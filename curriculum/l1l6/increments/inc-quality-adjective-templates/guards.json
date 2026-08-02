@@ -1,0 +1,30 @@
+{
+  "guards": [
+    {
+      "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+      "id": "g-qad-1"
+    },
+    {
+      "guard": "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+      "id": "g-qad-2"
+    },
+    {
+      "guard": "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+      "id": "g-qad-3"
+    },
+    {
+      "guard": "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+      "id": "g-qad-4"
+    },
+    {
+      "guard": "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+      "id": "g-qad-5"
+    },
+    {
+      "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+      "id": "g-qad-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

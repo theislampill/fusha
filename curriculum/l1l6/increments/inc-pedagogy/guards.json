@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "projection compiles from the qualified unit; independent authoring of colour/hover/lesson text is structurally impossible (recompute parity)",
+      "id": "g-ped-1"
+    },
+    {
+      "guard": "simplification never overwrites the fact: technical_identity carries the unit fact_ref verbatim",
+      "id": "g-ped-2"
+    },
+    {
+      "guard": "uncertainty surfaces: a projection that hides a supplied rival notice is the recorded v0 defect, kept red",
+      "id": "g-ped-3"
+    },
+    {
+      "guard": "the method (contract) transfers across units; no unit's content is copied to another",
+      "id": "g-ped-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

@@ -1,0 +1,9 @@
+{
+  "dependency_edges": 28,
+  "generator": "authored (clean-room); formatting via scratchpad gen_units.py",
+  "nahw_units": 12,
+  "note": "semantic instructional units — NOT heading inventory; heading-derived concept nodes remain in graph/ as source topology; unit.concept_node_query ties each unit to its concept-node population (validator-enforced minimums)",
+  "sarf_units": 9,
+  "schema": "curriculum.l1l6_instructional_unit.v1.meta",
+  "units": 21
+}

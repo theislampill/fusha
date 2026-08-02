@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "shared case with no intervening coordinator is the entry condition; adjacency alone never licenses a typing",
+      "id": "g-bad-case"
+    },
+    {
+      "guard": "the clitic is never invented to justify a connected type, and never attached to a referentially identical pair",
+      "id": "g-bad-clitic"
+    },
+    {
+      "guard": "the shared-label outcome is a recorded result, not an unresolved failure, and is never collapsed to one label",
+      "id": "g-bad-shared"
+    },
+    {
+      "guard": "a pair that predicates a property is routed out of this table rather than typed inside it",
+      "id": "g-bad-desc"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

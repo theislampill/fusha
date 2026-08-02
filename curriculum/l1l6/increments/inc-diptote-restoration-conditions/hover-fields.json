@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "restoration_source_chip",
+      "teaching": "names the environment that definitised the token, or states that neither environment applies"
+    },
+    {
+      "key": "nunation_note",
+      "teaching": "states plainly that a restored case vowel does not bring the nunation back in prose"
+    },
+    {
+      "key": "term_scope_note",
+      "teaching": "marks which term of an annexation the restoration reaches"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

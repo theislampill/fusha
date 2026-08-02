@@ -1,0 +1,400 @@
+{
+  "abstentions_preserved": [
+    "own-abs-01",
+    "own-abs-02"
+  ],
+  "backprop_proposal": {
+    "content": "repair unit-v1.json -> unit-v2.json with the recorded defect set as adversarial evidence",
+    "no_auto_promotion": true,
+    "target": "curriculum/l1l6/promotion/ bundle for inc-ownership"
+  },
+  "baseline_pack": "unit-v1.json",
+  "canonical_dogfood_eligible": false,
+  "capability": "letter_ownership",
+  "defects_recorded": [
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
+        "owners": [
+          "pattern_augment",
+          "root",
+          "root",
+          "root"
+        ]
+      },
+      "class": "abstention",
+      "expected": {
+        "decision": "abstain",
+        "reason": "no_root_evidence"
+      },
+      "fixture_id": "own-abs-01"
+    },
+    {
+      "actual": {
+        "decision": "abstain",
+        "reason": "pending_letter_ownership"
+      },
+      "class": "adversarial",
+      "expected": {
+        "decision": "candidate_pending",
+        "owners": [
+          "root",
+          "root",
+          "root"
+        ]
+      },
+      "fixture_id": "own-adv-01"
+    }
+  ],
+  "downstream_work": {
+    "hover_pedagogy": "queue q-hover-pedagogy rows for linked entries",
+    "occurrence_grounding": "queue q-pvn-grounding rows for lessons mapped to inc-ownership"
+  },
+  "evidence_class": "development_evidence_only",
+  "guards_loaded": [
+    "g-own-1",
+    "g-own-2",
+    "g-own-6",
+    "g-own-m"
+  ],
+  "improvement_classes_verified": [
+    "fixture_harness_improvement",
+    "instructional_improvement"
+  ],
+  "improvements": [
+    "own-abs-01",
+    "own-adv-01"
+  ],
+  "increment": "inc-ownership",
+  "loop": "ownership",
+  "regressions": [],
+  "repaired_pack": "unit-v2.json",
+  "rivals_preserved": [],
+  "run1": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 7,
+    "increment": "inc-ownership",
+    "mismatches": 2,
+    "results": [
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "owners": [
+            "clitic",
+            "clitic",
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "owners": [
+            "clitic",
+            "clitic",
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "fixture_id": "own-pos-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "owners": [
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "owners": [
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "fixture_id": "own-pos-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "pending_letter_ownership"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "candidate_pending",
+          "owners": [
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "fixture_id": "own-adv-01",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "owners": [
+            "inflection",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "candidate_pending",
+          "owners": [
+            "inflection",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "fixture_id": "own-adv-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "owners": [
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "no_root_evidence"
+        },
+        "fixture_id": "own-abs-01",
+        "match": false
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "pending_letter_ownership"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "pending_letter_ownership"
+        },
+        "fixture_id": "own-abs-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "owners": [
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "owners": [
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "fixture_id": "own-pos-03",
+        "match": true
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v1.json",
+    "unit_version": 1
+  },
+  "run2": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 7,
+    "increment": "inc-ownership",
+    "mismatches": 0,
+    "results": [
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "owners": [
+            "clitic",
+            "clitic",
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "owners": [
+            "clitic",
+            "clitic",
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "fixture_id": "own-pos-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "owners": [
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "owners": [
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "fixture_id": "own-pos-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "owners": [
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "candidate_pending",
+          "owners": [
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "fixture_id": "own-adv-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "owners": [
+            "inflection",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "candidate_pending",
+          "owners": [
+            "inflection",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "fixture_id": "own-adv-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "no_root_evidence"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "no_root_evidence"
+        },
+        "fixture_id": "own-abs-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "pending_letter_ownership"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "pending_letter_ownership"
+        },
+        "fixture_id": "own-abs-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "owners": [
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "owners": [
+            "pattern_augment",
+            "root",
+            "root",
+            "root"
+          ]
+        },
+        "fixture_id": "own-pos-03",
+        "match": true
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v2.json",
+    "unit_version": 2
+  },
+  "schema": "curriculum.l1l6_flywheel_loop.v1",
+  "site_payload_improvement": "never_claimable_here_owner_gated",
+  "status": "candidate",
+  "transfer_improvements": [],
+  "unit_ref": "u-s01"
+}

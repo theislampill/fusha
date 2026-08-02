@@ -1,0 +1,30 @@
+{
+  "guards": [
+    {
+      "guard": "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+      "id": "g-voi-1"
+    },
+    {
+      "guard": "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+      "id": "g-voi-2"
+    },
+    {
+      "guard": "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+      "id": "g-voi-3"
+    },
+    {
+      "guard": "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+      "id": "g-voi-4"
+    },
+    {
+      "guard": "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+      "id": "g-voi-5"
+    },
+    {
+      "guard": "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root",
+      "id": "g-voi-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

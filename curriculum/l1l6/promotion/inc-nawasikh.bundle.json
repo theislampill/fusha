@@ -1,0 +1,395 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-nawasikh/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-nawasikh/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "marking_unknown; non_governing_use; out_of_regime",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS consistency; it never assigns case (case facts remain two-vote gated)",
+        "og-4: family membership never fixes an occurrence's analysis when a lightened/non-governing use is possible",
+        "scripture is never 'corrected': violations become review candidates",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "c057b31471d3fdf37d54960d6e3f3ceadd0ed7ef3a48a2f4b20eaa12587bfffb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS consistency; it never assigns case (case facts remain two-vote gated)",
+          "id": "g-naw-1"
+        },
+        {
+          "guard": "og-4: family membership never fixes an occurrence's analysis when a lightened/non-governing use is possible",
+          "id": "g-naw-2"
+        },
+        {
+          "guard": "scripture is never 'corrected': violations become review candidates",
+          "id": "g-naw-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-naw-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "naw-adv-01",
+        "naw-adv-02",
+        "naw-abs-01",
+        "naw-abs-02"
+      ],
+      "positive_examples": [
+        "naw-pos-01",
+        "naw-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n02"
+      },
+      "scope": {
+        "increment": "inc-nawasikh",
+        "statement": "identify the abrogator by membership; a lightened/non-governing use (declared feature) removes the expectation (abstain non_governing_use)",
+        "unit_ref": "u-n02"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nawasikh-naw-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nawasikh/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "marking_unknown; non_governing_use; out_of_regime",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS consistency; it never assigns case (case facts remain two-vote gated)",
+        "og-4: family membership never fixes an occurrence's analysis when a lightened/non-governing use is possible",
+        "scripture is never 'corrected': violations become review candidates",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "c057b31471d3fdf37d54960d6e3f3ceadd0ed7ef3a48a2f4b20eaa12587bfffb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS consistency; it never assigns case (case facts remain two-vote gated)",
+          "id": "g-naw-1"
+        },
+        {
+          "guard": "og-4: family membership never fixes an occurrence's analysis when a lightened/non-governing use is possible",
+          "id": "g-naw-2"
+        },
+        {
+          "guard": "scripture is never 'corrected': violations become review candidates",
+          "id": "g-naw-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-naw-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "naw-adv-01",
+        "naw-adv-02",
+        "naw-abs-01",
+        "naw-abs-02"
+      ],
+      "positive_examples": [
+        "naw-pos-01",
+        "naw-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n02"
+      },
+      "scope": {
+        "increment": "inc-nawasikh",
+        "statement": "the consumer CHECKS observed case markings against the family pattern; it never assigns case itself (case facts stay two-vote)",
+        "unit_ref": "u-n02"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nawasikh-naw-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nawasikh/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "marking_unknown; non_governing_use; out_of_regime",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS consistency; it never assigns case (case facts remain two-vote gated)",
+        "og-4: family membership never fixes an occurrence's analysis when a lightened/non-governing use is possible",
+        "scripture is never 'corrected': violations become review candidates",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "c057b31471d3fdf37d54960d6e3f3ceadd0ed7ef3a48a2f4b20eaa12587bfffb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS consistency; it never assigns case (case facts remain two-vote gated)",
+          "id": "g-naw-1"
+        },
+        {
+          "guard": "og-4: family membership never fixes an occurrence's analysis when a lightened/non-governing use is possible",
+          "id": "g-naw-2"
+        },
+        {
+          "guard": "scripture is never 'corrected': violations become review candidates",
+          "id": "g-naw-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-naw-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "naw-adv-01",
+        "naw-adv-02",
+        "naw-abs-01",
+        "naw-abs-02"
+      ],
+      "positive_examples": [
+        "naw-pos-01",
+        "naw-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n02"
+      },
+      "scope": {
+        "increment": "inc-nawasikh",
+        "statement": "observed==expected -> consistent; observed!=expected -> violation_candidate routed to review (the text is never 'corrected'); marking unknown -> abstain marking_unknown",
+        "unit_ref": "u-n02"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nawasikh-naw-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nawasikh/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "marking_unknown; non_governing_use; out_of_regime",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS consistency; it never assigns case (case facts remain two-vote gated)",
+        "og-4: family membership never fixes an occurrence's analysis when a lightened/non-governing use is possible",
+        "scripture is never 'corrected': violations become review candidates",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "c057b31471d3fdf37d54960d6e3f3ceadd0ed7ef3a48a2f4b20eaa12587bfffb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS consistency; it never assigns case (case facts remain two-vote gated)",
+          "id": "g-naw-1"
+        },
+        {
+          "guard": "og-4: family membership never fixes an occurrence's analysis when a lightened/non-governing use is possible",
+          "id": "g-naw-2"
+        },
+        {
+          "guard": "scripture is never 'corrected': violations become review candidates",
+          "id": "g-naw-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-naw-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "naw-adv-01",
+        "naw-adv-02",
+        "naw-abs-01",
+        "naw-abs-02"
+      ],
+      "positive_examples": [
+        "naw-pos-01",
+        "naw-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n02"
+      },
+      "scope": {
+        "increment": "inc-nawasikh",
+        "statement": "la_jins and hijaziyya-ma regimes are OUT of this unit (different/school-dependent regimes)",
+        "unit_ref": "u-n02"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nawasikh-naw-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nawasikh/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "pattern_consistency",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-nawasikh",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "naw-abs-01",
+      "naw-abs-02"
+    ],
+    "adversarial": [
+      "naw-adv-01",
+      "naw-adv-02"
+    ],
+    "positive": [
+      "naw-pos-01",
+      "naw-pos-02"
+    ]
+  },
+  "flywheel_evidence": "curriculum/l1l6/loop/nawasikh-coverage/loop-record.json",
+  "increment": "inc-nawasikh",
+  "learner_explanation_ladder": {
+    "u-n02": {
+      "advanced": "curriculum/l1l6/increments/inc-nawasikh/reference.md",
+      "beginner": "curriculum/l1l6/increments/inc-nawasikh/staged-explanation.md",
+      "intermediate": "curriculum/l1l6/increments/inc-nawasikh/reference.md",
+      "model_facing": "curriculum/l1l6/increments/inc-nawasikh/procedure.md",
+      "technical": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json"
+    }
+  },
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "marking_unknown",
+      "non_governing_use",
+      "out_of_regime"
+    ],
+    "capability": "pattern_consistency",
+    "families": {
+      "inna": {
+        "ism": "nasb",
+        "khabar": "raf3",
+        "members": [
+          "إن",
+          "أن",
+          "لكن",
+          "كأن",
+          "ليت",
+          "لعل"
+        ]
+      },
+      "kana": {
+        "ism": "raf3",
+        "khabar": "nasb",
+        "members": [
+          "كان",
+          "أصبح",
+          "صار",
+          "ليس",
+          "ما زال",
+          "ما دام",
+          "بات",
+          "ظل"
+        ]
+      },
+      "zanna": {
+        "ism": "nasb",
+        "khabar": "nasb",
+        "members": [
+          "ظن",
+          "حسب",
+          "جعل",
+          "علم",
+          "وجد"
+        ]
+      }
+    },
+    "increment": "inc-nawasikh",
+    "rules": [
+      {
+        "id": "naw-r1",
+        "text": "identify the abrogator by membership; a lightened/non-governing use (declared feature) removes the expectation (abstain non_governing_use)"
+      },
+      {
+        "id": "naw-r2",
+        "text": "the consumer CHECKS observed case markings against the family pattern; it never assigns case itself (case facts stay two-vote)"
+      },
+      {
+        "id": "naw-r3",
+        "text": "observed==expected -> consistent; observed!=expected -> violation_candidate routed to review (the text is never 'corrected'); marking unknown -> abstain marking_unknown"
+      },
+      {
+        "id": "naw-r4",
+        "text": "la_jins and hijaziyya-ma regimes are OUT of this unit (different/school-dependent regimes)"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "u-n02",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [
+    "br-pl-ent-p011",
+    "br-pl-ent-p012",
+    "br-pl-ent-p013",
+    "br-pl-ent-p024",
+    "br-pl-ent-p029",
+    "br-pl-ent-p057",
+    "br-pl-ent-p058",
+    "br-pl-ent-p061",
+    "br-pl-ent-p063"
+  ],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "abrogator_card",
+      "teaching": "family, its two governed elements, and the case each receives — with the reason"
+    },
+    {
+      "key": "swap_warning",
+      "teaching": "the kana/inna pattern swap is THE classic error; the card shows both patterns side by side"
+    },
+    {
+      "key": "review_flag",
+      "teaching": "a marking that contradicts the pattern shows as 'needs review', never as a silent correction"
+    }
+  ],
+  "rollback_condition": "revert to unit-v0.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

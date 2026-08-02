@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "abrogator_card",
+      "teaching": "family, its two governed elements, and the case each receives — with the reason"
+    },
+    {
+      "key": "swap_warning",
+      "teaching": "the kana/inna pattern swap is THE classic error; the card shows both patterns side by side"
+    },
+    {
+      "key": "review_flag",
+      "teaching": "a marking that contradicts the pattern shows as 'needs review', never as a silent correction"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

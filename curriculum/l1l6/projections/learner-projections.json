@@ -1,0 +1,386 @@
+{
+  "compiler": "tools/build_learner_projections.py",
+  "contract": {
+    "depths": [
+      "beginner",
+      "intermediate",
+      "advanced",
+      "technical"
+    ],
+    "fact_precedence": "an instructional simplification NEVER overwrites the underlying fact: the technical view embeds the artifact verbatim and every other view derives from it",
+    "single_source_invariant": "every view is a pure function of its fact_ref artifact; colour, hover and all depths compile from ONE record; the validator recomputes byte-identically, so independent authoring or fact-overwriting simplification cannot survive CI"
+  },
+  "projections": [
+    {
+      "colour_ownership": [
+        {
+          "colour_class": "seg.candidate.clitic",
+          "letters": "ال",
+          "owner": "clitic"
+        },
+        {
+          "colour_class": "seg.candidate.pattern",
+          "letters": "م",
+          "owner": "pattern_augment"
+        },
+        {
+          "colour_class": "seg.candidate.root",
+          "letters": "سجد",
+          "owner": "root"
+        }
+      ],
+      "common_error_warning": "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+      "expanded_nahw_explanation": "curriculum/l1l6/increments/inc-nawasikh/reference.md (government of the carved clitic, where applicable)",
+      "expanded_sarf_explanation": "curriculum/l1l6/increments/inc-ownership/reference.md",
+      "fact_ref": "curriculum/l1l6/pilot/pilot-facts.json#pt-01",
+      "family": "ownership",
+      "hover_label_compact": "ال(clitic) + م(pattern_augment) + سجد(root)",
+      "pattern_association_lesson": "curriculum/l1l6/increments/inc-ownership/staged-explanation.md",
+      "status": "candidate",
+      "surface": "المَسْجِدُ",
+      "transfer_example_ref": "fixture own-pos-03 (مجلس — same rules, new root)",
+      "unresolved_notice": null,
+      "views": {
+        "advanced": "Letter ownership for المَسْجِدُ: ال=clitic; م=pattern_augment; سجد=root. Root س ج د in pattern مَفْعِل (noun_of_place); case vowel is hover_only.",
+        "beginner": "In المَسْجِدُ, the letters سجد carry the word's core meaning; attached grammar words and pattern letters come from the word shape or grammar.",
+        "intermediate": "المَسْجِدُ = ال [attached grammar word] + م [pattern letter] + سجد [root letter]. The root is س ج د; the pattern مَفْعِل adds its structural meaning; every other letter is grammar, not root.",
+        "technical": {
+          "analysis": {
+            "case_vowel": {
+              "display": "hover_only",
+              "value": "damma_nominative_context_free_citation"
+            },
+            "clitics": [
+              {
+                "kind": "definite_article",
+                "letters": [
+                  "ا",
+                  "ل"
+                ]
+              }
+            ],
+            "pattern": "مَفْعِل",
+            "pos": "noun",
+            "root": "س ج د",
+            "wazn_class": "noun_of_place"
+          },
+          "letters": [
+            {
+              "index": 0,
+              "letter": "ا",
+              "owner": "clitic",
+              "owner_detail": "definite_article"
+            },
+            {
+              "index": 1,
+              "letter": "ل",
+              "owner": "clitic",
+              "owner_detail": "definite_article"
+            },
+            {
+              "index": 2,
+              "letter": "م",
+              "owner": "pattern_augment",
+              "owner_detail": "mim_of_mafil_place_noun"
+            },
+            {
+              "index": 3,
+              "letter": "س",
+              "owner": "root",
+              "owner_detail": "radical_1"
+            },
+            {
+              "index": 4,
+              "letter": "ج",
+              "owner": "root",
+              "owner_detail": "radical_2"
+            },
+            {
+              "index": 5,
+              "letter": "د",
+              "owner": "root",
+              "owner_detail": "radical_3"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "colour_ownership": [
+        {
+          "colour_class": "seg.candidate.pattern",
+          "letters": "م",
+          "owner": "pattern_augment"
+        },
+        {
+          "colour_class": "seg.candidate.root",
+          "letters": "كتب",
+          "owner": "root"
+        }
+      ],
+      "common_error_warning": "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+      "expanded_nahw_explanation": "curriculum/l1l6/increments/inc-nawasikh/reference.md (government of the carved clitic, where applicable)",
+      "expanded_sarf_explanation": "curriculum/l1l6/increments/inc-ownership/reference.md",
+      "fact_ref": "curriculum/l1l6/pilot/pilot-facts.json#pt-02",
+      "family": "ownership",
+      "hover_label_compact": "م(pattern_augment) + كتب(root)",
+      "pattern_association_lesson": "curriculum/l1l6/increments/inc-ownership/staged-explanation.md",
+      "status": "candidate",
+      "surface": "مَكْتَب",
+      "transfer_example_ref": "fixture own-pos-03 (مجلس — same rules, new root)",
+      "unresolved_notice": null,
+      "views": {
+        "advanced": "Letter ownership for مَكْتَب: م=pattern_augment; كتب=root. Root ك ت ب in pattern مَفْعَل (noun_of_place); case vowel is hover_only.",
+        "beginner": "In مَكْتَب, the letters كتب carry the word's core meaning; pattern letters come from the word shape or grammar.",
+        "intermediate": "مَكْتَب = م [pattern letter] + كتب [root letter]. The root is ك ت ب; the pattern مَفْعَل adds its structural meaning; every other letter is grammar, not root.",
+        "technical": {
+          "analysis": {
+            "case_vowel": {
+              "display": "hover_only",
+              "value": "none_citation_form"
+            },
+            "clitics": [],
+            "pattern": "مَفْعَل",
+            "pos": "noun",
+            "root": "ك ت ب",
+            "wazn_class": "noun_of_place"
+          },
+          "letters": [
+            {
+              "index": 0,
+              "letter": "م",
+              "owner": "pattern_augment",
+              "owner_detail": "mim_of_mafal_place_noun"
+            },
+            {
+              "index": 1,
+              "letter": "ك",
+              "owner": "root",
+              "owner_detail": "radical_1"
+            },
+            {
+              "index": 2,
+              "letter": "ت",
+              "owner": "root",
+              "owner_detail": "radical_2"
+            },
+            {
+              "index": 3,
+              "letter": "ب",
+              "owner": "root",
+              "owner_detail": "radical_3"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "colour_ownership": [
+        {
+          "colour_class": "seg.candidate.particle-function",
+          "letters": "ما",
+          "owner": "particle"
+        }
+      ],
+      "common_error_warning": "og-3: no global/default function for ما; zero-evidence input must abstain",
+      "expanded_nahw_explanation": "curriculum/l1l6/increments/inc-ma/reference.md",
+      "expanded_sarf_explanation": "curriculum/l1l6/increments/inc-ownership/reference.md (ما is rootless: no radicals to own)",
+      "fact_ref": "curriculum/l1l6/increments/inc-ma/fixtures.jsonl#ma-pos-01",
+      "family": "ma-ambiguity",
+      "hover_label_compact": "negation ما",
+      "pattern_association_lesson": "curriculum/l1l6/increments/inc-ma/staged-explanation.md",
+      "status": "candidate",
+      "surface": "ما",
+      "transfer_example_ref": "fixture ma-adv-02 (shartiyya via the jussive pair)",
+      "unresolved_notice": null,
+      "views": {
+        "advanced": "Function nafiya selected by discriminators {\"clause\": [\"declarative\"], \"following\": [\"perfect_verb\"]}; rival functions eliminated by their unmet discriminators.",
+        "beginner": "Here ما works as: negation ما.",
+        "intermediate": "ما = negation ما, decided by: clause=declarative, following=perfect_verb.",
+        "technical": {
+          "expected": {
+            "decision": "candidate_pending",
+            "function": "nafiya"
+          },
+          "input": {
+            "features": {
+              "clause": "declarative",
+              "following": "perfect_verb"
+            },
+            "surface": "ما"
+          }
+        }
+      }
+    },
+    {
+      "colour_ownership": [
+        {
+          "colour_class": "seg.candidate.particle-function",
+          "letters": "ما",
+          "owner": "particle"
+        }
+      ],
+      "common_error_warning": "og-3: no global/default function for ما; zero-evidence input must abstain",
+      "expanded_nahw_explanation": "curriculum/l1l6/increments/inc-ma/reference.md",
+      "expanded_sarf_explanation": "curriculum/l1l6/increments/inc-ownership/reference.md (ما is rootless: no radicals to own)",
+      "fact_ref": "curriculum/l1l6/increments/inc-ma/fixtures.jsonl#ma-pos-02",
+      "family": "ma-ambiguity",
+      "hover_label_compact": "relative ما",
+      "pattern_association_lesson": "curriculum/l1l6/increments/inc-ma/staged-explanation.md",
+      "status": "candidate",
+      "surface": "ما",
+      "transfer_example_ref": "fixture ma-adv-02 (shartiyya via the jussive pair)",
+      "unresolved_notice": null,
+      "views": {
+        "advanced": "Function mawsula selected by discriminators {\"antecedent_slot\": [\"open_headless\"], \"following_clause\": [\"complete_with_gap\"]}; rival functions eliminated by their unmet discriminators.",
+        "beginner": "Here ما works as: relative ما.",
+        "intermediate": "ما = relative ما, decided by: antecedent_slot=open_headless, following_clause=complete_with_gap.",
+        "technical": {
+          "expected": {
+            "decision": "candidate_pending",
+            "function": "mawsula"
+          },
+          "input": {
+            "features": {
+              "antecedent_slot": "open_headless",
+              "following_clause": "complete_with_gap"
+            },
+            "surface": "ما"
+          }
+        }
+      }
+    },
+    {
+      "colour_ownership": [
+        {
+          "colour_class": "seg.candidate.particle-function",
+          "letters": "ما",
+          "owner": "particle"
+        }
+      ],
+      "common_error_warning": "og-3: no global/default function for ما; zero-evidence input must abstain",
+      "expanded_nahw_explanation": "curriculum/l1l6/increments/inc-ma/reference.md",
+      "expanded_sarf_explanation": "curriculum/l1l6/increments/inc-ownership/reference.md (ما is rootless: no radicals to own)",
+      "fact_ref": "curriculum/l1l6/increments/inc-ma/fixtures.jsonl#ma-adv-01",
+      "family": "ma-ambiguity",
+      "hover_label_compact": "unresolved: mawsula / nafiya",
+      "pattern_association_lesson": "curriculum/l1l6/increments/inc-ma/staged-explanation.md",
+      "status": "candidate",
+      "surface": "ما",
+      "transfer_example_ref": "fixture ma-adv-02 (shartiyya via the jussive pair)",
+      "unresolved_notice": "readings preserved: mawsula, nafiya (attributed-unresolved pattern)",
+      "views": {
+        "advanced": "preserve_alternatives: mawsula, nafiya all satisfy their discriminators; resolution requires additional per-occurrence evidence (og-3: no global reading).",
+        "beginner": "This ما could be read more than one way here — scholars keep both readings, and so do we.",
+        "intermediate": "Surviving readings: mawsula, nafiya. The context features given (antecedent_slot=open_headless, clause=declarative, following=perfect_verb, following_clause=complete_with_gap) do not separate them; no default exists.",
+        "technical": {
+          "expected": {
+            "alternatives": [
+              "mawsula",
+              "nafiya"
+            ],
+            "decision": "abstain",
+            "reason": "preserve_alternatives"
+          },
+          "input": {
+            "features": {
+              "antecedent_slot": "open_headless",
+              "clause": "declarative",
+              "following": "perfect_verb",
+              "following_clause": "complete_with_gap"
+            },
+            "surface": "ما"
+          }
+        }
+      }
+    },
+    {
+      "colour_ownership": [],
+      "common_error_warning": "no licence, no reconstruction — parse-saving inventions are rejected",
+      "expanded_nahw_explanation": "curriculum/l1l6/increments/inc-hidden/reference.md",
+      "expanded_sarf_explanation": "curriculum/l1l6/increments/inc-ownership/reference.md (hidden radicals are the sarf analogue)",
+      "fact_ref": "curriculum/l1l6/increments/inc-hidden/fixtures.jsonl#hid-pos-01",
+      "family": "hidden-structure",
+      "hover_label_compact": "no reconstruction licensed",
+      "pattern_association_lesson": "curriculum/l1l6/increments/inc-hidden/staged-explanation.md",
+      "status": "candidate",
+      "surface": null,
+      "transfer_example_ref": "fixture hid-pos-02 (relative-clause 'a'id gap)",
+      "unresolved_notice": null,
+      "views": {
+        "advanced": "reject_reconstruction: parse-saving taqdir is forbidden (closed licensing inventory).",
+        "beginner": "Nothing is hidden here; adding an 'understood word' would be inventing grammar.",
+        "intermediate": "Construction 'imperative_verb' licenses no reconstruction — the licensing table is closed.",
+        "technical": {
+          "expected": {
+            "decision": "candidate_pending",
+            "hidden_type": "mustatir_pronoun",
+            "obligatory": true
+          },
+          "input": {
+            "construction": "imperative_verb"
+          }
+        }
+      }
+    },
+    {
+      "colour_ownership": [],
+      "common_error_warning": "no licence, no reconstruction — parse-saving inventions are rejected",
+      "expanded_nahw_explanation": "curriculum/l1l6/increments/inc-hidden/reference.md",
+      "expanded_sarf_explanation": "curriculum/l1l6/increments/inc-ownership/reference.md (hidden radicals are the sarf analogue)",
+      "fact_ref": "curriculum/l1l6/increments/inc-hidden/fixtures.jsonl#hid-adv-01",
+      "family": "hidden-structure",
+      "hover_label_compact": "no reconstruction licensed",
+      "pattern_association_lesson": "curriculum/l1l6/increments/inc-hidden/staged-explanation.md",
+      "status": "candidate",
+      "surface": null,
+      "transfer_example_ref": "fixture hid-pos-02 (relative-clause 'a'id gap)",
+      "unresolved_notice": null,
+      "views": {
+        "advanced": "reject_reconstruction: parse-saving taqdir is forbidden (closed licensing inventory).",
+        "beginner": "Nothing is hidden here; adding an 'understood word' would be inventing grammar.",
+        "intermediate": "Construction 'plain_nominal_sentence' licenses no reconstruction — the licensing table is closed.",
+        "technical": {
+          "expected": {
+            "decision": "abstain",
+            "reason": "reject_reconstruction"
+          },
+          "input": {
+            "construction": "plain_nominal_sentence"
+          }
+        }
+      }
+    },
+    {
+      "colour_ownership": [],
+      "common_error_warning": "no licence, no reconstruction — parse-saving inventions are rejected",
+      "expanded_nahw_explanation": "curriculum/l1l6/increments/inc-hidden/reference.md",
+      "expanded_sarf_explanation": "curriculum/l1l6/increments/inc-ownership/reference.md (hidden radicals are the sarf analogue)",
+      "fact_ref": "curriculum/l1l6/increments/inc-hidden/fixtures.jsonl#hid-pos-03",
+      "family": "hidden-structure",
+      "hover_label_compact": "no reconstruction licensed",
+      "pattern_association_lesson": "curriculum/l1l6/increments/inc-hidden/staged-explanation.md",
+      "status": "candidate",
+      "surface": null,
+      "transfer_example_ref": "fixture hid-pos-02 (relative-clause 'a'id gap)",
+      "unresolved_notice": "analysis-dependent: attributed, never certified",
+      "views": {
+        "advanced": "reject_reconstruction: parse-saving taqdir is forbidden (closed licensing inventory).",
+        "beginner": "Nothing is hidden here; adding an 'understood word' would be inventing grammar.",
+        "intermediate": "Construction 'vocative_ya_noun' licenses no reconstruction — the licensing table is closed.",
+        "technical": {
+          "expected": {
+            "analysis_dependent": true,
+            "decision": "candidate_pending",
+            "hidden_type": "deleted_verb"
+          },
+          "input": {
+            "construction": "vocative_ya_noun"
+          }
+        }
+      }
+    }
+  ],
+  "schema": "curriculum.l1l6_learner_projection_set.v1",
+  "status": "candidate"
+}

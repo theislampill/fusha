@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "the accusative ending is never sufficient evidence for any of the four roles",
+      "id": "g-mans-surface"
+    },
+    {
+      "guard": "a failed hard precondition abstains; it never downgrades to a weaker role assignment",
+      "id": "g-mans-pre"
+    },
+    {
+      "guard": "the root test and the question test are peers; neither is allowed to override the other",
+      "id": "g-mans-alt"
+    },
+    {
+      "guard": "definiteness of the holder and definiteness of the descriptor are separate features and are never conflated",
+      "id": "g-mans-def"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

@@ -1,0 +1,484 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-numeral-polarity-licensing/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-numeral-polarity-licensing/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "reject_reconstruction; counted_singular_gender_unknown; numeral_band_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the gender of the counted singular is a declared input; the plural's surface shape never substitutes for it",
+        "the band boundary at ten is closed in every pack version",
+        "the numeral's case and the counted noun's case are decided separately and never copied across",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-numeral-polarity-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c7096cfbf2d1de562c42ea0a94a95470dbe3b2cb131e2cefbafd1ff04a8a2594",
+      "guards_payload": [
+        {
+          "guard": "the gender of the counted singular is a declared input; the plural's surface shape never substitutes for it",
+          "id": "g-num-1"
+        },
+        {
+          "guard": "the band boundary at ten is closed in every pack version",
+          "id": "g-num-2"
+        },
+        {
+          "guard": "the numeral's case and the counted noun's case are decided separately and never copied across",
+          "id": "g-num-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-num-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "num-adv-01",
+        "num-adv-02",
+        "num-abs-01"
+      ],
+      "positive_examples": [
+        "num-pos-01",
+        "num-pos-02",
+        "num-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-numeral-polarity-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-numeral-polarity-licensing"
+      },
+      "scope": {
+        "increment": "inc-numeral-polarity-licensing",
+        "statement": "polarity is computed from the gender of the counted noun's SINGULAR, never from the shape of the plural actually used",
+        "unit_ref": "cu-numeral-polarity-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-numeral-polarity-licensing-num-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-numeral-polarity-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; counted_singular_gender_unknown; numeral_band_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the gender of the counted singular is a declared input; the plural's surface shape never substitutes for it",
+        "the band boundary at ten is closed in every pack version",
+        "the numeral's case and the counted noun's case are decided separately and never copied across",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-numeral-polarity-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c7096cfbf2d1de562c42ea0a94a95470dbe3b2cb131e2cefbafd1ff04a8a2594",
+      "guards_payload": [
+        {
+          "guard": "the gender of the counted singular is a declared input; the plural's surface shape never substitutes for it",
+          "id": "g-num-1"
+        },
+        {
+          "guard": "the band boundary at ten is closed in every pack version",
+          "id": "g-num-2"
+        },
+        {
+          "guard": "the numeral's case and the counted noun's case are decided separately and never copied across",
+          "id": "g-num-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-num-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "num-adv-01",
+        "num-adv-02",
+        "num-abs-01"
+      ],
+      "positive_examples": [
+        "num-pos-01",
+        "num-pos-02",
+        "num-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-numeral-polarity-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-numeral-polarity-licensing"
+      },
+      "scope": {
+        "increment": "inc-numeral-polarity-licensing",
+        "statement": "polarity applies to the band three to ten only; one and two agree ordinarily and follow their noun",
+        "unit_ref": "cu-numeral-polarity-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-numeral-polarity-licensing-num-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-numeral-polarity-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; counted_singular_gender_unknown; numeral_band_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the gender of the counted singular is a declared input; the plural's surface shape never substitutes for it",
+        "the band boundary at ten is closed in every pack version",
+        "the numeral's case and the counted noun's case are decided separately and never copied across",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-numeral-polarity-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c7096cfbf2d1de562c42ea0a94a95470dbe3b2cb131e2cefbafd1ff04a8a2594",
+      "guards_payload": [
+        {
+          "guard": "the gender of the counted singular is a declared input; the plural's surface shape never substitutes for it",
+          "id": "g-num-1"
+        },
+        {
+          "guard": "the band boundary at ten is closed in every pack version",
+          "id": "g-num-2"
+        },
+        {
+          "guard": "the numeral's case and the counted noun's case are decided separately and never copied across",
+          "id": "g-num-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-num-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "num-adv-01",
+        "num-adv-02",
+        "num-abs-01"
+      ],
+      "positive_examples": [
+        "num-pos-01",
+        "num-pos-02",
+        "num-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-numeral-polarity-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-numeral-polarity-licensing"
+      },
+      "scope": {
+        "increment": "inc-numeral-polarity-licensing",
+        "statement": "the counted noun in the polarity band is the genitive plural second term of a construct, and its genitive exponent is selected by triptote or diptote class",
+        "unit_ref": "cu-numeral-polarity-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-numeral-polarity-licensing-num-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-numeral-polarity-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; counted_singular_gender_unknown; numeral_band_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the gender of the counted singular is a declared input; the plural's surface shape never substitutes for it",
+        "the band boundary at ten is closed in every pack version",
+        "the numeral's case and the counted noun's case are decided separately and never copied across",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-numeral-polarity-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c7096cfbf2d1de562c42ea0a94a95470dbe3b2cb131e2cefbafd1ff04a8a2594",
+      "guards_payload": [
+        {
+          "guard": "the gender of the counted singular is a declared input; the plural's surface shape never substitutes for it",
+          "id": "g-num-1"
+        },
+        {
+          "guard": "the band boundary at ten is closed in every pack version",
+          "id": "g-num-2"
+        },
+        {
+          "guard": "the numeral's case and the counted noun's case are decided separately and never copied across",
+          "id": "g-num-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-num-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "num-adv-01",
+        "num-adv-02",
+        "num-abs-01"
+      ],
+      "positive_examples": [
+        "num-pos-01",
+        "num-pos-02",
+        "num-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-numeral-polarity-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-numeral-polarity-licensing"
+      },
+      "scope": {
+        "increment": "inc-numeral-polarity-licensing",
+        "statement": "the numeral's own case comes from its clause role and is external to the construct",
+        "unit_ref": "cu-numeral-polarity-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-numeral-polarity-licensing-num-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-numeral-polarity-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; counted_singular_gender_unknown; numeral_band_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the gender of the counted singular is a declared input; the plural's surface shape never substitutes for it",
+        "the band boundary at ten is closed in every pack version",
+        "the numeral's case and the counted noun's case are decided separately and never copied across",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-numeral-polarity-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c7096cfbf2d1de562c42ea0a94a95470dbe3b2cb131e2cefbafd1ff04a8a2594",
+      "guards_payload": [
+        {
+          "guard": "the gender of the counted singular is a declared input; the plural's surface shape never substitutes for it",
+          "id": "g-num-1"
+        },
+        {
+          "guard": "the band boundary at ten is closed in every pack version",
+          "id": "g-num-2"
+        },
+        {
+          "guard": "the numeral's case and the counted noun's case are decided separately and never copied across",
+          "id": "g-num-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-num-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "num-adv-01",
+        "num-adv-02",
+        "num-abs-01"
+      ],
+      "positive_examples": [
+        "num-pos-01",
+        "num-pos-02",
+        "num-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-numeral-polarity-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-numeral-polarity-licensing"
+      },
+      "scope": {
+        "increment": "inc-numeral-polarity-licensing",
+        "statement": "numerals above ten are outside this table; inverse agreement is not extended by resemblance -> reject_reconstruction",
+        "unit_ref": "cu-numeral-polarity-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-numeral-polarity-licensing-num-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-numeral-polarity-licensing/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "licensing_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-numeral-polarity-licensing",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "num-abs-01"
+    ],
+    "adversarial": [
+      "num-adv-01",
+      "num-adv-02"
+    ],
+    "positive": [
+      "num-pos-01",
+      "num-pos-02"
+    ],
+    "transfer": [
+      "num-trn-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-numeral-polarity-licensing",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "reject_reconstruction",
+      "counted_singular_gender_unknown",
+      "numeral_band_unknown"
+    ],
+    "capability": "licensing_table",
+    "encoding_limitation": "the registered licensing_table capability matches ONE compound construction key and can only emit reject_reconstruction for anything unmatched; the evidence-specific abstention reasons declared here are therefore DECLARED-BUT-UNREACHABLE pending a keyed-evidence capability — kept as the unit's honest abstention vocabulary, not as consumer behavior (audit finding, modeled on inc-atf-case-following)",
+    "increment": "inc-numeral-polarity-licensing",
+    "licensing_table": [
+      {
+        "construction": "numeral_one_or_two_with_counted_noun",
+        "hidden": {
+          "type": "ordinary_gender_agreement_postposed",
+          "value_class": "numeral_follows_its_noun"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "numeral_three_to_ten_with_masculine_counted_singular",
+        "hidden": {
+          "type": "feminine_marked_numeral_form",
+          "value_class": "inverse_agreement"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "numeral_three_to_ten_with_feminine_counted_singular",
+        "hidden": {
+          "type": "unmarked_numeral_form",
+          "value_class": "inverse_agreement"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "counted_noun_after_numeral_three_to_ten",
+        "hidden": {
+          "type": "genitive_plural_second_term",
+          "value_class": "construct_dependent"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "counted_noun_triptote_in_the_genitive_slot",
+        "hidden": {
+          "type": "ordinary_genitive_exponent",
+          "value_class": "triptote"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "counted_noun_diptote_in_the_genitive_slot",
+        "hidden": {
+          "type": "reduced_genitive_exponent",
+          "value_class": "diptote"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "numeral_own_case_slot",
+        "hidden": {
+          "type": "case_from_the_clause_role",
+          "value_class": "external_to_the_construct"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "feminine_form_of_eight_indefinite_nominative_or_genitive",
+        "hidden": {
+          "type": "defective_noun_endings",
+          "value_class": "final_glide_dropped"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "definite_construction_offered_for_eight",
+        "hidden": {
+          "type": "article_on_both_numeral_and_counted_noun",
+          "value_class": "recorded_variant"
+        },
+        "note": "analysis-dependent: the article-bearing numeral before an article-bearing noun is recorded upstream as requiring review, and it sits against the construct requirement that the numeral be bare",
+        "obligatory": false
+      }
+    ],
+    "rules": [
+      {
+        "id": "num-r1",
+        "text": "polarity is computed from the gender of the counted noun's SINGULAR, never from the shape of the plural actually used"
+      },
+      {
+        "id": "num-r2",
+        "text": "polarity applies to the band three to ten only; one and two agree ordinarily and follow their noun"
+      },
+      {
+        "id": "num-r3",
+        "text": "the counted noun in the polarity band is the genitive plural second term of a construct, and its genitive exponent is selected by triptote or diptote class"
+      },
+      {
+        "id": "num-r4",
+        "text": "the numeral's own case comes from its clause role and is external to the construct"
+      },
+      {
+        "id": "num-r5",
+        "text": "numerals above ten are outside this table; inverse agreement is not extended by resemblance -> reject_reconstruction"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-numeral-polarity-licensing",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "polarity_chip",
+      "teaching": "shows the gender of the counted singular next to the numeral form it selected, so the inversion is visible"
+    },
+    {
+      "key": "construct_note",
+      "teaching": "marks the counted noun as the genitive plural second term and names the exponent chosen"
+    },
+    {
+      "key": "band_note",
+      "teaching": "states which numeral band the row belongs to, and that the band boundary is what limits the rule"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "agreement_axes_chip",
+      "teaching": "shows the four axes side by side with the head's values and the modifier's, so a mismatch is visible rather than asserted"
+    },
+    {
+      "key": "animacy_note",
+      "teaching": "states the referent animacy label that selected feminine singular agreement on a plural head"
+    },
+    {
+      "key": "attachment_note",
+      "teaching": "names the chain member the modifier's case attaches it to, or states plainly that case cannot separate them"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

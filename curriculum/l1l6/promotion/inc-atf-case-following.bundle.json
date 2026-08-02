@@ -1,0 +1,833 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-atf-case-following/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-atf-case-following/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "marking_unknown; out_of_regime; non_governing_use",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+        "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+        "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+        "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+        "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+        "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+        "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "085fd8e68c05f9528b79298c1b62861d382c348a8fca7876f872854c20353fbb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+          "id": "g-atf-1"
+        },
+        {
+          "guard": "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+          "id": "g-atf-2"
+        },
+        {
+          "guard": "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+          "id": "g-atf-3"
+        },
+        {
+          "guard": "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+          "id": "g-atf-4"
+        },
+        {
+          "guard": "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+          "id": "g-atf-5"
+        },
+        {
+          "guard": "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+          "id": "g-atf-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence",
+          "id": "g-atf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01",
+        "atf-abs-02",
+        "atf-abs-03"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "scope": {
+        "increment": "inc-atf-case-following",
+        "statement": "FIELD REINTERPRETATION: `abrogator` carries the coordination connector, `ism_marking` the observed case of the joined-to element (head), `khabar_marking` the observed case of the joined element (conjunct). Nothing here is an abrogator and nothing governs anything",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-case-following-atf-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-case-following/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "marking_unknown; out_of_regime; non_governing_use",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+        "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+        "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+        "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+        "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+        "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+        "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "085fd8e68c05f9528b79298c1b62861d382c348a8fca7876f872854c20353fbb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+          "id": "g-atf-1"
+        },
+        {
+          "guard": "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+          "id": "g-atf-2"
+        },
+        {
+          "guard": "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+          "id": "g-atf-3"
+        },
+        {
+          "guard": "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+          "id": "g-atf-4"
+        },
+        {
+          "guard": "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+          "id": "g-atf-5"
+        },
+        {
+          "guard": "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+          "id": "g-atf-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence",
+          "id": "g-atf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01",
+        "atf-abs-02",
+        "atf-abs-03"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "scope": {
+        "increment": "inc-atf-case-following",
+        "statement": "the checked relation is INHERITANCE: the conjunct copies the case the head already bears, so a lane is consistent exactly when both observed markings equal the lane's declared case",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-case-following-atf-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-case-following/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "marking_unknown; out_of_regime; non_governing_use",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+        "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+        "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+        "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+        "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+        "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+        "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "085fd8e68c05f9528b79298c1b62861d382c348a8fca7876f872854c20353fbb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+          "id": "g-atf-1"
+        },
+        {
+          "guard": "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+          "id": "g-atf-2"
+        },
+        {
+          "guard": "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+          "id": "g-atf-3"
+        },
+        {
+          "guard": "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+          "id": "g-atf-4"
+        },
+        {
+          "guard": "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+          "id": "g-atf-5"
+        },
+        {
+          "guard": "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+          "id": "g-atf-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence",
+          "id": "g-atf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01",
+        "atf-abs-02",
+        "atf-abs-03"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "scope": {
+        "increment": "inc-atf-case-following",
+        "statement": "the consumer CHECKS supplied markings; it never assigns case, never repairs the text, and never decides which element is the head when attachment is ambiguous",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-case-following-atf-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-case-following/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "marking_unknown; out_of_regime; non_governing_use",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+        "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+        "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+        "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+        "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+        "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+        "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "085fd8e68c05f9528b79298c1b62861d382c348a8fca7876f872854c20353fbb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+          "id": "g-atf-1"
+        },
+        {
+          "guard": "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+          "id": "g-atf-2"
+        },
+        {
+          "guard": "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+          "id": "g-atf-3"
+        },
+        {
+          "guard": "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+          "id": "g-atf-4"
+        },
+        {
+          "guard": "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+          "id": "g-atf-5"
+        },
+        {
+          "guard": "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+          "id": "g-atf-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence",
+          "id": "g-atf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01",
+        "atf-abs-02",
+        "atf-abs-03"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "scope": {
+        "increment": "inc-atf-case-following",
+        "statement": "a mismatch is a violation_candidate routed to review, because the classic error is giving the conjunct a case of its own",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-case-following-atf-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-case-following/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "marking_unknown; out_of_regime; non_governing_use",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+        "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+        "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+        "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+        "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+        "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+        "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "085fd8e68c05f9528b79298c1b62861d382c348a8fca7876f872854c20353fbb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+          "id": "g-atf-1"
+        },
+        {
+          "guard": "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+          "id": "g-atf-2"
+        },
+        {
+          "guard": "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+          "id": "g-atf-3"
+        },
+        {
+          "guard": "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+          "id": "g-atf-4"
+        },
+        {
+          "guard": "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+          "id": "g-atf-5"
+        },
+        {
+          "guard": "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+          "id": "g-atf-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence",
+          "id": "g-atf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01",
+        "atf-abs-02",
+        "atf-abs-03"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "scope": {
+        "increment": "inc-atf-case-following",
+        "statement": "either marking unknown -> abstain marking_unknown; a connector outside the declared inventory -> abstain out_of_regime",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-case-following-atf-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-case-following/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "marking_unknown; out_of_regime; non_governing_use",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+        "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+        "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+        "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+        "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+        "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+        "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "085fd8e68c05f9528b79298c1b62861d382c348a8fca7876f872854c20353fbb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+          "id": "g-atf-1"
+        },
+        {
+          "guard": "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+          "id": "g-atf-2"
+        },
+        {
+          "guard": "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+          "id": "g-atf-3"
+        },
+        {
+          "guard": "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+          "id": "g-atf-4"
+        },
+        {
+          "guard": "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+          "id": "g-atf-5"
+        },
+        {
+          "guard": "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+          "id": "g-atf-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence",
+          "id": "g-atf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01",
+        "atf-abs-02",
+        "atf-abs-03"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "scope": {
+        "increment": "inc-atf-case-following",
+        "statement": "a connector whose reading here is NOT coordination (the adversative item once an attached pronoun makes it an abrogator, or any clause-level use with no case to copy) is declared non-governing and abstains",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-case-following-atf-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-case-following/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "marking_unknown; out_of_regime; non_governing_use",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+        "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+        "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+        "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+        "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+        "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+        "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "085fd8e68c05f9528b79298c1b62861d382c348a8fca7876f872854c20353fbb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+          "id": "g-atf-1"
+        },
+        {
+          "guard": "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+          "id": "g-atf-2"
+        },
+        {
+          "guard": "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+          "id": "g-atf-3"
+        },
+        {
+          "guard": "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+          "id": "g-atf-4"
+        },
+        {
+          "guard": "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+          "id": "g-atf-5"
+        },
+        {
+          "guard": "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+          "id": "g-atf-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence",
+          "id": "g-atf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01",
+        "atf-abs-02",
+        "atf-abs-03"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "scope": {
+        "increment": "inc-atf-case-following",
+        "statement": "ENCODING LIMIT (recorded, not hidden): the registered analyzer compares each slot against a CONSTANT, so a lane can only pin one case. Every connector in fact joins a head in any case; the lane a connector sits in here is a pack-encoding artifact that fixes which case this unit checks it at, and is NOT a claim about the connector. The repair is a generic head/dependent capability, which is exactly why this canonical unit exists",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-case-following-atf-r7",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-case-following/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "marking_unknown; out_of_regime; non_governing_use",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+        "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+        "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+        "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+        "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+        "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+        "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pattern_consistency",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "085fd8e68c05f9528b79298c1b62861d382c348a8fca7876f872854c20353fbb",
+      "guards_payload": [
+        {
+          "guard": "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+          "id": "g-atf-1"
+        },
+        {
+          "guard": "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+          "id": "g-atf-2"
+        },
+        {
+          "guard": "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+          "id": "g-atf-3"
+        },
+        {
+          "guard": "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+          "id": "g-atf-4"
+        },
+        {
+          "guard": "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+          "id": "g-atf-5"
+        },
+        {
+          "guard": "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+          "id": "g-atf-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence",
+          "id": "g-atf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01",
+        "atf-abs-02",
+        "atf-abs-03"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-case-following/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "scope": {
+        "increment": "inc-atf-case-following",
+        "statement": "the six-connector inventory is a teaching core, not the traditional inventory; and each connector has documented non-coordinating uses that this unit does not adjudicate",
+        "unit_ref": "cu-atf-case-following"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-case-following-atf-r8",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-case-following/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "pattern_consistency",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-atf-case-following",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "atf-abs-01",
+      "atf-abs-02",
+      "atf-abs-03"
+    ],
+    "adversarial": [
+      "atf-adv-01",
+      "atf-adv-02",
+      "atf-adv-03"
+    ],
+    "positive": [
+      "atf-pos-01",
+      "atf-pos-02",
+      "atf-pos-03"
+    ],
+    "transfer": [
+      "atf-trn-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-atf-case-following",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "marking_unknown",
+      "out_of_regime",
+      "non_governing_use"
+    ],
+    "capability": "pattern_consistency",
+    "disabled_reason": "lane-encoded case constants false-flag valid coordination (Sol blocker 4): the registered pattern_consistency analyzer compares one constant per slot, but a coordinator joins a head in ANY case; the pack stays as a documented candidate awaiting the generic head/dependent capability (sol_adapter_required); its fixtures are retained as review material only and are not executed",
+    "encoding_limitation": "one lane pins one case because the analyzer compares against constants; connector-to-lane assignment is an encoding artifact, not a linguistic claim",
+    "families": {
+      "atf_jarr_lane": {
+        "ism": "jarr",
+        "khabar": "jarr",
+        "members": [
+          "بل",
+          "لكن"
+        ],
+        "semantics": {
+          "بل": "correction: cancels a negated first element, upgrades an affirmed one",
+          "لكن": "adversative contrast without cancellation"
+        },
+        "slot_reading": {
+          "ism": "observed case of the JOINED-TO element (the head)",
+          "khabar": "observed case of the JOINED element (the conjunct)"
+        }
+      },
+      "atf_nasb_lane": {
+        "ism": "nasb",
+        "khabar": "nasb",
+        "members": [
+          "ف",
+          "أو"
+        ],
+        "semantics": {
+          "أو": "alternation",
+          "ف": "sequence with no interval"
+        },
+        "slot_reading": {
+          "ism": "observed case of the JOINED-TO element (the head)",
+          "khabar": "observed case of the JOINED element (the conjunct)"
+        }
+      },
+      "atf_raf3_lane": {
+        "ism": "raf3",
+        "khabar": "raf3",
+        "members": [
+          "و",
+          "ثم"
+        ],
+        "semantics": {
+          "ثم": "sequence with an interval",
+          "و": "plain addition, no ordering asserted"
+        },
+        "slot_reading": {
+          "ism": "observed case of the JOINED-TO element (the head)",
+          "khabar": "observed case of the JOINED element (the conjunct)"
+        }
+      }
+    },
+    "field_reinterpretation": {
+      "abrogator": "coordination connector (not an abrogator)",
+      "consistent": "the conjunct inherited the head's case",
+      "ism": "expected case of the joined-to element (head)",
+      "khabar": "expected case of the joined element (conjunct)",
+      "lightened_non_governing": "reused slot: THIS occurrence is not a coordination reading (e.g. heavy لكنّ with an attached pronoun, or clause-level coordination with no case to copy). The slot name comes from inc-nawasikh and is NOT a claim about lightening here",
+      "violation_candidate": "the conjunct bears a case of its own — routed to review, never corrected"
+    },
+    "harness_disabled": true,
+    "increment": "inc-atf-case-following",
+    "rules": [
+      {
+        "id": "atf-r1",
+        "text": "FIELD REINTERPRETATION: `abrogator` carries the coordination connector, `ism_marking` the observed case of the joined-to element (head), `khabar_marking` the observed case of the joined element (conjunct). Nothing here is an abrogator and nothing governs anything"
+      },
+      {
+        "id": "atf-r2",
+        "text": "the checked relation is INHERITANCE: the conjunct copies the case the head already bears, so a lane is consistent exactly when both observed markings equal the lane's declared case"
+      },
+      {
+        "id": "atf-r3",
+        "text": "the consumer CHECKS supplied markings; it never assigns case, never repairs the text, and never decides which element is the head when attachment is ambiguous"
+      },
+      {
+        "id": "atf-r4",
+        "text": "a mismatch is a violation_candidate routed to review, because the classic error is giving the conjunct a case of its own"
+      },
+      {
+        "id": "atf-r5",
+        "text": "either marking unknown -> abstain marking_unknown; a connector outside the declared inventory -> abstain out_of_regime"
+      },
+      {
+        "id": "atf-r6",
+        "text": "a connector whose reading here is NOT coordination (the adversative item once an attached pronoun makes it an abrogator, or any clause-level use with no case to copy) is declared non-governing and abstains"
+      },
+      {
+        "id": "atf-r7",
+        "text": "ENCODING LIMIT (recorded, not hidden): the registered analyzer compares each slot against a CONSTANT, so a lane can only pin one case. Every connector in fact joins a head in any case; the lane a connector sits in here is a pack-encoding artifact that fixes which case this unit checks it at, and is NOT a claim about the connector. The repair is a generic head/dependent capability, which is exactly why this canonical unit exists"
+      },
+      {
+        "id": "atf-r8",
+        "text": "the six-connector inventory is a teaching core, not the traditional inventory; and each connector has documented non-coordinating uses that this unit does not adjudicate"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-atf-case-following",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "coordination_pair_card",
+      "teaching": "names the joined-to element and the joined element, shows the case each bears, and states that the second inherited the first"
+    },
+    {
+      "key": "connector_sense_chip",
+      "teaching": "gives the connector's semantic value — addition, tight or delayed sequence, alternation, correction, contrast — while making clear the case does not depend on it"
+    },
+    {
+      "key": "review_flag",
+      "teaching": "a conjunct bearing its own case shows as 'needs review' with the expected exponent named; the text is never rewritten"
+    },
+    {
+      "key": "not_coordination_notice",
+      "teaching": "when the item is read as an abrogator or joins whole clauses, the card says no inheritance expectation applies here"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

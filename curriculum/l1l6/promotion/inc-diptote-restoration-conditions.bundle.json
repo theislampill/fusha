@@ -1,0 +1,486 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-diptote-restoration-conditions/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-diptote-restoration-conditions/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "reject_reconstruction; definiteness_state_unknown; annexation_role_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "definiteness state and annexation role are declared inputs; adjacency never substitutes for them",
+        "the case vowel and the nunation are restored independently and are never inferred from each other",
+        "the poetic licence stays inside verse and is checked before a nunated occurrence is judged",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-diptote-restoration-conditions/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4149e5f4d9a6e3dd2b84ee41135c7e08ba846c5aebe37ba678d570fb1f1889fb",
+      "guards_payload": [
+        {
+          "guard": "definiteness state and annexation role are declared inputs; adjacency never substitutes for them",
+          "id": "g-dpr-1"
+        },
+        {
+          "guard": "the case vowel and the nunation are restored independently and are never inferred from each other",
+          "id": "g-dpr-2"
+        },
+        {
+          "guard": "the poetic licence stays inside verse and is checked before a nunated occurrence is judged",
+          "id": "g-dpr-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-dpr-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "dpr-adv-01",
+        "dpr-adv-02",
+        "dpr-abs-01"
+      ],
+      "positive_examples": [
+        "dpr-pos-01",
+        "dpr-pos-02",
+        "dpr-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-diptote-restoration-conditions/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-diptote-restoration-conditions"
+      },
+      "scope": {
+        "increment": "inc-diptote-restoration-conditions",
+        "statement": "restoration is triggered by definitisation: the definite article and first-term-of-annexation status are the two prose environments",
+        "unit_ref": "cu-diptote-restoration-conditions"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-diptote-restoration-conditions-dpr-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-diptote-restoration-conditions/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; definiteness_state_unknown; annexation_role_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "definiteness state and annexation role are declared inputs; adjacency never substitutes for them",
+        "the case vowel and the nunation are restored independently and are never inferred from each other",
+        "the poetic licence stays inside verse and is checked before a nunated occurrence is judged",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-diptote-restoration-conditions/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4149e5f4d9a6e3dd2b84ee41135c7e08ba846c5aebe37ba678d570fb1f1889fb",
+      "guards_payload": [
+        {
+          "guard": "definiteness state and annexation role are declared inputs; adjacency never substitutes for them",
+          "id": "g-dpr-1"
+        },
+        {
+          "guard": "the case vowel and the nunation are restored independently and are never inferred from each other",
+          "id": "g-dpr-2"
+        },
+        {
+          "guard": "the poetic licence stays inside verse and is checked before a nunated occurrence is judged",
+          "id": "g-dpr-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-dpr-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "dpr-adv-01",
+        "dpr-adv-02",
+        "dpr-abs-01"
+      ],
+      "positive_examples": [
+        "dpr-pos-01",
+        "dpr-pos-02",
+        "dpr-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-diptote-restoration-conditions/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-diptote-restoration-conditions"
+      },
+      "scope": {
+        "increment": "inc-diptote-restoration-conditions",
+        "statement": "restoration concerns the case vowel and never the nunation; a restored vowel is not evidence for a restored nunation",
+        "unit_ref": "cu-diptote-restoration-conditions"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-diptote-restoration-conditions-dpr-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-diptote-restoration-conditions/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; definiteness_state_unknown; annexation_role_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "definiteness state and annexation role are declared inputs; adjacency never substitutes for them",
+        "the case vowel and the nunation are restored independently and are never inferred from each other",
+        "the poetic licence stays inside verse and is checked before a nunated occurrence is judged",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-diptote-restoration-conditions/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4149e5f4d9a6e3dd2b84ee41135c7e08ba846c5aebe37ba678d570fb1f1889fb",
+      "guards_payload": [
+        {
+          "guard": "definiteness state and annexation role are declared inputs; adjacency never substitutes for them",
+          "id": "g-dpr-1"
+        },
+        {
+          "guard": "the case vowel and the nunation are restored independently and are never inferred from each other",
+          "id": "g-dpr-2"
+        },
+        {
+          "guard": "the poetic licence stays inside verse and is checked before a nunated occurrence is judged",
+          "id": "g-dpr-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-dpr-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "dpr-adv-01",
+        "dpr-adv-02",
+        "dpr-abs-01"
+      ],
+      "positive_examples": [
+        "dpr-pos-01",
+        "dpr-pos-02",
+        "dpr-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-diptote-restoration-conditions/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-diptote-restoration-conditions"
+      },
+      "scope": {
+        "increment": "inc-diptote-restoration-conditions",
+        "statement": "restoration reaches only the term that is actually definitised: a class member in second-term position keeps the reduced exponent",
+        "unit_ref": "cu-diptote-restoration-conditions"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-diptote-restoration-conditions-dpr-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-diptote-restoration-conditions/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; definiteness_state_unknown; annexation_role_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "definiteness state and annexation role are declared inputs; adjacency never substitutes for them",
+        "the case vowel and the nunation are restored independently and are never inferred from each other",
+        "the poetic licence stays inside verse and is checked before a nunated occurrence is judged",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-diptote-restoration-conditions/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4149e5f4d9a6e3dd2b84ee41135c7e08ba846c5aebe37ba678d570fb1f1889fb",
+      "guards_payload": [
+        {
+          "guard": "definiteness state and annexation role are declared inputs; adjacency never substitutes for them",
+          "id": "g-dpr-1"
+        },
+        {
+          "guard": "the case vowel and the nunation are restored independently and are never inferred from each other",
+          "id": "g-dpr-2"
+        },
+        {
+          "guard": "the poetic licence stays inside verse and is checked before a nunated occurrence is judged",
+          "id": "g-dpr-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-dpr-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "dpr-adv-01",
+        "dpr-adv-02",
+        "dpr-abs-01"
+      ],
+      "positive_examples": [
+        "dpr-pos-01",
+        "dpr-pos-02",
+        "dpr-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-diptote-restoration-conditions/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-diptote-restoration-conditions"
+      },
+      "scope": {
+        "increment": "inc-diptote-restoration-conditions",
+        "statement": "the metrical licence is confined to verse and is evaluated before a nunated occurrence is called an error",
+        "unit_ref": "cu-diptote-restoration-conditions"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-diptote-restoration-conditions-dpr-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-diptote-restoration-conditions/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; definiteness_state_unknown; annexation_role_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "definiteness state and annexation role are declared inputs; adjacency never substitutes for them",
+        "the case vowel and the nunation are restored independently and are never inferred from each other",
+        "the poetic licence stays inside verse and is checked before a nunated occurrence is judged",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-diptote-restoration-conditions/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4149e5f4d9a6e3dd2b84ee41135c7e08ba846c5aebe37ba678d570fb1f1889fb",
+      "guards_payload": [
+        {
+          "guard": "definiteness state and annexation role are declared inputs; adjacency never substitutes for them",
+          "id": "g-dpr-1"
+        },
+        {
+          "guard": "the case vowel and the nunation are restored independently and are never inferred from each other",
+          "id": "g-dpr-2"
+        },
+        {
+          "guard": "the poetic licence stays inside verse and is checked before a nunated occurrence is judged",
+          "id": "g-dpr-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-dpr-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "dpr-adv-01",
+        "dpr-adv-02",
+        "dpr-abs-01"
+      ],
+      "positive_examples": [
+        "dpr-pos-01",
+        "dpr-pos-02",
+        "dpr-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-diptote-restoration-conditions/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-diptote-restoration-conditions"
+      },
+      "scope": {
+        "increment": "inc-diptote-restoration-conditions",
+        "statement": "adjacency is not a restoring environment; a neighbouring word that does not definitise the head licenses nothing -> reject_reconstruction",
+        "unit_ref": "cu-diptote-restoration-conditions"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-diptote-restoration-conditions-dpr-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-diptote-restoration-conditions/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "licensing_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-diptote-restoration-conditions",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "dpr-abs-01"
+    ],
+    "adversarial": [
+      "dpr-adv-01",
+      "dpr-adv-02"
+    ],
+    "positive": [
+      "dpr-pos-01",
+      "dpr-pos-02"
+    ],
+    "transfer": [
+      "dpr-trn-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-diptote-restoration-conditions",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "reject_reconstruction",
+      "definiteness_state_unknown",
+      "annexation_role_unknown"
+    ],
+    "capability": "licensing_table",
+    "encoding_limitation": "the registered licensing_table capability matches ONE compound construction key and can only emit reject_reconstruction for anything unmatched; the evidence-specific abstention reasons declared here are therefore DECLARED-BUT-UNREACHABLE pending a keyed-evidence capability — kept as the unit's honest abstention vocabulary, not as consumer behavior (audit finding, modeled on inc-atf-case-following)",
+    "increment": "inc-diptote-restoration-conditions",
+    "licensing_table": [
+      {
+        "construction": "class_member_carrying_the_definite_article",
+        "hidden": {
+          "type": "case_vowel_restored_nunation_withheld",
+          "value_class": "definitised_by_the_article"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "class_member_as_first_term_of_an_annexation",
+        "hidden": {
+          "type": "case_vowel_restored_nunation_withheld",
+          "value_class": "definitised_by_first_term_status"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "class_member_as_second_term_of_an_annexation",
+        "hidden": {
+          "type": "no_restoration",
+          "value_class": "this_term_is_not_definitised"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "class_member_indefinite_and_unannexed",
+        "hidden": {
+          "type": "no_restoration",
+          "value_class": "reduced_exponent_retained"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "nunation_added_after_the_case_vowel_returned_in_prose",
+        "hidden": {
+          "type": "restoration_not_licensed",
+          "value_class": "restoring_environments_are_definitising"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "class_member_in_verse_under_metrical_pressure",
+        "hidden": {
+          "type": "nunation_restored_register_bound",
+          "value_class": "verse_only_and_never_extended_to_prose"
+        },
+        "obligatory": false
+      },
+      {
+        "construction": "class_member_followed_by_a_relational_adjective",
+        "hidden": {
+          "type": "restoration_claimed_but_unverified",
+          "value_class": "the_environment_does_not_definitise_the_head"
+        },
+        "note": "analysis-dependent: the claim that a following relational adjective behaves like annexation and restores the ordinary genitive vowel is recorded upstream as unsafe for automatic projection",
+        "obligatory": false
+      },
+      {
+        "construction": "article_prefixed_proper_toponym_illustration",
+        "hidden": {
+          "type": "case_vowel_restored_nunation_withheld",
+          "value_class": "illustration_recorded_as_requiring_review"
+        },
+        "note": "analysis-dependent: attaching the article directly to proper toponyms to demonstrate suspension is recorded upstream as requiring review",
+        "obligatory": false
+      },
+      {
+        "construction": "shortened_noun_ending_in_a_non_vocalisable_alif",
+        "hidden": {
+          "type": "no_exponent_surfaces",
+          "value_class": "membership_recorded_as_unverified"
+        },
+        "note": "analysis-dependent: listing this shortened-noun type among the class members in its indefinite state is recorded upstream as unsafe for automatic projection",
+        "obligatory": false
+      }
+    ],
+    "rules": [
+      {
+        "id": "dpr-r1",
+        "text": "restoration is triggered by definitisation: the definite article and first-term-of-annexation status are the two prose environments"
+      },
+      {
+        "id": "dpr-r2",
+        "text": "restoration concerns the case vowel and never the nunation; a restored vowel is not evidence for a restored nunation"
+      },
+      {
+        "id": "dpr-r3",
+        "text": "restoration reaches only the term that is actually definitised: a class member in second-term position keeps the reduced exponent"
+      },
+      {
+        "id": "dpr-r4",
+        "text": "the metrical licence is confined to verse and is evaluated before a nunated occurrence is called an error"
+      },
+      {
+        "id": "dpr-r5",
+        "text": "adjacency is not a restoring environment; a neighbouring word that does not definitise the head licenses nothing -> reject_reconstruction"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-diptote-restoration-conditions",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "restoration_source_chip",
+      "teaching": "names the environment that definitised the token, or states that neither environment applies"
+    },
+    {
+      "key": "nunation_note",
+      "teaching": "states plainly that a restored case vowel does not bring the nunation back in prose"
+    },
+    {
+      "key": "term_scope_note",
+      "teaching": "marks which term of an annexation the restoration reaches"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

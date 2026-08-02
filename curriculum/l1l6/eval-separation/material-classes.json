@@ -1,0 +1,45 @@
+{
+  "classes": {
+    "answered_instructional_examples": {
+      "count_proxy": {
+        "reading_passages": 326,
+        "vocabulary_table_rows": 8298
+      },
+      "eligible_as_independent_eval": false,
+      "population": "worked examples inside lesson grammar sections and reading passages (answer visible in source)",
+      "reason": "answer-visible in instructional prose"
+    },
+    "candidate_regression_tests": {
+      "eligible_as_independent_eval": false,
+      "population": "restated mistake-pattern fixtures promoted via TP-CURR packets after review",
+      "reason": "candidate until owner/Sol review"
+    },
+    "development_fixtures": {
+      "eligible_as_independent_eval": false,
+      "population": "pilot fixtures under curriculum/l1l6/pilot/ derived from lesson claims",
+      "reason": "used during development; regression role only"
+    },
+    "genuinely_held_out_evaluation_material": {
+      "count": 0,
+      "eligible_as_independent_eval": true,
+      "population": "NONE in this corpus",
+      "reason": "every item in the corpus is answer-visible or keyless; honest held-out material must come from elsewhere"
+    },
+    "questions_without_verified_answer_keys": {
+      "count": 3096,
+      "eligible_as_independent_eval": false,
+      "population": "lesson quiz questions: the source publishes questions with NO answer key",
+      "reason": "no verified key; keys must NOT be manufactured without source or review evidence (TP-CURR-QUIZ-KEY-REVIEW)"
+    },
+    "worked_exercises": {
+      "count_proxy": {
+        "common_mistakes_sections": 205
+      },
+      "eligible_as_independent_eval": false,
+      "population": "common-mistakes contrast sets (wrong vs corrected forms shown)",
+      "reason": "answer-visible; usable as adversarial fixture SOURCE after restatement + review"
+    }
+  },
+  "leakage_rule": "an answer-visible exercise is never counted as an independent evaluation",
+  "schema": "curriculum.l1l6_material_classes.v1"
+}

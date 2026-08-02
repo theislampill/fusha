@@ -1,0 +1,110 @@
+name: curriculum-l1l6-gate
+# Path-scoped gate for the L1-L6 curriculum substrate. ADDITIVE to pr-gate
+# (which runs the canonical harness): the canonical harness does not invoke
+# these validators until Sol wires the one-line integration, so this workflow
+# is the executable proof for the new subsystem. New file — no shared
+# workflow was modified.
+
+on:
+  pull_request:
+    paths:
+      - "curriculum/l1l6/**"
+      - "tools/build_curriculum_l1l6.py"
+      - "tools/validate_curriculum_l1l6.py"
+      - "tools/curriculum_unit_consumer.py"
+      - "tools/build_curriculum_corpus_pilot.py"
+      - "tools/build_curriculum_pvn_links.py"
+      - "tools/check_curriculum_fixture_corpus.py"
+      - "tools/build_curriculum_absorption.py"
+      - "tools/build_capability_matrix.py"
+      - "tools/build_curriculum_occurrence_bridge.py"
+      - "tools/curriculum_flywheel_runner.py"
+      - "tools/build_learner_projections.py"
+      - "tools/build_promotion_bundles.py"
+      - "tools/build_candidate_drills.py"
+      - "tools/build_curriculum_canonical.py"
+      - "tools/build_misconception_assets.py"
+      - "tools/build_pedagogy_projections.py"
+      - "tools/build_unit_dispositions.py"
+      - "tools/build_vn_grounding.py"
+      - "tools/validate_lesson_qualification.py"
+      - "tools/validate_task_packets.py"
+      - ".github/workflows/curriculum-l1l6-gate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  curriculum-l1l6:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: curriculum validator (23 named fail-closed checks)
+        run: python tools/validate_curriculum_l1l6.py
+
+      - name: validator mutation self-test (red-first)
+        run: python tools/validate_curriculum_l1l6.py --self-test
+
+      - name: task-packet validation (TP-CURR-*)
+        run: python tools/validate_task_packets.py curriculum/l1l6/packets/*.json
+
+      - name: candidate consumer self-test (pack mutations flip decisions)
+        run: python tools/curriculum_unit_consumer.py --self-test
+
+      - name: candidate consumer — all increments green on latest packs
+        run: python tools/curriculum_unit_consumer.py --all
+
+      - name: corpus-pilot envelopes byte-match a live recompute
+        run: python tools/build_curriculum_corpus_pilot.py --check
+
+      - name: precise P/V/N links byte-match a live recompute
+        run: python tools/build_curriculum_pvn_links.py --check
+
+      - name: SYNTHETIC-corpus determinism gate (2-lesson clean-room fixture corpus; private-corpus byte fidelity is the owner-run --source-dir gate, NOT this step)
+        run: python tools/check_curriculum_fixture_corpus.py
+
+      - name: absorption ledgers + queues + readiness recompute (226/226, unclassified=0)
+        run: python tools/build_curriculum_absorption.py --check
+
+      - name: capability matrix recompute (63 families)
+        run: python tools/build_capability_matrix.py --check
+
+      - name: occurrence bridge + P/V/N readiness recompute (wildcard-free)
+        run: python tools/build_curriculum_occurrence_bridge.py --check
+
+      - name: flywheel loops recompute (6 families — one per capability interface, defect sets pinned)
+        run: python tools/curriculum_flywheel_runner.py --manifest
+
+      - name: learner projections recompute (single-source invariant)
+        run: python tools/build_learner_projections.py --check
+
+      - name: promotion bundles recompute (every discovered increment)
+        run: python tools/build_promotion_bundles.py --check
+
+      - name: lesson-qualification records (schema, custody, 226/226 complete)
+        run: python tools/validate_lesson_qualification.py --complete
+
+      - name: canonical consolidation recompute (units, lesson map, misconceptions)
+        run: python tools/build_curriculum_canonical.py --check
+
+      - name: unit dispositions recompute (166/166 closed states, pack-backed)
+        run: python tools/build_unit_dispositions.py --check
+
+      - name: V/N grounding recompute (identity matching only)
+        run: python tools/build_vn_grounding.py --check
+
+      - name: misconception assets recompute (fixture candidates + remediations)
+        run: python tools/build_misconception_assets.py --check
+
+      - name: candidate drill records recompute (0 runtime-integrated, honesty-gated)
+        run: python tools/build_candidate_drills.py --check
+
+      - name: unit projections recompute (real pedagogy consumer, 166/166)
+        run: python tools/build_pedagogy_projections.py --check

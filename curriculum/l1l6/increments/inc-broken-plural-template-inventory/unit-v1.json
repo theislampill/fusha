@@ -1,0 +1,153 @@
+{
+  "abstention_reasons": [
+    "no_root_evidence",
+    "no_template",
+    "ambiguous_template"
+  ],
+  "capability": "template_classification",
+  "increment": "inc-broken-plural-template-inventory",
+  "inventory_note": "the six plural rows below are the high-frequency core, NOT a closed inventory; a surface that matches none of them is unclassified here, not ill-formed",
+  "rules": [
+    {
+      "id": "bpl-r1",
+      "text": "a plural template matches only against SUPPLIED root radicals filling R1..R3 in order; the consumer never derives a root and never coins a plural"
+    },
+    {
+      "id": "bpl-r2",
+      "text": "the singular's own template is a PRIOR, not a rule: the attested plural is a lexical fact, so this unit classifies an observed surface and never predicts one"
+    },
+    {
+      "id": "bpl-r3",
+      "text": "a suffixal (sound) plural is outside this inventory; zero surviving templates -> abstain no_template rather than forcing a restructured reading"
+    },
+    {
+      "id": "bpl-r4",
+      "text": "where a plural template is letter-identical to a singular template the pack declares BOTH rows, so the honest verdict on that skeleton is abstain ambiguous_template"
+    },
+    {
+      "id": "bpl-r5",
+      "text": "a lexeme with more than one attested plural yields more than one classified surface; this unit never ranks them and never emits one as the plural"
+    },
+    {
+      "id": "bpl-r6",
+      "text": "concord follows the referent's rationality, not the plural's template; this unit emits no concord claim"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "templates": [
+    {
+      "class": "plural_of_paucity",
+      "id": "afaal",
+      "name": "أفعال plural template",
+      "shape": [
+        "أ",
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ],
+      "signature": "an added opening element, then the radicals with a long low vowel before the last"
+    },
+    {
+      "class": "plural_of_paucity",
+      "id": "afila",
+      "name": "أفعلة plural template",
+      "shape": [
+        "أ",
+        "R1",
+        "R2",
+        "R3",
+        "ة"
+      ],
+      "signature": "the same opening element with a closing taa marbuta"
+    },
+    {
+      "class": "plural_of_multitude",
+      "id": "fuul",
+      "name": "فعول plural template",
+      "shape": [
+        "R1",
+        "R2",
+        "و",
+        "R3"
+      ],
+      "signature": "a long back vowel between the second and third radical"
+    },
+    {
+      "class": "plural_of_multitude",
+      "id": "fiaal",
+      "name": "فعال plural template",
+      "shape": [
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ],
+      "signature": "a long low vowel between the second and third radical"
+    },
+    {
+      "class": "non_plural_homograph",
+      "id": "fiaal_singular_homograph",
+      "name": "فعال homograph (singular noun / third-form masdar of the same skeleton)",
+      "shape": [
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ],
+      "signature": "letter-identical to the فعال plural row; only the vowels and the entry separate them"
+    },
+    {
+      "class": "extreme_plural",
+      "id": "mafaail",
+      "name": "مفاعل extreme-plural template",
+      "shape": [
+        "م",
+        "R1",
+        "ا",
+        "R2",
+        "R3"
+      ],
+      "signature": "an added opening mim with a long low vowel after the first radical"
+    },
+    {
+      "class": "plural_of_multitude",
+      "id": "fualaa",
+      "name": "فعلاء plural template",
+      "shape": [
+        "R1",
+        "R2",
+        "R3",
+        "ا",
+        "ء"
+      ],
+      "signature": "the three radicals closed by a long low vowel and a hamza"
+    },
+    {
+      "class": "non_plural_homograph",
+      "id": "fuul_singular_homograph",
+      "name": "فُعُول plural skeleton == singular فَعُول (declared collision)",
+      "shape": [
+        "R1",
+        "R2",
+        "و",
+        "R3"
+      ]
+    },
+    {
+      "class": "non_plural_homograph",
+      "id": "fualaa_singular_homograph",
+      "name": "فُعَلاء plural skeleton == singular فَعْلاء (declared collision)",
+      "shape": [
+        "R1",
+        "R2",
+        "R3",
+        "ا",
+        "ء"
+      ]
+    }
+  ],
+  "unit_ref": "cu-broken-plural-template-inventory",
+  "version": 1
+}

@@ -1,0 +1,395 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-hidden/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-hidden/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "reject_reconstruction; alternatives_preserved",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "reconstruction is typed analysis, never text; scripture read-only invariant is absolute",
+        "no licence, no reconstruction — parse-saving inventions are rejected",
+        "rival reconstructions preserved as alternatives (og analog of attributed-unresolved)",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "9f69a4fcfa18c5a38a47cac2bf99792a0b226d98b193a1b37a362e5b7109e84b",
+      "guards_payload": [
+        {
+          "guard": "reconstruction is typed analysis, never text; scripture read-only invariant is absolute",
+          "id": "g-hid-1"
+        },
+        {
+          "guard": "no licence, no reconstruction — parse-saving inventions are rejected",
+          "id": "g-hid-2"
+        },
+        {
+          "guard": "rival reconstructions preserved as alternatives (og analog of attributed-unresolved)",
+          "id": "g-hid-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-hid-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "hid-adv-01",
+        "hid-adv-02"
+      ],
+      "positive_examples": [
+        "hid-pos-01",
+        "hid-pos-02",
+        "hid-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n08"
+      },
+      "scope": {
+        "increment": "inc-hidden",
+        "statement": "a hidden element may be emitted ONLY for a construction in the licensing table; anything else -> reject_reconstruction",
+        "unit_ref": "u-n08"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-hidden-hid-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-hidden/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; alternatives_preserved",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "reconstruction is typed analysis, never text; scripture read-only invariant is absolute",
+        "no licence, no reconstruction — parse-saving inventions are rejected",
+        "rival reconstructions preserved as alternatives (og analog of attributed-unresolved)",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "9f69a4fcfa18c5a38a47cac2bf99792a0b226d98b193a1b37a362e5b7109e84b",
+      "guards_payload": [
+        {
+          "guard": "reconstruction is typed analysis, never text; scripture read-only invariant is absolute",
+          "id": "g-hid-1"
+        },
+        {
+          "guard": "no licence, no reconstruction — parse-saving inventions are rejected",
+          "id": "g-hid-2"
+        },
+        {
+          "guard": "rival reconstructions preserved as alternatives (og analog of attributed-unresolved)",
+          "id": "g-hid-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-hid-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "hid-adv-01",
+        "hid-adv-02"
+      ],
+      "positive_examples": [
+        "hid-pos-01",
+        "hid-pos-02",
+        "hid-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n08"
+      },
+      "scope": {
+        "increment": "inc-hidden",
+        "statement": "hidden elements are TYPED nodes flagged is_reconstruction=true; they are analysis, never text; scripture is never altered",
+        "unit_ref": "u-n08"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-hidden-hid-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-hidden/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; alternatives_preserved",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "reconstruction is typed analysis, never text; scripture read-only invariant is absolute",
+        "no licence, no reconstruction — parse-saving inventions are rejected",
+        "rival reconstructions preserved as alternatives (og analog of attributed-unresolved)",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "9f69a4fcfa18c5a38a47cac2bf99792a0b226d98b193a1b37a362e5b7109e84b",
+      "guards_payload": [
+        {
+          "guard": "reconstruction is typed analysis, never text; scripture read-only invariant is absolute",
+          "id": "g-hid-1"
+        },
+        {
+          "guard": "no licence, no reconstruction — parse-saving inventions are rejected",
+          "id": "g-hid-2"
+        },
+        {
+          "guard": "rival reconstructions preserved as alternatives (og analog of attributed-unresolved)",
+          "id": "g-hid-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-hid-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "hid-adv-01",
+        "hid-adv-02"
+      ],
+      "positive_examples": [
+        "hid-pos-01",
+        "hid-pos-02",
+        "hid-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n08"
+      },
+      "scope": {
+        "increment": "inc-hidden",
+        "statement": "analysis-dependent licences (vocative deleted-verb) carry their attribution and never certify",
+        "unit_ref": "u-n08"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-hidden-hid-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-hidden/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; alternatives_preserved",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "reconstruction is typed analysis, never text; scripture read-only invariant is absolute",
+        "no licence, no reconstruction — parse-saving inventions are rejected",
+        "rival reconstructions preserved as alternatives (og analog of attributed-unresolved)",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "9f69a4fcfa18c5a38a47cac2bf99792a0b226d98b193a1b37a362e5b7109e84b",
+      "guards_payload": [
+        {
+          "guard": "reconstruction is typed analysis, never text; scripture read-only invariant is absolute",
+          "id": "g-hid-1"
+        },
+        {
+          "guard": "no licence, no reconstruction — parse-saving inventions are rejected",
+          "id": "g-hid-2"
+        },
+        {
+          "guard": "rival reconstructions preserved as alternatives (og analog of attributed-unresolved)",
+          "id": "g-hid-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-hid-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "hid-adv-01",
+        "hid-adv-02"
+      ],
+      "positive_examples": [
+        "hid-pos-01",
+        "hid-pos-02",
+        "hid-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-hidden/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n08"
+      },
+      "scope": {
+        "increment": "inc-hidden",
+        "statement": "rival reconstructions are all emitted as alternatives, none preferred",
+        "unit_ref": "u-n08"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-hidden-hid-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-hidden/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "licensing_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-hidden",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "hid-adv-01"
+    ],
+    "adversarial": [
+      "hid-adv-02"
+    ],
+    "positive": [
+      "hid-pos-01",
+      "hid-pos-02",
+      "hid-pos-03"
+    ]
+  },
+  "flywheel_evidence": "curriculum/l1l6/loop/hidden-structure/loop-record.json",
+  "increment": "inc-hidden",
+  "learner_explanation_ladder": {
+    "u-n08": {
+      "advanced": "curriculum/l1l6/increments/inc-hidden/reference.md",
+      "beginner": "curriculum/l1l6/increments/inc-hidden/staged-explanation.md",
+      "intermediate": "curriculum/l1l6/increments/inc-hidden/reference.md",
+      "model_facing": "curriculum/l1l6/increments/inc-hidden/procedure.md",
+      "technical": "curriculum/l1l6/increments/inc-hidden/unit-v1.json"
+    },
+    "u-n09": {
+      "advanced": "curriculum/l1l6/increments/inc-hidden/reference.md",
+      "beginner": "curriculum/l1l6/increments/inc-hidden/staged-explanation.md",
+      "intermediate": "curriculum/l1l6/increments/inc-hidden/reference.md",
+      "model_facing": "curriculum/l1l6/increments/inc-hidden/procedure.md",
+      "technical": "curriculum/l1l6/increments/inc-hidden/unit-v1.json"
+    }
+  },
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "reject_reconstruction",
+      "alternatives_preserved"
+    ],
+    "capability": "licensing_table",
+    "increment": "inc-hidden",
+    "licensing_table": [
+      {
+        "construction": "imperative_verb",
+        "hidden": {
+          "type": "mustatir_pronoun",
+          "value_class": "second_person"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "third_person_verb_no_overt_subject",
+        "hidden": {
+          "type": "mustatir_pronoun",
+          "value_class": "third_person"
+        },
+        "obligatory": false
+      },
+      {
+        "construction": "vocative_ya_noun",
+        "hidden": {
+          "type": "deleted_verb",
+          "value_class": "call_verb"
+        },
+        "note": "analysis-dependent: the deleted-verb account is one school's analysis",
+        "obligatory": true,
+        "school_attribution": "deleted-call-verb account (Basran mainstream); rival sui-generis analyses exist — attributed, never resolved here"
+      },
+      {
+        "construction": "relative_clause_object_gap",
+        "hidden": {
+          "type": "elided_aid",
+          "value_class": "object_pronoun"
+        },
+        "obligatory": false
+      },
+      {
+        "construction": "answer_fragment",
+        "hidden": {
+          "type": "elided_clause",
+          "value_class": "contextual"
+        },
+        "obligatory": false
+      }
+    ],
+    "rules": [
+      {
+        "id": "hid-r1",
+        "text": "a hidden element may be emitted ONLY for a construction in the licensing table; anything else -> reject_reconstruction"
+      },
+      {
+        "id": "hid-r2",
+        "text": "hidden elements are TYPED nodes flagged is_reconstruction=true; they are analysis, never text; scripture is never altered"
+      },
+      {
+        "id": "hid-r3",
+        "text": "analysis-dependent licences (vocative deleted-verb) carry their attribution and never certify"
+      },
+      {
+        "id": "hid-r4",
+        "text": "rival reconstructions are all emitted as alternatives, none preferred"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "u-n08",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [
+    "br-pl-ent-p094",
+    "br-pl-ent-p095",
+    "br-pl-ent-p097"
+  ],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "hidden_element_chip",
+      "teaching": "shows the typed reconstruction (e.g. 'subject: hidden you') clearly flagged as analysis, visually distinct from real text"
+    },
+    {
+      "key": "licence_note",
+      "teaching": "names the construction that licenses the reconstruction"
+    },
+    {
+      "key": "attribution_note",
+      "teaching": "analysis-dependent reconstructions carry whose analysis they are"
+    }
+  ],
+  "rollback_condition": "revert to unit-v0.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

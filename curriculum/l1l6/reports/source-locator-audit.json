@@ -1,0 +1,27 @@
+{
+  "audit_date_basis": "correction round after PR #136 draft review",
+  "corrections_applied": [
+    {
+      "before": "ledger cl-010 cited L6.M1.* (module wildcard) for the Basran/Kufan governance dispute",
+      "after": "L6.M4.02 (Theory of Governance: Basran vs Kufan Disputes on العامل); L6.M1 is rhetoric/prosody (البلاغة/العروض), not school disputes",
+      "class": "wrong_module_attribution"
+    },
+    {
+      "before": "ledger cl-014 cited L2.M4.* (wildcard)",
+      "after": "L2.M4.01 (Form-I active participle); passive participle is L2.M4.02",
+      "class": "wildcard_tightened"
+    },
+    {
+      "before": "learner-error census reported as 199 (exact-heading prose) / 203 (prefix match)",
+      "after": "205 lessons / 205 sections under the semantic matcher ^common (mistakes?|errors?|confusion): variants are Common Mistakes (199), Common Mistakes to Avoid (2), Common Mistakes: Words That Look Like Nouns (1), Common Mistakes in Reading Vowelled Text (1), Common Errors to Avoid (1), Common Confusion Points (1)",
+      "class": "extractor_heading_variant_blindness"
+    }
+  ],
+  "enforcement": [
+    "tools/build_curriculum_l1l6.py MISTAKE_HEADING_RE (semantic, not exact-spelling)",
+    "tools/validate_curriculum_l1l6.py ledger_qualification: wildcard lesson_ids forbidden; every source_ref must resolve to a registry lesson + manifest row (red-first mutation wildcard_source_ref)"
+  ],
+  "ledger_resolution_state": "all claim source_refs resolve post-correction (machine-checked every validator run)",
+  "method": "direct archive inspection of all 226 lesson files + heading-variant frequency table; ledger refs cross-checked against per-file titles and module metadata lines",
+  "schema": "curriculum.l1l6_source_locator_audit.v1"
+}

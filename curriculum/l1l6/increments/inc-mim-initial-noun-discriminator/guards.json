@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+      "id": "g-mim-voc"
+    },
+    {
+      "guard": "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+      "id": "g-mim-lex"
+    },
+    {
+      "guard": "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+      "id": "g-mim-hom"
+    },
+    {
+      "guard": "the form class of the source verb is supplied evidence and is never inferred from the surface shape",
+      "id": "g-mim-src"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

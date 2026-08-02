@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "key": "degree_chip",
+      "teaching": "names the matched row and the degree it encodes — plain, intensive, or absolute — against the plain agent noun of the same root"
+    },
+    {
+      "key": "taa_reading_note",
+      "teaching": "when the row ends in a taa, states that it intensifies and that gender must be read from agreement instead"
+    },
+    {
+      "key": "rival_class_panel",
+      "teaching": "for shared rows, shows the quality-adjective reading beside the intensive one and names the transitivity test; for homograph skeletons, shows both templates and no winner"
+    },
+    {
+      "key": "annexation_flag",
+      "teaching": "marks a following annexed noun as the source verb's underlying object, as a reading to check rather than a case fact"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

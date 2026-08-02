@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "sense_panel",
+      "teaching": "names the sense of the connective with the evidence that produced it, never with a default translation"
+    },
+    {
+      "key": "case_evidence_panel",
+      "teaching": "shows the case of the following nominal as the decisive evidence, and marks it unrecoverable where the text is unpointed"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "where coordination and accompaniment are both licensed, both are shown with no winner implied"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

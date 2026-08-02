@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "key": "voice_melody_chip",
+      "teaching": "names the matched row with its form number, tense and stem class, and states which vowels are the exponent"
+    },
+    {
+      "key": "undecidable_badge",
+      "teaching": "on a colliding cell, shows the rival active and passive rows side by side and says the letters do not settle it — the abstention is displayed as the answer, not as a failure"
+    },
+    {
+      "key": "letter_visible_melody_note",
+      "teaching": "highlights the cells where the melody changes a LETTER, so the reader learns which cells survive unvocalised text"
+    },
+    {
+      "key": "stem_class_gap_note",
+      "teaching": "states plainly when the stem class has no row in this pack, instead of stretching a sound-stem melody over it"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

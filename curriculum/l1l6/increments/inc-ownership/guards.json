@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "og-1: root colouring never implies lexeme/sense sharing; hover wording must say 'same radicals', never 'same meaning'",
+      "id": "g-own-1"
+    },
+    {
+      "guard": "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+      "id": "g-own-2"
+    },
+    {
+      "guard": "og-6: consumer output is candidate analysis; it never writes entries, senses or certified facts",
+      "id": "g-own-6"
+    },
+    {
+      "guard": "method transfers, conclusions do not: the unit's rules apply to new tokens; a specific token's analysis is never copied to another token",
+      "id": "g-own-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

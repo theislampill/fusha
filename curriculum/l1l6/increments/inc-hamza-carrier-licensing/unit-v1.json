@@ -1,0 +1,119 @@
+{
+  "abstention_reasons": [
+    "reject_reconstruction",
+    "vowel_environment_unknown",
+    "position_unknown"
+  ],
+  "capability": "licensing_table",
+  "encoding_limitation": "the registered licensing_table capability matches ONE compound construction key and can only emit reject_reconstruction for anything unmatched; the evidence-specific abstention reasons declared here are therefore DECLARED-BUT-UNREACHABLE pending a keyed-evidence capability — kept as the unit's honest abstention vocabulary, not as consumer behavior (audit finding, modeled on inc-atf-case-following)",
+  "increment": "inc-hamza-carrier-licensing",
+  "licensing_table": [
+    {
+      "construction": "hamza_environment_with_kasra_present",
+      "hidden": {
+        "type": "ya_shaped_carrier",
+        "value_class": "kasra_outranks_damma_and_fatha"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "hamza_environment_with_damma_highest",
+      "hidden": {
+        "type": "waw_shaped_carrier",
+        "value_class": "damma_outranks_fatha"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "hamza_environment_with_fatha_only",
+      "hidden": {
+        "type": "alif_shaped_carrier",
+        "value_class": "fatha_is_lowest_in_the_precedence"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "hamza_after_a_vowelless_letter",
+      "hidden": {
+        "type": "bare_hamza_without_a_carrier",
+        "value_class": "no_seat_licensed"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "initial_hamza_root_in_the_first_person_singular_imperfect",
+      "hidden": {
+        "type": "long_alif_contraction",
+        "value_class": "prefix_hamza_merges_with_the_root_hamza"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "final_hamza_root_in_a_plural_cell",
+      "hidden": {
+        "type": "carrier_re_evaluated_after_affixation",
+        "value_class": "carrier_switches_from_the_citation_form"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "medial_hamza_root_in_the_passive_stem",
+      "hidden": {
+        "type": "carrier_re_evaluated_after_affixation",
+        "value_class": "vowel_environment_changed_by_the_passive_vowelling"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "stored_imperative_of_an_initial_hamza_verb",
+      "hidden": {
+        "type": "hamza_absent_stored_form",
+        "value_class": "three_listed_verbs_only"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "irregular_medial_hamza_lexeme_in_the_imperfect",
+      "hidden": {
+        "type": "hamza_absent_stored_form",
+        "value_class": "stored_lexical_fact_not_a_rule_output"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "hamza_in_word_final_position",
+      "hidden": {
+        "type": "carrier_not_determined_by_the_vowels_alone",
+        "value_class": "position_and_editorial_convention_also_condition_it"
+      },
+      "note": "analysis-dependent: the upstream account presents the carrier as fully vowel-determined, its tabulated and summary statements of the rule do not agree, and word-final position plus editorial convention are recorded as further conditioning factors",
+      "obligatory": false
+    }
+  ],
+  "rules": [
+    {
+      "id": "hmz-r1",
+      "text": "the carrier is selected from the declared vowel environment by a precedence in which kasra outranks damma and damma outranks fatha; after a vowelless letter the hamza is bare"
+    },
+    {
+      "id": "hmz-r2",
+      "text": "the carrier is a written-form fact, not a stem fact: it is re-evaluated after every affixation rather than copied from the citation form"
+    },
+    {
+      "id": "hmz-r3",
+      "text": "hamza is a root consonant; membership in a hamza subclass is orthogonal to membership in a weak class and the two labels are never substituted"
+    },
+    {
+      "id": "hmz-r4",
+      "text": "the stored forms — three initial-hamza imperatives and one irregular medial-hamza lexeme — are looked up before any derivation is attempted"
+    },
+    {
+      "id": "hmz-r5",
+      "text": "carrier variants licensed by this table identify one token, not different entries; an unlisted environment abstains -> reject_reconstruction"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-hamza-carrier-licensing",
+  "version": 1
+}

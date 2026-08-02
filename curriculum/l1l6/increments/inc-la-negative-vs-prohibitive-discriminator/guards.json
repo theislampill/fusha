@@ -1,0 +1,30 @@
+{
+  "guards": [
+    {
+      "guard": "og-3: no default function for this shape; zero-evidence input must abstain",
+      "id": "g-la-1"
+    },
+    {
+      "guard": "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+      "id": "g-la-2"
+    },
+    {
+      "guard": "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+      "id": "g-la-3"
+    },
+    {
+      "guard": "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+      "id": "g-la-4"
+    },
+    {
+      "guard": "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+      "id": "g-la-5"
+    },
+    {
+      "guard": "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape",
+      "id": "g-la-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

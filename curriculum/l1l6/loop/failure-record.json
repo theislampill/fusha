@@ -1,0 +1,27 @@
+{
+  "schema": "curriculum.l1l6_loop_failure_record.v1",
+  "status": "candidate",
+  "loop_step": "recorded failure (step 5 of the required proof chain)",
+  "run_artifact": "curriculum/l1l6/loop/run-1-ownership-v1.json",
+  "unit_under_test": "curriculum/l1l6/increments/inc-ownership/unit-v1.json",
+  "consumer": "tools/curriculum_unit_consumer.py",
+  "failures": [
+    {
+      "fixture_id": "own-adv-01",
+      "surface": "ملك",
+      "observed": "abstain pending_letter_ownership (v1's shape rule requires >=3 letters after م, so it cannot own a 3-letter root word whose م IS radical_1)",
+      "expected": "analyzed with all three letters root-owned per the supplied root evidence",
+      "defect_class": "shape_rule_cannot_represent_radical_mim"
+    },
+    {
+      "fixture_id": "own-abs-01",
+      "surface": "مقام",
+      "observed": "analyzed [pattern_augment, root, root, root] WITHOUT any root evidence",
+      "expected": "abstain no_root_evidence",
+      "defect_class": "overgeneralization_og2_og6 (surface shape treated as evidence; candidate ownership minted without an evidence basis)"
+    }
+  ],
+  "diagnosis": "rule own-r2-v1 assigns letter ownership from surface shape alone. This is exactly the overgeneralization the curriculum's own root-and-pattern lesson invites (guard og-2: identical surface never implies identical function; guard og-6: a candidate never establishes a fact) — the adversarial fixtures derived from the lesson's Common-Mistakes framing exposed it mechanically.",
+  "repair": "curriculum/l1l6/loop/repair-note.md -> unit-v2.json rule own-r2-v2 (root evidence REQUIRED; م is an augment only when evidence excludes it from the radicals; no evidence -> abstain)",
+  "verification": "curriculum/l1l6/loop/run-2-ownership-v2.json: 7/7 fixtures pass, including the second analogous token own-pos-03 (مجلس) processed through the REPAIRED consumer with zero per-token re-derivation"
+}

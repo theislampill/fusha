@@ -1,0 +1,30 @@
+{
+  "guards": [
+    {
+      "guard": "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
+      "id": "g-int-1"
+    },
+    {
+      "guard": "the intensifying taa never licenses a gender claim; gender comes from agreement, not from the letter",
+      "id": "g-int-2"
+    },
+    {
+      "guard": "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
+      "id": "g-int-3"
+    },
+    {
+      "guard": "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
+      "id": "g-int-4"
+    },
+    {
+      "guard": "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
+      "id": "g-int-5"
+    },
+    {
+      "guard": "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+      "id": "g-int-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

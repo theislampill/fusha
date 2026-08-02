@@ -1,0 +1,47 @@
+{
+  "abstention_reasons": [
+    "pending_letter_ownership",
+    "false_stem_risk",
+    "no_root_evidence"
+  ],
+  "capability": "letter_ownership",
+  "clitic_inventory": {
+    "ال": "definite_article",
+    "ب": "preposition",
+    "س": "future_marker",
+    "ف": "conjunction",
+    "ك": "preposition",
+    "ل": "preposition",
+    "و": "conjunction"
+  },
+  "increment": "inc-ownership",
+  "inflection_prefixes": {
+    "أ": "imperfect_1sg",
+    "ت": "imperfect_2_or_3f",
+    "ن": "imperfect_1pl",
+    "ي": "imperfect_3"
+  },
+  "known_defect": "v1 assigns an initial م as pattern_augment from SHAPE alone (>=3 residual letters); the adversarial fixture own-adv-01 exposes this overgeneralization; v2 repairs it. Kept for the recorded flywheel loop.",
+  "rules": [
+    {
+      "id": "own-r1",
+      "text": "peel leading ال then single-letter proclitics from clitic_inventory; a peel that leaves <2 letters is invalid (abstain false_stem_risk)"
+    },
+    {
+      "id": "own-r2-v1",
+      "text": "if the first residual letter is م and >=3 letters remain after it, assign م=pattern_augment and the next 3 letters as root (SHAPE-ONLY — the v1 defect)"
+    },
+    {
+      "id": "own-r3",
+      "text": "an inflection prefix from inflection_prefixes may be assigned only when token_kind=verb_imperfect is declared"
+    },
+    {
+      "id": "own-r4",
+      "text": "any letter left unowned, or owned twice, forces abstain pending_letter_ownership for the WHOLE token"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "u-s01",
+  "version": 1
+}

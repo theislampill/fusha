@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "og-3: no global/default function for ما; zero-evidence input must abstain",
+      "id": "g-ma-3"
+    },
+    {
+      "guard": "multiple survivors are PRESERVED as alternatives (attributed-unresolved pattern), never voted",
+      "id": "g-ma-alt"
+    },
+    {
+      "guard": "school-dependent government (hijaziyya) is never emitted as a fact by this unit",
+      "id": "g-ma-gov"
+    },
+    {
+      "guard": "method transfers, conclusions do not: an occurrence's resolved function never projects to another occurrence",
+      "id": "g-ma-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "a second term with an independent governor is never labelled a conjunct",
+      "id": "g-atf-case"
+    },
+    {
+      "guard": "the coordinating and clause-negating readings of one form are separated by position only, never by frequency",
+      "id": "g-atf-pos"
+    },
+    {
+      "guard": "disputed coordinator membership is preserved as attributed alternatives; the pack never resolves a school dispute",
+      "id": "g-atf-disp"
+    },
+    {
+      "guard": "later looser usage of the alternation particles is a teaching note, never a licensing rule",
+      "id": "g-atf-mod"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

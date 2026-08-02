@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "key": "function_inventory_panel",
+      "teaching": "lists the functions this shape carries with the discriminator that decides each, so the reader sees the evidence rather than a gloss"
+    },
+    {
+      "key": "mood_evidence_chip",
+      "teaching": "shows the following verb's mood exponent as the thing that decided between denying and forbidding — or shows that it is absent"
+    },
+    {
+      "key": "undecidable_badge",
+      "teaching": "when the text does not carry the separator, the card shows both readings and says so plainly; this is the honest annotation, not a gap"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "surviving readings are shown attributed, with no winner implied"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

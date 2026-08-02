@@ -1,0 +1,192 @@
+{
+  "schema": "curriculum.l1l6_sol_repair_ledger.v2",
+  "review_identity": {
+    "fix_request_comment": "https://github.com/theislampill/fusha/pull/136#issuecomment-5158892104",
+    "main": "92f267e4d1d342e8fd1b44d8257bbb470bbcb936",
+    "review_tree": "fd574a6f483995e5fce5a94368ea0b5fc7d37d14",
+    "review_verdict": "REVIEW_GAP (merge-blocking PR-head defects)"
+  },
+  "reviewed_head": "eb51278c626ebe9b65b5a3e1be3a3895783e1233",
+  "prior_round": "the round repairing Sol's architecture checkpoint at reviewed head 5bca6d26b5e9d3d5bc035dfe0fd6b40f27fa005a is superseded by this ledger; its rows live in git history of this file",
+  "closure_note": "no row in this ledger claims closure: closure is Sol's determination on independent re-review of the new frozen head; every row status is repaired_awaiting_sol_reverification",
+  "round_3": {
+    "trigger": "Sol readiness report naming two outstanding Fable repairs (hollow form-I weak-metadata gate; forward-slash Windows path detection), with Sol's own side clean: main fc4a2607414a52fdd24089c8ec8f115a8f565479, Sol integration 19c4876d3d4ae7ae52959fcc4728018af2d9ed57, three independent REVIEW_PASS, complete harness exit 0",
+    "reviewed_head": "ce4c93e61a2e852f895d9b7e726675c0a2a40999",
+    "main_at_repair": "fc4a2607414a52fdd24089c8ec8f115a8f565479",
+    "rows": [
+      {
+        "finding": "R3-1. hollow form-I weak-metadata gate: the round-2 gate covered only SUBSTITUTED weak realizations, so a weak radical STANDING LITERALLY in a form-I template passed as though the root were sound; and a weak declaration contradicting the supplied radicals was silently ignored",
+        "ownership": "fable_branch_repair",
+        "status": "repaired_awaiting_sol_reverification",
+        "red_canary": "reproduced pre-repair on the committed v3 pack: قاول -> candidate_pending active_participle/faail; مقوول -> candidate_pending passive_participle/mafuul; مبيوع -> candidate_pending passive_participle/mafuul (all three are uncontracted non-words; the real forms contract); مكتوب carrying weak_position R2 + weak_radical و over the SOUND root ك-ت-ب -> candidate_pending passive_participle, the false declaration ignored. All four are pinned RED under v3 (and under v2) by the consumer self-test",
+        "repair": "pack v4 replaces the substitution-only table with a unified weak_realizations.by_template[template][slot][radical] = {substituted[], literal_licensed, basis}: EVERY realization of a weak radical must be licensed for that template, slot and radical, whether altered or literal, and nothing is licensed by default. New fail-closed reasons weak_realization_unlicensed and weak_declaration_contradicts_root. The licence table is deliberately minimal — only realizations backed by committed fixtures are licensed (hamza seat in the agent participle; literal retention in derived-form مُـ participles); widening it is a ṣarf-authority decision made in DATA with no consumer edit. Derivation loop rebased v3 (4 defects) -> v4 (green, no regressions)",
+        "acceptance": "python tools/curriculum_unit_consumer.py --self-test && python tools/curriculum_flywheel_runner.py --manifest",
+        "files": ["tools/curriculum_unit_consumer.py", "curriculum/l1l6/increments/inc-derivatives/unit-v4.json", "curriculum/l1l6/increments/inc-derivatives/fixtures.jsonl", "curriculum/l1l6/increments/inc-derivatives/guards.json", "curriculum/l1l6/loop/loops-manifest.json"],
+        "remaining_dependency": "adp-sarf-nahw-authority — the licence table's contents are candidate scope declarations, not morphological authority"
+      },
+      {
+        "finding": "R3-2. forward-slash Windows path detection: drive-letter paths written with forward slashes, and UNC host paths written with forward slashes, evaded the leak scans in BOTH validators, which matched only the backslash spellings of the same paths. (This ledger deliberately does not spell the leak forms out: the repaired scan flags them on sight, including inside this file.)",
+        "ownership": "fable_branch_repair",
+        "status": "repaired_awaiting_sol_reverification",
+        "red_canary": "reproduced pre-repair against the committed regexes: a drive letter followed by a colon and a FORWARD slash (both an ai-workspace path and a private-corpus path), and a forward-slash UNC host path, were ALL undetected by validate_curriculum_l1l6.SERVER_PATH_RE and validate_lesson_qualification.SERVER_RE, while the same path in backslash form was caught. The exact leak strings are not reproduced in this ledger — the repaired scan flags them, which is itself the demonstration",
+        "repair": "both validators gain a forward-slash scan whose lookbehinds exclude URL schemes (a drive letter is a single letter before the colon, so https:/ cannot match; forward-slash UNC requires a host segment and a further slash, so http:// and arithmetic like a // b cannot match). Two red-first mutations plus an explicit NO-FALSE-POSITIVE probe (URLs, relative paths and fractions must stay quiet) are committed in the self-test",
+        "acceptance": "python tools/validate_curriculum_l1l6.py --self-test (windows_drive_forward_slash_leak, unc_forward_slash_leak trip; forward_slash_no_false_positive stays quiet) && python tools/validate_lesson_qualification.py --complete",
+        "files": ["tools/validate_curriculum_l1l6.py", "tools/validate_lesson_qualification.py"],
+        "remaining_dependency": "none beyond Sol re-review",
+        "cross_gate_interaction_found_at_merge": "the FIRST synthetic merge of this repair failed main's RM-09 tree-wide recurrence lint (1 offender: tools/validate_curriculum_l1l6.py). Cause: main's RM-09 already folds path separators before matching its operator-path needles (NF-T3-1), and the new canary string spelled a real operator path, so the canary itself became the recurrence. Repair: the canary now uses a neutral drive and directory, which exercises the same regex without reproducing a protected path. This was found only by running the complete harness on the merge tree — the PR-side gates alone would not have caught it, and the branch is now pre-cleared against main's RM-09 needle logic before every merge test"
+      },
+      {
+        "finding": "R3-3. MERGE-SEQUENCING OBLIGATION (not a branch defect): main's GAP-N12 (PR #139, 'bind two-vote claims exactly') re-bound the p007 pilot's iʿrāb-bearing facts to new :v2 fact ids and appended events, so four curriculum planes derived from that store are stale AGAINST THE MERGE TREE while remaining correct against this branch's own base",
+        "ownership": "shared_integration_gate",
+        "status": "reported_awaiting_merge_sequencing",
+        "red_canary": "on the synthetic merge tree the PR validator reports exactly four rows red: corpus-pilot envelope-2-34-5.json and envelope-61-5-4.json differ from recompute, pvn-precise-links.jsonl differs from recompute, and the occurrence bridge is stale. On the branch itself every one of those planes is byte-identical to recompute — the redness is upstream authority moving, which is precisely what these recompute gates exist to catch instead of silently serving derived artifacts built on superseded fact ids",
+        "detail": "the pilot's case/func/gov facts for both occurrences moved from their v1 ids to :v2 ids and the seg fact gained a fourth event; recomputing on the merge tree resolves every dependency to effective_status certified, so nothing is revoked and no envelope withholds — the artifacts simply must be regenerated against the newer store",
+        "repair": "NOT performed on this branch: regenerating here would require incorporating main's newer p007 store, i.e. a rebase or merge, which the owner has not authorized ('do not rebase onto moving main unless Sol directs'). The branch therefore stays pinned to its merge-base authority and the obligation is handed to merge sequencing, with the exact procedure verified end to end",
+        "merge_time_procedure": [
+          "python tools/build_curriculum_pvn_links.py",
+          "python tools/build_curriculum_corpus_pilot.py",
+          "python tools/build_curriculum_occurrence_bridge.py",
+          "python tools/build_promotion_bundles.py",
+          "python tools/build_unit_dispositions.py"
+        ],
+        "merge_time_verification": "executed on the throwaway synthetic merge worktree (never on this branch): the five commands touch exactly four tracked files (the two envelopes, the precise links and the occurrence bridge), after which the PR validator returns PASS (23 checks), both self-tests pass (38/38 mutations; 10 consumer probes) and the complete integrated harness returns ALL REGRESSION CHECKS PASS (1,363 ok) on the regenerated merge tree",
+        "acceptance": "at merge: run the five commands above, then python tools/validate_curriculum_l1l6.py && python -B tools/check_regressions.py",
+        "files": ["curriculum/l1l6/corpus-pilot/envelope-2-34-5.json", "curriculum/l1l6/corpus-pilot/envelope-61-5-4.json", "curriculum/l1l6/links/pvn-precise-links.jsonl", "curriculum/l1l6/reports/occurrence-bridge.jsonl"],
+        "remaining_dependency": "Sol merge sequencing (and, if Sol prefers the branch carry the regeneration instead, an explicit direction to rebase — this branch will not rebase on its own initiative)"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "finding": "1. sarf weak-substitution false passes: the v2 GLOBAL substitution table matched non-words built by inserting hamza into sound-slot templates (passive-participle and form-II-masdar shapes); claimed penult marks were trusted without the written surface; weak realization needed no declaration",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "recorded pre-repair on the committed v2 pack + consumer: the two hamza-inserted non-words returned candidate_pending (passive_participle mafuul / masdar_II tafiil) and an unpointed surface with a claimed kasra mark returned candidate_pending active_participle; the full v2 defect set {der-abs-02, der-adv-03..07} is pinned RED forever by the consumer self-test",
+      "repair": "pack v3: template-scoped substitution licences (weak_substitutions.by_template — a licence for one template never licenses another), penult_mark_verification (unpointed -> penult_mark_not_in_surface; contradicting written mark -> penult_mark_mismatch), require_weak_declaration (exercised substitution or weak-root voice without the exact bound weak_position+weak_radical -> weak_declaration_unbound); consumer implements all three fail-closed; derivation loop rebased to baseline v2 (6 defects) -> repaired v3 (green, no regressions)",
+      "acceptance": "python tools/curriculum_unit_consumer.py --self-test && python tools/curriculum_flywheel_runner.py --manifest",
+      "files": ["tools/curriculum_unit_consumer.py", "curriculum/l1l6/increments/inc-derivatives/unit-v3.json", "curriculum/l1l6/increments/inc-derivatives/fixtures.jsonl", "curriculum/l1l6/loop/loops-manifest.json"],
+      "remaining_dependency": "adp-sarf-nahw-authority for authoritative morphology (harness stays non-authoritative)"
+    },
+    {
+      "finding": "2. declared base letters and hover diacritics were not bound to the exact written surface: mutually consistent but wrong letters[]/surface_bare_letters passed, and a false final hover mark passed",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "pre-repair the validator carried NO written-surface gate: the mutations wrong_letters_mutually_consistent and false_final_hover_mark now committed in the self-test were green under the old checks by construction",
+      "repair": "check_pilot_parity binds letters[] AND surface_bare_letters to the bare letters of the exact written surface and verifies the hover-claimed final case vowel against the mark actually written on the final letter; check_corpus_pilot binds segment-surface concatenation to the envelope surface and the envelope surface to the canonical loc surface",
+      "acceptance": "python tools/validate_curriculum_l1l6.py --self-test (both mutations trip)",
+      "files": ["tools/validate_curriculum_l1l6.py"],
+      "remaining_dependency": "none beyond Sol re-review"
+    },
+    {
+      "finding": "3. V/N grounding witnesses were verified against the card appearance only: 11/35 witnesses' card surfaces diverged from qamus/indexes/quran-loc-surface (including the 12:43:5 card surface vs the canonical surface) while still presented as occurrence witnesses",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "reproduced pre-repair on the committed artifacts: 11/35 exact-surface mismatches including quran:12:43:5 (card vowel ending vs canonical), quran:2:35:15 (wasla), quran:7:43:15 and quran:7:43:22 (dagger alif), quran:2:103:11 / quran:10:54:14 / quran:7:146:11 (quranic marks), quran:26:154:9 / quran:2:31:14 (assimilated nun writing)",
+      "repair": "every witness is verified against the canonical loc->surface index (NFC equality); verified witnesses carry canonical_surface + canonical_surface_verified:true + witness_scope canonical_occurrence; diverging witnesses are DOWNGRADED to card_display_only (relation entry_selected_word_card_display_only) and never ground a canonical occurrence — canonical equality via orthography normalization is NOT established by this programme (a linguistic policy decision); meta splits the counts; dispositions count only canonical-verified witnesses; the validator re-verifies every flag/scope/surface against the index",
+      "acceptance": "python tools/validate_curriculum_l1l6.py --self-test (card_display_witness_upgrade_canary trips)",
+      "files": ["tools/build_vn_grounding.py", "tools/build_unit_dispositions.py", "tools/validate_curriculum_l1l6.py", "curriculum/l1l6/canonical/vn-grounding.jsonl"],
+      "remaining_dependency": "orthography-equivalence policy for the card_display_only witnesses is a Sol/scholar decision (linguistic_review_blocked axis recorded in the rows themselves)"
+    },
+    {
+      "finding": "4. the two committed ma payload canaries degraded in the links/bridge to surface:null, zero appearances and zero required facts",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "recorded pre-repair on the committed artifacts: br-pl-ma-93-3-1 and br-pl-ma-2-284-10 carried appearances count 0, required_sarf_facts 0, required_nahw_facts 0; the links carried surface null",
+      "repair": "the payload files are READ, never paraphrased: links carry the payload's exact surface + payload_binding (artifact_id, projection_hash, schema); bridge rows carry the payload's reverse-link appearances with single-hash parity, its certification fact planes and its evidence refs verbatim; the validator re-verifies every payload_binding against the payload file and pins the two canary rows",
+      "acceptance": "python tools/validate_curriculum_l1l6.py --self-test (ma_payload_degradation_canary trips)",
+      "files": ["tools/build_curriculum_pvn_links.py", "tools/build_curriculum_occurrence_bridge.py", "tools/validate_curriculum_l1l6.py"],
+      "remaining_dependency": "none beyond Sol re-review"
+    },
+    {
+      "finding": "5. certification replay did not fail closed: envelopes emitted learner-facing planes regardless of dependency state, and the invalidation rule claimed cascade behavior from last-event-wins replay",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "pre-repair the builder had NO withholding path (any dependency state produced a full envelope) and the committed invalidation_rule text asserted that revocation invalidates downstream artifacts without any enforcing mechanism",
+      "repair": "fail-closed withholding at build time: any depended-on fact whose replayed effective state is outside {certified, candidate} switches the envelope to withheld_invalid_dependency, dropping learner projections, colour/hover bindings, letter-ownership presentation, website envelope, appearance enumeration, fixture derivations and readiness metrics (the named withheld_artifact_classes); the validator injects a synthetic revocation on EVERY run and requires all envelopes to withhold (live canary); cascade behavior is explicitly NOT claimed — it is the adp-typed-fact-certification Sol adapter contract",
+      "acceptance": "python tools/validate_curriculum_l1l6.py (the withholding canary is a live gate on every validation run)",
+      "files": ["tools/build_curriculum_corpus_pilot.py", "tools/validate_curriculum_l1l6.py", "curriculum/l1l6/corpus-pilot/"],
+      "remaining_dependency": "adp-typed-fact-certification (the engine's own effective-state API replaces the event-trail replay)"
+    },
+    {
+      "finding": "6. contradictory projection metadata: all 166 rows candidate_projected while meta simultaneously reported all 166 abstained",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "recorded pre-repair from the committed meta: candidate_projected=166 AND abstained=166 over 166 units",
+      "repair": "the abstention comparison now uses the de-authorized consumer's actual decision label (candidate_projected), not the retired projected label; meta regenerated with consistent counts",
+      "acceptance": "python tools/build_pedagogy_projections.py --check (meta: candidate_projected + abstained == units)",
+      "files": ["tools/build_pedagogy_projections.py", "curriculum/l1l6/projections/unit-projections.meta.json"],
+      "remaining_dependency": "adp-tutor-kc-drills for any tutor consumption"
+    },
+    {
+      "finding": "7. stale operational-state documentation in the dispositions builder named the superseded consumption labels",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "the committed docstring listed machine_pack_consumed / occurrence_grounding_ready / promotion_bundle_ready / fixture_source_ready / drill_or_remediation_ready / tutor_projection_ready / instructional_only_with_consumer while the code emits the renamed candidate states",
+      "repair": "docstring rewritten to the actual closed candidate-state vocabulary with the explicit disclaimer that nothing is consumed by any runtime",
+      "acceptance": "python tools/build_unit_dispositions.py --check + inspection",
+      "files": ["tools/build_unit_dispositions.py"],
+      "remaining_dependency": "none beyond Sol re-review"
+    },
+    {
+      "finding": "8. the 834 drill-candidate records had no semantic validation in the ordinary validator (regeneration identity only)",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "pre-repair a drill row claiming runtime integration, an unroutable misconception link, or a weakened answer-visibility posture passed ordinary validation (only byte-recompute gated the file); the three committed mutations prove each now trips",
+      "repair": "check_drill_candidates validates every record semantically (unique dr- ids, status candidate_not_runtime_integrated, misconception/unit/capability links resolve, required specification fields, answer-visibility posture, Sol adapter requirement) and the honest counts: runtime_integrated 0, canonical_units_with_candidates recomputed from the records, answer_visible_candidate_packets declared",
+      "acceptance": "python tools/validate_curriculum_l1l6.py --self-test (drill_runtime_claim, drill_status_overclaim, drill_unroutable trip)",
+      "files": ["tools/validate_curriculum_l1l6.py", "tools/build_candidate_drills.py", "curriculum/l1l6/drills-candidates/"],
+      "remaining_dependency": "adp-tutor-kc-drills"
+    },
+    {
+      "finding": "9. workflow pull_request.paths omitted seven executed tools",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "the committed trigger list lacked build_curriculum_canonical.py, build_misconception_assets.py, build_pedagogy_projections.py, build_unit_dispositions.py, build_vn_grounding.py, validate_lesson_qualification.py and validate_task_packets.py — a PR touching only those files would not run the gate",
+      "repair": "all seven added; the trigger set now equals the executed-tool set of the workflow steps",
+      "acceptance": "inspection: every run tool in curriculum-l1l6-gate.yml appears in pull_request.paths",
+      "files": [".github/workflows/curriculum-l1l6-gate.yml"],
+      "remaining_dependency": "none beyond Sol re-review"
+    },
+    {
+      "finding": "10. stale conformance/repair ledgers: bound to the superseded review identities, with ad-hoc state strings and closure wording",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "the prior ledger carried reviewed_head 5bca6d2 identities and rows worded as complete; the prior conformance matrix used invented states (e.g. instructional_only_correctly, candidate_harness_correctly_labeled) outside any closed vocabulary",
+      "repair": "this ledger is bound to the CURRENT review identities (reviewed head eb51278, review tree fd574a6, fix-request comment 5158892104); every row status is repaired_awaiting_sol_reverification (closure is Sol's call); the conformance matrix is normalized to the owner's five-term ownership-split vocabulary ONLY, with remaining_dependency per row; the adapter manifest declares owner sol; check_sol_ledgers validates all three artifacts with three red-first mutations",
+      "acceptance": "python tools/validate_curriculum_l1l6.py --self-test (conformance_invented_state, ledger_false_closure, adapter_owner_drift trip)",
+      "files": ["curriculum/l1l6/reports/sol-review-repair-ledger.json", "curriculum/l1l6/reports/architecture-conformance-matrix.json", "curriculum/l1l6/reports/sol-adapter-manifest.json", "tools/validate_curriculum_l1l6.py"],
+      "remaining_dependency": "none beyond Sol re-review"
+    },
+    {
+      "finding": "11. incorrect README/generated claims: 757 queue rows (actual 572); later-unseen-token wording for committed transfer fixtures; QA loop artifacts presented as the linguistic flywheel",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "committed README stated 10 generated queues (757 rows) while the queue files sum to 572; the derivation loop proof said later unseen token improves; loop records carried no dogfood-eligibility marking",
+      "repair": "queue total corrected to 572; committed later cases renamed transfer fixtures throughout; every loop record and the loops manifest now carry evidence_class development_evidence_only and canonical_dogfood_eligible false; the fixture runner is described as the instructional/fixture QA harness, never the canonical linguistic flywheel (which is reachable only through the Sol adapter contracts)",
+      "acceptance": "python tools/curriculum_flywheel_runner.py --manifest + README inspection",
+      "files": ["curriculum/l1l6/README.md", "curriculum/l1l6/loop/loops-manifest.json", "tools/curriculum_flywheel_runner.py", "curriculum/l1l6/loop/ (all loop-record.json)"],
+      "remaining_dependency": "adp-canonical-dogfood for any canonical dogfood emission"
+    },
+    {
+      "finding": "12. public-boundary canaries did not cover Windows drive paths, IP addresses, or source-prose leakage as proven mutations",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "pre-repair the self-test had no drive-path, UNC, macOS or IP mutation (the path scans existed but were unproven; no IP scan existed at all)",
+      "repair": "IP-address scan added to leakage_scan; four new red-first mutations (windows_drive_leak, unc_path_leak, macos_users_leak, ip_address_leak) plus the retained Arabic source-prose mutation; the 213-heading custody review queue remains owner_review_pending untouched — no completed-custody claim is made anywhere",
+      "acceptance": "python tools/validate_curriculum_l1l6.py --self-test (all four boundary mutations trip)",
+      "files": ["tools/validate_curriculum_l1l6.py"],
+      "remaining_dependency": "custody heading queue adjudication is owner-owned (owner_or_scholar_blocked axis; 213 rows owner_review_pending)"
+    },
+    {
+      "finding": "13. colour/hover fact identity was overclaimed: the pilot assigns ids to segments and copies them to hovers by matching surface text, which is not authoritative same-fact identity",
+      "ownership": "fable_branch_repair",
+      "status": "repaired_awaiting_sol_reverification",
+      "red_canary": "the committed envelopes claimed parity_basis shared canonical fact ids per owned span while the implementation aligned hover components to segments BY component-surface string match",
+      "repair": "the claim is narrowed everywhere to what is true: alignment_basis declares a CANDIDATE span alignment (component-surface match within one projection record, copying the segment's fact ids) and states that authoritative same-fact identity — shared fact ids minted by the certifier/projection plane — is Sol adapter work (adp-occurrence-appearance-projection); the validator now REQUIRES the narrowed claim and fails an envelope that overclaims",
+      "acceptance": "python tools/validate_curriculum_l1l6.py (corpus_pilot alignment-basis gate)",
+      "files": ["tools/build_curriculum_corpus_pilot.py", "tools/validate_curriculum_l1l6.py", "curriculum/l1l6/corpus-pilot/"],
+      "remaining_dependency": "adp-occurrence-appearance-projection (authoritative same-fact identity)"
+    }
+  ],
+  "sol_owned_not_touched": "the six Sol adapters and GAP-N12 were NOT implemented on this branch per the fix-request scope: canonical harness integration, authoritative certifier/effective-state consumption, tutor/KC routing, occurrence-to-appearance projection, website payload generation, canonical dogfood reproduction"
+}

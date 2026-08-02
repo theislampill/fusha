@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "content-letter harakah decides لم/لِمَ upstream; this unit never receives an unresolved homograph",
+      "id": "g-neg-1"
+    },
+    {
+      "guard": "og-3 analog: bare لا has no default reading",
+      "id": "g-neg-2"
+    },
+    {
+      "guard": "tense is set by the governor, never by the verb's surface shape",
+      "id": "g-neg-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-neg-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

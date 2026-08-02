@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "both triggers are declared inputs; sounding foreign or being a name is never itself evidence",
+      "id": "g-dpc-1"
+    },
+    {
+      "guard": "definiteness and construct headship are tested before any override, since they explain most ordinary sightings of the restored exponent",
+      "id": "g-dpc-2"
+    },
+    {
+      "guard": "the verse override is register-gated and requires identified metrical or rhyme pressure; it is emitted attributed and never certifies",
+      "id": "g-dpc-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-dpc-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

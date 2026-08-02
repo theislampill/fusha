@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "function_inventory_panel",
+      "teaching": "lists ma's documented functions with the discriminator that decides each — the learner sees WHY this occurrence reads as it does"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "genuinely unresolved occurrences show every surviving reading, attributed, no winner implied"
+    },
+    {
+      "key": "school_note",
+      "teaching": "hijaziyya government marked school-dependent when relevant"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

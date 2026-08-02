@@ -1,0 +1,1439 @@
+{
+  "families": [
+    {
+      "axis": "sarf",
+      "backprop_readiness": "documentary only",
+      "domains": [
+        "script_phonology"
+      ],
+      "family": "script and orthographic preparation",
+      "family_id": "fs-01",
+      "fixture_coverage": "none",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "letter",
+        "script",
+        "hamza",
+        "vowel",
+        "sukun",
+        "shadda"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "author phonology unit if tutoring needs it",
+      "repo_documentary_support": [
+        "curriculum/drills/alphabet-and-sounds.md"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "n/a (pre-linguistic)"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "roots_patterns"
+      ],
+      "family": "roots and radicals",
+      "family_id": "fs-02",
+      "fixture_coverage": "false-clitic bank 130 rows",
+      "instructional_support": "u-s01 + inc-ownership",
+      "keywords": [
+        "root",
+        "radical",
+        "جذر"
+      ],
+      "occurrence_coverage": "12 p007 occurrences (carve-level)",
+      "remaining_work": "host-root certification lane",
+      "repo_documentary_support": [
+        "sarf/procedures/root-decision.md",
+        "sarf/rules/root-decision-rules.json"
+      ],
+      "repo_executable_consumer": "tools/fusha_morphology_lattice.py",
+      "rich_hover_readiness": "increment hover fields declared"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "roots_patterns",
+        "derivation"
+      ],
+      "family": "patterns and measures",
+      "family_id": "fs-03",
+      "fixture_coverage": "paradigm slots (consumed store)",
+      "instructional_support": "u-s02",
+      "keywords": [
+        "pattern",
+        "wazn",
+        "template",
+        "measure",
+        "وزن"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "per-token wazn classifier (TP-SARF-A1-DERIVATIVE-CONSUMER)",
+      "repo_documentary_support": [
+        "sarf/references/verb-measures-table.md"
+      ],
+      "repo_executable_consumer": "tools/fusha_paradigm_generate.py",
+      "rich_hover_readiness": "form label + augment colouring designed"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "derivation"
+      ],
+      "family": "forms I-X",
+      "family_id": "fs-04",
+      "fixture_coverage": "18 verb-measure examples",
+      "instructional_support": "u-s02",
+      "keywords": [
+        "form i",
+        "form v",
+        "shadda",
+        "augment"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "form-detection consumer",
+      "repo_documentary_support": [
+        "sarf/rules/verb-measures.json"
+      ],
+      "repo_executable_consumer": "tools/fusha_paradigm_generate.py",
+      "rich_hover_readiness": "form chip designed"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "documentary only",
+      "domains": [
+        "derivation",
+        "paradigms"
+      ],
+      "family": "quadriliterals",
+      "family_id": "fs-05",
+      "fixture_coverage": "none",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "quadriliteral",
+        "رباعي"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "quadriliteral unit + fixtures",
+      "repo_documentary_support": [
+        "sarf/rules/verb-measures.json"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "blocked on key-resolver",
+      "domains": [
+        "paradigms"
+      ],
+      "family": "active and passive voice",
+      "family_id": "fs-06",
+      "fixture_coverage": "state-machine eval 26 (candidate_no_consumer)",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "passive",
+        "voice",
+        "المجهول"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "TP-SARF-A1-KEY-RESOLVER-CONSUMER",
+      "repo_documentary_support": [
+        "sarf/rules/verb-measures.json"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "derivation"
+      ],
+      "family": "participles",
+      "family_id": "fs-07",
+      "fixture_coverage": "inc-derivatives 8 fixtures incl. weak-root transfer",
+      "instructional_support": "u-s03 + inc-derivatives",
+      "keywords": [
+        "participle",
+        "فاعل",
+        "مفعول"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "occurrence grounding",
+      "repo_documentary_support": [
+        "sarf/references/masdar-participle-notes.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "increment hover fields declared"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "derivation"
+      ],
+      "family": "masdar families",
+      "family_id": "fs-08",
+      "fixture_coverage": "masdar templates in inc-derivatives pack",
+      "instructional_support": "u-s04",
+      "keywords": [
+        "masdar",
+        "مصدر",
+        "verbal noun"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "form-I attestation checks",
+      "repo_documentary_support": [
+        "sarf/references/masdar-participle-notes.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "increment hover fields declared"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "derivation"
+      ],
+      "family": "place, time and instrument nouns",
+      "family_id": "fs-09",
+      "fixture_coverage": "pilot + inc-ownership fixtures",
+      "instructional_support": "u-s05 + pilot",
+      "keywords": [
+        "place",
+        "instrument",
+        "مكان",
+        "آلة"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "occurrence grounding",
+      "repo_documentary_support": [
+        "sarf/procedures/masdar-participle.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "increment hover fields declared"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "unit missing",
+      "domains": [
+        "derivation"
+      ],
+      "family": "diminutives and elatives",
+      "family_id": "fs-10",
+      "fixture_coverage": "none",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "diminutive",
+        "elative",
+        "تصغير",
+        "تفضيل"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "author unit + probe elative homographs (أعلم class)",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "paradigms"
+      ],
+      "family": "weak/hollow/defective/assimilated roots",
+      "family_id": "fs-11",
+      "fixture_coverage": "der-trn hollow fixtures (loop derivation)",
+      "instructional_support": "u-s06",
+      "keywords": [
+        "hollow",
+        "defective",
+        "assimilated",
+        "weak",
+        "أجوف",
+        "ناقص"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "wire weak gates to a consumer (Store A wiring)",
+      "repo_documentary_support": [
+        "sarf/procedures/weak-root.md",
+        "sarf/rules/weak-root-gates.json"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "hidden-radical note designed"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "documentary only",
+      "domains": [
+        "paradigms"
+      ],
+      "family": "geminate roots",
+      "family_id": "fs-12",
+      "fixture_coverage": "none",
+      "instructional_support": "u-s06 (covered in unit)",
+      "keywords": [
+        "geminate",
+        "doubled",
+        "مضعف"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "geminate fixtures for the ownership consumer",
+      "repo_documentary_support": [
+        "sarf/procedures/doubled-root.md"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "fixture-only",
+      "domains": [
+        "paradigms",
+        "script_phonology"
+      ],
+      "family": "hamzated roots",
+      "family_id": "fs-13",
+      "fixture_coverage": "hamza-gates fixture-only",
+      "instructional_support": "u-s06",
+      "keywords": [
+        "hamzated",
+        "مهموز",
+        "hamza"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "seat-change fixtures",
+      "repo_documentary_support": [
+        "sarf/procedures/hamza-root.md",
+        "sarf/rules/hamza-gates.json"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "unit only",
+      "domains": [
+        "morphology_general"
+      ],
+      "family": "i'lal",
+      "family_id": "fs-14",
+      "fixture_coverage": "none",
+      "instructional_support": "u-s07",
+      "keywords": [
+        "i'lal",
+        "إعلال",
+        "qalb"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "derivation-chain checker (C-level)",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "transformation-note designed"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "unit only",
+      "domains": [
+        "morphology_general"
+      ],
+      "family": "ibdal",
+      "family_id": "fs-15",
+      "fixture_coverage": "none",
+      "instructional_support": "u-s07",
+      "keywords": [
+        "ibdal",
+        "إبدال"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "form-VIII assimilation fixtures",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "unit missing",
+      "domains": [
+        "morphology_general",
+        "script_phonology"
+      ],
+      "family": "idgham",
+      "family_id": "fs-16",
+      "fixture_coverage": "none",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "idgham",
+        "إدغام"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "author idgham unit (shadda collapse ties to geminates)",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "clitics_affixes"
+      ],
+      "family": "clitics",
+      "family_id": "fs-17",
+      "fixture_coverage": "130-row bank implemented_and_consumed",
+      "instructional_support": "u-s09 + inc-ownership",
+      "keywords": [
+        "clitic",
+        "proclitic",
+        "الجر"
+      ],
+      "occurrence_coverage": "12 p007 occurrences",
+      "remaining_work": "بِـ (p002) pre-flight",
+      "repo_documentary_support": [
+        "sarf/procedures/root-decision.md"
+      ],
+      "repo_executable_consumer": "tools/fusha_morphology_lattice.py",
+      "rich_hover_readiness": "p007 two-surface projections exist"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "fixture-only",
+      "domains": [
+        "clitics_affixes"
+      ],
+      "family": "attached pronouns",
+      "family_id": "fs-18",
+      "fixture_coverage": "suffix-pronoun eval 71 (test-run only)",
+      "instructional_support": "u-s09",
+      "keywords": [
+        "pronoun",
+        "الضمائر",
+        "enclitic"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "wire suffix rules to a consumer",
+      "repo_documentary_support": [
+        "sarf/rules/suffix-pronoun-rules.json"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "generator exists",
+      "domains": [
+        "inflection",
+        "paradigms"
+      ],
+      "family": "person/number/gender inflection",
+      "family_id": "fs-19",
+      "fixture_coverage": "paradigm slots",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "person",
+        "inflection",
+        "conjugation",
+        "تصريف"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "inflection unit authoring",
+      "repo_documentary_support": [
+        "sarf/rules/verb-measures.json"
+      ],
+      "repo_executable_consumer": "tools/fusha_paradigm_generate.py",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "fixture-only",
+      "domains": [
+        "paradigms"
+      ],
+      "family": "duals",
+      "family_id": "fs-20",
+      "fixture_coverage": "plural-gender fixture-only",
+      "instructional_support": "u-s08",
+      "keywords": [
+        "dual",
+        "مثنى"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "dual tail fixtures",
+      "repo_documentary_support": [
+        "sarf/rules/plural-gender-rules.json"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "fixture-only",
+      "domains": [
+        "paradigms"
+      ],
+      "family": "sound plurals",
+      "family_id": "fs-21",
+      "fixture_coverage": "fixture-only",
+      "instructional_support": "u-s08",
+      "keywords": [
+        "sound masculine",
+        "sound feminine",
+        "السالم"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "tail-vs-radical fixtures for ownership consumer",
+      "repo_documentary_support": [
+        "sarf/rules/plural-gender-rules.json"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "gap",
+      "domains": [
+        "paradigms"
+      ],
+      "family": "broken plurals",
+      "family_id": "fs-22",
+      "fixture_coverage": "GAP-S9: no broken-plural producer",
+      "instructional_support": "u-s08",
+      "keywords": [
+        "broken plural",
+        "التكسير"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "lemma-linkage consumer (never surface)",
+      "repo_documentary_support": [
+        "sarf/rules/root-pattern-risk-rules.json"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "roots_patterns",
+        "derivation"
+      ],
+      "family": "letter ownership",
+      "family_id": "fs-23",
+      "fixture_coverage": "7 fixtures + loop",
+      "instructional_support": "u-s01/u-s05/u-s09 + inc-ownership",
+      "keywords": [
+        "ownership",
+        "augment"
+      ],
+      "occurrence_coverage": "12 p007 occurrences (carve; host pending)",
+      "remaining_work": "host-root certification",
+      "repo_documentary_support": [
+        "curriculum/l1l6/increments/inc-ownership/reference.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "increment hover fields declared"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "engine exists",
+      "domains": [
+        "morphology_general",
+        "script_phonology"
+      ],
+      "family": "surface reconstruction",
+      "family_id": "fs-24",
+      "fixture_coverage": "combining-mark byte-exact bank (2)",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "surface",
+        "orthograph"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "unit tying i'lal chains to surface checks",
+      "repo_documentary_support": [
+        "tools/normalize_ar.py"
+      ],
+      "repo_executable_consumer": "tools/fusha_text_check.py",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "sarf",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "ambiguity"
+      ],
+      "family": "sarf ambiguity and abstention",
+      "family_id": "fs-25",
+      "fixture_coverage": "abstention fixtures in every increment",
+      "instructional_support": "all units carry abstention_conditions",
+      "keywords": [
+        "ambiguity",
+        "abstention",
+        "pending"
+      ],
+      "occurrence_coverage": "corpus-pilot abstention machine-produced",
+      "remaining_work": "quarantine store wiring (Store A)",
+      "repo_documentary_support": [
+        "sarf/rules/homograph-quarantines.json"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "abstention_note designed"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "unit missing",
+      "domains": [
+        "syntactic_relations"
+      ],
+      "family": "nominal and verbal sentences",
+      "family_id": "fn-01",
+      "fixture_coverage": "none",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "nominal sentence",
+        "verbal sentence",
+        "الجملة"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "sentence-type unit",
+      "repo_documentary_support": [
+        "nahw/SKILL.md"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "lattice-native",
+      "domains": [
+        "syntactic_relations"
+      ],
+      "family": "mubtada' and khabar",
+      "family_id": "fn-02",
+      "fixture_coverage": "7 lattice rows",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "مبتدأ",
+        "خبر",
+        "predicate",
+        "topic"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "mubtada'/khabar fixtures via q-governance",
+      "repo_documentary_support": [
+        "nahw/SKILL.md"
+      ],
+      "repo_executable_consumer": "tools/fusha_governor.py",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "lattice-native",
+      "domains": [
+        "syntactic_relations"
+      ],
+      "family": "subject, object and transitivity",
+      "family_id": "fn-03",
+      "fixture_coverage": "lattice justification rules",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "فاعل",
+        "مفعول به",
+        "transitiv",
+        "object"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "graded sentence fixtures",
+      "repo_documentary_support": [
+        "qamus/schemas/dependency-candidate-lattice.schema.json"
+      ],
+      "repo_executable_consumer": "tools/fusha_governor.py",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "two-vote plane",
+      "domains": [
+        "case_mood"
+      ],
+      "family": "case signs",
+      "family_id": "fn-04",
+      "fixture_coverage": "two-vote artifacts v1.1",
+      "instructional_support": "u-n01",
+      "keywords": [
+        "case",
+        "الرفع",
+        "النصب",
+        "الجر",
+        "nominative",
+        "accusative",
+        "genitive"
+      ],
+      "occurrence_coverage": "p007 case_mood_governor facts (12 occ)",
+      "remaining_work": "widen beyond p007",
+      "repo_documentary_support": [
+        "nahw/procedures/irab-case-mood.md"
+      ],
+      "repo_executable_consumer": "tools/validate_two_vote_artifacts.py",
+      "rich_hover_readiness": "case chip with governor+reason"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "case_mood"
+      ],
+      "family": "mood signs",
+      "family_id": "fn-05",
+      "fixture_coverage": "inc-negation 5 fixtures",
+      "instructional_support": "u-n01 + inc-negation",
+      "keywords": [
+        "mood",
+        "jussive",
+        "subjunctive",
+        "المجزوم",
+        "المنصوب"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "mood-marking evidence rows",
+      "repo_documentary_support": [
+        "nahw/rules/negation-rules.json"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "negation-effect chip"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "unit missing",
+      "domains": [
+        "case_mood"
+      ],
+      "family": "secondary case signs",
+      "family_id": "fn-06",
+      "fixture_coverage": "none",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "five nouns",
+        "الأسماء الخمسة",
+        "letter case"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "secondary-signs unit (duals/plurals/five nouns letter marking)",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "governance"
+      ],
+      "family": "kana-family",
+      "family_id": "fn-07",
+      "fixture_coverage": "inc-nawasikh fixtures",
+      "instructional_support": "u-n02 + inc-nawasikh",
+      "keywords": [
+        "كان",
+        "kana"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "occurrence grounding via p-entries",
+      "repo_documentary_support": [
+        "curriculum/l1l6/increments/inc-nawasikh/reference.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "increment hover fields declared"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "governance"
+      ],
+      "family": "inna-family",
+      "family_id": "fn-08",
+      "fixture_coverage": "inc-nawasikh fixtures incl. swap adversarial",
+      "instructional_support": "u-n02 + inc-nawasikh",
+      "keywords": [
+        "إن",
+        "inna",
+        "أخوات"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "occurrence grounding (p011/p012)",
+      "repo_documentary_support": [
+        "curriculum/l1l6/increments/inc-nawasikh/reference.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "increment hover fields declared"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "pack covers zanna; kada missing",
+      "domains": [
+        "governance"
+      ],
+      "family": "other nawasikh (zanna, kada...)",
+      "family_id": "fn-09",
+      "fixture_coverage": "zanna family in pack",
+      "instructional_support": "u-n02",
+      "keywords": [
+        "ظن",
+        "كاد",
+        "zanna"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "add kada-family rows to the pack (declarative)",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "increment hover fields declared"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "the flagship lane",
+      "domains": [
+        "particles"
+      ],
+      "family": "prepositional government",
+      "family_id": "fn-10",
+      "fixture_coverage": "p007 governor facts",
+      "instructional_support": "u-s09 (carve) + u-n03",
+      "keywords": [
+        "preposition",
+        "جر",
+        "jarr"
+      ],
+      "occurrence_coverage": "12 p007 occurrences CERTIFIED-lane",
+      "remaining_work": "extend to p034-p039 entries",
+      "repo_documentary_support": [
+        "nahw/procedures/idafa-jar-majrur.md"
+      ],
+      "repo_executable_consumer": "tools/fusha_governor.py",
+      "rich_hover_readiness": "existing two-surface projections"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "procedure only",
+      "domains": [
+        "syntactic_relations"
+      ],
+      "family": "idafa",
+      "family_id": "fn-11",
+      "fixture_coverage": "none",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "idafa",
+        "الإضافة",
+        "construct"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "idafa unit + definiteness-chain fixtures",
+      "repo_documentary_support": [
+        "nahw/procedures/idafa-jar-majrur.md"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "unit missing",
+      "domains": [
+        "syntactic_relations"
+      ],
+      "family": "adjectives and followers",
+      "family_id": "fn-12",
+      "fixture_coverage": "none",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "adjective",
+        "النعت",
+        "توابع",
+        "apposition",
+        "بدل"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "followers unit (na't/badal/tawkid/atf agreement chains)",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "syntactic_relations"
+      ],
+      "family": "relative clauses and 'a'id",
+      "family_id": "fn-13",
+      "fixture_coverage": "hid-pos-02 'a'id gap fixture",
+      "instructional_support": "u-n05 + inc-hidden",
+      "keywords": [
+        "relative",
+        "الموصول",
+        "صلة"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "p094-p098 occurrence grounding",
+      "repo_documentary_support": [
+        "nahw/procedures/relative-interrogative.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "relative-chain card designed"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "partial via inc-ma",
+      "domains": [
+        "particles"
+      ],
+      "family": "conditional systems",
+      "family_id": "fn-14",
+      "fixture_coverage": "ma-adv-02 shartiyya fixture",
+      "instructional_support": "u-n06",
+      "keywords": [
+        "conditional",
+        "الشرط",
+        "جواب"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "conditional-pair unit pack (protasis/apodosis moods)",
+      "repo_documentary_support": [
+        "nahw/procedures/conditionals.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "gate exists",
+      "domains": [
+        "particles"
+      ],
+      "family": "exception",
+      "family_id": "fn-15",
+      "fixture_coverage": "istithna' gate class (two-vote trigger)",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "exception",
+        "الاستثناء",
+        "إلا"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "istithna' unit (polarity/connectedness)",
+      "repo_documentary_support": [
+        "nahw/SKILL.md"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "licensing covered",
+      "domains": [
+        "particles"
+      ],
+      "family": "vocative",
+      "family_id": "fn-16",
+      "fixture_coverage": "hid-pos-03 vocative licence fixture",
+      "instructional_support": "u-n08 (licensing row)",
+      "keywords": [
+        "vocative",
+        "النداء",
+        "المنادى"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "munada case fixtures",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "hidden-element chip"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "unit missing",
+      "domains": [
+        "particles"
+      ],
+      "family": "oath",
+      "family_id": "fn-17",
+      "fixture_coverage": "none",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "oath",
+        "القسم"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "oath unit (waw/ba/ta al-qasam + jawab)",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "particles"
+      ],
+      "family": "negation",
+      "family_id": "fn-18",
+      "fixture_coverage": "inc-negation 5 fixtures",
+      "instructional_support": "u-n01 + inc-negation",
+      "keywords": [
+        "negation",
+        "النفي"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "wire nahw/rules/negation-rules.json (GAP-N2) or supersede via pack",
+      "repo_documentary_support": [
+        "nahw/rules/negation-rules.json",
+        "nahw/procedures/negation.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "increment hover fields declared"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "particles"
+      ],
+      "family": "multifunction particles",
+      "family_id": "fn-19",
+      "fixture_coverage": "inc-ma + prepass 13 tests",
+      "instructional_support": "u-n07 + inc-ma",
+      "keywords": [
+        "particle",
+        "حرف"
+      ],
+      "occurrence_coverage": "2 exact ma occurrences",
+      "remaining_work": "extend packs to لو/لما/أن families",
+      "repo_documentary_support": [
+        "tools/funcword_homograph_prepass.py"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "increment hover fields declared"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "particles"
+      ],
+      "family": "ma functions (all major)",
+      "family_id": "fn-20",
+      "fixture_coverage": "6 fixtures + ma-ambiguity loop",
+      "instructional_support": "u-n07 + inc-ma",
+      "keywords": [
+        "ما"
+      ],
+      "occurrence_coverage": "93:3:1 + 2:284:10 exemplars",
+      "remaining_work": "per-occurrence discriminator evidence rows (p099 lane)",
+      "repo_documentary_support": [
+        "curriculum/l1l6/increments/inc-ma/reference.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "function inventory + alternatives panels"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "unit only",
+      "domains": [
+        "syntactic_relations"
+      ],
+      "family": "attachment",
+      "family_id": "fn-21",
+      "fixture_coverage": "existence-checked only (GAP-N3)",
+      "instructional_support": "u-n10",
+      "keywords": [
+        "attachment",
+        "attach"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "attachment-site test fixtures",
+      "repo_documentary_support": [
+        "nahw/rules/pronoun-attachment-rules.json"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "unit only",
+      "domains": [
+        "syntactic_relations",
+        "particles"
+      ],
+      "family": "scope",
+      "family_id": "fn-22",
+      "fixture_coverage": "none",
+      "instructional_support": "u-n10",
+      "keywords": [
+        "scope"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "negation/coordination scope fixtures (genuine ambiguity preserved)",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "guards exist unwired",
+      "domains": [
+        "contextual_interpretation"
+      ],
+      "family": "referent",
+      "family_id": "fn-23",
+      "fixture_coverage": "referent guards zero consumer (GAP-N2)",
+      "instructional_support": "u-n10",
+      "keywords": [
+        "referent",
+        "المرجع"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "wire referent guards",
+      "repo_documentary_support": [
+        "nahw/rules/referent-guard-rules.json",
+        "nahw/procedures/referent-context.md"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "lattice-native",
+      "domains": [
+        "governance"
+      ],
+      "family": "governor and governed expression",
+      "family_id": "fn-24",
+      "fixture_coverage": "7 lattice rows + 9 FAIL classes",
+      "instructional_support": "u-n03",
+      "keywords": [
+        "governor",
+        "عامل",
+        "govern"
+      ],
+      "occurrence_coverage": "p007 governor_relation facts",
+      "remaining_work": "widen lattice bank (q-governance packet)",
+      "repo_documentary_support": [
+        "tools/fusha_governor.py",
+        "tools/validate_dependency_lattice.py"
+      ],
+      "repo_executable_consumer": "tools/fusha_governor.py",
+      "rich_hover_readiness": "governor card"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "hidden_structure"
+      ],
+      "family": "hidden pronouns",
+      "family_id": "fn-25",
+      "fixture_coverage": "hid fixtures + loop",
+      "instructional_support": "u-n08 + inc-hidden",
+      "keywords": [
+        "hidden",
+        "مستتر"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "occurrence applications",
+      "repo_documentary_support": [
+        "curriculum/l1l6/increments/inc-hidden/reference.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "hidden-element chip"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "hidden_structure"
+      ],
+      "family": "deleted operators",
+      "family_id": "fn-26",
+      "fixture_coverage": "vocative deleted-verb fixture",
+      "instructional_support": "u-n08",
+      "keywords": [
+        "deleted",
+        "محذوف"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "answer-fragment fixtures",
+      "repo_documentary_support": [
+        "curriculum/l1l6/increments/inc-hidden/reference.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "increment hover fields declared"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "promotion bundle emittable (curriculum/l1l6/promotion/)",
+      "domains": [
+        "hidden_structure"
+      ],
+      "family": "taqdir",
+      "family_id": "fn-27",
+      "fixture_coverage": "licensing-table fixtures",
+      "instructional_support": "u-n08/u-n09",
+      "keywords": [
+        "taqdir",
+        "تقدير"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "muqaddar-marking fixtures",
+      "repo_documentary_support": [
+        "curriculum/l1l6/increments/inc-hidden/procedure.md"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "reconstruction flagged distinct from text"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "unit only",
+      "domains": [
+        "case_mood"
+      ],
+      "family": "mahall al-i'rab",
+      "family_id": "fn-28",
+      "fixture_coverage": "none",
+      "instructional_support": "u-n09",
+      "keywords": [
+        "محل",
+        "mahall",
+        "positional"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "clause-type inventory pack (licensing_table capability, declarative)",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "mahall annotation designed"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "unit only",
+      "domains": [
+        "syntactic_relations"
+      ],
+      "family": "major mansubat",
+      "family_id": "fn-29",
+      "fixture_coverage": "none",
+      "instructional_support": "u-n04",
+      "keywords": [
+        "حال",
+        "تمييز",
+        "مفعول مطلق",
+        "الظرف"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "role-criteria pack (discriminator_table capability, declarative)",
+      "repo_documentary_support": [
+        "nahw/SKILL.md"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "role chip designed"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "unit missing",
+      "domains": [
+        "governance"
+      ],
+      "family": "ishtighal",
+      "family_id": "fn-30",
+      "fixture_coverage": "none",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "اشتغال",
+        "ishtighal"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "C2 construction: record in claim families first",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "lattice can hold competing governors",
+      "domains": [
+        "governance"
+      ],
+      "family": "tanazu'",
+      "family_id": "fn-31",
+      "fixture_coverage": "none",
+      "instructional_support": "u-n03 (exception noted)",
+      "keywords": [
+        "تنازع",
+        "tanazu"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "tanazu' fixtures for the lattice",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "unit missing",
+      "domains": [
+        "governance"
+      ],
+      "family": "ta'liq and ilgha'",
+      "family_id": "fn-32",
+      "fixture_coverage": "none",
+      "instructional_support": "pending unit authoring (queue q-unit-authoring)",
+      "keywords": [
+        "تعليق",
+        "إلغاء"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "zanna-family suspension rows (pack-extendable)",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "lattice + packs",
+      "domains": [
+        "ambiguity"
+      ],
+      "family": "multiple valid analyses",
+      "family_id": "fn-33",
+      "fixture_coverage": "ma-adv-01 alternatives fixture + lattice",
+      "instructional_support": "u-n11",
+      "keywords": [
+        "rival",
+        "two analyses",
+        "ambigu"
+      ],
+      "occurrence_coverage": "92:3:1 attributed-unresolved exemplar",
+      "remaining_work": "school attribution as typed dimension",
+      "repo_documentary_support": [
+        "qamus/schemas/dependency-candidate-lattice.schema.json"
+      ],
+      "repo_executable_consumer": "tools/curriculum_unit_consumer.py",
+      "rich_hover_readiness": "alternatives panel"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "scholar lane",
+      "domains": [
+        "ambiguity"
+      ],
+      "family": "Basran/Kufan attribution",
+      "family_id": "fn-34",
+      "fixture_coverage": "none",
+      "instructional_support": "u-n11 + claim family cf-n11",
+      "keywords": [
+        "basran",
+        "kufan",
+        "البصري",
+        "الكوفي"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "attribution dimension in artifacts (owner/Sol decision)",
+      "repo_documentary_support": [
+        "docs/blockers.yaml"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "attribution notes designed"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "unit only",
+      "domains": [
+        "contextual_interpretation"
+      ],
+      "family": "sentence and discourse cohesion",
+      "family_id": "fn-35",
+      "fixture_coverage": "none",
+      "instructional_support": "u-n12",
+      "keywords": [
+        "discourse",
+        "cohesion",
+        "استئناف"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "waw-discrimination pack (discriminator_table, declarative)",
+      "repo_documentary_support": [],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "clause-type annotation designed"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "rules exist unwired",
+      "domains": [
+        "contextual_interpretation"
+      ],
+      "family": "contextual interpretation",
+      "family_id": "fn-36",
+      "fixture_coverage": "context-sense rules unconsumed (GAP-N2)",
+      "instructional_support": "u-n12",
+      "keywords": [
+        "context",
+        "interpretation"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "wire context-sense rules",
+      "repo_documentary_support": [
+        "nahw/rules/context-sense-rules.json"
+      ],
+      "repo_executable_consumer": "none",
+      "rich_hover_readiness": "none"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "gate-native",
+      "domains": [
+        "contextual_interpretation"
+      ],
+      "family": "translation safety",
+      "family_id": "fn-37",
+      "fixture_coverage": "gate ladder mutation-proven",
+      "instructional_support": "og-5 guard + claim rows",
+      "keywords": [
+        "translation",
+        "gloss"
+      ],
+      "occurrence_coverage": "no committed occurrence authority yet (queue q-pvn-grounding)",
+      "remaining_work": "none — enforced boundary",
+      "repo_documentary_support": [
+        "sarf/SKILL.md",
+        "nahw/SKILL.md"
+      ],
+      "repo_executable_consumer": "tools/validate_linguistic_decisions.py",
+      "rich_hover_readiness": "hover glosses entry-governed"
+    },
+    {
+      "axis": "nahw",
+      "backprop_readiness": "gate-native",
+      "domains": [
+        "ambiguity"
+      ],
+      "family": "abstention and escalation",
+      "family_id": "fn-38",
+      "fixture_coverage": "4-home SSOT parity",
+      "instructional_support": "every unit's abstention_conditions",
+      "keywords": [
+        "abstention",
+        "escalation",
+        "pending"
+      ],
+      "occurrence_coverage": "corpus-pilot machine abstention",
+      "remaining_work": "none — enforced boundary",
+      "repo_documentary_support": [
+        "nahw/evals/grammar-decision-gates.json"
+      ],
+      "repo_executable_consumer": "tools/validate_linguistic_decisions.py",
+      "rich_hover_readiness": "abstention notes"
+    }
+  ],
+  "note": "authored assessment data consumed by tools/build_capability_matrix.py; kept as DATA so no Store A rule path appears in tool source (the A1 runner's source-literal consumer prover stays clean)",
+  "schema": "curriculum.l1l6_capability_family_table.v1"
+}

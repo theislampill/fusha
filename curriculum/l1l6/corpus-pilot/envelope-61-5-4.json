@@ -1,0 +1,246 @@
+{
+  "appearances": {
+    "count": 4,
+    "rows": [
+      {
+        "appearance_id": "01133eb5431b:u0:x1:w3",
+        "projection_hash": "1317f79e00d553f3aea50cbbb3c99e0cec809d6786a06329c155b72fdcee9f9b"
+      },
+      {
+        "appearance_id": "3041d6f44a27:u11:x1:w3",
+        "projection_hash": "1317f79e00d553f3aea50cbbb3c99e0cec809d6786a06329c155b72fdcee9f9b"
+      },
+      {
+        "appearance_id": "65d3d5c51f24:u0:x2:w3",
+        "projection_hash": "1317f79e00d553f3aea50cbbb3c99e0cec809d6786a06329c155b72fdcee9f9b"
+      },
+      {
+        "appearance_id": "7f1f8b8e29e6:u0:x0:w3",
+        "projection_hash": "1317f79e00d553f3aea50cbbb3c99e0cec809d6786a06329c155b72fdcee9f9b"
+      }
+    ],
+    "single_hash_parity": true
+  },
+  "boundaries": [
+    "og-1",
+    "og-2",
+    "og-6",
+    "no certification minted by this envelope",
+    "no live surface touched"
+  ],
+  "canonical_surface_binding": {
+    "canonical_index": "qamus/indexes/quran-loc-surface/index.jsonl",
+    "canonical_surface": "لِقَوْمِهِۦ",
+    "projection_surface": "لِقَوْمِهِۦ",
+    "verified": true
+  },
+  "certification_dependency": {
+    "basis": "replayed from the hash-chained event trail — raw status strings are never treated as authority",
+    "depends_on_fact_ids": [
+      "fact:p00slice:61_5_4:case",
+      "fact:p00slice:61_5_4:func",
+      "fact:p00slice:61_5_4:gov",
+      "fact:p00slice:61_5_4:seg",
+      "fact:p00slice:entry_b10a1ee04666:rootless"
+    ],
+    "effective_states": {
+      "fact:p00slice:61_5_4:case": {
+        "effective_status": "certified",
+        "event_count": 3
+      },
+      "fact:p00slice:61_5_4:func": {
+        "effective_status": "certified",
+        "event_count": 3
+      },
+      "fact:p00slice:61_5_4:gov": {
+        "effective_status": "certified",
+        "event_count": 3
+      },
+      "fact:p00slice:61_5_4:seg": {
+        "effective_status": "certified",
+        "event_count": 3
+      },
+      "fact:p00slice:entry_b10a1ee04666:rootless": {
+        "effective_status": "certified",
+        "event_count": 3
+      }
+    },
+    "invalidation_rule": "fail-closed withholding by THIS builder: while any depended-on fact's replayed effective state is outside ['certified', 'candidate'], the envelope's learner-facing artifact classes ['learner_projection_fields', 'colour_and_hover_bindings', 'letter_ownership_presentation', 'website_envelope', 'appearance_enumeration', 'derived_fixture_candidates', 'disposition_and_readiness_metrics'] are WITHHELD (not emitted). Append-only cascade/regeneration across the canonical planes is the Sol certifier adapter's contract (adp-certifier-effective-state) — cascade behavior is NOT claimed from last-event-wins replay."
+  },
+  "colour_and_hover": {
+    "alignment_basis": "CANDIDATE span alignment: hover components are matched to segments by component_surface WITHIN this one projection record and copy that segment's fact ids; authoritative same-fact identity (shared fact ids minted by the certifier/projection plane) is Sol adapter work and is NOT claimed here",
+    "covered_segments": [
+      "لِ"
+    ],
+    "derived_from_single_projection_record": true,
+    "hover_fact_bindings": [
+      {
+        "component_surface": "لِ",
+        "fact_ids": [
+          "fact:p00slice:61_5_4:case",
+          "fact:p00slice:61_5_4:func",
+          "fact:p00slice:61_5_4:gov",
+          "fact:p00slice:61_5_4:seg",
+          "fact:p00slice:entry_b10a1ee04666:rootless"
+        ],
+        "traces_to_segment_facts": true
+      }
+    ],
+    "segment_fact_bindings": [
+      {
+        "fact_ids": [
+          "fact:p00slice:61_5_4:case",
+          "fact:p00slice:61_5_4:func",
+          "fact:p00slice:61_5_4:gov",
+          "fact:p00slice:61_5_4:seg",
+          "fact:p00slice:entry_b10a1ee04666:rootless"
+        ],
+        "role": "jarr_clitic_lam",
+        "surface": "لِ"
+      },
+      {
+        "fact_ids": [
+          "fact:p00slice:61_5_4:seg"
+        ],
+        "note": "host span owned by the carve fact only; host-internal facts pending (unresolved state)",
+        "role": "noun_host_majrur",
+        "surface": "قَوْمِ"
+      },
+      {
+        "fact_ids": [
+          "fact:p00slice:61_5_4:seg"
+        ],
+        "note": "host span owned by the carve fact only; host-internal facts pending (unresolved state)",
+        "role": "attached_pronoun_mudaf_ilayh",
+        "surface": "هِۦ"
+      }
+    ],
+    "segments": [
+      {
+        "char_end": 2,
+        "char_start": 0,
+        "colour_class": "qg-particle-jarr-clitic",
+        "role": "jarr_clitic_lam",
+        "surface": "لِ"
+      },
+      {
+        "char_end": 8,
+        "char_start": 2,
+        "colour_class": "qg-noun-stem",
+        "role": "noun_host_majrur",
+        "surface": "قَوْمِ"
+      },
+      {
+        "char_end": 11,
+        "char_start": 8,
+        "colour_class": "qg-possessive-pronoun",
+        "role": "attached_pronoun_mudaf_ilayh",
+        "surface": "هِۦ"
+      }
+    ],
+    "uncovered_note": "segments without a hover component are REPORTED, not papered over: no parity claim exists for them until the hover plane carries their fact ids",
+    "uncovered_segments": [
+      "قَوْمِ",
+      "هِۦ"
+    ]
+  },
+  "letter_ownership": {
+    "clitic_morpheme": {
+      "class": "clitic (jarr lam)",
+      "rootlessness": "per particle_rootlessness fact (repo)",
+      "surface": "لِ"
+    },
+    "host": {
+      "consumer_verdict": {
+        "decision": "abstain",
+        "reason": "no_root_evidence"
+      },
+      "internal_ownership": "UNRESOLVED — the repository certifies the carve, not the host's root/pattern letter split; preserved as pending",
+      "resolution_path": "host root certification via the sarf evidence ladder, then inc-ownership rules (packet TP-CURR-ROOTPATTERN-PROMOTION)",
+      "surface": "قَوْمِ"
+    }
+  },
+  "nahw_facts": [
+    "fact:p00slice:61_5_4:func",
+    "fact:p00slice:61_5_4:gov",
+    "fact:p00slice:61_5_4:case"
+  ],
+  "occurrence_id": "quran:61:5:4",
+  "repository_authority": {
+    "certification_event_trail": "qamus/examples/p007-li-pilot/certification/events.jsonl",
+    "projection_hash": "1317f79e00d553f3aea50cbbb3c99e0cec809d6786a06329c155b72fdcee9f9b",
+    "projection_source": "qamus/examples/p007-li-pilot/projections.jsonl",
+    "typed_facts": [
+      {
+        "certification_status_verbatim": "candidate",
+        "fact_id": "fact:p00slice:61_5_4:case",
+        "fact_type": "case_mood_governor",
+        "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+      },
+      {
+        "certification_status_verbatim": "candidate",
+        "fact_id": "fact:p00slice:61_5_4:func",
+        "fact_type": "contextual_function",
+        "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+      },
+      {
+        "certification_status_verbatim": "candidate",
+        "fact_id": "fact:p00slice:61_5_4:gov",
+        "fact_type": "governor_relation",
+        "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+      },
+      {
+        "certification_status_verbatim": "candidate",
+        "fact_id": "fact:p00slice:61_5_4:seg",
+        "fact_type": "clitic_host_segmentation",
+        "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+      },
+      {
+        "certification_status_verbatim": "candidate",
+        "fact_id": "fact:p00slice:entry_b10a1ee04666:rootless",
+        "fact_type": "particle_rootlessness",
+        "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+      }
+    ]
+  },
+  "reusable_lesson": {
+    "increment": "curriculum/l1l6/increments/inc-ownership/",
+    "lesson": "carve the jarr clitic, own letters only under evidence, abstain on the rest",
+    "reuse_note": "the SAME rules process both occurrences; nothing token-specific was copied between them (method transfer, og-2)",
+    "units": [
+      "u-s09",
+      "u-s01"
+    ]
+  },
+  "reverse_trace": {
+    "entry_id": "b10a1ee04666",
+    "occurrence_listed": true,
+    "source_file": "qamus/examples/p007-li-pilot/entry-reverse-index.json"
+  },
+  "sarf_facts": [
+    "fact:p00slice:61_5_4:seg",
+    "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "schema": "curriculum.l1l6_corpus_pilot_envelope.v1",
+  "status": "candidate",
+  "surface": "لِقَوْمِهِۦ",
+  "unresolved_states": [
+    "host_internal_letter_ownership (consumer abstains: no certified host root in the pilot store)"
+  ],
+  "website_envelope": {
+    "artifact_id": "artifact:vncanary:61:5:4",
+    "kind": "existing_payload_reference",
+    "schema": "qamus.website_projection_payload.v1",
+    "source_file": "qamus/examples/website-payloads/multi_entry_liqawmihi_61_5_4.payload.json"
+  },
+  "withheld": false,
+  "withheld_artifact_classes_on_invalid_dependency": [
+    "learner_projection_fields",
+    "colour_and_hover_bindings",
+    "letter_ownership_presentation",
+    "website_envelope",
+    "appearance_enumeration",
+    "derived_fixture_candidates",
+    "disposition_and_readiness_metrics"
+  ]
+}

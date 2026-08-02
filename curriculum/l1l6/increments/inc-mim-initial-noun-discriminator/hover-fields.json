@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "mim_class_panel",
+      "teaching": "names the class of the mim-initial noun with the vowel evidence that produced it"
+    },
+    {
+      "key": "vocalization_panel",
+      "teaching": "marks an unpointed prefix as missing evidence rather than as a resolved reading"
+    },
+    {
+      "key": "homograph_panel",
+      "teaching": "shows the shapes that coincide, so the learner sees the ambiguity as structural rather than accidental"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

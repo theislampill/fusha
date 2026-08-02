@@ -1,0 +1,844 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-elative-template-discriminator/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-elative-template-discriminator/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+        "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+        "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+        "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+        "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+        "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+        "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "35e5bce82b1b4a7fe05a72d1d2579b0bf6b5659dd3c18fda74a6a90131727bc6",
+      "guards_payload": [
+        {
+          "guard": "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+          "id": "g-ela-1"
+        },
+        {
+          "guard": "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+          "id": "g-ela-2"
+        },
+        {
+          "guard": "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+          "id": "g-ela-3"
+        },
+        {
+          "guard": "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+          "id": "g-ela-4"
+        },
+        {
+          "guard": "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+          "id": "g-ela-5"
+        },
+        {
+          "guard": "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+          "id": "g-ela-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme",
+          "id": "g-ela-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ela-adv-01",
+        "ela-adv-02",
+        "ela-adv-03",
+        "ela-adv-04",
+        "ela-abs-01",
+        "ela-abs-02"
+      ],
+      "positive_examples": [
+        "ela-pos-01",
+        "ela-pos-02",
+        "ela-pos-03",
+        "ela-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "scope": {
+        "increment": "inc-elative-template-discriminator",
+        "statement": "discriminator features are SUPPLIED evidence (construction, entry, paradigm); the consumer never reads them off the skeleton, which is shared by all five readings",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-elative-template-discriminator-ela-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+        "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+        "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+        "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+        "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+        "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+        "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "35e5bce82b1b4a7fe05a72d1d2579b0bf6b5659dd3c18fda74a6a90131727bc6",
+      "guards_payload": [
+        {
+          "guard": "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+          "id": "g-ela-1"
+        },
+        {
+          "guard": "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+          "id": "g-ela-2"
+        },
+        {
+          "guard": "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+          "id": "g-ela-3"
+        },
+        {
+          "guard": "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+          "id": "g-ela-4"
+        },
+        {
+          "guard": "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+          "id": "g-ela-5"
+        },
+        {
+          "guard": "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+          "id": "g-ela-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme",
+          "id": "g-ela-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ela-adv-01",
+        "ela-adv-02",
+        "ela-adv-03",
+        "ela-adv-04",
+        "ela-abs-01",
+        "ela-abs-02"
+      ],
+      "positive_examples": [
+        "ela-pos-01",
+        "ela-pos-02",
+        "ela-pos-03",
+        "ela-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "scope": {
+        "increment": "inc-elative-template-discriminator",
+        "statement": "the rival readings differ in PART OF SPEECH, not in nuance: two adjectival readings, one adjectival degree split, and two verbal readings all spell the same letters",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-elative-template-discriminator-ela-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+        "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+        "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+        "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+        "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+        "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+        "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "35e5bce82b1b4a7fe05a72d1d2579b0bf6b5659dd3c18fda74a6a90131727bc6",
+      "guards_payload": [
+        {
+          "guard": "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+          "id": "g-ela-1"
+        },
+        {
+          "guard": "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+          "id": "g-ela-2"
+        },
+        {
+          "guard": "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+          "id": "g-ela-3"
+        },
+        {
+          "guard": "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+          "id": "g-ela-4"
+        },
+        {
+          "guard": "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+          "id": "g-ela-5"
+        },
+        {
+          "guard": "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+          "id": "g-ela-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme",
+          "id": "g-ela-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ela-adv-01",
+        "ela-adv-02",
+        "ela-adv-03",
+        "ela-adv-04",
+        "ela-abs-01",
+        "ela-abs-02"
+      ],
+      "positive_examples": [
+        "ela-pos-01",
+        "ela-pos-02",
+        "ela-pos-03",
+        "ela-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "scope": {
+        "increment": "inc-elative-template-discriminator",
+        "statement": "degree is fixed by CONSTRUCTION, not by form: a comparison complement selects the comparative; the definite article or an immediately following genitive selects the superlative",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-elative-template-discriminator-ela-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+        "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+        "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+        "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+        "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+        "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+        "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "35e5bce82b1b4a7fe05a72d1d2579b0bf6b5659dd3c18fda74a6a90131727bc6",
+      "guards_payload": [
+        {
+          "guard": "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+          "id": "g-ela-1"
+        },
+        {
+          "guard": "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+          "id": "g-ela-2"
+        },
+        {
+          "guard": "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+          "id": "g-ela-3"
+        },
+        {
+          "guard": "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+          "id": "g-ela-4"
+        },
+        {
+          "guard": "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+          "id": "g-ela-5"
+        },
+        {
+          "guard": "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+          "id": "g-ela-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme",
+          "id": "g-ela-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ela-adv-01",
+        "ela-adv-02",
+        "ela-adv-03",
+        "ela-adv-04",
+        "ela-abs-01",
+        "ela-abs-02"
+      ],
+      "positive_examples": [
+        "ela-pos-01",
+        "ela-pos-02",
+        "ela-pos-03",
+        "ela-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "scope": {
+        "increment": "inc-elative-template-discriminator",
+        "statement": "the two superlative constructions EXCLUDE the comparison complement; a surface carrying both is not resolved by this table",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-elative-template-discriminator-ela-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+        "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+        "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+        "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+        "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+        "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+        "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "35e5bce82b1b4a7fe05a72d1d2579b0bf6b5659dd3c18fda74a6a90131727bc6",
+      "guards_payload": [
+        {
+          "guard": "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+          "id": "g-ela-1"
+        },
+        {
+          "guard": "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+          "id": "g-ela-2"
+        },
+        {
+          "guard": "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+          "id": "g-ela-3"
+        },
+        {
+          "guard": "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+          "id": "g-ela-4"
+        },
+        {
+          "guard": "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+          "id": "g-ela-5"
+        },
+        {
+          "guard": "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+          "id": "g-ela-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme",
+          "id": "g-ela-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ela-adv-01",
+        "ela-adv-02",
+        "ela-adv-03",
+        "ela-adv-04",
+        "ela-abs-01",
+        "ela-abs-02"
+      ],
+      "positive_examples": [
+        "ela-pos-01",
+        "ela-pos-02",
+        "ela-pos-03",
+        "ela-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "scope": {
+        "increment": "inc-elative-template-discriminator",
+        "statement": "the feminine counterpart template is evidence, not a consequence: the elative's counterpart and the colour adjective's counterpart are different templates, and which one the lexeme takes is a lexical fact",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-elative-template-discriminator-ela-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+        "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+        "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+        "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+        "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+        "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+        "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "35e5bce82b1b4a7fe05a72d1d2579b0bf6b5659dd3c18fda74a6a90131727bc6",
+      "guards_payload": [
+        {
+          "guard": "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+          "id": "g-ela-1"
+        },
+        {
+          "guard": "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+          "id": "g-ela-2"
+        },
+        {
+          "guard": "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+          "id": "g-ela-3"
+        },
+        {
+          "guard": "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+          "id": "g-ela-4"
+        },
+        {
+          "guard": "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+          "id": "g-ela-5"
+        },
+        {
+          "guard": "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+          "id": "g-ela-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme",
+          "id": "g-ela-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ela-adv-01",
+        "ela-adv-02",
+        "ela-adv-03",
+        "ela-adv-04",
+        "ela-abs-01",
+        "ela-abs-02"
+      ],
+      "positive_examples": [
+        "ela-pos-01",
+        "ela-pos-02",
+        "ela-pos-03",
+        "ela-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "scope": {
+        "increment": "inc-elative-template-discriminator",
+        "statement": "exactly one survivor -> that reading (candidate); more than one -> preserve_alternatives; none -> abstain insufficient_features. There is NO default reading for this skeleton",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-elative-template-discriminator-ela-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+        "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+        "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+        "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+        "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+        "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+        "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "35e5bce82b1b4a7fe05a72d1d2579b0bf6b5659dd3c18fda74a6a90131727bc6",
+      "guards_payload": [
+        {
+          "guard": "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+          "id": "g-ela-1"
+        },
+        {
+          "guard": "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+          "id": "g-ela-2"
+        },
+        {
+          "guard": "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+          "id": "g-ela-3"
+        },
+        {
+          "guard": "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+          "id": "g-ela-4"
+        },
+        {
+          "guard": "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+          "id": "g-ela-5"
+        },
+        {
+          "guard": "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+          "id": "g-ela-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme",
+          "id": "g-ela-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ela-adv-01",
+        "ela-adv-02",
+        "ela-adv-03",
+        "ela-adv-04",
+        "ela-abs-01",
+        "ela-abs-02"
+      ],
+      "positive_examples": [
+        "ela-pos-01",
+        "ela-pos-02",
+        "ela-pos-03",
+        "ela-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "scope": {
+        "increment": "inc-elative-template-discriminator",
+        "statement": "the classical conditions restricting which bases admit an elative at all are not encoded here, so a surviving elative reading is a candidate about THIS occurrence and never a licence to build one",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-elative-template-discriminator-ela-r7",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+        "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+        "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+        "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+        "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+        "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+        "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "35e5bce82b1b4a7fe05a72d1d2579b0bf6b5659dd3c18fda74a6a90131727bc6",
+      "guards_payload": [
+        {
+          "guard": "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+          "id": "g-ela-1"
+        },
+        {
+          "guard": "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+          "id": "g-ela-2"
+        },
+        {
+          "guard": "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+          "id": "g-ela-3"
+        },
+        {
+          "guard": "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+          "id": "g-ela-4"
+        },
+        {
+          "guard": "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+          "id": "g-ela-5"
+        },
+        {
+          "guard": "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+          "id": "g-ela-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme",
+          "id": "g-ela-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ela-adv-01",
+        "ela-adv-02",
+        "ela-adv-03",
+        "ela-adv-04",
+        "ela-abs-01",
+        "ela-abs-02"
+      ],
+      "positive_examples": [
+        "ela-pos-01",
+        "ela-pos-02",
+        "ela-pos-03",
+        "ela-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "scope": {
+        "increment": "inc-elative-template-discriminator",
+        "statement": "whether sequence and otherness items belong to the elative inventory is disputed in the tradition and is not decided by this table",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-elative-template-discriminator-ela-r8",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-elative-template-discriminator",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "ela-abs-01",
+      "ela-abs-02"
+    ],
+    "adversarial": [
+      "ela-adv-01",
+      "ela-adv-02",
+      "ela-adv-03",
+      "ela-adv-04"
+    ],
+    "positive": [
+      "ela-pos-01",
+      "ela-pos-02",
+      "ela-pos-03"
+    ],
+    "transfer": [
+      "ela-trn-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-elative-template-discriminator",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives"
+    ],
+    "capability": "discriminator_table",
+    "functions": [
+      {
+        "discriminators": {
+          "comparison_complement": [
+            "min_phrase_present"
+          ],
+          "entry_evidence": [
+            "adjectival_entry"
+          ]
+        },
+        "id": "elative_comparative",
+        "name": "elative read as a two-term comparison"
+      },
+      {
+        "discriminators": {
+          "comparison_complement": [
+            "absent"
+          ],
+          "definiteness_behaviour": [
+            "definite_article",
+            "heads_annexation"
+          ],
+          "entry_evidence": [
+            "adjectival_entry"
+          ]
+        },
+        "id": "elative_superlative",
+        "name": "elative read as a superlative"
+      },
+      {
+        "discriminators": {
+          "comparison_complement": [
+            "absent"
+          ],
+          "entry_evidence": [
+            "adjectival_entry"
+          ],
+          "feminine_counterpart_template": [
+            "falaa"
+          ]
+        },
+        "id": "colour_defect_adjective",
+        "name": "colour-or-defect adjective of the same skeleton"
+      },
+      {
+        "discriminators": {
+          "entry_evidence": [
+            "verbal_entry"
+          ],
+          "person_evidence": [
+            "third_person_default"
+          ],
+          "tense_evidence": [
+            "perfect_paradigm"
+          ]
+        },
+        "id": "form_iv_perfect_verb",
+        "name": "fourth-form perfect verb of the same skeleton"
+      },
+      {
+        "discriminators": {
+          "entry_evidence": [
+            "verbal_entry"
+          ],
+          "person_evidence": [
+            "first_singular_prefix"
+          ]
+        },
+        "id": "first_person_imperfect_verb",
+        "name": "first-person singular imperfect of the same skeleton"
+      }
+    ],
+    "increment": "inc-elative-template-discriminator",
+    "rules": [
+      {
+        "id": "ela-r1",
+        "text": "discriminator features are SUPPLIED evidence (construction, entry, paradigm); the consumer never reads them off the skeleton, which is shared by all five readings"
+      },
+      {
+        "id": "ela-r2",
+        "text": "the rival readings differ in PART OF SPEECH, not in nuance: two adjectival readings, one adjectival degree split, and two verbal readings all spell the same letters"
+      },
+      {
+        "id": "ela-r3",
+        "text": "degree is fixed by CONSTRUCTION, not by form: a comparison complement selects the comparative; the definite article or an immediately following genitive selects the superlative"
+      },
+      {
+        "id": "ela-r4",
+        "text": "the two superlative constructions EXCLUDE the comparison complement; a surface carrying both is not resolved by this table"
+      },
+      {
+        "id": "ela-r5",
+        "text": "the feminine counterpart template is evidence, not a consequence: the elative's counterpart and the colour adjective's counterpart are different templates, and which one the lexeme takes is a lexical fact"
+      },
+      {
+        "id": "ela-r6",
+        "text": "exactly one survivor -> that reading (candidate); more than one -> preserve_alternatives; none -> abstain insufficient_features. There is NO default reading for this skeleton"
+      },
+      {
+        "id": "ela-r7",
+        "text": "the classical conditions restricting which bases admit an elative at all are not encoded here, so a surviving elative reading is a candidate about THIS occurrence and never a licence to build one"
+      },
+      {
+        "id": "ela-r8",
+        "text": "whether sequence and otherness items belong to the elative inventory is disputed in the tradition and is not decided by this table"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "shared_skeleton": "أفعل — one spelling, five documented readings across three parts of speech",
+    "status": "candidate",
+    "unit_ref": "cu-elative-template-discriminator",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "reading_inventory_panel",
+      "teaching": "lists the five readings this spelling supports, each with the evidence that would select it, so the reader sees WHY this occurrence reads as it does"
+    },
+    {
+      "key": "construction_chip",
+      "teaching": "names the construction that fixed the degree — comparison complement, definite article, or following genitive — rather than pointing at the word's shape"
+    },
+    {
+      "key": "feminine_counterpart_note",
+      "teaching": "shows which counterpart template the lexeme takes, as the lexical evidence separating the elative from the colour adjective"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "genuinely undecided occurrences show every surviving reading, attributed, with no winner implied"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

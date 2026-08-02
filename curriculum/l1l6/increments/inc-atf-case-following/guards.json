@@ -1,0 +1,34 @@
+{
+  "guards": [
+    {
+      "guard": "the unit CHECKS an inheritance relation; it never assigns case — case facts stay two-vote gated",
+      "id": "g-atf-1"
+    },
+    {
+      "guard": "scripture and text are never 'corrected': a mismatch is a violation_candidate routed to review",
+      "id": "g-atf-2"
+    },
+    {
+      "guard": "attachment is SUPPLIED: the unit never decides which preceding constituent is the joined-to element, and a wrong head makes the whole check void",
+      "id": "g-atf-3"
+    },
+    {
+      "guard": "og-4: a connector's coordinating reading is per-occurrence; the documented non-coordinating uses of these same items are not adjudicated here",
+      "id": "g-atf-4"
+    },
+    {
+      "guard": "ENCODING LIMIT declared in the pack: a lane pins one case, so connector-to-lane assignment is an artifact of the borrowed slot shape and is never to be read as a claim that a connector joins only that case",
+      "id": "g-atf-5"
+    },
+    {
+      "guard": "the semantic choice between the connectors rests on a world-time or discourse judgment with no formal cue; this unit checks case only and emits no semantic verdict",
+      "id": "g-atf-6"
+    },
+    {
+      "guard": "method transfers, conclusions do not: one occurrence's resolved head never fixes the head of another occurrence",
+      "id": "g-atf-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

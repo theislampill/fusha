@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "exclusion_cell_chip",
+      "teaching": "names the cell that decided the case: polarity plus whether the set excluded from is overt"
+    },
+    {
+      "key": "alternatives_note",
+      "teaching": "under negation with an overt set, shows both licensed case outcomes side by side"
+    },
+    {
+      "key": "complement_note",
+      "teaching": "marks a noun after a nominal exclusion word as an annexed complement, not as the excluded item"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

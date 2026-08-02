@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "definiteness state and annexation role are declared inputs; adjacency never substitutes for them",
+      "id": "g-dpr-1"
+    },
+    {
+      "guard": "the case vowel and the nunation are restored independently and are never inferred from each other",
+      "id": "g-dpr-2"
+    },
+    {
+      "guard": "the poetic licence stays inside verse and is checked before a nunated occurrence is judged",
+      "id": "g-dpr-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-dpr-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

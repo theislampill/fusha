@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "key": "quality_template_chip",
+      "teaching": "names the matched template and whether it is a plain quality row, a feminine row, or a row shared with the intensive class"
+    },
+    {
+      "key": "feminine_partner_card",
+      "teaching": "shows the row's own feminine template, so the learner never builds it by adding a taa where the row forbids it"
+    },
+    {
+      "key": "restricted_inflection_flag",
+      "teaching": "marks the two restricted rows and states plainly that the definiteness and annexation conditions still have to be checked"
+    },
+    {
+      "key": "shared_row_notice",
+      "teaching": "when the row is shared with the intensive class or with the elative, the card shows the rival reading and the test that would decide it — not a winner"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}
