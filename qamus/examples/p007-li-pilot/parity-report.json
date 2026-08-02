@@ -1,551 +1,551 @@
 {
- "schema": "p00.parity_report.v1",
- "occurrences": [
-  {
-   "loc": "12:31:24",
-   "canonical_hash": "2e1764d82781f2254478b45c9ad10617e83c684ae5c97cf4741a693de88f11ae",
-   "appearance_count": 8,
-   "all_appearance_hashes_equal": true
-  },
-  {
-   "loc": "2:34:3",
-   "canonical_hash": "c06fae64baa7487e6bab40ded6ae91541eda0514b6535bad8fd46b758014d841",
-   "appearance_count": 5,
-   "all_appearance_hashes_equal": true
-  },
-  {
-   "loc": "2:34:5",
-   "canonical_hash": "52805d6e334d0a1573b62bf9ff7d0f3c9676f70261433f7c1d6b451f537e7abc",
-   "appearance_count": 5,
-   "all_appearance_hashes_equal": true
-  },
-  {
-   "loc": "24:35:44",
-   "canonical_hash": "5f5890a78ffe6f6d6bcd9674061f58ddf8ff4184725cacec1fbbf341ea3744f1",
-   "appearance_count": 10,
-   "all_appearance_hashes_equal": true
-  },
-  {
-   "loc": "2:187:63",
-   "canonical_hash": "ff43360d196c04ad5c8229420fd2ce5ee163ddd871942612fda731ba79c05ac9",
-   "appearance_count": 9,
-   "all_appearance_hashes_equal": true
-  },
-  {
-   "loc": "5:3:9",
-   "canonical_hash": "00c252282d8d948b5dd9ed163d99331bde2cf167e0ce7530c89f227f8938085d",
-   "appearance_count": 10,
-   "all_appearance_hashes_equal": true
-  },
-  {
-   "loc": "9:120:3",
-   "canonical_hash": "0f5d24e613b935b1c69d144b65021eae37f6d34b4399dddb2cb679e769ddc29c",
-   "appearance_count": 7,
-   "all_appearance_hashes_equal": true
-  },
-  {
-   "loc": "17:78:3",
-   "canonical_hash": "c9908d2c6af8285e5e5501a7e2e45b118361c36dc66b01db130e138496e75e83",
-   "appearance_count": 5,
-   "all_appearance_hashes_equal": true
-  },
-  {
-   "loc": "4:11:5",
-   "canonical_hash": "efc723c310197b44847b6a5f63f208fcadd1a2e9fc25007d56461404c32732d1",
-   "appearance_count": 5,
-   "all_appearance_hashes_equal": true
-  },
-  {
-   "loc": "33:53:48",
-   "canonical_hash": "d3055a6079e4e5a01b9028005aa08015d811bca5c3e72239af7ef0e06329bc2c",
-   "appearance_count": 5,
-   "all_appearance_hashes_equal": true
-  },
-  {
-   "loc": "24:31:23",
-   "canonical_hash": "35a56f1b67c183016189de73194393734e61c57e43463fc39df7d622f8ea2cb1",
-   "appearance_count": 5,
-   "all_appearance_hashes_equal": true
-  },
-  {
-   "loc": "61:5:4",
-   "canonical_hash": "1317f79e00d553f3aea50cbbb3c99e0cec809d6786a06329c155b72fdcee9f9b",
-   "appearance_count": 4,
-   "all_appearance_hashes_equal": true
-  }
- ],
- "live_deltas": [
-  {
-   "loc": "12:31:24",
-   "live_present": true,
-   "boundary_match": false,
-   "deltas": [
-    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'",
-    "diacritic-order only: repo matrix surface stores vowel-before-shadda; live whitelist stores shadda-before-vowel (NFC-equivalent). Carve identical."
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "prefix_lam",
-     "qg-lam"
-    ],
-    [
-     "لَّهِ",
-     "proper_noun",
-     "qg-proper-noun"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "لَّهِ",
-     "proper_name_majrur",
-     "qg-proper-noun"
-    ]
-   ],
-   "boundary_match_nfc": true
-  },
-  {
-   "loc": "2:34:3",
-   "live_present": true,
-   "boundary_match": true,
-   "deltas": [
-    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "preposition",
-     "qg-lam"
-    ],
-    [
-     "لْ",
-     "definite_article",
-     "qg-article"
-    ],
-    [
-     "مَلَٰٓئِكَةِ",
-     "noun_stem",
-     "qg-noun-stem"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "لْ",
-     "definite_article_assimilated",
-     "qg-article"
-    ],
-    [
-     "مَلَٰٓئِكَةِ",
-     "noun_host_majrur",
-     "qg-noun-stem"
-    ]
-   ]
-  },
-  {
-   "loc": "2:34:5",
-   "live_present": true,
-   "boundary_match": true,
-   "deltas": [
-    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "prepositional_lam",
-     "qg-lam"
-    ],
-    [
-     "ءَادَمَ",
-     "proper_noun",
-     "qg-proper-noun"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "ءَادَمَ",
-     "proper_name_majrur",
-     "qg-proper-noun"
-    ]
-   ]
-  },
-  {
-   "loc": "24:35:44",
-   "live_present": true,
-   "boundary_match": false,
-   "deltas": [
-    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'",
-    "diacritic-order only: repo matrix surface stores vowel-before-shadda; live whitelist stores shadda-before-vowel (NFC-equivalent). Carve identical."
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "lam_preposition",
-     "qg-lam"
-    ],
-    [
-     "ل",
-     "assimilated_definite_article",
-     "qg-article"
-    ],
-    [
-     "نَّاسِ",
-     "noun_host",
-     "qg-noun-stem"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "ل",
-     "definite_article_assimilated",
-     "qg-article"
-    ],
-    [
-     "نَّاسِ",
-     "noun_host_majrur",
-     "qg-noun-stem"
-    ]
-   ],
-   "boundary_match_nfc": true
-  },
-  {
-   "loc": "2:187:63",
-   "live_present": true,
-   "boundary_match": false,
-   "deltas": [
-    "segment boundaries differ: live ['لِ', 'لنَّاسِ'] vs projection ['لِ', 'ل', 'نَّاسِ']",
-    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "lam_preposition",
-     "qg-lam"
-    ],
-    [
-     "لنَّاسِ",
-     "noun_stem",
-     "qg-noun-stem"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "ل",
-     "definite_article_assimilated",
-     "qg-article"
-    ],
-    [
-     "نَّاسِ",
-     "noun_host_majrur",
-     "qg-noun-stem"
-    ]
-   ],
-   "boundary_match_nfc": false
-  },
-  {
-   "loc": "5:3:9",
-   "live_present": true,
-   "boundary_match": true,
-   "deltas": [
-    "clitic colour class: live 'qg-preposition' vs projection 'qg-particle-jarr-clitic'",
-    "live clitic role label empty"
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "",
-     "qg-preposition"
-    ],
-    [
-     "غَيْرِ",
-     "",
-     "qg-noun-stem"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "غَيْرِ",
-     "noun_host_majrur",
-     "qg-noun-stem"
-    ]
-   ]
-  },
-  {
-   "loc": "9:120:3",
-   "live_present": true,
-   "boundary_match": true,
-   "deltas": [
-    "clitic colour class: live 'qg-preposition' vs projection 'qg-particle-jarr-clitic'",
-    "live clitic role label empty"
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "",
-     "qg-preposition"
-    ],
-    [
-     "أَهْلِ",
-     "",
-     "qg-noun-stem"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "أَهْلِ",
-     "noun_host_majrur",
-     "qg-noun-stem"
-    ]
-   ]
-  },
-  {
-   "loc": "17:78:3",
-   "live_present": true,
-   "boundary_match": true,
-   "deltas": [
-    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "prefix_lam_preposition",
-     "qg-lam"
-    ],
-    [
-     "دُلُوكِ",
-     "noun_stem",
-     "qg-noun-stem"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "دُلُوكِ",
-     "noun_host_majrur",
-     "qg-noun-stem"
-    ]
-   ]
-  },
-  {
-   "loc": "4:11:5",
-   "live_present": true,
-   "boundary_match": false,
-   "deltas": [
-    "segment boundaries differ: live ['لِ', 'لذَّكَرِ'] vs projection ['لِ', 'ل', 'ذَّكَرِ']",
-    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "prefix_lam",
-     "qg-lam"
-    ],
-    [
-     "لذَّكَرِ",
-     "noun_or_adjective_stem",
-     "qg-noun-stem"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "ل",
-     "definite_article_assimilated",
-     "qg-article"
-    ],
-    [
-     "ذَّكَرِ",
-     "noun_host_majrur",
-     "qg-noun-stem"
-    ]
-   ],
-   "boundary_match_nfc": false
-  },
-  {
-   "loc": "33:53:48",
-   "live_present": true,
-   "boundary_match": true,
-   "deltas": [
-    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "prefix_lam",
-     "qg-lam"
-    ],
-    [
-     "قُلُوبِ",
-     "host_stem",
-     "qg-segment"
-    ],
-    [
-     "كُمْ",
-     "suffix_pronoun",
-     "qg-possessive-pronoun"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "قُلُوبِ",
-     "noun_host_majrur",
-     "qg-noun-stem"
-    ],
-    [
-     "كُمْ",
-     "attached_pronoun_mudaf_ilayh",
-     "qg-possessive-pronoun"
-    ]
-   ]
-  },
-  {
-   "loc": "24:31:23",
-   "live_present": true,
-   "boundary_match": false,
-   "deltas": [
-    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'",
-    "diacritic-order only: repo matrix surface stores vowel-before-shadda; live whitelist stores shadda-before-vowel (NFC-equivalent). Carve identical."
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "prefix_lam",
-     "qg-lam"
-    ],
-    [
-     "بُعُولَتِ",
-     "noun_or_adjective_stem",
-     "qg-noun-stem"
-    ],
-    [
-     "هِنَّ",
-     "possessive_pronoun_3fp",
-     "qg-possessive-pronoun"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "بُعُولَتِ",
-     "noun_host_majrur",
-     "qg-noun-stem"
-    ],
-    [
-     "هِنَّ",
-     "attached_pronoun_mudaf_ilayh",
-     "qg-possessive-pronoun"
-    ]
-   ],
-   "boundary_match_nfc": true
-  },
-  {
-   "loc": "61:5:4",
-   "live_present": true,
-   "boundary_match": true,
-   "deltas": [
-    "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
-   ],
-   "live_segments": [
-    [
-     "لِ",
-     "lam_preposition",
-     "qg-lam"
-    ],
-    [
-     "قَوْمِ",
-     "noun_stem",
-     "qg-noun-stem"
-    ],
-    [
-     "هِۦ",
-     "possessive_pronoun",
-     "qg-possessive-pronoun"
-    ]
-   ],
-   "projection_segments": [
-    [
-     "لِ",
-     "jarr_clitic_lam",
-     "qg-particle-jarr-clitic"
-    ],
-    [
-     "قَوْمِ",
-     "noun_host_majrur",
-     "qg-noun-stem"
-    ],
-    [
-     "هِۦ",
-     "attached_pronoun_mudaf_ilayh",
-     "qg-possessive-pronoun"
-    ]
-   ]
-  }
- ],
- "hash_forks": 0,
- "summary": {
-  "occurrences": 12,
-  "hash_parity": "IDENTICAL across all 78 appearances of every occurrence (0 forks)",
-  "live_rows_present": 12,
-  "live_boundary_matches": 7,
-  "live_rows_with_deltas": 12,
-  "upgrade_note": "live deltas are the CANDIDATE upgrade set; nothing deployed by this lane",
-  "live_boundary_matches_nfc": 10,
-  "live_true_carve_forks": [
-   "2:187:63",
-   "4:11:5"
+  "hash_forks": 0,
+  "live_deltas": [
+    {
+      "boundary_match": false,
+      "boundary_match_nfc": true,
+      "deltas": [
+        "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'",
+        "diacritic-order only: repo matrix surface stores vowel-before-shadda; live whitelist stores shadda-before-vowel (NFC-equivalent). Carve identical."
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "prefix_lam",
+          "qg-lam"
+        ],
+        [
+          "لَّهِ",
+          "proper_noun",
+          "qg-proper-noun"
+        ]
+      ],
+      "loc": "12:31:24",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "لَّهِ",
+          "proper_name_majrur",
+          "qg-proper-noun"
+        ]
+      ]
+    },
+    {
+      "boundary_match": true,
+      "deltas": [
+        "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "preposition",
+          "qg-lam"
+        ],
+        [
+          "لْ",
+          "definite_article",
+          "qg-article"
+        ],
+        [
+          "مَلَٰٓئِكَةِ",
+          "noun_stem",
+          "qg-noun-stem"
+        ]
+      ],
+      "loc": "2:34:3",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "لْ",
+          "definite_article_assimilated",
+          "qg-article"
+        ],
+        [
+          "مَلَٰٓئِكَةِ",
+          "noun_host_majrur",
+          "qg-noun-stem"
+        ]
+      ]
+    },
+    {
+      "boundary_match": true,
+      "deltas": [
+        "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "prepositional_lam",
+          "qg-lam"
+        ],
+        [
+          "ءَادَمَ",
+          "proper_noun",
+          "qg-proper-noun"
+        ]
+      ],
+      "loc": "2:34:5",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "ءَادَمَ",
+          "proper_name_majrur",
+          "qg-proper-noun"
+        ]
+      ]
+    },
+    {
+      "boundary_match": false,
+      "boundary_match_nfc": true,
+      "deltas": [
+        "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'",
+        "diacritic-order only: repo matrix surface stores vowel-before-shadda; live whitelist stores shadda-before-vowel (NFC-equivalent). Carve identical."
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "lam_preposition",
+          "qg-lam"
+        ],
+        [
+          "ل",
+          "assimilated_definite_article",
+          "qg-article"
+        ],
+        [
+          "نَّاسِ",
+          "noun_host",
+          "qg-noun-stem"
+        ]
+      ],
+      "loc": "24:35:44",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "ل",
+          "definite_article_assimilated",
+          "qg-article"
+        ],
+        [
+          "نَّاسِ",
+          "noun_host_majrur",
+          "qg-noun-stem"
+        ]
+      ]
+    },
+    {
+      "boundary_match": false,
+      "boundary_match_nfc": false,
+      "deltas": [
+        "segment boundaries differ: live ['لِ', 'لنَّاسِ'] vs projection ['لِ', 'ل', 'نَّاسِ']",
+        "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "lam_preposition",
+          "qg-lam"
+        ],
+        [
+          "لنَّاسِ",
+          "noun_stem",
+          "qg-noun-stem"
+        ]
+      ],
+      "loc": "2:187:63",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "ل",
+          "definite_article_assimilated",
+          "qg-article"
+        ],
+        [
+          "نَّاسِ",
+          "noun_host_majrur",
+          "qg-noun-stem"
+        ]
+      ]
+    },
+    {
+      "boundary_match": true,
+      "deltas": [
+        "clitic colour class: live 'qg-preposition' vs projection 'qg-particle-jarr-clitic'",
+        "live clitic role label empty"
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "",
+          "qg-preposition"
+        ],
+        [
+          "غَيْرِ",
+          "",
+          "qg-noun-stem"
+        ]
+      ],
+      "loc": "5:3:9",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "غَيْرِ",
+          "noun_host_majrur",
+          "qg-noun-stem"
+        ]
+      ]
+    },
+    {
+      "boundary_match": true,
+      "deltas": [
+        "clitic colour class: live 'qg-preposition' vs projection 'qg-particle-jarr-clitic'",
+        "live clitic role label empty"
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "",
+          "qg-preposition"
+        ],
+        [
+          "أَهْلِ",
+          "",
+          "qg-noun-stem"
+        ]
+      ],
+      "loc": "9:120:3",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "أَهْلِ",
+          "noun_host_majrur",
+          "qg-noun-stem"
+        ]
+      ]
+    },
+    {
+      "boundary_match": true,
+      "deltas": [
+        "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "prefix_lam_preposition",
+          "qg-lam"
+        ],
+        [
+          "دُلُوكِ",
+          "noun_stem",
+          "qg-noun-stem"
+        ]
+      ],
+      "loc": "17:78:3",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "دُلُوكِ",
+          "noun_host_majrur",
+          "qg-noun-stem"
+        ]
+      ]
+    },
+    {
+      "boundary_match": false,
+      "boundary_match_nfc": false,
+      "deltas": [
+        "segment boundaries differ: live ['لِ', 'لذَّكَرِ'] vs projection ['لِ', 'ل', 'ذَّكَرِ']",
+        "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "prefix_lam",
+          "qg-lam"
+        ],
+        [
+          "لذَّكَرِ",
+          "noun_or_adjective_stem",
+          "qg-noun-stem"
+        ]
+      ],
+      "loc": "4:11:5",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "ل",
+          "definite_article_assimilated",
+          "qg-article"
+        ],
+        [
+          "ذَّكَرِ",
+          "noun_host_majrur",
+          "qg-noun-stem"
+        ]
+      ]
+    },
+    {
+      "boundary_match": true,
+      "deltas": [
+        "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "prefix_lam",
+          "qg-lam"
+        ],
+        [
+          "قُلُوبِ",
+          "host_stem",
+          "qg-segment"
+        ],
+        [
+          "كُمْ",
+          "suffix_pronoun",
+          "qg-possessive-pronoun"
+        ]
+      ],
+      "loc": "33:53:48",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "قُلُوبِ",
+          "noun_host_majrur",
+          "qg-noun-stem"
+        ],
+        [
+          "كُمْ",
+          "attached_pronoun_mudaf_ilayh",
+          "qg-possessive-pronoun"
+        ]
+      ]
+    },
+    {
+      "boundary_match": false,
+      "boundary_match_nfc": true,
+      "deltas": [
+        "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'",
+        "diacritic-order only: repo matrix surface stores vowel-before-shadda; live whitelist stores shadda-before-vowel (NFC-equivalent). Carve identical."
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "prefix_lam",
+          "qg-lam"
+        ],
+        [
+          "بُعُولَتِ",
+          "noun_or_adjective_stem",
+          "qg-noun-stem"
+        ],
+        [
+          "هِنَّ",
+          "possessive_pronoun_3fp",
+          "qg-possessive-pronoun"
+        ]
+      ],
+      "loc": "24:31:23",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "بُعُولَتِ",
+          "noun_host_majrur",
+          "qg-noun-stem"
+        ],
+        [
+          "هِنَّ",
+          "attached_pronoun_mudaf_ilayh",
+          "qg-possessive-pronoun"
+        ]
+      ]
+    },
+    {
+      "boundary_match": true,
+      "deltas": [
+        "clitic colour class: live 'qg-lam' vs projection 'qg-particle-jarr-clitic'"
+      ],
+      "live_present": true,
+      "live_segments": [
+        [
+          "لِ",
+          "lam_preposition",
+          "qg-lam"
+        ],
+        [
+          "قَوْمِ",
+          "noun_stem",
+          "qg-noun-stem"
+        ],
+        [
+          "هِۦ",
+          "possessive_pronoun",
+          "qg-possessive-pronoun"
+        ]
+      ],
+      "loc": "61:5:4",
+      "projection_segments": [
+        [
+          "لِ",
+          "jarr_clitic_lam",
+          "qg-particle-jarr-clitic"
+        ],
+        [
+          "قَوْمِ",
+          "noun_host_majrur",
+          "qg-noun-stem"
+        ],
+        [
+          "هِۦ",
+          "attached_pronoun_mudaf_ilayh",
+          "qg-possessive-pronoun"
+        ]
+      ]
+    }
   ],
-  "normalization_exception": "qamus/lattice matrix surfaces and live rh_live_01 whitelist disagree on shadda/vowel codepoint order (both NFC-equivalent); parity comparison must normalize (NFC) before span matching. Affected here: 12:31:24, 24:35:44, 24:31:23.",
-  "same_surface_policy_fork_live": "live carves للناس as 3 segments at 24:35:44 but 2 segments at 2:187:63 (article folded into host) — live segmentation policy forks across occurrences of one surface; projection heals it."
- }
+  "occurrences": [
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 8,
+      "canonical_hash": "dcafb9c38683931f4d2a45e444c01b09a8679949e5151190ccb2b99abdd78288",
+      "loc": "12:31:24"
+    },
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 5,
+      "canonical_hash": "ecfbcfc5320b19fd6d330109586a865a36daacbcdf59231d2d33ccc027ab0630",
+      "loc": "2:34:3"
+    },
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 5,
+      "canonical_hash": "d74bb74f25bade09ebc44d92add2ec32f43c25aa2d238e97e046d7c0fef526c6",
+      "loc": "2:34:5"
+    },
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 10,
+      "canonical_hash": "8cca14e834039d116ea0cea0948077f47300076920504aea0431b09708148c5b",
+      "loc": "24:35:44"
+    },
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 9,
+      "canonical_hash": "ed762e608d952d01e581cf38f20d5537dd13e3bce606612360f970272cd7b0ec",
+      "loc": "2:187:63"
+    },
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 10,
+      "canonical_hash": "d497f3222e3d0a572bee0c446c2a09e9338394cb35b34e2279df6e17ff75f7ae",
+      "loc": "5:3:9"
+    },
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 7,
+      "canonical_hash": "d17db3c1cea3a06933d9a0ea2d5475d71bf4127843fcf6122f12d7d4cf919d3f",
+      "loc": "9:120:3"
+    },
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 5,
+      "canonical_hash": "ab7872e912e577ade3c1bbf0ffcb80f39cc93b43617b2af74613ab56e63e601e",
+      "loc": "17:78:3"
+    },
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 5,
+      "canonical_hash": "5d6ffcfd781c40438d06d36c8718e445484e869da121ae2a81034b35a8c78116",
+      "loc": "4:11:5"
+    },
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 5,
+      "canonical_hash": "fdea390df34e7c5d074711b357863984719c1ff9c097d81883cf02b31896c050",
+      "loc": "33:53:48"
+    },
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 5,
+      "canonical_hash": "8ac7b7cabe0bd3e11ef5427abd96ed3a3cf6e399990e0d31ded6b22b08cec42d",
+      "loc": "24:31:23"
+    },
+    {
+      "all_appearance_hashes_equal": true,
+      "appearance_count": 4,
+      "canonical_hash": "f4f1da458b5eeb1561b42f92aad53762d04c59957fe237386d55a8bcdcdb80aa",
+      "loc": "61:5:4"
+    }
+  ],
+  "schema": "p00.parity_report.v1",
+  "summary": {
+    "hash_parity": "IDENTICAL across all 78 appearances of every occurrence (0 forks)",
+    "live_boundary_matches": 7,
+    "live_boundary_matches_nfc": 10,
+    "live_rows_present": 12,
+    "live_rows_with_deltas": 12,
+    "live_true_carve_forks": [
+      "2:187:63",
+      "4:11:5"
+    ],
+    "normalization_exception": "qamus/lattice matrix surfaces and live rh_live_01 whitelist disagree on shadda/vowel codepoint order (both NFC-equivalent); parity comparison must normalize (NFC) before span matching. Affected here: 12:31:24, 24:35:44, 24:31:23.",
+    "occurrences": 12,
+    "same_surface_policy_fork_live": "live carves للناس as 3 segments at 24:35:44 but 2 segments at 2:187:63 (article folded into host) — live segmentation policy forks across occurrences of one surface; projection heals it.",
+    "upgrade_note": "live deltas are the CANDIDATE upgrade set; nothing deployed by this lane"
+  }
 }

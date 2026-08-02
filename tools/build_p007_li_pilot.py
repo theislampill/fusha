@@ -15,12 +15,13 @@ read-only captures) into the DERIVED repository machinery:
 * ``morpheme-occurrences.jsonl``— 12 ``qamus.particle_morpheme_occurrence.v1``
                                   identity nodes with base-letter spans.
 * ``transclusion-edges.jsonl``  — per occurrence the explicit entry-transclusion
-                                  closure: entry edge + sense edge +
+                                  closure: certified entry edge + candidate sense edge +
                                   clitic_host_edge + governor_edge +
                                   governed_expression_edge (+ the entry reverse
                                   occurrence edge), all ``qamus.graph_edge.v1``.
-* ``entry-reverse-index.json``  — p007 entry -> 12 certified occurrences -> 78
-                                  appearances grouped by page class.
+* ``entry-reverse-index.json``  — p007 entry -> 12 certified morpheme occurrences
+                                  -> 78 appearances grouped by page class;
+                                  dictionary sense remains candidate-pending.
 * ``two-vote-artifacts.v1_1.jsonl`` + ``migration-provenance.json`` — the
                                   v1 two-vote bundles migrated to
                                   ``qamus.two_vote_artifact.v1.1`` (governed
@@ -271,9 +272,9 @@ def build_edges(locations, artifacts_by_loc):
         mocc = "mocc:%s:%s" % (SOURCE_KEY, key)
         component = occ["morpheme"]["component_surface"]
         seg_fact = "fact:p00slice:%s:seg" % key.replace(":", "_")
-        func_fact = "fact:p00slice:%s:func" % key.replace(":", "_")
-        gov_fact = "fact:p00slice:%s:gov" % key.replace(":", "_")
-        case_fact = "fact:p00slice:%s:case" % key.replace(":", "_")
+        func_fact = "fact:p00slice:%s:func:v2" % key.replace(":", "_")
+        gov_fact = "fact:p00slice:%s:gov:v2" % key.replace(":", "_")
+        case_fact = "fact:p00slice:%s:case:v2" % key.replace(":", "_")
         bundle = "qamus/examples/p007-li-pilot/certification/events.jsonl#%s"
         two_vote_ref = artifacts_by_loc[occurrence_id]["artifact_id"]
         occurrence_node = "occurrence:%s" % occurrence_id
@@ -288,14 +289,16 @@ def build_edges(locations, artifacts_by_loc):
             governor_node_type = "morpheme-occurrence"
 
         def make(edge_type, from_node, from_type, to_node, to_type, fact_id,
-                 evidence_mode, guards, irab=False, with_component=False):
+                 evidence_mode, guards, irab=False, with_component=False,
+                 status="certified"):
             details = {
                 "occurrence_id": occurrence_id,
                 "surface": surface,
                 "evidence_mode": evidence_mode,
                 "fact_id": fact_id,
-                "evidence_bundle_ref": bundle % fact_id,
             }
+            if status == "certified":
+                details["evidence_bundle_ref"] = bundle % fact_id
             if with_component:
                 details["component_surface"] = component
             if irab:
@@ -308,7 +311,7 @@ def build_edges(locations, artifacts_by_loc):
                 "from_node_type": from_type,
                 "to_node_id": to_node,
                 "to_node_type": to_type,
-                "status": "certified",
+                "status": status,
                 "guards": guards,
                 "evidence": [{"address": occurrence_id, "method": "explicit_occurrence_address"}],
                 "details": details,
@@ -322,13 +325,15 @@ def build_edges(locations, artifacts_by_loc):
             ENTRY_NODE, "entry", seg_fact, "direct_source_attestation",
             ["entry_transclusion_instantiates", "surface_exact", "occurrence_address_exact"],
             with_component=True))
-        # morpheme_occurrence_instantiates_particle_sense (ontology kind:
-        # particle_sense_certified_edge, morpheme-occurrence -> sense 2 لِـ)
+        # The function fact proves this occurrence's jarr function, not its
+        # dictionary sense identity.  Preserve sense 2 as a candidate until a
+        # separate certified entry/sense fact exists; never launder the
+        # function fact into a certified sense edge.
         edges.append(make(
-            "particle_sense_certified_edge", mocc, "morpheme-occurrence",
-            SENSE_NODE, "sense", func_fact, "deterministic_derivation_from_certified_facts",
-            ["sense_transclusion_instantiates", "certified_function_selects_sense"],
-            with_component=True))
+            "particle_sense_candidate_edge", mocc, "morpheme-occurrence",
+            SENSE_NODE, "sense", func_fact, "unresolved",
+            ["candidate_sense_from_function", "requires_separate_sense_certification"],
+            with_component=True, status="candidate"))
         # attachment geometry
         edges.append(make(
             "clitic_host_edge", mocc, "morpheme-occurrence",
@@ -379,7 +384,9 @@ def build_reverse_index(locations, page_classes):
         "scope": SCOPE,
         "entry_id": ENTRY_ID,
         "source_key": SOURCE_KEY,
-        "sense_n": SENSE_N,
+        "sense_n_candidate": SENSE_N,
+        "sense_state": "candidate_pending",
+        "sense_blocker": "no separately certified occurrence-to-sense fact",
         "occurrences": occurrences,
         "totals": {
             "occurrences": len(occurrences),
@@ -498,7 +505,12 @@ def build_production_difference(locations, parity):
             "deltas": delta["deltas"],
             "affected_pages": sorted({appearance_id.split(":", 1)[0] for appearance_id in occ["appearance_ids"]}),
             "affected_appearance_count": occ["appearance_count"],
-            "required_change": "replace the live rich-whitelist row for %s with the certified canonical projection (canonical hash in projections.jsonl / parity-report.json)" % occurrence_id,
+            "required_change": "no live change authorized; resolve the candidate sense identity and governor-relation label before any public application for %s" % occurrence_id,
+            "projection_state": "candidate_pending",
+            "unresolved_dependencies": [
+                "occurrence_to_sense_certification",
+                "governor_relation_governed_key",
+            ],
             "rollback_unit": "live rich-whitelist row for %s (single-row revert)" % occurrence_id,
             "deployed": False,
         })

@@ -1,59 +1,70 @@
 {
- "schema": "p00.vn_unlock.v1",
- "family_direct": {
-  "occurrences": 12,
-  "appearances": 78,
-  "appearances_by_tranche": {
-   "VNPROP-00": 15,
-   "VNPROP-04": 9,
-   "VNPROP-05": 9,
-   "VNPROP-01": 8,
-   "VNPROP-02": 8,
-   "VNPROP-06": 5,
-   "VNPROP-03": 4,
-   "VNPROP-11": 4,
-   "VNPROP-17": 3,
-   "VNPROP-13": 3,
-   "VNPROP-07": 2,
-   "VNPROP-09": 1,
-   "VNPROP-16": 1,
-   "VNPROP-19": 1,
-   "VNPROP-14": 1,
-   "P-03": 1,
-   "VNPROP-12": 1,
-   "VNPROP-18": 1,
-   "P-02": 1
-  }
- },
- "pattern_ceiling_li_kasra_clitic": {
-  "matrix_rows": 580,
-  "appearances": 1266,
-  "appearances_by_tranche": {
-   "VNPROP-02": 266,
-   "VNPROP-03": 181,
-   "VNPROP-01": 168,
-   "VNPROP-00": 163,
-   "VNPROP-04": 144,
-   "VNPROP-05": 93,
-   "VNPROP-06": 67,
-   "VNPROP-11": 44,
-   "VNPROP-07": 36,
-   "VNPROP-17": 18,
-   "VNPROP-12": 18,
-   "VNPROP-09": 12,
-   "VNPROP-19": 10,
-   "VNPROP-18": 9,
-   "VNPROP-10": 8,
-   "VNPROP-16": 7,
-   "VNPROP-15": 5,
-   "P-03": 3,
-   "VNPROP-13": 3,
-   "VNPROP-08": 3,
-   "P-01": 2,
-   "P-02": 2,
-   "VNPROP-14": 2,
-   "P-00": 2
+  "family_direct": {
+    "appearances": 78,
+    "appearances_by_tranche": {
+      "P-02": 1,
+      "P-03": 1,
+      "VNPROP-00": 15,
+      "VNPROP-01": 8,
+      "VNPROP-02": 8,
+      "VNPROP-03": 4,
+      "VNPROP-04": 9,
+      "VNPROP-05": 9,
+      "VNPROP-06": 5,
+      "VNPROP-07": 2,
+      "VNPROP-09": 1,
+      "VNPROP-11": 4,
+      "VNPROP-12": 1,
+      "VNPROP-13": 3,
+      "VNPROP-14": 1,
+      "VNPROP-16": 1,
+      "VNPROP-17": 3,
+      "VNPROP-18": 1,
+      "VNPROP-19": 1
+    },
+    "occurrences": 12,
+    "projection_state": "candidate_pending",
+    "unresolved_dependencies": [
+      "occurrence_to_sense_certification",
+      "governor_relation_governed_key"
+    ]
   },
-  "note": "ceiling only: each row still needs per-occurrence host-noun evidence before the certified template applies (lam+verb ta'lil and lexical-lam rivals excluded per-occurrence, cf. 48:29:42 and 2:187:9 rejections)"
- }
+  "not_deployed": true,
+  "pattern_ceiling_li_kasra_clitic": {
+    "appearances": 1266,
+    "appearances_by_tranche": {
+      "P-00": 2,
+      "P-01": 2,
+      "P-02": 2,
+      "P-03": 3,
+      "VNPROP-00": 163,
+      "VNPROP-01": 168,
+      "VNPROP-02": 266,
+      "VNPROP-03": 181,
+      "VNPROP-04": 144,
+      "VNPROP-05": 93,
+      "VNPROP-06": 67,
+      "VNPROP-07": 36,
+      "VNPROP-08": 3,
+      "VNPROP-09": 12,
+      "VNPROP-10": 8,
+      "VNPROP-11": 44,
+      "VNPROP-12": 18,
+      "VNPROP-13": 3,
+      "VNPROP-14": 2,
+      "VNPROP-15": 5,
+      "VNPROP-16": 7,
+      "VNPROP-17": 18,
+      "VNPROP-18": 9,
+      "VNPROP-19": 10
+    },
+    "matrix_rows": 580,
+    "note": "candidate ceiling only: each row still needs per-occurrence host-noun, entry/sense and governor-relation evidence; lam+verb ta'lil and lexical-lam rivals remain excluded per occurrence",
+    "projection_state": "candidate_ceiling_only",
+    "unresolved_dependencies": [
+      "occurrence_to_sense_certification",
+      "governor_relation_governed_key"
+    ]
+  },
+  "schema": "p00.vn_unlock.v1"
 }

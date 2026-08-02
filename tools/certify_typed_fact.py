@@ -33,8 +33,9 @@ of the ten non-two-vote typed-claim families, because the MCP verbatim evidence
 file their family contract declares (``sufaha-evidence.jsonl``) is not committed
 in-repo — and it stays refused even when a temp packet makes that address
 resolvable, since family authority is the committed contract's evidence, not a
-citation string. Only ``governor_relation`` certifies there, against the
-validated two-vote artifact. The full transition + revocation cascade is
+citation string. Its legacy ``governor_relation`` also remains refused: the
+fact value predates the exact conclusion-and-reason projection required here.
+The full transition + revocation cascade is
 exercised by ``--self-test`` over a fact type with a registered producer
 contract, so no family name is ever borrowed to make a fixture green.
 """
@@ -719,6 +720,133 @@ def load_two_vote_row(bundle_path: os.PathLike[str] | str,
     return row, errors
 
 
+def _two_vote_expected_fact_value(fact_type: str,
+                                  vote: Dict[str, Any],
+                                  schema: str = "qamus.two_vote_artifact.v1") -> Optional[Dict[str, Any]]:
+    """Project one agreed vote into the exact closed value shape for a fact type.
+
+    A shared occurrence is not claim identity.  The certifier therefore accepts
+    only fact values whose complete JSON value is the type-specific projection
+    below, including the agreed reason key.  Producers that need additional
+    lexical or presentation fields must keep those in separate facts rather than
+    smuggling them through a grammar certification.
+    """
+
+    conclusion = vote.get("conclusion") or {}
+    case_or_mood = conclusion.get("case_or_mood") or {}
+    reason_key = vote.get("reason_key")
+    function = conclusion.get("function") or conclusion.get("contextual_function")
+    if schema == "qamus.two_vote_artifact.v1.1":
+        compact = two_vote.compact
+        reason_key = compact(vote.get("reason_key"))
+        governor = conclusion.get("governor")
+        governor_identity = None
+        if isinstance(governor, dict):
+            governor_identity = {
+                "loc": compact(governor.get("loc")),
+                "surface": (
+                    compact(governor.get("normalized_surface"))
+                    or compact(governor.get("surface"))
+                ),
+            }
+        canonical_case_or_mood = {
+            "mood_basis": compact(case_or_mood.get("mood_basis")) or None,
+            "sign": compact(case_or_mood.get("sign")),
+            "sign_visibility": compact(case_or_mood.get("sign_visibility")),
+            "value": compact(case_or_mood.get("value")),
+        }
+        if fact_type == "governor_relation":
+            return {
+                "attachment_key": compact(conclusion.get("attachment_key")) or None,
+                "governed_expression": compact(conclusion.get("governed_expression")) or None,
+                "governor": governor_identity,
+                "reason_key": reason_key,
+            }
+        if fact_type == "case_mood_governor":
+            return {
+                "case_or_mood": canonical_case_or_mood,
+                "governed_expression": compact(conclusion.get("governed_expression")) or None,
+                "governor": governor_identity,
+                "reason_key": reason_key,
+            }
+        if fact_type == "contextual_function":
+            return {"function": compact(conclusion.get("function")), "reason_key": reason_key}
+        if fact_type == "irab_rendering":
+            return {
+                "conclusion": {
+                    "attachment_key": compact(conclusion.get("attachment_key")) or None,
+                    "case_or_mood": canonical_case_or_mood,
+                    "function": compact(conclusion.get("function")),
+                    "governed_expression": compact(conclusion.get("governed_expression")) or None,
+                    "governor": governor_identity,
+                },
+                "reason_key": reason_key,
+            }
+        return None
+    if fact_type == "governor_relation":
+        return {
+            "attachment": conclusion.get("attachment"),
+            "governed_expression": conclusion.get("governed_expression"),
+            "governor": copy.deepcopy(conclusion.get("governor")),
+            "reason_key": reason_key,
+        }
+    if fact_type == "case_mood_governor":
+        return {
+            "case_or_mood": copy.deepcopy(case_or_mood),
+            "governed_expression": conclusion.get("governed_expression"),
+            "governor": copy.deepcopy(conclusion.get("governor")),
+            "reason_key": reason_key,
+        }
+    if fact_type == "contextual_function":
+        return {"function": function, "reason_key": reason_key}
+    if fact_type == "irab_rendering":
+        return {"conclusion": copy.deepcopy(conclusion), "reason_key": reason_key}
+    return None
+
+
+def two_vote_claim_errors(fact: Dict[str, Any],
+                          two_vote_row: Dict[str, Any]) -> List[str]:
+    """Refuse a two-vote artifact unless it proves this exact typed fact claim."""
+
+    errors: List[str] = []
+    votes = two_vote_row.get("votes") or []
+    if len(votes) != 2 or not all(isinstance(vote, dict) for vote in votes):
+        return ["two-vote claim binding requires exactly two vote records"]
+    fact_type = str(fact.get("fact_type") or "")
+    schema = str(two_vote_row.get("schema") or "")
+    expected = _two_vote_expected_fact_value(fact_type, votes[0], schema)
+    second_expected = _two_vote_expected_fact_value(fact_type, votes[1], schema)
+    if expected is None:
+        errors.append("two-vote claim has no closed fact-value projection for %s" % fact_type)
+    elif _canonical(expected) != _canonical(second_expected):
+        errors.append(
+            "two-vote claim projection for %s is not exactly agreed by both votes"
+            % fact_type
+        )
+    elif _canonical(fact.get("fact_value")) != _canonical(expected):
+        errors.append(
+            "two-vote claim does not bind the exact %s fact value and agreed reason key"
+            % fact_type
+        )
+
+    occurrence = two_vote_row.get("occurrence") or {}
+    expected_loc = occurrence.get("quran_loc")
+    expected_surface = occurrence.get("surface")
+    spans = fact.get("surface_spans") or []
+    exact_surface_bound = any(
+        isinstance(span, dict)
+        and span.get("quran_loc") == expected_loc
+        and span.get("surface") == expected_surface
+        for span in spans
+    )
+    if not exact_surface_bound:
+        errors.append(
+            "two-vote claim does not bind the artifact's exact occurrence surface %s"
+            % expected_loc
+        )
+    return errors
+
+
 def evidence_bundle_errors(fact: Dict[str, Any],
                            status_by_id: Dict[str, str],
                            *,
@@ -834,6 +962,8 @@ def evidence_bundle_errors(fact: Dict[str, Any],
                     "two-vote artifact occurrence %s is not among the fact's "
                     "source addresses" % bundle_loc
                 )
+            for claim_error in two_vote_claim_errors(fact, two_vote_row):
+                err(claim_error)
 
     # 6. Conflict record must exist (possibly empty) — certifying over an
     # unattached known conflict is a violation; attachment is representable.
@@ -903,6 +1033,12 @@ class TypedFactCertificationStore:
                     "fact": event.get("fact"),
                     "contract_id": event.get("contract_id"),
                 }
+            elif event.get("event_type") == "dependency_rebind" and fact_id in state:
+                fact = copy.deepcopy(state[fact_id].get("fact") or {})
+                fact["dependent_fact_ids"] = copy.deepcopy(
+                    event.get("dependent_fact_ids") or []
+                )
+                state[fact_id]["fact"] = fact
             elif fact_id in state:
                 state[fact_id]["status"] = event.get("to_status")
         return state
@@ -1024,6 +1160,49 @@ class TypedFactCertificationStore:
             "triggered_by": triggered_by,
         })
 
+    def rebind_dependents(self, fact_id: str, dependent_fact_ids: List[str], *,
+                          actor: str, timestamp: str, reason: str) -> Dict[str, Any]:
+        """Append an effective reverse-dependency update without rewriting a fact.
+
+        ``dependent_fact_ids`` is state-machine metadata (not linguistic claim
+        substance), so a versioned successor may replace a revoked historical
+        target while the original register event remains immutable.
+        """
+
+        state = self.state()
+        entry = state.get(fact_id)
+        if entry is None:
+            raise CertificationError("unknown fact_id: %s" % fact_id)
+        if not isinstance(dependent_fact_ids, list) or any(
+                not isinstance(item, str) or not item for item in dependent_fact_ids):
+            raise CertificationError("dependent_fact_ids must be a list of non-empty ids")
+        if len(dependent_fact_ids) != len(set(dependent_fact_ids)):
+            raise CertificationError("dependent_fact_ids must not contain duplicates")
+        if fact_id in dependent_fact_ids:
+            raise CertificationError("a fact cannot depend on itself")
+        missing = sorted(item for item in dependent_fact_ids if item not in state)
+        if missing:
+            raise CertificationError(
+                "dependency rebind targets unregistered facts: %s" % ", ".join(missing)
+            )
+        old_ids = copy.deepcopy((entry.get("fact") or {}).get("dependent_fact_ids") or [])
+        return self._append_event({
+            "event_type": "dependency_rebind",
+            "fact_id": fact_id,
+            "contract_id": entry.get("contract_id"),
+            "fact_type": (entry.get("fact") or {}).get("fact_type"),
+            "evidence_mode": (entry.get("fact") or {}).get("evidence_mode"),
+            "from_status": entry["status"],
+            "to_status": entry["status"],
+            "actor": actor,
+            "timestamp": timestamp,
+            "reason": reason,
+            "from_dependent_fact_ids": old_ids,
+            "dependent_fact_ids": copy.deepcopy(dependent_fact_ids),
+            "evidence_bundle_ref": None,
+            "triggered_by": None,
+        })
+
     # -- revocation cascade (doc section 5) --------------------------------
     def _dependents_of(self, fact_id: str, state: Dict[str, Dict[str, Any]]) -> List[str]:
         revoked_fact = (state.get(fact_id) or {}).get("fact") or {}
@@ -1098,6 +1277,7 @@ class TypedFactCertificationStore:
     def validate_trail(self) -> List[str]:
         errors: List[str] = []
         state: Dict[str, Dict[str, Any]] = {}
+        last_certification_event: Dict[str, Dict[str, Any]] = {}
         previous_line: Optional[str] = None
         for number, event in enumerate(self._events(), 1):
             prefix = "event %d" % number
@@ -1126,6 +1306,43 @@ class TypedFactCertificationStore:
                     "status": "candidate",
                     "fact": event.get("fact") or {},
                 }
+            elif event.get("event_type") == "dependency_rebind":
+                entry = state.get(fact_id)
+                if entry is None:
+                    errors.append(
+                        "%s: dependency rebind for unregistered fact %s" % (prefix, fact_id)
+                    )
+                else:
+                    if event.get("from_status") != entry["status"] \
+                            or event.get("to_status") != entry["status"]:
+                        errors.append(
+                            "%s: dependency rebind must preserve folded status %r"
+                            % (prefix, entry["status"])
+                        )
+                    fact = copy.deepcopy(entry.get("fact") or {})
+                    old_ids = fact.get("dependent_fact_ids") or []
+                    new_ids = event.get("dependent_fact_ids")
+                    if event.get("from_dependent_fact_ids") != old_ids:
+                        errors.append(
+                            "%s: dependency rebind source ids do not match folded payload"
+                            % prefix
+                        )
+                    if not isinstance(new_ids, list) or any(
+                            not isinstance(item, str) or not item for item in (new_ids or [])):
+                        errors.append(
+                            "%s: dependency rebind requires a list of non-empty ids" % prefix
+                        )
+                    elif len(new_ids) != len(set(new_ids)):
+                        errors.append("%s: dependency rebind contains duplicate ids" % prefix)
+                    else:
+                        missing = sorted(item for item in new_ids if item not in state)
+                        if missing:
+                            errors.append(
+                                "%s: dependency rebind targets unregistered facts: %s"
+                                % (prefix, ", ".join(missing))
+                            )
+                        fact["dependent_fact_ids"] = copy.deepcopy(new_ids)
+                        entry["fact"] = fact
             else:
                 entry = state.get(fact_id)
                 if entry is None:
@@ -1146,7 +1363,49 @@ class TypedFactCertificationStore:
                     event.get("evidence_bundle_ref"), dict
                 ):
                     errors.append("%s: certification event requires an evidence bundle reference" % prefix)
+                if event.get("to_status") == "certified":
+                    last_certification_event[fact_id] = event
             previous_line = _canonical(event)
+
+        # A hash-valid historical event is not proof that its claim still meets
+        # the current authority contract. Re-open the evidence behind every
+        # *currently* certified two-vote fact and bind it to the registered fact
+        # payload. A later append-only revocation removes the fact from this
+        # effective-state audit without rewriting its historical event.
+        for fact_id, entry in state.items():
+            if entry["status"] != "certified":
+                continue
+            fact = entry.get("fact") or {}
+            resolved_tier, _projector_id, _basis = producing_projector_gate(fact)
+            if fact.get("fact_type") not in TWO_VOTE_FACT_TYPES \
+                    and resolved_tier != "two_vote_required":
+                continue
+            cert_event = last_certification_event.get(fact_id) or {}
+            bundle_ref = cert_event.get("evidence_bundle_ref") or {}
+            bundle_name = bundle_ref.get("two_vote_bundle")
+            artifact_id = bundle_ref.get("two_vote_artifact_id")
+            if not bundle_name or not artifact_id:
+                errors.append(
+                    "current two-vote certification %s has no reopenable bundle and artifact id"
+                    % fact_id
+                )
+                continue
+            bundle_path = Path(str(bundle_name))
+            if not bundle_path.is_absolute():
+                bundle_path = ROOT / bundle_path
+            row, bundle_errors = load_two_vote_row(bundle_path, str(artifact_id))
+            for message in bundle_errors:
+                errors.append("current two-vote certification %s: %s" % (fact_id, message))
+            if row is None:
+                continue
+            loc = (row.get("occurrence") or {}).get("quran_loc")
+            if loc not in {item.get("address") for item in _addresses(fact)}:
+                errors.append(
+                    "current two-vote certification %s: artifact occurrence %s is not "
+                    "among the fact's source addresses" % (fact_id, loc)
+                )
+            for message in two_vote_claim_errors(fact, row):
+                errors.append("current two-vote certification %s: %s" % (fact_id, message))
         # Cascade invariant: a derived fact may not remain certified after any
         # input fact lost certification (a revoke without cascade is invalid).
         for fact_id, entry in state.items():
@@ -1343,6 +1602,14 @@ def self_test() -> int:
             "12", "governor_relation", "direct_source_attestation",
             addresses=[{"address": "quran:2:13:12", "source_kind": "quran_token"}],
         )
+        governed_vote = two_vote.sample_verified_row()["votes"][0]
+        governed["fact_value"] = _two_vote_expected_fact_value(
+            "governor_relation", governed_vote, "qamus.two_vote_artifact.v1"
+        )
+        governed["surface_spans"] = [{
+            "quran_loc": "quran:2:13:12",
+            "surface": "السُّفَهَاءُ",
+        }]
         store.register(governed, contract_id="fixture:contract", actor=_ACTOR, timestamp=_TS)
         store.transition(governed["fact_id"], "review_required", actor=_ACTOR,
                          timestamp=_TS, reason="bundle assembled")
@@ -1556,8 +1823,9 @@ def demo_sufaha() -> int:
         # makes the review-artifact address resolvable, and it still changes
         # nothing: the ten non-two-vote families draw their authority from the
         # committed family contract, whose declared evidence file is absent from
-        # this repository, so they stay refused. Only governor_relation may certify,
-        # because a validated two-vote artifact is its authority.
+        # this repository, so they stay refused. The legacy governor_relation also
+        # stays refused because its value does not exactly project the votes'
+        # conclusion and reason key. Location equality alone is no longer enough.
         fixture_packet = Path(td) / "fixture-packet"
         fixture_packet.mkdir()
         standin_rows = [
@@ -1581,6 +1849,7 @@ def demo_sufaha() -> int:
                                timestamp=_TS, reason="fixture bundle under review")
         certified_types: List[str] = []
         family_refusals: Dict[str, str] = {}
+        claim_refusals: Dict[str, str] = {}
         for fact in _sufaha_dependency_order(facts):
             kwargs = {"packet_dir": fixture_packet}
             if fact.get("fact_type") in TWO_VOTE_FACT_TYPES:
@@ -1591,52 +1860,32 @@ def demo_sufaha() -> int:
                                    **kwargs)
                 certified_types.append(str(fact.get("fact_type")))
             except CertificationError as exc:
-                family_refusals[str(fact.get("fact_type"))] = str(exc)
-        expected = sorted(str(fact.get("fact_type")) for fact in facts
-                          if fact.get("fact_type") in TWO_VOTE_FACT_TYPES)
-        if sorted(certified_types) != expected:
-            print("SUFAHA DEMO FAIL: fixture packet certified %s, expected exactly the "
-                  "two-vote families %s" % (sorted(certified_types), expected))
+                destination = (claim_refusals if "two-vote claim" in str(exc)
+                               else family_refusals)
+                destination[str(fact.get("fact_type"))] = str(exc)
+        if certified_types:
+            print("SUFAHA DEMO FAIL: fixture packet certified claims without exact "
+                  "fact-value binding: %s" % sorted(certified_types))
             return 1
         if not family_refusals or not all(
                 "not committed in-repo" in message for message in family_refusals.values()):
             print("SUFAHA DEMO FAIL: family refusals must all name the uncommitted evidence:",
                   sorted(family_refusals)[:3])
             return 1
-        print("  leg B (resolvable fixture packet): %d/%d certified — only %s, whose authority is "
-              "the CONSUMED two-vote artifact (%s); the %d family facts stay refused even with the "
-              "cited artifact present in the packet, because %s declares that evidence in-repo and "
-              "it is not committed"
-              % (len(certified_types), len(facts), ", ".join(expected),
-                 TWO_VOTE_SAMPLE.relative_to(ROOT), len(family_refusals),
-                 SUFAHA_CONTRACT.relative_to(ROOT).as_posix()))
-
-        # Leg C — revocation over the one fact that could certify. No cascade is
-        # possible here and none is claimed: nothing in this packet derives from the
-        # two-vote fact, and the derivations that DO exist could never certify. The
-        # cascade itself is exercised in --self-test, over a fact type with a
-        # registered producer contract, so no family name has to be borrowed.
-        certified_ids = store_b.certified_fact_ids()
-        events = store_b.revoke(certified_ids[0], actor=actor, timestamp=_TS,
-                                reason="demo: two-vote artifact withdrawn")
-        statuses = store_b.status_by_id()
-        cascade = [event for event in events if event["event_type"] == "revoke_cascade"]
-        if statuses[certified_ids[0]] != "review_required":
-            print("SUFAHA DEMO FAIL: revoked fact did not drop to review_required")
-            return 1
-        if cascade:
-            print("SUFAHA DEMO FAIL: a cascade was reported where no dependent was certified")
-            return 1
-        if store_b.certified_fact_ids():
-            print("SUFAHA DEMO FAIL: a certified fact survived its own revocation")
+        if set(claim_refusals) != {"governor_relation"}:
+            print("SUFAHA DEMO FAIL: expected the legacy governor_relation to fail exact "
+                  "claim binding, saw %s" % sorted(claim_refusals))
             return 1
         trail_errors = store_b.validate_trail()
         if trail_errors:
             print("SUFAHA DEMO FAIL: fixture trail invalid:", trail_errors[:3])
             return 1
-        print("  leg C (revocation): revoking the one certified fact left 0 certified and 0 "
-              "cascade events — honestly, because no certified dependent exists to drop; the "
-              "cascade machinery is exercised by --self-test, and the trail validates")
+        print("  leg B (resolvable fixture packet): 0/%d certified — %d family facts remain "
+              "blocked on committed evidence; governor_relation remains blocked because its "
+              "legacy value does not exactly bind the votes' conclusion and reason key"
+              % (len(facts), len(family_refusals)))
+        print("  revocation cascade remains exercised by --self-test over an exactly bound "
+              "two-vote fixture; this legacy packet has no certified fact to revoke")
 
     print("  committed artifacts untouched: certification was demonstrated only in "
           "temp stores; the in-repo blocker (uncommitted MCP verbatim evidence) is "

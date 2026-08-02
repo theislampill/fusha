@@ -157,7 +157,7 @@ Fact-level modes as committed in `sufaha-contract.json`:
 | `paired_y_removal` | `paired_form_inference` | dependency on the certified pair + pairing rule in the chain |
 | `plural_lexical_body` | `normalized_lexical_body` | normalization step recorded |
 | `case_ending` (nominative, visible damma) | `direct_source_attestation` | 1 for the *sign*; rung 4 for surfacing the conclusion |
-| `governor_relation` (fāʿil of آمَنَ) | `direct_source_attestation` | iʿrāb-bearing → its learner-facing surfacing requires the token-layer two-vote artifact; the sample verified bundle in `qamus/examples/two_vote_artifact.sample.jsonl` is exactly this occurrence |
+| `governor_relation` (fāʿil of آمَنَ) | `direct_source_attestation` | a new iʿrāb-bearing certification requires the token-layer two-vote artifact plus exact fact-value, reason-key, occurrence and written-surface binding; current certified state is re-audited from the referenced bundle, and the p007 location-only legacy events are append-only revoked in favor of exact successors |
 
 This packet is the model of *heterogeneous* fact-level certification: one word,
 eleven facts, four evidence modes — certification is per-fact, never per-word.
