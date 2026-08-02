@@ -38,6 +38,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import functools
 import hashlib
 import json
 import os
@@ -94,6 +95,19 @@ TWO_VOTE_FACT_TYPES = {
 # typed-claim family this plane already knows how to gate. Anything else has no
 # contract at all, so relabelling a gated fact's type/projector/producer sheds the
 # gate INTO refusal, never out of it. Extending this list is a deliberate edit.
+#
+# Membership here is NECESSARY BUT NEVER SUFFICIENT: a fact-type string is not a
+# credential. A recognised family that resolves NO registered projector gate must
+# additionally satisfy the authority its own family actually has --
+#
+#   * two-vote families certify only against a validated two-vote artifact naming
+#     the fact (see ``two_vote_refusal``), which is external evidence, not a name;
+#   * every other recognised family must cite the committed family contract that
+#     declares it, and may not claim a producer or projector that contract does
+#     not use (see ``family_contract_reference_refusal``).
+#
+# So a foreign payload relabelled into a recognised family cannot borrow that
+# family's authority from the fact_type field.
 RECOGNISED_TYPED_CLAIM_FACT_TYPES = frozenset(TWO_VOTE_FACT_TYPES) | frozenset({
     # proof-noun-sufaha typed-claim families (qamus/examples/proof-noun-sufaha/)
     "case_ending",
@@ -126,6 +140,107 @@ def _canonical(value: Any) -> str:
 
 def _sha256(text: str) -> str:
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+FAMILY_CONTRACT_ARTIFACTS = (
+    ROOT / "qamus" / "examples" / "proof-noun-sufaha" / "sufaha-contract.json",
+)
+
+
+@functools.lru_cache(maxsize=1)
+def family_contract_index() -> Dict[str, Dict[str, frozenset]]:
+    """Per declared family, the identity its committed family contract itself uses.
+
+    Read out of the committed contracts rather than hard-coded here, so a family's
+    permitted anchor cannot drift away from the artifact that defines it. For each
+    fact type the contract declares we keep the evidence artifact its facts are
+    anchored to (``source_address`` minus the fragment) and the producer/projector
+    identities those facts carry.
+    """
+
+    index: Dict[str, Dict[str, set]] = {}
+    for path in FAMILY_CONTRACT_ARTIFACTS:
+        if not path.exists():
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):  # a damaged contract declares nothing
+            continue
+        for fact in payload.get("facts") or []:
+            if not isinstance(fact, dict):
+                continue
+            fact_type = str(fact.get("fact_type") or "")
+            anchor = str(((fact.get("source_address") or {}).get("address")) or "")
+            if not fact_type or not anchor:
+                continue
+            declared = index.setdefault(
+                fact_type, {"anchors": set(), "producers": set(), "projectors": set()}
+            )
+            declared["anchors"].add(anchor.split("#", 1)[0])
+            producer = str(((fact.get("producer") or {}).get("id")) or "")
+            if producer:
+                declared["producers"].add(producer)
+            projector = str(((fact.get("rule_projector") or {}).get("projector_id")) or "")
+            if projector:
+                declared["projectors"].add(projector)
+    return {
+        fact_type: {key: frozenset(values) for key, values in declared.items()}
+        for fact_type, declared in index.items()
+    }
+
+
+def _cited_addresses(fact: Dict[str, Any]) -> List[str]:
+    """Every source address the fact cites, across all three carriers."""
+
+    values: List[str] = []
+    carriers: List[Any] = [_addresses(fact), [fact.get("source_address")]]
+    carriers.append((fact.get("dependencies") or {}).get("source_addresses") or [])
+    for carrier in carriers:
+        for item in carrier if isinstance(carrier, list) else []:
+            if isinstance(item, dict) and item.get("address"):
+                values.append(str(item["address"]))
+    return values
+
+
+def family_contract_reference_refusal(fact: Dict[str, Any]) -> Optional[str]:
+    """Refusal when a recognised-but-ungated family is not anchored to its contract.
+
+    A registered projector gate already decides what a fact needs. Where no such
+    gate exists, the fact must be anchored to the committed contract that declares
+    its family; otherwise the only thing authorizing certification would be the
+    fact_type STRING, which any relabelled payload can write.
+    """
+
+    fact_type = str(fact.get("fact_type") or "")
+    declared = family_contract_index().get(fact_type)
+    if not declared:
+        return (
+            "fact_type %r resolves no registered projector gate and no committed family contract "
+            "declares it; a fact-type name can never by itself authorize certification" % fact_type
+        )
+    anchors = declared["anchors"]
+    if not any(address.split("#", 1)[0] in anchors for address in _cited_addresses(fact)):
+        return (
+            "fact_type %r resolves no registered projector gate, so it must cite the family contract "
+            "evidence that declares it (one of: %s); this fact cites none of them, so its family "
+            "membership is an unverified relabelling"
+            % (fact_type, ", ".join(sorted(anchors)))
+        )
+    producer = str(((fact.get("producer") or {}).get("id")) or "")
+    if producer and declared["producers"] and producer not in declared["producers"]:
+        return (
+            "fact_type %r is declared by a family contract produced by %s; this fact claims producer "
+            "%r, so it is not a fact of that family"
+            % (fact_type, ", ".join(sorted(declared["producers"])), producer)
+        )
+    projector = str(((fact.get("rule_projector") or {}).get("projector_id")) or "")
+    if projector and declared["projectors"] and projector not in declared["projectors"]:
+        return (
+            "fact_type %r is declared by a family contract projected by %s; this fact claims projector "
+            "%r, so it is not a fact of that family"
+            % (fact_type, ", ".join(sorted(declared["projectors"])), projector)
+        )
+    return None
 
 
 def _gate_rank(tier):
@@ -204,14 +319,22 @@ def gate_refusal(fact: Dict[str, Any]) -> Optional[str]:
             "so no evidence bundle, dependency or vote can certify it"
             % (NEVER_AUTO_RESOLVE, basis, projector_id or fact.get("fact_type"))
         )
-    if tier is None and str(fact.get("fact_type") or "") not in RECOGNISED_TYPED_CLAIM_FACT_TYPES:
-        # No registered producer AND no recognised typed-claim family: this fact has
-        # no contract deciding what evidence it needs, so it can never be certified.
-        return (
-            "no registered producer gate and no recognised typed-claim contract for fact_type %r "
-            "/ projector %r; an unrecognised producer can never be certified"
-            % (fact.get("fact_type"), projector_id)
-        )
+    fact_type = str(fact.get("fact_type") or "")
+    if tier is None:
+        if fact_type not in RECOGNISED_TYPED_CLAIM_FACT_TYPES:
+            # No registered producer AND no recognised typed-claim family: this fact
+            # has no contract deciding what evidence it needs, so it can never be
+            # certified.
+            return (
+                "no registered producer gate and no recognised typed-claim contract for fact_type %r "
+                "/ projector %r; an unrecognised producer can never be certified"
+                % (fact.get("fact_type"), projector_id)
+            )
+        if fact_type not in TWO_VOTE_FACT_TYPES:
+            # Recognised but ungated: the family name proves nothing on its own, so
+            # the fact must be anchored to the contract that declares the family.
+            # (Two-vote families are already bound to a validated vote artifact.)
+            return family_contract_reference_refusal(fact)
     return None
 
 
@@ -791,6 +914,20 @@ def _synthetic_fact(suffix: str, fact_type: str, mode: str, *,
         "certification": {"status": "candidate", "reason": "fixture input"},
         "unresolved_blockers": [],
     }
+    declared = family_contract_index().get(fact_type)
+    if declared and fact_type not in TWO_VOTE_FACT_TYPES:
+        # A recognised family with no registered projector gate must be anchored to
+        # the contract that declares it, so a legitimate fixture carries that
+        # reference exactly as the real family facts do. It is declared as a
+        # dependency rather than as primary evidence because these fixtures exercise
+        # the state machine, not the (separately tested) packet resolution of a
+        # review artifact.
+        fact["dependencies"]["source_addresses"] = list(
+            fact["dependencies"]["source_addresses"]
+        ) + [{
+            "address": "%s#fixture=%s" % (sorted(declared["anchors"])[0], suffix),
+            "source_kind": "review_artifact",
+        }]
     if chain_inputs:
         fact["derivation_chain"] = [{
             "step_id": "fixture.step.%s" % suffix,

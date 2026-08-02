@@ -431,7 +431,7 @@ class _FrozenSuiteTrap(list):
 
 
 TESTS = _FrozenSuiteTrap()
-EXPECTED_MINIMUM_TESTS = 66
+EXPECTED_MINIMUM_TESTS = 67
 CRITICAL_PROBES = (
     "test_candidate_admission_requires_complete_authority",
     "test_carried_membership_binds_the_exact_row_body",
@@ -457,6 +457,7 @@ CRITICAL_PROBES = (
     "test_filtered_run_cannot_create_false_whole_family_provenance",
     "test_published_typed_edge_counts_match_the_scan",
     "test_unrecognised_producer_can_never_be_certified",
+    "test_no_recognised_family_name_authorizes_certification",
     "test_both_bridge_output_fact_types_are_registered",
     "test_no_frozen_partial_suite_can_be_run",
 )
@@ -1592,6 +1593,26 @@ def test_published_typed_edge_counts_match_the_scan() -> None:
     check("the as-built fixture record count matches the fixture metadata",
           "(%d records)" % fixtures["row_count"] in doc)
 
+    # The documented abstention vocabulary is a CLOSED set: it must equal
+    # BLOCKER_STATUS exactly, so neither a new blocker nor a deleted one can drift
+    # away from the published enumeration.
+    sentence = _re.search(r"\*\*Abstention vocabulary\*\*(.+?)Support requires", doc, _re.S)
+    check("the as-built map enumerates the abstention vocabulary", sentence is not None)
+    documented = set(_re.findall(r"`([a-z_]+)`", sentence.group(1)))
+    actual = set(bridge.BLOCKER_STATUS)
+    check("the documented blocker set is exactly BLOCKER_STATUS (missing %s, extra %s)"
+          % (sorted(actual - documented), sorted(documented - actual)),
+          documented == actual)
+    counted = _re.search(r"\*\*Abstention vocabulary\*\* \(closed, \*\*(\w+)\*\* blockers", doc)
+    words = {"sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19,
+             "twenty": 20, "twenty-one": 21, "twenty-two": 22}
+    check("the as-built map states its blocker count",
+          counted is not None and counted.group(1) in words)
+    check("the stated blocker count matches the enumeration",
+          words[counted.group(1)] == len(actual))
+    check("every documented blocker is stated once",
+          len(_re.findall(r"`([a-z_]+)`", sentence.group(1))) == len(documented))
+
 
 def test_unrecognised_producer_can_never_be_certified() -> None:
     """Relabelling all three identities must shed the gate INTO refusal."""
@@ -1624,14 +1645,112 @@ def test_unrecognised_producer_can_never_be_certified() -> None:
         else:
             raise AssertionError("FAILED: an unrecognised producer reached certified")
 
-    # Recognised typed-claim families remain certifiable under their own contracts.
+    # Recognised typed-claim families remain certifiable under their OWN contracts:
+    # membership is not blanket-refused, it is bound to the declaring artifact.
     for recognised in ("governor_relation", "paired_y_removal", "plural_pattern"):
-        probe = copy.deepcopy(base)
-        probe["fact_type"] = recognised
-        probe["rule_projector"] = dict(probe["rule_projector"], projector_id="nobody.unregistered.v9")
-        probe["producer"] = {"id": "tools/other.py", "version": "1.0.0"}
+        probe = _family_member(base, recognised, certifier)
         check("recognised family %s is not blanket-refused" % recognised,
               certifier.gate_refusal(probe) is None)
+
+
+def _family_member(base, fact_type, certifier):
+    """A fact that legitimately belongs to ``fact_type``'s family.
+
+    Two-vote families are bound by their vote artifact; a contract-declared family
+    is bound to the artifact that declares it, so a legitimate member carries that
+    anchor and the producer/projector identity the contract itself uses.
+    """
+
+    fact = copy.deepcopy(base)
+    fact["fact_type"] = fact_type
+    declared = certifier.family_contract_index().get(fact_type)
+    if declared is None:
+        # Not declared by a committed contract: a genuine member of such a family
+        # carries no A3 projector identity at all (it is bound by its vote artifact).
+        fact.pop("rule_projector", None)
+        fact.pop("producer", None)
+        return fact
+    fact["dependencies"] = dict(fact.get("dependencies") or {})
+    fact["dependencies"]["source_addresses"] = list(
+        fact["dependencies"].get("source_addresses") or []
+    ) + [{"address": "%s#fact=1" % sorted(declared["anchors"])[0],
+          "source_kind": "review_artifact"}]
+    fact["producer"] = {"id": sorted(declared["producers"])[0], "version": "1.0.0"}
+    fact["rule_projector"] = dict(fact.get("rule_projector") or {},
+                                  projector_id=sorted(declared["projectors"])[0])
+    return fact
+
+
+def test_no_recognised_family_name_authorizes_certification() -> None:
+    """Relabelling into ANY recognised family must never certify an A3 candidate.
+
+    ``RECOGNISED_TYPED_CLAIM_FACT_TYPES`` is a vocabulary, not a credential: a real
+    bridge candidate wearing a recognised family's name, with a foreign projector
+    and producer, must be refused for every single member — while a genuine member
+    of each of those families stays certifiable.
+    """
+
+    import tempfile
+    from tools import certify_typed_fact as certifier
+
+    families = sorted(certifier.RECOGNISED_TYPED_CLAIM_FACT_TYPES)
+    check("the recognised vocabulary is non-empty", len(families) >= 14)
+    base = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]
+    certified = []
+    for family in families:
+        fact = copy.deepcopy(base)
+        fact["fact_type"] = family
+        fact["rule_projector"] = dict(fact["rule_projector"], projector_id="nobody.unregistered.v9")
+        fact["producer"] = {"id": "tools/not_a_registered_producer.py", "version": "1.0.0"}
+        fact["dependent_projection_ids"] = ["llxbridge:test:projection"]
+        with tempfile.TemporaryDirectory() as tmp:
+            store = certifier.TypedFactCertificationStore(Path(tmp))
+            store.register(fact, contract_id="round8", actor="t", timestamp="2026-08-01T00:00:00Z")
+            store.transition(fact["fact_id"], "review_required", actor="t",
+                             timestamp="2026-08-01T00:00:01Z", reason="t")
+            try:
+                store.transition(fact["fact_id"], "certified", actor="t",
+                                 timestamp="2026-08-01T00:00:02Z", reason="t")
+            except certifier.CertificationError:
+                pass
+            else:
+                certified.append(family)
+    check("no recognised family name certifies a relabelled A3 candidate: %s" % certified,
+          not certified)
+
+    # The name alone is refused even where the fact type IS the only thing changed.
+    for family in families:
+        relabelled = copy.deepcopy(base)
+        relabelled["fact_type"] = family
+        check("%s cannot be certified on the strength of its name" % family,
+              certifier.gate_refusal(relabelled) is not None)
+
+    # …and the closure is precise, not a blanket refusal of the vocabulary.
+    for family in families:
+        member = _family_member(base, family, certifier)
+        check("a genuine %s fact is still permitted by the gate" % family,
+              certifier.gate_refusal(member) is None)
+
+    # A contract-declared family must cite the artifact that declares it.
+    declared_families = sorted(certifier.family_contract_index())
+    check("the committed family contract declares the sufaha families",
+          len(declared_families) >= 10)
+    for family in declared_families:
+        member = _family_member(base, family, certifier)
+        stripped = copy.deepcopy(member)
+        stripped["dependencies"] = dict(stripped["dependencies"], source_addresses=[])
+        stripped["source_evidence"] = dict(stripped.get("source_evidence") or {},
+                                           source_addresses=[])
+        stripped.pop("source_address", None)
+        if family in certifier.TWO_VOTE_FACT_TYPES:
+            continue  # bound by its vote artifact, not by the family anchor
+        refusal = certifier.gate_refusal(stripped)
+        check("%s without its family-contract reference is refused" % family,
+              refusal is not None and "unverified relabelling" in refusal)
+        foreign = copy.deepcopy(member)
+        foreign["producer"] = {"id": "tools/not_a_registered_producer.py", "version": "1.0.0"}
+        check("%s with a foreign producer is refused" % family,
+              (certifier.gate_refusal(foreign) or "").find("not a fact of that family") > 0)
 
 
 def test_both_bridge_output_fact_types_are_registered() -> None:
