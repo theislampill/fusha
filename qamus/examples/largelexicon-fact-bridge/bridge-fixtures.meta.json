@@ -1,0 +1,192 @@
+{
+  "blocker_vocabulary": [
+    "crosswalk_packet_not_accepted",
+    "dependency_id_not_in_authority",
+    "lexical_collision_requires_context",
+    "loc_not_in_canonical_index",
+    "loc_surface_disagreement",
+    "missing_dependency_release",
+    "missing_typed_graph_evidence",
+    "no_carried_lexical_support",
+    "non_certified_graph_edge_only",
+    "norm_only_surface_match",
+    "page_context_only_no_lexical_edge",
+    "quarantined_or_flagged_source_row",
+    "root_family_relation_not_lexeme_identity",
+    "row_not_in_validated_carried_authority",
+    "source_card_authority_unavailable",
+    "typed_edge_identity_disagreement",
+    "unresolved_canonical_loc",
+    "unverified_diagnostic_inputs",
+    "wbw_loc_disagreement"
+  ],
+  "certified_records": 0,
+  "generator": "tools/largelexicon_fact_bridge.py --write-fixtures",
+  "learner_visible_records": 0,
+  "note": "in-memory behavioural fixtures; no committed table row is reproduced here",
+  "projector_id": "largelexicon.carried_lexeme_candidate.v1",
+  "public_boundary_clean": true,
+  "row_count": 20,
+  "scenarios": [
+    {
+      "blockers": [],
+      "preserved_candidates": 1,
+      "projection_status": "candidate",
+      "scenario": "accepted_single_candidate"
+    },
+    {
+      "blockers": [
+        "lexical_collision_requires_context"
+      ],
+      "preserved_candidates": 2,
+      "projection_status": "unresolved",
+      "scenario": "lexical_collision_requires_context"
+    },
+    {
+      "blockers": [
+        "page_context_only_no_lexical_edge"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "unresolved",
+      "scenario": "page_context_only_no_lexical_edge"
+    },
+    {
+      "blockers": [
+        "root_family_relation_not_lexeme_identity"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "unresolved",
+      "scenario": "root_family_relation_not_lexeme_identity"
+    },
+    {
+      "blockers": [
+        "non_certified_graph_edge_only"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "unresolved",
+      "scenario": "non_certified_graph_edge_only"
+    },
+    {
+      "blockers": [
+        "unresolved_canonical_loc"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "source_gap",
+      "scenario": "unresolved_canonical_loc"
+    },
+    {
+      "blockers": [
+        "crosswalk_packet_not_accepted"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "source_gap",
+      "scenario": "crosswalk_packet_not_accepted"
+    },
+    {
+      "blockers": [
+        "quarantined_or_flagged_source_row"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "quarantined_or_flagged_source_row"
+    },
+    {
+      "blockers": [
+        "missing_dependency_release"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "missing_dependency_release"
+    },
+    {
+      "blockers": [
+        "norm_only_surface_match"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "norm_only_surface_match"
+    },
+    {
+      "blockers": [
+        "no_carried_lexical_support"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "producer_pending",
+      "scenario": "no_carried_lexical_support"
+    },
+    {
+      "blockers": [
+        "missing_typed_graph_evidence"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "source_gap",
+      "scenario": "missing_typed_graph_evidence"
+    },
+    {
+      "blockers": [
+        "typed_edge_identity_disagreement"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "unresolved",
+      "scenario": "typed_edge_identity_disagreement"
+    },
+    {
+      "blockers": [
+        "loc_not_in_canonical_index"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "loc_not_in_canonical_index"
+    },
+    {
+      "blockers": [
+        "loc_surface_disagreement"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "loc_surface_disagreement"
+    },
+    {
+      "blockers": [
+        "wbw_loc_disagreement"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "wbw_loc_disagreement"
+    },
+    {
+      "blockers": [
+        "row_not_in_validated_carried_authority"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "row_not_in_validated_carried_authority"
+    },
+    {
+      "blockers": [
+        "dependency_id_not_in_authority"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "dependency_id_not_in_authority"
+    },
+    {
+      "blockers": [
+        "source_card_authority_unavailable"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "source_gap",
+      "scenario": "source_card_authority_unavailable"
+    },
+    {
+      "blockers": [
+        "unverified_diagnostic_inputs"
+      ],
+      "preserved_candidates": 0,
+      "projection_status": "blocked",
+      "scenario": "unverified_diagnostic_inputs"
+    }
+  ],
+  "schema": "qamus/largelexicon-fact-bridge-fixtures-meta@1",
+  "sha256": "3aa4ad07f98ad361b33c413b0b70c0cf54d47ea9ffdb4d4a66096ba24ad328c7"
+}

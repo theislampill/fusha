@@ -7,7 +7,8 @@ import argparse
 import json
 from pathlib import Path
 
-from largelexicon_table_reader import LargelexiconQwordTable
+import promote_largelexicon_target_schema as promoter
+from largelexicon_table_reader import TARGET_FAMILIES, LargelexiconQwordTable, LargelexiconTargetTables
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,6 +40,40 @@ def validate() -> list[str]:
     missing = table.row_by_id("llx-qword-deadbeef0000-01-01-001")
     if missing is not None:
         errors.append("reader row_by_id must return None for unknown row")
+    errors.extend(validate_target_reader())
+    return errors
+
+
+def validate_target_reader() -> list[str]:
+    """The target reader must open only behind the freshness gate and fail closed."""
+
+    errors: list[str] = []
+    try:
+        target = LargelexiconTargetTables.open()
+    except promoter.PromotionError as error:
+        return ["target reader refused the committed release: " + str(error)]
+    summary = target.summary()
+    families = summary.get("families") or {}
+    if set(families) != set(TARGET_FAMILIES):
+        errors.append("target reader does not expose exactly the five target families")
+    for name, item in sorted(families.items()):
+        counts = item.get("disposition_counts") or {}
+        if item.get("carried_row_count") != counts.get("carried"):
+            errors.append(f"{name}: reader carried_row_count disagrees with the release dispositions")
+        if not str(item.get("target_row_schema", "")).endswith("@2"):
+            errors.append(f"{name}: reader exposes a non-target row schema")
+    if set(target.dependency_hashes()) != set(TARGET_FAMILIES):
+        errors.append("target reader dependency hashes do not cover every family")
+    try:
+        target.carried("not-a-family")
+    except KeyError:
+        pass
+    else:
+        errors.append("target reader accepted an unknown family")
+    stale = json.loads(json.dumps(target.release))
+    stale["tables"]["lemma-source"]["validation"]["violation_rows"] = 3
+    if not promoter.release_blockers(stale):
+        errors.append("target reader gate accepts a validation-red release")
     return errors
 
 

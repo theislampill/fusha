@@ -1,0 +1,16 @@
+{
+  "disposition": "flagged",
+  "full_ledger_row_count": 1479,
+  "full_ledger_sha256": "faca6c9e517314e69966fd980d901d26be6d82080948ca1fd487a2b9bc7cf54f",
+  "full_output_path": "out/largelexicon-target-schema/flagged-identities.jsonl",
+  "generator": "tools/promote_largelexicon_target_schema.py",
+  "note": "bounded committed sample; the complete ledger is a large regenerable output kept under gitignored out/ and bound by full_ledger_sha256",
+  "row_count": 5,
+  "row_schema": "qamus/largelexicon-target-disposition-row@1",
+  "sample_family_counts": {
+    "qword-crosswalk": 5
+  },
+  "sample_rule": "first 5 records of each family in canonical order",
+  "schema": "qamus/largelexicon-target-disposition-meta@1",
+  "sha256": "e6ed4fce0afa2d241f09c55e4aefd9e4564c7a87d33836be1013194e1806c707"
+}

@@ -40,6 +40,20 @@ FAM3_NUMBER_PROJECTOR_ID = "sarf.fam3.number_formation.v1"
 FAM4_FINITE_VERB_PROJECTOR_ID = "sarf.fam4.finite_verb.v1"
 FAM5_DERIVED_VERB_PROJECTOR_ID = "sarf.fam5.derived_verb.v1"
 PROOFV_VERB_PROJECTOR_ID = "sarf.proofv.verb.v1"
+# A3 largelexicon bridge. Its gate_tier is never_auto_resolve: a carried-table
+# lookup is candidate evidence about a written surface, never a certification of
+# lexical identity, so this projector has NO path to certified or materialized.
+LARGELEXICON_BRIDGE_PROJECTOR_ID = "largelexicon.carried_lexeme_candidate.v1"
+# The bridge also emits typed ABSTENTIONS. They are registered with their own
+# never_auto_resolve contract so their refusal rests on a real producer gate,
+# not on an incoherence report about an unregistered output fact type.
+LARGELEXICON_ABSTENTION_PROJECTOR_ID = "largelexicon.bridge_abstention.v1"
+# Fact types the A3 bridge content-addresses; their ids are recomputable from
+# the emitted fact, so a relabelled fact cannot keep a stale identity.
+LARGELEXICON_CONTENT_ADDRESSED_FACT_TYPES = frozenset(
+    {"largelexicon_lexeme_candidate", "largelexicon_bridge_abstention"}
+)
+LARGELEXICON_PRODUCER_ID = "tools/largelexicon_fact_bridge.py"
 
 
 class ProjectorValidationError(ValueError):
@@ -99,6 +113,23 @@ class ProjectorRegistry:
         projector_id = contract.get("projector_id")
         if projector_id in self._entries:
             errors.append("projector_id is already registered")
+        # An output fact type may have sibling producers (FAM2/FAM3 both emit
+        # formation_evidence), but they must agree on the gate. A second
+        # projector claiming the same output at a DIFFERENT tier would make the
+        # gate ambiguous and let a caller pick the lenient contract, so a
+        # conflicting re-registration is refused.
+        output_fact_type = contract.get("output_fact_type")
+        for existing, _projector in self._entries.values():
+            if existing.get("output_fact_type") != output_fact_type:
+                continue
+            if existing.get("gate_tier") != contract.get("gate_tier"):
+                errors.append(
+                    "output_fact_type %s is already produced by %s at gate %s; registering it at %s "
+                    "would make the gate ambiguous"
+                    % (output_fact_type, existing.get("projector_id"), existing.get("gate_tier"),
+                       contract.get("gate_tier"))
+                )
+                break
         if errors:
             raise ProjectorValidationError("invalid projector contract: " + "; ".join(errors))
         self._entries[projector_id] = (copy.deepcopy(contract), projector)
@@ -110,6 +141,24 @@ class ProjectorRegistry:
         if projector_id not in self._entries:
             raise ProjectorValidationError("unregistered projector: " + projector_id)
         return copy.deepcopy(self._entries[projector_id][0])
+
+    def gate_tier_for_output_fact_type(self, output_fact_type: str) -> Optional[str]:
+        """The STRICTEST registered gate that produces this output fact type.
+
+        Sibling producers must already agree on the tier (see ``register``); the
+        strictest-wins reduction is belt-and-braces so a future divergence can
+        only ever tighten a gate, never loosen one.
+        """
+
+        ranks = {name: item.get("rank", 0) for name, item in load_gate_tiers().items()}
+        tiers = [
+            contract.get("gate_tier")
+            for contract, _projector in self._entries.values()
+            if contract.get("output_fact_type") == output_fact_type
+        ]
+        if not tiers:
+            return None
+        return max(tiers, key=lambda tier: ranks.get(tier, 0))
 
     def run(self, projector_id: str, **kwargs: Any) -> Dict[str, Any]:
         if projector_id not in self._entries:
@@ -205,6 +254,90 @@ def proofv_verb_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
     """Named registry guard; PROOF-V keeps source gaps explicit."""
 
     return None
+
+
+def largelexicon_abstention_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named registry guard; the bridge records the precise blockers itself."""
+
+    return None
+
+
+def project_largelexicon_abstention(*, contract: Dict[str, Any], **_kwargs: Any) -> Dict[str, Any]:
+    """Abstentions are produced by the bridge run itself, never projected on demand.
+
+    The registration exists so the abstention output fact type carries a real
+    never_auto_resolve gate; invoking it directly is refused rather than silently
+    manufacturing an abstention record.
+    """
+
+    raise ProjectorValidationError(
+        "largelexicon abstentions are emitted by the bridge run, not projected on demand: "
+        + str(contract.get("projector_id"))
+    )
+
+
+def largelexicon_bridge_abstention_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named registry guard; the bridge performs loc-first and collision checks itself."""
+
+    return None
+
+
+def project_largelexicon_carried_lexeme(
+    *,
+    contract: Dict[str, Any],
+    crosswalk_row: Dict[str, Any],
+    inputs: Any,
+) -> Dict[str, Any]:
+    """Run the A3 bridge as a registry call: candidate or abstention, never more."""
+
+    from tools import largelexicon_fact_bridge as bridge
+
+    # A candidate wrapper may only ever be built from verified, candidate-capable
+    # inputs. Diagnostic inputs abstain by construction and can never reach here
+    # with a candidate attached.
+    candidate_capable = bool(getattr(inputs, "candidate_capable", False))
+    record = bridge.bridge_row(crosswalk_row, inputs)
+    errors = bridge.validate_records([record])
+    if errors:
+        raise ProjectorValidationError("bridge record is not a valid typed claim: " + "; ".join(errors[:3]))
+    projection = record["projection"]
+    candidates = [fact for fact in record["facts"] if fact["fact_type"] == "largelexicon_lexeme_candidate"]
+    resolved = projection["status"] == "candidate" and candidate_capable
+    if projection["status"] == "candidate" and not candidate_capable:
+        raise ProjectorValidationError(
+            "unverified inputs produced a candidate projection; the bridge gate is broken"
+        )
+    # The wrapper must never relabel the enclosed fact: it reports the evidence
+    # mode the fact actually carries, and refuses to emit a disagreeing summary.
+    modes = sorted({fact["evidence_mode"] for fact in candidates})
+    if resolved and len(modes) != 1:
+        raise ProjectorValidationError("bridge candidates disagree on evidence_mode: " + ",".join(modes))
+    evidence_mode = modes[0] if modes else "unresolved"
+    return {
+        "projector_id": contract["projector_id"],
+        "status": "candidate" if resolved else "abstained",
+        "route": projection["status"],
+        "candidate": {
+            "fact_type": contract["output_fact_type"],
+            "fact_ids": [fact["fact_id"] for fact in candidates],
+            "candidates_preserved": len(candidates),
+            "evidence_mode": evidence_mode,
+        }
+        if resolved
+        else None,
+        "preserved_candidate_fact_ids": [fact["fact_id"] for fact in candidates],
+        "blockers": sorted(
+            {
+                blocker["blocker_id"]
+                for fact in record["facts"]
+                for blocker in fact.get("unresolved_blockers") or []
+            }
+        ),
+        "evidence_mode": evidence_mode,
+        "typed_claim_record": record,
+        "certification_allowed": False,
+        "materialization_allowed": False,
+    }
 
 
 def project_proofv_verb(
@@ -762,6 +895,12 @@ def review_and_materialize(
     contract = contracts.get(row["fact_type"])
     if contract is None:
         raise ProjectorValidationError("candidate has no registered projector contract")
+    if contract["gate_tier"] == "never_auto_resolve":
+        # Gate SSOT: never_auto_resolve means "reject — never ship; quarantine or
+        # pending with the precise blocker". There is no vote count that opens it.
+        raise ProjectorValidationError(
+            "never_auto_resolve projectors may never certify or materialize: " + contract["projector_id"]
+        )
     if contract["gate_tier"] == "two_vote_required":
         approvals = {
             vote["voter_id"]
@@ -1032,6 +1171,65 @@ PROOFV_VERB_CONTRACT = {
     "resolution_method": "bounded_same_lexeme_crosswalk_candidate",
 }
 
+LARGELEXICON_BRIDGE_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.largelexicon_fact_bridge",
+    "projector_id": LARGELEXICON_BRIDGE_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["largelexicon_carried_crosswalk_row", "largelexicon_carried_form_row"],
+    "output_fact_type": "largelexicon_lexeme_candidate",
+    "compatibility_class": (
+        "canonical occurrences addressed loc-first by an ACCEPTED carried target-schema crosswalk row, "
+        "whose written surface is documented byte-exactly by carried lemma/form/stem rows; "
+        "the crosswalk entry_id is page context and never a lexical edge, normalized-only matches, "
+        "root-family relations, candidate graph edges, quarantined rows and multi-entry collisions all abstain"
+    ),
+    "defeater_checks": ["largelexicon_bridge_abstention_guard"],
+    "gate_tier": "never_auto_resolve",
+    "version": "1.0.0",
+    "resolution_method": "carried_target_schema_loc_first_exact_surface_candidate",
+}
+
+def identity_recomputer_for(fact: Dict[str, Any]):
+    """The registered content-addressed id recomputer for a fact's producer, if any.
+
+    A producer that content-addresses its facts registers its recomputation here so
+    the certifier can detect a relabelled fact that retained a stale ``fact_id``.
+    """
+
+    fact_type = str(fact.get("fact_type") or "")
+    projector_id = str(((fact.get("rule_projector") or {}).get("projector_id")) or "")
+    producer_id = str(((fact.get("producer") or {}).get("id")) or "")
+    # Dispatch on the PRODUCER too: relabelling only the fact type and projector
+    # must not shed the recomputation that would expose the stale identity.
+    if (fact_type in LARGELEXICON_CONTENT_ADDRESSED_FACT_TYPES
+            or projector_id == LARGELEXICON_BRIDGE_PROJECTOR_ID
+            or producer_id == LARGELEXICON_PRODUCER_ID):
+        from tools import largelexicon_fact_bridge
+
+        return largelexicon_fact_bridge.recompute_fact_id
+    return None
+
+
+LARGELEXICON_ABSTENTION_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.largelexicon_fact_bridge",
+    "projector_id": LARGELEXICON_ABSTENTION_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["largelexicon_carried_crosswalk_row"],
+    "output_fact_type": "largelexicon_bridge_abstention",
+    "compatibility_class": (
+        "typed abstentions emitted by the A3 bridge when admission is refused; each carries the "
+        "precise closed blockers and never asserts a lexical claim"
+    ),
+    "defeater_checks": ["largelexicon_abstention_guard"],
+    "gate_tier": "never_auto_resolve",
+    "version": "1.0.0",
+    "resolution_method": "carried_target_schema_admission_refusal",
+}
+
 REGISTRY = ProjectorRegistry()
 REGISTRY.register(SARF_CONTRACT, project_sarf_documented_forms)
 REGISTRY.register(NAHW_CONTRACT, project_nahw_particle_functions)
@@ -1043,6 +1241,8 @@ REGISTRY.register(FAM3_NUMBER_CONTRACT, project_fam3_number_pattern)
 REGISTRY.register(FAM4_FINITE_VERB_CONTRACT, project_fam4_finite_verb_pattern)
 REGISTRY.register(FAM5_DERIVED_VERB_CONTRACT, project_fam5_derived_verb_pattern)
 REGISTRY.register(PROOFV_VERB_CONTRACT, project_proofv_verb)
+REGISTRY.register(LARGELEXICON_BRIDGE_CONTRACT, project_largelexicon_carried_lexeme)
+REGISTRY.register(LARGELEXICON_ABSTENTION_CONTRACT, project_largelexicon_abstention)
 
 
 def main(argv: Optional[List[str]] = None) -> int:

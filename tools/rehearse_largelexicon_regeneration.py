@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
-"""Dry-run the RM-22 largelexicon @1 to @2 regeneration rehearsal.
+"""Dry-run the RM-22 largelexicon @1 to target-schema regeneration rehearsal.
 
 The tool reads the committed tables and emits reports only. It never writes a
 table, manifest, schema, or release file.
+
+Migration semantics are NOT re-implemented here: the candidate derivation, the
+disposition rules, and the losslessness proof all come from
+``tools/promote_largelexicon_target_schema.py``, so the rehearsal can never drift
+away from the promotion it rehearses.
 """
 
 from __future__ import annotations
 
 import argparse
-import copy
 import hashlib
 import json
-import subprocess
 from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable
 
+import promote_largelexicon_target_schema as promoter
 import validate_largelexicon_rows as validator
 
 
@@ -24,15 +28,10 @@ DEFAULT_REPORT_DIR = ROOT / "qamus" / "reports" / "rm22-regeneration-rehearsal"
 TOOL_PATH = "tools/rehearse_largelexicon_regeneration.py"
 REPORT_SCHEMA = "qamus/rm22-regeneration-rehearsal@1"
 ACCOUNTING_SCHEMA = "qamus/rm22-regeneration-accounting-row@1"
-DISPOSITIONS = frozenset({"carried", "flagged", "quarantined"})
-IDENTITY_FIELDS = {
-    "lemma-source": "entry_id",
-    "form-source": "form_id",
-    "stem-source": "stem_id",
-    "qword-denominator": "row_id",
-    "qword-crosswalk": "row_id",
-}
+DISPOSITIONS = frozenset(promoter.DISPOSITIONS)
+IDENTITY_FIELDS = promoter.IDENTITY_FIELDS
 STRUCTURAL_CONSTANTS = validator.ROW_CONSTANT_FIELDS
+migrate_candidate = promoter.migrate_candidate
 
 
 def canonical_line(value: Any) -> bytes:
@@ -50,78 +49,18 @@ def row_digest(row: dict[str, Any]) -> str:
 def assert_lossless_accounting(
     source_rows: Iterable[dict[str, Any]], accounting_rows: Iterable[dict[str, Any]], identity_field: str
 ) -> None:
-    source_ids = [str(row[identity_field]) for row in source_rows]
-    accounted = list(accounting_rows)
-    accounted_ids = [str(row[identity_field]) for row in accounted]
-    source_duplicates = sorted(key for key, count in Counter(source_ids).items() if count != 1)
-    duplicates = sorted(key for key, count in Counter(accounted_ids).items() if count != 1)
-    missing = sorted(set(source_ids) - set(accounted_ids))
-    extra = sorted(set(accounted_ids) - set(source_ids))
-    invalid = sorted(
-        str(row.get(identity_field, "<missing>"))
-        for row in accounted
-        if row.get("disposition") not in DISPOSITIONS
+    """Delegate to the promotion's proof so rehearsal and promotion cannot diverge."""
+
+    promoter.assert_lossless_accounting(
+        [str(row[identity_field]) for row in source_rows], list(accounting_rows), identity_field
     )
-    problems: list[str] = []
-    if source_duplicates:
-        problems.append("source_duplicate=" + ",".join(source_duplicates))
-    if duplicates:
-        problems.append("duplicate=" + ",".join(duplicates))
-    if missing:
-        problems.append("missing=" + ",".join(missing))
-    if extra:
-        problems.append("extra=" + ",".join(extra))
-    if invalid:
-        problems.append("invalid_disposition=" + ",".join(invalid))
-    if problems:
-        raise ValueError("losslessness accounting failed: " + "; ".join(problems))
 
 
-def field_changes(before: dict[str, Any], after: dict[str, Any]) -> list[dict[str, Any]]:
-    changes: list[dict[str, Any]] = []
-    for field in sorted(set(before) | set(after)):
-        if field not in before:
-            changes.append({"field": field, "kind": "added", "reason": "@2 structural requirement", "value": after[field]})
-        elif field not in after:
-            changes.append({"field": field, "kind": "removed", "reason": "@2 row-schema boundary", "value": before[field]})
-        elif before[field] != after[field]:
-            changes.append(
-                {"after": after[field], "before": before[field], "field": field, "kind": "changed", "reason": "@2 schema migration"}
-            )
-    return changes
+field_changes = promoter.field_changes
 
 
-def migrate_candidate(family: validator.Family, source: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-    candidate = copy.deepcopy(source)
-    target_schema = validator.read_json(ROOT / family.schema_path)["properties"]["schema"]["const"]
-    candidate["schema"] = target_schema
-    for field in sorted(STRUCTURAL_CONSTANTS):
-        candidate.pop(field, None)
-
-    surface_field = "lemma" if family.name == "lemma-source" else (
-        "visible_surface" if family.name.startswith("qword-") else "surface"
-    )
-    if any(character.isspace() for character in str(candidate.get(surface_field, ""))):
-        marker = "lemma_is_multiword" if family.name == "lemma-source" else "surface_is_multiword"
-        candidate[marker] = True
-        candidate["multiword_reason"] = "source @1 surface contains whitespace; semantic split not rehearsed"
-
-    if family.name == "stem-source":
-        annotations = (candidate.get("pattern"), candidate.get("form"), candidate.get("features"))
-        if annotations == (None, None, {}):
-            for field in ("pattern", "form", "features"):
-                candidate.pop(field, None)
-    return candidate, field_changes(source, candidate)
-
-
-def classify_disposition(errors: list[dict[str, str]]) -> tuple[str, list[str]]:
-    defect_families = sorted({error["defect_family"] for error in errors})
-    if not errors:
-        return "carried", ["candidate satisfies merged @2 schema"]
-    semantic_blockers = {"risk_flags", "root_shape_or_reason", "surface_shape", "stem_annotation_completeness"}
-    if semantic_blockers.intersection(defect_families):
-        return "quarantined", [f"semantic review required: {name}" for name in defect_families]
-    return "flagged", [f"structural migration blocker: {name}" for name in defect_families]
+def classify_disposition(errors: list[dict[str, str]], divergences: list[str] | None = None) -> tuple[str, list[str]]:
+    return promoter.classify_disposition(errors, divergences or [])
 
 
 def source_snapshot() -> dict[str, str]:
@@ -131,12 +70,6 @@ def source_snapshot() -> dict[str, str]:
         if family.manifest_path:
             paths.add(ROOT / family.manifest_path)
     return {path.relative_to(ROOT).as_posix(): validator.sha256_file(path) for path in sorted(paths)}
-
-
-def git_head() -> str:
-    return subprocess.run(
-        ["git", "rev-parse", "HEAD"], cwd=ROOT, check=True, capture_output=True, text=True
-    ).stdout.strip()
 
 
 def rehearse() -> tuple[dict[str, Any], list[dict[str, Any]]]:
@@ -161,7 +94,7 @@ def rehearse() -> tuple[dict[str, Any], list[dict[str, Any]]]:
             source_rows.append(source)
             candidate, changes = migrate_candidate(family, source)
             errors = validator.schema_errors(candidate, schema)
-            disposition, reasons = classify_disposition(errors)
+            disposition, reasons = classify_disposition(errors, promoter.boundary_divergences(source))
             identity = str(source[identity_field])
             if disposition == "carried":
                 output_digest.update(canonical_line(candidate))
@@ -214,7 +147,10 @@ def rehearse() -> tuple[dict[str, Any], list[dict[str, Any]]]:
         raise RuntimeError("dry-run invariant failed: committed table or manifest bytes changed during rehearsal")
     totals = Counter(row["disposition"] for row in all_accounting)
     summary = {
-        "baseline": {"git_head": git_head(), "source_sha256": baseline},
+        # No commit sha in the payload: binding one made --check go red after every
+        # unrelated commit, which is how the committed report silently went stale.
+        # The per-path source_sha256 map already binds the exact rehearsed inputs.
+        "baseline": {"source_sha256": baseline},
         "determinism": {"timestamps_omitted": True, "stable_input_order": True, "stable_json_keys": True},
         "dry_run": {"committed_sources_byte_untouched": True, "live_mutation_allowed": False},
         "families": family_reports,
@@ -295,7 +231,7 @@ def run_self_test() -> int:
     for fixture, expected in fixtures:
         try:
             assert_lossless_accounting(source, fixture, "row_id")
-        except ValueError as error:
+        except promoter.PromotionError as error:
             assert expected in str(error), error
             assertions += 1
         else:

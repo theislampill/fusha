@@ -1,15 +1,42 @@
-"""Manifest-backed readers for largelexicon source-clean fact tables."""
+"""Manifest-backed readers for largelexicon source-clean fact tables.
+
+``LargelexiconQwordTable`` reads the committed @1 sharded storage. Consumers that
+need TARGET-SCHEMA rows must go through :class:`LargelexiconTargetTables`, which
+regenerates the carried rows behind the release freshness gate: a stale,
+validation-red, mixed-version, or schema-drifted release raises instead of
+handing back rows.
+"""
 
 from __future__ import annotations
 
 import json
 import re
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterator
 
+# The largelexicon tool family imports flat sibling modules. Keep that working
+# whether this module is loaded as ``largelexicon_table_reader`` or, from the
+# repository boundary, as ``tools.largelexicon_table_reader``.
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+if str(Path(__file__).resolve().parents[1]) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+# ONE canonical module identity. Importing this module flat and as
+# ``tools.largelexicon_table_reader`` must not produce two classes, or an
+# isinstance/identity check on the reader silently depends on import style.
+_CANONICAL_MODULE = "tools.largelexicon_table_reader"
+if __name__ != _CANONICAL_MODULE:
+    import importlib
+
+    _canonical = sys.modules.get(_CANONICAL_MODULE) or importlib.import_module(_CANONICAL_MODULE)
+    sys.modules[__name__] = _canonical
+
 
 ROW_ID_RE = re.compile(r"^llx-qword-([0-9a-f]{12})-\d{2}-\d{2}-\d{3}$")
+TARGET_FAMILIES = ("lemma-source", "form-source", "stem-source", "qword-denominator", "qword-crosswalk")
 
 
 def _read_json(path: Path) -> dict[str, Any]:
@@ -128,3 +155,60 @@ class LargelexiconQwordTable:
             if row.get("qword_row_id") == qword_row_id:
                 return row
         return None
+
+
+@dataclass(frozen=True)
+class LargelexiconTargetTables:
+    """Fail-closed reader for the derived carried target-schema tables.
+
+    Carried rows are regenerated from the immutable @1 tables rather than stored a
+    second time; the released digest is re-checked on every read so a drifted
+    regeneration is an error, never silently-different data.
+    """
+
+    release: dict[str, Any]
+    target_dir: Path | None = None
+
+    @classmethod
+    def open(cls, *, target_dir: Path | None = None) -> "LargelexiconTargetTables":
+        from promote_largelexicon_target_schema import assert_release_usable, read_release
+
+        release = read_release(target_dir)
+        assert_release_usable(release)
+        # The exact directory that was validated is retained and used by every
+        # later read: validating one release and then reading another is a
+        # silent authority swap, so the target dir travels with the reader.
+        # Resolve ONCE, at open time: a later chdir must not be able to redirect
+        # reads to a different release.
+        return cls(release=release,
+                   target_dir=Path(target_dir).resolve() if target_dir is not None else None)
+
+    def summary(self) -> dict[str, Any]:
+        return {
+            "schema": "qamus/largelexicon-target-table-reader-summary@1",
+            "families": {
+                name: {
+                    "carried_row_count": table["carried_row_count"],
+                    "carried_sha256": table["carried_sha256"],
+                    "disposition_counts": table["disposition_counts"],
+                    "target_row_schema": table["target_row_schema"],
+                }
+                for name, table in sorted(self.release["tables"].items())
+            },
+            "losslessness": self.release["losslessness"],
+            "release_path": "qamus/indexes/largelexicon/target-schema/TARGET-RELEASE.json",
+        }
+
+    def carried(self, family_name: str) -> list[dict[str, Any]]:
+        from promote_largelexicon_target_schema import carried_table
+
+        if family_name not in TARGET_FAMILIES:
+            raise KeyError("unknown target family: " + family_name)
+        return carried_table(family_name, target_dir=self.target_dir)
+
+    def dependency_hashes(self) -> dict[str, str]:
+        """Exact digests a downstream typed claim must record as dependencies."""
+
+        return {
+            name: table["carried_sha256"] for name, table in sorted(self.release["tables"].items())
+        }

@@ -1,0 +1,2203 @@
+#!/usr/bin/env python3
+"""Behavioural tests for the A3 largelexicon typed bridge.
+
+Every test is a mutation: it takes the one fixture that legitimately produces a
+candidate and breaks exactly one precondition, then asserts the bridge abstains
+with the precise blocker instead of guessing. Fixtures are in-memory so the suite
+runs without touching the 253k-row committed tables.
+"""
+
+from __future__ import annotations
+
+import copy
+import json
+import sys
+from pathlib import Path
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from tools import fact_projectors, largelexicon_fact_bridge as bridge, typed_claim_contract
+
+
+LOC = bridge.FIXTURE_LOC
+SURFACE = bridge.FIXTURE_SURFACE
+NORM = bridge.FIXTURE_NORM
+OTHER_SURFACE = bridge.FIXTURE_NORM_TWIN
+
+# The fixture builders live beside the bridge so the committed fixtures and this
+# suite can never describe two different bridges.
+crosswalk_row = bridge.fixture_crosswalk_row
+form_row = bridge.fixture_form_row
+lemma_row = bridge.fixture_lemma_row
+stem_row = bridge.fixture_stem_row
+make_inputs = bridge.fixture_inputs
+
+
+def inputs_for(row: dict, **kwargs):
+    """Inputs whose validated carried authority contains EXACTLY this row.
+
+    Carried-ness is authority membership, not a flag, so a test that bridges a
+    mutated row must supply that row (and its matching denominator row) as the
+    authority it belongs to; otherwise it is measuring the membership guard
+    instead of the guard under test.
+    """
+
+    kwargs.setdefault("crosswalk", [row])
+    kwargs.setdefault("denominator", [bridge.fixture_denominator_row(
+        row_id=str(row.get("qword_row_id")),
+        entry_id=str(row.get("entry_id")),
+        card_id=str(row.get("card_id")),
+    )])
+    try:
+        return make_inputs(**kwargs)
+    except bridge.BridgeError:
+        # A row that cannot pass the target schema can never be a member of any
+        # carried authority; the membership guard is then the honest blocker.
+        return make_inputs(**{key: value for key, value in kwargs.items()
+                              if key not in ("crosswalk", "denominator")})
+
+
+def blockers_of(record: dict) -> set[str]:
+    return {
+        blocker["blocker_id"]
+        for fact in record["facts"]
+        for blocker in fact.get("unresolved_blockers") or []
+    }
+
+
+def candidates_of(record: dict) -> list[dict]:
+    return [fact for fact in record["facts"] if fact["fact_type"] == "largelexicon_lexeme_candidate"]
+
+
+def check(name: str, condition: bool) -> None:
+    if not condition:
+        raise AssertionError("FAILED: " + name)
+
+
+def assert_valid(record: dict, name: str) -> None:
+    errors = bridge.validate_records([record])
+    check(f"{name} produces a valid typed-claim record ({errors[:2]})", not errors)
+
+
+# --------------------------------------------------------------------------- #
+# the one accepted case
+# --------------------------------------------------------------------------- #
+def test_accepted_single_candidate() -> None:
+    inputs = make_inputs()
+    record = bridge.bridge_row(crosswalk_row(), inputs)
+    assert_valid(record, "accepted single candidate")
+    check("accepted record is a candidate projection", record["projection"]["status"] == "candidate")
+    check("accepted record preserves exactly one candidate", len(candidates_of(record)) == 1)
+    fact = candidates_of(record)[0]
+    check("accepted fact is candidate, never certified", fact["certification"]["status"] == "candidate")
+    check("accepted evidence is never certified", fact["evidence"]["status"] == "source_addressed_candidate")
+    check("accepted record is never learner visible", record["projection"]["learner_visible"] is False)
+    check("accepted record forbids public materialization",
+          record["projection"]["materialization_target"]["public_materialization_allowed"] is False)
+    check("accepted record forbids live mutation",
+          record["projection"]["materialization_target"]["live_mutation_allowed"] is False)
+    check("accepted record has no claim", record["projection"]["claim"] is None)
+    check("candidate binds the canonical loc", record["canonical_occurrence"]["occurrence_id"] == f"quran:{LOC}")
+    check("candidate records the sealed carried-table digests",
+          any(item["address"].startswith(bridge.SEAL_ADDRESS_PREFIX) and "qword-crosswalk" in item["address"]
+              for item in fact["dependencies"]["source_addresses"]))
+
+
+def test_lexeme_identity_is_not_the_crosswalk_entry() -> None:
+    """Mutating only the page-context entry_id must not change the lexeme claim."""
+
+    inputs = make_inputs()
+    base = candidates_of(bridge.bridge_row(crosswalk_row(), inputs))[0]
+    moved = crosswalk_row(
+        entry_id="0aae00000002",
+        row_id="llx-crosswalk-llx-qword-0aae00000002-01-01-001",
+        qword_row_id="llx-qword-0aae00000002-01-01-001",
+        card_id="0aae00000002:u1:e1",
+        source_dependencies=[
+            {"id": "llx-qword-0aae00000002-01-01-001", "kind": "qword_denominator_row"},
+            {"id": "0aae00000002:u1:e1", "kind": "source_card"},
+        ],
+    )
+    # The moved row is a member of ITS OWN carried authority, with the matching
+    # denominator row; only the displaying page differs.
+    moved_inputs = make_inputs(
+        crosswalk=[moved],
+        denominator=[bridge.fixture_denominator_row(
+            row_id="llx-qword-0aae00000002-01-01-001",
+            entry_id="0aae00000002",
+            card_id="0aae00000002:u1:e1",
+        )],
+    )
+    other = candidates_of(bridge.bridge_row(moved, moved_inputs))[0]
+    check("lexeme candidate entry is the documenting entry, not the displaying page",
+          base["fact_value"]["lexeme_candidate"]["entry_id"] == "1ec0de000001")
+    check("page context follows the crosswalk entry, not the lexeme",
+          other["fact_value"]["page_context"]["crosswalk_entry_id"] == "0aae00000002")
+    check("page context is explicitly never a lexeme edge",
+          other["fact_value"]["page_context"]["never_lexeme_edge"] is True)
+    check("lexeme candidate is unchanged by the page move",
+          other["fact_value"]["lexeme_candidate"] == base["fact_value"]["lexeme_candidate"])
+    # The LEXICAL claim is untouched by the page move...
+    check("lexical identity does not absorb the page context",
+          bridge.lexeme_identity_digest(other) == bridge.lexeme_identity_digest(base))
+    # ...while the whole-fact id legitimately moves, because page context and the
+    # sealed authority are part of the recomputable content (round-6 requirement).
+    check("the whole-fact id still tracks page context and authority",
+          other["fact_id"] != base["fact_id"])
+    check("both ids remain recomputable from their own content",
+          bridge.recompute_fact_id(other) == other["fact_id"]
+          and bridge.recompute_fact_id(base) == base["fact_id"])
+
+
+# --------------------------------------------------------------------------- #
+# mutation tests — each breaks one precondition and must abstain precisely
+# --------------------------------------------------------------------------- #
+def test_collision_abstains_and_preserves_every_candidate() -> None:
+    forms = [form_row("1ec0de000001", SURFACE), form_row("1ec0de000002", SURFACE, "001")]
+    inputs = make_inputs(forms=forms, lemmas=[lemma_row("1ec0de000001", SURFACE), lemma_row("1ec0de000002", SURFACE)],
+                         stems=[stem_row("1ec0de000001", SURFACE), stem_row("1ec0de000002", SURFACE)])
+    record = bridge.bridge_row(crosswalk_row(), inputs)
+    assert_valid(record, "collision")
+    check("collision abstains", record["projection"]["status"] == "unresolved")
+    check("collision preserves BOTH candidates", len(candidates_of(record)) == 2)
+    check("collision names its blocker", blockers_of(record) == {"lexical_collision_requires_context"})
+    check("collision records a tension", len(record.get("tension_records") or []) == 1)
+    check("collision tension is unresolved", record["tension_records"][0]["status"] == "unresolved")
+    check("collision never marks a winner",
+          all(fact["certification"]["status"] == "candidate" for fact in candidates_of(record)))
+    check("collision declares rank is not preference",
+          all(fact["fact_value"]["candidate_rank_is_not_preference"] for fact in candidates_of(record)))
+
+
+def test_multi_match_beyond_two_still_abstains() -> None:
+    forms = [form_row(f"1ec0de00000{index}", SURFACE, f"00{index}") for index in (1, 2, 3)]
+    inputs = make_inputs(forms=forms, lemmas=[lemma_row(f"1ec0de00000{index}", SURFACE) for index in (1, 2, 3)], stems=[])
+    record = bridge.bridge_row(crosswalk_row(), inputs)
+    assert_valid(record, "multi match")
+    check("three-way match abstains", record["projection"]["status"] == "unresolved")
+    check("three-way match preserves all three", len(candidates_of(record)) == 3)
+    check("three-way match names its blocker", blockers_of(record) == {"lexical_collision_requires_context"})
+
+
+def test_page_context_only_abstains() -> None:
+    """The displaying entry has a carried lemma row but documents no such form."""
+
+    inputs = make_inputs(forms=[], lemmas=[lemma_row("0aae00000000", "شَيْء")], stems=[])
+    record = bridge.bridge_row(crosswalk_row(), inputs)
+    assert_valid(record, "page context only")
+    check("page-context-only abstains", record["projection"]["status"] == "unresolved")
+    check("page-context-only names its blocker", blockers_of(record) == {"page_context_only_no_lexical_edge"})
+    check("page-context-only emits no lexeme candidate", candidates_of(record) == [])
+
+
+def test_root_only_abstains() -> None:
+    edges = {LOC: [{"loc": LOC, "entry_id": "1ec0de000009", "edge_type": "headword", "relation": "root_confirms",
+                    "row_root": "ا ل ه"}]}
+    inputs = make_inputs(forms=[], lemmas=[], stems=[], graph_edges=edges)
+    record = bridge.bridge_row(crosswalk_row(), inputs)
+    assert_valid(record, "root only")
+    check("root-only abstains", record["projection"]["status"] == "unresolved")
+    check("root-only names its blocker", blockers_of(record) == {"root_family_relation_not_lexeme_identity"})
+    check("root-only emits no lexeme candidate", candidates_of(record) == [])
+
+
+def test_non_certified_graph_edge_only_abstains() -> None:
+    edges = {LOC: [{"loc": LOC, "entry_id": "1ec0de000009", "edge_type": "form", "relation": "linkage_only"}]}
+    inputs = make_inputs(forms=[], lemmas=[], stems=[], graph_edges=edges)
+    record = bridge.bridge_row(crosswalk_row(), inputs)
+    assert_valid(record, "candidate edge only")
+    check("candidate-edge-only abstains", record["projection"]["status"] == "unresolved")
+    check("candidate-edge-only names its blocker", blockers_of(record) == {"non_certified_graph_edge_only"})
+    edge_records = record["facts"][0]["fact_value"]["candidate_graph_edges"]
+    check("graph edges are labelled never-certified",
+          all(item["status"] == "candidate_edge_never_certified" for item in edge_records))
+
+
+def test_graph_edge_never_upgrades_a_candidate() -> None:
+    """A candidate edge alongside a real form row stays candidate evidence only."""
+
+    edges = {LOC: [{"loc": LOC, "entry_id": "1ec0de000001", "edge_type": "headword", "relation": "root_confirms",
+                    "row_root": "ا ل ه"}]}
+    inputs = make_inputs(graph_edges=edges)
+    fact = candidates_of(bridge.bridge_row(crosswalk_row(), inputs))[0]
+    check("graph edge does not certify", fact["certification"]["status"] == "candidate")
+    check("graph edge is carried as a root-family relation",
+          fact["fact_value"]["root_family_relations"][0]["status"] == "candidate_edge_never_certified")
+    check("root is flagged as relation not identity", fact["fact_value"]["lexeme_candidate"]["root_is_relation_not_identity"])
+
+
+def test_unresolved_loc_abstains() -> None:
+    inputs = make_inputs()
+    for bad in (None, "missing-loc|2:255", "sarf:surface:الله", "2:255", ""):
+        bad_row = crosswalk_row(canonical_quran_loc=bad)
+        record = bridge.bridge_row(bad_row, inputs_for(bad_row))
+        assert_valid(record, f"unresolved loc {bad!r}")
+        check(f"loc {bad!r} abstains", record["projection"]["status"] != "candidate")
+        check(f"loc {bad!r} names its blocker", "unresolved_canonical_loc" in blockers_of(record))
+        check(f"loc {bad!r} emits no lexeme candidate", candidates_of(record) == [])
+
+
+def test_packet_ready_crosswalk_abstains() -> None:
+    inputs = make_inputs()
+    packet_ready = crosswalk_row(status="source_crosswalk_packet_ready",
+                                 transclusion_route="entry_card_qword_to_canonical_crosswalk_packet")
+    record = bridge.bridge_row(packet_ready, inputs_for(packet_ready))
+    assert_valid(record, "packet ready")
+    check("packet-ready abstains", record["projection"]["status"] == "source_gap")
+    check("packet-ready names its blocker", "crosswalk_packet_not_accepted" in blockers_of(record))
+
+
+def test_demoted_crosswalk_abstains() -> None:
+    inputs = make_inputs()
+    demoted = crosswalk_row(status="canonical_crosswalk_demoted")
+    record = bridge.bridge_row(demoted, inputs_for(demoted))
+    check("demoted abstains", record["projection"]["status"] != "candidate")
+    check("demoted names its blocker", "crosswalk_packet_not_accepted" in blockers_of(record))
+
+
+def test_quarantined_row_abstains() -> None:
+    inputs = make_inputs()
+    record = bridge.bridge_row(crosswalk_row(), make_inputs(crosswalk=[], non_carried_crosswalk=[crosswalk_row()]))
+    assert_valid(record, "quarantined row")
+    check("quarantined row abstains", record["projection"]["status"] == "blocked")
+    check("quarantined row names its blocker", "quarantined_or_flagged_source_row" in blockers_of(record))
+    check("quarantined row emits no lexeme candidate", candidates_of(record) == [])
+
+
+def test_missing_dependency_abstains() -> None:
+    for dependencies in ([{"id": "x", "kind": "entry"}], [{"id": "x", "kind": "source_card"}]):
+        thin = crosswalk_row(source_dependencies=dependencies)
+        record = bridge.bridge_row(thin, inputs_for(thin))
+        assert_valid(record, "missing dependency")
+        check("missing dependency abstains", record["projection"]["status"] == "blocked")
+        check("missing dependency names its blocker", "missing_dependency_release" in blockers_of(record))
+    # An empty dependency list cannot even pass the target schema, so such a row
+    # is not a member of any carried authority and is blocked one gate earlier.
+    empty = crosswalk_row(source_dependencies=[])
+    record = bridge.bridge_row(empty, inputs_for(empty))
+    check("dependency-less row is refused by the membership gate",
+          "row_not_in_validated_carried_authority" in blockers_of(record))
+    check("dependency-less row emits no candidate", candidates_of(record) == [])
+
+
+def test_norm_only_match_abstains() -> None:
+    """norm_only_match is a never_auto_resolve trigger: it may never resolve."""
+
+    inputs = make_inputs(forms=[form_row("1ec0de000001", OTHER_SURFACE)], lemmas=[], stems=[])
+    record = bridge.bridge_row(crosswalk_row(), inputs)
+    assert_valid(record, "norm only")
+    check("norm-only abstains", record["projection"]["status"] == "blocked")
+    check("norm-only names its blocker", blockers_of(record) == {"norm_only_surface_match"})
+    check("norm-only emits no lexeme candidate", candidates_of(record) == [])
+
+
+def test_no_support_abstains() -> None:
+    inputs = make_inputs(forms=[], lemmas=[], stems=[])
+    record = bridge.bridge_row(crosswalk_row(), inputs)
+    assert_valid(record, "no support")
+    check("no-support abstains", record["projection"]["status"] == "producer_pending")
+    check("no-support names its blocker", blockers_of(record) == {"no_carried_lexical_support"})
+
+
+def test_distinct_identity_kinds_stay_distinct() -> None:
+    inputs = make_inputs()
+    fact = candidates_of(bridge.bridge_row(crosswalk_row(), inputs))[0]
+    value = fact["fact_value"]
+    check("lexeme identity is its own field", "lexeme_candidate" in value)
+    check("form realization is its own field", "form_realization" in value)
+    check("stem segmentation is its own field", "stem_segmentation" in value)
+    check("occurrence is its own field", "occurrence" in value)
+    check("page context is its own field", "page_context" in value)
+    check("root family is its own field", "root_family_relations" in value)
+    check("form id is not the entry id", value["form_realization"]["form_id"] != value["lexeme_candidate"]["entry_id"])
+    check("stem id is not the form id", value["stem_segmentation"]["stem_id"] != value["form_realization"]["form_id"])
+    check("occurrence loc is not an entry id", value["occurrence"]["canonical_quran_loc"] == LOC)
+    check("page-context entry differs from the lexeme entry",
+          value["page_context"]["crosswalk_entry_id"] != value["lexeme_candidate"]["entry_id"])
+
+
+# --------------------------------------------------------------------------- #
+# registration and certification boundary
+# --------------------------------------------------------------------------- #
+def test_projector_is_registered_fail_closed() -> None:
+    contract = fact_projectors.REGISTRY.contract(fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID)
+    check("bridge projector is registered never_auto_resolve", contract["gate_tier"] == "never_auto_resolve")
+    check("bridge projector declares its defeater guard", contract["defeater_checks"] == ["largelexicon_bridge_abstention_guard"])
+    gates = fact_projectors.load_gate_tiers()
+    check("never_auto_resolve exists in the gate SSOT", "never_auto_resolve" in gates)
+    check("never_auto_resolve is the strictest rank",
+          gates["never_auto_resolve"]["rank"] == max(item["rank"] for item in gates.values()))
+    # The enforcing registry is tools/fact_projectors.py. The transclusion-lattice
+    # registry keys @2.1 SKILL-RULE projectors to released sarf@2 / nahw@2 rule ids
+    # through declarative predicates in tools/lattice_projectors.py; the bridge has
+    # no skill rule ids and no declarative class predicate, so it is deliberately
+    # NOT registered there rather than registered behind a placeholder predicate.
+    lattice = json.loads((Path(__file__).resolve().parents[1] / "qamus" / "lattice" / "registered-projectors.json")
+                         .read_text(encoding="utf-8"))
+    entries = {item["projector_id"] for item in lattice["registered"]}
+    check("bridge is not registered behind a placeholder lattice predicate",
+          fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID not in entries)
+    check("every lattice entry still keys real skill rules or a declarative predicate",
+          all(item.get("class_predicate") for item in lattice["registered"]))
+
+
+def test_registry_run_returns_candidate_or_abstention_only() -> None:
+    inputs = make_inputs()
+    result = fact_projectors.REGISTRY.run(
+        fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID, crosswalk_row=crosswalk_row(), inputs=inputs
+    )
+    check("registry run yields a candidate", result["status"] == "candidate")
+    check("registry run forbids materialization", result["materialization_allowed"] is False)
+    check("registry run forbids certification", result["certification_allowed"] is False)
+    collision_inputs = make_inputs(
+        forms=[form_row("1ec0de000001", SURFACE), form_row("1ec0de000002", SURFACE, "001")], lemmas=[], stems=[]
+    )
+    abstained = fact_projectors.REGISTRY.run(
+        fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID, crosswalk_row=crosswalk_row(), inputs=collision_inputs
+    )
+    check("registry run abstains on collision", abstained["status"] == "abstained")
+    check("registry abstention names the blocker", abstained["blockers"] == ["lexical_collision_requires_context"])
+    check("registry abstention emits no resolved candidate", abstained["candidate"] is None)
+    check("registry abstention still preserves both fact ids", len(abstained["preserved_candidate_fact_ids"]) == 2)
+
+
+def test_never_auto_resolve_cannot_be_certified() -> None:
+    """A never_auto_resolve contract must have no certification path at all."""
+
+    class _Store:
+        def __init__(self, row):
+            self.row = row
+
+        def query(self, fact_id=None):
+            return [self.row] if fact_id == self.row["fact_id"] else []
+
+    row = {"fact_id": "sha256:" + "0" * 64, "fact_type": "largelexicon_lexeme_candidate"}
+    votes = [
+        {"voter_id": "a", "independent": True, "vote": "approve"},
+        {"voter_id": "b", "independent": True, "vote": "approve"},
+    ]
+    try:
+        fact_projectors.review_and_materialize(_Store(row), row["fact_id"], votes, "target", {})
+    except fact_projectors.ProjectorValidationError as error:
+        check("never_auto_resolve refuses certification even with two votes",
+              "never_auto_resolve" in str(error))
+    else:
+        raise AssertionError("FAILED: never_auto_resolve candidate was certified")
+
+
+def test_committed_fixtures_match_the_bridge() -> None:
+    directory = Path(__file__).resolve().parents[1] / "qamus" / "examples" / "largelexicon-fact-bridge"
+    path = directory / "bridge-fixtures.jsonl"
+    if not path.exists():
+        return
+    committed = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    errors = bridge.validate_records(committed)
+    check(f"committed fixtures are valid typed claims ({errors[:2]})", not errors)
+    check("committed fixtures certify nothing",
+          all(fact["certification"]["status"] != "certified" for record in committed for fact in record["facts"]))
+    check("committed fixtures are never learner visible",
+          all(record["projection"]["learner_visible"] is False for record in committed))
+    check("committed fixtures cover every blocker",
+          {blocker for record in committed for blocker in blockers_of(record)} == set(bridge.BLOCKER_STATUS))
+
+
+def all_tests():
+    """Collected at call time so appended tests can never be silently skipped."""
+
+    return [value for name, value in sorted(globals().items()) if name.startswith("test_")]
+
+
+# There is deliberately NO frozen TESTS snapshot. A module-level list captured at
+# import time silently drops every test appended after it, which is exactly how the
+# harness once ran 20 of 41. Callers must collect via all_tests() at call time;
+# EXPECTED_MINIMUM_TESTS and CRITICAL_PROBES are the contract asserted against it.
+
+
+class _FrozenSuiteTrap(list):
+    """Refuses to be used as a test list, and says why."""
+
+    def __iter__(self):  # noqa: D105 - the refusal IS the behaviour
+        raise RuntimeError(
+            "tools.test_largelexicon_fact_bridge.TESTS is not a runnable suite: "
+            "collect tests with all_tests() at call time so appended tests cannot be skipped"
+        )
+
+    def __len__(self):  # noqa: D105
+        raise RuntimeError(
+            "tools.test_largelexicon_fact_bridge.TESTS is not a runnable suite: "
+            "use len(all_tests()) so the count cannot go stale"
+        )
+
+
+TESTS = _FrozenSuiteTrap()
+EXPECTED_MINIMUM_TESTS = 69
+CRITICAL_PROBES = (
+    "test_candidate_admission_requires_complete_authority",
+    "test_carried_membership_binds_the_exact_row_body",
+    "test_dependency_ids_bind_to_the_denominator_authority",
+    "test_typed_edge_requires_reconstructible_content",
+    "test_authority_digests_are_recomputed_not_trusted",
+    "test_canonical_loc_requires_positive_coordinates",
+    "test_certifier_refuses_never_auto_resolve_producer",
+    "test_no_validation_bypass_can_return_a_candidate",
+    "test_typed_graph_evidence_is_mandatory",
+    "test_no_first_row_winner",
+    "test_projector_identity_cannot_shed_a_fact_type_gate",
+    "test_registry_two_vote_gate_requires_a_bundle",
+    "test_stale_content_addressed_fact_id_is_refused",
+    "test_authority_is_sealed_not_caller_declared",
+    "test_duplicate_identities_are_refused_in_every_family",
+    "test_invented_denominator_cannot_be_source_card_authority",
+    "test_repository_metadata_binds_the_exact_parsed_content",
+    "test_typed_edge_identity_and_endpoints_are_exact",
+    "test_reader_boundary_is_stable",
+    "test_release_fragment_addresses_name_release_digests",
+    "test_seal_digest_is_separately_and_honestly_bound",
+    "test_filtered_run_cannot_create_false_whole_family_provenance",
+    "test_published_typed_edge_counts_match_the_scan",
+    "test_unrecognised_producer_can_never_be_certified",
+    "test_no_recognised_family_name_authorizes_certification",
+    "test_family_authority_is_resolved_evidence_not_a_citation_string",
+    "test_family_authority_binds_the_declared_body_and_committed_evidence",
+    "test_both_bridge_output_fact_types_are_registered",
+    "test_no_frozen_partial_suite_can_be_run",
+)
+
+
+def main() -> int:
+    tests = all_tests()
+    for test in tests:
+        test()
+    print(
+        json.dumps(
+            {"ok": True, "schema": "qamus/largelexicon-fact-bridge-tests@1", "tests": len(tests)},
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+
+
+# --------------------------------------------------------------------------- #
+# defect-round-1 repairs
+# --------------------------------------------------------------------------- #
+def test_typed_graph_evidence_is_mandatory() -> None:
+    """Exact surface is discovery only; a same-surface form elsewhere abstains."""
+
+    record = bridge.bridge_row(crosswalk_row(), make_inputs(typed_edges={}))
+    check("no typed edge abstains", record["projection"]["status"] == "source_gap")
+    check("no typed edge names its blocker", blockers_of(record) == {"missing_typed_graph_evidence"})
+    check("no typed edge emits no candidate", candidates_of(record) == [])
+
+    other_loc = bridge.fixture_typed_edge("1ec0de000001", loc="9:9:9")
+    elsewhere = bridge.bridge_row(crosswalk_row(), make_inputs(typed_edges={"9:9:9": [other_loc]}))
+    check("a typed edge at another loc does not support this occurrence",
+          blockers_of(elsewhere) == {"missing_typed_graph_evidence"})
+
+    wrong_surface = bridge.fixture_typed_edge("1ec0de000001", surface=OTHER_SURFACE)
+    surface_mismatch = bridge.bridge_row(crosswalk_row(), make_inputs(typed_edges={LOC: [wrong_surface]}))
+    check("a same-surface form elsewhere does not support this occurrence",
+          blockers_of(surface_mismatch) == {"missing_typed_graph_evidence"})
+
+    wrong_entry = bridge.bridge_row(
+        crosswalk_row(), make_inputs(typed_edges={LOC: [bridge.fixture_typed_edge("1ec0de000009")]})
+    )
+    check("a typed edge to another entry does not establish identity",
+          blockers_of(wrong_entry) == {"typed_edge_identity_disagreement"})
+
+
+def test_candidate_status_typed_edge_never_supports_identity() -> None:
+    for status in ("candidate", "ambiguous", "source_gap", "rejected"):
+        edge = bridge.fixture_typed_edge("1ec0de000001", status=status)
+        check("typed edge status " + status + " is not structurally eligible",
+              bridge.typed_edge_errors(edge) != [])
+
+
+def test_occurrence_loc_is_never_manufactured() -> None:
+    check("card address is not an occurrence loc",
+          bridge.occurrence_loc_of("selected-word:1ec0de000001:s1:u1:f1:c2:284:x1") is None)
+    check("explicit occurrence loc is read",
+          bridge.occurrence_loc_of("selected-word:x:s1:u1:f1:c28:50:x12:o28:50:12") == "28:50:12")
+
+
+def test_loc_must_agree_with_the_canonical_index() -> None:
+    absent = bridge.bridge_row(crosswalk_row(), make_inputs(loc_surface={"1:1:1": "x"}))
+    check("absent loc is blocked", blockers_of(absent) == {"loc_not_in_canonical_index"})
+    mismatch = bridge.bridge_row(crosswalk_row(), make_inputs(loc_surface={LOC: OTHER_SURFACE}))
+    check("loc/surface disagreement is blocked", blockers_of(mismatch) == {"loc_surface_disagreement"})
+    for bad in ("0:0:0", "9:9:9", ""):
+        drifted = crosswalk_row(canonical_wbw_loc=bad)
+        record = bridge.bridge_row(drifted, inputs_for(drifted))
+        check("wbw disagreement is caught", "wbw_loc_disagreement" in blockers_of(record))
+    for bad in ("0:0:0", "1000:1:1", "2:255", "-1:2:3"):
+        check("invalid loc coordinates are refused", not bridge.is_canonical_loc(bad) or bad == "0:0:0")
+
+
+def test_inputs_fail_closed_on_legacy_rows_and_unbound_dependencies() -> None:
+    """Legacy rows, unvalidated edges and loose caller authority all fail closed."""
+
+    legacy = form_row("1ec0de000001", SURFACE)
+    legacy["schema"] = "fusha/largelexicon/form-source@1"
+    for name, kwargs in (
+        ("legacy @1 form row", {"forms": [legacy]}),
+        ("unvalidated typed edge", {"typed_edges": {LOC: [{"schema": "other"}]}}),
+    ):
+        try:
+            make_inputs(**kwargs)
+        except bridge.BridgeError as error:
+            check(name + " fails closed", "failed closed" in str(error))
+        else:
+            raise AssertionError("FAILED: " + name + " was accepted")
+
+    # Loose caller rows are no longer an accepted authority shape at all.
+    try:
+        bridge.BridgeInputs(crosswalk=[], lemmas=[], forms=[], stems=[], dependency_hashes={})
+    except TypeError:
+        pass
+    else:
+        raise AssertionError("FAILED: BridgeInputs accepted loose caller rows")
+    try:
+        bridge.BridgeInputs({"not": "a seal"})
+    except bridge.BridgeError as error:
+        check("a non-seal is refused", "SealedAuthority" in str(error))
+    else:
+        raise AssertionError("FAILED: a non-seal was accepted as authority")
+
+def test_fact_id_is_content_addressed_over_the_claim() -> None:
+    base = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]["fact_id"]
+
+    def one(**kwargs):
+        return candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs(**kwargs)))[0]["fact_id"]
+
+    mutated_pos = form_row("1ec0de000001", SURFACE)
+    mutated_pos["pos"] = "verb"
+    check("POS change moves the fact id", one(forms=[mutated_pos]) != base)
+    mutated_root = form_row("1ec0de000001", SURFACE)
+    mutated_root.update({"root": "ا ل ه", "no_root_reason": None})
+    check("root change moves the fact id", one(forms=[mutated_root]) != base)
+    mutated_lemma = lemma_row("1ec0de000001", SURFACE)
+    mutated_lemma["lemma"] = OTHER_SURFACE
+    check("lemma change moves the fact id", one(lemmas=[mutated_lemma]) != base)
+    check("stem change moves the fact id", one(stems=[]) != base)
+    check("typed-edge change moves the fact id",
+          one(typed_edges={LOC: [bridge.fixture_typed_edge("1ec0de000001", edge_type="form_entry_edge")]}) != base)
+
+    check("carried-table content change moves the fact id",
+          one(forms=[form_row("1ec0de000001", SURFACE), form_row("1ec0de000002", SURFACE, "001")])
+          != base)
+    # Digests are recomputed from content, so identity moves when CONTENT moves.
+    wider_index = {LOC: SURFACE, "2:255:2": OTHER_SURFACE}
+    check("canonical-index content change moves the fact id", one(loc_surface=wider_index) != base)
+    lattice = {LOC: [{"loc": LOC, "entry_id": "1ec0de000009", "edge_type": "form", "relation": "linkage_only"}]}
+    check("lexeme-lattice content change moves the fact id", one(graph_edges=lattice) != base)
+    both_edges = {LOC: [bridge.fixture_typed_edge("1ec0de000001"),
+                        bridge.fixture_typed_edge("1ec0de000001", edge_type="form_entry_edge")]}
+    check("typed-graph content change moves the fact id", one(typed_edges=both_edges) != base)
+    root_edge = {LOC: [{"loc": LOC, "entry_id": "1ec0de000001", "edge_type": "headword",
+                        "relation": "root_confirms", "row_root": "ا ل ه"}]}
+    check("root-family relation change moves the fact id", one(graph_edges=root_edge) != base)
+
+
+def test_no_first_row_winner() -> None:
+    forms = [form_row("1ec0de000001", SURFACE), form_row("1ec0de000002", SURFACE, "001")]
+    record = bridge.bridge_row(crosswalk_row(), make_inputs(forms=forms, lemmas=[], stems=[]))
+    flipped = bridge.bridge_row(crosswalk_row(), make_inputs(forms=list(reversed(forms)), lemmas=[], stems=[]))
+    check("input order does not pick a winner", record["projection"]["status"] == "unresolved")
+    check("reversed input order abstains identically", flipped["projection"]["status"] == "unresolved")
+    check("the same candidate fact ids are preserved either way",
+          sorted(f["fact_id"] for f in candidates_of(record))
+          == sorted(f["fact_id"] for f in candidates_of(flipped)))
+
+
+def test_unregistered_projector_fails() -> None:
+    for unknown in ("largelexicon.not_registered.v1", "", "sarf.made_up.v9"):
+        try:
+            fact_projectors.REGISTRY.run(unknown, crosswalk_row=crosswalk_row(), inputs=make_inputs())
+        except fact_projectors.ProjectorValidationError as error:
+            check("unknown projector is refused", "unregistered projector" in str(error))
+        else:
+            raise AssertionError("FAILED: unregistered projector ran")
+    try:
+        fact_projectors.REGISTRY.contract("largelexicon.not_registered.v1")
+    except fact_projectors.ProjectorValidationError:
+        pass
+    else:
+        raise AssertionError("FAILED: unknown contract was returned")
+
+
+def test_committed_fixtures_respect_the_public_boundary() -> None:
+    directory = Path(__file__).resolve().parents[1] / "qamus" / "examples" / "largelexicon-fact-bridge"
+    text = (directory / "bridge-fixtures.jsonl").read_text(encoding="utf-8")
+    committed = [json.loads(line) for line in text.splitlines() if line.strip()]
+    check("committed fixtures are boundary-clean", bridge.public_fixture_errors(committed) == [])
+    windows_path = "from C:" + chr(92) + "private"
+    for name, mutate in (
+        ("informed_by", lambda r: r[0]["facts"][0].update({"informed_by": ["qac"]})),
+        ("gloss prose", lambda r: r[0]["facts"][0]["fact_value"].update({"gloss_text": "a copied gloss"})),
+        ("ocr field", lambda r: r[0]["facts"][0]["fact_value"].update({"ocr_text": "scanned"})),
+        ("external label", lambda r: r[0]["facts"][0]["evidence"].update({"summary": "checked against qac"})),
+        ("url", lambda r: r[0]["facts"][0]["evidence"].update({"summary": "see https://example.test/x"})),
+        ("absolute path", lambda r: r[0]["facts"][0]["evidence"].update({"summary": "from /srv/private/x"})),
+        ("windows path", lambda r: r[0]["facts"][0]["evidence"].update({"summary": windows_path})),
+    ):
+        broken = copy.deepcopy(committed)
+        mutate(broken)
+        check(name + " is rejected in a public fixture", bridge.public_fixture_errors(broken) != [])
+
+
+def test_full_output_may_not_target_a_tracked_path() -> None:
+    check("default output is under out/", "out" in bridge.DEFAULT_OUTPUT.parts)
+    check("materialization target is not a tracked path",
+          bridge.MATERIALIZATION_TARGET["artifact"].startswith("out/"))
+    try:
+        bridge.main(["--limit", "1", "--out", "qamus/examples/largelexicon-fact-bridge/leak.jsonl"])
+    except SystemExit as error:
+        check("tracked output destination is refused", "gitignored out/" in str(error))
+    else:
+        raise AssertionError("FAILED: a tracked output destination was accepted")
+
+
+# --------------------------------------------------------------------------- #
+# defect-round-2 repairs
+# --------------------------------------------------------------------------- #
+def _expect_closed(name, build) -> None:
+    try:
+        build()
+    except bridge.BridgeError as error:
+        check(name + " fails closed", "failed closed" in str(error))
+    else:
+        raise AssertionError("FAILED: " + name + " was admitted")
+
+
+def test_candidate_admission_requires_complete_authority() -> None:
+    """Admission may never fail open when an authority is absent or unsealed."""
+
+    _expect_closed("empty canonical loc index", lambda: make_inputs(loc_surface={}))
+    _expect_closed("unvalidated typed edge", lambda: make_inputs(typed_edges={LOC: [{"schema": "x"}]}))
+    _expect_closed("legacy denominator row",
+                   lambda: make_inputs(denominator=[{"row_id": "x", "card_id": "y"}]))
+
+    import inspect
+
+    seal_params = set(inspect.signature(bridge.SealedAuthority.seal_fixture).parameters)
+    forbidden = seal_params & {"binding", "bundles", "sha256", "path", "verified",
+                               "dependency_hashes", "loc_surface_meta", "typed_graph_meta"}
+    check("the seal accepts no caller binding, digest or path claim", not forbidden)
+
+    binding = make_inputs().authority_binding()
+    check("the seal marks itself verified only after recomputation", binding["verified"] is True)
+    check("the seal records its origin", binding["origin"] == "fixture")
+    check("the seal recomputes every carried-table digest",
+          set(binding["carried_tables"]) == set(bridge.CARRIED_FAMILY_IDENTITY))
+    for family, digest in binding["carried_tables"].items():
+        check("carried digest for %s is a sha256" % family, len(digest) == 64)
+
+def test_edge_map_key_must_agree_with_the_encoded_loc() -> None:
+    """An edge filed under one loc whose node encodes another is a mis-binding."""
+
+    mismatched = {LOC: [bridge.fixture_typed_edge("1ec0de000001", loc="9:9:9")]}
+    _expect_closed("mismatched edge-map key", lambda: make_inputs(typed_edges=mismatched))
+    check("edge-key disagreement is reported precisely",
+          any("map key disagrees" in problem for problem in bridge._edge_key_errors(mismatched)))
+    check("agreeing edge-map key is accepted",
+          bridge._edge_key_errors({LOC: [bridge.fixture_typed_edge("1ec0de000001")]}) == [])
+
+
+def test_authority_binding_is_carried_into_facts_and_scan() -> None:
+    inputs = make_inputs()
+    binding = inputs.authority_binding()
+    check("binding names every authority",
+          {"canonical_loc_index", "carried_tables", "lexeme_join_lattice", "typed_graph"} <= set(binding))
+    check("the consumed authority object is verified", binding["verified"] is True)
+    check("authority digest is a sha256", len(inputs.authority_digest()) == 64)
+    fact = candidates_of(bridge.bridge_row(crosswalk_row(), inputs))[0]
+    check("candidate binds the typed-graph digest",
+          fact["fact_value"]["occurrence"]["canonical_quran_loc"] == LOC)
+    scan = Path(__file__).resolve().parents[1] / "qamus" / "examples" / "largelexicon-fact-bridge" / "real-data-scan.meta.json"
+    if scan.exists():
+        payload = json.loads(scan.read_text(encoding="utf-8"))
+        upstream = payload["upstream_binding"]
+        check("scan binds every authority", set(upstream["authorities"]) == set(binding))
+        check("scan authority is verified", upstream["authorities"]["verified"] is True)
+        for name in ("canonical_loc_index", "lexeme_join_lattice"):
+            check(name + " is hashed into the scan",
+                  len(str(upstream["authorities"][name]["content_sha256"])) == 64)
+        check("scan carries an authority digest", len(str(upstream["authority_digest"])) == 64)
+
+
+def test_abstention_ids_bind_semantics_and_provenance() -> None:
+    """An abstention ID must move when its claim or its provenance moves."""
+
+    def abstention(**kwargs) -> str:
+        row = kwargs.pop("row", crosswalk_row())
+        record = bridge.bridge_row(row, make_inputs(typed_edges={}, **kwargs))
+        return record["facts"][0]["fact_id"]
+
+    base = abstention()
+    check("carried-table content moves the abstention id",
+          abstention(stems=[]) != base)
+    check("canonical-index content moves the abstention id",
+          abstention(loc_surface={LOC: SURFACE, "2:255:2": OTHER_SURFACE}) != base)
+    check("lexeme-lattice content moves the abstention id",
+          abstention(graph_edges={LOC: [{"loc": LOC, "entry_id": "1ec0de000009", "edge_type": "form",
+                                         "relation": "linkage_only"}]}) != base)
+    graph = {LOC: [{"loc": LOC, "entry_id": "1ec0de000009", "edge_type": "form", "relation": "linkage_only"}]}
+    check("blocker graph evidence moves the abstention id",
+          abstention(forms=[], lemmas=[], stems=[], graph_edges=graph) != base)
+    other_surface = crosswalk_row(visible_surface=OTHER_SURFACE)
+    check("surface moves the abstention id", abstention(row=other_surface) != base)
+
+
+def test_public_fixture_keys_are_checked_at_every_depth() -> None:
+    probes = (
+        {"nested": {"qac": True}},
+        {"nested": {"tafsir": 1}},
+        {"nested": {"informed_by": []}},
+        {"a": {"b": {"https://example.test/x": 1}}},
+        {"a": {"C:" + chr(92) + "private": 1}},
+        {"a": {"/srv/private/x": 1}},
+        {"deep": [{"more": {"ocr": "x"}}]},
+    )
+    for probe in probes:
+        check("nested prohibited key is rejected: " + json.dumps(probe, ensure_ascii=False),
+              bridge.public_fixture_errors(probe) != [])
+    legitimate = {
+        "schema": "qamus.typed_claim_contract.v1",
+        "facts": [{"fact_type": "largelexicon_lexeme_candidate", "surface_spans": [{"role": "written_token"}]}],
+        "projection": {"materialization_target": {"artifact": "out/largelexicon-fact-bridge/typed-claims.jsonl"}},
+    }
+    check("legitimate schema keys stay accepted", bridge.public_fixture_errors(legitimate) == [])
+
+
+def test_projector_reports_the_enclosed_evidence_mode() -> None:
+    result = fact_projectors.REGISTRY.run(
+        fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID,
+        crosswalk_row=crosswalk_row(),
+        inputs=make_inputs(),
+    )
+    fact = [f for f in result["typed_claim_record"]["facts"]
+            if f["fact_type"] == "largelexicon_lexeme_candidate"][0]
+    check("wrapper evidence mode equals the enclosed fact's",
+          result["candidate"]["evidence_mode"] == fact["evidence_mode"])
+    check("wrapper does not relabel as normalized or certified",
+          result["evidence_mode"] not in {"normalized_lexical_body", "certified"})
+    check("enclosed fact is not relabelled", fact["evidence_mode"] == "direct_source_attestation")
+
+    original = bridge.bridge_row
+
+    def relabelled(row, inputs):
+        record = original(row, inputs)
+        for item in record["facts"]:
+            if item["fact_type"] == "largelexicon_lexeme_candidate":
+                item["evidence_mode"] = "normalized_lexical_body"
+        return record
+
+    bridge.bridge_row = relabelled
+    try:
+        mismatched = fact_projectors.REGISTRY.run(
+            fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID,
+            crosswalk_row=crosswalk_row(),
+            inputs=make_inputs(),
+        )
+        check("a relabelled fact is reported as-is, never silently normalized",
+              mismatched["candidate"]["evidence_mode"] == "normalized_lexical_body"
+              and mismatched["typed_claim_record"]["facts"][0]["evidence_mode"] == "normalized_lexical_body")
+    finally:
+        bridge.bridge_row = original
+
+
+def test_full_carried_table_output_refuses_tracked_paths() -> None:
+    import promote_largelexicon_target_schema as promoter
+
+    for name, destination in (
+        ("tracked index path", promoter.ROOT / "qamus" / "indexes" / "tracked-probe"),
+        ("repository root", promoter.ROOT),
+        ("traversal escape", promoter.ROOT / "out" / ".." / "qamus"),
+        ("absolute outside root", Path(promoter.ROOT.anchor) / "tmp" / "a3-probe"),
+    ):
+        for api in (
+            lambda d: promoter.emit_carried(d, {}),
+            lambda d: promoter.emit_ledgers(d, {"flagged": [], "quarantined": []}),
+            promoter.assert_ignored_output_root,
+        ):
+            try:
+                api(destination)
+            except promoter.PromotionError as error:
+                check(name + " is refused", "gitignored out/" in str(error))
+            else:
+                raise AssertionError("FAILED: " + name + " was accepted for full output")
+    check("the authorized ignored root is accepted",
+          promoter.assert_ignored_output_root(promoter.DEFAULT_CARRIED_DIR).is_relative_to(
+              (promoter.ROOT / "out").resolve()))
+
+
+# --------------------------------------------------------------------------- #
+# defect-round-3 repairs: no forged or bypassed authority binding
+# --------------------------------------------------------------------------- #
+def test_forged_zero_bundle_metadata_is_refused() -> None:
+    """Bundle counts are derived from the sealed edges; they cannot be declared."""
+
+    import inspect
+
+    params = set(inspect.signature(make_inputs).parameters)
+    check("no typed_graph_meta parameter survives", "typed_graph_meta" not in params)
+
+    edges = {LOC: [bridge.fixture_typed_edge("1ec0de000001")]}
+    binding = make_inputs(typed_edges=edges).authority_binding()["typed_graph"]
+    check("eligible edge count is derived", binding["eligible_edge_count"] == 1)
+    check("eligible loc count is derived", binding["eligible_loc_count"] == 1)
+    declared = sum(item["eligible_edge_count"] for item in binding["bundles"])
+    check("bundle counts equal the sealed edge multiset", declared == 1)
+
+    empty = make_inputs(typed_edges={}).authority_binding()["typed_graph"]
+    check("an empty graph reports zero, not a forged count", empty["eligible_edge_count"] == 0)
+    check("the two graph digests differ with content",
+          binding["edge_content_sha256"] != empty["edge_content_sha256"])
+
+def test_partial_dependency_family_is_refused() -> None:
+    """Every carried family must be present and validated in the seal."""
+
+    import inspect
+
+    seal_params = inspect.signature(bridge.SealedAuthority.seal_fixture).parameters
+    for family in ("crosswalk", "denominator", "forms", "lemmas", "stems"):
+        check("the seal requires the %s family" % family, family in seal_params)
+    binding = make_inputs().authority_binding()
+    check("all five carried families are bound",
+          set(binding["carried_tables"]) == set(bridge.CARRIED_FAMILY_IDENTITY))
+    check("row counts are recorded per family",
+          set(binding["carried_row_counts"]) == set(bridge.CARRIED_FAMILY_IDENTITY))
+
+    # A family whose rows do not validate cannot be sealed at all.
+    bad = form_row("1ec0de000001", SURFACE)
+    bad["schema"] = "fusha/largelexicon/form-source@1"
+    _expect_closed("legacy row in a carried family", lambda: make_inputs(forms=[bad]))
+
+def test_no_validation_bypass_can_return_a_candidate() -> None:
+    """Counterexample C: the old validate_rows=False escape hatch is gone."""
+
+    import inspect
+
+    signature = inspect.signature(bridge.BridgeInputs.__init__)
+    check("BridgeInputs exposes no validation bypass flag", "validate_rows" not in signature.parameters)
+    check("BridgeInputs is candidate capable", bridge.BridgeInputs.candidate_capable is True)
+    check("DiagnosticInputs is structurally candidate incapable",
+          bridge.DiagnosticInputs.candidate_capable is False)
+
+    diagnostic = bridge.DiagnosticInputs(
+        crosswalk=[],
+        forms=[form_row("1ec0de000001", SURFACE)],
+        typed_edges={LOC: [bridge.fixture_typed_edge("1ec0de000001")]},
+        loc_surface={},
+    )
+    check("diagnostic construction records why it is unverified", diagnostic.input_errors != [])
+    check("diagnostic authority is not verified", diagnostic.authority["verified"] is False)
+    record = bridge.bridge_row(crosswalk_row(), diagnostic)
+    assert_valid(record, "diagnostic abstention")
+    check("diagnostic inputs emit no candidate", candidates_of(record) == [])
+    check("diagnostic inputs abstain", record["projection"]["status"] == "blocked")
+    check("diagnostic inputs name their blocker",
+          blockers_of(record) == {"unverified_diagnostic_inputs"})
+
+    result = fact_projectors.REGISTRY.run(
+        fact_projectors.LARGELEXICON_BRIDGE_PROJECTOR_ID,
+        crosswalk_row=crosswalk_row(),
+        inputs=diagnostic,
+    )
+    check("the projector wrapper cannot return a candidate from diagnostic inputs",
+          result["status"] == "abstained" and result["candidate"] is None)
+    check("the diagnostic wrapper is not certification capable",
+          result["certification_allowed"] is False and result["materialization_allowed"] is False)
+
+
+def test_verified_authority_is_bound_into_ids_and_scan() -> None:
+    inputs = make_inputs()
+    binding = inputs.authority_binding()
+    check("the consumed authority is verified", binding["verified"] is True)
+    check("counts are derived, never asserted",
+          binding["typed_graph"]["eligible_edge_count"] == 1)
+    check("the complete carried family is bound",
+          set(binding["carried_tables"]) == set(bridge.CARRIED_FAMILY_IDENTITY))
+
+    base = candidates_of(bridge.bridge_row(crosswalk_row(), inputs))[0]["fact_id"]
+    # Mutating any carried family's CONTENT moves the recomputed digest and the id.
+    moved_forms = [form_row("1ec0de000001", SURFACE), form_row("1ec0de000002", SURFACE, "001")]
+    other = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs(forms=moved_forms)))
+    check("carried-content change moves the fact id",
+          all(fact["fact_id"] != base for fact in other))
+    check("stem content change moves the fact id",
+          candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs(stems=[])))[0]["fact_id"] != base)
+
+    scan = Path(__file__).resolve().parents[1] / "qamus" / "examples" / "largelexicon-fact-bridge" / "real-data-scan.meta.json"
+    if scan.exists():
+        payload = json.loads(scan.read_text(encoding="utf-8"))
+        authorities = payload["upstream_binding"]["authorities"]
+        check("the scan binds a verified authority", authorities["verified"] is True)
+        check("the scan binds every carried family",
+              set(authorities["carried_tables"]) == set(bridge.CARRIED_FAMILY_IDENTITY))
+        check("the scan records a release-origin seal", authorities["origin"] == "release")
+
+def test_carried_membership_binds_the_exact_row_body() -> None:
+    """A detached or drifted row can never be bridged, whatever its row_id says."""
+
+    detached = crosswalk_row()
+    record = bridge.bridge_row(detached, make_inputs(crosswalk=[]))
+    check("a detached row emits no candidate", candidates_of(record) == [])
+    check("a detached row names the membership blocker",
+          "row_not_in_validated_carried_authority" in blockers_of(record))
+
+    authority = make_inputs()
+    for label, mutate in (
+        ("schema downgrade", lambda r: r.update({"schema": "qamus/largelexicon-qword-crosswalk@1"})),
+        ("invented field", lambda r: r.update({"invented_field": "x"})),
+        ("surface drift", lambda r: r.update({"visible_surface": OTHER_SURFACE})),
+        ("match_status forgery", lambda r: r.update({"match_status": "forged"})),
+        ("dependency swap", lambda r: r.update({"source_dependencies": [
+            {"id": "llx-qword-0aae00000000-01-01-001", "kind": "qword_denominator_row"}]})),
+    ):
+        drifted = copy.deepcopy(crosswalk_row())
+        mutate(drifted)
+        record = bridge.bridge_row(drifted, authority)
+        check("post-validation %s emits no candidate" % label, candidates_of(record) == [])
+        check("post-validation %s is blocked" % label,
+              record["projection"]["status"] in {"blocked", "source_gap", "unresolved", "producer_pending"})
+
+    check("membership is body-addressed, not id-addressed",
+          authority.carried_membership(crosswalk_row()) == "carried")
+    check("an altered body loses membership",
+          authority.carried_membership(crosswalk_row(usage_index=9))
+          == "row_not_in_validated_carried_authority")
+    check("a dispositioned row is named as such",
+          make_inputs(crosswalk=[], non_carried_crosswalk=[crosswalk_row()])
+          .carried_membership(crosswalk_row()) == "quarantined_or_flagged_source_row")
+
+    import inspect
+    check("bridge_row exposes no caller-defaulted carried trust path",
+          "carried" not in inspect.signature(bridge.bridge_row).parameters)
+
+
+def test_dependency_ids_bind_to_the_denominator_authority() -> None:
+    """Correct kind labels with bogus ids must not admit a candidate."""
+
+    bogus = crosswalk_row(source_dependencies=[
+        {"id": "llx-qword-ffffffffffff-99-99-999", "kind": "qword_denominator_row"},
+        {"id": "ffffffffffff:u9:e9", "kind": "source_card"},
+    ])
+    record = bridge.bridge_row(bogus, inputs_for(bogus))
+    check("bogus dependency ids emit no candidate", candidates_of(record) == [])
+    check("bogus dependency ids name the authority blocker",
+          "dependency_id_not_in_authority" in blockers_of(record))
+
+    wrong_card = crosswalk_row(source_dependencies=[
+        {"id": "llx-qword-0aae00000000-01-01-001", "kind": "qword_denominator_row"},
+        {"id": "0aae00000000:u9:e9", "kind": "source_card"},
+    ])
+    record = bridge.bridge_row(wrong_card, inputs_for(wrong_card))
+    check("a source-card id that is not the denominator row's card is refused",
+          "dependency_id_not_in_authority" in blockers_of(record))
+
+    record = bridge.bridge_row(crosswalk_row(), make_inputs(denominator=[]))
+    check("an absent denominator authority is an honest source gap",
+          "source_card_authority_unavailable" in blockers_of(record))
+    check("an absent denominator authority emits no candidate", candidates_of(record) == [])
+
+
+def test_typed_edge_requires_reconstructible_content() -> None:
+    """An accepted-looking edge without reconstructible content is not authority."""
+
+    for label, mutate in (
+        ("empty evidence", lambda e: e.update({"evidence": []})),
+        ("missing evidence", lambda e: e.pop("evidence", None)),
+        ("empty guards", lambda e: e.update({"guards": []})),
+        ("missing guards", lambda e: e.pop("guards", None)),
+        ("no producer", lambda e: e.pop("producer", None)),
+        ("producer without version", lambda e: e.update({"producer": {"id": "x"}})),
+        ("no edge id", lambda e: e.pop("edge_id", None)),
+        ("edge id is not content-shaped", lambda e: e.update({"edge_id": "edge:not-the-content-hash"})),
+        ("page context relation", lambda e: e.update({"edge_type": "page_context_entry_edge"})),
+        ("root family relation", lambda e: e.update({"edge_type": "root_family_edge"})),
+        ("candidate status", lambda e: e.update({"status": "candidate"})),
+        ("no occurrence loc", lambda e: e.update({"from_node_id": "selected-word:x:s1:u1:f1:c2:255"})),
+    ):
+        edge = bridge.fixture_typed_edge("1ec0de000001")
+        mutate(edge)
+        check("hollow typed edge (%s) is structurally rejected" % label,
+              bridge.typed_edge_errors(edge) != [])
+        try:
+            record = bridge.bridge_row(crosswalk_row(), make_inputs(typed_edges={LOC: [edge]}))
+        except bridge.BridgeError:
+            continue
+        check("hollow typed edge (%s) emits no candidate" % label, candidates_of(record) == [])
+
+    check("the content-bound fixture edge is accepted",
+          bridge.typed_edge_errors(bridge.fixture_typed_edge("1ec0de000001")) == [])
+
+
+def test_authority_digests_are_recomputed_not_trusted() -> None:
+    """Digests are recomputed by the seal; there is nothing left to declare."""
+
+    import inspect
+
+    params = set(inspect.signature(make_inputs).parameters)
+    for forbidden in ("loc_surface_meta", "lexeme_join_meta", "typed_graph_meta", "dependency_hashes"):
+        check("no %s parameter survives" % forbidden, forbidden not in params)
+
+    binding = make_inputs().authority_binding()
+    check("the canonical index digest is recomputed",
+          binding["canonical_loc_index"]["content_sha256"]
+          == bridge._content_sha256({LOC: SURFACE}))
+    check("the aggregate graph digest is derived from its parts",
+          binding["typed_graph"]["typed_graph_sha256"] == bridge._content_sha256(
+              {key: value for key, value in binding["typed_graph"].items()
+               if key != "typed_graph_sha256"}))
+    check("the authority digest covers the whole binding",
+          binding["authority_sha256"] == bridge._content_sha256(
+              {key: value for key, value in binding.items() if key != "authority_sha256"}))
+
+    # Same-count content substitution changes the recomputed digest.
+    drifted = make_inputs(loc_surface={LOC: OTHER_SURFACE}).authority_binding()
+    check("same-count loc-surface drift moves the digest",
+          drifted["canonical_loc_index"]["content_sha256"]
+          != binding["canonical_loc_index"]["content_sha256"])
+    check("same-count loc-surface drift moves the authority digest",
+          drifted["authority_sha256"] != binding["authority_sha256"])
+
+def test_canonical_loc_requires_positive_coordinates() -> None:
+    check("0:0:0 is structurally impossible", not bridge.is_canonical_loc("0:0:0"))
+    check("0:1:1 is structurally impossible", not bridge.is_canonical_loc("0:1:1"))
+    check("2:255:0 is structurally impossible", not bridge.is_canonical_loc("2:255:0"))
+    check("a real loc is structural", bridge.is_canonical_loc("2:255:1"))
+    for bad in ("0:0:0", "999:999:999", "114:7:99"):
+        row = crosswalk_row(canonical_quran_loc=bad, canonical_wbw_loc=bad)
+        record = bridge.bridge_row(row, inputs_for(row))
+        check("loc %s emits no candidate" % bad, candidates_of(record) == [])
+        check("loc %s abstains precisely" % bad,
+              blockers_of(record) & {"unresolved_canonical_loc", "loc_not_in_canonical_index"})
+
+
+def test_certifier_refuses_never_auto_resolve_producer() -> None:
+    """The authoritative store must refuse a real emitted bridge fact."""
+
+    import tempfile
+    from tools import certify_typed_fact as certifier
+
+    fact = copy.deepcopy(candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0])
+    tier, projector_id, basis = certifier.producing_projector_gate(fact)
+    check("the producing projector resolves to never_auto_resolve", tier == "never_auto_resolve")
+    check("resolution comes from repository authority, not the fact",
+          basis in {"registered projector_id", "registered output_fact_type"})
+
+    # Even with the projector_id stripped, the output fact type still resolves.
+    stripped = copy.deepcopy(fact)
+    stripped["rule_projector"] = dict(stripped["rule_projector"], projector_id="not.registered.v9")
+    check("a renamed projector_id cannot shed the gate",
+          certifier.producing_projector_gate(stripped)[0] == "never_auto_resolve")
+    check("a claimed weaker tier on the fact is ignored", certifier.gate_refusal(fact) is not None)
+
+    fact["dependent_projection_ids"] = ["llxbridge:probe:projection"]
+    with tempfile.TemporaryDirectory() as tmp:
+        store = certifier.TypedFactCertificationStore(Path(tmp))
+        store.register(fact, contract_id="llxbridge-probe", actor="probe",
+                       timestamp="2026-07-30T00:00:00Z")
+        store.transition(fact["fact_id"], "review_required", actor="probe",
+                         timestamp="2026-07-30T00:00:01Z", reason="probe")
+        try:
+            store.transition(fact["fact_id"], "certified", actor="probe",
+                             timestamp="2026-07-30T00:00:02Z", reason="probe")
+        except certifier.CertificationError as error:
+            check("the authoritative store refuses certification",
+                  "never_auto_resolve" in str(error))
+        else:
+            raise AssertionError("FAILED: a never_auto_resolve fact reached certified")
+
+
+def test_duplicate_registration_cannot_weaken_a_gate() -> None:
+    shadow = copy.deepcopy(fact_projectors.LARGELEXICON_BRIDGE_CONTRACT)
+    shadow["projector_id"] = "largelexicon.duplicate_shadow.v1"
+    shadow["gate_tier"] = "auto_safe"
+    registry = fact_projectors.ProjectorRegistry()
+    registry.register(copy.deepcopy(fact_projectors.LARGELEXICON_BRIDGE_CONTRACT),
+                      fact_projectors.project_largelexicon_carried_lexeme)
+    try:
+        registry.register(shadow, fact_projectors.project_largelexicon_carried_lexeme)
+    except fact_projectors.ProjectorValidationError as error:
+        check("a conflicting gate re-registration is refused", "ambiguous" in str(error))
+    else:
+        raise AssertionError("FAILED: a duplicate projector claimed the output at a weaker gate")
+    check("the strictest registered gate is reported",
+          fact_projectors.REGISTRY.gate_tier_for_output_fact_type("largelexicon_lexeme_candidate")
+          == "never_auto_resolve")
+    check("sibling producers at the same tier remain legal",
+          fact_projectors.REGISTRY.gate_tier_for_output_fact_type("formation_evidence")
+          == "two_vote_required")
+
+
+def test_target_reader_import_and_custom_target_isolation() -> None:
+    import subprocess
+    import tempfile
+    from tools.largelexicon_table_reader import LargelexiconTargetTables
+
+    repo_root = Path(__file__).resolve().parents[1]
+    code = ("import sys; sys.path.insert(0, r'%s');\n"
+            "from tools.largelexicon_table_reader import LargelexiconTargetTables;\n"
+            "print('IMPORT_OK')\n" % str(repo_root))
+    proc = subprocess.run([sys.executable, "-B", "-c", code], cwd=str(repo_root.parent),
+                          capture_output=True, text=True)
+    check("the package imports from the repository parent (%s)" % proc.stderr.strip()[-90:],
+          "IMPORT_OK" in proc.stdout)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        target = Path(tmp) / "target-schema"
+        target.mkdir(parents=True)
+        real = repo_root / "qamus" / "indexes" / "largelexicon" / "target-schema" / "TARGET-RELEASE.json"
+        release = json.loads(real.read_text(encoding="utf-8"))
+        release["tables"]["lemma-source"]["carried_sha256"] = "0" * 64
+        (target / "TARGET-RELEASE.json").write_text(
+            json.dumps(release, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        tables = LargelexiconTargetTables.open(target_dir=target)
+        check("the reader retains the exact validated target dir",
+              tables.target_dir is not None and Path(tables.target_dir).resolve() == target.resolve())
+        try:
+            tables.carried("lemma-source")
+        except Exception as error:  # noqa: BLE001
+            check("carried() reads the retained release, not the default one",
+                  "lemma-source" in str(error) or "carried" in str(error))
+        else:
+            raise AssertionError("FAILED: carried() silently read the default release")
+
+    default_tables = LargelexiconTargetTables.open()
+    check("the default reader keeps target_dir unset", default_tables.target_dir is None)
+
+
+# --------------------------------------------------------------------------- #
+# defect-round-6 repairs: sealed authority, exact identity, bound certifier
+# --------------------------------------------------------------------------- #
+def _emitted_candidates(build) -> list:
+    try:
+        record = build()
+    except bridge.BridgeError:
+        return []
+    return candidates_of(record)
+
+
+def _a_candidate_fact() -> dict:
+    return copy.deepcopy(candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0])
+
+
+def _try_certify(fact: dict, *, bundle=None) -> str:
+    import tempfile
+    from tools import certify_typed_fact as certifier
+
+    with tempfile.TemporaryDirectory() as tmp:
+        store = certifier.TypedFactCertificationStore(Path(tmp))
+        try:
+            store.register(fact, contract_id="round6", actor="t", timestamp="2026-07-30T00:00:00Z")
+            store.transition(fact["fact_id"], "review_required", actor="t",
+                             timestamp="2026-07-30T00:00:01Z", reason="t")
+            store.transition(fact["fact_id"], "certified", actor="t",
+                             timestamp="2026-07-30T00:00:02Z", reason="t", two_vote_bundle=bundle)
+        except certifier.CertificationError as error:
+            return str(error)
+        return "CERTIFIED"
+
+
+def test_projector_identity_cannot_shed_a_fact_type_gate() -> None:
+    """A known projector id with a mismatched output fact type must never certify."""
+
+    from tools import certify_typed_fact as certifier
+
+    base = _a_candidate_fact()
+    for projector_id in ("sarf.documented_form.v1", "nahw.particle_function.v1"):
+        fact = copy.deepcopy(base)
+        fact["rule_projector"] = dict(fact["rule_projector"], projector_id=projector_id)
+        fact["dependent_projection_ids"] = ["llxbridge:test:projection"]
+        outcome = _try_certify(fact)
+        check("substituting %s does not certify" % projector_id, outcome != "CERTIFIED")
+
+        # The gate resolution itself must not select the substituted projector's tier.
+        probe = copy.deepcopy(base)
+        probe["rule_projector"] = dict(probe["rule_projector"], projector_id=projector_id)
+        tier, _pid, basis = certifier.producing_projector_gate(probe)
+        check("%s is reported as a projector/fact_type mismatch" % projector_id,
+              basis.startswith("projector/fact_type mismatch"))
+        check("%s still resolves the fact-type gate" % projector_id, tier == "never_auto_resolve")
+        check("%s is refused by the gate" % projector_id, certifier.gate_refusal(probe) is not None)
+
+
+def test_registry_two_vote_gate_requires_a_bundle() -> None:
+    """A registry-resolved two_vote_required gate demands a canonical bundle."""
+
+    from tools import certify_typed_fact as certifier
+
+    fact = _a_candidate_fact()
+    fact["fact_type"] = "particle_function"
+    fact["rule_projector"] = dict(fact["rule_projector"], projector_id="nahw.particle_function.v1")
+    fact["producer"] = {"id": "tools/other_producer.py", "version": "1.0.0"}
+    fact["dependent_projection_ids"] = ["llxbridge:test:projection"]
+    fact["fact_id"] = "sha256:" + "3" * 64
+    tier, _pid, _basis = certifier.producing_projector_gate(fact)
+    check("the registry resolves two_vote_required", tier == "two_vote_required")
+    outcome = _try_certify(fact)
+    check("a registry two_vote gate without a bundle does not certify", outcome != "CERTIFIED")
+    check("the refusal names the missing bundle",
+          "two-vote" in outcome or "two_vote" in outcome)
+
+
+def test_stale_content_addressed_fact_id_is_refused() -> None:
+    """Relabelling projector, fact type or claim may not retain the original id."""
+
+    base = _a_candidate_fact()
+    check("the emitted id is recomputable", bridge.recompute_fact_id(base) == base["fact_id"])
+    for label, mutate in (
+        ("fact type", lambda f: f.update({"fact_type": "formation_evidence"})),
+        ("projector", lambda f: f.update({"rule_projector": dict(
+            f["rule_projector"], projector_id="sarf.fam2.lexical_formation.v1")})),
+        ("semantic claim", lambda f: f.update({"fact_value": dict(
+            f["fact_value"], relabelled_semantic_claim=True)})),
+    ):
+        fact = copy.deepcopy(base)
+        original = fact["fact_id"]
+        mutate(fact)
+        fact["fact_id"] = original
+        check("a relabelled %s no longer recomputes to the stale id" % label,
+              bridge.recompute_fact_id(fact) != original)
+        outcome = _try_certify(fact)
+        check("a stale id for a relabelled %s is refused" % label, outcome != "CERTIFIED")
+        check("the refusal names the identity mismatch for %s" % label,
+              "content-addressed fact id" in outcome)
+
+
+def test_same_type_projector_gate_cannot_be_weakened() -> None:
+    shadow = copy.deepcopy(fact_projectors.LARGELEXICON_BRIDGE_CONTRACT)
+    shadow["projector_id"] = "largelexicon.same_type_shadow.v1"
+    shadow["gate_tier"] = "auto_safe"
+    registry = fact_projectors.ProjectorRegistry()
+    registry.register(copy.deepcopy(fact_projectors.LARGELEXICON_BRIDGE_CONTRACT),
+                      fact_projectors.project_largelexicon_carried_lexeme)
+    try:
+        registry.register(shadow, fact_projectors.project_largelexicon_carried_lexeme)
+    except fact_projectors.ProjectorValidationError as error:
+        check("a same-type weaker gate is refused", "ambiguous" in str(error))
+    else:
+        raise AssertionError("FAILED: a same-type projector weakened the gate")
+    check("the live registry still reports the strict gate",
+          fact_projectors.REGISTRY.gate_tier_for_output_fact_type("largelexicon_lexeme_candidate")
+          == "never_auto_resolve")
+
+
+def test_authority_is_sealed_not_caller_declared() -> None:
+    """Only a seal is authority; loose rows and direct construction are refused."""
+
+    try:
+        bridge.BridgeInputs({"verified": True, "carried_tables": {}})
+    except bridge.BridgeError as error:
+        check("a caller-shaped authority dict is refused", "SealedAuthority" in str(error))
+    else:
+        raise AssertionError("FAILED: a caller dict was accepted as authority")
+
+    try:
+        bridge.SealedAuthority(object(), origin="forged", families={}, loc_surface={},
+                               typed_edges={}, lexeme_join={}, bundles=[], non_carried_crosswalk=[])
+    except bridge.BridgeError as error:
+        check("a seal cannot be forged directly", "may only be produced" in str(error))
+    else:
+        raise AssertionError("FAILED: a SealedAuthority was forged directly")
+
+    seal = make_inputs().authority_seal
+    check("the fixture seal names its origin", seal.origin == "fixture")
+    check("the release seal is a distinct factory",
+          hasattr(bridge.SealedAuthority, "from_release"))
+    binding = seal.binding
+    check("verified is set by the seal, not by a caller", binding["verified"] is True)
+    check("the authority digest covers the binding",
+          binding["authority_sha256"] == bridge._content_sha256(
+              {k: v for k, v in binding.items() if k != "authority_sha256"}))
+
+
+def test_duplicate_identities_are_refused_in_every_family() -> None:
+    """Conflicting duplicate bodies must never become authority."""
+
+    row_a = crosswalk_row()
+    row_b = crosswalk_row(visible_surface=OTHER_SURFACE)  # same row_id, different body
+    _expect_closed("two crosswalk bodies under one row_id",
+                   lambda: make_inputs(crosswalk=[row_a, row_b]))
+
+    form_a = form_row("1ec0de000001", SURFACE)
+    form_b = form_row("1ec0de000001", SURFACE)
+    form_b["pos"] = "verb"
+    _expect_closed("two form bodies under one form_id", lambda: make_inputs(forms=[form_a, form_b]))
+
+    lemma_a = lemma_row("1ec0de000001", SURFACE)
+    lemma_b = lemma_row("1ec0de000001", OTHER_SURFACE)
+    _expect_closed("two lemma bodies under one entry_id", lambda: make_inputs(lemmas=[lemma_a, lemma_b]))
+
+    stem_a = stem_row("1ec0de000001", SURFACE)
+    stem_b = copy.deepcopy(stem_a)
+    stem_b["gloss_hint"] = "a conflicting gloss"
+    _expect_closed("two stem bodies under one stem_id", lambda: make_inputs(stems=[stem_a, stem_b]))
+
+    den_a = bridge.fixture_denominator_row()
+    den_b = bridge.fixture_denominator_row(quran_ref="9:9")
+    _expect_closed("two denominator bodies under one row_id",
+                   lambda: make_inputs(denominator=[den_a, den_b]))
+
+    # An exact duplicate is also refused: an authority set has one row per identity.
+    _expect_closed("an exactly duplicated crosswalk row",
+                   lambda: make_inputs(crosswalk=[row_a, copy.deepcopy(row_a)]))
+
+    # Distinct surviving analyses under ONE entry id remain unresolved, never merged.
+    twins = [form_row("1ec0de000001", SURFACE), form_row("1ec0de000001", SURFACE, "001")]
+    record = bridge.bridge_row(crosswalk_row(), make_inputs(forms=twins, lemmas=[], stems=[]))
+    check("same-entry rivals do not silently collapse to a blocker-free candidate",
+          record["projection"]["status"] != "candidate" or blockers_of(record))
+
+
+def test_invented_denominator_cannot_be_source_card_authority() -> None:
+    _expect_closed("a two-field invented denominator",
+                   lambda: make_inputs(denominator=[{"row_id": "llx-qword-0aae00000000-01-01-001",
+                                                     "card_id": "0aae00000000:u1:e1"}]))
+    _expect_closed("a legacy @1 denominator row",
+                   lambda: make_inputs(denominator=[dict(bridge.fixture_denominator_row(),
+                                                         schema="qamus/largelexicon-qword-denominator@1")]))
+
+
+def test_repository_metadata_binds_the_exact_parsed_content() -> None:
+    """Loaders return content and binding together; they cannot be paired by a caller."""
+
+    import inspect
+
+    params = set(inspect.signature(make_inputs).parameters)
+    for forbidden in ("loc_surface_meta", "lexeme_join_meta", "typed_graph_meta", "dependency_hashes"):
+        check("no %s parameter exists on the sealed path" % forbidden, forbidden not in params)
+    seal_params = set(inspect.signature(bridge.SealedAuthority.seal_fixture).parameters)
+    for forbidden in ("binding", "bundles", "sha256", "path"):
+        check("the seal accepts no %s claim" % forbidden, forbidden not in seal_params)
+
+    edges, bundles = bridge._load_typed_graph_sealed()
+    declared = sum(item["eligible_edge_count"] for item in bundles)
+    actual = sum(len(items) for items in edges.values())
+    check("the sealed bundle count equals the parsed edge multiset", declared == actual)
+    for bundle in bundles:
+        if bundle["present"]:
+            path = Path(__file__).resolve().parents[1] / bundle["path"]
+            import hashlib
+            check("bundle %s digest is the file digest" % bundle["path"],
+                  bundle["sha256"] == hashlib.sha256(path.read_bytes()).hexdigest())
+
+    binding = make_inputs().authority_binding()
+    check("the aggregate graph digest is derived, not supplied",
+          binding["typed_graph"]["typed_graph_sha256"] == bridge._content_sha256(
+              {k: v for k, v in binding["typed_graph"].items() if k != "typed_graph_sha256"}))
+    check("same-count loc-surface substitution changes the digest",
+          make_inputs(loc_surface={LOC: OTHER_SURFACE}).authority_binding()["canonical_loc_index"]["content_sha256"]
+          != binding["canonical_loc_index"]["content_sha256"])
+
+
+def test_typed_edge_identity_and_endpoints_are_exact() -> None:
+    good = bridge.fixture_typed_edge("1ec0de000001")
+    check("the fixture edge id is the canonical derivation",
+          good["edge_id"] == bridge.canonical_edge_id(
+              {k: v for k, v in good.items() if k != "edge_id"}))
+
+    stale = copy.deepcopy(good)
+    stale["details"] = dict(stale["details"], mutated=True)
+    check("a stale well-shaped edge id is rejected", bridge.typed_edge_errors(stale) != [])
+
+    zeroed = copy.deepcopy(good)
+    zeroed["edge_id"] = "edge:" + "0" * 24
+    check("an all-zero well-shaped edge id is rejected", bridge.typed_edge_errors(zeroed) != [])
+
+    for label, node_type, node_id in (
+        ("card declaring a selected-word node", "card", good["from_node_id"]),
+        ("selected-word declaring a card node", "selected-word", "card:0aae00000000:u1:x1:o2:255:1"),
+        ("appearance node", "appearance", good["from_node_id"]),
+    ):
+        edge = copy.deepcopy(good)
+        edge["from_node_type"] = node_type
+        edge["from_node_id"] = node_id
+        edge["edge_id"] = bridge.canonical_edge_id({k: v for k, v in edge.items() if k != "edge_id"})
+        check("endpoint mismatch (%s) is rejected" % label, bridge.typed_edge_errors(edge) != [])
+
+    twin = bridge.fixture_typed_edge("1ec0de000002")
+    twin["edge_id"] = good["edge_id"]
+    _expect_closed("two edges sharing one edge id",
+                   lambda: make_inputs(typed_edges={LOC: [good, twin]}))
+    _expect_closed("an exactly duplicated edge",
+                   lambda: make_inputs(typed_edges={LOC: [good, copy.deepcopy(good)]}))
+
+
+def test_reader_boundary_is_stable() -> None:
+    """One module identity, and a relative target dir resolved at open time."""
+
+    import importlib
+    import os
+    import tempfile
+
+    flat = importlib.import_module("largelexicon_table_reader")
+    packaged = importlib.import_module("tools.largelexicon_table_reader")
+    check("the reader has one module identity", flat is packaged)
+    check("the reader has one class identity",
+          flat.LargelexiconTargetTables is packaged.LargelexiconTargetTables)
+
+    repo_root = Path(__file__).resolve().parents[1]
+    with tempfile.TemporaryDirectory() as tmp:
+        base = Path(tmp)
+        target = base / "target-schema"
+        target.mkdir(parents=True)
+        real = repo_root / "qamus" / "indexes" / "largelexicon" / "target-schema" / "TARGET-RELEASE.json"
+        release = json.loads(real.read_text(encoding="utf-8"))
+        release["tables"]["lemma-source"]["carried_sha256"] = "0" * 64
+        (target / "TARGET-RELEASE.json").write_text(
+            json.dumps(release, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        cwd = os.getcwd()
+        try:
+            os.chdir(base)
+            tables = packaged.LargelexiconTargetTables.open(target_dir=Path("target-schema"))
+        finally:
+            os.chdir(cwd)
+        retained = Path(tables.target_dir)
+        check("a relative target dir is retained absolutely", retained.is_absolute())
+        check("the retained dir is the one that was validated",
+              retained.resolve() == target.resolve())
+        try:
+            tables.carried("lemma-source")
+        except Exception as error:  # noqa: BLE001
+            check("carried() reads the retained release, never the default",
+                  "lemma-source" in str(error) or "carried" in str(error))
+        else:
+            raise AssertionError("FAILED: carried() fell back to the default release")
+
+    default_tables = packaged.LargelexiconTargetTables.open()
+    check("the default reader keeps target_dir unset", default_tables.target_dir is None)
+
+
+# --------------------------------------------------------------------------- #
+# defect-round-7 repairs: exact provenance, honest counts, certification closure
+# --------------------------------------------------------------------------- #
+import re as _re
+
+
+def _release() -> dict:
+    return json.loads((Path(__file__).resolve().parents[1] / "qamus" / "indexes" / "largelexicon"
+                       / "target-schema" / "TARGET-RELEASE.json").read_text(encoding="utf-8"))
+
+
+def _scan() -> dict:
+    return json.loads((Path(__file__).resolve().parents[1] / "qamus" / "examples"
+                       / "largelexicon-fact-bridge" / "real-data-scan.meta.json").read_text(encoding="utf-8"))
+
+
+_FRAGMENT = _re.compile(
+    r"^qamus/indexes/largelexicon/target-schema/TARGET-RELEASE\.json#([a-z-]+)@sha256:([0-9a-f]{64})$"
+)
+
+
+def _addresses(fact: dict) -> list[str]:
+    return [item["address"] for item in fact["dependencies"]["source_addresses"]]
+
+
+def test_release_fragment_addresses_name_release_digests() -> None:
+    """Every TARGET-RELEASE fragment must name a digest that exists at that address."""
+
+    declared = {family: table["carried_sha256"] for family, table in _release()["tables"].items()}
+    inputs = bridge.BridgeInputs.from_release(locs={LOC})
+    check("the real release yields a crosswalk row at the probe loc", bool(inputs.crosswalk))
+    record = bridge.bridge_row(inputs.crosswalk[0], inputs)
+    fragments = []
+    for fact in record["facts"]:
+        for address in _addresses(fact):
+            match = _FRAGMENT.match(address)
+            if match:
+                fragments.append((match.group(1), match.group(2)))
+    check("a real-release run emits TARGET-RELEASE fragment addresses", bool(fragments))
+    for family, digest in fragments:
+        check("fragment %s names the release-declared carried_sha256" % family,
+              declared.get(family) == digest)
+
+
+def test_seal_digest_is_separately_and_honestly_bound() -> None:
+    """The recomputed seal digest travels under its own non-file address."""
+
+    fact = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]
+    addresses = _addresses(fact)
+    seal = [a for a in addresses if a.startswith(bridge.SEAL_ADDRESS_PREFIX)]
+    check("the seal digest is carried", len(seal) == len(bridge.CARRIED_FAMILY_IDENTITY))
+    check("no seal address claims to be a file fragment",
+          not any(_FRAGMENT.match(a) for a in seal))
+    binding = make_inputs().authority_binding()
+    for family, digest in binding["carried_tables"].items():
+        check("the seal address for %s carries the recomputed digest" % family,
+              any(a.endswith("@sha256:" + digest) and family in a for a in seal))
+    check("fixture authority declares no release digest", binding["released_carried_sha256"] == {})
+    check("fixture scope is fixture-only",
+          set(binding["carried_scope"].values()) == {"fixture_only"})
+    check("a fixture run emits NO TARGET-RELEASE fragment address",
+          not any(_FRAGMENT.match(a) for a in addresses))
+
+
+def test_filtered_run_cannot_create_false_whole_family_provenance() -> None:
+    """A subset digest may never be published at a whole-family file address."""
+
+    inputs = bridge.BridgeInputs.from_release(locs={LOC})
+    binding = inputs.authority_binding()
+    scope = binding["carried_scope"]
+    check("the filtered crosswalk is labelled a subset",
+          scope["qword-crosswalk"] == "filtered_subset")
+    check("unfiltered families stay labelled whole",
+          scope["lemma-source"] == "whole_released_family")
+    declared = set(binding["released_carried_sha256"].values())
+    record = bridge.bridge_row(inputs.crosswalk[0], inputs)
+    for fact in record["facts"]:
+        for address in _addresses(fact):
+            match = _FRAGMENT.match(address)
+            if match:
+                check("no subset digest appears at a file-fragment address",
+                      match.group(2) in declared)
+    subset_digest = binding["carried_tables"]["qword-crosswalk"]
+    check("the subset digest differs from the released whole-family digest",
+          subset_digest != binding["released_carried_sha256"]["qword-crosswalk"])
+    check("the subset digest is published only under its scoped seal address",
+          any(a.startswith(bridge.SEAL_ADDRESS_PREFIX) and "filtered_subset" in a
+              and a.endswith("@sha256:" + subset_digest)
+              for fact in record["facts"] for a in _addresses(fact)))
+
+
+def test_published_typed_edge_counts_match_the_scan() -> None:
+    """The as-built map and bridge packet must state the recomputed counts."""
+
+    root = Path(__file__).resolve().parents[1]
+    typed = _scan()["upstream_binding"]["authorities"]["typed_graph"]
+    edges, locs = typed["eligible_edge_count"], typed["eligible_loc_count"]
+    doc = (root / "docs" / "subsystems" / "largelexicon-as-built.md").read_text(encoding="utf-8")
+    packet = (root / "qamus" / "task-packets"
+              / "TP-LARGELEXICON-A3-BRIDGE-WAVE1.json").read_text(encoding="utf-8")
+    stale = _re.compile(r"\b2 eligible (canonical typed lexeme/form )?edges at 1\b")
+    check("the as-built map carries no stale 2/1 edge claim", not stale.search(doc))
+    check("the bridge packet carries no stale 2/1 edge claim", not stale.search(packet))
+    for label, text in (("as-built", doc), ("packet", packet)):
+        for phrase in ("%d eligible canonical typed lexeme/form edges at %d occurrence locs" % (edges, locs),
+                       "%d eligible edges at %d locs" % (edges, locs),
+                       "%d eligible edges at %d occurrence locs" % (edges, locs)):
+            if phrase in text:
+                break
+        else:
+            raise AssertionError("FAILED: %s does not state the recomputed %d/%d counts"
+                                 % (label, edges, locs))
+    stated = _re.search(r"holds \*\*(\d+)\*\* adversarial tests", doc)
+    check("the as-built adversarial-test count matches dynamic discovery",
+          stated is not None and int(stated.group(1)) == len(all_tests()))
+    fixtures = json.loads((root / "qamus" / "examples" / "largelexicon-fact-bridge"
+                           / "bridge-fixtures.meta.json").read_text(encoding="utf-8"))
+    check("the as-built fixture record count matches the fixture metadata",
+          "(%d records)" % fixtures["row_count"] in doc)
+
+    # The documented abstention vocabulary is a CLOSED set: it must equal
+    # BLOCKER_STATUS exactly, so neither a new blocker nor a deleted one can drift
+    # away from the published enumeration.
+    sentence = _re.search(r"\*\*Abstention vocabulary\*\*(.+?)Support requires", doc, _re.S)
+    check("the as-built map enumerates the abstention vocabulary", sentence is not None)
+    documented = set(_re.findall(r"`([a-z_]+)`", sentence.group(1)))
+    actual = set(bridge.BLOCKER_STATUS)
+    check("the documented blocker set is exactly BLOCKER_STATUS (missing %s, extra %s)"
+          % (sorted(actual - documented), sorted(documented - actual)),
+          documented == actual)
+    counted = _re.search(r"\*\*Abstention vocabulary\*\* \(closed, \*\*(\w+)\*\* blockers", doc)
+    words = {"sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19,
+             "twenty": 20, "twenty-one": 21, "twenty-two": 22}
+    check("the as-built map states its blocker count",
+          counted is not None and counted.group(1) in words)
+    check("the stated blocker count matches the enumeration",
+          words[counted.group(1)] == len(actual))
+    check("every documented blocker is stated once",
+          len(_re.findall(r"`([a-z_]+)`", sentence.group(1))) == len(documented))
+
+
+def test_unrecognised_producer_can_never_be_certified() -> None:
+    """Relabelling all three identities must shed the gate INTO refusal."""
+
+    import tempfile
+    from tools import certify_typed_fact as certifier
+
+    base = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]
+    fact = copy.deepcopy(base)
+    fact["fact_type"] = "totally_unregistered_fact"
+    fact["rule_projector"] = dict(fact["rule_projector"], projector_id="nobody.unregistered.v9")
+    fact["producer"] = {"id": "tools/not_a_registered_producer.py", "version": "1.0.0"}
+    fact["dependent_projection_ids"] = ["llxbridge:test:projection"]
+    tier, _pid, basis = certifier.producing_projector_gate(fact)
+    check("a fully relabelled fact resolves no gate", tier is None and basis == "no registered producer")
+    check("the certifier refuses it outright", certifier.gate_refusal(fact) is not None)
+    check("the refusal names the missing contract",
+          "no recognised typed-claim contract" in certifier.gate_refusal(fact))
+    with tempfile.TemporaryDirectory() as tmp:
+        store = certifier.TypedFactCertificationStore(Path(tmp))
+        store.register(fact, contract_id="round7", actor="t", timestamp="2026-07-31T00:00:00Z")
+        store.transition(fact["fact_id"], "review_required", actor="t",
+                         timestamp="2026-07-31T00:00:01Z", reason="t")
+        try:
+            store.transition(fact["fact_id"], "certified", actor="t",
+                             timestamp="2026-07-31T00:00:02Z", reason="t")
+        except certifier.CertificationError as error:
+            check("the authoritative store refuses an unrecognised producer",
+                  "can never be certified" in str(error))
+        else:
+            raise AssertionError("FAILED: an unrecognised producer reached certified")
+
+    # Recognised typed-claim families are not blanket-refused: each is judged
+    # against its OWN authority. Two-vote families pass the gate and are decided by
+    # their vote artifact; a contract-declared family passes every identity check
+    # and is stopped only by the one honest fact that its declared evidence is not
+    # committed in this repository.
+    check("a two-vote family passes the gate on its own authority",
+          certifier.gate_refusal(_family_member(base, "governor_relation", certifier)) is None)
+    for recognised in ("paired_y_removal", "plural_pattern"):
+        genuine = certifier.gate_refusal(_declared_family_fact(certifier, recognised))
+        check("the declared %s fact is refused only for its uncommitted evidence" % recognised,
+              genuine is not None and "not committed in-repo" in genuine
+              and "unverified relabelling" not in genuine)
+        dressed = certifier.gate_refusal(_family_member(base, recognised, certifier))
+        check("an A3 payload wearing %s identity is refused as not that fact" % recognised,
+              dressed is not None and "not the fact that citation declares" in dressed)
+
+
+def _family_member(base, fact_type, certifier):
+    """A foreign payload wearing every identity marker of ``fact_type``'s family.
+
+    Two-vote families are bound by their vote artifact, so a member of one carries
+    no A3 projector identity at all. A contract-declared family is bound to the
+    artifact that declares it, so this shape carries that contract's exact
+    review-artifact citation on the carrier the reconstructibility check reads,
+    plus the producer and projector identity the contract itself uses — everything
+    a forger could copy. The payload underneath is still an A3 bridge candidate.
+    """
+
+    fact = copy.deepcopy(base)
+    fact["fact_type"] = fact_type
+    declared = certifier.family_contract_index().get(fact_type)
+    if declared is None:
+        # Not declared by a committed contract: a genuine member of such a family
+        # carries no A3 projector identity at all (it is bound by its vote artifact).
+        fact.pop("rule_projector", None)
+        fact.pop("producer", None)
+        return fact
+    citation = sorted(declared["citations"])[0]
+    declaring = declared["citations"][citation]
+    fact["source_evidence"] = dict(fact.get("source_evidence") or {})
+    fact["source_evidence"]["source_addresses"] = list(
+        fact["source_evidence"].get("source_addresses") or []
+    ) + [{"address": citation, "source_kind": certifier.FAMILY_ANCHOR_SOURCE_KIND}]
+    fact["producer"] = {"id": declaring["producer"], "version": "1.0.0"}
+    fact["rule_projector"] = dict(fact.get("rule_projector") or {},
+                                  projector_id=declaring["projector"])
+    fact["evidence_mode"] = declaring["evidence_mode"]
+    return fact
+
+
+def _declared_citation(certifier, fact_type):
+    """The exact address the committed family contract declares for this type."""
+
+    return sorted(certifier.family_contract_index()[fact_type]["citations"])[0]
+
+
+def _declared_family_fact(certifier, fact_type):
+    """The committed contract's OWN fact of this type: the legitimate input."""
+
+    contract_path = certifier.FAMILY_CONTRACT_ARTIFACTS[0]
+    contract = json.loads(Path(contract_path).read_text(encoding="utf-8"))
+    return copy.deepcopy(
+        next(fact for fact in contract["facts"] if fact["fact_type"] == fact_type)
+    )
+
+
+def _walk_to_certified(certifier, fact, contract_id, packet_dir=None):
+    """Run register -> review_required -> certified. Return the refusal, or None."""
+
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        store = certifier.TypedFactCertificationStore(Path(tmp))
+        kwargs = {"packet_dir": packet_dir} if packet_dir is not None else {}
+        store.register(fact, contract_id=contract_id, actor="t", timestamp="2026-08-02T00:00:00Z")
+        store.transition(fact["fact_id"], "review_required", actor="t",
+                         timestamp="2026-08-02T00:00:01Z", reason="t")
+        try:
+            store.transition(fact["fact_id"], "certified", actor="t",
+                             timestamp="2026-08-02T00:00:02Z", reason="t", **kwargs)
+        except certifier.CertificationError as error:
+            return str(error)
+        return None
+
+
+def test_no_recognised_family_name_authorizes_certification() -> None:
+    """Relabelling into ANY recognised family must never certify an A3 candidate.
+
+    ``RECOGNISED_TYPED_CLAIM_FACT_TYPES`` is a vocabulary, not a credential: a real
+    bridge candidate wearing a recognised family's name, with a foreign projector
+    and producer, must be refused for every single member — while a genuine member
+    of each of those families stays certifiable.
+    """
+
+    import tempfile
+    from tools import certify_typed_fact as certifier
+
+    families = sorted(certifier.RECOGNISED_TYPED_CLAIM_FACT_TYPES)
+    check("the recognised vocabulary is non-empty", len(families) >= 14)
+    base = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]
+    certified = []
+    for family in families:
+        fact = copy.deepcopy(base)
+        fact["fact_type"] = family
+        fact["rule_projector"] = dict(fact["rule_projector"], projector_id="nobody.unregistered.v9")
+        fact["producer"] = {"id": "tools/not_a_registered_producer.py", "version": "1.0.0"}
+        fact["dependent_projection_ids"] = ["llxbridge:test:projection"]
+        with tempfile.TemporaryDirectory() as tmp:
+            store = certifier.TypedFactCertificationStore(Path(tmp))
+            store.register(fact, contract_id="round8", actor="t", timestamp="2026-08-01T00:00:00Z")
+            store.transition(fact["fact_id"], "review_required", actor="t",
+                             timestamp="2026-08-01T00:00:01Z", reason="t")
+            try:
+                store.transition(fact["fact_id"], "certified", actor="t",
+                                 timestamp="2026-08-01T00:00:02Z", reason="t")
+            except certifier.CertificationError:
+                pass
+            else:
+                certified.append(family)
+    check("no recognised family name certifies a relabelled A3 candidate: %s" % certified,
+          not certified)
+
+    # The name alone is refused even where the fact type IS the only thing changed.
+    for family in families:
+        relabelled = copy.deepcopy(base)
+        relabelled["fact_type"] = family
+        check("%s cannot be certified on the strength of its name" % family,
+              certifier.gate_refusal(relabelled) is not None)
+
+    # …and the closure is precise, not a blanket refusal of the vocabulary: each
+    # family is refused for its OWN missing authority, never for its name.
+    for family in families:
+        if family in certifier.TWO_VOTE_FACT_TYPES:
+            check("two-vote family %s passes the gate and is decided by its votes" % family,
+                  certifier.gate_refusal(_family_member(base, family, certifier)) is None)
+        else:
+            refusal = certifier.gate_refusal(_declared_family_fact(certifier, family))
+            check("declared family %s is refused for its evidence, not its identity" % family,
+                  refusal is not None and "not committed in-repo" in refusal)
+
+    # A contract-declared family must cite the artifact that declares it.
+    declared_families = sorted(certifier.family_contract_index())
+    check("the committed family contract declares the sufaha families",
+          len(declared_families) >= 10)
+    for family in declared_families:
+        if family in certifier.TWO_VOTE_FACT_TYPES:
+            continue  # bound by its vote artifact, not by the family anchor
+        member = _declared_family_fact(certifier, family)
+        stripped = copy.deepcopy(member)
+        stripped["source_evidence"] = dict(stripped.get("source_evidence") or {},
+                                           source_addresses=[])
+        stripped.pop("source_address", None)
+        refusal = certifier.gate_refusal(stripped)
+        check("%s without its family-contract citation is refused" % family,
+              refusal is not None and "not evidence" in refusal)
+        foreign = copy.deepcopy(member)
+        foreign["producer"] = {"id": "tools/not_a_registered_producer.py", "version": "1.0.0"}
+        check("%s with a foreign producer is refused" % family,
+              "not a fact of that family" in (certifier.gate_refusal(foreign) or ""))
+
+
+def test_family_authority_is_resolved_evidence_not_a_citation_string() -> None:
+    """A recognised family name plus an unresolved citation is not authority.
+
+    Round 8 accepted any address whose basename matched the family contract's
+    evidence file — on any carrier, under any source kind, with producer and
+    projector optional. That made the minimum forgery two fields: relabel a real A3
+    bridge candidate and append one string naming a file nothing ever opens. Every
+    shape below runs the FULL transition (register -> review_required -> certified)
+    against the authoritative store, for every recognised family.
+    """
+
+    from tools import certify_typed_fact as certifier
+
+    root = Path(__file__).resolve().parents[1]
+    contract_path = root / "qamus" / "examples" / "proof-noun-sufaha" / "sufaha-contract.json"
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    declared_contract_id = contract["contract_id"]
+    families = sorted(certifier.RECOGNISED_TYPED_CLAIM_FACT_TYPES - certifier.TWO_VOTE_FACT_TYPES)
+    check("every non-two-vote recognised family is declared by the committed contract",
+          len(families) == 10
+          and all(family in certifier.family_contract_index() for family in families))
+
+    base = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]
+
+    def forged(family, **overrides):
+        """A real A3 candidate wearing ``family``, plus one citation string."""
+
+        fact = copy.deepcopy(base)
+        fact["fact_type"] = family
+        fact["dependent_projection_ids"] = ["llxbridge:test:projection"]
+        if overrides.get("drop_identity", True):
+            fact.pop("producer", None)
+            fact.pop("rule_projector", None)
+        address = overrides.get("address") or _declared_citation(certifier, family)
+        kind = overrides.get("source_kind", "quran_token")
+        carrier = overrides.get("carrier", "source_evidence")
+        entry = {"address": address, "source_kind": kind}
+        if carrier == "source_evidence":
+            fact["source_evidence"] = dict(fact.get("source_evidence") or {})
+            fact["source_evidence"]["source_addresses"] = list(
+                fact["source_evidence"].get("source_addresses") or []) + [entry]
+        elif carrier == "dependencies":
+            fact["dependencies"] = dict(fact.get("dependencies") or {})
+            fact["dependencies"]["source_addresses"] = list(
+                fact["dependencies"].get("source_addresses") or []) + [entry]
+        elif carrier == "source_address":
+            fact["source_address"] = entry
+        return fact
+
+    # 1. The reviewer's minimum two-field forgery, for every family.
+    for family in families:
+        refusal = _walk_to_certified(certifier, forged(family), "round9")
+        check("the minimum forgery as %s never reaches certified" % family,
+              refusal is not None)
+
+    # 2. Dependency-only anchors: the carrier nothing resolves.
+    for family in families:
+        refusal = _walk_to_certified(
+            certifier,
+            forged(family, carrier="dependencies",
+                   source_kind=certifier.FAMILY_ANCHOR_SOURCE_KIND),
+            "round9")
+        check("a dependency-only citation is not authority for %s" % family,
+              refusal is not None and "not evidence" in refusal)
+
+    # 3. Wrong source kinds on the right carrier.
+    for kind in ("quran_token", "qamus_entry_field", "structured_source_fact", ""):
+        refusal = _walk_to_certified(certifier, forged("root", source_kind=kind), "round9")
+        check("source_kind %r is not the family anchor kind" % kind,
+              refusal is not None and "not evidence" in refusal)
+
+    # 4. Wrong contract/fact identity: a basename, a lookalike path, and another
+    #    family's declared fact.
+    anchor_kind = certifier.FAMILY_ANCHOR_SOURCE_KIND
+    for label, address in (
+        ("a bare basename", "sufaha-evidence.jsonl"),
+        ("a lookalike path", "attacker/sufaha-evidence.jsonl#fact=3"),
+        ("another family's declared fact", _declared_citation(certifier, "case_ending")),
+    ):
+        refusal = _walk_to_certified(
+            certifier, forged("root", address=address, source_kind=anchor_kind), "round9")
+        check("%s does not authorize the root family" % label,
+              refusal is not None and "unverified relabelling" in refusal)
+
+    # 5. Producer and projector are required, not optional.
+    for family in families:
+        stripped = _declared_family_fact(certifier, family)
+        stripped.pop("producer", None)
+        check("an absent producer refuses for %s" % family,
+              "no producer" in (certifier.gate_refusal(stripped) or ""))
+        stripped = _declared_family_fact(certifier, family)
+        stripped.pop("rule_projector", None)
+        check("an absent projector refuses for %s" % family,
+              "no projector" in (certifier.gate_refusal(stripped) or ""))
+        stripped = _declared_family_fact(certifier, family)
+        stripped["rule_projector"] = dict(stripped["rule_projector"],
+                                          projector_id="nobody.unregistered.v9")
+        check("a foreign projector refuses for %s" % family,
+              "not a fact of that family" in (certifier.gate_refusal(stripped) or ""))
+
+    # 6. The citation belongs to its contract, and to the fact that contract
+    #    declares: it does not travel to another contract id, and it cannot be
+    #    presented with a foreign payload attached.
+    for family in families:
+        refusal = _walk_to_certified(certifier, _declared_family_fact(certifier, family),
+                                     "attacker:contract")
+        check("the %s citation does not travel to another contract id" % family,
+              refusal is not None and "does not belong to it" in refusal)
+        dressed = _walk_to_certified(certifier, _family_member(base, family, certifier),
+                                     declared_contract_id, packet_dir=contract_path.parent)
+        check("an A3 payload wearing every %s marker is still not that fact" % family,
+              dressed is not None and "not the fact that citation declares" in dressed)
+
+    # 7. The honest state: the strongest legitimate input that exists — the
+    #    contract's own declared fact — is still refused, because the evidence its
+    #    family contract declares is not committed in this repository. No packet
+    #    directory can supply it.
+    evidence = contract_path.parent / "sufaha-evidence.jsonl"
+    check("the declared family evidence is genuinely uncommitted", not evidence.exists())
+    for family in families:
+        member = _declared_family_fact(certifier, family)
+        for label, packet in (("no packet", None), ("committed packet", contract_path.parent)):
+            refusal = _walk_to_certified(certifier, member, declared_contract_id,
+                                         packet_dir=packet)
+            check("the declared %s fact is honestly refused (%s)" % (family, label),
+                  refusal is not None and "not committed in-repo" in refusal)
+
+    # 8. The committed contract's own facts are refused for exactly that reason —
+    #    the shipped contract is the strongest legitimate input that exists.
+    for fact in contract["facts"]:
+        if fact["fact_type"] in certifier.TWO_VOTE_FACT_TYPES:
+            continue
+        refusal = _walk_to_certified(certifier, copy.deepcopy(fact), declared_contract_id,
+                                     packet_dir=contract_path.parent)
+        check("committed contract fact %s is refused for its uncommitted evidence"
+              % fact["fact_type"],
+              refusal is not None and "not committed in-repo" in refusal)
+
+    # 9. The two-vote families keep their own closure: a relabelled A3 candidate
+    #    cannot certify as one, and the gate does not stand in for the vote.
+    for family in sorted(certifier.TWO_VOTE_FACT_TYPES):
+        refusal = _walk_to_certified(
+            certifier, forged(family, address=_declared_citation(certifier, "root")), "round9")
+        check("the two-vote family %s stays closed to a relabelled candidate" % family,
+              refusal is not None)
+
+
+def _tracked_evidence_declaration(certifier):
+    """The future evidence-present state, modelled with COMMITTED bytes only.
+
+    The declared citations are re-pointed from the (uncommitted) MCP capture at
+    ``sufaha-evidence.jsonl`` onto an artifact that is already tracked, unmodified
+    and record-shaped: the contract itself, whose N-th fact carries the N-th
+    quotation. Nothing is written, no evidence is manufactured, and the real
+    evidence artifact is never created — but the evidence-authority checks pass, so
+    what stays under test is the DECLARED-BODY binding on its own.
+    """
+
+    contract_path = certifier.FAMILY_CONTRACT_ARTIFACTS[0]
+    payload = json.loads(Path(contract_path).read_text(encoding="utf-8"))
+    for fact in payload["facts"]:
+        carriers = [fact.get("source_address")]
+        carriers += list((fact.get("source_evidence") or {}).get("source_addresses") or [])
+        carriers += list((fact.get("dependencies") or {}).get("source_addresses") or [])
+        for item in carriers:
+            if isinstance(item, dict) and isinstance(item.get("address"), str):
+                item["address"] = item["address"].replace("sufaha-evidence.jsonl",
+                                                          Path(contract_path).name)
+    return payload, Path(contract_path)
+
+
+def _certify_family_batch(certifier, payload, packet_dir, mutate=None):
+    """Register every declared fact in one store; return the types that certified."""
+
+    import tempfile
+
+    certified = []
+    with tempfile.TemporaryDirectory() as tmp:
+        store = certifier.TypedFactCertificationStore(Path(tmp))
+        prepared = []
+        for fact in payload["facts"]:
+            candidate = copy.deepcopy(fact)
+            if mutate is not None:
+                mutate(candidate)
+            prepared.append(candidate)
+            store.register(candidate, contract_id=payload["contract_id"], actor="t",
+                           timestamp="2026-08-02T00:00:00Z")
+            store.transition(candidate["fact_id"], "review_required", actor="t",
+                             timestamp="2026-08-02T00:00:01Z", reason="t")
+        for fact in certifier._sufaha_dependency_order(prepared):
+            kwargs = {"packet_dir": packet_dir}
+            if fact["fact_type"] in certifier.TWO_VOTE_FACT_TYPES:
+                kwargs["two_vote_bundle"] = (certifier.TWO_VOTE_SAMPLE,
+                                             "two-vote-artifact:quran_2_13_12")
+            try:
+                store.transition(fact["fact_id"], "certified", actor="t",
+                                 timestamp="2026-08-02T00:00:02Z", reason="t", **kwargs)
+                certified.append(fact["fact_type"])
+            except certifier.CertificationError:
+                pass
+    return certified
+
+
+def test_family_authority_binds_the_declared_body_and_committed_evidence() -> None:
+    """A declared fact id is a label; certification asserts the declared BODY.
+
+    Round 9 resolved a citation to a path and checked that the path existed. Under
+    a resolvable evidence file that let a candidate keep the declared ``fact_id``
+    and citation while substituting ``fact_value``, the quotation or the evidence
+    mode — and certify. Existence was also mistaken for repository authority: any
+    file dropped beside a contract counted as committed evidence.
+    """
+
+    import tempfile
+
+    from tools import certify_typed_fact as certifier
+
+    payload, contract_path = _tracked_evidence_declaration(certifier)
+    families = [fact["fact_type"] for fact in payload["facts"]
+                if fact["fact_type"] not in certifier.TWO_VOTE_FACT_TYPES]
+    check("the committed contract declares ten non-two-vote families", len(families) == 10)
+
+    real_index = certifier.family_contract_index
+    simulated = certifier._build_family_index(payload, contract_path)
+    certifier.family_contract_index = lambda: simulated
+    try:
+        # Positive control: with committed evidence the DECLARED facts certify, so
+        # every refusal below is the body binding, not an inert simulation.
+        clean = [name for name in _certify_family_batch(certifier, payload, contract_path.parent)
+                 if name not in certifier.TWO_VOTE_FACT_TYPES]
+        check("the evidence-present simulation certifies all %d declared facts (%d)"
+              % (len(families), len(clean)), sorted(clean) == sorted(families))
+
+        def substitute_payload(fact):
+            fact["fact_value"] = {"value": "SUBSTITUTED CLAIM", "attacker": True}
+            fact["source_evidence"] = dict(fact.get("source_evidence") or {})
+            fact["source_evidence"]["source_quotation"] = "substituted verbatim quotation"
+
+        forged = [name for name in _certify_family_batch(
+            certifier, payload, contract_path.parent, mutate=substitute_payload)
+            if name not in certifier.TWO_VOTE_FACT_TYPES]
+        check("no substituted payload certifies under a declared fact id (%s)" % forged,
+              not forged)
+
+        # Each truth-bearing field binds on its own, with a refusal that says so.
+        declared = next(fact for fact in payload["facts"]
+                        if fact["fact_type"] == "singular_pattern")
+        for label, mutate in (
+            ("fact_value", lambda f: f.update({"fact_value": {"value": "other"}})),
+            ("source_quotation", lambda f: f["source_evidence"].update(
+                {"source_quotation": "other"})),
+            ("dependencies", lambda f: f.update({"dependencies": {"fact_ids": ["sha256:x"]}})),
+            ("derivation_chain", lambda f: f.update({"derivation_chain": [{"step_id": "x"}]})),
+            ("evidence", lambda f: f.update({"evidence": {"evidence_ids": ["invented"]}})),
+            ("contradiction_records", lambda f: f.update({"contradiction_records": ["x"]})),
+        ):
+            forged_fact = copy.deepcopy(declared)
+            mutate(forged_fact)
+            refusal = certifier.gate_refusal(forged_fact, contract_id=payload["contract_id"])
+            check("a substituted %s is refused as a substituted body" % label,
+                  refusal is not None and "may not carry a substituted body" in refusal)
+
+        # A weaker rung than the declaration claimed.
+        root_fact = copy.deepcopy(next(fact for fact in payload["facts"]
+                                       if fact["fact_type"] == "root"))
+        check("root is declared at cross_source_corroboration",
+              root_fact["evidence_mode"] == "cross_source_corroboration")
+        root_fact["evidence_mode"] = "direct_source_attestation"
+        refusal = certifier.gate_refusal(root_fact, contract_id=payload["contract_id"])
+        check("a substituted evidence mode is refused",
+              refusal is not None and "never claimed" in refusal)
+
+        # The cited fragment must open and corroborate; a filename is not evidence.
+        for label, address_suffix in (("an out-of-range record", "#fact=999"),
+                                      ("no record fragment at all", "")):
+            forged_fact = copy.deepcopy(declared)
+            base_address = forged_fact["source_address"]["address"].split("#", 1)[0]
+            forged_fact["source_address"] = dict(forged_fact["source_address"],
+                                                 address=base_address + address_suffix)
+            refusal = certifier.gate_refusal(forged_fact, contract_id=payload["contract_id"])
+            check("a citation naming %s is refused" % label, refusal is not None)
+    finally:
+        certifier.family_contract_index = real_index
+
+    # Repository authority: tracked and unmodified passes; an untracked lookalike
+    # and a tracked-but-drifted path are refusals, not evidence.
+    check("a tracked, unmodified repository file passes repository authority",
+          certifier.repository_blob_refusal(contract_path) is None)
+    with tempfile.TemporaryDirectory() as tmp:
+        repo = Path(tmp) / "scratch"
+        repo.mkdir()
+        git = ["git", "-C", str(repo)]
+        _run(git + ["init", "-q"])
+        tracked = repo / "evidence.jsonl"
+        tracked.write_text('{"row": 1}\n', encoding="utf-8", newline="\n")
+        lookalike = repo / "sufaha-evidence.jsonl"
+        lookalike.write_text('{"row": 2}\n', encoding="utf-8", newline="\n")
+        _run(git + ["add", "evidence.jsonl"])
+        _run(git + ["-c", "user.email=a@b.c", "-c", "user.name=t", "commit", "-q", "-m", "e"])
+        check("the committed scratch blob is accepted",
+              certifier.repository_blob_refusal(tracked, repo_root=repo) is None)
+        untracked_refusal = certifier.repository_blob_refusal(lookalike, repo_root=repo)
+        check("an untracked lookalike is not committed evidence",
+              untracked_refusal is not None and "not tracked" in untracked_refusal)
+        tracked.write_text('{"row": 1, "drifted": true}\n', encoding="utf-8", newline="\n")
+        drift_refusal = certifier.repository_blob_refusal(tracked, repo_root=repo)
+        check("a tracked but byte-drifted evidence path is not committed evidence",
+              drift_refusal is not None and "drifted" in drift_refusal)
+
+    # Today's honest state is unchanged by any of this.
+    real_evidence = contract_path.parent / "sufaha-evidence.jsonl"
+    check("the real evidence artifact is still absent", not real_evidence.exists())
+    live = json.loads(contract_path.read_text(encoding="utf-8"))
+    certified = _certify_family_batch(certifier, live, contract_path.parent)
+    check("no real family fact certifies today (%s)" % certified, not certified)
+    # The two-vote family is not held by the family gate at all: its authority is
+    # the validated vote artifact, and today it is stopped only by the same missing
+    # review artifact that stops everything else in this packet.
+    governor = next(fact for fact in live["facts"]
+                    if fact["fact_type"] == "governor_relation")
+    check("the two-vote family keeps its validated-bundle authority",
+          certifier.gate_refusal(governor, contract_id=live["contract_id"]) is None)
+
+
+def _run(args):
+    import subprocess
+
+    return subprocess.run(args, capture_output=True, text=True)
+
+
+def test_both_bridge_output_fact_types_are_registered() -> None:
+    """Candidate AND abstention outputs carry a real never_auto_resolve gate."""
+
+    from tools import certify_typed_fact as certifier
+
+    for fact_type in ("largelexicon_lexeme_candidate", "largelexicon_bridge_abstention"):
+        check("%s has a registered never_auto_resolve gate" % fact_type,
+              fact_projectors.REGISTRY.gate_tier_for_output_fact_type(fact_type)
+              == "never_auto_resolve")
+
+    record = bridge.bridge_row(crosswalk_row(), make_inputs(typed_edges={}))
+    abstention = [f for f in record["facts"] if f["fact_type"] == "largelexicon_bridge_abstention"]
+    check("the bridge emits a typed abstention", len(abstention) == 1)
+    fact = abstention[0]
+    check("the abstention names its own projector",
+          fact["rule_projector"]["projector_id"] == bridge.ABSTENTION_PROJECTOR_ID)
+    tier, _pid, basis = certifier.producing_projector_gate(fact)
+    check("the abstention resolves never_auto_resolve", tier == "never_auto_resolve")
+    check("the abstention refusal rests on a real gate, not an incoherence report",
+          basis == "registered projector_id")
+    check("the abstention id is recomputable", bridge.recompute_fact_id(fact) == fact["fact_id"])
+    check("the abstention is refused by the gate", certifier.gate_refusal(fact) is not None)
+
+    candidate = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]
+    _tier, _pid, candidate_basis = certifier.producing_projector_gate(candidate)
+    check("the candidate refusal also rests on a real gate",
+          candidate_basis == "registered projector_id")
+
+    # The abstention projector is registration-only: it never manufactures a record.
+    try:
+        fact_projectors.REGISTRY.run(bridge.ABSTENTION_PROJECTOR_ID)
+    except fact_projectors.ProjectorValidationError as error:
+        check("the abstention projector refuses on-demand projection",
+              "not projected on demand" in str(error))
+    else:
+        raise AssertionError("FAILED: the abstention projector manufactured a record")
+
+
+def test_no_frozen_partial_suite_can_be_run() -> None:
+    """A module-level TESTS snapshot must not silently run a subset."""
+
+    import sys as _sys
+
+    module = _sys.modules[__name__]
+    frozen = getattr(module, "TESTS", None)
+    check("a TESTS attribute still exists for legacy callers", frozen is not None)
+    for operation, call in (("iteration", lambda: list(frozen)), ("len()", lambda: len(frozen))):
+        try:
+            call()
+        except RuntimeError as error:
+            check("frozen TESTS refuses %s and explains why" % operation,
+                  "all_tests()" in str(error))
+        else:
+            raise AssertionError("FAILED: frozen TESTS allowed %s" % operation)
+    collected = all_tests()
+    check("dynamic discovery is the only runnable suite", len(collected) >= EXPECTED_MINIMUM_TESTS)
+    names = {test.__name__ for test in collected}
+    for critical in CRITICAL_PROBES:
+        check("critical probe %s is discovered" % critical, critical in names)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
