@@ -232,6 +232,35 @@ def analyze_hidden(inp, unit):
     return {"decision": "abstain", "reason": "reject_reconstruction"}
 
 
+# ------------------------------------------ capability: pedagogical_projection
+def analyze_pedagogy(inp, unit):
+    """Data-driven teaching-artifact compiler: the pack's projection_contract
+    declares required inputs and emitted fields (each mapped from an input
+    key, with an optional per-field template prefix). Missing required
+    evidence -> abstain (never invent teaching content); the underlying fact
+    reference is carried verbatim so learner simplification can never
+    overwrite it. Mutating the contract changes the emitted artifact."""
+    contract = unit["projection_contract"]
+    data = inp.get("data") or {}
+    missing = [k for k in contract.get("required", []) if not data.get(k)]
+    if missing:
+        return {"decision": "abstain", "reason": "missing_pedagogical_inputs",
+                "missing": sorted(missing)}
+    fields = {}
+    for emit in contract.get("emits", []):
+        src = data.get(emit["from"])
+        if src is None:
+            continue
+        if isinstance(src, list):
+            src = "; ".join(str(x) for x in src)
+        fields[emit["field"]] = (emit.get("prefix", "") + str(src))
+    if not data.get("fact_ref"):
+        return {"decision": "abstain", "reason": "missing_pedagogical_inputs",
+                "missing": ["fact_ref"]}
+    return {"decision": "projected", "fact_ref": data["fact_ref"],
+            "fields": fields}
+
+
 # Registered CAPABILITY interfaces. Dispatch is by the unit pack's declared
 # `capability` field, never by increment name — a new increment that reuses a
 # registered capability needs ZERO consumer edits (declarative addition).
@@ -241,6 +270,7 @@ CAPABILITIES = {
     "discriminator_table": analyze_discriminator_table,
     "pattern_consistency": analyze_nawasikh,
     "licensing_table": analyze_hidden,
+    "pedagogical_projection": analyze_pedagogy,
 }
 
 
@@ -252,9 +282,15 @@ def analyzer_for(unit):
 
 
 def _subset_match(expected, actual):
-    """Every expected key must appear in actual with an equal value."""
+    """Every expected key must appear in actual with an equal value; nested
+    dicts match as subsets recursively (a fixture may pin one emitted field
+    without enumerating the whole artifact)."""
     for k, v in expected.items():
-        if actual.get(k) != v:
+        av = actual.get(k)
+        if isinstance(v, dict) and isinstance(av, dict):
+            if not _subset_match(v, av):
+                return False
+        elif av != v:
             return False
     return True
 

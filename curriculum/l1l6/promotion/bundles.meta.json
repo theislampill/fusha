@@ -5,7 +5,8 @@
     "inc-ma.bundle.json",
     "inc-nawasikh.bundle.json",
     "inc-negation.bundle.json",
-    "inc-ownership.bundle.json"
+    "inc-ownership.bundle.json",
+    "inc-pedagogy.bundle.json"
   ],
   "generator": "tools/build_promotion_bundles.py",
   "note": "review inputs for Sol; nothing applied automatically",

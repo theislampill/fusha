@@ -11,28 +11,28 @@
   ],
   "expected_skill_registry_entries": [
     {
-      "gate": "@curriculum-candidate:redfirst",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
       "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
       "rule_id": "curr-nawasikh-naw-r1",
       "statement": "identify the abrogator by membership; a lightened/non-governing use (declared feature) removes the expectation (abstain non_governing_use)",
       "status": "candidate"
     },
     {
-      "gate": "@curriculum-candidate:redfirst",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
       "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
       "rule_id": "curr-nawasikh-naw-r2",
       "statement": "the consumer CHECKS observed case markings against the family pattern; it never assigns case itself (case facts stay two-vote)",
       "status": "candidate"
     },
     {
-      "gate": "@curriculum-candidate:redfirst",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
       "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
       "rule_id": "curr-nawasikh-naw-r3",
       "statement": "observed==expected -> consistent; observed!=expected -> violation_candidate routed to review (the text is never 'corrected'); marking unknown -> abstain marking_unknown",
       "status": "candidate"
     },
     {
-      "gate": "@curriculum-candidate:redfirst",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
       "provenance": "curriculum/l1l6/increments/inc-nawasikh/unit-v1.json",
       "rule_id": "curr-nawasikh-naw-r4",
       "statement": "la_jins and hijaziyya-ma regimes are OUT of this unit (different/school-dependent regimes)",
@@ -53,7 +53,7 @@
       "naw-pos-02"
     ]
   },
-  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "flywheel_evidence": "curriculum/l1l6/loop/nawasikh-coverage/loop-record.json",
   "increment": "inc-nawasikh",
   "learner_explanation_ladder": {
     "u-n02": {
@@ -160,7 +160,7 @@
       "teaching": "a marking that contradicts the pattern shows as 'needs review', never as a silent correction"
     }
   ],
-  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "rollback_condition": "revert to unit-v0.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
   "schema": "curriculum.l1l6_promotion_bundle.v1",
   "status": "candidate_awaiting_sol_review"
 }

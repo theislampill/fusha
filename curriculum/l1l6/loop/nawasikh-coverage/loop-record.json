@@ -1,0 +1,233 @@
+{
+  "abstentions_preserved": [
+    "naw-abs-01",
+    "naw-abs-02"
+  ],
+  "backprop_proposal": {
+    "content": "repair unit-v0.json -> unit-v1.json with the recorded defect set as adversarial evidence",
+    "no_auto_promotion": true,
+    "target": "curriculum/l1l6/promotion/ bundle for inc-nawasikh"
+  },
+  "baseline_pack": "unit-v0.json",
+  "capability": "pattern_consistency",
+  "defects_recorded": [
+    {
+      "actual": {
+        "decision": "abstain",
+        "reason": "out_of_regime"
+      },
+      "class": "adversarial",
+      "expected": {
+        "decision": "violation_candidate",
+        "family": "zanna"
+      },
+      "fixture_id": "naw-adv-02"
+    }
+  ],
+  "downstream_work": {
+    "hover_pedagogy": "queue q-hover-pedagogy rows for linked entries",
+    "occurrence_grounding": "queue q-pvn-grounding rows for lessons mapped to inc-nawasikh"
+  },
+  "guards_loaded": [
+    "g-naw-1",
+    "g-naw-2",
+    "g-naw-3",
+    "g-naw-m"
+  ],
+  "improvement_classes_verified": [
+    "linguistic_consumer_improvement"
+  ],
+  "improvements": [
+    "naw-adv-02"
+  ],
+  "increment": "inc-nawasikh",
+  "loop": "nawasikh-coverage",
+  "regressions": [],
+  "repaired_pack": "unit-v1.json",
+  "rivals_preserved": [],
+  "run1": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 6,
+    "increment": "inc-nawasikh",
+    "mismatches": 1,
+    "results": [
+      {
+        "actual": {
+          "decision": "consistent",
+          "family": "inna"
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "consistent",
+          "family": "inna"
+        },
+        "fixture_id": "naw-pos-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "consistent",
+          "family": "kana"
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "consistent",
+          "family": "kana"
+        },
+        "fixture_id": "naw-pos-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "violation_candidate",
+          "family": "inna"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "violation_candidate",
+          "family": "inna"
+        },
+        "fixture_id": "naw-adv-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "out_of_regime"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "violation_candidate",
+          "family": "zanna"
+        },
+        "fixture_id": "naw-adv-02",
+        "match": false
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "non_governing_use"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "non_governing_use"
+        },
+        "fixture_id": "naw-abs-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "marking_unknown"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "marking_unknown"
+        },
+        "fixture_id": "naw-abs-02",
+        "match": true
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v0.json",
+    "unit_version": 0
+  },
+  "run2": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 6,
+    "increment": "inc-nawasikh",
+    "mismatches": 0,
+    "results": [
+      {
+        "actual": {
+          "decision": "consistent",
+          "family": "inna"
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "consistent",
+          "family": "inna"
+        },
+        "fixture_id": "naw-pos-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "consistent",
+          "family": "kana"
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "consistent",
+          "family": "kana"
+        },
+        "fixture_id": "naw-pos-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "violation_candidate",
+          "family": "inna"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "violation_candidate",
+          "family": "inna"
+        },
+        "fixture_id": "naw-adv-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "violation_candidate",
+          "family": "zanna"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "violation_candidate",
+          "family": "zanna"
+        },
+        "fixture_id": "naw-adv-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "non_governing_use"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "non_governing_use"
+        },
+        "fixture_id": "naw-abs-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "marking_unknown"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "marking_unknown"
+        },
+        "fixture_id": "naw-abs-02",
+        "match": true
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v1.json",
+    "unit_version": 1
+  },
+  "schema": "curriculum.l1l6_flywheel_loop.v1",
+  "site_payload_improvement": "never_claimable_here_owner_gated",
+  "status": "candidate",
+  "transfer_improvements": [],
+  "unit_ref": "u-n02"
+}

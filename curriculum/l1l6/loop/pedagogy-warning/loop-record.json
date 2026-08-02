@@ -1,0 +1,345 @@
+{
+  "abstentions_preserved": [
+    "ped-abs-01"
+  ],
+  "backprop_proposal": {
+    "content": "repair unit-v0.json -> unit-v1.json with the recorded defect set as adversarial evidence",
+    "no_auto_promotion": true,
+    "target": "curriculum/l1l6/promotion/ bundle for inc-pedagogy"
+  },
+  "baseline_pack": "unit-v0.json",
+  "capability": "pedagogical_projection",
+  "defects_recorded": [
+    {
+      "actual": {
+        "decision": "projected",
+        "fact_ref": "cu-x",
+        "fields": {
+          "beginner_explanation": "something",
+          "recognition_cue": "cue",
+          "technical_identity": "unit:cu-x",
+          "tutor_destination": "tutor"
+        }
+      },
+      "class": "adversarial",
+      "expected": {
+        "decision": "projected",
+        "fields": {
+          "beginner_explanation": "something",
+          "common_error_warning": "watch out: known trap",
+          "recognition_cue": "cue",
+          "technical_identity": "unit:cu-x",
+          "tutor_destination": "tutor",
+          "unresolved_notice": "genuine dispute"
+        }
+      },
+      "fixture_id": "ped-adv-01"
+    },
+    {
+      "actual": {
+        "decision": "projected",
+        "fact_ref": "cu-hamza-seat-selection",
+        "fields": {
+          "advanced_explanation": "final position follows the preceding vowel alone",
+          "beginner_explanation": "how the hamza chooses its carrier letter",
+          "contrast_or_transfer": "seat orthography vs radical identity",
+          "intermediate_explanation": "compare the neighbouring vowels by strength; strongest picks the seat",
+          "prerequisite_statement": "short vowels; carrier letters",
+          "recognition_cue": "hamza with differing seats across forms of one word",
+          "technical_identity": "unit:cu-hamza-seat-selection",
+          "tutor_destination": "hover seat-note + drill"
+        }
+      },
+      "class": "transfer",
+      "expected": {
+        "decision": "projected",
+        "fields": {
+          "common_error_warning": "watch out: treating seat changes as root changes"
+        }
+      },
+      "fixture_id": "ped-trn-01"
+    }
+  ],
+  "downstream_work": {
+    "hover_pedagogy": "queue q-hover-pedagogy rows for linked entries",
+    "occurrence_grounding": "queue q-pvn-grounding rows for lessons mapped to inc-pedagogy"
+  },
+  "guards_loaded": [
+    "g-ped-1",
+    "g-ped-2",
+    "g-ped-3",
+    "g-ped-m"
+  ],
+  "improvement_classes_verified": [
+    "linguistic_consumer_improvement"
+  ],
+  "improvements": [
+    "ped-adv-01",
+    "ped-trn-01"
+  ],
+  "increment": "inc-pedagogy",
+  "loop": "pedagogy-warning",
+  "regressions": [],
+  "repaired_pack": "unit-v1.json",
+  "rivals_preserved": [],
+  "run1": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 5,
+    "increment": "inc-pedagogy",
+    "mismatches": 2,
+    "results": [
+      {
+        "actual": {
+          "decision": "projected",
+          "fact_ref": "cu-idafa-definiteness-licensing",
+          "fields": {
+            "advanced_explanation": "lafziyya-type heads admit the article under stated conditions",
+            "beginner_explanation": "how possession chains share definiteness",
+            "contrast_or_transfer": "true idafa vs adjectival (lafziyya) idafa",
+            "intermediate_explanation": "walk the chain; only the last member carries the article",
+            "prerequisite_statement": "case endings; definiteness sources",
+            "recognition_cue": "two adjacent nouns, second genitive",
+            "technical_identity": "unit:cu-idafa-definiteness-licensing",
+            "tutor_destination": "tutor prerequisite routing + hover chain card"
+          }
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "projected"
+        },
+        "fixture_id": "ped-pos-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "projected",
+          "fact_ref": "cu-tamyiz-role-discriminator",
+          "fields": {
+            "advanced_explanation": "measure/number frames make tamyiz near-obligatory",
+            "beginner_explanation": "picking the specification reading among accusative roles",
+            "contrast_or_transfer": "tamyiz vs hal (respect vs state)",
+            "intermediate_explanation": "run the role question tests in order",
+            "prerequisite_statement": "accusative roles inventory",
+            "recognition_cue": "indefinite accusative answering 'in what respect'",
+            "technical_identity": "unit:cu-tamyiz-role-discriminator",
+            "tutor_destination": "drill generation + role chip hover"
+          }
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "projected"
+        },
+        "fixture_id": "ped-pos-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "projected",
+          "fact_ref": "cu-x",
+          "fields": {
+            "beginner_explanation": "something",
+            "recognition_cue": "cue",
+            "technical_identity": "unit:cu-x",
+            "tutor_destination": "tutor"
+          }
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "projected",
+          "fields": {
+            "beginner_explanation": "something",
+            "common_error_warning": "watch out: known trap",
+            "recognition_cue": "cue",
+            "technical_identity": "unit:cu-x",
+            "tutor_destination": "tutor",
+            "unresolved_notice": "genuine dispute"
+          }
+        },
+        "fixture_id": "ped-adv-01",
+        "match": false
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "missing": [
+            "recognition"
+          ],
+          "reason": "missing_pedagogical_inputs"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "missing_pedagogical_inputs"
+        },
+        "fixture_id": "ped-abs-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "projected",
+          "fact_ref": "cu-hamza-seat-selection",
+          "fields": {
+            "advanced_explanation": "final position follows the preceding vowel alone",
+            "beginner_explanation": "how the hamza chooses its carrier letter",
+            "contrast_or_transfer": "seat orthography vs radical identity",
+            "intermediate_explanation": "compare the neighbouring vowels by strength; strongest picks the seat",
+            "prerequisite_statement": "short vowels; carrier letters",
+            "recognition_cue": "hamza with differing seats across forms of one word",
+            "technical_identity": "unit:cu-hamza-seat-selection",
+            "tutor_destination": "hover seat-note + drill"
+          }
+        },
+        "class": "transfer",
+        "expected": {
+          "decision": "projected",
+          "fields": {
+            "common_error_warning": "watch out: treating seat changes as root changes"
+          }
+        },
+        "fixture_id": "ped-trn-01",
+        "match": false
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v0.json",
+    "unit_version": 0
+  },
+  "run2": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 5,
+    "increment": "inc-pedagogy",
+    "mismatches": 0,
+    "results": [
+      {
+        "actual": {
+          "decision": "projected",
+          "fact_ref": "cu-idafa-definiteness-licensing",
+          "fields": {
+            "advanced_explanation": "lafziyya-type heads admit the article under stated conditions",
+            "beginner_explanation": "how possession chains share definiteness",
+            "common_error_warning": "watch out: putting the article on the first member of the chain",
+            "contrast_or_transfer": "true idafa vs adjectival (lafziyya) idafa",
+            "intermediate_explanation": "walk the chain; only the last member carries the article",
+            "prerequisite_statement": "case endings; definiteness sources",
+            "recognition_cue": "two adjacent nouns, second genitive",
+            "technical_identity": "unit:cu-idafa-definiteness-licensing",
+            "tutor_destination": "tutor prerequisite routing + hover chain card"
+          }
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "projected"
+        },
+        "fixture_id": "ped-pos-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "projected",
+          "fact_ref": "cu-tamyiz-role-discriminator",
+          "fields": {
+            "advanced_explanation": "measure/number frames make tamyiz near-obligatory",
+            "beginner_explanation": "picking the specification reading among accusative roles",
+            "common_error_warning": "watch out: labelling every nasb noun the direct object",
+            "contrast_or_transfer": "tamyiz vs hal (respect vs state)",
+            "intermediate_explanation": "run the role question tests in order",
+            "prerequisite_statement": "accusative roles inventory",
+            "recognition_cue": "indefinite accusative answering 'in what respect'",
+            "technical_identity": "unit:cu-tamyiz-role-discriminator",
+            "tutor_destination": "drill generation + role chip hover",
+            "unresolved_notice": "some frames admit two role analyses — both retained"
+          }
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "projected"
+        },
+        "fixture_id": "ped-pos-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "projected",
+          "fact_ref": "cu-x",
+          "fields": {
+            "beginner_explanation": "something",
+            "common_error_warning": "watch out: known trap",
+            "recognition_cue": "cue",
+            "technical_identity": "unit:cu-x",
+            "tutor_destination": "tutor",
+            "unresolved_notice": "genuine dispute"
+          }
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "projected",
+          "fields": {
+            "beginner_explanation": "something",
+            "common_error_warning": "watch out: known trap",
+            "recognition_cue": "cue",
+            "technical_identity": "unit:cu-x",
+            "tutor_destination": "tutor",
+            "unresolved_notice": "genuine dispute"
+          }
+        },
+        "fixture_id": "ped-adv-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "missing": [
+            "recognition"
+          ],
+          "reason": "missing_pedagogical_inputs"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "missing_pedagogical_inputs"
+        },
+        "fixture_id": "ped-abs-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "projected",
+          "fact_ref": "cu-hamza-seat-selection",
+          "fields": {
+            "advanced_explanation": "final position follows the preceding vowel alone",
+            "beginner_explanation": "how the hamza chooses its carrier letter",
+            "common_error_warning": "watch out: treating seat changes as root changes",
+            "contrast_or_transfer": "seat orthography vs radical identity",
+            "intermediate_explanation": "compare the neighbouring vowels by strength; strongest picks the seat",
+            "prerequisite_statement": "short vowels; carrier letters",
+            "recognition_cue": "hamza with differing seats across forms of one word",
+            "technical_identity": "unit:cu-hamza-seat-selection",
+            "tutor_destination": "hover seat-note + drill",
+            "unresolved_notice": "medial-seat conventions vary by region/style manual"
+          }
+        },
+        "class": "transfer",
+        "expected": {
+          "decision": "projected",
+          "fields": {
+            "common_error_warning": "watch out: treating seat changes as root changes"
+          }
+        },
+        "fixture_id": "ped-trn-01",
+        "match": true
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v1.json",
+    "unit_version": 1
+  },
+  "schema": "curriculum.l1l6_flywheel_loop.v1",
+  "site_payload_improvement": "never_claimable_here_owner_gated",
+  "status": "candidate",
+  "transfer_improvements": [
+    "ped-trn-01"
+  ],
+  "unit_ref": null
+}

@@ -1,42 +1,60 @@
 {
-  "schema": "curriculum.l1l6_loops_manifest.v1",
-  "note": "every loop is recomputed live by tools/curriculum_flywheel_runner.py --manifest and byte-compared in the validator; expected_run1_mismatches pins each recorded defect set. Three substantially different families beyond the original ownership loop: sarf derivation (weak-root complication), nahw ambiguity (global-ma refuted, rivals preserved), nahw structural (licensing-table hidden structure).",
   "loops": [
     {
-      "loop": "ownership",
+      "baseline_pack": "unit-v1.json",
+      "expected_run1_mismatches": 2,
       "family": "sarf letter ownership",
       "increment": "inc-ownership",
-      "baseline_pack": "unit-v1.json",
-      "repaired_pack": "unit-v2.json",
-      "expected_run1_mismatches": 2,
-      "proof": "shape-only rule refuted by radical-mim + evidence-free minting; repaired by evidence-required rule; second token مجلس improves"
+      "loop": "ownership",
+      "proof": "shape-only rule refuted by radical-mim + evidence-free minting; repaired by evidence-required rule; second token مجلس improves",
+      "repaired_pack": "unit-v2.json"
     },
     {
-      "loop": "derivation",
+      "baseline_pack": "unit-v1.json",
+      "expected_run1_mismatches": 2,
       "family": "sarf derivation (weak-root complication)",
       "increment": "inc-derivatives",
-      "baseline_pack": "unit-v1.json",
-      "repaired_pack": "unit-v2.json",
-      "expected_run1_mismatches": 2,
-      "proof": "lesson unit -> candidate classifier -> FALSE NEGATIVES on hollow-root participles (قائل، بائع) -> pack-only repair (declared weak_substitutions table) -> later unseen token improves (transfer class)"
+      "loop": "derivation",
+      "proof": "lesson unit -> candidate classifier -> FALSE NEGATIVES on hollow-root participles (قائل، بائع) -> pack-only repair (declared weak_substitutions table) -> later unseen token improves (transfer class)",
+      "repaired_pack": "unit-v2.json"
     },
     {
-      "loop": "ma-ambiguity",
+      "baseline_pack": "unit-v0.json",
+      "expected_run1_mismatches": 6,
       "family": "nahw ambiguity (multifunction ma)",
       "increment": "inc-ma",
-      "baseline_pack": "unit-v0.json",
-      "repaired_pack": "unit-v1.json",
-      "expected_run1_mismatches": 6,
-      "proof": "one global surface reading (v0 'what') fails EVERY fixture -> occurrence/context discriminators introduced (v1) -> two different ma readings retained on different feature sets (nafiya vs mawsula), genuine ambiguity preserved as alternatives, zero-evidence input abstains -> learner-facing explanations differ by function id"
+      "loop": "ma-ambiguity",
+      "proof": "one global surface reading (v0 'what') fails EVERY fixture -> occurrence/context discriminators introduced (v1) -> two different ma readings retained on different feature sets (nafiya vs mawsula), genuine ambiguity preserved as alternatives, zero-evidence input abstains -> learner-facing explanations differ by function id",
+      "repaired_pack": "unit-v1.json"
     },
     {
-      "loop": "hidden-structure",
+      "baseline_pack": "unit-v0.json",
+      "expected_run1_mismatches": 2,
       "family": "nahw structural (licensing-table taqdir)",
       "increment": "inc-hidden",
+      "loop": "hidden-structure",
+      "proof": "flat label insufficient: v0 licenses only the imperative mustatir, so the relative-clause 'a'id gap and vocative deleted-verb analyses fail -> typed licensing relations introduced (v1) -> transfer example (relative gap) handled; unlicensed reconstruction stays rejected in BOTH versions (wrong-reason fixture)",
+      "repaired_pack": "unit-v1.json"
+    },
+    {
       "baseline_pack": "unit-v0.json",
-      "repaired_pack": "unit-v1.json",
+      "expected_run1_mismatches": 1,
+      "family": "nahw governance (pattern_consistency)",
+      "increment": "inc-nawasikh",
+      "loop": "nawasikh-coverage",
+      "proof": "family-coverage insufficiency: without the zanna double-accusative family the ظن probe silently falls out_of_regime (an abstention where a violation check was due) -> pack-only repair restores the family -> the swap adversarial and lightened-lakin abstention stay correct in both versions (sufficiency independently tested)",
+      "repaired_pack": "unit-v1.json"
+    },
+    {
+      "baseline_pack": "unit-v0.json",
       "expected_run1_mismatches": 2,
-      "proof": "flat label insufficient: v0 licenses only the imperative mustatir, so the relative-clause 'a'id gap and vocative deleted-verb analyses fail -> typed licensing relations introduced (v1) -> transfer example (relative gap) handled; unlicensed reconstruction stays rejected in BOTH versions (wrong-reason fixture)"
+      "family": "pedagogical projection (instructional consumer)",
+      "increment": "inc-pedagogy",
+      "loop": "pedagogy-warning",
+      "proof": "teaching-without-the-guard: v0's contract drops the common-error warning and rival notice, so projections teach the rule while hiding the misconception guard and genuine disputes (adversarial + transfer probes fail) -> contract repair -> an UNRELATED unit's data projects through the same repaired contract (template transfer, no per-unit code)",
+      "repaired_pack": "unit-v1.json"
     }
-  ]
+  ],
+  "note": "every loop is recomputed live by tools/curriculum_flywheel_runner.py --manifest and byte-compared in the validator; expected_run1_mismatches pins each recorded defect set. Five families beyond the original ownership loop — one per registered capability interface (letter_ownership, template_classification, discriminator_table, licensing_table, pattern_consistency, pedagogical_projection): sarf derivation (weak-root complication), nahw ambiguity (global-ma refuted, rivals preserved), nahw structural (licensing-table hidden structure).",
+  "schema": "curriculum.l1l6_loops_manifest.v1"
 }

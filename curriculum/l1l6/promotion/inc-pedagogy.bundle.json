@@ -1,0 +1,152 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-pedagogy/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-pedagogy/reference.md",
+  "capability": "pedagogical_projection",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-pedagogy",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
+      "rule_id": "curr-pedagogy-ped-r1",
+      "statement": "teaching artifacts are compiled from the qualified unit's declared inputs; missing required evidence abstains — content is never invented",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
+      "rule_id": "curr-pedagogy-ped-r2",
+      "statement": "the fact_ref is carried verbatim (technical_identity): learner-level simplification can never overwrite the underlying fact",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
+      "rule_id": "curr-pedagogy-ped-r3",
+      "statement": "where a unit carries uncertainty/rival flags, the projection MUST surface the unresolved notice (v1; the v0 defect drops it)",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "ped-abs-01"
+    ],
+    "adversarial": [
+      "ped-adv-01"
+    ],
+    "positive": [
+      "ped-pos-01",
+      "ped-pos-02"
+    ],
+    "transfer": [
+      "ped-trn-01"
+    ]
+  },
+  "flywheel_evidence": "curriculum/l1l6/loop/pedagogy-warning/loop-record.json",
+  "increment": "inc-pedagogy",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "missing_pedagogical_inputs"
+    ],
+    "capability": "pedagogical_projection",
+    "increment": "inc-pedagogy",
+    "projection_contract": {
+      "emits": [
+        {
+          "field": "prerequisite_statement",
+          "from": "prerequisites"
+        },
+        {
+          "field": "beginner_explanation",
+          "from": "purpose"
+        },
+        {
+          "field": "intermediate_explanation",
+          "from": "procedure"
+        },
+        {
+          "field": "advanced_explanation",
+          "from": "conditions_exceptions"
+        },
+        {
+          "field": "technical_identity",
+          "from": "fact_ref",
+          "prefix": "unit:"
+        },
+        {
+          "field": "recognition_cue",
+          "from": "recognition"
+        },
+        {
+          "field": "common_error_warning",
+          "from": "error_warning",
+          "prefix": "watch out: "
+        },
+        {
+          "field": "contrast_or_transfer",
+          "from": "contrast"
+        },
+        {
+          "field": "unresolved_notice",
+          "from": "rival_notice"
+        },
+        {
+          "field": "tutor_destination",
+          "from": "destination"
+        }
+      ],
+      "required": [
+        "fact_ref",
+        "purpose",
+        "recognition"
+      ]
+    },
+    "rules": [
+      {
+        "id": "ped-r1",
+        "text": "teaching artifacts are compiled from the qualified unit's declared inputs; missing required evidence abstains — content is never invented"
+      },
+      {
+        "id": "ped-r2",
+        "text": "the fact_ref is carried verbatim (technical_identity): learner-level simplification can never overwrite the underlying fact"
+      },
+      {
+        "id": "ped-r3",
+        "text": "where a unit carries uncertainty/rival flags, the projection MUST surface the unresolved notice (v1; the v0 defect drops it)"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "u-n12",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "rich_hover_fields": [
+    {
+      "key": "depth_tiered_explanations",
+      "teaching": "beginner/intermediate/advanced views compiled from ONE unit record"
+    },
+    {
+      "key": "recognition_cue",
+      "teaching": "what the learner should look for on the token/construction"
+    },
+    {
+      "key": "common_error_warning",
+      "teaching": "the misconception guard travels WITH the explanation — never dropped"
+    },
+    {
+      "key": "unresolved_notice",
+      "teaching": "genuine rival analyses surface, attributed, no winner implied"
+    }
+  ],
+  "rollback_condition": "revert to unit-v0.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

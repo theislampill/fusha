@@ -1,0 +1,16 @@
+{
+  "generator": "tools/build_vn_grounding.py",
+  "schema": "curriculum.l1l6_vn_grounding_row.v1.meta",
+  "state_histogram": {
+    "authority_blocked": 24,
+    "exact_vn_candidates": 16,
+    "not_applicable_with_reason": 50,
+    "sol_integration_blocked": 76
+  },
+  "total_n_candidates": 5,
+  "total_v_candidates": 20,
+  "units": 166,
+  "units_with_exact_n": 5,
+  "units_with_exact_v": 13,
+  "units_with_occurrences": 16
+}

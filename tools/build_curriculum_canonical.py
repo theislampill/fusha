@@ -156,6 +156,7 @@ def build(ctx):
         })
 
     # ---- misconception registry ----
+    lesson_targets = {r["lesson_id"]: r["units"] for r in lesson_map}
     clusters = {}
     for q in quals:
         caps = set()
@@ -197,12 +198,21 @@ def build(ctx):
                                      key=lambda m: m["lesson_id"])
         c["disposition"] = ("candidate_fixture" if has_consumer else
                             "instructional_only")
+        if not c["related_units"]:
+            # fallback binding: the manifesting lesson's full canonical-unit
+            # targets (two-way map) — the cluster is bound to the lesson's
+            # units even when the mistake record itself named none
+            fallback = sorted({u for m in c["manifestations"]
+                               for u in lesson_targets.get(m["lesson_id"], [])})
+            if fallback:
+                c["related_units"] = fallback
+                c["binding_basis"] = "lesson_unit_map_fallback"
         c["unit_routable"] = bool(c["related_units"])
-        if has_consumer and not c["related_units"]:
-            c["routing_note"] = ("capability-level only: the source lesson "
-                                 "linked no specific unit — route via the "
-                                 "capability family's increment when its pack "
-                                 "is authored")
+        if not c["related_units"]:
+            c["routing_note"] = ("unbindable: the manifesting lesson maps to "
+                                 "no canonical unit (instructional-only "
+                                 "lesson) — remediation routes through the "
+                                 "pedagogy consumer instead")
         c["disposition_reason"] = (
             "violated capability has a real consumer; eligible for fixture "
             "restatement" if has_consumer else

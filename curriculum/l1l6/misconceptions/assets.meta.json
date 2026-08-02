@@ -1,0 +1,7 @@
+{
+  "fixture_candidates": 829,
+  "generator": "tools/build_misconception_assets.py",
+  "remediation_projections": 77,
+  "remediations_projected": 77,
+  "schema": "curriculum.l1l6_misconception_assets.meta.v1"
+}

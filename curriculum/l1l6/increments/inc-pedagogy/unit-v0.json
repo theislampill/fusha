@@ -1,0 +1,68 @@
+{
+  "abstention_reasons": [
+    "missing_pedagogical_inputs"
+  ],
+  "capability": "pedagogical_projection",
+  "increment": "inc-pedagogy",
+  "known_defect": "v0 emits explanations WITHOUT the common-error warning and rival notice — teaching that hides the misconception guard; the pedagogy loop pins this failure",
+  "projection_contract": {
+    "emits": [
+      {
+        "field": "prerequisite_statement",
+        "from": "prerequisites"
+      },
+      {
+        "field": "beginner_explanation",
+        "from": "purpose"
+      },
+      {
+        "field": "intermediate_explanation",
+        "from": "procedure"
+      },
+      {
+        "field": "advanced_explanation",
+        "from": "conditions_exceptions"
+      },
+      {
+        "field": "technical_identity",
+        "from": "fact_ref",
+        "prefix": "unit:"
+      },
+      {
+        "field": "recognition_cue",
+        "from": "recognition"
+      },
+      {
+        "field": "contrast_or_transfer",
+        "from": "contrast"
+      },
+      {
+        "field": "tutor_destination",
+        "from": "destination"
+      }
+    ],
+    "required": [
+      "fact_ref",
+      "purpose",
+      "recognition"
+    ]
+  },
+  "rules": [
+    {
+      "id": "ped-r1",
+      "text": "teaching artifacts are compiled from the qualified unit's declared inputs; missing required evidence abstains — content is never invented"
+    },
+    {
+      "id": "ped-r2",
+      "text": "the fact_ref is carried verbatim (technical_identity): learner-level simplification can never overwrite the underlying fact"
+    },
+    {
+      "id": "ped-r3",
+      "text": "where a unit carries uncertainty/rival flags, the projection MUST surface the unresolved notice (v1; the v0 defect drops it)"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "u-n12",
+  "version": 0
+}

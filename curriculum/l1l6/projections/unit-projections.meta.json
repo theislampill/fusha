@@ -1,0 +1,11 @@
+{
+  "abstained": 0,
+  "abstained_units": [],
+  "abstention_honesty": "abstained units lack required qualified inputs (recognition evidence, purpose or fact_ref); their projections are NOT authored around the gap — the gap routes to unit-record enrichment",
+  "generator": "tools/build_pedagogy_projections.py",
+  "projected": 166,
+  "schema": "curriculum.l1l6_unit_projection.v1.meta",
+  "units": 166,
+  "with_error_warning": 165,
+  "with_unresolved_notice": 72
+}

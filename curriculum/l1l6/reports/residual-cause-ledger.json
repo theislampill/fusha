@@ -1,0 +1,81 @@
+{
+  "schema": "curriculum.l1l6_residual_cause_ledger.v1",
+  "method": "5-WHY per residual from the 226-campaign readiness snapshot (head 8dd39f4), each closed as defect-repaired, operationalized, or justified boundary — never renamed away",
+  "residuals": [
+    {
+      "residual": "units with real machine consumers: 10 (of 166)",
+      "why_chain": [
+        "packs existed only for the 6 authored-wave increments",
+        "the qualification wave produced units as knowledge records, not packs",
+        "pack authoring needs the unit's table content lifted into the capability schema",
+        "that lift is bounded editorial work per unit, not blocked by evidence",
+        "root cause: unfinished implementation, NOT a boundary"
+      ],
+      "disposition": "operationalized this round: 3 pack-authoring lanes (24 units across discriminator_table/licensing_table/template_classification/pattern_consistency) + the pedagogical_projection interface giving EVERY unit a real consumer; remaining machine-eligible units carry exact per-unit dispositions in the operational-disposition ledger"
+    },
+    {
+      "residual": "units with complete fixture classes: 6",
+      "why_chain": ["fixtures ship with packs; no pack, no fixtures", "same root cause as above"],
+      "disposition": "each new pack lane is required to ship positive+adversarial+abstention (+transfer) classes; verified by the increments gate"
+    },
+    {
+      "residual": "promotion bundles: 6",
+      "why_chain": ["the bundle generator is discovery-based; it had 6 increments to discover"],
+      "disposition": "resolves mechanically: bundles regenerate over every discovered increment after the lanes land"
+    },
+    {
+      "residual": "V-entry links: 0; N-entry links: 0",
+      "why_chain": [
+        "precise links were built only from committed occurrence AUTHORITY (p007 store + payload exemplars), which is particle-only",
+        "v/n entries had no equivalent per-occurrence certified store in this branch's base",
+        "linking by root/surface similarity is prohibited (og-1/og-2)",
+        "but the entry store itself supports EXACT citation-form identity resolution, and the example-ayah universe records each entry's own selected occurrences",
+        "root cause: a missing identity-resolution interface, not a genuine authority void"
+      ],
+      "disposition": "operationalized: tools/build_vn_grounding.py — curated standard exemplars resolved by exact citation-form identity; 20 V + 5 N exact candidates with selected occurrences; nahw units honestly sol_integration_blocked on the merged A2 dependency plane; remainder authority_blocked with the named extension path or not-applicable with reason"
+    },
+    {
+      "residual": "flywheel loops: 4 (of 6 capability interfaces)",
+      "why_chain": ["pattern_consistency and (new) pedagogical_projection had no recorded loop",
+                     "root cause: unfinished implementation"],
+      "disposition": "operationalized: nawasikh-coverage loop (family-coverage insufficiency defect) + pedagogy-warning loop (teaching-without-the-guard defect, with cross-unit template transfer); 6/6 interfaces looped, all validator-recomputed"
+    },
+    {
+      "residual": "pedagogical projections: 8",
+      "why_chain": ["projections were compiled only for 3 exemplar families",
+                     "no consumer existed that could compile projections from ANY qualified unit",
+                     "root cause: missing generic interface"],
+      "disposition": "operationalized: pedagogical_projection capability (registered, mutation-proven, looped) + tools/build_pedagogy_projections.py -> 166/166 unit projections (165 with error warnings, 72 with rival notices), all pure functions of qualified data"
+    },
+    {
+      "residual": "misconception clusters unit_routable=false: 52",
+      "why_chain": [
+        "related_units came only from the same qualification record's unit mapping",
+        "some lessons recorded mistakes without naming units in the same record",
+        "but every such lesson HAS canonical units in the two-way map",
+        "root cause: an incomplete join, not missing knowledge"
+      ],
+      "disposition": "defect repaired: lesson-unit-map fallback binding; unroutable now 0; binding_basis recorded on fallback-bound clusters"
+    },
+    {
+      "residual": "829 candidate_fixture dispositions as registry rows only",
+      "why_chain": ["dispositions were routing tags without consumable records"],
+      "disposition": "operationalized: 829 normalized fixture-candidate records (wrong-reasoning pattern, correction, contrast, target consumer/units, evidence status marked source-visible-never-eval) in misconceptions/fixture-candidates.jsonl"
+    },
+    {
+      "residual": "77 instructional_only misconceptions without remediation artifacts",
+      "why_chain": ["no instructional consumer existed"],
+      "disposition": "operationalized: 77/77 remediation projections emitted by the REAL pedagogy consumer (misconceptions/remediation-projections.jsonl)"
+    },
+    {
+      "residual": "generic pack_authoring_remaining counter (130)",
+      "why_chain": ["a single number concealed per-unit differences in eligibility, blockers and strongest consumer"],
+      "disposition": "eliminated as a category: replaced by the 166-row operational-disposition ledger with closed per-unit states summing to 166; the generic counter is retired from the readiness report"
+    }
+  ],
+  "justified_boundaries": [
+    "nahw occurrence grounding waits for the merged Burst-A2 dependency plane (Sol-owned; merged to main after this branch's base) — simulating it in this lane would create a competing analysis plane",
+    "candidate-to-certified promotion, entry-store mutation, occurrence certification, website payload delivery: owner/Sol-gated by standing repo doctrine",
+    "school-dependent claims stay attributed alternatives pending scholar routing (never resolved by this lane)"
+  ]
+}
