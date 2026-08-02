@@ -1,5 +1,5 @@
 {
-  "basis": "Sol fix-request round at reviewed head eb51278c626ebe9b65b5a3e1be3a3895783e1233 (review tree fd574a6f483995e5fce5a94368ea0b5fc7d37d14); states are drawn EXCLUSIVELY from the owner's closed ownership-split vocabulary — a state names where the subsystem's remaining work sits; remaining_dependency: none means the subsystem's PR-side work is repaired and awaits only Sol re-review",
+  "basis": "Sol fix-request round at reviewed head eb51278c626ebe9b65b5a3e1be3a3895783e1233 (review tree fd574a6f483995e5fce5a94368ea0b5fc7d37d14); states are drawn EXCLUSIVELY from the owner's closed ownership-split vocabulary and name the responsible integration partition, while remaining_dependency records whether work is still open; remaining_dependency: none means the bounded work is implemented but does not itself claim final review closure",
   "schema": "curriculum.l1l6_architecture_conformance.v2",
   "state_vocabulary": [
     "fable_branch_repair",
@@ -77,15 +77,15 @@
     },
     {
       "subsystem": "Learner projections",
-      "state": "sol_adapter_required",
-      "remaining_dependency": "adp-typed-fact-certification",
-      "change": "fail-closed withholding under invalid dependencies with a live synthetic-revocation canary; cascade claim removed (finding 5)"
+      "state": "shared_integration_gate",
+      "remaining_dependency": "none",
+      "change": "Sol integration replaced private replay with TypedFactCertificationStore validation/status APIs and real targeted revoke tests; invalid trails and dependencies fail closed, and generated learner planes are fresh (finding 5)"
     },
     {
       "subsystem": "Promotion bundles",
       "state": "sol_adapter_required",
       "remaining_dependency": "Sol review + application",
-      "change": "regenerated over the v3 derivation pack; rows remain full main-schema candidates"
+      "change": "regenerated over the v4 derivation pack; rows remain full main-schema candidates with no automatic application"
     },
     {
       "subsystem": "P/V/N grounding",
@@ -138,8 +138,8 @@
     {
       "subsystem": "p007-derived planes (merge sequencing)",
       "state": "shared_integration_gate",
-      "remaining_dependency": "Sol merge sequencing: main's GAP-N12 re-bound the pilot's iʿrāb-bearing fact ids, so four derived planes must be regenerated AT MERGE (procedure and end-to-end verification in the repair ledger, row R3-3). Correct on this branch against its own base; this branch does not rebase on its own initiative",
-      "change": "reported, not silently absorbed — the recompute gates went red on the merge tree rather than serving artifacts built on superseded fact ids (R3-3)"
+      "remaining_dependency": "none",
+      "change": "satisfied in the Sol integration tree: both corpus envelopes, precise P/V/N links and the occurrence bridge were regenerated against GAP-N12 :v2 fact identities and are byte-identical to recomputation; final review/harness remains a separate merge gate (R3-3)"
     },
     {
       "subsystem": "Residual/blocker ledgers",

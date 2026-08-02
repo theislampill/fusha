@@ -8,7 +8,11 @@
   },
   "reviewed_head": "eb51278c626ebe9b65b5a3e1be3a3895783e1233",
   "prior_round": "the round repairing Sol's architecture checkpoint at reviewed head 5bca6d26b5e9d3d5bc035dfe0fd6b40f27fa005a is superseded by this ledger; its rows live in git history of this file",
-  "closure_note": "no row in this ledger claims closure: closure is Sol's determination on independent re-review of the new frozen head; every row status is repaired_awaiting_sol_reverification",
+  "closure_note": "no row in this ledger claims final merge or linguistic closure: Fable branch repairs remain repaired_awaiting_sol_reverification, while the completed shared integration row remains integrated_awaiting_final_verification until independent exact-tree review and the complete harness pass",
+  "status_vocabulary": [
+    "integrated_awaiting_final_verification",
+    "repaired_awaiting_sol_reverification"
+  ],
   "round_3": {
     "trigger": "Sol readiness report naming two outstanding Fable repairs (hollow form-I weak-metadata gate; forward-slash Windows path detection), with Sol's own side clean: main fc4a2607414a52fdd24089c8ec8f115a8f565479, Sol integration 19c4876d3d4ae7ae52959fcc4728018af2d9ed57, three independent REVIEW_PASS, complete harness exit 0",
     "reviewed_head": "ce4c93e61a2e852f895d9b7e726675c0a2a40999",
@@ -38,10 +42,10 @@
       {
         "finding": "R3-3. MERGE-SEQUENCING OBLIGATION (not a branch defect): main's GAP-N12 (PR #139, 'bind two-vote claims exactly') re-bound the p007 pilot's iʿrāb-bearing facts to new :v2 fact ids and appended events, so four curriculum planes derived from that store are stale AGAINST THE MERGE TREE while remaining correct against this branch's own base",
         "ownership": "shared_integration_gate",
-        "status": "reported_awaiting_merge_sequencing",
+        "status": "integrated_awaiting_final_verification",
         "red_canary": "on the synthetic merge tree the PR validator reports exactly four rows red: corpus-pilot envelope-2-34-5.json and envelope-61-5-4.json differ from recompute, pvn-precise-links.jsonl differs from recompute, and the occurrence bridge is stale. On the branch itself every one of those planes is byte-identical to recompute — the redness is upstream authority moving, which is precisely what these recompute gates exist to catch instead of silently serving derived artifacts built on superseded fact ids",
         "detail": "the pilot's case/func/gov facts for both occurrences moved from their v1 ids to :v2 ids and the seg fact gained a fourth event; recomputing on the merge tree resolves every dependency to effective_status certified, so nothing is revoked and no envelope withholds — the artifacts simply must be regenerated against the newer store",
-        "repair": "NOT performed on this branch: regenerating here would require incorporating main's newer p007 store, i.e. a rebase or merge, which the owner has not authorized ('do not rebase onto moving main unless Sol directs'). The branch therefore stays pinned to its merge-base authority and the obligation is handed to merge sequencing, with the exact procedure verified end to end",
+        "repair": "performed in the isolated Sol integration tree after merging frozen Fable head c9eef5ad567424687a28ebf0cee3d4072017d06c with current main fc4a2607414a52fdd24089c8ec8f115a8f565479: the two corpus-pilot envelopes, precise P/V/N links and occurrence bridge were regenerated against the canonical :v2 fact identities; authoritative certifier replay and targeted revocation tests were added; no Fable authority branch or live system was mutated",
         "merge_time_procedure": [
           "python tools/build_curriculum_pvn_links.py",
           "python tools/build_curriculum_corpus_pilot.py",
@@ -50,9 +54,9 @@
           "python tools/build_unit_dispositions.py"
         ],
         "merge_time_verification": "executed on the throwaway synthetic merge worktree (never on this branch): the five commands touch exactly four tracked files (the two envelopes, the precise links and the occurrence bridge), after which the PR validator returns PASS (23 checks), both self-tests pass (38/38 mutations; 10 consumer probes) and the complete integrated harness returns ALL REGRESSION CHECKS PASS (1,363 ok) on the regenerated merge tree",
-        "acceptance": "at merge: run the five commands above, then python tools/validate_curriculum_l1l6.py && python -B tools/check_regressions.py",
+        "acceptance": "python tools/build_curriculum_corpus_pilot.py --check && python tools/build_curriculum_pvn_links.py --check && python tools/build_curriculum_occurrence_bridge.py --check && python tools/validate_curriculum_l1l6.py && python -B tools/check_regressions.py",
         "files": ["curriculum/l1l6/corpus-pilot/envelope-2-34-5.json", "curriculum/l1l6/corpus-pilot/envelope-61-5-4.json", "curriculum/l1l6/links/pvn-precise-links.jsonl", "curriculum/l1l6/reports/occurrence-bridge.jsonl"],
-        "remaining_dependency": "Sol merge sequencing (and, if Sol prefers the branch carry the regeneration instead, an explicit direction to rebase — this branch will not rebase on its own initiative)"
+        "remaining_dependency": "independent exact-tree re-review and the complete canonical harness; no regeneration or certification-adapter implementation remains"
       }
     ]
   },
@@ -188,5 +192,5 @@
       "remaining_dependency": "adp-occurrence-appearance-projection (authoritative same-fact identity)"
     }
   ],
-  "sol_owned_not_touched": "the six Sol adapters and GAP-N12 were NOT implemented on this branch per the fix-request scope: canonical harness integration, authoritative certifier/effective-state consumption, tutor/KC routing, occurrence-to-appearance projection, website payload generation, canonical dogfood reproduction"
+  "sol_owned_integration_summary": "the combined Sol integration implements canonical harness wiring, authoritative typed-fact effective-state consumption and bounded p007 occurrence/website candidate payload generation. The generic sarf/nahw authority, tutor/KC, generic occurrence projection, website-agent handoff and canonical-dogfood adapters remain explicitly pending in sol-adapter-manifest.json; no parallel runtime, automatic promotion or live mutation was introduced"
 }
