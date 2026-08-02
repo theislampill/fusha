@@ -1,0 +1,119 @@
+{
+  "abstention_reasons": [
+    "reject_reconstruction",
+    "response_opener_unclassified",
+    "response_boundary_unknown"
+  ],
+  "capability": "licensing_table",
+  "increment": "inc-jawab-al-shart-fa-licensing",
+  "licensing_table": [
+    {
+      "construction": "response_opens_with_a_noun_or_independent_pronoun",
+      "hidden": {
+        "type": "connective_required",
+        "value_class": "no_verb_available_to_carry_jussive_marking"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "response_opens_with_a_future_marker",
+      "hidden": {
+        "type": "connective_required",
+        "value_class": "indicative_marking_assigned_by_the_future_marker"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "response_opens_with_a_negator",
+      "hidden": {
+        "type": "connective_required",
+        "value_class": "mood_assigned_by_the_negator_inside_the_response"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "response_opens_with_an_emphatic_particle",
+      "hidden": {
+        "type": "connective_required",
+        "value_class": "mood_assigned_by_the_response_internal_operator"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "response_opens_with_a_probability_particle",
+      "hidden": {
+        "type": "connective_required",
+        "value_class": "mood_assigned_by_the_response_internal_operator"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "response_opens_with_an_oath_formula",
+      "hidden": {
+        "type": "connective_required",
+        "value_class": "mood_assigned_by_the_oath_clause"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "response_is_a_non_second_person_command",
+      "hidden": {
+        "type": "connective_required_before_the_command_prefix",
+        "value_class": "jussive_assigned_by_the_command_prefix"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "response_opens_with_a_command_form",
+      "hidden": {
+        "type": "connective_required",
+        "value_class": "command_mood_retained_inside_the_response"
+      },
+      "note": "analysis-dependent: treating the command form as a distinct mood built on the jussive stem, rather than as a jussive, is school-dependent upstream",
+      "obligatory": false
+    },
+    {
+      "construction": "response_is_a_bare_imperfect_verb",
+      "hidden": {
+        "type": "connective_forbidden",
+        "value_class": "jussive_assigned_by_the_conditional_trigger"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "condition_verb_negated_by_the_past_time_negator",
+      "hidden": {
+        "type": "no_response_connective_licensed",
+        "value_class": "jussive_inside_the_condition_half"
+      },
+      "note": "analysis-dependent: whether the trigger and the past-time negator both govern the condition verb is recorded upstream as analysis-dependent",
+      "obligatory": false
+    }
+  ],
+  "rules": [
+    {
+      "id": "jsh-r1",
+      "text": "the licensing test is applied to the LEFTMOST element of the response, never to the clause as a whole"
+    },
+    {
+      "id": "jsh-r2",
+      "text": "the connective is a repair for responses that cannot receive jussive marking; where jussive marking is available it is forbidden, not optional"
+    },
+    {
+      "id": "jsh-r3",
+      "text": "once the connective is present, mood inside the response is assigned by the nearest response-internal operator and not by the conditional trigger"
+    },
+    {
+      "id": "jsh-r4",
+      "text": "the opener inventory recorded here is the taught set and is NOT exhaustive over attested responses; an unlisted opener abstains rather than being assimilated to the nearest row"
+    },
+    {
+      "id": "jsh-r5",
+      "text": "negation of the condition half is a different question from negation of the response half and never licenses a response connective"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-jawab-al-shart-fa-licensing",
+  "version": 1
+}

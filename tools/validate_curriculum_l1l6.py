@@ -882,6 +882,59 @@ def check_generated_planes(ctx, errors):
             errors.append("generated_planes: P/V/N links contain wildcards")
 
 
+def check_freeze_planes(ctx, errors):
+    """Freeze-round gates: unit dispositions + V/N grounding + misconception
+    assets + unit projections recompute byte-identically; 166/166 closed
+    dispositions; machine states are pack-backed; blockers carry causes;
+    misconceptions fully routed."""
+    for mod_name, label in (("build_unit_dispositions", "unit dispositions"),
+                            ("build_vn_grounding", "vn grounding"),
+                            ("build_misconception_assets", "misconception assets"),
+                            ("build_pedagogy_projections", "unit projections")):
+        try:
+            sys.path.insert(0, str(ROOT / "tools"))
+            mod = __import__(mod_name)
+            files = mod.serialize(*mod.build())
+        except Exception as exc:  # noqa: BLE001
+            errors.append("freeze_planes: %s recompute failed (%s)" % (label, exc))
+            continue
+        finally:
+            if str(ROOT / "tools") in sys.path:
+                sys.path.remove(str(ROOT / "tools"))
+        for path, data in sorted(files.items()):
+            p = Path(path)
+            if not p.exists() or p.read_bytes() != data:
+                errors.append("freeze_planes: %s stale (%s)" % (label, p.name))
+    disp_p = BASE / "canonical" / "unit-dispositions.jsonl"
+    if not disp_p.exists():
+        return
+    disp = _jsonl(disp_p)
+    canon = _jsonl(BASE / "canonical" / "canonical-units.jsonl")
+    if len(disp) != len(canon):
+        errors.append("freeze_planes: %d dispositions != %d canonical units"
+                      % (len(disp), len(canon)))
+    incs = set(discovered_increments())
+    for r in disp:
+        if not r.get("strongest_state"):
+            errors.append("freeze_planes: %s no strongest_state" % r["unit_id"])
+        if "machine_pack_consumed" in r.get("states", []):
+            if not r.get("machine_increments") or \
+                    not set(r["machine_increments"]) <= incs:
+                errors.append("freeze_planes: %s claims a machine consumer "
+                              "without a discovered pack (invented claim)"
+                              % r["unit_id"])
+        for b in r.get("blockers", []):
+            if not b.get("cause"):
+                errors.append("freeze_planes: %s blocker without exact cause"
+                              % r["unit_id"])
+    reg = _jsonl(BASE / "misconceptions" / "misconception-registry.jsonl")
+    unroutable = sum(1 for c in reg if not c.get("unit_routable")
+                     and not c.get("routing_note"))
+    if unroutable:
+        errors.append("freeze_planes: %d misconception clusters unroutable "
+                      "without a routing note" % unroutable)
+
+
 ALL_CHECKS = (
     check_manifest_shape, check_registry_consistency, check_graph_integrity,
     check_nfc, check_crosswalk_evidence, check_ledger_qualification,
@@ -889,7 +942,7 @@ ALL_CHECKS = (
     check_no_certification, check_pilot_parity, check_packet_presence,
     check_units_semantic, check_increments, check_flywheel_loop,
     check_corpus_pilot, check_precise_links, check_absorption,
-    check_generated_planes,
+    check_generated_planes, check_freeze_planes,
 )
 PILOT_CHECKS = (check_pilot_parity, check_no_certification)
 

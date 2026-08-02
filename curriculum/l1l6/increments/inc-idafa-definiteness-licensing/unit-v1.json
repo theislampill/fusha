@@ -1,0 +1,103 @@
+{
+  "abstention_reasons": [
+    "reject_reconstruction",
+    "exponents_unknown",
+    "chain_position_unknown"
+  ],
+  "capability": "licensing_table",
+  "increment": "inc-idafa-definiteness-licensing",
+  "licensing_table": [
+    {
+      "construction": "annexation_head",
+      "hidden": {
+        "type": "exponent_suppression_required",
+        "value_class": "no_tanwin_no_article_no_dual_or_sound_plural_final_consonant"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "annexation_dependent",
+      "hidden": {
+        "type": "genitive_invariant",
+        "value_class": "dependent"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "annexation_head_case_slot",
+      "hidden": {
+        "type": "case_from_the_wider_clause_role",
+        "value_class": "head_independent_of_the_construction"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "annexation_definiteness_of_the_whole_phrase",
+      "hidden": {
+        "type": "definiteness_inherited_from_the_final_member",
+        "value_class": "whole_phrase"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "annexation_chain_non_final_member",
+      "hidden": {
+        "type": "genitive_and_no_definiteness_exponent",
+        "value_class": "every_non_initial_member"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "annexation_chain_final_member",
+      "hidden": {
+        "type": "definiteness_exponent_permitted",
+        "value_class": "final_member_only"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "participial_annexation_head",
+      "hidden": {
+        "type": "article_on_the_head_permitted_and_inheritance_blocked",
+        "value_class": "licensed_subtype_exception"
+      },
+      "note": "analysis-dependent: the label used upstream for the descriptive type is the same term the tradition applies to this structurally different subtype, and the exception is recorded as requiring review",
+      "obligatory": false
+    },
+    {
+      "construction": "semantic_relation_of_the_annexation",
+      "hidden": {
+        "type": "relation_type_not_decided_by_form",
+        "value_class": "possessive_descriptive_or_material_enumeration"
+      },
+      "note": "analysis-dependent: the three-way enumeration is school-dependent upstream, and a part-whole relation is analysed in the worked material without appearing in the enumeration",
+      "obligatory": false
+    }
+  ],
+  "rules": [
+    {
+      "id": "idf-r1",
+      "text": "the head's exponent suppression and the dependent's invariant genitive are the two form-side signatures that identify the construction at all"
+    },
+    {
+      "id": "idf-r2",
+      "text": "the head's own case comes from its role in the wider clause and is never read off the construction"
+    },
+    {
+      "id": "idf-r3",
+      "text": "in a chain only the final member may carry a definiteness exponent; every non-initial member is genitive"
+    },
+    {
+      "id": "idf-r4",
+      "text": "the participial subtype is the recorded licensed exception: it admits the article on the head and blocks definiteness inheritance, and it is emitted attributed"
+    },
+    {
+      "id": "idf-r5",
+      "text": "an adjacent noun pair whose exponents do not match a row is not an annexation by resemblance -> reject_reconstruction"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-idafa-definiteness-licensing",
+  "version": 1
+}

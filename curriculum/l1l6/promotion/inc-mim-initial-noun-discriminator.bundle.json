@@ -1,0 +1,205 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/reference.md",
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-mim-initial-noun-discriminator",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+      "rule_id": "curr-mim-initial-noun-discriminator-mim-r1",
+      "statement": "prefix vowel, internal vowel, final ending and the form class of the source verb are SUPPLIED evidence; an unvocalized token supplies none of the vowel features and therefore resolves nothing",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+      "rule_id": "curr-mim-initial-noun-discriminator-mim-r2",
+      "statement": "the prefix vowel is the only formal boundary between the tool class and the place-or-time class, so an unpointed prefix abstains and never defaults to the more frequent class",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+      "rule_id": "curr-mim-initial-noun-discriminator-mim-r3",
+      "statement": "the derived-form verbal noun and the patient noun coincide in shape: where both are licensed, both are preserved and the function is decided by context outside this table",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+      "rule_id": "curr-mim-initial-noun-discriminator-mim-r4",
+      "statement": "instrument templates are lexical, not derivable: this table classifies an attested token, it never predicts which template a root takes",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+      "rule_id": "curr-mim-initial-noun-discriminator-mim-r5",
+      "statement": "a place-or-time reading presupposes a bare triliteral source; the same prefix vowel over a derived source is outside the table's regime",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "mim-abs-01"
+    ],
+    "adversarial": [
+      "mim-adv-01",
+      "mim-adv-02"
+    ],
+    "positive": [
+      "mim-pos-01",
+      "mim-pos-02",
+      "mim-pos-03"
+    ],
+    "transfer": [
+      "mim-tr-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-mim-initial-noun-discriminator",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives"
+    ],
+    "capability": "discriminator_table",
+    "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+    "functions": [
+      {
+        "discriminators": {
+          "penult_vowel": [
+            "kasra"
+          ],
+          "prefix_vowel": [
+            "damma"
+          ],
+          "source_form_class": [
+            "derived",
+            "form_three"
+          ]
+        },
+        "id": "agent_noun",
+        "name": "agent noun on a derived form"
+      },
+      {
+        "discriminators": {
+          "penult_vowel": [
+            "fatha"
+          ],
+          "prefix_vowel": [
+            "damma"
+          ],
+          "source_form_class": [
+            "derived",
+            "form_three"
+          ]
+        },
+        "id": "patient_noun",
+        "name": "patient noun on a derived form"
+      },
+      {
+        "discriminators": {
+          "final_ending": [
+            "taa_marbuta"
+          ],
+          "penult_vowel": [
+            "fatha"
+          ],
+          "prefix_vowel": [
+            "damma"
+          ],
+          "source_form_class": [
+            "form_three"
+          ]
+        },
+        "id": "form_three_verbal_noun",
+        "name": "third-form verbal noun"
+      },
+      {
+        "discriminators": {
+          "prefix_vowel": [
+            "fatha"
+          ],
+          "source_form_class": [
+            "bare_triliteral"
+          ],
+          "vocalization": [
+            "present"
+          ]
+        },
+        "id": "place_or_time_noun",
+        "name": "place or time noun"
+      },
+      {
+        "discriminators": {
+          "prefix_vowel": [
+            "kasra"
+          ],
+          "source_form_class": [
+            "bare_triliteral"
+          ],
+          "vocalization": [
+            "present"
+          ]
+        },
+        "id": "instrument_noun",
+        "name": "instrument noun"
+      }
+    ],
+    "increment": "inc-mim-initial-noun-discriminator",
+    "rules": [
+      {
+        "id": "mim-r1",
+        "text": "prefix vowel, internal vowel, final ending and the form class of the source verb are SUPPLIED evidence; an unvocalized token supplies none of the vowel features and therefore resolves nothing"
+      },
+      {
+        "id": "mim-r2",
+        "text": "the prefix vowel is the only formal boundary between the tool class and the place-or-time class, so an unpointed prefix abstains and never defaults to the more frequent class"
+      },
+      {
+        "id": "mim-r3",
+        "text": "the derived-form verbal noun and the patient noun coincide in shape: where both are licensed, both are preserved and the function is decided by context outside this table"
+      },
+      {
+        "id": "mim-r4",
+        "text": "instrument templates are lexical, not derivable: this table classifies an attested token, it never predicts which template a root takes"
+      },
+      {
+        "id": "mim-r5",
+        "text": "a place-or-time reading presupposes a bare triliteral source; the same prefix vowel over a derived source is outside the table's regime"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-mim-initial-noun-discriminator",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "rich_hover_fields": [
+    {
+      "key": "mim_class_panel",
+      "teaching": "names the class of the mim-initial noun with the vowel evidence that produced it"
+    },
+    {
+      "key": "vocalization_panel",
+      "teaching": "marks an unpointed prefix as missing evidence rather than as a resolved reading"
+    },
+    {
+      "key": "homograph_panel",
+      "teaching": "shows the shapes that coincide, so the learner sees the ambiguity as structural rather than accidental"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

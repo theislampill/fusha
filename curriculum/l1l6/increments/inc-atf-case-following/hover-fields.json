@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "key": "coordination_pair_card",
+      "teaching": "names the joined-to element and the joined element, shows the case each bears, and states that the second inherited the first"
+    },
+    {
+      "key": "connector_sense_chip",
+      "teaching": "gives the connector's semantic value — addition, tight or delayed sequence, alternation, correction, contrast — while making clear the case does not depend on it"
+    },
+    {
+      "key": "review_flag",
+      "teaching": "a conjunct bearing its own case shows as 'needs review' with the expected exponent named; the text is never rewritten"
+    },
+    {
+      "key": "not_coordination_notice",
+      "teaching": "when the item is read as an abrogator or joins whole clauses, the card says no inheritance expectation applies here"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

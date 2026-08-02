@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "observed exponents are declared inputs; adjacency alone never establishes the construction",
+      "id": "g-idf-1"
+    },
+    {
+      "guard": "the head's case is imported from the clause, never invented by the construction",
+      "id": "g-idf-2"
+    },
+    {
+      "guard": "the participial subtype is emitted attributed and is never generalised into the ordinary head row",
+      "id": "g-idf-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-idf-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

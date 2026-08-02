@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "mood is never read off a final vowel; the class-by-mood cell is the only licensed route",
+      "id": "g-mood-surface"
+    },
+    {
+      "guard": "a deletion exponent is a positive result and is never reported as an unmarked form",
+      "id": "g-mood-del"
+    },
+    {
+      "guard": "syncretic cells are preserved together; the surface never adjudicates between them",
+      "id": "g-mood-syn"
+    },
+    {
+      "guard": "an unrecorded cell abstains; the matrix is never extended by analogy from a neighbouring class",
+      "id": "g-mood-anal"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

@@ -1,0 +1,184 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives"
+  ],
+  "capability": "discriminator_table",
+  "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+  "functions": [
+    {
+      "discriminators": {
+        "governor_reading": [
+          "indicative_no_governor"
+        ],
+        "verb_class": [
+          "sound"
+        ]
+      },
+      "id": "sound_indicative_damma",
+      "name": "sound class, indicative: final damma"
+    },
+    {
+      "discriminators": {
+        "governor_reading": [
+          "subjunctive"
+        ],
+        "verb_class": [
+          "sound"
+        ]
+      },
+      "id": "sound_subjunctive_fatha",
+      "name": "sound class, subjunctive: final fatha"
+    },
+    {
+      "discriminators": {
+        "governor_reading": [
+          "jussive"
+        ],
+        "verb_class": [
+          "sound"
+        ]
+      },
+      "id": "sound_jussive_sukun",
+      "name": "sound class, jussive: final sukun"
+    },
+    {
+      "discriminators": {
+        "governor_reading": [
+          "indicative_no_governor"
+        ],
+        "verb_class": [
+          "five_forms"
+        ]
+      },
+      "id": "five_forms_indicative_nun_retained",
+      "name": "nun-bearing class, indicative: nun retained"
+    },
+    {
+      "discriminators": {
+        "governor_reading": [
+          "subjunctive",
+          "unrecoverable"
+        ],
+        "verb_class": [
+          "five_forms"
+        ]
+      },
+      "id": "five_forms_subjunctive_nun_deleted",
+      "name": "nun-bearing class, subjunctive: nun deleted"
+    },
+    {
+      "discriminators": {
+        "governor_reading": [
+          "jussive",
+          "unrecoverable"
+        ],
+        "verb_class": [
+          "five_forms"
+        ]
+      },
+      "id": "five_forms_jussive_nun_deleted",
+      "name": "nun-bearing class, jussive: nun deleted"
+    },
+    {
+      "discriminators": {
+        "governor_reading": [
+          "indicative_no_governor"
+        ],
+        "verb_class": [
+          "weak_final"
+        ]
+      },
+      "id": "weak_final_indicative_estimated",
+      "name": "weak-final class, indicative: estimated vowel"
+    },
+    {
+      "discriminators": {
+        "governor_reading": [
+          "subjunctive"
+        ],
+        "verb_class": [
+          "weak_final"
+        ]
+      },
+      "id": "weak_final_subjunctive_fatha",
+      "name": "weak-final class, subjunctive: overt fatha"
+    },
+    {
+      "discriminators": {
+        "governor_reading": [
+          "jussive"
+        ],
+        "verb_class": [
+          "weak_final"
+        ]
+      },
+      "id": "weak_final_jussive_letter_deleted",
+      "name": "weak-final class, jussive: final letter deleted"
+    },
+    {
+      "discriminators": {
+        "governor_reading": [
+          "subjunctive"
+        ],
+        "verb_class": [
+          "hollow"
+        ]
+      },
+      "id": "hollow_subjunctive_medial_retained",
+      "name": "hollow class, subjunctive: medial letter retained"
+    },
+    {
+      "discriminators": {
+        "governor_reading": [
+          "jussive"
+        ],
+        "verb_class": [
+          "hollow"
+        ]
+      },
+      "id": "hollow_jussive_medial_deleted",
+      "name": "hollow class, jussive: medial letter deleted"
+    },
+    {
+      "discriminators": {
+        "verb_class": [
+          "fixed_shape_feminine_plural"
+        ]
+      },
+      "id": "fixed_shape_invariant",
+      "name": "fixed-shape class: no mood alternation"
+    }
+  ],
+  "increment": "inc-mood-exponent-matrix",
+  "rules": [
+    {
+      "id": "mood-r1",
+      "text": "verb class and the governor reading are SUPPLIED evidence; the exponent is looked up in the matrix and never read off a final vowel"
+    },
+    {
+      "id": "mood-r2",
+      "text": "one governor produces different surface effects by verb class, so the class must be settled before any exponent is chosen"
+    },
+    {
+      "id": "mood-r3",
+      "text": "several cells are realised by a DELETION and are therefore not directly readable from the surface; a deletion cell is a positive result, not a missing exponent"
+    },
+    {
+      "id": "mood-r4",
+      "text": "the nun-bearing class is syncretic across the two governed moods: where the governor is unrecoverable, both cells are preserved and no mood is asserted from the surface"
+    },
+    {
+      "id": "mood-r5",
+      "text": "the fixed-shape class does not participate in the alternation at all; its cell is invariant under every governor"
+    },
+    {
+      "id": "mood-r6",
+      "text": "a class-and-governor pair with no recorded cell abstains; the matrix is never extended by analogy from a neighbouring cell"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-mood-exponent-matrix",
+  "version": 1
+}

@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "annexation_role_chip",
+      "teaching": "labels which member is the head and which the dependent, and shows the suppressed exponents on the head"
+    },
+    {
+      "key": "definiteness_source_note",
+      "teaching": "names the member the phrase's definiteness is read off"
+    },
+    {
+      "key": "subtype_attribution_note",
+      "teaching": "flags the participial subtype as a licensed exception carrying its attribution"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

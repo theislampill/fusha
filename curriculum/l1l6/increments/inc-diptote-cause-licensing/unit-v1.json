@@ -1,0 +1,151 @@
+{
+  "abstention_reasons": [
+    "reject_reconstruction",
+    "triggers_unstated",
+    "register_unknown"
+  ],
+  "capability": "licensing_table",
+  "increment": "inc-diptote-cause-licensing",
+  "licensing_table": [
+    {
+      "construction": "proper_name_with_feminine_marking",
+      "hidden": {
+        "type": "nunation_blocked",
+        "value_class": "paired_trigger_semantic_plus_formal"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "proper_name_of_foreign_origin",
+      "hidden": {
+        "type": "nunation_blocked",
+        "value_class": "paired_trigger_semantic_plus_formal"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "proper_name_on_a_verb_shaped_template",
+      "hidden": {
+        "type": "nunation_blocked",
+        "value_class": "paired_trigger_semantic_plus_formal"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "proper_name_with_an_added_alif_and_nun",
+      "hidden": {
+        "type": "nunation_blocked",
+        "value_class": "paired_trigger_semantic_plus_formal"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "compounded_proper_name",
+      "hidden": {
+        "type": "nunation_blocked",
+        "value_class": "paired_trigger_semantic_plus_formal"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "adjective_on_the_comparative_or_colour_template",
+      "hidden": {
+        "type": "nunation_blocked",
+        "value_class": "paired_trigger_adjectival_plus_formal"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "adjective_on_the_added_alif_and_nun_state_template",
+      "hidden": {
+        "type": "nunation_blocked",
+        "value_class": "paired_trigger_adjectival_plus_formal"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "broken_plural_on_an_ultimate_plural_template",
+      "hidden": {
+        "type": "nunation_blocked",
+        "value_class": "template_evidence_alone_no_semantic_trigger"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "proper_name_with_a_single_feature_only",
+      "hidden": {
+        "type": "blocking_not_licensed",
+        "value_class": "fully_declining"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "short_three_letter_loan_proper_name",
+      "hidden": {
+        "type": "blocking_not_licensed",
+        "value_class": "fully_declining_by_length"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "blocked_noun_carrying_the_definite_article",
+      "hidden": {
+        "type": "blocking_cancelled_in_prose",
+        "value_class": "ordinary_genitive_exponent_returns"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "blocked_noun_as_head_of_an_annexation",
+      "hidden": {
+        "type": "blocking_cancelled_in_prose",
+        "value_class": "ordinary_genitive_exponent_returns"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "blocked_noun_in_verse_with_identified_metrical_or_rhyme_pressure",
+      "hidden": {
+        "type": "register_gated_override",
+        "value_class": "nunation_or_ordinary_genitive_exponent_supplied"
+      },
+      "note": "analysis-dependent: the concession attributed to the foundational grammarian, the heaviness rationale and the celebrated rhyme-final illustration are all recorded upstream as school-dependent or as requiring review; the override needs positive evidence of deviation",
+      "obligatory": false
+    },
+    {
+      "construction": "toponym_assigned_on_inherent_feminine_gender",
+      "hidden": {
+        "type": "nunation_blocked",
+        "value_class": "single_trigger_route"
+      },
+      "note": "analysis-dependent: assignment on inherent feminine gender alone is school-dependent upstream and does not run the paired-trigger test",
+      "obligatory": false
+    }
+  ],
+  "rules": [
+    {
+      "id": "dpc-r1",
+      "text": "the feature-based route needs a pair: one semantic trigger (name-hood or adjectival status) together with one formal trigger; either alone leaves the noun fully declining"
+    },
+    {
+      "id": "dpc-r2",
+      "text": "the ultimate-plural template family blocks on template evidence alone and does not run the paired-trigger test"
+    },
+    {
+      "id": "dpc-r3",
+      "text": "blocking surfaces only while the noun is indefinite and unannexed; the article and construct headship cancel it in ordinary prose, which is grammar and not a licence"
+    },
+    {
+      "id": "dpc-r4",
+      "text": "the verse override is register-gated and requires identified metrical or rhyme pressure; it never reaches prose"
+    },
+    {
+      "id": "dpc-r5",
+      "text": "a template that the trigger chart does not list is not a trigger by resemblance, however many worked examples sit on it -> reject_reconstruction"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-diptote-cause-licensing",
+  "version": 1
+}

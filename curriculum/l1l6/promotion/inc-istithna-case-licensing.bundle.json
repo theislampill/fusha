@@ -1,0 +1,182 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-istithna-case-licensing/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-istithna-case-licensing/reference.md",
+  "capability": "licensing_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-istithna-case-licensing",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+      "rule_id": "curr-istithna-case-licensing-ist-r1",
+      "statement": "case for the excluded item is read off the cell fixed by clause polarity and by whether the set excluded from is overt; no other feature selects it",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+      "rule_id": "curr-istithna-case-licensing-ist-r2",
+      "statement": "the exclusion word never assigns the accusative by itself; with the set omitted the clause role assigns the case",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+      "rule_id": "curr-istithna-case-licensing-ist-r3",
+      "statement": "the nominal exclusion words invert the pattern: they carry the case the excluded item would have taken and their complement stays genitive unconditionally",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+      "rule_id": "curr-istithna-case-licensing-ist-r4",
+      "statement": "under negation with an overt set both licensed readings survive together, attributed and uncertified",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+      "rule_id": "curr-istithna-case-licensing-ist-r5",
+      "statement": "the exclusion-word inventory recorded here is the taught closed set; a word outside it is not licensed by resemblance -> reject_reconstruction",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "ist-abs-01"
+    ],
+    "adversarial": [
+      "ist-adv-01",
+      "ist-adv-02"
+    ],
+    "positive": [
+      "ist-pos-01",
+      "ist-pos-02"
+    ],
+    "transfer": [
+      "ist-trn-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-istithna-case-licensing",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "reject_reconstruction",
+      "polarity_unknown",
+      "set_overtness_unknown"
+    ],
+    "capability": "licensing_table",
+    "increment": "inc-istithna-case-licensing",
+    "licensing_table": [
+      {
+        "construction": "affirmative_clause_overt_set",
+        "hidden": {
+          "type": "accusative_by_exception",
+          "value_class": "excluded_item"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "negative_clause_overt_set",
+        "hidden": {
+          "type": "case_by_apposition",
+          "value_class": "excluded_item_or_accusative_by_exception"
+        },
+        "note": "analysis-dependent: under negation with an overt set both the accusative-by-exception reading and the appositive-substitute reading are licensed upstream; neither is preferred and neither certifies",
+        "obligatory": false
+      },
+      {
+        "construction": "clause_with_omitted_set",
+        "hidden": {
+          "type": "case_by_clause_role",
+          "value_class": "nominative_accusative_or_genitive"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "categorical_negator_with_overt_set",
+        "hidden": {
+          "type": "case_by_apposition",
+          "value_class": "nominative_substitute_for_a_built_form"
+        },
+        "note": "analysis-dependent: reading the built form as occupying an accusative slot, with the excepted noun substituting for it, is an upstream analysis",
+        "obligatory": false
+      },
+      {
+        "construction": "nominal_exclusion_word_head",
+        "hidden": {
+          "type": "case_of_the_excluded_item_carried_by_the_exclusion_word",
+          "value_class": "nominal_exclusion_word"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "noun_after_nominal_exclusion_word",
+        "hidden": {
+          "type": "genitive_as_annexed_complement",
+          "value_class": "dependent"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "excluded_item_introduced_by_a_preposition",
+        "hidden": {
+          "type": "prepositional_phrase_analysis",
+          "value_class": "genitive_governed_by_the_preposition"
+        },
+        "obligatory": true
+      }
+    ],
+    "rules": [
+      {
+        "id": "ist-r1",
+        "text": "case for the excluded item is read off the cell fixed by clause polarity and by whether the set excluded from is overt; no other feature selects it"
+      },
+      {
+        "id": "ist-r2",
+        "text": "the exclusion word never assigns the accusative by itself; with the set omitted the clause role assigns the case"
+      },
+      {
+        "id": "ist-r3",
+        "text": "the nominal exclusion words invert the pattern: they carry the case the excluded item would have taken and their complement stays genitive unconditionally"
+      },
+      {
+        "id": "ist-r4",
+        "text": "under negation with an overt set both licensed readings survive together, attributed and uncertified"
+      },
+      {
+        "id": "ist-r5",
+        "text": "the exclusion-word inventory recorded here is the taught closed set; a word outside it is not licensed by resemblance -> reject_reconstruction"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-istithna-case-licensing",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "rich_hover_fields": [
+    {
+      "key": "exclusion_cell_chip",
+      "teaching": "names the cell that decided the case: polarity plus whether the set excluded from is overt"
+    },
+    {
+      "key": "alternatives_note",
+      "teaching": "under negation with an overt set, shows both licensed case outcomes side by side"
+    },
+    {
+      "key": "complement_note",
+      "teaching": "marks a noun after a nominal exclusion word as an annexed complement, not as the excluded item"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

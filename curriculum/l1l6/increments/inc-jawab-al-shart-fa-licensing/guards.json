@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "the opener class is a declared input read at the left edge of the response; it is never inferred from the sentence's meaning",
+      "id": "g-jsh-1"
+    },
+    {
+      "guard": "the forbidding outcome is emitted explicitly, so a vacuous connective is a recorded error rather than a stylistic choice",
+      "id": "g-jsh-2"
+    },
+    {
+      "guard": "the taught opener inventory is recorded as non-exhaustive; unlisted openers abstain and are never assimilated",
+      "id": "g-jsh-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-jsh-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

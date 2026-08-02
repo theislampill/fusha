@@ -1,0 +1,205 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-mansub-role-discriminator/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-mansub-role-discriminator/reference.md",
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-mansub-role-discriminator",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+      "rule_id": "curr-mansub-role-discriminator-mans-r1",
+      "statement": "root identity with the governing verb, verbal-noun status, the question the noun answers and agreement with a definite holder are SUPPLIED evidence, never inferred from the surface accusative alone",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+      "rule_id": "curr-mansub-role-discriminator-mans-r2",
+      "statement": "all four roles share one surface signature (an indefinite accusative noun after a verb), so the case marking alone can never select a role",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+      "rule_id": "curr-mansub-role-discriminator-mans-r3",
+      "statement": "the motive role has hard preconditions: verbal-noun status, causal sense, one agent at one time, and indefiniteness; a failed precondition abstains, and the prepositional construction is the recorded repair",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+      "rule_id": "curr-mansub-role-discriminator-mans-r4",
+      "statement": "same root with a causal reading leaves reinforcement and motive both live: preserve alternatives rather than letting either test override the other",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+      "rule_id": "curr-mansub-role-discriminator-mans-r5",
+      "statement": "the state role requires a DEFINITE holder and an indefinite accusative descriptor; the respect role requires an identifiable vagueness to resolve",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "mans-abs-01"
+    ],
+    "adversarial": [
+      "mans-adv-01",
+      "mans-adv-02",
+      "mans-adv-03"
+    ],
+    "positive": [
+      "mans-pos-01",
+      "mans-pos-02",
+      "mans-pos-03",
+      "mans-pos-04"
+    ],
+    "transfer": [
+      "mans-tr-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-mansub-role-discriminator",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives"
+    ],
+    "capability": "discriminator_table",
+    "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+    "functions": [
+      {
+        "discriminators": {
+          "case": [
+            "nasb"
+          ],
+          "derivation": [
+            "verbal_noun"
+          ],
+          "root_relation_to_verb": [
+            "same_root"
+          ]
+        },
+        "id": "reinforcing_verbal_noun",
+        "name": "reinforcing verbal noun in the accusative"
+      },
+      {
+        "discriminators": {
+          "agent_and_time_shared": [
+            "yes"
+          ],
+          "answers_question": [
+            "why"
+          ],
+          "case": [
+            "nasb"
+          ],
+          "definiteness": [
+            "indefinite"
+          ],
+          "derivation": [
+            "verbal_noun"
+          ]
+        },
+        "id": "motive_accusative",
+        "name": "motive accusative"
+      },
+      {
+        "discriminators": {
+          "answers_question": [
+            "in_what_condition"
+          ],
+          "case": [
+            "nasb"
+          ],
+          "definiteness": [
+            "indefinite"
+          ],
+          "derivation": [
+            "participle_or_adjective"
+          ],
+          "holder_definiteness": [
+            "definite"
+          ]
+        },
+        "id": "state_descriptor",
+        "name": "state descriptor حال"
+      },
+      {
+        "discriminators": {
+          "answers_question": [
+            "in_what_respect"
+          ],
+          "case": [
+            "nasb"
+          ],
+          "definiteness": [
+            "indefinite"
+          ],
+          "vagueness_trigger": [
+            "measure_or_number",
+            "elative",
+            "increase_or_evaluation_verb",
+            "whole_clause"
+          ]
+        },
+        "id": "respect_specifier",
+        "name": "respect specifier تمييز"
+      }
+    ],
+    "increment": "inc-mansub-role-discriminator",
+    "rules": [
+      {
+        "id": "mans-r1",
+        "text": "root identity with the governing verb, verbal-noun status, the question the noun answers and agreement with a definite holder are SUPPLIED evidence, never inferred from the surface accusative alone"
+      },
+      {
+        "id": "mans-r2",
+        "text": "all four roles share one surface signature (an indefinite accusative noun after a verb), so the case marking alone can never select a role"
+      },
+      {
+        "id": "mans-r3",
+        "text": "the motive role has hard preconditions: verbal-noun status, causal sense, one agent at one time, and indefiniteness; a failed precondition abstains, and the prepositional construction is the recorded repair"
+      },
+      {
+        "id": "mans-r4",
+        "text": "same root with a causal reading leaves reinforcement and motive both live: preserve alternatives rather than letting either test override the other"
+      },
+      {
+        "id": "mans-r5",
+        "text": "the state role requires a DEFINITE holder and an indefinite accusative descriptor; the respect role requires an identifiable vagueness to resolve"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-mansub-role-discriminator",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "rich_hover_fields": [
+    {
+      "key": "role_panel",
+      "teaching": "names the accusative role with the discriminator that produced it, not with the case ending"
+    },
+    {
+      "key": "precondition_panel",
+      "teaching": "shows which hard precondition failed when the role is withheld, so the learner sees why the prepositional repair is offered"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "a same-root causal accusative shows both roles, attributed and unranked"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

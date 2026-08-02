@@ -1,0 +1,102 @@
+{
+  "abstention_reasons": [
+    "reject_reconstruction",
+    "head_features_unknown",
+    "referent_animacy_unknown"
+  ],
+  "capability": "licensing_table",
+  "increment": "inc-attributive-agreement-licensing",
+  "licensing_table": [
+    {
+      "construction": "head_with_human_referent_plus_following_descriptive_word",
+      "hidden": {
+        "type": "four_axis_agreement_required",
+        "value_class": "case_gender_number_definiteness"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "non_human_plural_head_plus_following_descriptive_word",
+      "hidden": {
+        "type": "feminine_singular_agreement_required",
+        "value_class": "case_and_definiteness_still_copied"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "definite_head_plus_indefinite_descriptive_word",
+      "hidden": {
+        "type": "predication_not_modification",
+        "value_class": "two_term_nominal_reading"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "stacked_descriptive_words_on_one_head",
+      "hidden": {
+        "type": "each_modifier_licensed_independently",
+        "value_class": "no_coordinator_required"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "elative_shaped_modifier",
+      "hidden": {
+        "type": "case_and_definiteness_agreement_only",
+        "value_class": "base_masculine_singular_shape_retained"
+      },
+      "note": "analysis-dependent: restricting the elative's distinct feminine shapes to non-follower position is recorded upstream as requiring review and as unsafe for automatic projection",
+      "obligatory": false
+    },
+    {
+      "construction": "causal_descriptive_follower",
+      "hidden": {
+        "type": "gender_taken_from_the_following_noun",
+        "value_class": "modifier_held_singular"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "annexation_chain_followed_by_modifier_with_a_distinct_case",
+      "hidden": {
+        "type": "attachment_identified_by_case",
+        "value_class": "case_selects_the_chain_member"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "annexation_chain_followed_by_modifier_with_a_shared_case",
+      "hidden": {
+        "type": "attachment_undecidable",
+        "value_class": "both_chain_members_carry_the_same_case"
+      },
+      "obligatory": true
+    }
+  ],
+  "rules": [
+    {
+      "id": "agr-r1",
+      "text": "an attributive modifier is licensed only by simultaneous agreement on case, gender, number and definiteness against one head"
+    },
+    {
+      "id": "agr-r2",
+      "text": "referent animacy is a declared input and is applied before gender and number are set: a non-human plural head licenses feminine singular modification"
+    },
+    {
+      "id": "agr-r3",
+      "text": "definiteness is the axis that decides phrase versus predication; a definite head with an indefinite follower is not modification"
+    },
+    {
+      "id": "agr-r4",
+      "text": "after an annexation chain the modifier's case identifies its attachment target; where both members share a case the outcome is an explicit undecidable, emitted as such and not silently resolved"
+    },
+    {
+      "id": "agr-r5",
+      "text": "a post-nominal accusative that fails the definiteness parity test is not licensed as modification by resemblance -> reject_reconstruction"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-attributive-agreement-licensing",
+  "version": 1
+}

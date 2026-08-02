@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "harakat are declared evidence; an unread vowel environment abstains rather than producing a plausible spelling",
+      "id": "g-hmz-1"
+    },
+    {
+      "guard": "carrier variation licensed here identifies one token; it never multiplies entries in an index",
+      "id": "g-hmz-2"
+    },
+    {
+      "guard": "hamza-root and weak-root classifications stay separate and are assigned explicitly when a root qualifies for each",
+      "id": "g-hmz-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-hmz-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

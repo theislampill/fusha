@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "key": "reading_inventory_panel",
+      "teaching": "lists the five readings this spelling supports, each with the evidence that would select it, so the reader sees WHY this occurrence reads as it does"
+    },
+    {
+      "key": "construction_chip",
+      "teaching": "names the construction that fixed the degree — comparison complement, definite article, or following genitive — rather than pointing at the word's shape"
+    },
+    {
+      "key": "feminine_counterpart_note",
+      "teaching": "shows which counterpart template the lexeme takes, as the lexical evidence separating the elative from the colour adjective"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "genuinely undecided occurrences show every surviving reading, attributed, with no winner implied"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

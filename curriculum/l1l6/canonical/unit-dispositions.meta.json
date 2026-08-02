@@ -1,0 +1,28 @@
+{
+  "generator": "tools/build_unit_dispositions.py",
+  "generic_unresolved_remainders": 0,
+  "note": "every state is computed from committed evidence; machine states require a discovered pack (invented consumer claims are structurally impossible); blockers carry exact causes",
+  "schema": "curriculum.l1l6_unit_disposition.v1.meta",
+  "state_participation": {
+    "drill_or_remediation_ready": 18,
+    "evidence_blocked": 24,
+    "fixture_source_ready": 35,
+    "instructional_only_with_consumer": 25,
+    "machine_pack_consumed": 35,
+    "occurrence_grounding_ready": 18,
+    "owner_adjudication_blocked": 0,
+    "promotion_bundle_ready": 35,
+    "scholar_review_blocked": 0,
+    "sol_integration_blocked": 76,
+    "tutor_projection_ready": 166
+  },
+  "strongest_state_histogram": {
+    "drill_or_remediation_ready": 9,
+    "fixture_source_ready": 19,
+    "machine_pack_consumed": 35,
+    "occurrence_grounding_ready": 8,
+    "tutor_projection_ready": 95
+  },
+  "strongest_sums_to_units": true,
+  "units": 166
+}

@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "markers are sufficient, never necessary: absence of four markers is never emitted as evidence against a class",
+      "id": "g-pos-suff"
+    },
+    {
+      "guard": "the residual label is never emitted from a positive test; it requires recorded failure of both positive inventories",
+      "id": "g-pos-neg"
+    },
+    {
+      "guard": "no English part-of-speech category is ever imported as a class label",
+      "id": "g-pos-eng"
+    },
+    {
+      "guard": "a nominal marker and a verbal marker on one string preserve two readings; the pack never votes",
+      "id": "g-pos-alt"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

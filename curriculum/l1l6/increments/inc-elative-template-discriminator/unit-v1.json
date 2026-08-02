@@ -1,0 +1,119 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives"
+  ],
+  "capability": "discriminator_table",
+  "functions": [
+    {
+      "discriminators": {
+        "comparison_complement": [
+          "min_phrase_present"
+        ],
+        "entry_evidence": [
+          "adjectival_entry"
+        ]
+      },
+      "id": "elative_comparative",
+      "name": "elative read as a two-term comparison"
+    },
+    {
+      "discriminators": {
+        "comparison_complement": [
+          "absent"
+        ],
+        "definiteness_behaviour": [
+          "definite_article",
+          "heads_annexation"
+        ],
+        "entry_evidence": [
+          "adjectival_entry"
+        ]
+      },
+      "id": "elative_superlative",
+      "name": "elative read as a superlative"
+    },
+    {
+      "discriminators": {
+        "comparison_complement": [
+          "absent"
+        ],
+        "entry_evidence": [
+          "adjectival_entry"
+        ],
+        "feminine_counterpart_template": [
+          "falaa"
+        ]
+      },
+      "id": "colour_defect_adjective",
+      "name": "colour-or-defect adjective of the same skeleton"
+    },
+    {
+      "discriminators": {
+        "entry_evidence": [
+          "verbal_entry"
+        ],
+        "person_evidence": [
+          "third_person_default"
+        ],
+        "tense_evidence": [
+          "perfect_paradigm"
+        ]
+      },
+      "id": "form_iv_perfect_verb",
+      "name": "fourth-form perfect verb of the same skeleton"
+    },
+    {
+      "discriminators": {
+        "entry_evidence": [
+          "verbal_entry"
+        ],
+        "person_evidence": [
+          "first_singular_prefix"
+        ]
+      },
+      "id": "first_person_imperfect_verb",
+      "name": "first-person singular imperfect of the same skeleton"
+    }
+  ],
+  "increment": "inc-elative-template-discriminator",
+  "rules": [
+    {
+      "id": "ela-r1",
+      "text": "discriminator features are SUPPLIED evidence (construction, entry, paradigm); the consumer never reads them off the skeleton, which is shared by all five readings"
+    },
+    {
+      "id": "ela-r2",
+      "text": "the rival readings differ in PART OF SPEECH, not in nuance: two adjectival readings, one adjectival degree split, and two verbal readings all spell the same letters"
+    },
+    {
+      "id": "ela-r3",
+      "text": "degree is fixed by CONSTRUCTION, not by form: a comparison complement selects the comparative; the definite article or an immediately following genitive selects the superlative"
+    },
+    {
+      "id": "ela-r4",
+      "text": "the two superlative constructions EXCLUDE the comparison complement; a surface carrying both is not resolved by this table"
+    },
+    {
+      "id": "ela-r5",
+      "text": "the feminine counterpart template is evidence, not a consequence: the elative's counterpart and the colour adjective's counterpart are different templates, and which one the lexeme takes is a lexical fact"
+    },
+    {
+      "id": "ela-r6",
+      "text": "exactly one survivor -> that reading (candidate); more than one -> preserve_alternatives; none -> abstain insufficient_features. There is NO default reading for this skeleton"
+    },
+    {
+      "id": "ela-r7",
+      "text": "the classical conditions restricting which bases admit an elative at all are not encoded here, so a surviving elative reading is a candidate about THIS occurrence and never a licence to build one"
+    },
+    {
+      "id": "ela-r8",
+      "text": "whether sequence and otherness items belong to the elative inventory is disputed in the tradition and is not decided by this table"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "shared_skeleton": "أفعل — one spelling, five documented readings across three parts of speech",
+  "status": "candidate",
+  "unit_ref": "cu-elative-template-discriminator",
+  "version": 1
+}

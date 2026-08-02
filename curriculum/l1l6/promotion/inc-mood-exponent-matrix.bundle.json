@@ -1,0 +1,281 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-mood-exponent-matrix/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-mood-exponent-matrix/reference.md",
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-mood-exponent-matrix",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mood-exponent-matrix/unit-v1.json",
+      "rule_id": "curr-mood-exponent-matrix-mood-r1",
+      "statement": "verb class and the governor reading are SUPPLIED evidence; the exponent is looked up in the matrix and never read off a final vowel",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mood-exponent-matrix/unit-v1.json",
+      "rule_id": "curr-mood-exponent-matrix-mood-r2",
+      "statement": "one governor produces different surface effects by verb class, so the class must be settled before any exponent is chosen",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mood-exponent-matrix/unit-v1.json",
+      "rule_id": "curr-mood-exponent-matrix-mood-r3",
+      "statement": "several cells are realised by a DELETION and are therefore not directly readable from the surface; a deletion cell is a positive result, not a missing exponent",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mood-exponent-matrix/unit-v1.json",
+      "rule_id": "curr-mood-exponent-matrix-mood-r4",
+      "statement": "the nun-bearing class is syncretic across the two governed moods: where the governor is unrecoverable, both cells are preserved and no mood is asserted from the surface",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mood-exponent-matrix/unit-v1.json",
+      "rule_id": "curr-mood-exponent-matrix-mood-r5",
+      "statement": "the fixed-shape class does not participate in the alternation at all; its cell is invariant under every governor",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-mood-exponent-matrix/unit-v1.json",
+      "rule_id": "curr-mood-exponent-matrix-mood-r6",
+      "statement": "a class-and-governor pair with no recorded cell abstains; the matrix is never extended by analogy from a neighbouring cell",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "mood-abs-01"
+    ],
+    "adversarial": [
+      "mood-adv-01",
+      "mood-adv-02",
+      "mood-adv-03"
+    ],
+    "positive": [
+      "mood-pos-01",
+      "mood-pos-02",
+      "mood-pos-03",
+      "mood-pos-04"
+    ],
+    "transfer": [
+      "mood-tr-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-mood-exponent-matrix",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives"
+    ],
+    "capability": "discriminator_table",
+    "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+    "functions": [
+      {
+        "discriminators": {
+          "governor_reading": [
+            "indicative_no_governor"
+          ],
+          "verb_class": [
+            "sound"
+          ]
+        },
+        "id": "sound_indicative_damma",
+        "name": "sound class, indicative: final damma"
+      },
+      {
+        "discriminators": {
+          "governor_reading": [
+            "subjunctive"
+          ],
+          "verb_class": [
+            "sound"
+          ]
+        },
+        "id": "sound_subjunctive_fatha",
+        "name": "sound class, subjunctive: final fatha"
+      },
+      {
+        "discriminators": {
+          "governor_reading": [
+            "jussive"
+          ],
+          "verb_class": [
+            "sound"
+          ]
+        },
+        "id": "sound_jussive_sukun",
+        "name": "sound class, jussive: final sukun"
+      },
+      {
+        "discriminators": {
+          "governor_reading": [
+            "indicative_no_governor"
+          ],
+          "verb_class": [
+            "five_forms"
+          ]
+        },
+        "id": "five_forms_indicative_nun_retained",
+        "name": "nun-bearing class, indicative: nun retained"
+      },
+      {
+        "discriminators": {
+          "governor_reading": [
+            "subjunctive",
+            "unrecoverable"
+          ],
+          "verb_class": [
+            "five_forms"
+          ]
+        },
+        "id": "five_forms_subjunctive_nun_deleted",
+        "name": "nun-bearing class, subjunctive: nun deleted"
+      },
+      {
+        "discriminators": {
+          "governor_reading": [
+            "jussive",
+            "unrecoverable"
+          ],
+          "verb_class": [
+            "five_forms"
+          ]
+        },
+        "id": "five_forms_jussive_nun_deleted",
+        "name": "nun-bearing class, jussive: nun deleted"
+      },
+      {
+        "discriminators": {
+          "governor_reading": [
+            "indicative_no_governor"
+          ],
+          "verb_class": [
+            "weak_final"
+          ]
+        },
+        "id": "weak_final_indicative_estimated",
+        "name": "weak-final class, indicative: estimated vowel"
+      },
+      {
+        "discriminators": {
+          "governor_reading": [
+            "subjunctive"
+          ],
+          "verb_class": [
+            "weak_final"
+          ]
+        },
+        "id": "weak_final_subjunctive_fatha",
+        "name": "weak-final class, subjunctive: overt fatha"
+      },
+      {
+        "discriminators": {
+          "governor_reading": [
+            "jussive"
+          ],
+          "verb_class": [
+            "weak_final"
+          ]
+        },
+        "id": "weak_final_jussive_letter_deleted",
+        "name": "weak-final class, jussive: final letter deleted"
+      },
+      {
+        "discriminators": {
+          "governor_reading": [
+            "subjunctive"
+          ],
+          "verb_class": [
+            "hollow"
+          ]
+        },
+        "id": "hollow_subjunctive_medial_retained",
+        "name": "hollow class, subjunctive: medial letter retained"
+      },
+      {
+        "discriminators": {
+          "governor_reading": [
+            "jussive"
+          ],
+          "verb_class": [
+            "hollow"
+          ]
+        },
+        "id": "hollow_jussive_medial_deleted",
+        "name": "hollow class, jussive: medial letter deleted"
+      },
+      {
+        "discriminators": {
+          "verb_class": [
+            "fixed_shape_feminine_plural"
+          ]
+        },
+        "id": "fixed_shape_invariant",
+        "name": "fixed-shape class: no mood alternation"
+      }
+    ],
+    "increment": "inc-mood-exponent-matrix",
+    "rules": [
+      {
+        "id": "mood-r1",
+        "text": "verb class and the governor reading are SUPPLIED evidence; the exponent is looked up in the matrix and never read off a final vowel"
+      },
+      {
+        "id": "mood-r2",
+        "text": "one governor produces different surface effects by verb class, so the class must be settled before any exponent is chosen"
+      },
+      {
+        "id": "mood-r3",
+        "text": "several cells are realised by a DELETION and are therefore not directly readable from the surface; a deletion cell is a positive result, not a missing exponent"
+      },
+      {
+        "id": "mood-r4",
+        "text": "the nun-bearing class is syncretic across the two governed moods: where the governor is unrecoverable, both cells are preserved and no mood is asserted from the surface"
+      },
+      {
+        "id": "mood-r5",
+        "text": "the fixed-shape class does not participate in the alternation at all; its cell is invariant under every governor"
+      },
+      {
+        "id": "mood-r6",
+        "text": "a class-and-governor pair with no recorded cell abstains; the matrix is never extended by analogy from a neighbouring cell"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-mood-exponent-matrix",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "rich_hover_fields": [
+    {
+      "key": "exponent_panel",
+      "teaching": "names the expected exponent for this class in this mood, with the cell it came from"
+    },
+    {
+      "key": "deletion_panel",
+      "teaching": "marks the cells whose exponent is a deletion, so an absent letter reads as evidence rather than as nothing"
+    },
+    {
+      "key": "syncretism_panel",
+      "teaching": "shows both governed cells for the nun-bearing class where the governor is unrecoverable"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

@@ -1,0 +1,166 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-pos-trichotomy-assignment/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-pos-trichotomy-assignment/reference.md",
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-pos-trichotomy-assignment",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-pos-trichotomy-assignment/unit-v1.json",
+      "rule_id": "curr-pos-trichotomy-assignment-pos-r1",
+      "statement": "class markers are SUPPLIED evidence read off a licensing frame; the consumer never invents a marker it was not given",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-pos-trichotomy-assignment/unit-v1.json",
+      "rule_id": "curr-pos-trichotomy-assignment-pos-r2",
+      "statement": "the naming and action inventories are SUFFICIENT, not necessary: one accepted marker settles the label, and rejection of the other markers is not evidence against it",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-pos-trichotomy-assignment/unit-v1.json",
+      "rule_id": "curr-pos-trichotomy-assignment-pos-r3",
+      "statement": "the residual label is licensed only NEGATIVELY, after both positive inventories have failed to attach and the word cannot stand as an answer",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-pos-trichotomy-assignment/unit-v1.json",
+      "rule_id": "curr-pos-trichotomy-assignment-pos-r4",
+      "statement": "the eight-way English scheme is never imported: a class label is produced by marker acceptance, never by what the word denotes or by its translation category",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-pos-trichotomy-assignment/unit-v1.json",
+      "rule_id": "curr-pos-trichotomy-assignment-pos-r5",
+      "statement": "one nominal and one verbal marker on the same string means two readings, not a winner: preserve both and let vocalization decide upstream",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "pos-abs-01"
+    ],
+    "adversarial": [
+      "pos-adv-01",
+      "pos-adv-02"
+    ],
+    "positive": [
+      "pos-pos-01",
+      "pos-pos-02",
+      "pos-pos-03"
+    ],
+    "transfer": [
+      "pos-tr-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-pos-trichotomy-assignment",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives"
+    ],
+    "capability": "discriminator_table",
+    "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+    "functions": [
+      {
+        "discriminators": {
+          "nominal_marker": [
+            "definite_article",
+            "nunation",
+            "post_preposition_genitive",
+            "vocative_addressee",
+            "predication_subject_slot"
+          ]
+        },
+        "id": "naming_class",
+        "name": "naming class اسم"
+      },
+      {
+        "discriminators": {
+          "verbal_marker": [
+            "completion_particle",
+            "future_prefix",
+            "free_future_word",
+            "vowelless_feminine_ending",
+            "vowelled_subject_ending",
+            "addressee_feminine_ending",
+            "emphatic_ending",
+            "person_conjugation"
+          ]
+        },
+        "id": "action_class",
+        "name": "action class فعل"
+      },
+      {
+        "discriminators": {
+          "marker_attachment": [
+            "all_rejected"
+          ],
+          "standalone_answer": [
+            "rejected"
+          ]
+        },
+        "id": "residual_class",
+        "name": "residual class حرف"
+      }
+    ],
+    "increment": "inc-pos-trichotomy-assignment",
+    "rules": [
+      {
+        "id": "pos-r1",
+        "text": "class markers are SUPPLIED evidence read off a licensing frame; the consumer never invents a marker it was not given"
+      },
+      {
+        "id": "pos-r2",
+        "text": "the naming and action inventories are SUFFICIENT, not necessary: one accepted marker settles the label, and rejection of the other markers is not evidence against it"
+      },
+      {
+        "id": "pos-r3",
+        "text": "the residual label is licensed only NEGATIVELY, after both positive inventories have failed to attach and the word cannot stand as an answer"
+      },
+      {
+        "id": "pos-r4",
+        "text": "the eight-way English scheme is never imported: a class label is produced by marker acceptance, never by what the word denotes or by its translation category"
+      },
+      {
+        "id": "pos-r5",
+        "text": "one nominal and one verbal marker on the same string means two readings, not a winner: preserve both and let vocalization decide upstream"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-pos-trichotomy-assignment",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "rich_hover_fields": [
+    {
+      "key": "class_label_panel",
+      "teaching": "shows the assigned class with the marker that produced it, so the learner sees the evidence rather than a bare label"
+    },
+    {
+      "key": "marker_inventory_panel",
+      "teaching": "lists the sufficient markers per class and which one attached here"
+    },
+    {
+      "key": "two_reading_panel",
+      "teaching": "a string with both a nominal and a verbal marker shows both readings, unresolved and unranked"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

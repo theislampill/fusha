@@ -1,0 +1,396 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/reference.md",
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-preposition-sense-discriminators",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "rule_id": "curr-preposition-sense-discriminators-prp-r1",
+      "statement": "discriminator features are SUPPLIED evidence — the governing predicate's class, the complement's semantic type, and the outcome of the paraphrase test; the token alone never fixes the sense",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "rule_id": "curr-preposition-sense-discriminators-prp-r2",
+      "statement": "the preposition's identity is itself a discriminator, so a sense row is only ever reachable for its own preposition; a missing preposition feature abstains",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "rule_id": "curr-preposition-sense-discriminators-prp-r3",
+      "statement": "government is INVARIANT across senses: every preposition here assigns genitive whichever sense is selected, so a sense decision never touches the case and a case reading never selects a sense",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "rule_id": "curr-preposition-sense-discriminators-prp-r4",
+      "statement": "the paraphrase test is required evidence where the row declares it; an unrun test is missing evidence and abstains rather than defaulting to the commonest sense",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "rule_id": "curr-preposition-sense-discriminators-prp-r5",
+      "statement": "exactly one survivor -> that sense (candidate); more than one -> preserve_alternatives; none -> abstain insufficient_features. No preposition here has a default sense",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "rule_id": "curr-preposition-sense-discriminators-prp-r6",
+      "statement": "the contested comitative-vs-transitivising reading is declared as TWO overlapping rows, so that environment preserves both readings instead of asserting the source's pick",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "rule_id": "curr-preposition-sense-discriminators-prp-r7",
+      "statement": "the sense lists are the source's teaching inventories and are NOT the classical inventories, which are longer; a no-survivor outcome means unlisted here, never ill-formed",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "rule_id": "curr-preposition-sense-discriminators-prp-r8",
+      "statement": "expletive occurrences and prepositions selected lexically by a particular verb are outside this table and are never forced into a compositional sense",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "prp-abs-01",
+      "prp-abs-02"
+    ],
+    "adversarial": [
+      "prp-adv-01",
+      "prp-adv-02",
+      "prp-adv-03",
+      "prp-adv-04"
+    ],
+    "positive": [
+      "prp-pos-01",
+      "prp-pos-02",
+      "prp-pos-03"
+    ],
+    "transfer": [
+      "prp-trn-01",
+      "prp-trn-02"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-preposition-sense-discriminators",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives"
+    ],
+    "capability": "discriminator_table",
+    "functions": [
+      {
+        "discriminators": {
+          "complement_type": [
+            "place_or_bound"
+          ],
+          "predicate_class": [
+            "motion"
+          ],
+          "preposition": [
+            "من"
+          ]
+        },
+        "id": "min_origin",
+        "name": "starting point",
+        "preposition": "من"
+      },
+      {
+        "discriminators": {
+          "complement_type": [
+            "substance"
+          ],
+          "paraphrase_test": [
+            "made_of_holds"
+          ],
+          "preposition": [
+            "من"
+          ]
+        },
+        "id": "min_material",
+        "name": "constitutive material",
+        "preposition": "من"
+      },
+      {
+        "discriminators": {
+          "complement_type": [
+            "mass_or_set"
+          ],
+          "paraphrase_test": [
+            "part_of_holds"
+          ],
+          "preposition": [
+            "من"
+          ]
+        },
+        "id": "min_partitive",
+        "name": "partitive portion",
+        "preposition": "من"
+      },
+      {
+        "discriminators": {
+          "complement_type": [
+            "specifying_aspect"
+          ],
+          "paraphrase_test": [
+            "namely_holds"
+          ],
+          "preposition": [
+            "من"
+          ]
+        },
+        "id": "min_explicative",
+        "name": "explicative specification",
+        "preposition": "من"
+      },
+      {
+        "discriminators": {
+          "complement_type": [
+            "manipulable_tool"
+          ],
+          "predicate_class": [
+            "action"
+          ],
+          "preposition": [
+            "ب"
+          ]
+        },
+        "id": "bi_instrument",
+        "name": "instrument or means",
+        "preposition": "ب"
+      },
+      {
+        "discriminators": {
+          "complement_type": [
+            "animate_co_participant"
+          ],
+          "predicate_class": [
+            "action",
+            "bringing_presenting"
+          ],
+          "preposition": [
+            "ب"
+          ]
+        },
+        "id": "bi_comitative",
+        "name": "accompaniment",
+        "preposition": "ب"
+      },
+      {
+        "discriminators": {
+          "complement_type": [
+            "animate_co_participant"
+          ],
+          "predicate_class": [
+            "bringing_presenting"
+          ],
+          "preposition": [
+            "ب"
+          ]
+        },
+        "id": "bi_transitivising",
+        "name": "transitivising element (contested reading)",
+        "preposition": "ب"
+      },
+      {
+        "discriminators": {
+          "complement_type": [
+            "event_or_state"
+          ],
+          "predicate_class": [
+            "affective"
+          ],
+          "preposition": [
+            "ب"
+          ]
+        },
+        "id": "bi_cause",
+        "name": "causal motivation",
+        "preposition": "ب"
+      },
+      {
+        "discriminators": {
+          "predicate_class": [
+            "swearing"
+          ],
+          "preposition": [
+            "ب"
+          ]
+        },
+        "id": "bi_oath",
+        "name": "oath introduction",
+        "preposition": "ب"
+      },
+      {
+        "discriminators": {
+          "complement_type": [
+            "place_or_bound"
+          ],
+          "predicate_class": [
+            "motion"
+          ],
+          "preposition": [
+            "عن"
+          ]
+        },
+        "id": "an_departure",
+        "name": "spatial or metaphorical departure",
+        "preposition": "عن"
+      },
+      {
+        "discriminators": {
+          "predicate_class": [
+            "asking_speaking_knowing"
+          ],
+          "preposition": [
+            "عن"
+          ]
+        },
+        "id": "an_topic",
+        "name": "topic of speech or inquiry",
+        "preposition": "عن"
+      },
+      {
+        "discriminators": {
+          "predicate_class": [
+            "discharging_obligation"
+          ],
+          "preposition": [
+            "عن"
+          ]
+        },
+        "id": "an_substitution",
+        "name": "acting in place of another party",
+        "preposition": "عن"
+      },
+      {
+        "discriminators": {
+          "complement_type": [
+            "animate_possessor"
+          ],
+          "predicate_class": [
+            "nominal_predication"
+          ],
+          "preposition": [
+            "ل"
+          ]
+        },
+        "id": "li_ownership",
+        "name": "ownership",
+        "preposition": "ل"
+      },
+      {
+        "discriminators": {
+          "complement_type": [
+            "animate_beneficiary"
+          ],
+          "predicate_class": [
+            "action"
+          ],
+          "preposition": [
+            "ل"
+          ]
+        },
+        "id": "li_benefit",
+        "name": "benefit or advantage",
+        "preposition": "ل"
+      },
+      {
+        "discriminators": {
+          "complement_type": [
+            "verbal_noun_goal"
+          ],
+          "preposition": [
+            "ل"
+          ]
+        },
+        "id": "li_purpose",
+        "name": "purpose or cause",
+        "preposition": "ل"
+      }
+    ],
+    "government_note": "genitive on the complement is constant across every row; no row emits a case claim",
+    "increment": "inc-preposition-sense-discriminators",
+    "inventory_status": "teaching inventories (4/4/3/3 plus one contested row); the classical inventories are longer",
+    "rules": [
+      {
+        "id": "prp-r1",
+        "text": "discriminator features are SUPPLIED evidence — the governing predicate's class, the complement's semantic type, and the outcome of the paraphrase test; the token alone never fixes the sense"
+      },
+      {
+        "id": "prp-r2",
+        "text": "the preposition's identity is itself a discriminator, so a sense row is only ever reachable for its own preposition; a missing preposition feature abstains"
+      },
+      {
+        "id": "prp-r3",
+        "text": "government is INVARIANT across senses: every preposition here assigns genitive whichever sense is selected, so a sense decision never touches the case and a case reading never selects a sense"
+      },
+      {
+        "id": "prp-r4",
+        "text": "the paraphrase test is required evidence where the row declares it; an unrun test is missing evidence and abstains rather than defaulting to the commonest sense"
+      },
+      {
+        "id": "prp-r5",
+        "text": "exactly one survivor -> that sense (candidate); more than one -> preserve_alternatives; none -> abstain insufficient_features. No preposition here has a default sense"
+      },
+      {
+        "id": "prp-r6",
+        "text": "the contested comitative-vs-transitivising reading is declared as TWO overlapping rows, so that environment preserves both readings instead of asserting the source's pick"
+      },
+      {
+        "id": "prp-r7",
+        "text": "the sense lists are the source's teaching inventories and are NOT the classical inventories, which are longer; a no-survivor outcome means unlisted here, never ill-formed"
+      },
+      {
+        "id": "prp-r8",
+        "text": "expletive occurrences and prepositions selected lexically by a particular verb are outside this table and are never forced into a compositional sense"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-preposition-sense-discriminators",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "rich_hover_fields": [
+    {
+      "key": "sense_inventory_panel",
+      "teaching": "lists the senses documented for this preposition with the feature that selects each, so the reader sees a decision rather than a gloss"
+    },
+    {
+      "key": "paraphrase_evidence_chip",
+      "teaching": "shows which paraphrase test was run and what it returned — or that it was not run, which is why the card abstains"
+    },
+    {
+      "key": "government_constant_note",
+      "teaching": "states that the complement is genitive whichever sense won, so the learner never reads the case off the sense"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "contested environments show every surviving sense, attributed, with no winner implied"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

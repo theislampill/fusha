@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "clause polarity and set-overtness are declared inputs; a missing one abstains rather than defaulting to the accusative",
+      "id": "g-ist-1"
+    },
+    {
+      "guard": "both licensed readings under negation are emitted together; the pack never picks a school",
+      "id": "g-ist-2"
+    },
+    {
+      "guard": "the exclusion-word inventory is closed in every pack version; resemblance is not membership",
+      "id": "g-ist-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-ist-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

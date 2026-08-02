@@ -118,6 +118,13 @@ def build():
                 else:
                     unresolved.append(hw)
             kinds = {k[0] for r_ in resolved for k in r_["source_keys"]}
+            if not resolved:
+                row["blocker"] = ("no curated exemplar resolves by exact "
+                                  "citation-form identity in the entry store "
+                                  "(tried: %s); extension path: widen the "
+                                  "exemplar list with store-attested citation "
+                                  "forms — identity matching only, never "
+                                  "similarity" % " / ".join(unresolved))
             row.update({
                 "grounding_state": ("exact_vn_candidates" if resolved
                                      else "authority_blocked"),

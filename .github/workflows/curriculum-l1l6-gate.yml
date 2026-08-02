@@ -85,3 +85,15 @@ jobs:
 
       - name: canonical consolidation recompute (units, lesson map, misconceptions)
         run: python tools/build_curriculum_canonical.py --check
+
+      - name: unit dispositions recompute (166/166 closed states, pack-backed)
+        run: python tools/build_unit_dispositions.py --check
+
+      - name: V/N grounding recompute (identity matching only)
+        run: python tools/build_vn_grounding.py --check
+
+      - name: misconception assets recompute (fixture candidates + remediations)
+        run: python tools/build_misconception_assets.py --check
+
+      - name: unit projections recompute (real pedagogy consumer, 166/166)
+        run: python tools/build_pedagogy_projections.py --check

@@ -1,0 +1,231 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/reference.md",
+  "capability": "template_classification",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-broken-plural-template-inventory",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "rule_id": "curr-broken-plural-template-inventory-bpl-r1",
+      "statement": "a plural template matches only against SUPPLIED root radicals filling R1..R3 in order; the consumer never derives a root and never coins a plural",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "rule_id": "curr-broken-plural-template-inventory-bpl-r2",
+      "statement": "the singular's own template is a PRIOR, not a rule: the attested plural is a lexical fact, so this unit classifies an observed surface and never predicts one",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "rule_id": "curr-broken-plural-template-inventory-bpl-r3",
+      "statement": "a suffixal (sound) plural is outside this inventory; zero surviving templates -> abstain no_template rather than forcing a restructured reading",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "rule_id": "curr-broken-plural-template-inventory-bpl-r4",
+      "statement": "where a plural template is letter-identical to a singular template the pack declares BOTH rows, so the honest verdict on that skeleton is abstain ambiguous_template",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "rule_id": "curr-broken-plural-template-inventory-bpl-r5",
+      "statement": "a lexeme with more than one attested plural yields more than one classified surface; this unit never ranks them and never emits one as the plural",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "rule_id": "curr-broken-plural-template-inventory-bpl-r6",
+      "statement": "concord follows the referent's rationality, not the plural's template; this unit emits no concord claim",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "bpl-abs-01"
+    ],
+    "adversarial": [
+      "bpl-adv-01",
+      "bpl-adv-02",
+      "bpl-adv-03"
+    ],
+    "positive": [
+      "bpl-pos-01",
+      "bpl-pos-02",
+      "bpl-pos-03"
+    ],
+    "transfer": [
+      "bpl-trn-01",
+      "bpl-trn-02"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-broken-plural-template-inventory",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "no_root_evidence",
+      "no_template",
+      "ambiguous_template"
+    ],
+    "capability": "template_classification",
+    "increment": "inc-broken-plural-template-inventory",
+    "inventory_note": "the six plural rows below are the high-frequency core, NOT a closed inventory; a surface that matches none of them is unclassified here, not ill-formed",
+    "rules": [
+      {
+        "id": "bpl-r1",
+        "text": "a plural template matches only against SUPPLIED root radicals filling R1..R3 in order; the consumer never derives a root and never coins a plural"
+      },
+      {
+        "id": "bpl-r2",
+        "text": "the singular's own template is a PRIOR, not a rule: the attested plural is a lexical fact, so this unit classifies an observed surface and never predicts one"
+      },
+      {
+        "id": "bpl-r3",
+        "text": "a suffixal (sound) plural is outside this inventory; zero surviving templates -> abstain no_template rather than forcing a restructured reading"
+      },
+      {
+        "id": "bpl-r4",
+        "text": "where a plural template is letter-identical to a singular template the pack declares BOTH rows, so the honest verdict on that skeleton is abstain ambiguous_template"
+      },
+      {
+        "id": "bpl-r5",
+        "text": "a lexeme with more than one attested plural yields more than one classified surface; this unit never ranks them and never emits one as the plural"
+      },
+      {
+        "id": "bpl-r6",
+        "text": "concord follows the referent's rationality, not the plural's template; this unit emits no concord claim"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "templates": [
+      {
+        "class": "plural_of_paucity",
+        "id": "afaal",
+        "name": "أفعال plural template",
+        "shape": [
+          "أ",
+          "R1",
+          "R2",
+          "ا",
+          "R3"
+        ],
+        "signature": "an added opening element, then the radicals with a long low vowel before the last"
+      },
+      {
+        "class": "plural_of_paucity",
+        "id": "afila",
+        "name": "أفعلة plural template",
+        "shape": [
+          "أ",
+          "R1",
+          "R2",
+          "R3",
+          "ة"
+        ],
+        "signature": "the same opening element with a closing taa marbuta"
+      },
+      {
+        "class": "plural_of_multitude",
+        "id": "fuul",
+        "name": "فعول plural template",
+        "shape": [
+          "R1",
+          "R2",
+          "و",
+          "R3"
+        ],
+        "signature": "a long back vowel between the second and third radical"
+      },
+      {
+        "class": "plural_of_multitude",
+        "id": "fiaal",
+        "name": "فعال plural template",
+        "shape": [
+          "R1",
+          "R2",
+          "ا",
+          "R3"
+        ],
+        "signature": "a long low vowel between the second and third radical"
+      },
+      {
+        "class": "non_plural_homograph",
+        "id": "fiaal_singular_homograph",
+        "name": "فعال homograph (singular noun / third-form masdar of the same skeleton)",
+        "shape": [
+          "R1",
+          "R2",
+          "ا",
+          "R3"
+        ],
+        "signature": "letter-identical to the فعال plural row; only the vowels and the entry separate them"
+      },
+      {
+        "class": "extreme_plural",
+        "id": "mafaail",
+        "name": "مفاعل extreme-plural template",
+        "shape": [
+          "م",
+          "R1",
+          "ا",
+          "R2",
+          "R3"
+        ],
+        "signature": "an added opening mim with a long low vowel after the first radical"
+      },
+      {
+        "class": "plural_of_multitude",
+        "id": "fualaa",
+        "name": "فعلاء plural template",
+        "shape": [
+          "R1",
+          "R2",
+          "R3",
+          "ا",
+          "ء"
+        ],
+        "signature": "the three radicals closed by a long low vowel and a hamza"
+      }
+    ],
+    "unit_ref": "cu-broken-plural-template-inventory",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "rich_hover_fields": [
+    {
+      "key": "plural_template_chip",
+      "teaching": "names the matched plural template and whether it reads as paucity, multitude or an extreme plural"
+    },
+    {
+      "key": "singular_link_note",
+      "teaching": "shows the supplied singular and states that the pairing is attested, not derived — with rival attested plurals listed when they exist"
+    },
+    {
+      "key": "homograph_warning",
+      "teaching": "when the skeleton is shared with a singular template the card shows both readings and the honest 'cannot decide from letters' verdict"
+    },
+    {
+      "key": "concord_note",
+      "teaching": "reminds the reader that agreement is chosen from the referent, not from the plural's shape"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "the gender of the counted singular is a declared input; the plural's surface shape never substitutes for it",
+      "id": "g-num-1"
+    },
+    {
+      "guard": "the band boundary at ten is closed in every pack version",
+      "id": "g-num-2"
+    },
+    {
+      "guard": "the numeral's case and the counted noun's case are decided separately and never copied across",
+      "id": "g-num-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-num-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

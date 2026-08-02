@@ -1,0 +1,115 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives"
+  ],
+  "capability": "discriminator_table",
+  "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+  "functions": [
+    {
+      "discriminators": {
+        "case": [
+          "nasb"
+        ],
+        "derivation": [
+          "verbal_noun"
+        ],
+        "root_relation_to_verb": [
+          "same_root"
+        ]
+      },
+      "id": "reinforcing_verbal_noun",
+      "name": "reinforcing verbal noun in the accusative"
+    },
+    {
+      "discriminators": {
+        "agent_and_time_shared": [
+          "yes"
+        ],
+        "answers_question": [
+          "why"
+        ],
+        "case": [
+          "nasb"
+        ],
+        "definiteness": [
+          "indefinite"
+        ],
+        "derivation": [
+          "verbal_noun"
+        ]
+      },
+      "id": "motive_accusative",
+      "name": "motive accusative"
+    },
+    {
+      "discriminators": {
+        "answers_question": [
+          "in_what_condition"
+        ],
+        "case": [
+          "nasb"
+        ],
+        "definiteness": [
+          "indefinite"
+        ],
+        "derivation": [
+          "participle_or_adjective"
+        ],
+        "holder_definiteness": [
+          "definite"
+        ]
+      },
+      "id": "state_descriptor",
+      "name": "state descriptor حال"
+    },
+    {
+      "discriminators": {
+        "answers_question": [
+          "in_what_respect"
+        ],
+        "case": [
+          "nasb"
+        ],
+        "definiteness": [
+          "indefinite"
+        ],
+        "vagueness_trigger": [
+          "measure_or_number",
+          "elative",
+          "increase_or_evaluation_verb",
+          "whole_clause"
+        ]
+      },
+      "id": "respect_specifier",
+      "name": "respect specifier تمييز"
+    }
+  ],
+  "increment": "inc-mansub-role-discriminator",
+  "rules": [
+    {
+      "id": "mans-r1",
+      "text": "root identity with the governing verb, verbal-noun status, the question the noun answers and agreement with a definite holder are SUPPLIED evidence, never inferred from the surface accusative alone"
+    },
+    {
+      "id": "mans-r2",
+      "text": "all four roles share one surface signature (an indefinite accusative noun after a verb), so the case marking alone can never select a role"
+    },
+    {
+      "id": "mans-r3",
+      "text": "the motive role has hard preconditions: verbal-noun status, causal sense, one agent at one time, and indefiniteness; a failed precondition abstains, and the prepositional construction is the recorded repair"
+    },
+    {
+      "id": "mans-r4",
+      "text": "same root with a causal reading leaves reinforcement and motive both live: preserve alternatives rather than letting either test override the other"
+    },
+    {
+      "id": "mans-r5",
+      "text": "the state role requires a DEFINITE holder and an indefinite accusative descriptor; the respect role requires an identifiable vagueness to resolve"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-mansub-role-discriminator",
+  "version": 1
+}

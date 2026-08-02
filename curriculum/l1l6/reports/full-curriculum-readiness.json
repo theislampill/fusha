@@ -4,7 +4,7 @@
     "canonical_units_nahw": 76,
     "canonical_units_sarf": 39,
     "canonical_units_total": 166,
-    "canonical_units_with_machine_pack": 10,
+    "canonical_units_with_machine_pack": 35,
     "error_section_lessons_processed": 226,
     "honesty": "canonical units from the qualification wave are AUTHORED CANDIDATE UNITS (summary, capability family, contributing lessons, two-way map); their machine packs are the bounded remaining executable work, not silent gaps",
     "lessons_instructional_only_with_reason": 5,
@@ -14,7 +14,7 @@
     "lessons_semantically_qualified": 226,
     "misconception_clusters": 906,
     "misconception_manifestations": 912,
-    "pack_authoring_remaining": 130,
+    "pack_authoring_remaining": 106,
     "sections_linked_to_canonical_units": 1491,
     "sections_still_only_domain_classified": 0
   },
@@ -38,7 +38,7 @@
     "q-paradigm-consumer": 56,
     "q-pvn-grounding": 224,
     "q-sarf-backprop": 9,
-    "q-scholar-owner-review": 11,
+    "q-scholar-owner-review": 35,
     "q-tutor-adoption": 10,
     "q-unit-authoring": 0
   },

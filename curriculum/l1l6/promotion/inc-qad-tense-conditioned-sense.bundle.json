@@ -1,0 +1,179 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-qad-tense-conditioned-sense/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-qad-tense-conditioned-sense/reference.md",
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-qad-tense-conditioned-sense",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-qad-tense-conditioned-sense/unit-v1.json",
+      "rule_id": "curr-qad-tense-conditioned-sense-qad-r1",
+      "statement": "the tense class of the immediately following token and the adjacency of the particle to it are SUPPLIED evidence; the reading is selected locally and never carried over from another occurrence",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-qad-tense-conditioned-sense/unit-v1.json",
+      "rule_id": "curr-qad-tense-conditioned-sense-qad-r2",
+      "statement": "the two tense environments produce opposite modal force, so a fixed rendering is prohibited: no reading is emitted before the tense class of the following token is supplied",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-qad-tense-conditioned-sense/unit-v1.json",
+      "rule_id": "curr-qad-tense-conditioned-sense-qad-r3",
+      "statement": "the secondary readings sit alongside the primary ones rather than replacing them; where the contextual condition is supplied, primary and secondary are preserved together",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-qad-tense-conditioned-sense/unit-v1.json",
+      "rule_id": "curr-qad-tense-conditioned-sense-qad-r4",
+      "statement": "the particle governs nothing: no mood or case consequence is ever emitted from any reading of this table",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-qad-tense-conditioned-sense/unit-v1.json",
+      "rule_id": "curr-qad-tense-conditioned-sense-qad-r5",
+      "statement": "a non-verbal token immediately after the particle means the analysis or the identification of the particle is wrong; that is an abstention and a review flag, never a reading",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "qad-abs-01"
+    ],
+    "adversarial": [
+      "qad-adv-01",
+      "qad-adv-02",
+      "qad-adv-03"
+    ],
+    "positive": [
+      "qad-pos-01",
+      "qad-pos-02"
+    ],
+    "transfer": [
+      "qad-tr-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-qad-tense-conditioned-sense",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives"
+    ],
+    "capability": "discriminator_table",
+    "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+    "functions": [
+      {
+        "discriminators": {
+          "adjacency": [
+            "immediate"
+          ],
+          "following_token": [
+            "perfect_verb"
+          ]
+        },
+        "id": "certainty_completion",
+        "name": "certainty and completion with a perfect verb"
+      },
+      {
+        "discriminators": {
+          "adjacency": [
+            "immediate"
+          ],
+          "following_token": [
+            "perfect_verb"
+          ],
+          "utterance_anchoring": [
+            "at_event_moment"
+          ]
+        },
+        "id": "recency_reading",
+        "name": "recency with a perfect verb"
+      },
+      {
+        "discriminators": {
+          "adjacency": [
+            "immediate"
+          ],
+          "following_token": [
+            "imperfect_verb"
+          ]
+        },
+        "id": "weakened_assertion",
+        "name": "weakened assertion with an imperfect verb"
+      },
+      {
+        "discriminators": {
+          "adjacency": [
+            "immediate"
+          ],
+          "following_token": [
+            "imperfect_verb"
+          ],
+          "statement_genericity": [
+            "generic"
+          ]
+        },
+        "id": "frequency_reading",
+        "name": "frequency with an imperfect verb"
+      }
+    ],
+    "increment": "inc-qad-tense-conditioned-sense",
+    "rules": [
+      {
+        "id": "qad-r1",
+        "text": "the tense class of the immediately following token and the adjacency of the particle to it are SUPPLIED evidence; the reading is selected locally and never carried over from another occurrence"
+      },
+      {
+        "id": "qad-r2",
+        "text": "the two tense environments produce opposite modal force, so a fixed rendering is prohibited: no reading is emitted before the tense class of the following token is supplied"
+      },
+      {
+        "id": "qad-r3",
+        "text": "the secondary readings sit alongside the primary ones rather than replacing them; where the contextual condition is supplied, primary and secondary are preserved together"
+      },
+      {
+        "id": "qad-r4",
+        "text": "the particle governs nothing: no mood or case consequence is ever emitted from any reading of this table"
+      },
+      {
+        "id": "qad-r5",
+        "text": "a non-verbal token immediately after the particle means the analysis or the identification of the particle is wrong; that is an abstention and a review flag, never a reading"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-qad-tense-conditioned-sense",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "rich_hover_fields": [
+    {
+      "key": "sense_panel",
+      "teaching": "names the reading with the tense class that selected it, so the learner sees the local conditioning"
+    },
+    {
+      "key": "secondary_reading_panel",
+      "teaching": "shows a secondary reading alongside the primary one when the contextual condition is supplied, without ranking them"
+    },
+    {
+      "key": "no_government_panel",
+      "teaching": "states explicitly that no mood or case consequence follows from this particle"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

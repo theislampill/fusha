@@ -1,0 +1,198 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-waw-function-discriminator/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-waw-function-discriminator/reference.md",
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-waw-function-discriminator",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "expected_skill_registry_entries": [
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+      "rule_id": "curr-waw-function-discriminator-waw-r1",
+      "statement": "the case of the following nominal, the presence of a verbal governor, the definiteness and role saturation of the preceding nominal, the linking pronoun and the presence of a response clause are SUPPLIED evidence, never reconstructed from an unvocalized string",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+      "rule_id": "curr-waw-function-discriminator-waw-r2",
+      "statement": "the accompaniment reading requires a preceding verbal governor and an accusative following nominal; a nominative following nominal selects coordination instead",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+      "rule_id": "curr-waw-function-discriminator-waw-r3",
+      "statement": "the participation test is a strong cue, not a gate: an animate capable nominal may still be construed as accompanying, so animacy never closes the decision on its own",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+      "rule_id": "curr-waw-function-discriminator-waw-r4",
+      "statement": "where the case is unrecoverable and both readings are licensed, both are preserved; the emphasis difference between them is not a fact this unit may emit",
+      "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst",
+      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+      "rule_id": "curr-waw-function-discriminator-waw-r5",
+      "statement": "a nominal state clause requires both the state connective and a linking pronoun; a clause-initial connective is not by itself an oath",
+      "status": "candidate"
+    }
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "waw-abs-01"
+    ],
+    "adversarial": [
+      "waw-adv-01",
+      "waw-adv-02"
+    ],
+    "positive": [
+      "waw-pos-01",
+      "waw-pos-02",
+      "waw-pos-03",
+      "waw-pos-04"
+    ],
+    "transfer": [
+      "waw-tr-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-waw-function-discriminator",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives"
+    ],
+    "capability": "discriminator_table",
+    "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+    "functions": [
+      {
+        "discriminators": {
+          "joint_performance": [
+            "available"
+          ],
+          "preceding_role_saturation": [
+            "open"
+          ],
+          "second_governor": [
+            "absent"
+          ]
+        },
+        "id": "waw_coordination",
+        "name": "coordinating و"
+      },
+      {
+        "discriminators": {
+          "following_nominal_case": [
+            "nasb"
+          ],
+          "preceding_verbal_governor": [
+            "present"
+          ],
+          "second_governor": [
+            "absent"
+          ]
+        },
+        "id": "waw_maiyya",
+        "name": "accompaniment و"
+      },
+      {
+        "discriminators": {
+          "following_clause": [
+            "topic_comment"
+          ],
+          "linking_pronoun": [
+            "present"
+          ],
+          "preceding_nominal": [
+            "definite_role_saturated"
+          ]
+        },
+        "id": "waw_hal",
+        "name": "state و"
+      },
+      {
+        "discriminators": {
+          "following_nominal_case": [
+            "jarr"
+          ],
+          "position": [
+            "clause_initial"
+          ],
+          "response_clause": [
+            "present"
+          ]
+        },
+        "id": "waw_qasam",
+        "name": "oath و"
+      },
+      {
+        "discriminators": {
+          "following_clause": [
+            "independent_no_slot"
+          ],
+          "position": [
+            "clause_initial"
+          ]
+        },
+        "id": "waw_istinaf",
+        "name": "parenthetical or resumptive و"
+      }
+    ],
+    "increment": "inc-waw-function-discriminator",
+    "rules": [
+      {
+        "id": "waw-r1",
+        "text": "the case of the following nominal, the presence of a verbal governor, the definiteness and role saturation of the preceding nominal, the linking pronoun and the presence of a response clause are SUPPLIED evidence, never reconstructed from an unvocalized string"
+      },
+      {
+        "id": "waw-r2",
+        "text": "the accompaniment reading requires a preceding verbal governor and an accusative following nominal; a nominative following nominal selects coordination instead"
+      },
+      {
+        "id": "waw-r3",
+        "text": "the participation test is a strong cue, not a gate: an animate capable nominal may still be construed as accompanying, so animacy never closes the decision on its own"
+      },
+      {
+        "id": "waw-r4",
+        "text": "where the case is unrecoverable and both readings are licensed, both are preserved; the emphasis difference between them is not a fact this unit may emit"
+      },
+      {
+        "id": "waw-r5",
+        "text": "a nominal state clause requires both the state connective and a linking pronoun; a clause-initial connective is not by itself an oath"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-waw-function-discriminator",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "rich_hover_fields": [
+    {
+      "key": "sense_panel",
+      "teaching": "names the sense of the connective with the evidence that produced it, never with a default translation"
+    },
+    {
+      "key": "case_evidence_panel",
+      "teaching": "shows the case of the following nominal as the decisive evidence, and marks it unrecoverable where the text is unpointed"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "where coordination and accompaniment are both licensed, both are shown with no winner implied"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

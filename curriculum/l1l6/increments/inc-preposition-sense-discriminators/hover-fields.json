@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "key": "sense_inventory_panel",
+      "teaching": "lists the senses documented for this preposition with the feature that selects each, so the reader sees a decision rather than a gloss"
+    },
+    {
+      "key": "paraphrase_evidence_chip",
+      "teaching": "shows which paraphrase test was run and what it returned — or that it was not run, which is why the card abstains"
+    },
+    {
+      "key": "government_constant_note",
+      "teaching": "states that the complement is genitive whichever sense won, so the learner never reads the case off the sense"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "contested environments show every surviving sense, attributed, with no winner implied"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "trigger_pair_chip",
+      "teaching": "names both triggers explicitly and marks which one is the semantic member"
+    },
+    {
+      "key": "cancellation_note",
+      "teaching": "states when the article or construct headship has cancelled the blocking in ordinary prose"
+    },
+    {
+      "key": "register_note",
+      "teaching": "flags the verse-only override and the metrical or rhyme pressure that motivated it"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

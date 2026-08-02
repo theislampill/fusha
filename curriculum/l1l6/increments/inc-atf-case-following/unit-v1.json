@@ -1,0 +1,105 @@
+{
+  "abstention_reasons": [
+    "marking_unknown",
+    "out_of_regime",
+    "non_governing_use"
+  ],
+  "capability": "pattern_consistency",
+  "encoding_limitation": "one lane pins one case because the analyzer compares against constants; connector-to-lane assignment is an encoding artifact, not a linguistic claim",
+  "families": {
+    "atf_jarr_lane": {
+      "ism": "jarr",
+      "khabar": "jarr",
+      "members": [
+        "بل",
+        "لكن"
+      ],
+      "semantics": {
+        "بل": "correction: cancels a negated first element, upgrades an affirmed one",
+        "لكن": "adversative contrast without cancellation"
+      },
+      "slot_reading": {
+        "ism": "observed case of the JOINED-TO element (the head)",
+        "khabar": "observed case of the JOINED element (the conjunct)"
+      }
+    },
+    "atf_nasb_lane": {
+      "ism": "nasb",
+      "khabar": "nasb",
+      "members": [
+        "ف",
+        "أو"
+      ],
+      "semantics": {
+        "أو": "alternation",
+        "ف": "sequence with no interval"
+      },
+      "slot_reading": {
+        "ism": "observed case of the JOINED-TO element (the head)",
+        "khabar": "observed case of the JOINED element (the conjunct)"
+      }
+    },
+    "atf_raf3_lane": {
+      "ism": "raf3",
+      "khabar": "raf3",
+      "members": [
+        "و",
+        "ثم"
+      ],
+      "semantics": {
+        "ثم": "sequence with an interval",
+        "و": "plain addition, no ordering asserted"
+      },
+      "slot_reading": {
+        "ism": "observed case of the JOINED-TO element (the head)",
+        "khabar": "observed case of the JOINED element (the conjunct)"
+      }
+    }
+  },
+  "field_reinterpretation": {
+    "abrogator": "coordination connector (not an abrogator)",
+    "consistent": "the conjunct inherited the head's case",
+    "ism": "expected case of the joined-to element (head)",
+    "khabar": "expected case of the joined element (conjunct)",
+    "violation_candidate": "the conjunct bears a case of its own — routed to review, never corrected"
+  },
+  "increment": "inc-atf-case-following",
+  "rules": [
+    {
+      "id": "atf-r1",
+      "text": "FIELD REINTERPRETATION: `abrogator` carries the coordination connector, `ism_marking` the observed case of the joined-to element (head), `khabar_marking` the observed case of the joined element (conjunct). Nothing here is an abrogator and nothing governs anything"
+    },
+    {
+      "id": "atf-r2",
+      "text": "the checked relation is INHERITANCE: the conjunct copies the case the head already bears, so a lane is consistent exactly when both observed markings equal the lane's declared case"
+    },
+    {
+      "id": "atf-r3",
+      "text": "the consumer CHECKS supplied markings; it never assigns case, never repairs the text, and never decides which element is the head when attachment is ambiguous"
+    },
+    {
+      "id": "atf-r4",
+      "text": "a mismatch is a violation_candidate routed to review, because the classic error is giving the conjunct a case of its own"
+    },
+    {
+      "id": "atf-r5",
+      "text": "either marking unknown -> abstain marking_unknown; a connector outside the declared inventory -> abstain out_of_regime"
+    },
+    {
+      "id": "atf-r6",
+      "text": "a connector whose reading here is NOT coordination (the adversative item once an attached pronoun makes it an abrogator, or any clause-level use with no case to copy) is declared non-governing and abstains"
+    },
+    {
+      "id": "atf-r7",
+      "text": "ENCODING LIMIT (recorded, not hidden): the registered analyzer compares each slot against a CONSTANT, so a lane can only pin one case. Every connector in fact joins a head in any case; the lane a connector sits in here is a pack-encoding artifact that fixes which case this unit checks it at, and is NOT a claim about the connector. The repair is a generic head/dependent capability, which is exactly why this canonical unit exists"
+    },
+    {
+      "id": "atf-r8",
+      "text": "the six-connector inventory is a teaching core, not the traditional inventory; and each connector has documented non-coordinating uses that this unit does not adjudicate"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-atf-case-following",
+  "version": 1
+}
