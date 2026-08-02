@@ -1299,6 +1299,108 @@ def test_r14_marks_and_learner_error():
           not bad["grade"]["cleared"] and bad["grade"]["two_vote_status"] == "pending")
 
 
+def test_r15_case_safe_kull_and_gate_inputs():
+    """ROUND-15 (1,3): member-aware kull marks, and every public gate input fails closed."""
+    # 1. كُلّ is a declinable NOUN: its lām carries whichever case the syntax assigns, with or without
+    # tanwīn. Round 14's single shared lām profile pushed the ordinary nominative and genitive to pending.
+    for surface, label in (("كُلُّ", "nominative"), ("كُلِّ", "genitive"), ("كُلَّ", "accusative"),
+                           ("كُلٌّ", "nominative tanwīn"), ("كُلٍّ", "genitive tanwīn"),
+                           ("كُلًّا", "accusative tanwīn"), ("كُلّ", "bare shadda")):
+        res = PR.resolve_particle_homograph(surface)
+        check("R15 the legitimate %s %s resolves as the quantifier" % (label, surface),
+              res.get("decision") == "resolved" and res.get("branch") == "A",
+              "decision=%s branch=%s" % (res.get("decision"), res.get("branch")))
+    # كَلَّا is an indeclinable PARTICLE: lām exactly shadda+fatḥa, and a final alif.
+    res = PR.resolve_particle_homograph("كَلَّا")
+    check("R15 كَلَّا still resolves as the deterrent",
+          res.get("decision") == "resolved" and res.get("branch") == "B")
+    for surface, why in (("كَلُّا", "ḍamma on the lām where كَلَّا is written with fatḥa"),
+                         ("كَلَّ", "no final alif"),
+                         ("كَل", "no shadda"),
+                         ("كُلَا", "no shadda"),
+                         ("كُلْ", "sukūn on the lām")):
+        res = PR.resolve_particle_homograph(surface)
+        check("R15 malformed %s stays pending (%s)" % (surface, why[:30]),
+              res.get("decision") == "pending" and res.get("branch") is None,
+              "decision=%s branch=%s" % (res.get("decision"), res.get("branch")))
+    # the other homograph gates are untouched
+    for surface in ("أَنُّ", "إِنُّ", "نَعَّمْ", "أَنِ", "أَنَ", "إِنِ", "إِنَ", "أن", "مُن",
+                    "لَمَ", "لِمْ", "نَعَمَ", "نِعْمْ", "أَنِّى", "أَنَّي"):
+        check("R15 the %s gate is not weakened" % surface,
+              PR.resolve_particle_homograph(surface).get("decision") == "pending")
+    for surface in ("أَنَّ", "إِنَّ", "أَنْ", "إِنْ", "نَعَمْ", "نِعْمَ", "مَنْ", "مِنْ", "لَمْ", "لِمَ",
+                    "لَمَّا", "لِمَا"):
+        check("R15 exact control %s still resolves" % surface,
+              PR.resolve_particle_homograph(surface).get("decision") == "resolved")
+
+    # 3. every public gate entry point validates its raw inputs
+    for value in ([], {}, set(), 7, object()):
+        label = type(value).__name__
+        for name, call in (("effective_gate(topic=)", lambda v: GATE.effective_gate(topic=v)),
+                           ("topic_gate()", lambda v: GATE.topic_gate(v)),
+                           ("resolve_gate()", lambda v: GATE.resolve_gate(v)),
+                           ("irab_rule_gate()", lambda v: GATE.irab_rule_gate(v)),
+                           ("reconcile_required_gate(topic=)",
+                            lambda v: GATE.reconcile_required_gate(None, ["irab"], topic=v))):
+            try:
+                got = call(value)
+            except Exception as exc:  # noqa: BLE001
+                check("R15 %s with a %s fails closed" % (name, label), False,
+                      "%s: %s" % (type(exc).__name__, exc))
+                continue
+            check("R15 %s with a %s fails closed" % (name, label), got != "auto_safe", got)
+    # legitimate defaults survive
+    check("R15 resolve_gate(None) keeps its fail-closed default",
+          GATE.resolve_gate(None) == "two_vote_required", GATE.resolve_gate(None))
+    check("R15 a legitimate topic still resolves",
+          GATE.topic_gate("irab") in ("auto_safe", "two_vote_required",
+                                      "human_source_review_required", "never_auto_resolve"))
+    check("R15 effective_gate() with no arguments is still auto_safe",
+          GATE.effective_gate() == "auto_safe", GATE.effective_gate())
+    check("R15 the irāb two-vote floor still holds",
+          all(GATE.gate_rank(GATE.irab_rule_gate(r)) >= GATE.gate_rank(GATE.IRAB_GATE_FLOOR)
+              for r in GATE.irab_rule_ids()))
+
+
+def test_r15_governor_mirrors_are_bound():
+    """ROUND-15 (2): flat governor mirrors are bound, not merely fallbacks."""
+    import unicodedata  # noqa: PLC0415
+    from tools.grade_grammar_reasoning import two_vote_evidence_defect  # noqa: PLC0415
+    va, vb = _r13_pair(vid_a="vote:r15:a", vid_b="vote:r15:b")
+    good = dict(project_vote(va), two_vote_evidence=[va, vb])
+    gov = va["conclusion"]["governor"]
+    nested = {"governor_type": "preposition", "surface": gov["surface"],
+              "loc": gov.get("loc"), "relation": gov["relation"]}
+    check("R15 baseline: the honest projected claim passes",
+          two_vote_evidence_defect(good) is None, repr(two_vote_evidence_defect(good)))
+    check("R15 a complete nested governor agreeing with the flat mirrors passes",
+          two_vote_evidence_defect(dict(good, governor=nested)) is None,
+          repr(two_vote_evidence_defect(dict(good, governor=nested))))
+    for label, key, value in (("surface", "governor_surface", "لَيْسَ"),
+                              ("location", "governor_loc", "quran:2:13:1"),
+                              ("relation", "governor_relation", "idafa_governs_genitive")):
+        claim = dict(good, governor=dict(nested))
+        claim[key] = value
+        check("R15 a fabricated flat governor %s beside a complete nested governor is refused" % label,
+              two_vote_evidence_defect(claim) is not None, repr(two_vote_evidence_defect(claim)))
+    # NFC-equivalent spellings of the SAME characters stay legal
+    nfd = dict(good)
+    nfd["governor_surface"] = unicodedata.normalize("NFD", good["governor_surface"] or "")
+    check("R15 an NFC-equivalent governor surface spelling stays legal",
+          two_vote_evidence_defect(nfd) is None, repr(two_vote_evidence_defect(nfd)))
+    # EXTERNAL-AUTHORITY LIMIT, stated rather than claimed closed: if the votes and the claim carry the SAME
+    # fabricated governor, nothing here can disprove it. The repository has no independent per-word
+    # occurrence/governor authority, so that gap stays open and is not asserted away.
+    fa, fb = _r13_pair(vid_a="vote:r15:c", vid_b="vote:r15:d")
+    for v in (fa, fb):
+        v["conclusion"] = dict(v["conclusion"],
+                               governor=dict(v["conclusion"]["governor"], surface="لَيْسَ"))
+    self_consistent = dict(project_vote(fa), two_vote_evidence=[fa, fb])
+    check("R15 a self-consistent fabricated pair is NOT disproved here (documented external limit)",
+          two_vote_evidence_defect(self_consistent) is None,
+          repr(two_vote_evidence_defect(self_consistent)))
+
+
 def main():
     for fn in (test_m1_wrong_conclusion, test_m2_wrong_reason, test_m3_absent_governor,
                test_m4_lost_rival, test_m5_unsafe_auto_resolution, test_two_vote_agreement,
@@ -1307,7 +1409,8 @@ def main():
                test_r10_gate_reconciliation, test_r13_envelope_and_claim_binding,
                test_r13_transition_surface_and_gates, test_r13_homographs_rivals_gloss,
                test_r13_tutor_content_vs_fact, test_r14_identity_governor_and_gates,
-               test_r14_marks_and_learner_error):
+               test_r14_marks_and_learner_error, test_r15_case_safe_kull_and_gate_inputs,
+               test_r15_governor_mirrors_are_bound):
         fn()
     if FAILS:
         print("FAIL — %d behavioural gate(s) broke:" % len(FAILS))
@@ -1322,7 +1425,8 @@ def main():
           "mandatory surface + governor-relation binding, surface-bound transitions, symmetric rivals, "
           "context-free gloss refusal, learner mastery separated from fact readiness, complete canonical "
           "record identity, complete governor tuple, exact mark profiles, exact sibling roles, learner "
-          "error never hidden by the fact gate)")
+          "error never hidden by the fact gate, case-safe كُلّ, bound governor mirrors, total gate-input "
+          "validation)")
 
 
 if __name__ == "__main__":

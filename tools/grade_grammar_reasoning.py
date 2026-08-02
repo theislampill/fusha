@@ -452,18 +452,29 @@ def claim_binding_defect(claim, vote):
         for field, defect in (("relation", "claim_governor_relation_not_bound"),
                               ("surface", "claim_governor_surface_not_bound"),
                               ("loc", "claim_governor_loc_not_bound")):
-            # Each field may be stated on the nested governor record or as a flat `governor_<field>` key
-            # (what project_vote emits); it must be stated somewhere, and it must match the vote.
-            claimed_value = claimed_governor.get(field)
-            if claimed_value is None:
-                claimed_value = claim.get("governor_%s" % field)
-            if claimed_value is None:
+            # ROUND-15: the flat `governor_<field>` mirror was read only as a FALLBACK, so with a complete
+            # nested governor a caller could publish a fabricated flat surface or location and still pass —
+            # and downstream readers of the flat form would be told something the vote never said. Every
+            # form that is present must agree with the canonical vote AND with the other form; at least one
+            # must be present.
+            nested_value = claimed_governor.get(field)
+            flat_value = claim.get("governor_%s" % field)
+            if nested_value is None and flat_value is None:
                 return "claim_governor_%s_absent" % field
-            if field == "surface":
-                if not exact_surface_equal(claimed_value, vote_governor.get(field) or ""):
+
+            def _matches(value, _field=field):
+                if _field == "surface":
+                    return exact_surface_equal(value, vote_governor.get(_field) or "")
+                return compact(value) == compact(vote_governor.get(_field))
+
+            for present in (v for v in (nested_value, flat_value) if v is not None):
+                if not _matches(present):
                     return defect
-            elif compact(claimed_value) != compact(vote_governor.get(field)):
-                return defect
+            if nested_value is not None and flat_value is not None:
+                same = (exact_surface_equal(nested_value, flat_value) if field == "surface"
+                        else compact(nested_value) == compact(flat_value))
+                if not same:
+                    return "claim_governor_%s_forms_disagree" % field
         governed = ((vote or {}).get("conclusion") or {}).get("governed_expression")
         if governed is not None:
             claimed_governed = claim.get("governed_expression")

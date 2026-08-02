@@ -246,6 +246,8 @@ def _seat(surface):
 # enforcement of the committed rule data, not a new linguistic claim.
 SUKUN = "\u0652"
 FATHATAN = "ً"   # the tanwin on kulla-tanwin; part of a permitted lam profile
+DAMMATAN = "\u064c"
+KASRATAN = "\u064d"
 
 
 def _mark_cluster(tok, target):
@@ -414,19 +416,26 @@ def _d_kull_vs_kalla(surface):
     obs = ["haraka(ك)=%s" % (hk or "absent"), "shadda(ل)=%s" % shadda_l]
     if not shadda_l:
         return None, obs + ["no shadda on the lām: neither كُلّ nor كَلَّا is written here"]
-    # ROUND-14: both members carry a bare shadda on the lām; كَلُّا adds a ḍamma, so it is neither.
-    # permitted lām profiles: bare shadda, shadda+fatḥa (كَلَّا / كُلَّ) or shadda+fatḥatān (كُلًّا).
-    # كَلُّا adds a ḍamma, which belongs to neither member.
-    if not any(_marks_exactly(surface, "ل", allowed)
-               for allowed in ([N.SHADDA], [N.SHADDA, N.FATHA], [N.SHADDA, FATHATAN])):
-        return None, obs + ["the lām carries an extraneous or contradictory mark profile"]
-    if hk == N.DAMMA:
-        return "A", obs
-    # ROUND-13: كَلَّا is written with a final alif. كَلّ carries the kāf fatḥa and the lām shadda but not
-    # the alif, so it is not that member.
+    # ROUND-15: mark validation is MEMBER-AWARE. Round 14 used one shared lām profile for both members,
+    # which pushed the ordinary nominative كُلُّ and genitive كُلِّ (and their tanwīn forms كُلٌّ / كُلٍّ)
+    # to pending — كُلّ is a declinable NOUN, so its lām carries whichever case vowel the syntax assigns.
+    # كَلَّا is an indeclinable particle: its lām is written with a fatḥa and it ends in an alif, so
+    # كَلُّا is still refused, now because it fails ITS member's profile rather than a shared one.
     final = _final_base_letter(surface)
     obs.append("final=%s" % (final or "absent"))
-    if hk == N.FATHA and final == "ا":
+    if hk == N.DAMMA:
+        # كُلّ: shadda plus at most ONE case realization (ḍamma/kasra/fatḥa or its tanwīn).
+        if not any(_marks_exactly(surface, "ل", [N.SHADDA] + extra)
+                   for extra in ([], [N.DAMMA], [N.KASRA], [N.FATHA],
+                                 [DAMMATAN], [KASRATAN], [FATHATAN])):
+            return None, obs + ["the lām of كُلّ carries an extraneous or contradictory mark profile"]
+        return "A", obs
+    # كَلَّا: the kāf carries a fatḥa, the lām EXACTLY shadda+fatḥa, and the word ends in an alif.
+    if hk == N.FATHA:
+        if not _marks_exactly(surface, "ل", [N.SHADDA, N.FATHA]):
+            return None, obs + ["the lām of كَلَّا is written shadda+fatḥa; this profile is neither member"]
+        if final != "ا":
+            return None, obs + ["كَلَّا is written with a final alif"]
         return "B", obs
     return None, obs
 

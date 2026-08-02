@@ -108,8 +108,39 @@ def irab_rule_triggers(rule_id, rules=None):
 IRAB_GATE_FLOOR = "two_vote_required"
 
 
+# ROUND-15: `tools/fusha_check.resolve_gate` and the topic tables are dict lookups, so an unhashable raw
+# value (a list, dict or set) raised TypeError straight out of this module's public API — an unreadable gate
+# input is not a safe one, and it must never surface as an exception either. Every public entry point below
+# validates its raw inputs FIRST and answers the strict tier. `tools/fusha_check.resolve_gate` itself is
+# unchanged (it is outside this lane); this module simply never hands it a value it cannot look up, and
+# re-exports the guarded form under the same name so `GATE.resolve_gate` is safe for callers too.
+_UPSTREAM_RESOLVE_GATE = resolve_gate
+STRICT_GATE = "never_auto_resolve"
+
+
+def gate_value_defect(value):
+    """None when `value` is something a gate table can be keyed by at all (a non-empty string, or None)."""
+    if value is None:
+        return None
+    if not isinstance(value, str) or not value.strip():
+        return "gate_value_not_a_string"
+    return None
+
+
+def resolve_gate(declared):
+    """Guarded resolve_gate: an unreadable value is the STRICT tier — never an exception, never auto_safe.
+
+    `resolve_gate(None)` keeps its documented fail-closed default (two_vote_required) from upstream.
+    """
+    if gate_value_defect(declared) is not None:
+        return STRICT_GATE
+    return _UPSTREAM_RESOLVE_GATE(declared)
+
+
 def irab_rule_gate(rule_id, rules=None):
     """The effective gate for an iʿrāb-safety rule: the file's tier, strengthened by its own triggers."""
+    if gate_value_defect(rule_id) is not None:
+        return STRICT_GATE                  # ROUND-15: an unreadable rule id is not a safe one
     row = _irab_row(rule_id, rules)
     if row is None:
         return "two_vote_required"          # unknown rule fails closed
@@ -137,6 +168,13 @@ def topic_ids(rules=None):
 
 
 def topic_gate(topic, rules=None):
+    """ROUND-15: a malformed raw topic (list/dict/set) is the STRICT tier, never an exception."""
+    if gate_value_defect(topic) is not None:
+        return STRICT_GATE
+    return _topic_gate_checked(topic, rules=rules)
+
+
+def _topic_gate_checked(topic, rules=None):
     """The gate as DECLARED in the topic map (unreconciled). Use effective_gate() for decisions."""
     row = (rules or load_topic_gates()).get("by_topic", {}).get(topic)
     return resolve_gate(row.get("gate")) if row else "two_vote_required"
@@ -157,6 +195,9 @@ def effective_gate(topic=None, triggers=(), declared=None, rules=None, irab_gate
     """
     # ROUND-14: validate the RAW inputs before any lookup or coercion. `declared=[]` used to raise
     # TypeError out of this public API, and a non-list `triggers` fell through to auto_safe.
+    # ROUND-15: the raw TOPIC is validated too — it reaches a dict lookup in both branches below.
+    if gate_value_defect(topic) is not None:
+        return STRICT_GATE
     if declared_gate_defect(declared) is not None:
         return "never_auto_resolve"
     # an EMPTY non-list (e.g. {}) is falsy, so it must be validated on its type, not on its truthiness
@@ -230,7 +271,8 @@ def reconcile_required_gate(declared, triggers, topic=None, rules=None):
     A malformed, non-list, duplicated or unknown trigger set yields `never_auto_resolve`: the risk statement
     could not be read, so nothing may be auto-resolved on it. A caller-declared tier can only STRENGTHEN.
     """
-    if declared_gate_defect(declared) is not None:
+    # ROUND-15: the raw topic reaches a dict lookup here too.
+    if declared_gate_defect(declared) is not None or gate_value_defect(topic) is not None:
         return "never_auto_resolve"
     defect = trigger_set_defect(triggers)
     if defect is not None:
