@@ -79,3 +79,9 @@ jobs:
 
       - name: promotion bundles recompute (every discovered increment)
         run: python tools/build_promotion_bundles.py --check
+
+      - name: lesson-qualification records (schema, custody, 226/226 complete)
+        run: python tools/validate_lesson_qualification.py --complete
+
+      - name: canonical consolidation recompute (units, lesson map, misconceptions)
+        run: python tools/build_curriculum_canonical.py --check
