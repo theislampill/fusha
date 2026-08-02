@@ -199,7 +199,7 @@
         "intermediate": "ما = negation ما, decided by: clause=declarative, following=perfect_verb.",
         "technical": {
           "expected": {
-            "decision": "analyzed",
+            "decision": "candidate_pending",
             "function": "nafiya"
           },
           "input": {
@@ -237,7 +237,7 @@
         "intermediate": "ما = relative ما, decided by: antecedent_slot=open_headless, following_clause=complete_with_gap.",
         "technical": {
           "expected": {
-            "decision": "analyzed",
+            "decision": "candidate_pending",
             "function": "mawsula"
           },
           "input": {
@@ -301,19 +301,19 @@
       "expanded_sarf_explanation": "curriculum/l1l6/increments/inc-ownership/reference.md (hidden radicals are the sarf analogue)",
       "fact_ref": "curriculum/l1l6/increments/inc-hidden/fixtures.jsonl#hid-pos-01",
       "family": "hidden-structure",
-      "hover_label_compact": "hidden: mustatir_pronoun",
+      "hover_label_compact": "no reconstruction licensed",
       "pattern_association_lesson": "curriculum/l1l6/increments/inc-hidden/staged-explanation.md",
       "status": "candidate",
       "surface": null,
       "transfer_example_ref": "fixture hid-pos-02 (relative-clause 'a'id gap)",
       "unresolved_notice": null,
       "views": {
-        "advanced": "{\"construction\": \"imperative_verb\", \"hidden\": {\"type\": \"mustatir_pronoun\", \"value_class\": \"second_person\"}, \"obligatory\": true} — flagged is_reconstruction; analysis-dependent licences carry attribution.",
-        "beginner": "The grammar includes a hidden piece here (mustatir_pronoun) — real, but written nowhere.",
-        "intermediate": "Construction 'imperative_verb' licenses a mustatir_pronoun (obligatory).",
+        "advanced": "reject_reconstruction: parse-saving taqdir is forbidden (closed licensing inventory).",
+        "beginner": "Nothing is hidden here; adding an 'understood word' would be inventing grammar.",
+        "intermediate": "Construction 'imperative_verb' licenses no reconstruction — the licensing table is closed.",
         "technical": {
           "expected": {
-            "decision": "analyzed",
+            "decision": "candidate_pending",
             "hidden_type": "mustatir_pronoun",
             "obligatory": true
           },
@@ -358,20 +358,20 @@
       "expanded_sarf_explanation": "curriculum/l1l6/increments/inc-ownership/reference.md (hidden radicals are the sarf analogue)",
       "fact_ref": "curriculum/l1l6/increments/inc-hidden/fixtures.jsonl#hid-pos-03",
       "family": "hidden-structure",
-      "hover_label_compact": "hidden: deleted_verb",
+      "hover_label_compact": "no reconstruction licensed",
       "pattern_association_lesson": "curriculum/l1l6/increments/inc-hidden/staged-explanation.md",
       "status": "candidate",
       "surface": null,
       "transfer_example_ref": "fixture hid-pos-02 (relative-clause 'a'id gap)",
       "unresolved_notice": "analysis-dependent: attributed, never certified",
       "views": {
-        "advanced": "{\"construction\": \"vocative_ya_noun\", \"hidden\": {\"type\": \"deleted_verb\", \"value_class\": \"call_verb\"}, \"note\": \"analysis-dependent: the deleted-verb account is one school's analysis\", \"obligatory\": true} — flagged is_reconstruction; analysis-dependent licences carry attribution.",
-        "beginner": "The grammar includes a hidden piece here (deleted_verb) — real, but written nowhere.",
-        "intermediate": "Construction 'vocative_ya_noun' licenses a deleted_verb (obligatory).",
+        "advanced": "reject_reconstruction: parse-saving taqdir is forbidden (closed licensing inventory).",
+        "beginner": "Nothing is hidden here; adding an 'understood word' would be inventing grammar.",
+        "intermediate": "Construction 'vocative_ya_noun' licenses no reconstruction — the licensing table is closed.",
         "technical": {
           "expected": {
             "analysis_dependent": true,
-            "decision": "analyzed",
+            "decision": "candidate_pending",
             "hidden_type": "deleted_verb"
           },
           "input": {

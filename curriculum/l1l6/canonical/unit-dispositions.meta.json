@@ -4,24 +4,24 @@
   "note": "every state is computed from committed evidence; machine states require a discovered pack (invented consumer claims are structurally impossible); blockers carry exact causes",
   "schema": "curriculum.l1l6_unit_disposition.v1.meta",
   "state_participation": {
-    "drill_or_remediation_ready": 18,
+    "candidate_occurrence_witnesses": 13,
+    "candidate_pack_harnessed": 35,
+    "candidate_presentation_template": 166,
+    "candidate_remediation_material": 18,
     "evidence_blocked": 29,
-    "fixture_source_ready": 35,
-    "instructional_only_with_consumer": 25,
-    "machine_pack_consumed": 35,
-    "occurrence_grounding_ready": 13,
+    "fixture_source_candidate": 35,
+    "instructional_only_candidate_presentation": 25,
     "owner_adjudication_blocked": 0,
-    "promotion_bundle_ready": 35,
+    "promotion_bundle_prepared": 35,
     "scholar_review_blocked": 0,
-    "sol_integration_blocked": 76,
-    "tutor_projection_ready": 166
+    "sol_integration_blocked": 76
   },
   "strongest_state_histogram": {
-    "drill_or_remediation_ready": 9,
-    "fixture_source_ready": 20,
-    "machine_pack_consumed": 35,
-    "occurrence_grounding_ready": 7,
-    "tutor_projection_ready": 95
+    "candidate_occurrence_witnesses": 7,
+    "candidate_pack_harnessed": 35,
+    "candidate_presentation_template": 95,
+    "candidate_remediation_material": 9,
+    "fixture_source_candidate": 20
   },
   "strongest_sums_to_units": true,
   "units": 166

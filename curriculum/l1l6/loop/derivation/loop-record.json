@@ -19,7 +19,7 @@
       "class": "transfer",
       "expected": {
         "class": "active_participle",
-        "decision": "analyzed",
+        "decision": "candidate_pending",
         "template": "faail"
       },
       "fixture_id": "der-trn-01"
@@ -32,7 +32,7 @@
       "class": "transfer",
       "expected": {
         "class": "active_participle",
-        "decision": "analyzed",
+        "decision": "candidate_pending",
         "template": "faail"
       },
       "fixture_id": "der-trn-02"
@@ -48,8 +48,8 @@
     "g-der-m"
   ],
   "improvement_classes_verified": [
-    "instructional_improvement",
-    "linguistic_consumer_improvement"
+    "fixture_harness_improvement",
+    "instructional_improvement"
   ],
   "improvements": [
     "der-trn-01",
@@ -68,14 +68,15 @@
     "results": [
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "faail"
         },
         "class": "positive",
         "expected": {
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "faail"
         },
         "fixture_id": "der-pos-01",
@@ -83,14 +84,15 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "class": "passive_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mafuul"
         },
         "class": "positive",
         "expected": {
           "class": "passive_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mafuul"
         },
         "fixture_id": "der-pos-02",
@@ -98,14 +100,15 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mu_participle"
         },
         "class": "positive",
         "expected": {
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mu_participle"
         },
         "fixture_id": "der-pos-03",
@@ -113,14 +116,15 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "class": "passive_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mu_participle"
         },
         "class": "adversarial",
         "expected": {
           "class": "passive_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mu_participle"
         },
         "fixture_id": "der-adv-01",
@@ -160,7 +164,7 @@
         "class": "transfer",
         "expected": {
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "faail"
         },
         "fixture_id": "der-trn-01",
@@ -174,7 +178,7 @@
         "class": "transfer",
         "expected": {
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "faail"
         },
         "fixture_id": "der-trn-02",
@@ -194,14 +198,15 @@
     "results": [
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "faail"
         },
         "class": "positive",
         "expected": {
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "faail"
         },
         "fixture_id": "der-pos-01",
@@ -209,14 +214,15 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "class": "passive_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mafuul"
         },
         "class": "positive",
         "expected": {
           "class": "passive_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mafuul"
         },
         "fixture_id": "der-pos-02",
@@ -224,14 +230,15 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mu_participle"
         },
         "class": "positive",
         "expected": {
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mu_participle"
         },
         "fixture_id": "der-pos-03",
@@ -239,14 +246,15 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "class": "passive_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mu_participle"
         },
         "class": "adversarial",
         "expected": {
           "class": "passive_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "mu_participle"
         },
         "fixture_id": "der-adv-01",
@@ -280,14 +288,15 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "faail"
         },
         "class": "transfer",
         "expected": {
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "faail"
         },
         "fixture_id": "der-trn-01",
@@ -295,14 +304,15 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "faail"
         },
         "class": "transfer",
         "expected": {
           "class": "active_participle",
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "template": "faail"
         },
         "fixture_id": "der-trn-02",

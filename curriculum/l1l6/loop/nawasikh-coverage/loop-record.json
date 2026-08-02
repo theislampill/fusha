@@ -35,7 +35,7 @@
     "g-naw-m"
   ],
   "improvement_classes_verified": [
-    "linguistic_consumer_improvement"
+    "fixture_harness_improvement"
   ],
   "improvements": [
     "naw-adv-02"
@@ -53,12 +53,13 @@
     "results": [
       {
         "actual": {
-          "decision": "consistent",
+          "authority": "none_fixture_harness",
+          "decision": "consistent_candidate",
           "family": "inna"
         },
         "class": "positive",
         "expected": {
-          "decision": "consistent",
+          "decision": "consistent_candidate",
           "family": "inna"
         },
         "fixture_id": "naw-pos-01",
@@ -66,12 +67,13 @@
       },
       {
         "actual": {
-          "decision": "consistent",
+          "authority": "none_fixture_harness",
+          "decision": "consistent_candidate",
           "family": "kana"
         },
         "class": "positive",
         "expected": {
-          "decision": "consistent",
+          "decision": "consistent_candidate",
           "family": "kana"
         },
         "fixture_id": "naw-pos-02",
@@ -79,6 +81,7 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "decision": "violation_candidate",
           "family": "inna"
         },
@@ -143,12 +146,13 @@
     "results": [
       {
         "actual": {
-          "decision": "consistent",
+          "authority": "none_fixture_harness",
+          "decision": "consistent_candidate",
           "family": "inna"
         },
         "class": "positive",
         "expected": {
-          "decision": "consistent",
+          "decision": "consistent_candidate",
           "family": "inna"
         },
         "fixture_id": "naw-pos-01",
@@ -156,12 +160,13 @@
       },
       {
         "actual": {
-          "decision": "consistent",
+          "authority": "none_fixture_harness",
+          "decision": "consistent_candidate",
           "family": "kana"
         },
         "class": "positive",
         "expected": {
-          "decision": "consistent",
+          "decision": "consistent_candidate",
           "family": "kana"
         },
         "fixture_id": "naw-pos-02",
@@ -169,6 +174,7 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "decision": "violation_candidate",
           "family": "inna"
         },
@@ -182,6 +188,7 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
           "decision": "violation_candidate",
           "family": "zanna"
         },

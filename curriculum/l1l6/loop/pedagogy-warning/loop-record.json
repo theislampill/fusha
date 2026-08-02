@@ -12,7 +12,8 @@
   "defects_recorded": [
     {
       "actual": {
-        "decision": "projected",
+        "authority": "none_presentation_template",
+        "decision": "candidate_projected",
         "fact_ref": "cu-x",
         "fields": {
           "beginner_explanation": "something",
@@ -23,7 +24,7 @@
       },
       "class": "adversarial",
       "expected": {
-        "decision": "projected",
+        "decision": "candidate_projected",
         "fields": {
           "beginner_explanation": "something",
           "common_error_warning": "watch out: known trap",
@@ -37,7 +38,8 @@
     },
     {
       "actual": {
-        "decision": "projected",
+        "authority": "none_presentation_template",
+        "decision": "candidate_projected",
         "fact_ref": "cu-hamza-seat-selection",
         "fields": {
           "advanced_explanation": "final position follows the preceding vowel alone",
@@ -52,7 +54,7 @@
       },
       "class": "transfer",
       "expected": {
-        "decision": "projected",
+        "decision": "candidate_projected",
         "fields": {
           "common_error_warning": "watch out: treating seat changes as root changes"
         }
@@ -71,7 +73,7 @@
     "g-ped-m"
   ],
   "improvement_classes_verified": [
-    "linguistic_consumer_improvement"
+    "fixture_harness_improvement"
   ],
   "improvements": [
     "ped-adv-01",
@@ -90,7 +92,8 @@
     "results": [
       {
         "actual": {
-          "decision": "projected",
+          "authority": "none_presentation_template",
+          "decision": "candidate_projected",
           "fact_ref": "cu-idafa-definiteness-licensing",
           "fields": {
             "advanced_explanation": "lafziyya-type heads admit the article under stated conditions",
@@ -105,14 +108,15 @@
         },
         "class": "positive",
         "expected": {
-          "decision": "projected"
+          "decision": "candidate_projected"
         },
         "fixture_id": "ped-pos-01",
         "match": true
       },
       {
         "actual": {
-          "decision": "projected",
+          "authority": "none_presentation_template",
+          "decision": "candidate_projected",
           "fact_ref": "cu-tamyiz-role-discriminator",
           "fields": {
             "advanced_explanation": "measure/number frames make tamyiz near-obligatory",
@@ -127,14 +131,15 @@
         },
         "class": "positive",
         "expected": {
-          "decision": "projected"
+          "decision": "candidate_projected"
         },
         "fixture_id": "ped-pos-02",
         "match": true
       },
       {
         "actual": {
-          "decision": "projected",
+          "authority": "none_presentation_template",
+          "decision": "candidate_projected",
           "fact_ref": "cu-x",
           "fields": {
             "beginner_explanation": "something",
@@ -145,7 +150,7 @@
         },
         "class": "adversarial",
         "expected": {
-          "decision": "projected",
+          "decision": "candidate_projected",
           "fields": {
             "beginner_explanation": "something",
             "common_error_warning": "watch out: known trap",
@@ -176,7 +181,8 @@
       },
       {
         "actual": {
-          "decision": "projected",
+          "authority": "none_presentation_template",
+          "decision": "candidate_projected",
           "fact_ref": "cu-hamza-seat-selection",
           "fields": {
             "advanced_explanation": "final position follows the preceding vowel alone",
@@ -191,7 +197,7 @@
         },
         "class": "transfer",
         "expected": {
-          "decision": "projected",
+          "decision": "candidate_projected",
           "fields": {
             "common_error_warning": "watch out: treating seat changes as root changes"
           }
@@ -213,7 +219,8 @@
     "results": [
       {
         "actual": {
-          "decision": "projected",
+          "authority": "none_presentation_template",
+          "decision": "candidate_projected",
           "fact_ref": "cu-idafa-definiteness-licensing",
           "fields": {
             "advanced_explanation": "lafziyya-type heads admit the article under stated conditions",
@@ -229,14 +236,15 @@
         },
         "class": "positive",
         "expected": {
-          "decision": "projected"
+          "decision": "candidate_projected"
         },
         "fixture_id": "ped-pos-01",
         "match": true
       },
       {
         "actual": {
-          "decision": "projected",
+          "authority": "none_presentation_template",
+          "decision": "candidate_projected",
           "fact_ref": "cu-tamyiz-role-discriminator",
           "fields": {
             "advanced_explanation": "measure/number frames make tamyiz near-obligatory",
@@ -253,14 +261,15 @@
         },
         "class": "positive",
         "expected": {
-          "decision": "projected"
+          "decision": "candidate_projected"
         },
         "fixture_id": "ped-pos-02",
         "match": true
       },
       {
         "actual": {
-          "decision": "projected",
+          "authority": "none_presentation_template",
+          "decision": "candidate_projected",
           "fact_ref": "cu-x",
           "fields": {
             "beginner_explanation": "something",
@@ -273,7 +282,7 @@
         },
         "class": "adversarial",
         "expected": {
-          "decision": "projected",
+          "decision": "candidate_projected",
           "fields": {
             "beginner_explanation": "something",
             "common_error_warning": "watch out: known trap",
@@ -304,7 +313,8 @@
       },
       {
         "actual": {
-          "decision": "projected",
+          "authority": "none_presentation_template",
+          "decision": "candidate_projected",
           "fact_ref": "cu-hamza-seat-selection",
           "fields": {
             "advanced_explanation": "final position follows the preceding vowel alone",
@@ -321,7 +331,7 @@
         },
         "class": "transfer",
         "expected": {
-          "decision": "projected",
+          "decision": "candidate_projected",
           "fields": {
             "common_error_warning": "watch out: treating seat changes as root changes"
           }

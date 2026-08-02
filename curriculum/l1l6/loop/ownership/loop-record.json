@@ -13,7 +13,8 @@
   "defects_recorded": [
     {
       "actual": {
-        "decision": "analyzed",
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
         "owners": [
           "pattern_augment",
           "root",
@@ -35,7 +36,7 @@
       },
       "class": "adversarial",
       "expected": {
-        "decision": "analyzed",
+        "decision": "candidate_pending",
         "owners": [
           "root",
           "root",
@@ -56,8 +57,8 @@
     "g-own-m"
   ],
   "improvement_classes_verified": [
-    "instructional_improvement",
-    "linguistic_consumer_improvement"
+    "fixture_harness_improvement",
+    "instructional_improvement"
   ],
   "improvements": [
     "own-abs-01",
@@ -76,7 +77,8 @@
     "results": [
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "owners": [
             "clitic",
             "clitic",
@@ -88,7 +90,7 @@
         },
         "class": "positive",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "owners": [
             "clitic",
             "clitic",
@@ -103,7 +105,8 @@
       },
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "owners": [
             "pattern_augment",
             "root",
@@ -113,7 +116,7 @@
         },
         "class": "positive",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "owners": [
             "pattern_augment",
             "root",
@@ -131,7 +134,7 @@
         },
         "class": "adversarial",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "owners": [
             "root",
             "root",
@@ -143,7 +146,8 @@
       },
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "owners": [
             "inflection",
             "root",
@@ -153,7 +157,7 @@
         },
         "class": "adversarial",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "owners": [
             "inflection",
             "root",
@@ -166,7 +170,8 @@
       },
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "owners": [
             "pattern_augment",
             "root",
@@ -197,7 +202,8 @@
       },
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "owners": [
             "pattern_augment",
             "root",
@@ -207,7 +213,7 @@
         },
         "class": "positive",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "owners": [
             "pattern_augment",
             "root",
@@ -232,7 +238,8 @@
     "results": [
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "owners": [
             "clitic",
             "clitic",
@@ -244,7 +251,7 @@
         },
         "class": "positive",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "owners": [
             "clitic",
             "clitic",
@@ -259,7 +266,8 @@
       },
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "owners": [
             "pattern_augment",
             "root",
@@ -269,7 +277,7 @@
         },
         "class": "positive",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "owners": [
             "pattern_augment",
             "root",
@@ -282,7 +290,8 @@
       },
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "owners": [
             "root",
             "root",
@@ -291,7 +300,7 @@
         },
         "class": "adversarial",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "owners": [
             "root",
             "root",
@@ -303,7 +312,8 @@
       },
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "owners": [
             "inflection",
             "root",
@@ -313,7 +323,7 @@
         },
         "class": "adversarial",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "owners": [
             "inflection",
             "root",
@@ -352,7 +362,8 @@
       },
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "owners": [
             "pattern_augment",
             "root",
@@ -362,7 +373,7 @@
         },
         "class": "positive",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "owners": [
             "pattern_augment",
             "root",

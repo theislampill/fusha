@@ -1,6 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Deterministic CANDIDATE consumer for the L1-L6 instructional machine units.
+"""NON-AUTHORITATIVE fixture/development harness for the L1-L6 candidate
+instructional machine units.
+
+AUTHORITY BANNER (Sol architecture checkpoint): this module is NOT a
+linguistic decision engine. It never resolves root, letter ownership,
+pattern, particle function, mood, governor, hidden structure, contextual
+meaning or occurrence analysis. Every non-abstention outcome is a
+CANDIDATE PROPOSAL (decision: candidate_pending) awaiting the authoritative
+current-main producers/lattices and the certification engine; occurrence-
+bound resolution additionally requires the Sol adapter envelope (exact
+occurrence, governor, reason key, rivals, review posture). Outputs feed
+fixtures, review bundles and presentation templates - nothing downstream
+may treat them as facts.
 
 This is the executable half of the curriculum backprop path: it LOADS an
 increment's machine unit pack (curriculum/l1l6/increments/<inc>/unit-vN.json)
@@ -69,8 +81,17 @@ def load(inc, unit_file=None):
 
 
 # ------------------------------------------------------------- inc-ownership
+def _surface_letters(surface):
+    import re as _re
+    return [ch for ch in _re.sub("[\u064b-\u0652\u0670\u06d6-\u06ed]", "", surface)]
+
+
 def analyze_ownership(inp, unit):
     letters = list(inp["letters"])
+    # fail-closed surface accounting (Sol repair 3): supplied letters must be
+    # exactly the NFC bare letters of the written surface
+    if inp.get("surface") is not None and _surface_letters(inp["surface"]) != letters:
+        return {"decision": "abstain", "reason": "surface_letter_mismatch"}
     n = len(letters)
     owners = [None] * n
     i = 0
@@ -114,7 +135,16 @@ def analyze_ownership(inp, unit):
                 owners[k] = "inflection"
     if any(o is None for o in owners):
         return {"decision": "abstain", "reason": "pending_letter_ownership"}
-    return {"decision": "analyzed", "owners": owners}
+    if "own-r2-v2" in rule_ids:
+        declared_hidden = set((inp.get("root_evidence") or {}).get("hidden_positions", []))
+        consumed = sum(1 for o in owners if o == "root")
+        radicals_n = len((inp.get("root_evidence") or {}).get("radicals", []))
+        if consumed + len(declared_hidden) != radicals_n:
+            # four radicals over a three-radical surface (or any unconsumed
+            # radical without a declared weak/hidden position) fails closed
+            return {"decision": "abstain",
+                    "reason": "radical_accounting_incomplete"}
+    return {"decision": "candidate_pending", "authority": "none_fixture_harness", "owners": owners}
 
 
 # ----------------------------------------------------------- inc-derivatives
@@ -149,6 +179,8 @@ def analyze_derivative(inp, unit):
     ev = inp.get("root_evidence")
     if ev is None:
         return {"decision": "abstain", "reason": "no_root_evidence"}
+    if inp.get("surface") is not None and _surface_letters(inp["surface"]) != list(inp["letters"]):
+        return {"decision": "abstain", "reason": "surface_letter_mismatch"}
     radicals = list(ev.get("radicals", []))
     letters = list(inp["letters"])
     subs = unit.get("weak_substitutions") or {}
@@ -169,14 +201,19 @@ def analyze_derivative(inp, unit):
         pv = inp.get("penult_vowel")
         if pv is None:
             return {"decision": "abstain", "reason": "penult_vowel_unknown"}
+        if inp.get("penult_vowel_evidence") != "surface_mark":
+            # a caller-asserted vowel with no surface-mark binding cannot
+            # decide voice (Sol repair 3): evidence must be bound
+            return {"decision": "abstain",
+                    "reason": "penult_vowel_evidence_unbound"}
         t = next(t for t in survivors if t["id"] == "mu_participle")
-        return {"decision": "analyzed", "class": t["split"][pv], "template": t["id"]}
+        return {"decision": "candidate_pending", "authority": "none_fixture_harness", "class": t["split"][pv], "template": t["id"]}
     if not survivors:
         return {"decision": "abstain", "reason": "no_template"}
     if len(survivors) > 1:
         return {"decision": "abstain", "reason": "ambiguous_template"}
     t = survivors[0]
-    return {"decision": "analyzed", "class": t["class"], "template": t["id"]}
+    return {"decision": "candidate_pending", "authority": "none_fixture_harness", "class": t["class"], "template": t["id"]}
 
 
 # ------------------------------------------- capability: discriminator_table
@@ -194,10 +231,17 @@ def analyze_discriminator_table(inp, unit):
     survivors.sort()
     if not survivors:
         return {"decision": "abstain", "reason": "insufficient_features"}
+    by_id = {f["id"]: f for f in unit["functions"]}
+    if len(survivors) == 1 and by_id[survivors[0]].get("school_attribution"):
+        # a school-attributed reading never solo-resolves (Sol repair 4):
+        # it stays an attributed rival pending scholar/adapter review
+        return {"decision": "abstain", "reason": "school_dependent_attributed",
+                "attributed_function": survivors[0],
+                "school_attribution": by_id[survivors[0]]["school_attribution"]}
     if len(survivors) > 1:
         return {"decision": "abstain", "reason": "preserve_alternatives",
                 "alternatives": survivors}
-    return {"decision": "analyzed", "function": survivors[0]}
+    return {"decision": "candidate_pending", "authority": "none_fixture_harness", "function": survivors[0], "occurrence_binding": (inp.get("envelope") and "supplied") or "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"}
 
 
 # ------------------------------------------------------------- inc-nawasikh
@@ -216,20 +260,31 @@ def analyze_nawasikh(inp, unit):
     if ism in (None, "unknown") or khabar in (None, "unknown"):
         return {"decision": "abstain", "reason": "marking_unknown"}
     if ism == spec_["ism"] and khabar == spec_["khabar"]:
-        return {"decision": "consistent", "family": family}
-    return {"decision": "violation_candidate", "family": family}
+        return {"decision": "consistent_candidate", "authority": "none_fixture_harness", "family": family}
+    return {"decision": "violation_candidate", "authority": "none_fixture_harness", "family": family}
 
 
 # --------------------------------------------------------------- inc-hidden
 def analyze_hidden(inp, unit):
-    for row in unit["licensing_table"]:
-        if row["construction"] == inp.get("construction"):
-            out = {"decision": "analyzed", "hidden_type": row["hidden"]["type"],
-                   "obligatory": row.get("obligatory", False)}
-            if "analysis-dependent" in (row.get("note") or ""):
-                out["analysis_dependent"] = True
-            return out
-    return {"decision": "abstain", "reason": "reject_reconstruction"}
+    matches = [row for row in unit["licensing_table"]
+               if row["construction"] == inp.get("construction")]
+    if not matches:
+        return {"decision": "abstain", "reason": "reject_reconstruction"}
+    if len(matches) > 1:
+        # first-match collapse is forbidden (Sol repair 4): rival licensed
+        # analyses are preserved, never silently ordered away
+        return {"decision": "abstain", "reason": "alternatives_preserved",
+                "alternatives": sorted(m["hidden"]["type"] for m in matches)}
+    row = matches[0]
+    out = {"decision": "candidate_pending",
+           "authority": "none_fixture_harness",
+           "hidden_type": row["hidden"]["type"],
+           "obligatory": row.get("obligatory", False)}
+    if "analysis-dependent" in (row.get("note") or ""):
+        out["analysis_dependent"] = True
+    if row.get("school_attribution"):
+        out["school_attribution"] = row["school_attribution"]
+    return out
 
 
 # ------------------------------------------ capability: pedagogical_projection
@@ -257,8 +312,9 @@ def analyze_pedagogy(inp, unit):
     if not data.get("fact_ref"):
         return {"decision": "abstain", "reason": "missing_pedagogical_inputs",
                 "missing": ["fact_ref"]}
-    return {"decision": "projected", "fact_ref": data["fact_ref"],
-            "fields": fields}
+    return {"decision": "candidate_projected",
+            "authority": "none_presentation_template",
+            "fact_ref": data["fact_ref"], "fields": fields}
 
 
 # Registered CAPABILITY interfaces. Dispatch is by the unit pack's declared
@@ -297,6 +353,15 @@ def _subset_match(expected, actual):
 
 def run(inc, unit_file=None):
     unit, fixtures = load(inc, unit_file)
+    if unit.get("harness_disabled"):
+        return {"schema": "curriculum.l1l6_consumer_run.v1", "increment": inc,
+                "unit_file": unit_file or latest_unit(inc),
+                "unit_version": unit.get("version"),
+                "consumer": "tools/curriculum_unit_consumer.py",
+                "harness_disabled": True,
+                "disabled_reason": unit.get("disabled_reason"),
+                "fixtures": 0, "mismatches": 0, "results": [],
+                "status": "candidate_disabled_pending_adapter"}
     analyzer = analyzer_for(unit)
     results = []
     mismatches = 0
@@ -349,7 +414,7 @@ def self_test():
     unit_m = json.loads(json.dumps(unit))
     unit_m["functions"] = [f_ for f_ in unit_m["functions"] if f_["id"] != "nafiya"]
     a1, a2 = analyze_discriminator_table(fx["input"], unit), analyze_discriminator_table(fx["input"], unit_m)
-    if a1 == a2 or a2.get("decision") != "analyzed":
+    if a1 == a2 or a2.get("decision") != "candidate_pending":
         failures.append("ma pack mutation did not collapse alternatives as expected")
     # 5. nawasikh: swapping the inna pattern in the pack must flip consistency
     unit, fixtures = load("inc-nawasikh")

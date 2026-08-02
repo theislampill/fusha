@@ -18,7 +18,7 @@
       },
       "class": "positive",
       "expected": {
-        "decision": "analyzed",
+        "decision": "candidate_pending",
         "hidden_type": "elided_aid",
         "obligatory": false
       },
@@ -32,7 +32,7 @@
       "class": "positive",
       "expected": {
         "analysis_dependent": true,
-        "decision": "analyzed",
+        "decision": "candidate_pending",
         "hidden_type": "deleted_verb"
       },
       "fixture_id": "hid-pos-03"
@@ -49,8 +49,8 @@
     "g-hid-m"
   ],
   "improvement_classes_verified": [
-    "instructional_improvement",
-    "linguistic_consumer_improvement"
+    "fixture_harness_improvement",
+    "instructional_improvement"
   ],
   "improvements": [
     "hid-pos-02",
@@ -69,13 +69,14 @@
     "results": [
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "hidden_type": "mustatir_pronoun",
           "obligatory": true
         },
         "class": "positive",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "hidden_type": "mustatir_pronoun",
           "obligatory": true
         },
@@ -89,7 +90,7 @@
         },
         "class": "positive",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "hidden_type": "elided_aid",
           "obligatory": false
         },
@@ -117,7 +118,7 @@
         "class": "positive",
         "expected": {
           "analysis_dependent": true,
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "hidden_type": "deleted_verb"
         },
         "fixture_id": "hid-pos-03",
@@ -150,13 +151,14 @@
     "results": [
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "hidden_type": "mustatir_pronoun",
           "obligatory": true
         },
         "class": "positive",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "hidden_type": "mustatir_pronoun",
           "obligatory": true
         },
@@ -165,13 +167,14 @@
       },
       {
         "actual": {
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "hidden_type": "elided_aid",
           "obligatory": false
         },
         "class": "positive",
         "expected": {
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "hidden_type": "elided_aid",
           "obligatory": false
         },
@@ -194,14 +197,16 @@
       {
         "actual": {
           "analysis_dependent": true,
-          "decision": "analyzed",
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
           "hidden_type": "deleted_verb",
-          "obligatory": true
+          "obligatory": true,
+          "school_attribution": "deleted-call-verb account (Basran mainstream); rival sui-generis analyses exist — attributed, never resolved here"
         },
         "class": "positive",
         "expected": {
           "analysis_dependent": true,
-          "decision": "analyzed",
+          "decision": "candidate_pending",
           "hidden_type": "deleted_verb"
         },
         "fixture_id": "hid-pos-03",

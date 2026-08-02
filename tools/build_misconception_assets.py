@@ -98,8 +98,8 @@ def serialize(fixtures, remediations):
         "generator": "tools/build_misconception_assets.py",
         "fixture_candidates": len(fixtures),
         "remediation_projections": len(remediations),
-        "remediations_projected": sum(
-            1 for r in remediations if r["result"]["decision"] == "projected"),
+        "remediations_candidate_projected": sum(
+            1 for r in remediations if r["result"]["decision"] == "candidate_projected"),
     }, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")
     return out
 

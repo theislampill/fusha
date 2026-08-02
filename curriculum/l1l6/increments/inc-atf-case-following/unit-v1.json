@@ -5,6 +5,7 @@
     "non_governing_use"
   ],
   "capability": "pattern_consistency",
+  "disabled_reason": "lane-encoded case constants false-flag valid coordination (Sol blocker 4): the registered pattern_consistency analyzer compares one constant per slot, but a coordinator joins a head in ANY case; the pack stays as a documented candidate awaiting the generic head/dependent capability (sol_adapter_required); its fixtures are retained as review material only and are not executed",
   "encoding_limitation": "one lane pins one case because the analyzer compares against constants; connector-to-lane assignment is an encoding artifact, not a linguistic claim",
   "families": {
     "atf_jarr_lane": {
@@ -64,6 +65,7 @@
     "lightened_non_governing": "reused slot: THIS occurrence is not a coordination reading (e.g. heavy لكنّ with an attached pronoun, or clause-level coordination with no case to copy). The slot name comes from inc-nawasikh and is NOT a claim about lightening here",
     "violation_candidate": "the conjunct bears a case of its own — routed to review, never corrected"
   },
+  "harness_disabled": true,
   "increment": "inc-atf-case-following",
   "rules": [
     {

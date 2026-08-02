@@ -20,11 +20,11 @@
     },
     {
       "baseline_pack": "unit-v0.json",
-      "expected_run1_mismatches": 6,
+      "expected_run1_mismatches": 7,
       "family": "nahw ambiguity (multifunction ma)",
       "increment": "inc-ma",
       "loop": "ma-ambiguity",
-      "proof": "one global surface reading (v0 'what') fails EVERY fixture -> occurrence/context discriminators introduced (v1) -> two different ma readings retained on different feature sets (nafiya vs mawsula), genuine ambiguity preserved as alternatives, zero-evidence input abstains -> learner-facing explanations differ by function id",
+      "proof": "one global surface reading (v0 'what') fails EVERY fixture (7/7 incl. the school-attributed laysa-like probe) -> occurrence/context discriminators introduced (v1) -> two different ma readings retained on different feature sets (nafiya vs mawsula), genuine ambiguity preserved as alternatives, zero-evidence input abstains -> learner-facing explanations differ by function id",
       "repaired_pack": "unit-v1.json"
     },
     {

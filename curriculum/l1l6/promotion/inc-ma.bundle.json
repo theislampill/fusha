@@ -37,6 +37,13 @@
       "rule_id": "curr-ma-ma-r4",
       "statement": "hijaziyya government is school-dependent: even a resolved nafiya reading never emits a government claim from this unit",
       "status": "candidate"
+    },
+    {
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "provenance": "curriculum/l1l6/increments/inc-ma/unit-v1.json",
+      "rule_id": "curr-ma-ma-r5",
+      "statement": "the laysa-like nominal reading is carried as a school-attributed rival; any survivor set containing it stays preserve_alternatives at occurrence scope (Sol repair 4)",
+      "status": "candidate"
     }
   ],
   "fixtures_by_class": {
@@ -45,7 +52,8 @@
     ],
     "adversarial": [
       "ma-adv-01",
-      "ma-adv-02"
+      "ma-adv-02",
+      "ma-adv-03"
     ],
     "positive": [
       "ma-pos-01",
@@ -67,7 +75,8 @@
   "machine_unit_pack": {
     "abstention_reasons": [
       "insufficient_features",
-      "preserve_alternatives"
+      "preserve_alternatives",
+      "school_dependent_attributed"
     ],
     "capability": "discriminator_table",
     "functions": [
@@ -145,6 +154,19 @@
         },
         "id": "zaida",
         "name": "extra ما"
+      },
+      {
+        "discriminators": {
+          "clause": [
+            "declarative"
+          ],
+          "following": [
+            "nominal_clause"
+          ]
+        },
+        "id": "hijaziyya_laysa_like",
+        "name": "ma al-hijaziyya (laysa-like nominal negation; SCHOOL-DEPENDENT government)",
+        "school_attribution": "Hijazi reading governs like laysa; Tamimi reading does not govern — never resolved by this harness"
       }
     ],
     "increment": "inc-ma",
@@ -164,6 +186,10 @@
       {
         "id": "ma-r4",
         "text": "hijaziyya government is school-dependent: even a resolved nafiya reading never emits a government claim from this unit"
+      },
+      {
+        "id": "ma-r5",
+        "text": "the laysa-like nominal reading is carried as a school-attributed rival; any survivor set containing it stays preserve_alternatives at occurrence scope (Sol repair 4)"
       }
     ],
     "schema": "curriculum.l1l6_machine_unit.v1",

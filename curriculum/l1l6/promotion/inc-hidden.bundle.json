@@ -101,7 +101,8 @@
           "value_class": "call_verb"
         },
         "note": "analysis-dependent: the deleted-verb account is one school's analysis",
-        "obligatory": true
+        "obligatory": true,
+        "school_attribution": "deleted-call-verb account (Basran mainstream); rival sui-generis analyses exist — attributed, never resolved here"
       },
       {
         "construction": "relative_clause_object_gap",

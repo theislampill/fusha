@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Generic CANDIDATE-mode flywheel runner.
+"""Instructional/fixture QA harness runner (NOT the canonical repository
+flywheel).
+
+AUTHORITY BANNER (Sol architecture checkpoint): this runner exercises the
+NON-AUTHORITATIVE candidate harness (tools/curriculum_unit_consumer.py)
+over candidate packs and fixtures. It never invokes the ordinary Sarf/Nahw
+producers, fact projectors, certification engine, tutor, occurrence graph,
+website validator or canonical dogfood ledger; its measurements are
+DEVELOPMENT EVIDENCE for pack review, not production flywheel gains.
+Canonical dogfood-event emission requires the Sol adapter contract
+(curriculum/l1l6/reports/sol-adapter-manifest.json).
 
 Executes the full loop for ANY discovered increment (no hard-coding to a
 family list — increments and packs are directory-discovered, dispatch is by
@@ -15,7 +25,7 @@ registered capability):
 
 Improvement-class discipline: the runner verifies every claimed class
 against actual consumer evidence —
-  linguistic_consumer_improvement : >=1 decision changed run1->run2 into a
+  fixture_harness_improvement  : >=1 harness decision changed run1->run2 into a
                                     match (transfer rows count double-proof)
   fixture_only_improvement        : fixture set changed, decisions did not
   instructional_improvement       : explanation/hover artifacts differ
@@ -80,7 +90,7 @@ def run_loop(name, inc, baseline, repaired):
 
     classes = []
     if improvements and not regressions:
-        classes.append("linguistic_consumer_improvement")
+        classes.append("fixture_harness_improvement")
     if not improvements and run1["fixtures"] != run2["fixtures"]:
         classes.append("fixture_only_improvement")
     b = json.loads((BASE / "increments" / inc / baseline).read_text(encoding="utf-8"))

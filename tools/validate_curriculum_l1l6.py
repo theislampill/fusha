@@ -665,9 +665,9 @@ def check_flywheel_loop(ctx, errors):
                              row["expected_run1_mismatches"]))
         if rec["run2"]["mismatches"] != 0 or rec["regressions"]:
             errors.append("flywheel_loop: %s repair not green/regressed" % row["loop"])
-        if ("linguistic_consumer_improvement" in rec["improvement_classes_verified"]
+        if ("fixture_harness_improvement" in rec["improvement_classes_verified"]
                 and not rec["improvements"]):
-            errors.append("flywheel_loop: %s claims consumer improvement without "
+            errors.append("flywheel_loop: %s claims harness improvement without "
                           "consumer evidence" % row["loop"])
 
 
@@ -917,7 +917,7 @@ def check_freeze_planes(ctx, errors):
     for r in disp:
         if not r.get("strongest_state"):
             errors.append("freeze_planes: %s no strongest_state" % r["unit_id"])
-        if "machine_pack_consumed" in r.get("states", []):
+        if "candidate_pack_harnessed" in r.get("states", []):
             if not r.get("machine_increments") or \
                     not set(r["machine_increments"]) <= incs:
                 errors.append("freeze_planes: %s claims a machine consumer "

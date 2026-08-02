@@ -35,10 +35,10 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "curriculum" / "l1l6"
 
 STRONGEST_ORDER = [
-    "machine_pack_consumed", "occurrence_grounding_ready",
-    "promotion_bundle_ready", "fixture_source_ready",
-    "drill_or_remediation_ready", "tutor_projection_ready",
-    "instructional_only_with_consumer",
+    "candidate_pack_harnessed", "candidate_occurrence_witnesses",
+    "promotion_bundle_prepared", "fixture_source_candidate",
+    "candidate_remediation_material", "candidate_presentation_template",
+    "instructional_only_candidate_presentation",
     "sol_integration_blocked", "scholar_review_blocked",
     "owner_adjudication_blocked", "evidence_blocked",
 ]
@@ -73,21 +73,21 @@ def build():
         mis = mis_by_unit.get(uid, [])
         states, blockers = [], []
         if incs:
-            states.append("machine_pack_consumed")
+            states.append("candidate_pack_harnessed")
         if (grow.get("grounding_state") == "exact_vn_candidates"
                 and any(x.get("selected_witnesses")
                         for x in grow.get("resolved", []))) or uid in occ_units:
-            states.append("occurrence_grounding_ready")
+            states.append("candidate_occurrence_witnesses")
         if any(i in bundles for i in incs):
-            states.append("promotion_bundle_ready")
+            states.append("promotion_bundle_prepared")
         if any(c["disposition"] == "candidate_fixture" for c in mis):
-            states.append("fixture_source_ready")
+            states.append("fixture_source_candidate")
         if any(c["disposition"] == "instructional_only" for c in mis):
-            states.append("drill_or_remediation_ready")
-        if proj and proj["result"]["decision"] == "projected":
-            states.append("tutor_projection_ready")
+            states.append("candidate_remediation_material")
+        if proj and proj["result"]["decision"] == "candidate_projected":
+            states.append("candidate_presentation_template")
             if u.get("capability_family") == "instructional_only":
-                states.append("instructional_only_with_consumer")
+                states.append("instructional_only_candidate_presentation")
         gs = grow.get("grounding_state")
         if gs == "sol_integration_blocked":
             states.append("sol_integration_blocked")

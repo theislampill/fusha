@@ -86,14 +86,14 @@ def build():
             "result": result,
             "status": "candidate",
         })
-    projected = sum(1 for r in rows if r["result"]["decision"] == "projected")
+    projected = sum(1 for r in rows if r["result"]["decision"] == "candidate_projected")
     abstained = [r["unit_id"] for r in rows
                  if r["result"]["decision"] != "projected"]
     meta = {
         "schema": "curriculum.l1l6_unit_projection.v1.meta",
         "generator": "tools/build_pedagogy_projections.py",
         "units": len(rows),
-        "projected": projected,
+        "candidate_projected": projected,
         "abstained": len(abstained),
         "abstained_units": abstained,
         "abstention_honesty": "abstained units lack required qualified inputs (recognition evidence, purpose or fact_ref); their projections are NOT authored around the gap — the gap routes to unit-record enrichment",

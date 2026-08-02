@@ -6,7 +6,8 @@
   "results": [
     {
       "actual": {
-        "decision": "analyzed",
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
         "owners": [
           "clitic",
           "clitic",
@@ -18,7 +19,7 @@
       },
       "class": "positive",
       "expected": {
-        "decision": "analyzed",
+        "decision": "candidate_pending",
         "owners": [
           "clitic",
           "clitic",
@@ -33,7 +34,8 @@
     },
     {
       "actual": {
-        "decision": "analyzed",
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
         "owners": [
           "pattern_augment",
           "root",
@@ -43,7 +45,7 @@
       },
       "class": "positive",
       "expected": {
-        "decision": "analyzed",
+        "decision": "candidate_pending",
         "owners": [
           "pattern_augment",
           "root",
@@ -56,7 +58,8 @@
     },
     {
       "actual": {
-        "decision": "analyzed",
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
         "owners": [
           "root",
           "root",
@@ -65,7 +68,7 @@
       },
       "class": "adversarial",
       "expected": {
-        "decision": "analyzed",
+        "decision": "candidate_pending",
         "owners": [
           "root",
           "root",
@@ -77,7 +80,8 @@
     },
     {
       "actual": {
-        "decision": "analyzed",
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
         "owners": [
           "inflection",
           "root",
@@ -87,7 +91,7 @@
       },
       "class": "adversarial",
       "expected": {
-        "decision": "analyzed",
+        "decision": "candidate_pending",
         "owners": [
           "inflection",
           "root",
@@ -126,7 +130,8 @@
     },
     {
       "actual": {
-        "decision": "analyzed",
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
         "owners": [
           "pattern_augment",
           "root",
@@ -136,7 +141,7 @@
       },
       "class": "positive",
       "expected": {
-        "decision": "analyzed",
+        "decision": "candidate_pending",
         "owners": [
           "pattern_augment",
           "root",
