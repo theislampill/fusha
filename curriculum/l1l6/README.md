@@ -30,13 +30,17 @@ structures only.
 | `links/` | family-level candidate links + 35 PRECISE generated links (store entry_ids, exact occurrences, hover components, promotion evidence, abstention conditions) | authored + generated |
 | `packets/` | `TP-CURR-*` skill-backprop task packets (schema `qamus.task_packet.v1`) | authored |
 | `pilot/` | clean-room letter-ownership pilot: candidate procedure, fixtures, colour segmentation + hover parity | authored |
-| `reports/` | source-locator audit (extractor-variant + attribution corrections) | authored |
+| `reports/` | absorption ledger (226/226), section ledger (6,574 classified), 10 generated queues (757 rows), 63-family capability matrix, occurrence bridge + P/V/N readiness, source-locator audit, full-curriculum readiness | generated |
+| `projections/` | learner-projection sets: one fact artifact → beginner/intermediate/advanced/technical + colour + hover (single-source invariant) | generated |
+| `promotion/` | Sol-reviewable promotion bundles, one per discovered increment | generated |
 | `testdata/` | clean-room fixture corpus + pinned digest for the CI determinism gate | authored |
 
-Executable plane: `tools/curriculum_unit_consumer.py` loads the increment
-machine packs at runtime and decides their fixtures (pack mutations flip
-decisions — proven by its `--self-test`); CI gate:
-`.github/workflows/curriculum-l1l6-gate.yml`.
+Executable plane: `tools/curriculum_unit_consumer.py` (capability-interface
+dispatch from pack data, directory-discovered increments) +
+`tools/curriculum_flywheel_runner.py` (generic defect→repair→transfer loops,
+4 recorded families, improvement classes verified against consumer
+evidence). CI gate: `.github/workflows/curriculum-l1l6-gate.yml` (14 steps;
+every generated plane recomputed live — stale artifacts are red).
 
 Generated artifacts name their generator (`tools/build_curriculum_l1l6.py`);
 regenerate with the private corpus, verify with `--check`. Validate everything
