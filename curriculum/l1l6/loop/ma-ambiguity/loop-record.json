@@ -1,0 +1,400 @@
+{
+  "abstentions_preserved": [
+    "ma-abs-01",
+    "ma-adv-01",
+    "ma-adv-03"
+  ],
+  "backprop_proposal": {
+    "content": "repair unit-v0.json -> unit-v1.json with the recorded defect set as adversarial evidence",
+    "no_auto_promotion": true,
+    "target": "curriculum/l1l6/promotion/ bundle for inc-ma"
+  },
+  "baseline_pack": "unit-v0.json",
+  "canonical_dogfood_eligible": false,
+  "capability": "discriminator_table",
+  "defects_recorded": [
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
+        "function": "global_what",
+        "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+      },
+      "class": "abstention",
+      "expected": {
+        "decision": "abstain",
+        "reason": "insufficient_features"
+      },
+      "fixture_id": "ma-abs-01"
+    },
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
+        "function": "global_what",
+        "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+      },
+      "class": "adversarial",
+      "expected": {
+        "alternatives": [
+          "mawsula",
+          "nafiya"
+        ],
+        "decision": "abstain",
+        "reason": "preserve_alternatives"
+      },
+      "fixture_id": "ma-adv-01"
+    },
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
+        "function": "global_what",
+        "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+      },
+      "class": "adversarial",
+      "expected": {
+        "decision": "candidate_pending",
+        "function": "shartiyya"
+      },
+      "fixture_id": "ma-adv-02"
+    },
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
+        "function": "global_what",
+        "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+      },
+      "class": "adversarial",
+      "expected": {
+        "attributed_function": "hijaziyya_laysa_like",
+        "decision": "abstain",
+        "reason": "school_dependent_attributed"
+      },
+      "fixture_id": "ma-adv-03"
+    },
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
+        "function": "global_what",
+        "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+      },
+      "class": "positive",
+      "expected": {
+        "decision": "candidate_pending",
+        "function": "nafiya"
+      },
+      "fixture_id": "ma-pos-01"
+    },
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
+        "function": "global_what",
+        "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+      },
+      "class": "positive",
+      "expected": {
+        "decision": "candidate_pending",
+        "function": "mawsula"
+      },
+      "fixture_id": "ma-pos-02"
+    },
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
+        "decision": "candidate_pending",
+        "function": "global_what",
+        "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+      },
+      "class": "positive",
+      "expected": {
+        "decision": "candidate_pending",
+        "function": "kaffa"
+      },
+      "fixture_id": "ma-pos-03"
+    }
+  ],
+  "downstream_work": {
+    "hover_pedagogy": "queue q-hover-pedagogy rows for linked entries",
+    "occurrence_grounding": "queue q-pvn-grounding rows for lessons mapped to inc-ma"
+  },
+  "evidence_class": "development_evidence_only",
+  "guards_loaded": [
+    "g-ma-3",
+    "g-ma-alt",
+    "g-ma-gov",
+    "g-ma-m"
+  ],
+  "improvement_classes_verified": [
+    "fixture_harness_improvement",
+    "instructional_improvement"
+  ],
+  "improvements": [
+    "ma-abs-01",
+    "ma-adv-01",
+    "ma-adv-02",
+    "ma-adv-03",
+    "ma-pos-01",
+    "ma-pos-02",
+    "ma-pos-03"
+  ],
+  "increment": "inc-ma",
+  "loop": "ma-ambiguity",
+  "regressions": [],
+  "repaired_pack": "unit-v1.json",
+  "rivals_preserved": [
+    "ma-adv-01"
+  ],
+  "run1": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 7,
+    "increment": "inc-ma",
+    "mismatches": 7,
+    "results": [
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "function": "global_what",
+          "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "function": "nafiya"
+        },
+        "fixture_id": "ma-pos-01",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "function": "global_what",
+          "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "function": "mawsula"
+        },
+        "fixture_id": "ma-pos-02",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "function": "global_what",
+          "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "function": "kaffa"
+        },
+        "fixture_id": "ma-pos-03",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "function": "global_what",
+          "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+        },
+        "class": "adversarial",
+        "expected": {
+          "alternatives": [
+            "mawsula",
+            "nafiya"
+          ],
+          "decision": "abstain",
+          "reason": "preserve_alternatives"
+        },
+        "fixture_id": "ma-adv-01",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "function": "global_what",
+          "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "insufficient_features"
+        },
+        "fixture_id": "ma-abs-01",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "function": "global_what",
+          "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "candidate_pending",
+          "function": "shartiyya"
+        },
+        "fixture_id": "ma-adv-02",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "function": "global_what",
+          "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+        },
+        "class": "adversarial",
+        "expected": {
+          "attributed_function": "hijaziyya_laysa_like",
+          "decision": "abstain",
+          "reason": "school_dependent_attributed"
+        },
+        "fixture_id": "ma-adv-03",
+        "match": false
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v0.json",
+    "unit_version": 0
+  },
+  "run2": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 7,
+    "increment": "inc-ma",
+    "mismatches": 0,
+    "results": [
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "function": "nafiya",
+          "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "function": "nafiya"
+        },
+        "fixture_id": "ma-pos-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "function": "mawsula",
+          "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "function": "mawsula"
+        },
+        "fixture_id": "ma-pos-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "function": "kaffa",
+          "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "function": "kaffa"
+        },
+        "fixture_id": "ma-pos-03",
+        "match": true
+      },
+      {
+        "actual": {
+          "alternatives": [
+            "mawsula",
+            "nafiya"
+          ],
+          "decision": "abstain",
+          "reason": "preserve_alternatives"
+        },
+        "class": "adversarial",
+        "expected": {
+          "alternatives": [
+            "mawsula",
+            "nafiya"
+          ],
+          "decision": "abstain",
+          "reason": "preserve_alternatives"
+        },
+        "fixture_id": "ma-adv-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "insufficient_features"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "insufficient_features"
+        },
+        "fixture_id": "ma-abs-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "function": "shartiyya",
+          "occurrence_binding": "none_generic_candidate: occurrence resolution requires the Sol adapter envelope (occurrence_id, surface, governor, reason_key, complete rivals, review posture)"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "candidate_pending",
+          "function": "shartiyya"
+        },
+        "fixture_id": "ma-adv-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "attributed_function": "hijaziyya_laysa_like",
+          "decision": "abstain",
+          "reason": "school_dependent_attributed",
+          "school_attribution": "Hijazi reading governs like laysa; Tamimi reading does not govern — never resolved by this harness"
+        },
+        "class": "adversarial",
+        "expected": {
+          "attributed_function": "hijaziyya_laysa_like",
+          "decision": "abstain",
+          "reason": "school_dependent_attributed"
+        },
+        "fixture_id": "ma-adv-03",
+        "match": true
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v1.json",
+    "unit_version": 1
+  },
+  "schema": "curriculum.l1l6_flywheel_loop.v1",
+  "site_payload_improvement": "never_claimable_here_owner_gated",
+  "status": "candidate",
+  "transfer_improvements": [],
+  "unit_ref": "u-n07"
+}

@@ -1,0 +1,38 @@
+{
+  "guards": [
+    {
+      "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+      "id": "g-der-1"
+    },
+    {
+      "guard": "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
+      "id": "g-der-2"
+    },
+    {
+      "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+      "id": "g-der-m"
+    },
+    {
+      "guard": "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+      "id": "g-der-3"
+    },
+    {
+      "guard": "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+      "id": "g-der-4"
+    },
+    {
+      "guard": "no weak realization is accepted without the exact bound declaration of which radical went weak in which position",
+      "id": "g-der-5"
+    },
+    {
+      "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+      "id": "g-der-6"
+    },
+    {
+      "guard": "evidence must agree with itself: a declared weak position/radical that the supplied radicals do not bear refutes the evidence rather than decorating it",
+      "id": "g-der-7"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

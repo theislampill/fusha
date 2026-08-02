@@ -1,0 +1,41 @@
+{
+  "abstention_reasons": [
+    "reject_reconstruction",
+    "alternatives_preserved"
+  ],
+  "capability": "licensing_table",
+  "increment": "inc-hidden",
+  "known_defect": "v0 licenses ONLY the imperative mustatir: the relative-clause 'a'id gap and the vocative deleted-verb analyses are missing, so a flat 'no subject/no verb' label is all v0 can say — recorded structural-family loop",
+  "licensing_table": [
+    {
+      "construction": "imperative_verb",
+      "hidden": {
+        "type": "mustatir_pronoun",
+        "value_class": "second_person"
+      },
+      "obligatory": true
+    }
+  ],
+  "rules": [
+    {
+      "id": "hid-r1",
+      "text": "a hidden element may be emitted ONLY for a construction in the licensing table; anything else -> reject_reconstruction"
+    },
+    {
+      "id": "hid-r2",
+      "text": "hidden elements are TYPED nodes flagged is_reconstruction=true; they are analysis, never text; scripture is never altered"
+    },
+    {
+      "id": "hid-r3",
+      "text": "analysis-dependent licences (vocative deleted-verb) carry their attribution and never certify"
+    },
+    {
+      "id": "hid-r4",
+      "text": "rival reconstructions are all emitted as alternatives, none preferred"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "u-n08",
+  "version": 0
+}

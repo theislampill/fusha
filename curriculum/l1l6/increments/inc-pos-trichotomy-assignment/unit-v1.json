@@ -1,0 +1,78 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives"
+  ],
+  "capability": "discriminator_table",
+  "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+  "functions": [
+    {
+      "discriminators": {
+        "nominal_marker": [
+          "definite_article",
+          "nunation",
+          "post_preposition_genitive",
+          "vocative_addressee",
+          "predication_subject_slot"
+        ]
+      },
+      "id": "naming_class",
+      "name": "naming class اسم"
+    },
+    {
+      "discriminators": {
+        "verbal_marker": [
+          "completion_particle",
+          "future_prefix",
+          "free_future_word",
+          "vowelless_feminine_ending",
+          "vowelled_subject_ending",
+          "addressee_feminine_ending",
+          "emphatic_ending",
+          "person_conjugation"
+        ]
+      },
+      "id": "action_class",
+      "name": "action class فعل"
+    },
+    {
+      "discriminators": {
+        "marker_attachment": [
+          "all_rejected"
+        ],
+        "standalone_answer": [
+          "rejected"
+        ]
+      },
+      "id": "residual_class",
+      "name": "residual class حرف"
+    }
+  ],
+  "increment": "inc-pos-trichotomy-assignment",
+  "rules": [
+    {
+      "id": "pos-r1",
+      "text": "class markers are SUPPLIED evidence read off a licensing frame; the consumer never invents a marker it was not given"
+    },
+    {
+      "id": "pos-r2",
+      "text": "the naming and action inventories are SUFFICIENT, not necessary: one accepted marker settles the label, and rejection of the other markers is not evidence against it"
+    },
+    {
+      "id": "pos-r3",
+      "text": "the residual label is licensed only NEGATIVELY, after both positive inventories have failed to attach and the word cannot stand as an answer"
+    },
+    {
+      "id": "pos-r4",
+      "text": "the eight-way English scheme is never imported: a class label is produced by marker acceptance, never by what the word denotes or by its translation category"
+    },
+    {
+      "id": "pos-r5",
+      "text": "one nominal and one verbal marker on the same string means two readings, not a winner: preserve both and let vocalization decide upstream"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-pos-trichotomy-assignment",
+  "version": 1
+}

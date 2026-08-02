@@ -1,0 +1,233 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives"
+  ],
+  "capability": "discriminator_table",
+  "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+  "functions": [
+    {
+      "discriminators": {
+        "case_identity": [
+          "shared"
+        ],
+        "particle": [
+          "و"
+        ],
+        "position": [
+          "between_two_terms"
+        ]
+      },
+      "id": "additive_coordination",
+      "name": "additive coordinator و"
+    },
+    {
+      "discriminators": {
+        "case_identity": [
+          "shared"
+        ],
+        "particle": [
+          "ف"
+        ],
+        "position": [
+          "between_two_terms"
+        ]
+      },
+      "id": "immediate_sequence",
+      "name": "immediate-sequence coordinator ف"
+    },
+    {
+      "discriminators": {
+        "case_identity": [
+          "shared"
+        ],
+        "particle": [
+          "ثم"
+        ],
+        "position": [
+          "between_two_terms"
+        ]
+      },
+      "id": "delayed_sequence",
+      "name": "delayed-sequence coordinator ثم"
+    },
+    {
+      "discriminators": {
+        "clause_type": [
+          "declarative"
+        ],
+        "particle": [
+          "أو"
+        ],
+        "position": [
+          "between_two_terms"
+        ]
+      },
+      "id": "declarative_alternation",
+      "name": "declarative alternation أو"
+    },
+    {
+      "discriminators": {
+        "clause_type": [
+          "interrogative"
+        ],
+        "particle": [
+          "أم"
+        ],
+        "position": [
+          "between_two_terms"
+        ]
+      },
+      "id": "interrogative_alternation",
+      "name": "interrogative alternation أم"
+    },
+    {
+      "discriminators": {
+        "particle": [
+          "بل"
+        ],
+        "position": [
+          "between_two_terms"
+        ],
+        "preceding_polarity": [
+          "negative",
+          "affirmative_upgraded"
+        ]
+      },
+      "id": "corrective_retraction",
+      "name": "corrective coordinator بل"
+    },
+    {
+      "discriminators": {
+        "case_identity": [
+          "shared"
+        ],
+        "particle": [
+          "لكن"
+        ],
+        "position": [
+          "between_two_terms"
+        ]
+      },
+      "id": "adversative_contrast",
+      "name": "adversative coordinator لكن"
+    },
+    {
+      "discriminators": {
+        "following_unit_size": [
+          "single_term"
+        ],
+        "particle": [
+          "لا"
+        ],
+        "position": [
+          "between_two_terms"
+        ],
+        "preceding_polarity": [
+          "affirmative"
+        ]
+      },
+      "id": "coordinating_negator",
+      "name": "coordinating negator لا"
+    },
+    {
+      "discriminators": {
+        "particle": [
+          "إما"
+        ],
+        "second_member_present": [
+          "yes"
+        ]
+      },
+      "id": "paired_alternation",
+      "name": "paired alternation إما"
+    },
+    {
+      "discriminators": {
+        "case_identity": [
+          "shared"
+        ],
+        "following_unit_size": [
+          "single_term"
+        ],
+        "particle": [
+          "حتى"
+        ],
+        "position": [
+          "between_two_terms"
+        ]
+      },
+      "id": "extreme_inclusion_coordinating",
+      "name": "extreme inclusion حتى read as coordinator"
+    },
+    {
+      "discriminators": {
+        "following_unit_size": [
+          "single_term"
+        ],
+        "particle": [
+          "حتى"
+        ],
+        "school_attribution": [
+          "disputed"
+        ]
+      },
+      "id": "extreme_inclusion_non_coordinating",
+      "name": "extreme inclusion حتى read as governor"
+    },
+    {
+      "discriminators": {
+        "following_unit_size": [
+          "clause"
+        ],
+        "particle": [
+          "لا"
+        ],
+        "position": [
+          "before_predicate"
+        ]
+      },
+      "id": "clause_negation_non_coordinating",
+      "name": "clause negation لا, not a coordinator"
+    },
+    {
+      "discriminators": {
+        "gemination": [
+          "geminated"
+        ],
+        "particle": [
+          "لكن"
+        ]
+      },
+      "id": "governing_particle_non_coordinating",
+      "name": "geminated لكن as a governing particle"
+    }
+  ],
+  "increment": "inc-atf-particle-discriminator",
+  "rules": [
+    {
+      "id": "atf-r1",
+      "text": "particle identity, position relative to the two terms, case identity, polarity of the preceding clause, the size of the following unit and gemination are SUPPLIED evidence, never guessed from the bare form"
+    },
+    {
+      "id": "atf-r2",
+      "text": "case transmission from the first term to the second is the formal content of the coordination relation; a second term with an independent governor is not a conjunct"
+    },
+    {
+      "id": "atf-r3",
+      "text": "position between two terms separates the coordinating negator from clause negation, and gemination separates the adversative coordinator from its governing homograph"
+    },
+    {
+      "id": "atf-r4",
+      "text": "the disputed members carry an attributed no-decision path: when both the coordinating and the governing reading are licensed, both are kept with their attribution and neither is promoted"
+    },
+    {
+      "id": "atf-r5",
+      "text": "the classical division of the two alternation particles by clause type is recorded as taught; looser later usage is a teaching note and is never emitted as a licensing rule"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-atf-particle-discriminator",
+  "version": 1
+}

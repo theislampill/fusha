@@ -1,0 +1,126 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "pilot_validators_green",
+      "pass_condition": "the command exits 0 AND prints its named PASS line (e.g. 'CURRICULUM L1L6 VALIDATION PASS'); any FAIL line is a packet failure regardless of exit code",
+      "run": "python tools/validate_curriculum_l1l6.py --pilot-only"
+    },
+    {
+      "name": "no_certified_status_introduced",
+      "pass_condition": "no_unsupported_certification check passes",
+      "run": "python tools/validate_curriculum_l1l6.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "the adversarial fixture (a word whose initial م IS a root letter) must stay correctly classified; if the procedure misowns it, the packet verdict is repair, not accept",
+        "id": "adv-malik"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "the pilot's مسجد analysis (root س ج د, pattern-owned م) survives review as a correct candidate",
+        "id": "pos-masjid"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "curriculum/l1l6/pilot/",
+    "selection_rule": "the single pilot procedure",
+    "this_packet_size": 1,
+    "universe_size": 1
+  },
+  "commands": [
+    {
+      "expect": "pilot checks PASS",
+      "purpose": "verify the pilot parity invariant (facts == segmentation == hover letters)",
+      "run": "python tools/validate_curriculum_l1l6.py --pilot-only"
+    },
+    {
+      "expect": "overlap table with zero unexplained conflicts",
+      "purpose": "cross-check the candidate procedure against sarf@2.4 candidate rows for overlap/conflict",
+      "run": "python - (inline: join pilot procedure rule keys against qamus/skills/rule-registry-increment-24.jsonl ids; emit overlap table)"
+    }
+  ],
+  "defeaters": [
+    "a produced row conflicts with a repo-certified fact -> record as contradicted, do not overwrite",
+    "the private corpus is unavailable -> metadata-only steps proceed; body-reading steps abort cleanly"
+  ],
+  "definition_of_done": [
+    "review bundle exists",
+    "recommendation recorded",
+    "no Sol-owned file modified"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "procedure conflicts with an accepted sarf rule",
+      "any fixture requires a linguistic ruling beyond the evidence"
+    ],
+    "route": "Sol integration review -> owner adjudication where a rule/status change is implied"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "never invent an example, answer key or analysis the source or an independent authority does not support; abstain and record the gap",
+    "statement": "evidence level: curriculum-source-supported (uncertified); every row cites its claim-ledger claim_id and manifest file_id (source + claim identity); lesson prose is read in private custody and never committed; committed rows are original restatements",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "review bundle: procedure text, fixture results, overlap table, recommendation (accept-as-candidate / repair / reject)",
+      "path": "curriculum/l1l6/reports/rootpattern-promotion-review.md"
+    }
+  ],
+  "guards": [
+    "the METHOD transfers, linguistic conclusions never do: a lesson-derived pattern licenses a candidate row, never a resolved analysis at any occurrence",
+    "rival-analysis handling: any item admitting more than one admissible analysis is recorded with ALL alternatives (analysis-dependent / school-dependent), never side-picked",
+    "no candidate-to-certified automatic promotion: nothing this packet produces may carry status certified; only tools/certify_typed_fact.py certifies, after review, outside this packet"
+  ],
+  "inputs": {
+    "input_files": [
+      "curriculum/l1l6/registry/lessons.jsonl",
+      "curriculum/l1l6/graph/concepts.jsonl",
+      "curriculum/l1l6/ledger/claim-ledger.jsonl",
+      "curriculum/l1l6/ledger/overgeneralization-guards.jsonl",
+      "curriculum/l1l6/crosswalk/sarf-crosswalk.jsonl",
+      "curriculum/l1l6/crosswalk/nahw-crosswalk.jsonl"
+    ],
+    "permitted_write_files": [
+      "curriculum/l1l6/reports/rootpattern-promotion-review.md"
+    ],
+    "prohibited_files": [
+      "sarf/SKILL.md",
+      "nahw/SKILL.md",
+      "sarf/rules/",
+      "nahw/rules/",
+      "qamus/skills/",
+      "qamus/lattice/",
+      "qamus/data/",
+      "qamus/examples/",
+      "tools/check_regressions.py",
+      "fusha/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "All outputs are candidate-plane repo artifacts; no live surface, entry store, or public payload is touched; deployment is owner-gated elsewhere.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-CURR-ROOTPATTERN-PROMOTION",
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "CURRICULUM_BACKPROP_SARF",
+    "out_of_scope": [
+      "editing sarf/SKILL.md or any rule registry directly",
+      "certifying any fact",
+      "touching p007 pilot artifacts"
+    ],
+    "summary": "Adjudicate curriculum/l1l6/pilot/: the candidate root-vs-pattern-vs-affix letter-ownership procedure, its fixtures and its segmentation/hover parity proof. If accepted, Sol integrates a sarf@2.x candidate increment through the NORMAL rule-registry path; this packet itself only prepares the review bundle.",
+    "tranche": "curriculum-l1l6-w1"
+  },
+  "title": "Review and (if approved) promote the pilot letter-ownership candidate procedure into the sarf skill plane",
+  "tools_required": [
+    "python3",
+    "the PRIVATE lesson corpus (owner custody) for any step that reads lesson bodies; metadata-only steps run from committed artifacts"
+  ]
+}

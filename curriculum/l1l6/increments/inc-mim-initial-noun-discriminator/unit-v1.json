@@ -1,0 +1,117 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives"
+  ],
+  "capability": "discriminator_table",
+  "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+  "functions": [
+    {
+      "discriminators": {
+        "penult_vowel": [
+          "kasra"
+        ],
+        "prefix_vowel": [
+          "damma"
+        ],
+        "source_form_class": [
+          "derived",
+          "form_three"
+        ]
+      },
+      "id": "agent_noun",
+      "name": "agent noun on a derived form"
+    },
+    {
+      "discriminators": {
+        "penult_vowel": [
+          "fatha"
+        ],
+        "prefix_vowel": [
+          "damma"
+        ],
+        "source_form_class": [
+          "derived",
+          "form_three"
+        ]
+      },
+      "id": "patient_noun",
+      "name": "patient noun on a derived form"
+    },
+    {
+      "discriminators": {
+        "final_ending": [
+          "taa_marbuta"
+        ],
+        "penult_vowel": [
+          "fatha"
+        ],
+        "prefix_vowel": [
+          "damma"
+        ],
+        "source_form_class": [
+          "form_three"
+        ]
+      },
+      "id": "form_three_verbal_noun",
+      "name": "third-form verbal noun"
+    },
+    {
+      "discriminators": {
+        "prefix_vowel": [
+          "fatha"
+        ],
+        "source_form_class": [
+          "bare_triliteral"
+        ],
+        "vocalization": [
+          "present"
+        ]
+      },
+      "id": "place_or_time_noun",
+      "name": "place or time noun"
+    },
+    {
+      "discriminators": {
+        "prefix_vowel": [
+          "kasra"
+        ],
+        "source_form_class": [
+          "bare_triliteral"
+        ],
+        "vocalization": [
+          "present"
+        ]
+      },
+      "id": "instrument_noun",
+      "name": "instrument noun"
+    }
+  ],
+  "increment": "inc-mim-initial-noun-discriminator",
+  "rules": [
+    {
+      "id": "mim-r1",
+      "text": "prefix vowel, internal vowel, final ending and the form class of the source verb are SUPPLIED evidence; an unvocalized token supplies none of the vowel features and therefore resolves nothing"
+    },
+    {
+      "id": "mim-r2",
+      "text": "the prefix vowel is the only formal boundary between the tool class and the place-or-time class, so an unpointed prefix abstains and never defaults to the more frequent class"
+    },
+    {
+      "id": "mim-r3",
+      "text": "the derived-form verbal noun and the patient noun coincide in shape: where both are licensed, both are preserved and the function is decided by context outside this table"
+    },
+    {
+      "id": "mim-r4",
+      "text": "instrument templates are lexical, not derivable: this table classifies an attested token, it never predicts which template a root takes"
+    },
+    {
+      "id": "mim-r5",
+      "text": "a place-or-time reading presupposes a bare triliteral source; the same prefix vowel over a derived source is outside the table's regime"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-mim-initial-noun-discriminator",
+  "version": 1
+}

@@ -1,0 +1,109 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives"
+  ],
+  "capability": "discriminator_table",
+  "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+  "functions": [
+    {
+      "discriminators": {
+        "joint_performance": [
+          "available"
+        ],
+        "preceding_role_saturation": [
+          "open"
+        ],
+        "second_governor": [
+          "absent"
+        ]
+      },
+      "id": "waw_coordination",
+      "name": "coordinating و"
+    },
+    {
+      "discriminators": {
+        "following_nominal_case": [
+          "nasb"
+        ],
+        "preceding_verbal_governor": [
+          "present"
+        ],
+        "second_governor": [
+          "absent"
+        ]
+      },
+      "id": "waw_maiyya",
+      "name": "accompaniment و"
+    },
+    {
+      "discriminators": {
+        "following_clause": [
+          "topic_comment"
+        ],
+        "linking_pronoun": [
+          "present"
+        ],
+        "preceding_nominal": [
+          "definite_role_saturated"
+        ]
+      },
+      "id": "waw_hal",
+      "name": "state و"
+    },
+    {
+      "discriminators": {
+        "following_nominal_case": [
+          "jarr"
+        ],
+        "position": [
+          "clause_initial"
+        ],
+        "response_clause": [
+          "present"
+        ]
+      },
+      "id": "waw_qasam",
+      "name": "oath و"
+    },
+    {
+      "discriminators": {
+        "following_clause": [
+          "independent_no_slot"
+        ],
+        "position": [
+          "clause_initial"
+        ]
+      },
+      "id": "waw_istinaf",
+      "name": "parenthetical or resumptive و"
+    }
+  ],
+  "increment": "inc-waw-function-discriminator",
+  "rules": [
+    {
+      "id": "waw-r1",
+      "text": "the case of the following nominal, the presence of a verbal governor, the definiteness and role saturation of the preceding nominal, the linking pronoun and the presence of a response clause are SUPPLIED evidence, never reconstructed from an unvocalized string"
+    },
+    {
+      "id": "waw-r2",
+      "text": "the accompaniment reading requires a preceding verbal governor and an accusative following nominal; a nominative following nominal selects coordination instead"
+    },
+    {
+      "id": "waw-r3",
+      "text": "the participation test is a strong cue, not a gate: an animate capable nominal may still be construed as accompanying, so animacy never closes the decision on its own"
+    },
+    {
+      "id": "waw-r4",
+      "text": "where the case is unrecoverable and both readings are licensed, both are preserved; the emphasis difference between them is not a fact this unit may emit"
+    },
+    {
+      "id": "waw-r5",
+      "text": "a nominal state clause requires both the state connective and a linking pronoun; a clause-initial connective is not by itself an oath"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-waw-function-discriminator",
+  "version": 1
+}

@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "coordination_panel",
+      "teaching": "names the coordinating sense with the evidence that produced it: position, case identity, polarity, unit size"
+    },
+    {
+      "key": "homograph_panel",
+      "teaching": "shows the non-coordinating reading of the same form and the feature that separates them"
+    },
+    {
+      "key": "disputed_membership_panel",
+      "teaching": "for the disputed members, both readings are shown with attribution and no winner"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

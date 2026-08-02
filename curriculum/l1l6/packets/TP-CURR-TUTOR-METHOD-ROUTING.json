@@ -1,0 +1,118 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "routing_validates",
+      "pass_condition": "exit 0; every row has gate_wrap",
+      "run": "python tools/validate_curriculum_l1l6.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "a routing row that would let a lesson-derived answer bypass validate_linguistic_decisions gates must be rejected",
+        "id": "adv-gate-drop"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "M5 (error diagnosis) routes to fusha_learner_feedback KC records with gate_wrap intact",
+        "id": "pos-m5"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "curriculum/l1l6/crosswalk/instructional-methods.md",
+    "selection_rule": "all extracted methods",
+    "this_packet_size": 10,
+    "universe_size": 10
+  },
+  "commands": [
+    {
+      "expect": "every row names a gate_wrap; rows without gate_wrap fail",
+      "purpose": "emit candidate routing rows {method_id, concept_domain, cefr_band, existing_surface, gate_wrap}",
+      "run": "python - (inline: cross instructional-methods.md table with graph domain histogram + tools/fusha_cefr_gate.py bands)"
+    }
+  ],
+  "defeaters": [
+    "a produced row conflicts with a repo-certified fact -> record as contradicted, do not overwrite",
+    "the private corpus is unavailable -> metadata-only steps proceed; body-reading steps abort cleanly"
+  ],
+  "definition_of_done": [
+    "10 methods routed or explicitly deferred",
+    "all rows candidate + gate-wrapped"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "a method requires tutor-surface changes (Sol-owned) — leave integration note"
+    ],
+    "route": "Sol integration review -> owner adjudication where a rule/status change is implied"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "never invent an example, answer key or analysis the source or an independent authority does not support; abstain and record the gap",
+    "statement": "evidence level: curriculum-source-supported (uncertified); every row cites its claim-ledger claim_id and manifest file_id (source + claim identity); lesson prose is read in private custody and never committed; committed rows are original restatements",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "candidate method->surface routing rows with mandatory gate_wrap",
+      "path": "curriculum/l1l6/reports/tutor-method-routing.jsonl"
+    },
+    {
+      "description": "coverage summary + integration notes for the tutor owner",
+      "path": "curriculum/l1l6/reports/tutor-method-routing.meta.json"
+    }
+  ],
+  "guards": [
+    "the METHOD transfers, linguistic conclusions never do: a lesson-derived pattern licenses a candidate row, never a resolved analysis at any occurrence",
+    "rival-analysis handling: any item admitting more than one admissible analysis is recorded with ALL alternatives (analysis-dependent / school-dependent), never side-picked",
+    "no candidate-to-certified automatic promotion: nothing this packet produces may carry status certified; only tools/certify_typed_fact.py certifies, after review, outside this packet"
+  ],
+  "inputs": {
+    "input_files": [
+      "curriculum/l1l6/registry/lessons.jsonl",
+      "curriculum/l1l6/graph/concepts.jsonl",
+      "curriculum/l1l6/ledger/claim-ledger.jsonl",
+      "curriculum/l1l6/ledger/overgeneralization-guards.jsonl",
+      "curriculum/l1l6/crosswalk/sarf-crosswalk.jsonl",
+      "curriculum/l1l6/crosswalk/nahw-crosswalk.jsonl"
+    ],
+    "permitted_write_files": [
+      "curriculum/l1l6/reports/tutor-method-routing.jsonl",
+      "curriculum/l1l6/reports/tutor-method-routing.meta.json"
+    ],
+    "prohibited_files": [
+      "sarf/SKILL.md",
+      "nahw/SKILL.md",
+      "sarf/rules/",
+      "nahw/rules/",
+      "qamus/skills/",
+      "qamus/lattice/",
+      "qamus/data/",
+      "qamus/examples/",
+      "tools/check_regressions.py",
+      "fusha/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "All outputs are candidate-plane repo artifacts; no live surface, entry store, or public payload is touched; deployment is owner-gated elsewhere.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-CURR-TUTOR-METHOD-ROUTING",
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "CURRICULUM_BACKPROP_TUTOR",
+    "out_of_scope": [
+      "editing curriculum/tutor-runtime-routing.md or tutor-session-protocol.md directly (Sol-shared tutor surface)",
+      "weakening any decision gate"
+    ],
+    "summary": "Map methods M1-M10 (crosswalk/instructional-methods.md) onto curriculum/tutor-runtime-routing.md's existing routing surfaces as ADDITIVE candidate routing rows: which method serves which concept domain at which CEFR level. The inverse gap (xn-10) is controlling: the curriculum has no abstention pedagogy, so every routed answer path must carry the gate ladder.",
+    "tranche": "curriculum-l1l6-w1"
+  },
+  "title": "Wire the 10 extracted instructional methods into tutor routing metadata with the abstention gate preserved",
+  "tools_required": [
+    "python3",
+    "the PRIVATE lesson corpus (owner custody) for any step that reads lesson bodies; metadata-only steps run from committed artifacts"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "guards": [
+    {
+      "guard": "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+      "id": "g-prp-1"
+    },
+    {
+      "guard": "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+      "id": "g-prp-2"
+    },
+    {
+      "guard": "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+      "id": "g-prp-3"
+    },
+    {
+      "guard": "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+      "id": "g-prp-4"
+    },
+    {
+      "guard": "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+      "id": "g-prp-5"
+    },
+    {
+      "guard": "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+      "id": "g-prp-6"
+    },
+    {
+      "guard": "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition",
+      "id": "g-prp-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

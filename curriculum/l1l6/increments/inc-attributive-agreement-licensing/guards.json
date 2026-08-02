@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "referent animacy and the head's four features are declared inputs; a missing one abstains",
+      "id": "g-agr-1"
+    },
+    {
+      "guard": "an undecidable attachment is emitted as an outcome, never resolved by preference or by word order",
+      "id": "g-agr-2"
+    },
+    {
+      "guard": "reduced-agreement rows are attributed and never widened into the general agreement licence",
+      "id": "g-agr-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-agr-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

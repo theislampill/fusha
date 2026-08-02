@@ -1,0 +1,162 @@
+{
+  "abstention_reasons": [
+    "penult_vowel_unknown",
+    "penult_vowel_evidence_unbound",
+    "penult_mark_not_in_surface",
+    "penult_mark_mismatch",
+    "weak_declaration_unbound",
+    "ambiguous_template",
+    "no_template",
+    "no_root_evidence",
+    "surface_letter_mismatch"
+  ],
+  "capability": "template_classification",
+  "increment": "inc-derivatives",
+  "penult_mark_verification": true,
+  "repair_of": "unit-v2.json (GLOBAL weak-substitution table false-passed non-words built by inserting hamza into sound-slot templates, e.g. the mafuul and tafiil shapes; claimed penult marks were trusted without the written surface; weak realization was undeclared — Sol fix-request round 2, finding 1)",
+  "require_weak_declaration": true,
+  "rules": [
+    {
+      "id": "der-r1",
+      "text": "a template matches only with supplied root radicals filling R1..R3 in order (no root derivation in the consumer)"
+    },
+    {
+      "id": "der-r2",
+      "text": "mu_participle without a known penult vowel -> abstain penult_vowel_unknown (never default to active)"
+    },
+    {
+      "id": "der-r3",
+      "text": "gloss SHAPE is nominal for every class here; the consumer flags (does not author) any verbal-gloss pairing"
+    },
+    {
+      "id": "der-r4",
+      "text": "zero or >1 surviving template -> abstain (ambiguous_template or no_template)"
+    },
+    {
+      "id": "der-r5",
+      "text": "a weak radical may surface only via the substitutions the pack licenses FOR THAT TEMPLATE (by_template scope); a substitution licensed for one template never licenses another"
+    },
+    {
+      "id": "der-r6",
+      "text": "a claimed penult surface mark must be verifiable on the written surface: unpointed surface -> penult_mark_not_in_surface; differing written mark -> penult_mark_mismatch (never trust the claim alone)"
+    },
+    {
+      "id": "der-r7",
+      "text": "any exercised weak substitution, and any voice split over a weak-radical root, requires the exact bound weak declaration (weak_position + weak_radical) in the root evidence -> otherwise weak_declaration_unbound"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "templates": [
+    {
+      "class": "active_participle",
+      "id": "faail",
+      "name": "فاعل active participle (form I)",
+      "requires": [],
+      "shape": [
+        "R1",
+        "ا",
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "class": "passive_participle",
+      "id": "mafuul",
+      "name": "مفعول passive participle (form I)",
+      "requires": [],
+      "shape": [
+        "م",
+        "R1",
+        "R2",
+        "و",
+        "R3"
+      ]
+    },
+    {
+      "class": "mu_participle",
+      "id": "mu_participle",
+      "name": "مُـ participle (derived forms)",
+      "requires": [
+        "penult_vowel"
+      ],
+      "shape": [
+        "م",
+        "..."
+      ],
+      "split": {
+        "fatha": "passive_participle",
+        "kasra": "active_participle"
+      }
+    },
+    {
+      "class": "masdar_II",
+      "id": "tafiil",
+      "name": "تفعيل masdar (form II)",
+      "requires": [],
+      "shape": [
+        "ت",
+        "R1",
+        "R2",
+        "ي",
+        "R3"
+      ]
+    },
+    {
+      "class": "masdar_IV",
+      "id": "ifaal",
+      "name": "إفعال masdar (form IV)",
+      "requires": [],
+      "shape": [
+        "إ",
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "masdar_X",
+      "id": "istifaal",
+      "name": "استفعال masdar (form X)",
+      "requires": [],
+      "shape": [
+        "ا",
+        "س",
+        "ت",
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "place_time_noun",
+      "id": "mafal_place",
+      "name": "مَفْعَل/مَفْعِل place-noun",
+      "requires": [],
+      "shape": [
+        "م",
+        "R1",
+        "R2",
+        "R3"
+      ]
+    }
+  ],
+  "unit_ref": "u-s03",
+  "version": 3,
+  "weak_substitutions": {
+    "by_template": {
+      "faail": {
+        "R2": {
+          "و": [
+            "ئ"
+          ],
+          "ي": [
+            "ئ"
+          ]
+        }
+      }
+    }
+  }
+}

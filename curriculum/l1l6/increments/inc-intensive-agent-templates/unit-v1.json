@@ -1,0 +1,158 @@
+{
+  "abstention_reasons": [
+    "no_root_evidence",
+    "no_template",
+    "ambiguous_template"
+  ],
+  "capability": "template_classification",
+  "degree_scale": [
+    "plain agent noun",
+    "doubled-radical intensive",
+    "absolute"
+  ],
+  "increment": "inc-intensive-agent-templates",
+  "inventory_status": "candidate; membership and count differ between traditions",
+  "rules": [
+    {
+      "id": "int-r1",
+      "text": "a template matches only against SUPPLIED root radicals filling R1..R3 in order; no root is derived here"
+    },
+    {
+      "id": "int-r2",
+      "text": "a matched row names degree, not identity: the intensive reading asserts habitual, professional or excessive performance and is never claimed for a single-occasion act"
+    },
+    {
+      "id": "int-r3",
+      "text": "the closing taa of the فعالة row is declared intensifying, so this unit emits NO gender claim from it; gender is read from agreement elsewhere in the clause"
+    },
+    {
+      "id": "int-r4",
+      "text": "the فعيل and فعول rows are declared shared with the quality-adjective inventory; the transitivity test (can an underlying verb with an object be recovered?) is SUPPLIED evidence and is not run by the consumer"
+    },
+    {
+      "id": "int-r5",
+      "text": "the مفعال row is letter-identical to the instrument template and the فعلة row is letter-identical to a nominal template; both homographs are declared, so those skeletons abstain ambiguous_template"
+    },
+    {
+      "id": "int-r6",
+      "text": "an annexed noun following an intensive form corresponds to the source verb's object; this unit flags the annexation for review and never re-analyses the clause"
+    },
+    {
+      "id": "int-r7",
+      "text": "the six-row grouping is one of several competing traditions and the classical restriction to transitive triliteral verbs is recorded as unstated in the source; the inventory is candidate, not closed"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "templates": [
+    {
+      "class": "intensive_agent",
+      "degree": "habitual or professional performance",
+      "id": "faaal",
+      "name": "فعال intensive template (doubled middle radical)",
+      "note": "most productive row of the class",
+      "shape": [
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "intensive_agent_intensifying_taa",
+      "degree": "reinforced habitual performance",
+      "id": "faaala_taa",
+      "name": "فعالة intensive template with the non-gender taa",
+      "note": "the closing taa intensifies and leaves the referent's gender open",
+      "shape": [
+        "R1",
+        "R2",
+        "ا",
+        "R3",
+        "ة"
+      ]
+    },
+    {
+      "class": "intensive_agent",
+      "degree": "excess",
+      "id": "mifaal",
+      "name": "مفعال intensive template",
+      "shape": [
+        "م",
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "instrument_noun_homograph",
+      "id": "mifaal_instrument_homograph",
+      "name": "مفعال homograph (the instrument template of the same skeleton)",
+      "note": "person-vs-tool cannot be read off the letters",
+      "shape": [
+        "م",
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "shared_intensive_quality",
+      "degree": "absolute",
+      "id": "faul",
+      "name": "فعول absolute-degree template",
+      "shape": [
+        "R1",
+        "R2",
+        "و",
+        "R3"
+      ],
+      "shared_with": [
+        "cu-quality-adjective-templates"
+      ]
+    },
+    {
+      "class": "shared_intensive_quality",
+      "degree": "intensified",
+      "id": "faiil",
+      "name": "فعيل template",
+      "shape": [
+        "R1",
+        "R2",
+        "ي",
+        "R3"
+      ],
+      "shared_with": [
+        "cu-quality-adjective-templates"
+      ]
+    },
+    {
+      "class": "intensive_agent_rare",
+      "degree": "censured habit",
+      "id": "fuala",
+      "name": "فعلة rare censuring template",
+      "shape": [
+        "R1",
+        "R2",
+        "R3",
+        "ة"
+      ]
+    },
+    {
+      "class": "nominal_homograph",
+      "id": "fala_nominal_homograph",
+      "name": "فعلة homograph (the masdar / instance noun of the same skeleton)",
+      "note": "letter-identical to the rare row; only the vowels and the entry separate them",
+      "shape": [
+        "R1",
+        "R2",
+        "R3",
+        "ة"
+      ]
+    }
+  ],
+  "unit_ref": "cu-intensive-agent-templates",
+  "version": 1
+}

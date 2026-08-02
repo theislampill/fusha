@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "a fixed rendering across both tense environments is prohibited; the tense class must be supplied first",
+      "id": "g-qad-fixed"
+    },
+    {
+      "guard": "no mood or case claim is ever emitted from this unit",
+      "id": "g-qad-gov"
+    },
+    {
+      "guard": "the emphatic variant is a separate item and is never resolved through this table",
+      "id": "g-qad-var"
+    },
+    {
+      "guard": "a non-verbal complement is a review flag, never a reading",
+      "id": "g-qad-nom"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

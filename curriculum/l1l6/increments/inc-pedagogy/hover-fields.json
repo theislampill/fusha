@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "key": "depth_tiered_explanations",
+      "teaching": "beginner/intermediate/advanced views compiled from ONE unit record"
+    },
+    {
+      "key": "recognition_cue",
+      "teaching": "what the learner should look for on the token/construction"
+    },
+    {
+      "key": "common_error_warning",
+      "teaching": "the misconception guard travels WITH the explanation — never dropped"
+    },
+    {
+      "key": "unresolved_notice",
+      "teaching": "genuine rival analyses surface, attributed, no winner implied"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

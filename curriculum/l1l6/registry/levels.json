@@ -1,0 +1,78 @@
+{
+  "generator": "tools/build_curriculum_l1l6.py",
+  "levels": [
+    {
+      "actual_lessons": 39,
+      "actual_modules": 5,
+      "declaration_matches_actual": true,
+      "declared_lessons": 39,
+      "declared_modules": 5,
+      "level_id": "L1",
+      "ordinal": 1,
+      "schema": "curriculum.l1l6_level.v1",
+      "source_url": "https://kitabite.com/level/level-1",
+      "title": "Level 1 — Foundations (A1): The Building Blocks of Arabic Speech"
+    },
+    {
+      "actual_lessons": 32,
+      "actual_modules": 5,
+      "declaration_matches_actual": true,
+      "declared_lessons": 32,
+      "declared_modules": 5,
+      "level_id": "L2",
+      "ordinal": 2,
+      "schema": "curriculum.l1l6_level.v1",
+      "source_url": "https://kitabite.com/level/level-2",
+      "title": "Level 2 — Core System (A2): Governance, Mood, and the Abrogators"
+    },
+    {
+      "actual_lessons": 37,
+      "actual_modules": 5,
+      "declaration_matches_actual": true,
+      "declared_lessons": 37,
+      "declared_modules": 5,
+      "level_id": "L3",
+      "ordinal": 3,
+      "schema": "curriculum.l1l6_level.v1",
+      "source_url": "https://kitabite.com/level/level-3",
+      "title": "Level 3 — Expanded Morphology and Constructions (B1): Derivation, Governance, and Complex Roles"
+    },
+    {
+      "actual_lessons": 40,
+      "actual_modules": 5,
+      "declaration_matches_actual": true,
+      "declared_lessons": 40,
+      "declared_modules": 5,
+      "level_id": "L4",
+      "ordinal": 4,
+      "schema": "curriculum.l1l6_level.v1",
+      "source_url": "https://kitabite.com/level/level-4",
+      "title": "Level 4 — Deep Syntax and Mastery of Roles (B2): Advanced Governance, Constructions, and Paradigms"
+    },
+    {
+      "actual_lessons": 40,
+      "actual_modules": 6,
+      "declaration_matches_actual": true,
+      "declared_lessons": 40,
+      "declared_modules": 6,
+      "level_id": "L5",
+      "ordinal": 5,
+      "schema": "curriculum.l1l6_level.v1",
+      "source_url": "https://kitabite.com/level/level-5",
+      "title": "Level 5 — Stylistic Control and Genre Grammar (C1): Rhetoric, Complex Governance, and Advanced Morphology"
+    },
+    {
+      "actual_lessons": 38,
+      "actual_modules": 6,
+      "declaration_matches_actual": true,
+      "declared_lessons": 38,
+      "declared_modules": 6,
+      "level_id": "L6",
+      "ordinal": 6,
+      "schema": "curriculum.l1l6_level.v1",
+      "source_url": "https://kitabite.com/level/level-6",
+      "title": "Level 6 — Mastery and Autonomy (C2): Classical Tradition, Poetic Grammar, and Full-System Command"
+    }
+  ],
+  "schema": "curriculum.l1l6_level.v1.table"
+}

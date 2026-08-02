@@ -1,0 +1,10 @@
+{
+  "authority": "qamus/examples/p007-li-pilot/ (facts, projections, reverse index, event trail) — no new linguistic conclusions",
+  "generator": "tools/build_curriculum_corpus_pilot.py",
+  "occurrences": [
+    "quran:2:34:5",
+    "quran:61:5:4"
+  ],
+  "reuse_demonstration": "one reusable lesson (inc-ownership rules) applied to both occurrences; second occurrence = reuse proof",
+  "schema": "curriculum.l1l6_corpus_pilot_envelope.v1.meta"
+}

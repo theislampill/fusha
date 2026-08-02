@@ -1,0 +1,11 @@
+{
+  "committed_fields_policy": "hashes, counts, titles, slugs, section-heading labels, source URLs only; no lesson prose",
+  "custody_decision": "curriculum/l1l6/custody/custody-decision.md",
+  "custody_status": "private_source_custody_metadata_only",
+  "duplicate_content_groups": [],
+  "generator": "tools/build_curriculum_l1l6.py",
+  "lesson_files": 226,
+  "level_readmes": 6,
+  "row_count": 232,
+  "schema": "curriculum.l1l6_source_manifest.v1.meta"
+}

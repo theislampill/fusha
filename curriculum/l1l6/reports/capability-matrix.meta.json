@@ -1,0 +1,9 @@
+{
+  "families_pending_unit_authoring": 17,
+  "families_with_executable_consumer": 33,
+  "generator": "tools/build_capability_matrix.py",
+  "nahw_families": 38,
+  "rows": 63,
+  "sarf_families": 25,
+  "schema": "curriculum.l1l6_capability_matrix_row.v1.meta"
+}

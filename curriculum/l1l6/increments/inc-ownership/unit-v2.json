@@ -1,0 +1,51 @@
+{
+  "abstention_reasons": [
+    "pending_letter_ownership",
+    "false_stem_risk",
+    "no_root_evidence"
+  ],
+  "capability": "letter_ownership",
+  "clitic_inventory": {
+    "ال": "definite_article",
+    "ب": "preposition",
+    "س": "future_marker",
+    "ف": "conjunction",
+    "ك": "preposition",
+    "ل": "preposition",
+    "و": "conjunction"
+  },
+  "increment": "inc-ownership",
+  "inflection_prefixes": {
+    "أ": "imperfect_1sg",
+    "ت": "imperfect_2_or_3f",
+    "ن": "imperfect_1pl",
+    "ي": "imperfect_3"
+  },
+  "repair_of": "unit-v1.json own-r2-v1 (shape-only augment assignment)",
+  "rules": [
+    {
+      "id": "own-r1",
+      "text": "peel leading ال then single-letter proclitics from clitic_inventory; a peel that leaves <2 letters is invalid (abstain false_stem_risk)"
+    },
+    {
+      "id": "own-r2-v2",
+      "text": "letter ownership REQUIRES supplied root_evidence (root radicals + basis). A letter is root iff it matches the next expected radical in order; an initial م is pattern_augment ONLY when root_evidence exists and م is not the expected radical. NO root_evidence -> abstain no_root_evidence. (repairs own-r2-v1; guard og-2/og-6)"
+    },
+    {
+      "id": "own-r3",
+      "text": "an inflection prefix from inflection_prefixes may be assigned only when token_kind=verb_imperfect is declared AND the letter is not the expected radical"
+    },
+    {
+      "id": "own-r4",
+      "text": "any letter left unowned, or owned twice, forces abstain pending_letter_ownership for the WHOLE token"
+    },
+    {
+      "id": "own-r5",
+      "text": "weak roots: a radical absent from the surface is recorded as hidden_radical, never forced onto a surface letter"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "u-s01",
+  "version": 2
+}

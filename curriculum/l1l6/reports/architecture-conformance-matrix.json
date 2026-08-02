@@ -1,0 +1,151 @@
+{
+  "basis": "Sol fix-request round at reviewed head eb51278c626ebe9b65b5a3e1be3a3895783e1233 (review tree fd574a6f483995e5fce5a94368ea0b5fc7d37d14); states are drawn EXCLUSIVELY from the owner's closed ownership-split vocabulary and name the responsible integration partition, while remaining_dependency records whether work is still open; remaining_dependency: none means the bounded work is implemented but does not itself claim final review closure",
+  "schema": "curriculum.l1l6_architecture_conformance.v2",
+  "state_vocabulary": [
+    "fable_branch_repair",
+    "sol_adapter_required",
+    "shared_integration_gate",
+    "linguistic_review_blocked",
+    "owner_or_scholar_blocked"
+  ],
+  "rows": [
+    {
+      "subsystem": "Canonical units",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "instructional plane only; no defect in this round"
+    },
+    {
+      "subsystem": "Unit-to-lesson graph",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "two-way map unchanged; no defect in this round"
+    },
+    {
+      "subsystem": "Machine packs",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority",
+      "change": "round 2: template-scoped weak-substitution licences, written-surface mark verification, bound weak declarations (finding 1). Round 3: unified weak_realizations table — every realization licensed per template/slot/radical, literal retention included, nothing licensed by default (R3-1)"
+    },
+    {
+      "subsystem": "Generic consumer (weak-root gate)",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority",
+      "change": "round 3: literal weak realizations gated (قاول / مقوول / مبيوع abstain weak_realization_unlicensed) and self-contradicting weak evidence rejected (weak_declaration_contradicts_root); the licence table's contents remain candidate scope declarations, never morphological authority (R3-1)"
+    },
+    {
+      "subsystem": "Capability interfaces",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority",
+      "change": "unchanged de-authorized dispatch; authoritative consumption stays adapter-gated"
+    },
+    {
+      "subsystem": "Generic consumer",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority",
+      "change": "new fail-closed reasons: penult_mark_not_in_surface, penult_mark_mismatch, weak_declaration_unbound; مقئول/تقئيل red-first pinned (finding 1)"
+    },
+    {
+      "subsystem": "Flywheel runner",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-canonical-dogfood",
+      "change": "every loop record stamped development_evidence_only + canonical_dogfood_eligible:false; transfer-fixture wording (finding 11)"
+    },
+    {
+      "subsystem": "Misconception registry",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "no defect in this round"
+    },
+    {
+      "subsystem": "Fixture candidates",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "no defect in this round"
+    },
+    {
+      "subsystem": "Drill candidates",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-tutor-kc-drills",
+      "change": "semantic validation of all records in the ordinary validator; honest counts preserved (finding 8)"
+    },
+    {
+      "subsystem": "Pedagogy consumer",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-tutor-kc-drills",
+      "change": "projected/candidate_projected metadata contradiction repaired (finding 6); stale disposition docs rewritten (finding 7)"
+    },
+    {
+      "subsystem": "Learner projections",
+      "state": "shared_integration_gate",
+      "remaining_dependency": "none",
+      "change": "Sol integration replaced private replay with TypedFactCertificationStore validation/status APIs and real targeted revoke tests; invalid trails and dependencies fail closed, and generated learner planes are fresh (finding 5)"
+    },
+    {
+      "subsystem": "Promotion bundles",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "Sol review + application",
+      "change": "regenerated over the v4 derivation pack; rows remain full main-schema candidates with no automatic application"
+    },
+    {
+      "subsystem": "P/V/N grounding",
+      "state": "linguistic_review_blocked",
+      "remaining_dependency": "orthography-equivalence policy for card_display_only witnesses (Sol/scholar)",
+      "change": "canonical loc-surface verification; 11 diverging witnesses downgraded to card_display_only, never canonical (finding 3)"
+    },
+    {
+      "subsystem": "V candidates",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority + per-occurrence evidence",
+      "change": "witness canonical verification inherited from grounding (finding 3)"
+    },
+    {
+      "subsystem": "N candidates",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority + per-occurrence evidence",
+      "change": "witness canonical verification inherited from grounding (finding 3)"
+    },
+    {
+      "subsystem": "Occurrence candidates",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "ma payload surface/appearances/facts/binding preserved verbatim with validator re-verification (finding 4)"
+    },
+    {
+      "subsystem": "Colour/hover bindings",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-occurrence-appearance-projection",
+      "change": "claims narrowed to candidate span alignment; authoritative same-fact identity is adapter work (finding 13); pilot letters + hover marks bound to the written surface (finding 2)"
+    },
+    {
+      "subsystem": "Website pedagogy",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-website-payload",
+      "change": "unchanged deliverable:false shapes"
+    },
+    {
+      "subsystem": "CI gate",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "trigger paths equal the executed-tool set (finding 9); boundary canaries extended to drive paths / UNC / macOS / IP (finding 12); round 3: forward-slash Windows drive and UNC paths detected in BOTH validators with a committed no-false-positive probe (R3-2)"
+    },
+    {
+      "subsystem": "Custody heading queue",
+      "state": "owner_or_scholar_blocked",
+      "remaining_dependency": "owner adjudication of 213 owner_review_pending rows",
+      "change": "untouched; no completed-custody claim"
+    },
+    {
+      "subsystem": "p007-derived planes (merge sequencing)",
+      "state": "shared_integration_gate",
+      "remaining_dependency": "none",
+      "change": "satisfied in the Sol integration tree: both corpus envelopes, precise P/V/N links and the occurrence bridge were regenerated against GAP-N12 :v2 fact identities and are byte-identical to recomputation; final review/harness remains a separate merge gate (R3-3)"
+    },
+    {
+      "subsystem": "Residual/blocker ledgers",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "repair ledger + conformance matrix rebound to current review identities; closed vocabulary enforced by the validator (finding 10)"
+    }
+  ]
+}

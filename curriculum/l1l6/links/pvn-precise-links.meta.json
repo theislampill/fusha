@@ -1,0 +1,10 @@
+{
+  "classes": {
+    "entry": 21,
+    "occurrence": 14
+  },
+  "generator": "tools/build_curriculum_pvn_links.py",
+  "note": "supersedes the broad lk-* families in pvn-candidate-links.jsonl for precision; the lk file remains as the family-level rationale. ALL rows candidate; no link derives from root or surface similarity.",
+  "rows": 35,
+  "schema": "curriculum.l1l6_pvn_precise_link.v1.meta"
+}

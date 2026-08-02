@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "role_panel",
+      "teaching": "names the accusative role with the discriminator that produced it, not with the case ending"
+    },
+    {
+      "key": "precondition_panel",
+      "teaching": "shows which hard precondition failed when the role is withheld, so the learner sees why the prepositional repair is offered"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "a same-root causal accusative shows both roles, attributed and unranked"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

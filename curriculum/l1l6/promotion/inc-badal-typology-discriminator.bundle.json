@@ -1,0 +1,518 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-badal-typology-discriminator/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-badal-typology-discriminator/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "shared case with no intervening coordinator is the entry condition; adjacency alone never licenses a typing",
+        "the clitic is never invented to justify a connected type, and never attached to a referentially identical pair",
+        "the shared-label outcome is a recorded result, not an unresolved failure, and is never collapsed to one label",
+        "a pair that predicates a property is routed out of this table rather than typed inside it"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-badal-typology-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0249e626113fbeaa3d7afc1bd5f0a760be9abdcc933a81f306005c69918404ac",
+      "guards_payload": [
+        {
+          "guard": "shared case with no intervening coordinator is the entry condition; adjacency alone never licenses a typing",
+          "id": "g-bad-case"
+        },
+        {
+          "guard": "the clitic is never invented to justify a connected type, and never attached to a referentially identical pair",
+          "id": "g-bad-clitic"
+        },
+        {
+          "guard": "the shared-label outcome is a recorded result, not an unresolved failure, and is never collapsed to one label",
+          "id": "g-bad-shared"
+        },
+        {
+          "guard": "a pair that predicates a property is routed out of this table rather than typed inside it",
+          "id": "g-bad-desc"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "bad-adv-01",
+        "bad-adv-02",
+        "bad-adv-03",
+        "bad-abs-01"
+      ],
+      "positive_examples": [
+        "bad-pos-01",
+        "bad-pos-02",
+        "bad-pos-03",
+        "bad-pos-04",
+        "bad-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-badal-typology-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-badal-typology-discriminator"
+      },
+      "scope": {
+        "increment": "inc-badal-typology-discriminator",
+        "statement": "case identity, presence of a resumptive clitic, referential identity, the part-versus-containment judgement and the status of the first nominal are SUPPLIED evidence, never read off adjacency alone",
+        "unit_ref": "cu-badal-typology-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-badal-typology-discriminator-bad-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-badal-typology-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "shared case with no intervening coordinator is the entry condition; adjacency alone never licenses a typing",
+        "the clitic is never invented to justify a connected type, and never attached to a referentially identical pair",
+        "the shared-label outcome is a recorded result, not an unresolved failure, and is never collapsed to one label",
+        "a pair that predicates a property is routed out of this table rather than typed inside it"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-badal-typology-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0249e626113fbeaa3d7afc1bd5f0a760be9abdcc933a81f306005c69918404ac",
+      "guards_payload": [
+        {
+          "guard": "shared case with no intervening coordinator is the entry condition; adjacency alone never licenses a typing",
+          "id": "g-bad-case"
+        },
+        {
+          "guard": "the clitic is never invented to justify a connected type, and never attached to a referentially identical pair",
+          "id": "g-bad-clitic"
+        },
+        {
+          "guard": "the shared-label outcome is a recorded result, not an unresolved failure, and is never collapsed to one label",
+          "id": "g-bad-shared"
+        },
+        {
+          "guard": "a pair that predicates a property is routed out of this table rather than typed inside it",
+          "id": "g-bad-desc"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "bad-adv-01",
+        "bad-adv-02",
+        "bad-adv-03",
+        "bad-abs-01"
+      ],
+      "positive_examples": [
+        "bad-pos-01",
+        "bad-pos-02",
+        "bad-pos-03",
+        "bad-pos-04",
+        "bad-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-badal-typology-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-badal-typology-discriminator"
+      },
+      "scope": {
+        "increment": "inc-badal-typology-discriminator",
+        "statement": "case identity with no coordinator between the two nominals is the entry condition for the whole table; without it there is no follower relation to type",
+        "unit_ref": "cu-badal-typology-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-badal-typology-discriminator-bad-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-badal-typology-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "shared case with no intervening coordinator is the entry condition; adjacency alone never licenses a typing",
+        "the clitic is never invented to justify a connected type, and never attached to a referentially identical pair",
+        "the shared-label outcome is a recorded result, not an unresolved failure, and is never collapsed to one label",
+        "a pair that predicates a property is routed out of this table rather than typed inside it"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-badal-typology-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0249e626113fbeaa3d7afc1bd5f0a760be9abdcc933a81f306005c69918404ac",
+      "guards_payload": [
+        {
+          "guard": "shared case with no intervening coordinator is the entry condition; adjacency alone never licenses a typing",
+          "id": "g-bad-case"
+        },
+        {
+          "guard": "the clitic is never invented to justify a connected type, and never attached to a referentially identical pair",
+          "id": "g-bad-clitic"
+        },
+        {
+          "guard": "the shared-label outcome is a recorded result, not an unresolved failure, and is never collapsed to one label",
+          "id": "g-bad-shared"
+        },
+        {
+          "guard": "a pair that predicates a property is routed out of this table rather than typed inside it",
+          "id": "g-bad-desc"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "bad-adv-01",
+        "bad-adv-02",
+        "bad-adv-03",
+        "bad-abs-01"
+      ],
+      "positive_examples": [
+        "bad-pos-01",
+        "bad-pos-02",
+        "bad-pos-03",
+        "bad-pos-04",
+        "bad-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-badal-typology-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-badal-typology-discriminator"
+      },
+      "scope": {
+        "increment": "inc-badal-typology-discriminator",
+        "statement": "the resumptive clitic is obligatory in the two connected types and absent where the two nominals are referentially identical, but the clitic alone does not choose between the part reading and the quality reading",
+        "unit_ref": "cu-badal-typology-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-badal-typology-discriminator-bad-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-badal-typology-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "shared case with no intervening coordinator is the entry condition; adjacency alone never licenses a typing",
+        "the clitic is never invented to justify a connected type, and never attached to a referentially identical pair",
+        "the shared-label outcome is a recorded result, not an unresolved failure, and is never collapsed to one label",
+        "a pair that predicates a property is routed out of this table rather than typed inside it"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-badal-typology-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0249e626113fbeaa3d7afc1bd5f0a760be9abdcc933a81f306005c69918404ac",
+      "guards_payload": [
+        {
+          "guard": "shared case with no intervening coordinator is the entry condition; adjacency alone never licenses a typing",
+          "id": "g-bad-case"
+        },
+        {
+          "guard": "the clitic is never invented to justify a connected type, and never attached to a referentially identical pair",
+          "id": "g-bad-clitic"
+        },
+        {
+          "guard": "the shared-label outcome is a recorded result, not an unresolved failure, and is never collapsed to one label",
+          "id": "g-bad-shared"
+        },
+        {
+          "guard": "a pair that predicates a property is routed out of this table rather than typed inside it",
+          "id": "g-bad-desc"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "bad-adv-01",
+        "bad-adv-02",
+        "bad-adv-03",
+        "bad-abs-01"
+      ],
+      "positive_examples": [
+        "bad-pos-01",
+        "bad-pos-02",
+        "bad-pos-03",
+        "bad-pos-04",
+        "bad-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-badal-typology-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-badal-typology-discriminator"
+      },
+      "scope": {
+        "increment": "inc-badal-typology-discriminator",
+        "statement": "total apposition and appositional clarification are formally indistinguishable: where the shared label is licensed, both are returned together as the recorded outcome, not as a failure",
+        "unit_ref": "cu-badal-typology-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-badal-typology-discriminator-bad-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-badal-typology-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "shared case with no intervening coordinator is the entry condition; adjacency alone never licenses a typing",
+        "the clitic is never invented to justify a connected type, and never attached to a referentially identical pair",
+        "the shared-label outcome is a recorded result, not an unresolved failure, and is never collapsed to one label",
+        "a pair that predicates a property is routed out of this table rather than typed inside it"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-badal-typology-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0249e626113fbeaa3d7afc1bd5f0a760be9abdcc933a81f306005c69918404ac",
+      "guards_payload": [
+        {
+          "guard": "shared case with no intervening coordinator is the entry condition; adjacency alone never licenses a typing",
+          "id": "g-bad-case"
+        },
+        {
+          "guard": "the clitic is never invented to justify a connected type, and never attached to a referentially identical pair",
+          "id": "g-bad-clitic"
+        },
+        {
+          "guard": "the shared-label outcome is a recorded result, not an unresolved failure, and is never collapsed to one label",
+          "id": "g-bad-shared"
+        },
+        {
+          "guard": "a pair that predicates a property is routed out of this table rather than typed inside it",
+          "id": "g-bad-desc"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "bad-adv-01",
+        "bad-adv-02",
+        "bad-adv-03",
+        "bad-abs-01"
+      ],
+      "positive_examples": [
+        "bad-pos-01",
+        "bad-pos-02",
+        "bad-pos-03",
+        "bad-pos-04",
+        "bad-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-badal-typology-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-badal-typology-discriminator"
+      },
+      "scope": {
+        "increment": "inc-badal-typology-discriminator",
+        "statement": "a second nominal that predicates a property of the first is a descriptive follower and falls outside this table entirely",
+        "unit_ref": "cu-badal-typology-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-badal-typology-discriminator-bad-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-badal-typology-discriminator/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-badal-typology-discriminator",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "bad-abs-01"
+    ],
+    "adversarial": [
+      "bad-adv-01",
+      "bad-adv-02",
+      "bad-adv-03"
+    ],
+    "positive": [
+      "bad-pos-01",
+      "bad-pos-02",
+      "bad-pos-03",
+      "bad-pos-04"
+    ],
+    "transfer": [
+      "bad-tr-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-badal-typology-discriminator",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives"
+    ],
+    "capability": "discriminator_table",
+    "declarative_addition_proof": "added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability, proving capability-keyed dispatch",
+    "functions": [
+      {
+        "discriminators": {
+          "case_identity": [
+            "shared"
+          ],
+          "property_predicated": [
+            "no"
+          ],
+          "referential_identity": [
+            "identical"
+          ],
+          "resumptive_clitic": [
+            "absent"
+          ]
+        },
+        "id": "total_apposition",
+        "name": "total apposition"
+      },
+      {
+        "discriminators": {
+          "case_identity": [
+            "shared"
+          ],
+          "property_predicated": [
+            "no"
+          ],
+          "relation_to_first": [
+            "genuine_portion"
+          ],
+          "resumptive_clitic": [
+            "present"
+          ]
+        },
+        "id": "partitive_apposition",
+        "name": "partitive apposition"
+      },
+      {
+        "discriminators": {
+          "case_identity": [
+            "shared"
+          ],
+          "property_predicated": [
+            "no"
+          ],
+          "relation_to_first": [
+            "borne_quality"
+          ],
+          "resumptive_clitic": [
+            "present"
+          ]
+        },
+        "id": "inclusion_apposition",
+        "name": "inclusion apposition"
+      },
+      {
+        "discriminators": {
+          "case_identity": [
+            "shared"
+          ],
+          "first_nominal_status": [
+            "discarded_misstatement"
+          ],
+          "property_predicated": [
+            "no"
+          ]
+        },
+        "id": "corrective_apposition",
+        "name": "corrective apposition"
+      },
+      {
+        "discriminators": {
+          "case_identity": [
+            "shared"
+          ],
+          "property_predicated": [
+            "no"
+          ],
+          "referential_identity": [
+            "identical"
+          ],
+          "resumptive_clitic": [
+            "absent"
+          ],
+          "shared_label": [
+            "licensed"
+          ]
+        },
+        "id": "appositional_clarification",
+        "name": "appositional clarification, shared label"
+      }
+    ],
+    "increment": "inc-badal-typology-discriminator",
+    "rules": [
+      {
+        "id": "bad-r1",
+        "text": "case identity, presence of a resumptive clitic, referential identity, the part-versus-containment judgement and the status of the first nominal are SUPPLIED evidence, never read off adjacency alone"
+      },
+      {
+        "id": "bad-r2",
+        "text": "case identity with no coordinator between the two nominals is the entry condition for the whole table; without it there is no follower relation to type"
+      },
+      {
+        "id": "bad-r3",
+        "text": "the resumptive clitic is obligatory in the two connected types and absent where the two nominals are referentially identical, but the clitic alone does not choose between the part reading and the quality reading"
+      },
+      {
+        "id": "bad-r4",
+        "text": "total apposition and appositional clarification are formally indistinguishable: where the shared label is licensed, both are returned together as the recorded outcome, not as a failure"
+      },
+      {
+        "id": "bad-r5",
+        "text": "a second nominal that predicates a property of the first is a descriptive follower and falls outside this table entirely"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-badal-typology-discriminator",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "apposition_type_panel",
+      "teaching": "names the apposition type with the clitic and relation evidence that produced it"
+    },
+    {
+      "key": "clitic_panel",
+      "teaching": "shows the resumptive clitic and the nominal it resolves to, or records its licensed absence"
+    },
+    {
+      "key": "shared_label_panel",
+      "teaching": "where two labels cover one configuration, both are shown as a recorded shared-label outcome"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

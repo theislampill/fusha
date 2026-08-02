@@ -1,0 +1,708 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no default function for this shape; zero-evidence input must abstain",
+        "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+        "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+        "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+        "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+        "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c8585c66c078181f9b0040f1e352947e5253a27db1d3fb4a42d93604822d7ece",
+      "guards_payload": [
+        {
+          "guard": "og-3: no default function for this shape; zero-evidence input must abstain",
+          "id": "g-la-1"
+        },
+        {
+          "guard": "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+          "id": "g-la-2"
+        },
+        {
+          "guard": "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+          "id": "g-la-3"
+        },
+        {
+          "guard": "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+          "id": "g-la-4"
+        },
+        {
+          "guard": "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+          "id": "g-la-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape",
+          "id": "g-la-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "la-adv-01",
+        "la-adv-02",
+        "la-adv-03",
+        "la-abs-01",
+        "la-abs-02"
+      ],
+      "positive_examples": [
+        "la-pos-01",
+        "la-pos-02",
+        "la-pos-03",
+        "la-trn-01",
+        "la-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "scope": {
+        "increment": "inc-la-negative-vs-prohibitive-discriminator",
+        "statement": "discriminator features are SUPPLIED evidence about the following word (its category, its mood exponent, its case exponent); the consumer never reads them off the shape, which is identical across every function",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-la-negative-vs-prohibitive-discriminator-la-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no default function for this shape; zero-evidence input must abstain",
+        "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+        "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+        "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+        "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+        "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c8585c66c078181f9b0040f1e352947e5253a27db1d3fb4a42d93604822d7ece",
+      "guards_payload": [
+        {
+          "guard": "og-3: no default function for this shape; zero-evidence input must abstain",
+          "id": "g-la-1"
+        },
+        {
+          "guard": "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+          "id": "g-la-2"
+        },
+        {
+          "guard": "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+          "id": "g-la-3"
+        },
+        {
+          "guard": "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+          "id": "g-la-4"
+        },
+        {
+          "guard": "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+          "id": "g-la-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape",
+          "id": "g-la-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "la-adv-01",
+        "la-adv-02",
+        "la-adv-03",
+        "la-abs-01",
+        "la-abs-02"
+      ],
+      "positive_examples": [
+        "la-pos-01",
+        "la-pos-02",
+        "la-pos-03",
+        "la-trn-01",
+        "la-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "scope": {
+        "increment": "inc-la-negative-vs-prohibitive-discriminator",
+        "statement": "the statement negation leaves the verb's mood untouched; the prohibitive licenses the third mood. Mood is therefore the ONLY formal separator between them",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-la-negative-vs-prohibitive-discriminator-la-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no default function for this shape; zero-evidence input must abstain",
+        "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+        "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+        "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+        "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+        "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c8585c66c078181f9b0040f1e352947e5253a27db1d3fb4a42d93604822d7ece",
+      "guards_payload": [
+        {
+          "guard": "og-3: no default function for this shape; zero-evidence input must abstain",
+          "id": "g-la-1"
+        },
+        {
+          "guard": "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+          "id": "g-la-2"
+        },
+        {
+          "guard": "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+          "id": "g-la-3"
+        },
+        {
+          "guard": "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+          "id": "g-la-4"
+        },
+        {
+          "guard": "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+          "id": "g-la-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape",
+          "id": "g-la-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "la-adv-01",
+        "la-adv-02",
+        "la-adv-03",
+        "la-abs-01",
+        "la-abs-02"
+      ],
+      "positive_examples": [
+        "la-pos-01",
+        "la-pos-02",
+        "la-pos-03",
+        "la-trn-01",
+        "la-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "scope": {
+        "increment": "inc-la-negative-vs-prohibitive-discriminator",
+        "statement": "for vowel-exponed verbs that separator is invisible in unvocalised text: `unvocalised_vowel_exponent` is declared as a licit value for BOTH functions, so such an occurrence yields two survivors and is preserved as alternatives — the undecidable outcome is a reportable result, not a failure",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-la-negative-vs-prohibitive-discriminator-la-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no default function for this shape; zero-evidence input must abstain",
+        "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+        "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+        "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+        "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+        "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c8585c66c078181f9b0040f1e352947e5253a27db1d3fb4a42d93604822d7ece",
+      "guards_payload": [
+        {
+          "guard": "og-3: no default function for this shape; zero-evidence input must abstain",
+          "id": "g-la-1"
+        },
+        {
+          "guard": "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+          "id": "g-la-2"
+        },
+        {
+          "guard": "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+          "id": "g-la-3"
+        },
+        {
+          "guard": "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+          "id": "g-la-4"
+        },
+        {
+          "guard": "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+          "id": "g-la-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape",
+          "id": "g-la-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "la-adv-01",
+        "la-adv-02",
+        "la-adv-03",
+        "la-abs-01",
+        "la-abs-02"
+      ],
+      "positive_examples": [
+        "la-pos-01",
+        "la-pos-02",
+        "la-pos-03",
+        "la-trn-01",
+        "la-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "scope": {
+        "increment": "inc-la-negative-vs-prohibitive-discriminator",
+        "statement": "the categorical-negation function is a distinct regime keyed on an indefinite noun bearing nasb without tanwin; it is never reached from a verbal environment",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-la-negative-vs-prohibitive-discriminator-la-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no default function for this shape; zero-evidence input must abstain",
+        "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+        "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+        "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+        "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+        "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c8585c66c078181f9b0040f1e352947e5253a27db1d3fb4a42d93604822d7ece",
+      "guards_payload": [
+        {
+          "guard": "og-3: no default function for this shape; zero-evidence input must abstain",
+          "id": "g-la-1"
+        },
+        {
+          "guard": "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+          "id": "g-la-2"
+        },
+        {
+          "guard": "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+          "id": "g-la-3"
+        },
+        {
+          "guard": "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+          "id": "g-la-4"
+        },
+        {
+          "guard": "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+          "id": "g-la-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape",
+          "id": "g-la-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "la-adv-01",
+        "la-adv-02",
+        "la-adv-03",
+        "la-abs-01",
+        "la-abs-02"
+      ],
+      "positive_examples": [
+        "la-pos-01",
+        "la-pos-02",
+        "la-pos-03",
+        "la-trn-01",
+        "la-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "scope": {
+        "increment": "inc-la-negative-vs-prohibitive-discriminator",
+        "statement": "exactly one survivor -> that function (candidate); more than one -> preserve_alternatives; none -> abstain insufficient_features. There is NO default function",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-la-negative-vs-prohibitive-discriminator-la-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no default function for this shape; zero-evidence input must abstain",
+        "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+        "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+        "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+        "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+        "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c8585c66c078181f9b0040f1e352947e5253a27db1d3fb4a42d93604822d7ece",
+      "guards_payload": [
+        {
+          "guard": "og-3: no default function for this shape; zero-evidence input must abstain",
+          "id": "g-la-1"
+        },
+        {
+          "guard": "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+          "id": "g-la-2"
+        },
+        {
+          "guard": "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+          "id": "g-la-3"
+        },
+        {
+          "guard": "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+          "id": "g-la-4"
+        },
+        {
+          "guard": "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+          "id": "g-la-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape",
+          "id": "g-la-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "la-adv-01",
+        "la-adv-02",
+        "la-adv-03",
+        "la-abs-01",
+        "la-abs-02"
+      ],
+      "positive_examples": [
+        "la-pos-01",
+        "la-pos-02",
+        "la-pos-03",
+        "la-trn-01",
+        "la-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "scope": {
+        "increment": "inc-la-negative-vs-prohibitive-discriminator",
+        "statement": "the prohibitive is NOT restricted to the second person; a person feature is therefore never used to exclude it",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-la-negative-vs-prohibitive-discriminator-la-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no default function for this shape; zero-evidence input must abstain",
+        "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+        "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+        "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+        "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+        "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c8585c66c078181f9b0040f1e352947e5253a27db1d3fb4a42d93604822d7ece",
+      "guards_payload": [
+        {
+          "guard": "og-3: no default function for this shape; zero-evidence input must abstain",
+          "id": "g-la-1"
+        },
+        {
+          "guard": "the undecidable outcome is a FIRST-CLASS result: when the mood exponent is not in the text, both readings are preserved and neither is defaulted",
+          "id": "g-la-2"
+        },
+        {
+          "guard": "the prohibitive is not restricted to the second person, so no person feature may be used to rule it out",
+          "id": "g-la-3"
+        },
+        {
+          "guard": "og-4: the unit reports the occurrence's function; it assigns no mood, no case, and no government",
+          "id": "g-la-4"
+        },
+        {
+          "guard": "the categorical-negation regime is present here although the source lesson omits it; its verdicts are candidate and separately gated",
+          "id": "g-la-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a resolved occurrence never fixes the reading of the next occurrence of the same shape",
+          "id": "g-la-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "la-adv-01",
+        "la-adv-02",
+        "la-adv-03",
+        "la-abs-01",
+        "la-abs-02"
+      ],
+      "positive_examples": [
+        "la-pos-01",
+        "la-pos-02",
+        "la-pos-03",
+        "la-trn-01",
+        "la-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "scope": {
+        "increment": "inc-la-negative-vs-prohibitive-discriminator",
+        "statement": "this unit reports the function of the occurrence; it emits no mood assignment, no case assignment and no illocutionary claim beyond the named function",
+        "unit_ref": "cu-la-negative-vs-prohibitive-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-la-negative-vs-prohibitive-discriminator-la-r7",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-la-negative-vs-prohibitive-discriminator/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-la-negative-vs-prohibitive-discriminator",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "la-abs-01",
+      "la-abs-02"
+    ],
+    "adversarial": [
+      "la-adv-01",
+      "la-adv-02",
+      "la-adv-03"
+    ],
+    "positive": [
+      "la-pos-01",
+      "la-pos-02",
+      "la-pos-03"
+    ],
+    "transfer": [
+      "la-trn-01",
+      "la-trn-02"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-la-negative-vs-prohibitive-discriminator",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives"
+    ],
+    "capability": "discriminator_table",
+    "functions": [
+      {
+        "discriminators": {
+          "following_category": [
+            "imperfect_verb"
+          ],
+          "following_mood": [
+            "indicative",
+            "unvocalised_vowel_exponent"
+          ]
+        },
+        "id": "nafiya_statement",
+        "name": "statement negation over an imperfect verb"
+      },
+      {
+        "discriminators": {
+          "following_category": [
+            "imperfect_verb"
+          ],
+          "following_mood": [
+            "jussive",
+            "unvocalised_vowel_exponent"
+          ]
+        },
+        "id": "nahiya_prohibitive",
+        "name": "prohibitive over an imperfect verb"
+      },
+      {
+        "discriminators": {
+          "following_case": [
+            "nasb_no_tanwin"
+          ],
+          "following_category": [
+            "indefinite_noun"
+          ]
+        },
+        "id": "nafiya_lil_jins",
+        "name": "categorical negation of a whole class"
+      },
+      {
+        "discriminators": {
+          "following_category": [
+            "utterance_final"
+          ]
+        },
+        "id": "answer_particle",
+        "name": "standalone negative answer"
+      },
+      {
+        "discriminators": {
+          "following_category": [
+            "frozen_partner"
+          ]
+        },
+        "id": "frozen_expression",
+        "name": "member of a frozen negative expression"
+      }
+    ],
+    "increment": "inc-la-negative-vs-prohibitive-discriminator",
+    "rules": [
+      {
+        "id": "la-r1",
+        "text": "discriminator features are SUPPLIED evidence about the following word (its category, its mood exponent, its case exponent); the consumer never reads them off the shape, which is identical across every function"
+      },
+      {
+        "id": "la-r2",
+        "text": "the statement negation leaves the verb's mood untouched; the prohibitive licenses the third mood. Mood is therefore the ONLY formal separator between them"
+      },
+      {
+        "id": "la-r3",
+        "text": "for vowel-exponed verbs that separator is invisible in unvocalised text: `unvocalised_vowel_exponent` is declared as a licit value for BOTH functions, so such an occurrence yields two survivors and is preserved as alternatives — the undecidable outcome is a reportable result, not a failure"
+      },
+      {
+        "id": "la-r4",
+        "text": "the categorical-negation function is a distinct regime keyed on an indefinite noun bearing nasb without tanwin; it is never reached from a verbal environment"
+      },
+      {
+        "id": "la-r5",
+        "text": "exactly one survivor -> that function (candidate); more than one -> preserve_alternatives; none -> abstain insufficient_features. There is NO default function"
+      },
+      {
+        "id": "la-r6",
+        "text": "the prohibitive is NOT restricted to the second person; a person feature is therefore never used to exclude it"
+      },
+      {
+        "id": "la-r7",
+        "text": "this unit reports the function of the occurrence; it emits no mood assignment, no case assignment and no illocutionary claim beyond the named function"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "undecidability_note": "the mood diagnostic that separates the statement negation from the prohibitive is frequently absent from running text; that case is encoded as a first-class outcome, not as missing data",
+    "unit_ref": "cu-la-negative-vs-prohibitive-discriminator",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "function_inventory_panel",
+      "teaching": "lists the functions this shape carries with the discriminator that decides each, so the reader sees the evidence rather than a gloss"
+    },
+    {
+      "key": "mood_evidence_chip",
+      "teaching": "shows the following verb's mood exponent as the thing that decided between denying and forbidding — or shows that it is absent"
+    },
+    {
+      "key": "undecidable_badge",
+      "teaching": "when the text does not carry the separator, the card shows both readings and says so plainly; this is the honest annotation, not a gap"
+    },
+    {
+      "key": "alternatives_panel",
+      "teaching": "surviving readings are shown attributed, with no winner implied"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "key": "owner_colour_segments",
+      "teaching": "each colour = one owner class; a learner reads WHICH letters carry the dictionary meaning (root) vs the template (augment) vs grammar (clitic/inflection)"
+    },
+    {
+      "key": "augment_note",
+      "teaching": "why this م is not part of the root (pattern مَفْعِل forms place-nouns)"
+    },
+    {
+      "key": "root_link_note",
+      "teaching": "root radicals link to the root family WITHOUT implying shared meaning (og-1 wording constraint)"
+    },
+    {
+      "key": "abstention_note",
+      "teaching": "when ownership abstains, the hover says what evidence is missing — honest gaps are taught, never blanked"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

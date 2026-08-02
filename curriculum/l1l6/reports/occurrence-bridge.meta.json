@@ -1,0 +1,7 @@
+{
+  "entry_rows": 21,
+  "generator": "tools/build_curriculum_occurrence_bridge.py",
+  "occurrence_rows": 14,
+  "rows": 35,
+  "schema": "curriculum.l1l6_occurrence_bridge_row.v1.meta"
+}

@@ -1,0 +1,114 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "spec_exists_validates",
+      "pass_condition": "path + leakage checks pass",
+      "run": "python tools/validate_curriculum_l1l6.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "a construction with school-dependent analysis must appear in the spec as attributed-alternatives; a spec that side-picks fails",
+        "id": "adv-school"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "the spec covers implied-pronoun (mustatir) representation with an explicit visible/hidden segment distinction",
+        "id": "pos-mustatir"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "curriculum/l1l6/graph/concepts.jsonl",
+    "selection_rule": "all hidden_structure-domain concept nodes",
+    "this_packet_size": 9,
+    "universe_size": 9
+  },
+  "commands": [
+    {
+      "expect": "spec with fixture-shape, procedure outline, school-attribution rules, integration points",
+      "purpose": "author the spec from crosswalk rows xn-08/xn-09 + curriculum staging metadata",
+      "run": "python - (inline: collect hidden_structure + ambiguity concept nodes with levels; write spec skeleton)"
+    }
+  ],
+  "defeaters": [
+    "a produced row conflicts with a repo-certified fact -> record as contradicted, do not overwrite",
+    "the private corpus is unavailable -> metadata-only steps proceed; body-reading steps abort cleanly"
+  ],
+  "definition_of_done": [
+    "spec complete with fixture shape + integration points",
+    "no implementation attempted"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "spec implies changes to the dependency-lattice schema (Sol/owner decision)"
+    ],
+    "route": "Sol integration review -> owner adjudication where a rule/status change is implied"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "never invent an example, answer key or analysis the source or an independent authority does not support; abstain and record the gap",
+    "statement": "evidence level: curriculum-source-supported (uncertified); every row cites its claim-ledger claim_id and manifest file_id (source + claim identity); lesson prose is read in private custody and never committed; committed rows are original restatements",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "capability specification (candidate; implementation is a later Sol-routed lane)",
+      "path": "curriculum/l1l6/reports/hidden-structure-capability-spec.md"
+    }
+  ],
+  "guards": [
+    "the METHOD transfers, linguistic conclusions never do: a lesson-derived pattern licenses a candidate row, never a resolved analysis at any occurrence",
+    "rival-analysis handling: any item admitting more than one admissible analysis is recorded with ALL alternatives (analysis-dependent / school-dependent), never side-picked",
+    "no candidate-to-certified automatic promotion: nothing this packet produces may carry status certified; only tools/certify_typed_fact.py certifies, after review, outside this packet"
+  ],
+  "inputs": {
+    "input_files": [
+      "curriculum/l1l6/registry/lessons.jsonl",
+      "curriculum/l1l6/graph/concepts.jsonl",
+      "curriculum/l1l6/ledger/claim-ledger.jsonl",
+      "curriculum/l1l6/ledger/overgeneralization-guards.jsonl",
+      "curriculum/l1l6/crosswalk/sarf-crosswalk.jsonl",
+      "curriculum/l1l6/crosswalk/nahw-crosswalk.jsonl"
+    ],
+    "permitted_write_files": [
+      "curriculum/l1l6/reports/hidden-structure-capability-spec.md"
+    ],
+    "prohibited_files": [
+      "sarf/SKILL.md",
+      "nahw/SKILL.md",
+      "sarf/rules/",
+      "nahw/rules/",
+      "qamus/skills/",
+      "qamus/lattice/",
+      "qamus/data/",
+      "qamus/examples/",
+      "tools/check_regressions.py",
+      "fusha/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "All outputs are candidate-plane repo artifacts; no live surface, entry store, or public payload is touched; deployment is owner-gated elsewhere.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-CURR-HIDDEN-STRUCTURE",
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "CURRICULUM_BACKPROP_NAHW",
+    "out_of_scope": [
+      "implementing the capability",
+      "writing into nahw/procedures/",
+      "resolving any school dispute"
+    ],
+    "summary": "Hidden/implied structure (omitted mubtada', mustatir pronouns, taqdir) is MISSING from the repo (crosswalk xn-08): schema headless field only, no procedure, no fixtures. Draft the capability spec: a procedure outline, a fixture-bank shape, and school-attribution requirements (Kufan/Basran differences recorded as attributed alternatives), grounded in the curriculum's staged treatment but written clean-room.",
+    "tranche": "curriculum-l1l6-w1"
+  },
+  "title": "Specify the missing hidden-structure (taqdir) capability from curriculum L4-L6 staging",
+  "tools_required": [
+    "python3",
+    "the PRIVATE lesson corpus (owner custody) for any step that reads lesson bodies; metadata-only steps run from committed artifacts"
+  ]
+}

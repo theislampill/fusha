@@ -1,0 +1,477 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "reject_reconstruction; exponents_unknown; chain_position_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "observed exponents are declared inputs; adjacency alone never establishes the construction",
+        "the head's case is imported from the clause, never invented by the construction",
+        "the participial subtype is emitted attributed and is never generalised into the ordinary head row",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0e9d06f0b83ed2273d461594b06c16f2f9795e80d9202b3df2a74c827486f8ab",
+      "guards_payload": [
+        {
+          "guard": "observed exponents are declared inputs; adjacency alone never establishes the construction",
+          "id": "g-idf-1"
+        },
+        {
+          "guard": "the head's case is imported from the clause, never invented by the construction",
+          "id": "g-idf-2"
+        },
+        {
+          "guard": "the participial subtype is emitted attributed and is never generalised into the ordinary head row",
+          "id": "g-idf-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-idf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "idf-adv-01",
+        "idf-adv-02",
+        "idf-abs-01"
+      ],
+      "positive_examples": [
+        "idf-pos-01",
+        "idf-pos-02",
+        "idf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-idafa-definiteness-licensing"
+      },
+      "scope": {
+        "increment": "inc-idafa-definiteness-licensing",
+        "statement": "the head's exponent suppression and the dependent's invariant genitive are the two form-side signatures that identify the construction at all",
+        "unit_ref": "cu-idafa-definiteness-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-idafa-definiteness-licensing-idf-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; exponents_unknown; chain_position_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "observed exponents are declared inputs; adjacency alone never establishes the construction",
+        "the head's case is imported from the clause, never invented by the construction",
+        "the participial subtype is emitted attributed and is never generalised into the ordinary head row",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0e9d06f0b83ed2273d461594b06c16f2f9795e80d9202b3df2a74c827486f8ab",
+      "guards_payload": [
+        {
+          "guard": "observed exponents are declared inputs; adjacency alone never establishes the construction",
+          "id": "g-idf-1"
+        },
+        {
+          "guard": "the head's case is imported from the clause, never invented by the construction",
+          "id": "g-idf-2"
+        },
+        {
+          "guard": "the participial subtype is emitted attributed and is never generalised into the ordinary head row",
+          "id": "g-idf-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-idf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "idf-adv-01",
+        "idf-adv-02",
+        "idf-abs-01"
+      ],
+      "positive_examples": [
+        "idf-pos-01",
+        "idf-pos-02",
+        "idf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-idafa-definiteness-licensing"
+      },
+      "scope": {
+        "increment": "inc-idafa-definiteness-licensing",
+        "statement": "the head's own case comes from its role in the wider clause and is never read off the construction",
+        "unit_ref": "cu-idafa-definiteness-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-idafa-definiteness-licensing-idf-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; exponents_unknown; chain_position_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "observed exponents are declared inputs; adjacency alone never establishes the construction",
+        "the head's case is imported from the clause, never invented by the construction",
+        "the participial subtype is emitted attributed and is never generalised into the ordinary head row",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0e9d06f0b83ed2273d461594b06c16f2f9795e80d9202b3df2a74c827486f8ab",
+      "guards_payload": [
+        {
+          "guard": "observed exponents are declared inputs; adjacency alone never establishes the construction",
+          "id": "g-idf-1"
+        },
+        {
+          "guard": "the head's case is imported from the clause, never invented by the construction",
+          "id": "g-idf-2"
+        },
+        {
+          "guard": "the participial subtype is emitted attributed and is never generalised into the ordinary head row",
+          "id": "g-idf-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-idf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "idf-adv-01",
+        "idf-adv-02",
+        "idf-abs-01"
+      ],
+      "positive_examples": [
+        "idf-pos-01",
+        "idf-pos-02",
+        "idf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-idafa-definiteness-licensing"
+      },
+      "scope": {
+        "increment": "inc-idafa-definiteness-licensing",
+        "statement": "in a chain only the final member may carry a definiteness exponent; every non-initial member is genitive",
+        "unit_ref": "cu-idafa-definiteness-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-idafa-definiteness-licensing-idf-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; exponents_unknown; chain_position_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "observed exponents are declared inputs; adjacency alone never establishes the construction",
+        "the head's case is imported from the clause, never invented by the construction",
+        "the participial subtype is emitted attributed and is never generalised into the ordinary head row",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0e9d06f0b83ed2273d461594b06c16f2f9795e80d9202b3df2a74c827486f8ab",
+      "guards_payload": [
+        {
+          "guard": "observed exponents are declared inputs; adjacency alone never establishes the construction",
+          "id": "g-idf-1"
+        },
+        {
+          "guard": "the head's case is imported from the clause, never invented by the construction",
+          "id": "g-idf-2"
+        },
+        {
+          "guard": "the participial subtype is emitted attributed and is never generalised into the ordinary head row",
+          "id": "g-idf-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-idf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "idf-adv-01",
+        "idf-adv-02",
+        "idf-abs-01"
+      ],
+      "positive_examples": [
+        "idf-pos-01",
+        "idf-pos-02",
+        "idf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-idafa-definiteness-licensing"
+      },
+      "scope": {
+        "increment": "inc-idafa-definiteness-licensing",
+        "statement": "the participial subtype is the recorded licensed exception: it admits the article on the head and blocks definiteness inheritance, and it is emitted attributed",
+        "unit_ref": "cu-idafa-definiteness-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-idafa-definiteness-licensing-idf-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; exponents_unknown; chain_position_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "observed exponents are declared inputs; adjacency alone never establishes the construction",
+        "the head's case is imported from the clause, never invented by the construction",
+        "the participial subtype is emitted attributed and is never generalised into the ordinary head row",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0e9d06f0b83ed2273d461594b06c16f2f9795e80d9202b3df2a74c827486f8ab",
+      "guards_payload": [
+        {
+          "guard": "observed exponents are declared inputs; adjacency alone never establishes the construction",
+          "id": "g-idf-1"
+        },
+        {
+          "guard": "the head's case is imported from the clause, never invented by the construction",
+          "id": "g-idf-2"
+        },
+        {
+          "guard": "the participial subtype is emitted attributed and is never generalised into the ordinary head row",
+          "id": "g-idf-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-idf-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "idf-adv-01",
+        "idf-adv-02",
+        "idf-abs-01"
+      ],
+      "positive_examples": [
+        "idf-pos-01",
+        "idf-pos-02",
+        "idf-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-idafa-definiteness-licensing"
+      },
+      "scope": {
+        "increment": "inc-idafa-definiteness-licensing",
+        "statement": "an adjacent noun pair whose exponents do not match a row is not an annexation by resemblance -> reject_reconstruction",
+        "unit_ref": "cu-idafa-definiteness-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-idafa-definiteness-licensing-idf-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-idafa-definiteness-licensing/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "licensing_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-idafa-definiteness-licensing",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "idf-abs-01"
+    ],
+    "adversarial": [
+      "idf-adv-01",
+      "idf-adv-02"
+    ],
+    "positive": [
+      "idf-pos-01",
+      "idf-pos-02"
+    ],
+    "transfer": [
+      "idf-trn-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-idafa-definiteness-licensing",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "reject_reconstruction",
+      "exponents_unknown",
+      "chain_position_unknown"
+    ],
+    "capability": "licensing_table",
+    "encoding_limitation": "the registered licensing_table capability matches ONE compound construction key and can only emit reject_reconstruction for anything unmatched; the evidence-specific abstention reasons declared here are therefore DECLARED-BUT-UNREACHABLE pending a keyed-evidence capability — kept as the unit's honest abstention vocabulary, not as consumer behavior (audit finding, modeled on inc-atf-case-following)",
+    "increment": "inc-idafa-definiteness-licensing",
+    "licensing_table": [
+      {
+        "construction": "annexation_head",
+        "hidden": {
+          "type": "exponent_suppression_required",
+          "value_class": "no_tanwin_no_article_no_dual_or_sound_plural_final_consonant"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "annexation_dependent",
+        "hidden": {
+          "type": "genitive_invariant",
+          "value_class": "dependent"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "annexation_head_case_slot",
+        "hidden": {
+          "type": "case_from_the_wider_clause_role",
+          "value_class": "head_independent_of_the_construction"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "annexation_definiteness_of_the_whole_phrase",
+        "hidden": {
+          "type": "definiteness_inherited_from_the_final_member",
+          "value_class": "whole_phrase"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "annexation_chain_non_final_member",
+        "hidden": {
+          "type": "genitive_and_no_definiteness_exponent",
+          "value_class": "every_non_initial_member"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "annexation_chain_final_member",
+        "hidden": {
+          "type": "definiteness_exponent_permitted",
+          "value_class": "final_member_only"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "participial_annexation_head",
+        "hidden": {
+          "type": "article_on_the_head_permitted_and_inheritance_blocked",
+          "value_class": "licensed_subtype_exception"
+        },
+        "note": "analysis-dependent: the label used upstream for the descriptive type is the same term the tradition applies to this structurally different subtype, and the exception is recorded as requiring review",
+        "obligatory": false
+      },
+      {
+        "construction": "semantic_relation_of_the_annexation",
+        "hidden": {
+          "type": "relation_type_not_decided_by_form",
+          "value_class": "possessive_descriptive_or_material_enumeration"
+        },
+        "note": "analysis-dependent: the three-way enumeration is school-dependent upstream, and a part-whole relation is analysed in the worked material without appearing in the enumeration",
+        "obligatory": false
+      }
+    ],
+    "rules": [
+      {
+        "id": "idf-r1",
+        "text": "the head's exponent suppression and the dependent's invariant genitive are the two form-side signatures that identify the construction at all"
+      },
+      {
+        "id": "idf-r2",
+        "text": "the head's own case comes from its role in the wider clause and is never read off the construction"
+      },
+      {
+        "id": "idf-r3",
+        "text": "in a chain only the final member may carry a definiteness exponent; every non-initial member is genitive"
+      },
+      {
+        "id": "idf-r4",
+        "text": "the participial subtype is the recorded licensed exception: it admits the article on the head and blocks definiteness inheritance, and it is emitted attributed"
+      },
+      {
+        "id": "idf-r5",
+        "text": "an adjacent noun pair whose exponents do not match a row is not an annexation by resemblance -> reject_reconstruction"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-idafa-definiteness-licensing",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "annexation_role_chip",
+      "teaching": "labels which member is the head and which the dependent, and shows the suppressed exponents on the head"
+    },
+    {
+      "key": "definiteness_source_note",
+      "teaching": "names the member the phrase's definiteness is read off"
+    },
+    {
+      "key": "subtype_attribution_note",
+      "teaching": "flags the participial subtype as a licensed exception carrying its attribution"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

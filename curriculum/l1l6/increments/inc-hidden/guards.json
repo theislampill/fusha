@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "reconstruction is typed analysis, never text; scripture read-only invariant is absolute",
+      "id": "g-hid-1"
+    },
+    {
+      "guard": "no licence, no reconstruction — parse-saving inventions are rejected",
+      "id": "g-hid-2"
+    },
+    {
+      "guard": "rival reconstructions preserved as alternatives (og analog of attributed-unresolved)",
+      "id": "g-hid-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-hid-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

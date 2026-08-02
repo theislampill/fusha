@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "class_label_panel",
+      "teaching": "shows the assigned class with the marker that produced it, so the learner sees the evidence rather than a bare label"
+    },
+    {
+      "key": "marker_inventory_panel",
+      "teaching": "lists the sufficient markers per class and which one attached here"
+    },
+    {
+      "key": "two_reading_panel",
+      "teaching": "a string with both a nominal and a verbal marker shows both readings, unresolved and unranked"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

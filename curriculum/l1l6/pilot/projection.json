@@ -1,0 +1,114 @@
+{
+  "compiled_from": "curriculum/l1l6/pilot/pilot-facts.json",
+  "compiler": "tools/validate_curriculum_l1l6.py derive_projection",
+  "schema": "curriculum.l1l6_pilot_projection.v1",
+  "status": "candidate",
+  "tokens": [
+    {
+      "hover": [
+        {
+          "explanation_key": "clitic:definite_article",
+          "letters": [
+            "ا",
+            "ل"
+          ],
+          "segment_index": 0
+        },
+        {
+          "explanation_key": "pattern_augment:mim_of_mafil_place_noun",
+          "letters": [
+            "م"
+          ],
+          "segment_index": 1
+        },
+        {
+          "explanation_key": "root:radical_1+radical_2+radical_3",
+          "letters": [
+            "س",
+            "ج",
+            "د"
+          ],
+          "segment_index": 2
+        },
+        {
+          "explanation_key": "case_vowel:damma_nominative_context_free_citation",
+          "letters": [],
+          "segment_index": null
+        }
+      ],
+      "segments": [
+        {
+          "colour_class": "seg.candidate.clitic",
+          "letters": [
+            "ا",
+            "ل"
+          ],
+          "owner": "clitic"
+        },
+        {
+          "colour_class": "seg.candidate.pattern",
+          "letters": [
+            "م"
+          ],
+          "owner": "pattern_augment"
+        },
+        {
+          "colour_class": "seg.candidate.root",
+          "letters": [
+            "س",
+            "ج",
+            "د"
+          ],
+          "owner": "root"
+        }
+      ],
+      "surface": "المَسْجِدُ",
+      "token_id": "pt-01"
+    },
+    {
+      "hover": [
+        {
+          "explanation_key": "pattern_augment:mim_of_mafal_place_noun",
+          "letters": [
+            "م"
+          ],
+          "segment_index": 0
+        },
+        {
+          "explanation_key": "root:radical_1+radical_2+radical_3",
+          "letters": [
+            "ك",
+            "ت",
+            "ب"
+          ],
+          "segment_index": 1
+        },
+        {
+          "explanation_key": "case_vowel:none_citation_form",
+          "letters": [],
+          "segment_index": null
+        }
+      ],
+      "segments": [
+        {
+          "colour_class": "seg.candidate.pattern",
+          "letters": [
+            "م"
+          ],
+          "owner": "pattern_augment"
+        },
+        {
+          "colour_class": "seg.candidate.root",
+          "letters": [
+            "ك",
+            "ت",
+            "ب"
+          ],
+          "owner": "root"
+        }
+      ],
+      "surface": "مَكْتَب",
+      "token_id": "pt-02"
+    }
+  ]
+}

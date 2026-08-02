@@ -1,0 +1,26 @@
+{
+  "guards": [
+    {
+      "guard": "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
+      "id": "g-bpl-1"
+    },
+    {
+      "guard": "the attested plural is a LEXICAL fact: the singular's template is a prior only, and this unit never generates or repairs a plural",
+      "id": "g-bpl-2"
+    },
+    {
+      "guard": "og-4: a template classifies FORM; concord is decided by the referent's rationality and is never emitted here",
+      "id": "g-bpl-3"
+    },
+    {
+      "guard": "the six rows are a core, not a closed inventory; no_template means unclassified by this pack, never ill-formed",
+      "id": "g-bpl-4"
+    },
+    {
+      "guard": "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
+      "id": "g-bpl-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

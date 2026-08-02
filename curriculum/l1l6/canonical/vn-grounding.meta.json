@@ -1,0 +1,20 @@
+{
+  "card_display_only_note": "card_display_only witnesses diverge from the canonical loc->surface index (orthographic convention); they never ground a canonical occurrence — equivalence, if any, is a Sol/scholar policy decision (linguistic_review_blocked)",
+  "generator": "tools/build_vn_grounding.py",
+  "schema": "curriculum.l1l6_vn_grounding_row.v1.meta",
+  "state_histogram": {
+    "authority_blocked": 29,
+    "exact_vn_candidates": 11,
+    "not_applicable_with_reason": 50,
+    "sol_integration_blocked": 76
+  },
+  "total_n_candidates": 3,
+  "total_v_candidates": 15,
+  "units": 166,
+  "units_with_exact_n": 3,
+  "units_with_exact_v": 9,
+  "units_with_occurrences": 10,
+  "witnesses_canonical_verified": 24,
+  "witnesses_card_display_only": 11,
+  "witnesses_total": 35
+}

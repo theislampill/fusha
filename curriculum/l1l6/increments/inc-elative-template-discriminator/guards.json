@@ -1,0 +1,34 @@
+{
+  "guards": [
+    {
+      "guard": "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+      "id": "g-ela-1"
+    },
+    {
+      "guard": "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+      "id": "g-ela-2"
+    },
+    {
+      "guard": "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+      "id": "g-ela-3"
+    },
+    {
+      "guard": "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+      "id": "g-ela-4"
+    },
+    {
+      "guard": "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+      "id": "g-ela-5"
+    },
+    {
+      "guard": "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+      "id": "g-ela-6"
+    },
+    {
+      "guard": "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme",
+      "id": "g-ela-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

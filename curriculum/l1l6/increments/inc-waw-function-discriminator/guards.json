@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "the connective has no default sense; an unresolved occurrence is never glossed as coordination by convenience",
+      "id": "g-waw-def"
+    },
+    {
+      "guard": "an unpointed following nominal has an unrecoverable case and is recorded as such, never assigned one",
+      "id": "g-waw-case"
+    },
+    {
+      "guard": "animacy is a cue, never a gate: an animate nominal is not excluded from the accompaniment reading",
+      "id": "g-waw-anim"
+    },
+    {
+      "guard": "the emphasis difference between two licensed readings is a teaching note, never an emitted fact",
+      "id": "g-waw-emph"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

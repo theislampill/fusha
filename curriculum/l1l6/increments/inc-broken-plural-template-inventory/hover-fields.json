@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "key": "plural_template_chip",
+      "teaching": "names the matched plural template and whether it reads as paucity, multitude or an extreme plural"
+    },
+    {
+      "key": "singular_link_note",
+      "teaching": "shows the supplied singular and states that the pairing is attested, not derived — with rival attested plurals listed when they exist"
+    },
+    {
+      "key": "homograph_warning",
+      "teaching": "when the skeleton is shared with a singular template the card shows both readings and the honest 'cannot decide from letters' verdict"
+    },
+    {
+      "key": "concord_note",
+      "teaching": "reminds the reader that agreement is chosen from the referent, not from the plural's shape"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

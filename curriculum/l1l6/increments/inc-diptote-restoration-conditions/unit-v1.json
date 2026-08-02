@@ -1,0 +1,113 @@
+{
+  "abstention_reasons": [
+    "reject_reconstruction",
+    "definiteness_state_unknown",
+    "annexation_role_unknown"
+  ],
+  "capability": "licensing_table",
+  "encoding_limitation": "the registered licensing_table capability matches ONE compound construction key and can only emit reject_reconstruction for anything unmatched; the evidence-specific abstention reasons declared here are therefore DECLARED-BUT-UNREACHABLE pending a keyed-evidence capability — kept as the unit's honest abstention vocabulary, not as consumer behavior (audit finding, modeled on inc-atf-case-following)",
+  "increment": "inc-diptote-restoration-conditions",
+  "licensing_table": [
+    {
+      "construction": "class_member_carrying_the_definite_article",
+      "hidden": {
+        "type": "case_vowel_restored_nunation_withheld",
+        "value_class": "definitised_by_the_article"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "class_member_as_first_term_of_an_annexation",
+      "hidden": {
+        "type": "case_vowel_restored_nunation_withheld",
+        "value_class": "definitised_by_first_term_status"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "class_member_as_second_term_of_an_annexation",
+      "hidden": {
+        "type": "no_restoration",
+        "value_class": "this_term_is_not_definitised"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "class_member_indefinite_and_unannexed",
+      "hidden": {
+        "type": "no_restoration",
+        "value_class": "reduced_exponent_retained"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "nunation_added_after_the_case_vowel_returned_in_prose",
+      "hidden": {
+        "type": "restoration_not_licensed",
+        "value_class": "restoring_environments_are_definitising"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "class_member_in_verse_under_metrical_pressure",
+      "hidden": {
+        "type": "nunation_restored_register_bound",
+        "value_class": "verse_only_and_never_extended_to_prose"
+      },
+      "obligatory": false
+    },
+    {
+      "construction": "class_member_followed_by_a_relational_adjective",
+      "hidden": {
+        "type": "restoration_claimed_but_unverified",
+        "value_class": "the_environment_does_not_definitise_the_head"
+      },
+      "note": "analysis-dependent: the claim that a following relational adjective behaves like annexation and restores the ordinary genitive vowel is recorded upstream as unsafe for automatic projection",
+      "obligatory": false
+    },
+    {
+      "construction": "article_prefixed_proper_toponym_illustration",
+      "hidden": {
+        "type": "case_vowel_restored_nunation_withheld",
+        "value_class": "illustration_recorded_as_requiring_review"
+      },
+      "note": "analysis-dependent: attaching the article directly to proper toponyms to demonstrate suspension is recorded upstream as requiring review",
+      "obligatory": false
+    },
+    {
+      "construction": "shortened_noun_ending_in_a_non_vocalisable_alif",
+      "hidden": {
+        "type": "no_exponent_surfaces",
+        "value_class": "membership_recorded_as_unverified"
+      },
+      "note": "analysis-dependent: listing this shortened-noun type among the class members in its indefinite state is recorded upstream as unsafe for automatic projection",
+      "obligatory": false
+    }
+  ],
+  "rules": [
+    {
+      "id": "dpr-r1",
+      "text": "restoration is triggered by definitisation: the definite article and first-term-of-annexation status are the two prose environments"
+    },
+    {
+      "id": "dpr-r2",
+      "text": "restoration concerns the case vowel and never the nunation; a restored vowel is not evidence for a restored nunation"
+    },
+    {
+      "id": "dpr-r3",
+      "text": "restoration reaches only the term that is actually definitised: a class member in second-term position keeps the reduced exponent"
+    },
+    {
+      "id": "dpr-r4",
+      "text": "the metrical licence is confined to verse and is evaluated before a nunated occurrence is called an error"
+    },
+    {
+      "id": "dpr-r5",
+      "text": "adjacency is not a restoring environment; a neighbouring word that does not definitise the head licenses nothing -> reject_reconstruction"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-diptote-restoration-conditions",
+  "version": 1
+}

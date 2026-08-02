@@ -1,0 +1,241 @@
+{
+  "abstentions_preserved": [
+    "hid-adv-01",
+    "hid-adv-02"
+  ],
+  "backprop_proposal": {
+    "content": "repair unit-v0.json -> unit-v1.json with the recorded defect set as adversarial evidence",
+    "no_auto_promotion": true,
+    "target": "curriculum/l1l6/promotion/ bundle for inc-hidden"
+  },
+  "baseline_pack": "unit-v0.json",
+  "canonical_dogfood_eligible": false,
+  "capability": "licensing_table",
+  "defects_recorded": [
+    {
+      "actual": {
+        "decision": "abstain",
+        "reason": "reject_reconstruction"
+      },
+      "class": "positive",
+      "expected": {
+        "decision": "candidate_pending",
+        "hidden_type": "elided_aid",
+        "obligatory": false
+      },
+      "fixture_id": "hid-pos-02"
+    },
+    {
+      "actual": {
+        "decision": "abstain",
+        "reason": "reject_reconstruction"
+      },
+      "class": "positive",
+      "expected": {
+        "analysis_dependent": true,
+        "decision": "candidate_pending",
+        "hidden_type": "deleted_verb"
+      },
+      "fixture_id": "hid-pos-03"
+    }
+  ],
+  "downstream_work": {
+    "hover_pedagogy": "queue q-hover-pedagogy rows for linked entries",
+    "occurrence_grounding": "queue q-pvn-grounding rows for lessons mapped to inc-hidden"
+  },
+  "evidence_class": "development_evidence_only",
+  "guards_loaded": [
+    "g-hid-1",
+    "g-hid-2",
+    "g-hid-3",
+    "g-hid-m"
+  ],
+  "improvement_classes_verified": [
+    "fixture_harness_improvement",
+    "instructional_improvement"
+  ],
+  "improvements": [
+    "hid-pos-02",
+    "hid-pos-03"
+  ],
+  "increment": "inc-hidden",
+  "loop": "hidden-structure",
+  "regressions": [],
+  "repaired_pack": "unit-v1.json",
+  "rivals_preserved": [],
+  "run1": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 5,
+    "increment": "inc-hidden",
+    "mismatches": 2,
+    "results": [
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "hidden_type": "mustatir_pronoun",
+          "obligatory": true
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "hidden_type": "mustatir_pronoun",
+          "obligatory": true
+        },
+        "fixture_id": "hid-pos-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "hidden_type": "elided_aid",
+          "obligatory": false
+        },
+        "fixture_id": "hid-pos-02",
+        "match": false
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "fixture_id": "hid-adv-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "class": "positive",
+        "expected": {
+          "analysis_dependent": true,
+          "decision": "candidate_pending",
+          "hidden_type": "deleted_verb"
+        },
+        "fixture_id": "hid-pos-03",
+        "match": false
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "fixture_id": "hid-adv-02",
+        "match": true
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v0.json",
+    "unit_version": 0
+  },
+  "run2": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 5,
+    "increment": "inc-hidden",
+    "mismatches": 0,
+    "results": [
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "hidden_type": "mustatir_pronoun",
+          "obligatory": true
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "hidden_type": "mustatir_pronoun",
+          "obligatory": true
+        },
+        "fixture_id": "hid-pos-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "hidden_type": "elided_aid",
+          "obligatory": false
+        },
+        "class": "positive",
+        "expected": {
+          "decision": "candidate_pending",
+          "hidden_type": "elided_aid",
+          "obligatory": false
+        },
+        "fixture_id": "hid-pos-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "fixture_id": "hid-adv-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "analysis_dependent": true,
+          "authority": "none_fixture_harness",
+          "decision": "candidate_pending",
+          "hidden_type": "deleted_verb",
+          "obligatory": true,
+          "school_attribution": "deleted-call-verb account (Basran mainstream); rival sui-generis analyses exist — attributed, never resolved here"
+        },
+        "class": "positive",
+        "expected": {
+          "analysis_dependent": true,
+          "decision": "candidate_pending",
+          "hidden_type": "deleted_verb"
+        },
+        "fixture_id": "hid-pos-03",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "fixture_id": "hid-adv-02",
+        "match": true
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v1.json",
+    "unit_version": 1
+  },
+  "schema": "curriculum.l1l6_flywheel_loop.v1",
+  "site_payload_improvement": "never_claimable_here_owner_gated",
+  "status": "candidate",
+  "transfer_improvements": [],
+  "unit_ref": "u-n08"
+}
