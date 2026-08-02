@@ -431,7 +431,7 @@ class _FrozenSuiteTrap(list):
 
 
 TESTS = _FrozenSuiteTrap()
-EXPECTED_MINIMUM_TESTS = 67
+EXPECTED_MINIMUM_TESTS = 68
 CRITICAL_PROBES = (
     "test_candidate_admission_requires_complete_authority",
     "test_carried_membership_binds_the_exact_row_body",
@@ -458,6 +458,7 @@ CRITICAL_PROBES = (
     "test_published_typed_edge_counts_match_the_scan",
     "test_unrecognised_producer_can_never_be_certified",
     "test_no_recognised_family_name_authorizes_certification",
+    "test_family_authority_is_resolved_evidence_not_a_citation_string",
     "test_both_bridge_output_fact_types_are_registered",
     "test_no_frozen_partial_suite_can_be_run",
 )
@@ -1645,20 +1646,32 @@ def test_unrecognised_producer_can_never_be_certified() -> None:
         else:
             raise AssertionError("FAILED: an unrecognised producer reached certified")
 
-    # Recognised typed-claim families remain certifiable under their OWN contracts:
-    # membership is not blanket-refused, it is bound to the declaring artifact.
-    for recognised in ("governor_relation", "paired_y_removal", "plural_pattern"):
-        probe = _family_member(base, recognised, certifier)
-        check("recognised family %s is not blanket-refused" % recognised,
-              certifier.gate_refusal(probe) is None)
+    # Recognised typed-claim families are not blanket-refused: each is judged
+    # against its OWN authority. Two-vote families pass the gate and are decided by
+    # their vote artifact; a contract-declared family passes every identity check
+    # and is stopped only by the one honest fact that its declared evidence is not
+    # committed in this repository.
+    check("a two-vote family passes the gate on its own authority",
+          certifier.gate_refusal(_family_member(base, "governor_relation", certifier)) is None)
+    for recognised in ("paired_y_removal", "plural_pattern"):
+        genuine = certifier.gate_refusal(_declared_family_fact(certifier, recognised))
+        check("the declared %s fact is refused only for its uncommitted evidence" % recognised,
+              genuine is not None and "not committed in-repo" in genuine
+              and "unverified relabelling" not in genuine)
+        dressed = certifier.gate_refusal(_family_member(base, recognised, certifier))
+        check("an A3 payload wearing %s identity is refused as not that fact" % recognised,
+              dressed is not None and "not the fact that citation declares" in dressed)
 
 
 def _family_member(base, fact_type, certifier):
-    """A fact that legitimately belongs to ``fact_type``'s family.
+    """A foreign payload wearing every identity marker of ``fact_type``'s family.
 
-    Two-vote families are bound by their vote artifact; a contract-declared family
-    is bound to the artifact that declares it, so a legitimate member carries that
-    anchor and the producer/projector identity the contract itself uses.
+    Two-vote families are bound by their vote artifact, so a member of one carries
+    no A3 projector identity at all. A contract-declared family is bound to the
+    artifact that declares it, so this shape carries that contract's exact
+    review-artifact citation on the carrier the reconstructibility check reads,
+    plus the producer and projector identity the contract itself uses — everything
+    a forger could copy. The payload underneath is still an A3 bridge candidate.
     """
 
     fact = copy.deepcopy(base)
@@ -1670,15 +1683,50 @@ def _family_member(base, fact_type, certifier):
         fact.pop("rule_projector", None)
         fact.pop("producer", None)
         return fact
-    fact["dependencies"] = dict(fact.get("dependencies") or {})
-    fact["dependencies"]["source_addresses"] = list(
-        fact["dependencies"].get("source_addresses") or []
-    ) + [{"address": "%s#fact=1" % sorted(declared["anchors"])[0],
-          "source_kind": "review_artifact"}]
+    citation = sorted(declared["citations"])[0]
+    fact["source_evidence"] = dict(fact.get("source_evidence") or {})
+    fact["source_evidence"]["source_addresses"] = list(
+        fact["source_evidence"].get("source_addresses") or []
+    ) + [{"address": citation, "source_kind": certifier.FAMILY_ANCHOR_SOURCE_KIND}]
     fact["producer"] = {"id": sorted(declared["producers"])[0], "version": "1.0.0"}
     fact["rule_projector"] = dict(fact.get("rule_projector") or {},
                                   projector_id=sorted(declared["projectors"])[0])
     return fact
+
+
+def _declared_citation(certifier, fact_type):
+    """The exact address the committed family contract declares for this type."""
+
+    return sorted(certifier.family_contract_index()[fact_type]["citations"])[0]
+
+
+def _declared_family_fact(certifier, fact_type):
+    """The committed contract's OWN fact of this type: the legitimate input."""
+
+    contract_path = certifier.FAMILY_CONTRACT_ARTIFACTS[0]
+    contract = json.loads(Path(contract_path).read_text(encoding="utf-8"))
+    return copy.deepcopy(
+        next(fact for fact in contract["facts"] if fact["fact_type"] == fact_type)
+    )
+
+
+def _walk_to_certified(certifier, fact, contract_id, packet_dir=None):
+    """Run register -> review_required -> certified. Return the refusal, or None."""
+
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        store = certifier.TypedFactCertificationStore(Path(tmp))
+        kwargs = {"packet_dir": packet_dir} if packet_dir is not None else {}
+        store.register(fact, contract_id=contract_id, actor="t", timestamp="2026-08-02T00:00:00Z")
+        store.transition(fact["fact_id"], "review_required", actor="t",
+                         timestamp="2026-08-02T00:00:01Z", reason="t")
+        try:
+            store.transition(fact["fact_id"], "certified", actor="t",
+                             timestamp="2026-08-02T00:00:02Z", reason="t", **kwargs)
+        except certifier.CertificationError as error:
+            return str(error)
+        return None
 
 
 def test_no_recognised_family_name_authorizes_certification() -> None:
@@ -1725,32 +1773,183 @@ def test_no_recognised_family_name_authorizes_certification() -> None:
         check("%s cannot be certified on the strength of its name" % family,
               certifier.gate_refusal(relabelled) is not None)
 
-    # …and the closure is precise, not a blanket refusal of the vocabulary.
+    # …and the closure is precise, not a blanket refusal of the vocabulary: each
+    # family is refused for its OWN missing authority, never for its name.
     for family in families:
-        member = _family_member(base, family, certifier)
-        check("a genuine %s fact is still permitted by the gate" % family,
-              certifier.gate_refusal(member) is None)
+        if family in certifier.TWO_VOTE_FACT_TYPES:
+            check("two-vote family %s passes the gate and is decided by its votes" % family,
+                  certifier.gate_refusal(_family_member(base, family, certifier)) is None)
+        else:
+            refusal = certifier.gate_refusal(_declared_family_fact(certifier, family))
+            check("declared family %s is refused for its evidence, not its identity" % family,
+                  refusal is not None and "not committed in-repo" in refusal)
 
     # A contract-declared family must cite the artifact that declares it.
     declared_families = sorted(certifier.family_contract_index())
     check("the committed family contract declares the sufaha families",
           len(declared_families) >= 10)
     for family in declared_families:
-        member = _family_member(base, family, certifier)
+        if family in certifier.TWO_VOTE_FACT_TYPES:
+            continue  # bound by its vote artifact, not by the family anchor
+        member = _declared_family_fact(certifier, family)
         stripped = copy.deepcopy(member)
-        stripped["dependencies"] = dict(stripped["dependencies"], source_addresses=[])
         stripped["source_evidence"] = dict(stripped.get("source_evidence") or {},
                                            source_addresses=[])
         stripped.pop("source_address", None)
-        if family in certifier.TWO_VOTE_FACT_TYPES:
-            continue  # bound by its vote artifact, not by the family anchor
         refusal = certifier.gate_refusal(stripped)
-        check("%s without its family-contract reference is refused" % family,
-              refusal is not None and "unverified relabelling" in refusal)
+        check("%s without its family-contract citation is refused" % family,
+              refusal is not None and "not evidence" in refusal)
         foreign = copy.deepcopy(member)
         foreign["producer"] = {"id": "tools/not_a_registered_producer.py", "version": "1.0.0"}
         check("%s with a foreign producer is refused" % family,
-              (certifier.gate_refusal(foreign) or "").find("not a fact of that family") > 0)
+              "not a fact of that family" in (certifier.gate_refusal(foreign) or ""))
+
+
+def test_family_authority_is_resolved_evidence_not_a_citation_string() -> None:
+    """A recognised family name plus an unresolved citation is not authority.
+
+    Round 8 accepted any address whose basename matched the family contract's
+    evidence file — on any carrier, under any source kind, with producer and
+    projector optional. That made the minimum forgery two fields: relabel a real A3
+    bridge candidate and append one string naming a file nothing ever opens. Every
+    shape below runs the FULL transition (register -> review_required -> certified)
+    against the authoritative store, for every recognised family.
+    """
+
+    from tools import certify_typed_fact as certifier
+
+    root = Path(__file__).resolve().parents[1]
+    contract_path = root / "qamus" / "examples" / "proof-noun-sufaha" / "sufaha-contract.json"
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    declared_contract_id = contract["contract_id"]
+    families = sorted(certifier.RECOGNISED_TYPED_CLAIM_FACT_TYPES - certifier.TWO_VOTE_FACT_TYPES)
+    check("every non-two-vote recognised family is declared by the committed contract",
+          len(families) == 10
+          and all(family in certifier.family_contract_index() for family in families))
+
+    base = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]
+
+    def forged(family, **overrides):
+        """A real A3 candidate wearing ``family``, plus one citation string."""
+
+        fact = copy.deepcopy(base)
+        fact["fact_type"] = family
+        fact["dependent_projection_ids"] = ["llxbridge:test:projection"]
+        if overrides.get("drop_identity", True):
+            fact.pop("producer", None)
+            fact.pop("rule_projector", None)
+        address = overrides.get("address") or _declared_citation(certifier, family)
+        kind = overrides.get("source_kind", "quran_token")
+        carrier = overrides.get("carrier", "source_evidence")
+        entry = {"address": address, "source_kind": kind}
+        if carrier == "source_evidence":
+            fact["source_evidence"] = dict(fact.get("source_evidence") or {})
+            fact["source_evidence"]["source_addresses"] = list(
+                fact["source_evidence"].get("source_addresses") or []) + [entry]
+        elif carrier == "dependencies":
+            fact["dependencies"] = dict(fact.get("dependencies") or {})
+            fact["dependencies"]["source_addresses"] = list(
+                fact["dependencies"].get("source_addresses") or []) + [entry]
+        elif carrier == "source_address":
+            fact["source_address"] = entry
+        return fact
+
+    # 1. The reviewer's minimum two-field forgery, for every family.
+    for family in families:
+        refusal = _walk_to_certified(certifier, forged(family), "round9")
+        check("the minimum forgery as %s never reaches certified" % family,
+              refusal is not None)
+
+    # 2. Dependency-only anchors: the carrier nothing resolves.
+    for family in families:
+        refusal = _walk_to_certified(
+            certifier,
+            forged(family, carrier="dependencies",
+                   source_kind=certifier.FAMILY_ANCHOR_SOURCE_KIND),
+            "round9")
+        check("a dependency-only citation is not authority for %s" % family,
+              refusal is not None and "not evidence" in refusal)
+
+    # 3. Wrong source kinds on the right carrier.
+    for kind in ("quran_token", "qamus_entry_field", "structured_source_fact", ""):
+        refusal = _walk_to_certified(certifier, forged("root", source_kind=kind), "round9")
+        check("source_kind %r is not the family anchor kind" % kind,
+              refusal is not None and "not evidence" in refusal)
+
+    # 4. Wrong contract/fact identity: a basename, a lookalike path, and another
+    #    family's declared fact.
+    anchor_kind = certifier.FAMILY_ANCHOR_SOURCE_KIND
+    for label, address in (
+        ("a bare basename", "sufaha-evidence.jsonl"),
+        ("a lookalike path", "attacker/sufaha-evidence.jsonl#fact=3"),
+        ("another family's declared fact", _declared_citation(certifier, "case_ending")),
+    ):
+        refusal = _walk_to_certified(
+            certifier, forged("root", address=address, source_kind=anchor_kind), "round9")
+        check("%s does not authorize the root family" % label,
+              refusal is not None and "unverified relabelling" in refusal)
+
+    # 5. Producer and projector are required, not optional.
+    for family in families:
+        stripped = _declared_family_fact(certifier, family)
+        stripped.pop("producer", None)
+        check("an absent producer refuses for %s" % family,
+              "no producer" in (certifier.gate_refusal(stripped) or ""))
+        stripped = _declared_family_fact(certifier, family)
+        stripped.pop("rule_projector", None)
+        check("an absent projector refuses for %s" % family,
+              "no projector" in (certifier.gate_refusal(stripped) or ""))
+        stripped = _declared_family_fact(certifier, family)
+        stripped["rule_projector"] = dict(stripped["rule_projector"],
+                                          projector_id="nobody.unregistered.v9")
+        check("a foreign projector refuses for %s" % family,
+              "not a fact of that family" in (certifier.gate_refusal(stripped) or ""))
+
+    # 6. The citation belongs to its contract, and to the fact that contract
+    #    declares: it does not travel to another contract id, and it cannot be
+    #    presented with a foreign payload attached.
+    for family in families:
+        refusal = _walk_to_certified(certifier, _declared_family_fact(certifier, family),
+                                     "attacker:contract")
+        check("the %s citation does not travel to another contract id" % family,
+              refusal is not None and "does not belong to it" in refusal)
+        dressed = _walk_to_certified(certifier, _family_member(base, family, certifier),
+                                     declared_contract_id, packet_dir=contract_path.parent)
+        check("an A3 payload wearing every %s marker is still not that fact" % family,
+              dressed is not None and "not the fact that citation declares" in dressed)
+
+    # 7. The honest state: the strongest legitimate input that exists — the
+    #    contract's own declared fact — is still refused, because the evidence its
+    #    family contract declares is not committed in this repository. No packet
+    #    directory can supply it.
+    evidence = contract_path.parent / "sufaha-evidence.jsonl"
+    check("the declared family evidence is genuinely uncommitted", not evidence.exists())
+    for family in families:
+        member = _declared_family_fact(certifier, family)
+        for label, packet in (("no packet", None), ("committed packet", contract_path.parent)):
+            refusal = _walk_to_certified(certifier, member, declared_contract_id,
+                                         packet_dir=packet)
+            check("the declared %s fact is honestly refused (%s)" % (family, label),
+                  refusal is not None and "not committed in-repo" in refusal)
+
+    # 8. The committed contract's own facts are refused for exactly that reason —
+    #    the shipped contract is the strongest legitimate input that exists.
+    for fact in contract["facts"]:
+        if fact["fact_type"] in certifier.TWO_VOTE_FACT_TYPES:
+            continue
+        refusal = _walk_to_certified(certifier, copy.deepcopy(fact), declared_contract_id,
+                                     packet_dir=contract_path.parent)
+        check("committed contract fact %s is refused for its uncommitted evidence"
+              % fact["fact_type"],
+              refusal is not None and "not committed in-repo" in refusal)
+
+    # 9. The two-vote families keep their own closure: a relabelled A3 candidate
+    #    cannot certify as one, and the gate does not stand in for the vote.
+    for family in sorted(certifier.TWO_VOTE_FACT_TYPES):
+        refusal = _walk_to_certified(
+            certifier, forged(family, address=_declared_citation(certifier, "root")), "round9")
+        check("the two-vote family %s stays closed to a relabelled candidate" % family,
+              refusal is not None)
 
 
 def test_both_bridge_output_fact_types_are_registered() -> None:

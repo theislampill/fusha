@@ -28,10 +28,15 @@ to the typed-claim plane governed by docs/certification-authority.md:
   revoked input are automatically de-certified.
 
 No live surface is read or mutated. The committed sufaha packet demo is
-read-only over the committed contract: it refuses certification for the
-committed packet because the MCP verbatim evidence file the facts address
-(``sufaha-evidence.jsonl``) is not committed in-repo, and demonstrates the full
-transition + revocation cascade only on a fixture copy in a temp directory.
+read-only over the committed contract: it refuses certification for every fact
+of the ten non-two-vote typed-claim families, because the MCP verbatim evidence
+file their family contract declares (``sufaha-evidence.jsonl``) is not committed
+in-repo — and it stays refused even when a temp packet makes that address
+resolvable, since family authority is the committed contract's evidence, not a
+citation string. Only ``governor_relation`` certifies there, against the
+validated two-vote artifact. The full transition + revocation cascade is
+exercised by ``--self-test`` over a fact type with a registered producer
+contract, so no family name is ever borrowed to make a fixture green.
 """
 
 from __future__ import annotations
@@ -102,12 +107,16 @@ TWO_VOTE_FACT_TYPES = {
 #
 #   * two-vote families certify only against a validated two-vote artifact naming
 #     the fact (see ``two_vote_refusal``), which is external evidence, not a name;
-#   * every other recognised family must cite the committed family contract that
-#     declares it, and may not claim a producer or projector that contract does
-#     not use (see ``family_contract_reference_refusal``).
+#   * every other recognised family must establish membership against the committed
+#     contract that declares it: the exact declared review-artifact citation, on the
+#     carrier that is actually resolved, plus the declared producer and projector,
+#     plus an evidence file committed in this repository (see
+#     ``family_authority_refusal``). A citation string is not evidence until it
+#     opens onto something.
 #
 # So a foreign payload relabelled into a recognised family cannot borrow that
-# family's authority from the fact_type field.
+# family's authority from the fact_type field, and cannot mint it from an address
+# nothing resolves.
 RECOGNISED_TYPED_CLAIM_FACT_TYPES = frozenset(TWO_VOTE_FACT_TYPES) | frozenset({
     # proof-noun-sufaha typed-claim families (qamus/examples/proof-noun-sufaha/)
     "case_ending",
@@ -147,18 +156,31 @@ FAMILY_CONTRACT_ARTIFACTS = (
 )
 
 
+# A family anchor is only ever read from the SAME carrier the review-artifact
+# reconstructibility check reads (``source_evidence.source_addresses`` and
+# ``source_address``) and only with this source kind. An address that appears only
+# under ``dependencies.source_addresses``, or under any other source kind, is never
+# resolved against a packet, so it can claim anything and authorizes nothing.
+FAMILY_ANCHOR_SOURCE_KIND = "review_artifact"
+
+
 @functools.lru_cache(maxsize=1)
-def family_contract_index() -> Dict[str, Dict[str, frozenset]]:
-    """Per declared family, the identity its committed family contract itself uses.
+def family_contract_index() -> Dict[str, Dict[str, Any]]:
+    """Per declared family, the exact identity its committed family contract uses.
 
     Read out of the committed contracts rather than hard-coded here, so a family's
-    permitted anchor cannot drift away from the artifact that defines it. For each
-    fact type the contract declares we keep the evidence artifact its facts are
-    anchored to (``source_address`` minus the fragment) and the producer/projector
-    identities those facts carry.
+    permitted authority cannot drift away from the artifact that defines it. For
+    each declared fact type we keep
+
+    * ``citations`` — the EXACT review-artifact addresses the contract's own facts
+      of that type are anchored to, mapped to the declaring fact id, so a citation
+      identifies one declared contract fact rather than a basename;
+    * ``producers`` / ``projectors`` — the identities those facts carry;
+    * ``contract_path`` / ``contract_id`` — the declaring artifact itself, which is
+      also the directory the cited evidence must be committed under.
     """
 
-    index: Dict[str, Dict[str, set]] = {}
+    index: Dict[str, Dict[str, Any]] = {}
     for path in FAMILY_CONTRACT_ARTIFACTS:
         if not path.exists():
             continue
@@ -166,49 +188,97 @@ def family_contract_index() -> Dict[str, Dict[str, frozenset]]:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):  # a damaged contract declares nothing
             continue
+        contract_id = str(payload.get("contract_id") or "")
         for fact in payload.get("facts") or []:
             if not isinstance(fact, dict):
                 continue
             fact_type = str(fact.get("fact_type") or "")
-            anchor = str(((fact.get("source_address") or {}).get("address")) or "")
-            if not fact_type or not anchor:
+            anchor = fact.get("source_address")
+            if not isinstance(anchor, dict):
                 continue
-            declared = index.setdefault(
-                fact_type, {"anchors": set(), "producers": set(), "projectors": set()}
-            )
-            declared["anchors"].add(anchor.split("#", 1)[0])
+            address = str(anchor.get("address") or "")
+            if not fact_type or not address:
+                continue
+            if str(anchor.get("source_kind") or "") != FAMILY_ANCHOR_SOURCE_KIND:
+                # Only a reconstructible review artifact can anchor a family.
+                continue
+            declared = index.setdefault(fact_type, {
+                "contract_path": path,
+                "contract_id": contract_id,
+                "citations": {},
+                "producers": set(),
+                "projectors": set(),
+            })
+            declared["citations"][address] = str(fact.get("fact_id") or "")
             producer = str(((fact.get("producer") or {}).get("id")) or "")
             if producer:
                 declared["producers"].add(producer)
             projector = str(((fact.get("rule_projector") or {}).get("projector_id")) or "")
             if projector:
                 declared["projectors"].add(projector)
-    return {
-        fact_type: {key: frozenset(values) for key, values in declared.items()}
-        for fact_type, declared in index.items()
-    }
+    for declared in index.values():
+        declared["producers"] = frozenset(declared["producers"])
+        declared["projectors"] = frozenset(declared["projectors"])
+        declared["citations"] = dict(declared["citations"])
+    return index
 
 
-def _cited_addresses(fact: Dict[str, Any]) -> List[str]:
-    """Every source address the fact cites, across all three carriers."""
+def _family_anchor_candidates(fact: Dict[str, Any]) -> List[str]:
+    """Addresses offered on the reconstructible carrier, with the anchor kind.
 
-    values: List[str] = []
-    carriers: List[Any] = [_addresses(fact), [fact.get("source_address")]]
-    carriers.append((fact.get("dependencies") or {}).get("source_addresses") or [])
-    for carrier in carriers:
-        for item in carrier if isinstance(carrier, list) else []:
-            if isinstance(item, dict) and item.get("address"):
-                values.append(str(item["address"]))
-    return values
+    ``dependencies.source_addresses`` is deliberately excluded: the review-artifact
+    reconstructibility check never reads it, so an address living only there is
+    never opened and cannot be evidence of anything.
+    """
+
+    items: List[Any] = list(_addresses(fact))
+    primary = fact.get("source_address")
+    if isinstance(primary, dict):
+        items.append(primary)
+    return [
+        str(item["address"]) for item in items
+        if isinstance(item, dict) and item.get("address")
+        and str(item.get("source_kind") or "") == FAMILY_ANCHOR_SOURCE_KIND
+    ]
 
 
-def family_contract_reference_refusal(fact: Dict[str, Any]) -> Optional[str]:
-    """Refusal when a recognised-but-ungated family is not anchored to its contract.
+def family_evidence_path(declared: Dict[str, Any], address: str) -> Optional[Path]:
+    """The in-repository path a declared citation resolves to, or None if unsafe.
+
+    Resolution is relative to the DECLARING contract's own directory and must stay
+    inside the repository: a citation may not escape into the filesystem, and a
+    lookalike path is not the declared artifact.
+    """
+
+    file_part = str(address).split("#", 1)[0]
+    if (not file_part or os.path.isabs(file_part)
+            or file_part.startswith(("/", "\\")) or ".." in file_part):
+        return None
+    candidate = Path(declared["contract_path"]).parent / file_part
+    try:
+        candidate.resolve().relative_to(ROOT.resolve())
+    except (OSError, ValueError):
+        return None
+    return candidate
+
+
+def family_authority_refusal(fact: Dict[str, Any], *,
+                             contract_id: Optional[str] = None) -> Optional[str]:
+    """Refusal when a recognised-but-ungated family's authority is not established.
 
     A registered projector gate already decides what a fact needs. Where no such
-    gate exists, the fact must be anchored to the committed contract that declares
-    its family; otherwise the only thing authorizing certification would be the
-    fact_type STRING, which any relabelled payload can write.
+    gate exists, the family name is only a word; the fact must be tied to the
+    committed contract that declares the family by
+
+    1. citing that contract's own review-artifact address for a fact of THIS type,
+       on the carrier the reconstructibility check actually reads;
+    2. carrying the producer and projector identity that contract declares — both
+       are required, because an omitted field must never skip a check;
+    3. being the fact that citation declares, registered under that contract, so a
+       foreign payload cannot ride a legitimate citation;
+    4. resolving the cited artifact to a file committed in this repository.
+
+    Anything less would let a relabelled payload assert its own family membership.
     """
 
     fact_type = str(fact.get("fact_type") or "")
@@ -218,28 +288,81 @@ def family_contract_reference_refusal(fact: Dict[str, Any]) -> Optional[str]:
             "fact_type %r resolves no registered projector gate and no committed family contract "
             "declares it; a fact-type name can never by itself authorize certification" % fact_type
         )
-    anchors = declared["anchors"]
-    if not any(address.split("#", 1)[0] in anchors for address in _cited_addresses(fact)):
+    contract_display = Path(declared["contract_path"]).relative_to(ROOT).as_posix()
+    citations = declared["citations"]
+
+    offered = _family_anchor_candidates(fact)
+    if not offered:
         return (
-            "fact_type %r resolves no registered projector gate, so it must cite the family contract "
-            "evidence that declares it (one of: %s); this fact cites none of them, so its family "
-            "membership is an unverified relabelling"
-            % (fact_type, ", ".join(sorted(anchors)))
+            "fact_type %r resolves no registered projector gate, so its family membership must be "
+            "anchored to %s by a %r source address in source_evidence.source_addresses or "
+            "source_address; this fact offers none (a dependency-only or differently-kinded "
+            "address is never resolved, so it is not evidence)"
+            % (fact_type, contract_display, FAMILY_ANCHOR_SOURCE_KIND)
         )
-    producer = str(((fact.get("producer") or {}).get("id")) or "")
-    if producer and declared["producers"] and producer not in declared["producers"]:
+    cited = [address for address in offered if address in citations]
+    if not cited:
         return (
-            "fact_type %r is declared by a family contract produced by %s; this fact claims producer "
-            "%r, so it is not a fact of that family"
-            % (fact_type, ", ".join(sorted(declared["producers"])), producer)
+            "fact_type %r must cite the exact %s address that contract declares for a %s fact "
+            "(one of: %s); it cites %s, so its family membership is an unverified relabelling"
+            % (fact_type, contract_display, fact_type,
+               ", ".join(sorted(citations)), ", ".join(sorted(offered)))
+        )
+
+    producer = str(((fact.get("producer") or {}).get("id")) or "")
+    if declared["producers"] and producer not in declared["producers"]:
+        return (
+            "fact_type %r is declared by %s with producer %s; this fact declares %s, so it is not "
+            "a fact of that family"
+            % (fact_type, contract_display, ", ".join(sorted(declared["producers"])),
+               repr(producer) if producer else "no producer")
         )
     projector = str(((fact.get("rule_projector") or {}).get("projector_id")) or "")
-    if projector and declared["projectors"] and projector not in declared["projectors"]:
+    if declared["projectors"] and projector not in declared["projectors"]:
         return (
-            "fact_type %r is declared by a family contract projected by %s; this fact claims projector "
-            "%r, so it is not a fact of that family"
-            % (fact_type, ", ".join(sorted(declared["projectors"])), projector)
+            "fact_type %r is declared by %s with projector %s; this fact declares %s, so it is not "
+            "a fact of that family"
+            % (fact_type, contract_display, ", ".join(sorted(declared["projectors"])),
+               repr(projector) if projector else "no projector")
         )
+    if (contract_id is not None and declared["contract_id"]
+            and str(contract_id) != declared["contract_id"]):
+        return (
+            "fact_type %r is declared by %s under contract_id %r; this fact is registered under "
+            "%r, so the citation does not belong to it"
+            % (fact_type, contract_display, declared["contract_id"], str(contract_id))
+        )
+
+    # A citation identifies ONE declared contract fact. Presenting it with someone
+    # else's payload attached is the whole forgery: the body would be certified, not
+    # the fact the contract declared.
+    for address in sorted(cited):
+        declared_fact_id = citations.get(address) or ""
+        if declared_fact_id and str(fact.get("fact_id") or "") != declared_fact_id:
+            return (
+                "the citation %r identifies the %s fact %s declared by %s; this payload presents "
+                "fact_id %r, so it is not the fact that citation declares"
+                % (address, fact_type, declared_fact_id, contract_display,
+                   str(fact.get("fact_id") or ""))
+            )
+
+    # The citation must open onto something committed. While the declared evidence
+    # is absent from the repository, no fact of this family can be certified — that
+    # is the honest state, not a reason to accept the citation as its own proof.
+    for address in sorted(cited):
+        evidence_path = family_evidence_path(declared, address)
+        if evidence_path is None:
+            return (
+                "the family citation %r does not resolve to a repository-relative path under %s"
+                % (address, contract_display)
+            )
+        if not evidence_path.exists():
+            return (
+                "%s declares the evidence for %r at %s, which is not committed in-repo; "
+                "no fact of this family can be certified until that evidence is committed"
+                % (contract_display, fact_type,
+                   evidence_path.relative_to(ROOT).as_posix())
+            )
     return None
 
 
@@ -304,7 +427,7 @@ def producing_projector_gate(fact: Dict[str, Any]) -> Tuple[Optional[str], Optio
     return strictest, (str(projector_id) if projector_id else None), basis
 
 
-def gate_refusal(fact: Dict[str, Any]) -> Optional[str]:
+def gate_refusal(fact: Dict[str, Any], *, contract_id: Optional[str] = None) -> Optional[str]:
     """Refusal reason when the producing projector may never reach certified."""
 
     tier, projector_id, basis = producing_projector_gate(fact)
@@ -332,9 +455,11 @@ def gate_refusal(fact: Dict[str, Any]) -> Optional[str]:
             )
         if fact_type not in TWO_VOTE_FACT_TYPES:
             # Recognised but ungated: the family name proves nothing on its own, so
-            # the fact must be anchored to the contract that declares the family.
-            # (Two-vote families are already bound to a validated vote artifact.)
-            return family_contract_reference_refusal(fact)
+            # the fact must establish its membership against the contract that
+            # declares the family — a cited, resolvable, committed artifact plus the
+            # declared producer and projector identity. (Two-vote families are
+            # already bound to a validated vote artifact.)
+            return family_authority_refusal(fact, contract_id=contract_id)
     return None
 
 
@@ -655,7 +780,7 @@ class TypedFactCertificationStore:
         if to_status == "certified":
             # Producer gate first: a never_auto_resolve producer can never reach
             # certified, however complete its evidence, dependencies or votes.
-            refusal = gate_refusal(entry["fact"])
+            refusal = gate_refusal(entry["fact"], contract_id=entry.get("contract_id"))
             if refusal is None:
                 refusal = identity_refusal(entry["fact"])
             if refusal is not None:
@@ -884,17 +1009,40 @@ def count_certified(directory: os.PathLike[str] | str | None = None) -> int:
 _TS = "2026-07-29T00:00:00Z"
 _ACTOR = "lane:certify-typed-fact-self-test"
 
+# The fact type these fixtures are stamped with: one whose producer contract is
+# REGISTERED (``sarf.documented_form.v1`` -> ``sarf_form``, gate ``auto_safe``), so
+# the state machine can be exercised without borrowing anyone's authority.
+_FIXTURE_FACT_TYPE = "sarf_form"
+
 
 def _synthetic_fact(suffix: str, fact_type: str, mode: str, *,
                     addresses: Optional[List[Dict[str, str]]] = None,
                     dependency_ids: Optional[List[str]] = None,
                     chain_inputs: Optional[List[str]] = None,
                     quotation: str = "verbatim source statement") -> Dict[str, Any]:
+    """A synthetic fixture for the transition machinery.
+
+    A fixture may never impersonate a recognised typed-claim family: that family's
+    authority is a committed contract, an evidence artifact and a declared identity,
+    none of which a synthetic fact has. A requested family name is therefore
+    recorded as ``fixture_requested_fact_type`` and the fixture is stamped with the
+    registered fixture type instead — callers exercising the state machine keep
+    working, and no fixture is ever certified under a family it does not belong to.
+    Two-vote families are left alone: their authority is a validated vote artifact,
+    which a fixture bundle can legitimately supply.
+    """
+
+    requested = fact_type
+    if fact_type in RECOGNISED_TYPED_CLAIM_FACT_TYPES and fact_type not in TWO_VOTE_FACT_TYPES:
+        fact_type = _FIXTURE_FACT_TYPE
     addresses = addresses or [{"address": "quran:2:13:%s" % suffix, "source_kind": "quran_token"}]
     fact: Dict[str, Any] = {
         "fact_id": "sha256:" + hashlib.sha256(("fixture:" + fact_type + ":" + suffix).encode("utf-8")).hexdigest(),
         "fact_type": fact_type,
-        "fact_value": {"value": "fixture-%s-%s" % (fact_type, suffix)},
+        "fact_value": {
+            "value": "fixture-%s-%s" % (fact_type, suffix),
+            "fixture_requested_fact_type": requested,
+        },
         "evidence_mode": mode,
         "source_evidence": {
             "source_addresses": copy.deepcopy(addresses),
@@ -914,20 +1062,6 @@ def _synthetic_fact(suffix: str, fact_type: str, mode: str, *,
         "certification": {"status": "candidate", "reason": "fixture input"},
         "unresolved_blockers": [],
     }
-    declared = family_contract_index().get(fact_type)
-    if declared and fact_type not in TWO_VOTE_FACT_TYPES:
-        # A recognised family with no registered projector gate must be anchored to
-        # the contract that declares it, so a legitimate fixture carries that
-        # reference exactly as the real family facts do. It is declared as a
-        # dependency rather than as primary evidence because these fixtures exercise
-        # the state machine, not the (separately tested) packet resolution of a
-        # review artifact.
-        fact["dependencies"]["source_addresses"] = list(
-            fact["dependencies"]["source_addresses"]
-        ) + [{
-            "address": "%s#fixture=%s" % (sorted(declared["anchors"])[0], suffix),
-            "source_kind": "review_artifact",
-        }]
     if chain_inputs:
         fact["derivation_chain"] = [{
             "step_id": "fixture.step.%s" % suffix,
@@ -954,16 +1088,16 @@ def self_test() -> int:
     with tempfile.TemporaryDirectory(prefix="certify-typed-fact-") as td:
         store = TypedFactCertificationStore(os.path.join(td, "store"))
 
-        attested = _synthetic_fact("21", "singular_pattern", "direct_source_attestation")
+        attested = _synthetic_fact("21", _FIXTURE_FACT_TYPE, "direct_source_attestation")
         corroborated = _synthetic_fact(
-            "22", "root", "cross_source_corroboration",
+            "22", _FIXTURE_FACT_TYPE, "cross_source_corroboration",
             addresses=[
                 {"address": "quran:2:13:22", "source_kind": "quran_token"},
                 {"address": "entry:fixture22:root", "source_kind": "qamus_entry_field"},
             ],
         )
         derived = _synthetic_fact(
-            "23", "paired_y_removal", "deterministic_derivation_from_certified_facts",
+            "23", _FIXTURE_FACT_TYPE, "deterministic_derivation_from_certified_facts",
             dependency_ids=[attested["fact_id"], corroborated["fact_id"]],
             chain_inputs=[attested["fact_id"], corroborated["fact_id"]],
         )
@@ -992,7 +1126,7 @@ def self_test() -> int:
             return 1
 
         # Red 3: certification without an evidence bundle.
-        naked = _synthetic_fact("24", "plural_pattern", "direct_source_attestation")
+        naked = _synthetic_fact("24", _FIXTURE_FACT_TYPE, "direct_source_attestation")
         del naked["source_evidence"]
         store.register(naked, contract_id="fixture:contract", actor=_ACTOR, timestamp=_TS)
         store.transition(naked["fact_id"], "review_required", actor=_ACTOR,
@@ -1006,7 +1140,7 @@ def self_test() -> int:
 
         # Red 4: same-family repetition is not corroboration.
         repeated = _synthetic_fact(
-            "25", "root", "cross_source_corroboration",
+            "25", _FIXTURE_FACT_TYPE, "cross_source_corroboration",
             addresses=[
                 {"address": "quran:2:13:25", "source_kind": "quran_token"},
                 {"address": "quran:2:282:25", "source_kind": "quran_token"},
@@ -1101,9 +1235,9 @@ def self_test() -> int:
         # the corroborated input under a certified derived fact.
         forged_dir = os.path.join(td, "forged")
         forged = TypedFactCertificationStore(forged_dir)
-        base_input = _synthetic_fact("31", "singular_pattern", "direct_source_attestation")
+        base_input = _synthetic_fact("31", _FIXTURE_FACT_TYPE, "direct_source_attestation")
         base_derived = _synthetic_fact(
-            "32", "paired_y_removal", "paired_form_inference",
+            "32", _FIXTURE_FACT_TYPE, "paired_form_inference",
             dependency_ids=[base_input["fact_id"]],
             chain_inputs=[base_input["fact_id"]],
         )
@@ -1234,10 +1368,14 @@ def demo_sufaha() -> int:
               "(sufaha-evidence.jsonl, MCP verbatim capture) is not committed in-repo"
               % len(facts))
 
-        # Leg B — fixture copy: a temp packet dir carries a clearly-marked
-        # stand-in evidence file built ONLY from the quotations already
-        # committed inside sufaha-contract.json, so the transition machinery
-        # can be demonstrated without asserting any new evidence.
+        # Leg B — a resolvable fixture packet does NOT confer family authority.
+        # The temp packet dir carries a clearly-marked stand-in evidence file built
+        # ONLY from quotations already committed inside sufaha-contract.json. It
+        # makes the review-artifact address resolvable, and it still changes
+        # nothing: the ten non-two-vote families draw their authority from the
+        # committed family contract, whose declared evidence file is absent from
+        # this repository, so they stay refused. Only governor_relation may certify,
+        # because a validated two-vote artifact is its authority.
         fixture_packet = Path(td) / "fixture-packet"
         fixture_packet.mkdir()
         standin_rows = [
@@ -1259,49 +1397,64 @@ def demo_sufaha() -> int:
             store_b.register(fact, contract_id=contract_id, actor=actor, timestamp=_TS)
             store_b.transition(fact["fact_id"], "review_required", actor=actor,
                                timestamp=_TS, reason="fixture bundle under review")
+        certified_types: List[str] = []
+        family_refusals: Dict[str, str] = {}
         for fact in _sufaha_dependency_order(facts):
             kwargs = {"packet_dir": fixture_packet}
             if fact.get("fact_type") in TWO_VOTE_FACT_TYPES:
                 kwargs["two_vote_bundle"] = (TWO_VOTE_SAMPLE, "two-vote-artifact:quran_2_13_12")
-            store_b.transition(fact["fact_id"], "certified", actor=actor, timestamp=_TS,
-                               reason="fixture-copy bundle complete (%s)" % fact.get("evidence_mode"),
-                               **kwargs)
-        if len(store_b.certified_fact_ids()) != len(facts):
-            print("SUFAHA DEMO FAIL: fixture copy certified %d/%d facts"
-                  % (len(store_b.certified_fact_ids()), len(facts)))
+            try:
+                store_b.transition(fact["fact_id"], "certified", actor=actor, timestamp=_TS,
+                                   reason="fixture packet bundle (%s)" % fact.get("evidence_mode"),
+                                   **kwargs)
+                certified_types.append(str(fact.get("fact_type")))
+            except CertificationError as exc:
+                family_refusals[str(fact.get("fact_type"))] = str(exc)
+        expected = sorted(str(fact.get("fact_type")) for fact in facts
+                          if fact.get("fact_type") in TWO_VOTE_FACT_TYPES)
+        if sorted(certified_types) != expected:
+            print("SUFAHA DEMO FAIL: fixture packet certified %s, expected exactly the "
+                  "two-vote families %s" % (sorted(certified_types), expected))
             return 1
-        modes = sorted({fact.get("evidence_mode") for fact in facts})
-        print("  leg B (fixture copy): %d/%d certified across evidence modes %s; "
-              "governor_relation certified by CONSUMING the committed two-vote "
-              "artifact bundle (%s)"
-              % (len(facts), len(facts), ", ".join(modes),
-                 TWO_VOTE_SAMPLE.relative_to(ROOT)))
+        if not family_refusals or not all(
+                "not committed in-repo" in message for message in family_refusals.values()):
+            print("SUFAHA DEMO FAIL: family refusals must all name the uncommitted evidence:",
+                  sorted(family_refusals)[:3])
+            return 1
+        print("  leg B (resolvable fixture packet): %d/%d certified — only %s, whose authority is "
+              "the CONSUMED two-vote artifact (%s); the %d family facts stay refused even with the "
+              "cited artifact present in the packet, because %s declares that evidence in-repo and "
+              "it is not committed"
+              % (len(certified_types), len(facts), ", ".join(expected),
+                 TWO_VOTE_SAMPLE.relative_to(ROOT), len(family_refusals),
+                 SUFAHA_CONTRACT.relative_to(ROOT).as_posix()))
 
-        # Leg C — revocation cascade on the fixture copy: revoking the root
-        # singular_pattern fact must drop the paired_y_removal derivation.
-        singular = next(fact for fact in facts if fact["fact_type"] == "singular_pattern")
-        paired = next(fact for fact in facts if fact["fact_type"] == "paired_y_removal")
-        events = store_b.revoke(singular["fact_id"], actor=actor, timestamp=_TS,
-                                reason="demo: source capture withdrawn")
+        # Leg C — revocation over the one fact that could certify. No cascade is
+        # possible here and none is claimed: nothing in this packet derives from the
+        # two-vote fact, and the derivations that DO exist could never certify. The
+        # cascade itself is exercised in --self-test, over a fact type with a
+        # registered producer contract, so no family name has to be borrowed.
+        certified_ids = store_b.certified_fact_ids()
+        events = store_b.revoke(certified_ids[0], actor=actor, timestamp=_TS,
+                                reason="demo: two-vote artifact withdrawn")
         statuses = store_b.status_by_id()
         cascade = [event for event in events if event["event_type"] == "revoke_cascade"]
-        if statuses[singular["fact_id"]] != "review_required":
-            print("SUFAHA DEMO FAIL: revoked root fact did not drop")
+        if statuses[certified_ids[0]] != "review_required":
+            print("SUFAHA DEMO FAIL: revoked fact did not drop to review_required")
             return 1
-        if statuses[paired["fact_id"]] != "review_required":
-            print("SUFAHA DEMO FAIL: dependent paired_form_inference fact did not drop")
+        if cascade:
+            print("SUFAHA DEMO FAIL: a cascade was reported where no dependent was certified")
             return 1
-        if not any(event["fact_id"] == paired["fact_id"] and "auto-de-certified" in event["reason"]
-                   for event in cascade):
-            print("SUFAHA DEMO FAIL: paired_y_removal was not auto-de-certified")
+        if store_b.certified_fact_ids():
+            print("SUFAHA DEMO FAIL: a certified fact survived its own revocation")
             return 1
         trail_errors = store_b.validate_trail()
         if trail_errors:
             print("SUFAHA DEMO FAIL: fixture trail invalid:", trail_errors[:3])
             return 1
-        print("  leg C (revocation cascade): revoking singular_pattern dropped %d "
-              "dependent fact(s) the same run (paired_y_removal auto-de-certified); "
-              "%d certified remain" % (len(cascade), len(store_b.certified_fact_ids())))
+        print("  leg C (revocation): revoking the one certified fact left 0 certified and 0 "
+              "cascade events — honestly, because no certified dependent exists to drop; the "
+              "cascade machinery is exercised by --self-test, and the trail validates")
 
     print("  committed artifacts untouched: certification was demonstrated only in "
           "temp stores; the in-repo blocker (uncommitted MCP verbatim evidence) is "
