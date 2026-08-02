@@ -44,6 +44,10 @@ PROOFV_VERB_PROJECTOR_ID = "sarf.proofv.verb.v1"
 # lookup is candidate evidence about a written surface, never a certification of
 # lexical identity, so this projector has NO path to certified or materialized.
 LARGELEXICON_BRIDGE_PROJECTOR_ID = "largelexicon.carried_lexeme_candidate.v1"
+# The bridge also emits typed ABSTENTIONS. They are registered with their own
+# never_auto_resolve contract so their refusal rests on a real producer gate,
+# not on an incoherence report about an unregistered output fact type.
+LARGELEXICON_ABSTENTION_PROJECTOR_ID = "largelexicon.bridge_abstention.v1"
 # Fact types the A3 bridge content-addresses; their ids are recomputable from
 # the emitted fact, so a relabelled fact cannot keep a stale identity.
 LARGELEXICON_CONTENT_ADDRESSED_FACT_TYPES = frozenset(
@@ -250,6 +254,26 @@ def proofv_verb_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
     """Named registry guard; PROOF-V keeps source gaps explicit."""
 
     return None
+
+
+def largelexicon_abstention_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named registry guard; the bridge records the precise blockers itself."""
+
+    return None
+
+
+def project_largelexicon_abstention(*, contract: Dict[str, Any], **_kwargs: Any) -> Dict[str, Any]:
+    """Abstentions are produced by the bridge run itself, never projected on demand.
+
+    The registration exists so the abstention output fact type carries a real
+    never_auto_resolve gate; invoking it directly is refused rather than silently
+    manufacturing an abstention record.
+    """
+
+    raise ProjectorValidationError(
+        "largelexicon abstentions are emitted by the bridge run, not projected on demand: "
+        + str(contract.get("projector_id"))
+    )
 
 
 def largelexicon_bridge_abstention_guard(*_args: Any, **_kwargs: Any) -> None:
@@ -1188,6 +1212,24 @@ def identity_recomputer_for(fact: Dict[str, Any]):
     return None
 
 
+LARGELEXICON_ABSTENTION_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.largelexicon_fact_bridge",
+    "projector_id": LARGELEXICON_ABSTENTION_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["largelexicon_carried_crosswalk_row"],
+    "output_fact_type": "largelexicon_bridge_abstention",
+    "compatibility_class": (
+        "typed abstentions emitted by the A3 bridge when admission is refused; each carries the "
+        "precise closed blockers and never asserts a lexical claim"
+    ),
+    "defeater_checks": ["largelexicon_abstention_guard"],
+    "gate_tier": "never_auto_resolve",
+    "version": "1.0.0",
+    "resolution_method": "carried_target_schema_admission_refusal",
+}
+
 REGISTRY = ProjectorRegistry()
 REGISTRY.register(SARF_CONTRACT, project_sarf_documented_forms)
 REGISTRY.register(NAHW_CONTRACT, project_nahw_particle_functions)
@@ -1200,6 +1242,7 @@ REGISTRY.register(FAM4_FINITE_VERB_CONTRACT, project_fam4_finite_verb_pattern)
 REGISTRY.register(FAM5_DERIVED_VERB_CONTRACT, project_fam5_derived_verb_pattern)
 REGISTRY.register(PROOFV_VERB_CONTRACT, project_proofv_verb)
 REGISTRY.register(LARGELEXICON_BRIDGE_CONTRACT, project_largelexicon_carried_lexeme)
+REGISTRY.register(LARGELEXICON_ABSTENTION_CONTRACT, project_largelexicon_abstention)
 
 
 def main(argv: Optional[List[str]] = None) -> int:

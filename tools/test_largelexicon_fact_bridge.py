@@ -99,8 +99,9 @@ def test_accepted_single_candidate() -> None:
           record["projection"]["materialization_target"]["live_mutation_allowed"] is False)
     check("accepted record has no claim", record["projection"]["claim"] is None)
     check("candidate binds the canonical loc", record["canonical_occurrence"]["occurrence_id"] == f"quran:{LOC}")
-    check("candidate records dependency hashes",
-          any("qword-crosswalk@sha256:" in item["address"] for item in fact["dependencies"]["source_addresses"]))
+    check("candidate records the sealed carried-table digests",
+          any(item["address"].startswith(bridge.SEAL_ADDRESS_PREFIX) and "qword-crosswalk" in item["address"]
+              for item in fact["dependencies"]["source_addresses"]))
 
 
 def test_lexeme_identity_is_not_the_crosswalk_entry() -> None:
@@ -407,11 +408,30 @@ def all_tests():
     return [value for name, value in sorted(globals().items()) if name.startswith("test_")]
 
 
-# The frozen snapshot below is retained only for direct callers; the harness
-# collects dynamically via all_tests(). EXPECTED_MINIMUM_TESTS and CRITICAL_PROBES
-# are the contract the harness asserts.
-TESTS = all_tests()
-EXPECTED_MINIMUM_TESTS = 59
+# There is deliberately NO frozen TESTS snapshot. A module-level list captured at
+# import time silently drops every test appended after it, which is exactly how the
+# harness once ran 20 of 41. Callers must collect via all_tests() at call time;
+# EXPECTED_MINIMUM_TESTS and CRITICAL_PROBES are the contract asserted against it.
+
+
+class _FrozenSuiteTrap(list):
+    """Refuses to be used as a test list, and says why."""
+
+    def __iter__(self):  # noqa: D105 - the refusal IS the behaviour
+        raise RuntimeError(
+            "tools.test_largelexicon_fact_bridge.TESTS is not a runnable suite: "
+            "collect tests with all_tests() at call time so appended tests cannot be skipped"
+        )
+
+    def __len__(self):  # noqa: D105
+        raise RuntimeError(
+            "tools.test_largelexicon_fact_bridge.TESTS is not a runnable suite: "
+            "use len(all_tests()) so the count cannot go stale"
+        )
+
+
+TESTS = _FrozenSuiteTrap()
+EXPECTED_MINIMUM_TESTS = 66
 CRITICAL_PROBES = (
     "test_candidate_admission_requires_complete_authority",
     "test_carried_membership_binds_the_exact_row_body",
@@ -432,6 +452,13 @@ CRITICAL_PROBES = (
     "test_repository_metadata_binds_the_exact_parsed_content",
     "test_typed_edge_identity_and_endpoints_are_exact",
     "test_reader_boundary_is_stable",
+    "test_release_fragment_addresses_name_release_digests",
+    "test_seal_digest_is_separately_and_honestly_bound",
+    "test_filtered_run_cannot_create_false_whole_family_provenance",
+    "test_published_typed_edge_counts_match_the_scan",
+    "test_unrecognised_producer_can_never_be_certified",
+    "test_both_bridge_output_fact_types_are_registered",
+    "test_no_frozen_partial_suite_can_be_run",
 )
 
 
@@ -1443,6 +1470,229 @@ def test_reader_boundary_is_stable() -> None:
 
     default_tables = packaged.LargelexiconTargetTables.open()
     check("the default reader keeps target_dir unset", default_tables.target_dir is None)
+
+
+# --------------------------------------------------------------------------- #
+# defect-round-7 repairs: exact provenance, honest counts, certification closure
+# --------------------------------------------------------------------------- #
+import re as _re
+
+
+def _release() -> dict:
+    return json.loads((Path(__file__).resolve().parents[1] / "qamus" / "indexes" / "largelexicon"
+                       / "target-schema" / "TARGET-RELEASE.json").read_text(encoding="utf-8"))
+
+
+def _scan() -> dict:
+    return json.loads((Path(__file__).resolve().parents[1] / "qamus" / "examples"
+                       / "largelexicon-fact-bridge" / "real-data-scan.meta.json").read_text(encoding="utf-8"))
+
+
+_FRAGMENT = _re.compile(
+    r"^qamus/indexes/largelexicon/target-schema/TARGET-RELEASE\.json#([a-z-]+)@sha256:([0-9a-f]{64})$"
+)
+
+
+def _addresses(fact: dict) -> list[str]:
+    return [item["address"] for item in fact["dependencies"]["source_addresses"]]
+
+
+def test_release_fragment_addresses_name_release_digests() -> None:
+    """Every TARGET-RELEASE fragment must name a digest that exists at that address."""
+
+    declared = {family: table["carried_sha256"] for family, table in _release()["tables"].items()}
+    inputs = bridge.BridgeInputs.from_release(locs={LOC})
+    check("the real release yields a crosswalk row at the probe loc", bool(inputs.crosswalk))
+    record = bridge.bridge_row(inputs.crosswalk[0], inputs)
+    fragments = []
+    for fact in record["facts"]:
+        for address in _addresses(fact):
+            match = _FRAGMENT.match(address)
+            if match:
+                fragments.append((match.group(1), match.group(2)))
+    check("a real-release run emits TARGET-RELEASE fragment addresses", bool(fragments))
+    for family, digest in fragments:
+        check("fragment %s names the release-declared carried_sha256" % family,
+              declared.get(family) == digest)
+
+
+def test_seal_digest_is_separately_and_honestly_bound() -> None:
+    """The recomputed seal digest travels under its own non-file address."""
+
+    fact = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]
+    addresses = _addresses(fact)
+    seal = [a for a in addresses if a.startswith(bridge.SEAL_ADDRESS_PREFIX)]
+    check("the seal digest is carried", len(seal) == len(bridge.CARRIED_FAMILY_IDENTITY))
+    check("no seal address claims to be a file fragment",
+          not any(_FRAGMENT.match(a) for a in seal))
+    binding = make_inputs().authority_binding()
+    for family, digest in binding["carried_tables"].items():
+        check("the seal address for %s carries the recomputed digest" % family,
+              any(a.endswith("@sha256:" + digest) and family in a for a in seal))
+    check("fixture authority declares no release digest", binding["released_carried_sha256"] == {})
+    check("fixture scope is fixture-only",
+          set(binding["carried_scope"].values()) == {"fixture_only"})
+    check("a fixture run emits NO TARGET-RELEASE fragment address",
+          not any(_FRAGMENT.match(a) for a in addresses))
+
+
+def test_filtered_run_cannot_create_false_whole_family_provenance() -> None:
+    """A subset digest may never be published at a whole-family file address."""
+
+    inputs = bridge.BridgeInputs.from_release(locs={LOC})
+    binding = inputs.authority_binding()
+    scope = binding["carried_scope"]
+    check("the filtered crosswalk is labelled a subset",
+          scope["qword-crosswalk"] == "filtered_subset")
+    check("unfiltered families stay labelled whole",
+          scope["lemma-source"] == "whole_released_family")
+    declared = set(binding["released_carried_sha256"].values())
+    record = bridge.bridge_row(inputs.crosswalk[0], inputs)
+    for fact in record["facts"]:
+        for address in _addresses(fact):
+            match = _FRAGMENT.match(address)
+            if match:
+                check("no subset digest appears at a file-fragment address",
+                      match.group(2) in declared)
+    subset_digest = binding["carried_tables"]["qword-crosswalk"]
+    check("the subset digest differs from the released whole-family digest",
+          subset_digest != binding["released_carried_sha256"]["qword-crosswalk"])
+    check("the subset digest is published only under its scoped seal address",
+          any(a.startswith(bridge.SEAL_ADDRESS_PREFIX) and "filtered_subset" in a
+              and a.endswith("@sha256:" + subset_digest)
+              for fact in record["facts"] for a in _addresses(fact)))
+
+
+def test_published_typed_edge_counts_match_the_scan() -> None:
+    """The as-built map and bridge packet must state the recomputed counts."""
+
+    root = Path(__file__).resolve().parents[1]
+    typed = _scan()["upstream_binding"]["authorities"]["typed_graph"]
+    edges, locs = typed["eligible_edge_count"], typed["eligible_loc_count"]
+    doc = (root / "docs" / "subsystems" / "largelexicon-as-built.md").read_text(encoding="utf-8")
+    packet = (root / "qamus" / "task-packets"
+              / "TP-LARGELEXICON-A3-BRIDGE-WAVE1.json").read_text(encoding="utf-8")
+    stale = _re.compile(r"\b2 eligible (canonical typed lexeme/form )?edges at 1\b")
+    check("the as-built map carries no stale 2/1 edge claim", not stale.search(doc))
+    check("the bridge packet carries no stale 2/1 edge claim", not stale.search(packet))
+    for label, text in (("as-built", doc), ("packet", packet)):
+        for phrase in ("%d eligible canonical typed lexeme/form edges at %d occurrence locs" % (edges, locs),
+                       "%d eligible edges at %d locs" % (edges, locs),
+                       "%d eligible edges at %d occurrence locs" % (edges, locs)):
+            if phrase in text:
+                break
+        else:
+            raise AssertionError("FAILED: %s does not state the recomputed %d/%d counts"
+                                 % (label, edges, locs))
+    stated = _re.search(r"holds \*\*(\d+)\*\* adversarial tests", doc)
+    check("the as-built adversarial-test count matches dynamic discovery",
+          stated is not None and int(stated.group(1)) == len(all_tests()))
+    fixtures = json.loads((root / "qamus" / "examples" / "largelexicon-fact-bridge"
+                           / "bridge-fixtures.meta.json").read_text(encoding="utf-8"))
+    check("the as-built fixture record count matches the fixture metadata",
+          "(%d records)" % fixtures["row_count"] in doc)
+
+
+def test_unrecognised_producer_can_never_be_certified() -> None:
+    """Relabelling all three identities must shed the gate INTO refusal."""
+
+    import tempfile
+    from tools import certify_typed_fact as certifier
+
+    base = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]
+    fact = copy.deepcopy(base)
+    fact["fact_type"] = "totally_unregistered_fact"
+    fact["rule_projector"] = dict(fact["rule_projector"], projector_id="nobody.unregistered.v9")
+    fact["producer"] = {"id": "tools/not_a_registered_producer.py", "version": "1.0.0"}
+    fact["dependent_projection_ids"] = ["llxbridge:test:projection"]
+    tier, _pid, basis = certifier.producing_projector_gate(fact)
+    check("a fully relabelled fact resolves no gate", tier is None and basis == "no registered producer")
+    check("the certifier refuses it outright", certifier.gate_refusal(fact) is not None)
+    check("the refusal names the missing contract",
+          "no recognised typed-claim contract" in certifier.gate_refusal(fact))
+    with tempfile.TemporaryDirectory() as tmp:
+        store = certifier.TypedFactCertificationStore(Path(tmp))
+        store.register(fact, contract_id="round7", actor="t", timestamp="2026-07-31T00:00:00Z")
+        store.transition(fact["fact_id"], "review_required", actor="t",
+                         timestamp="2026-07-31T00:00:01Z", reason="t")
+        try:
+            store.transition(fact["fact_id"], "certified", actor="t",
+                             timestamp="2026-07-31T00:00:02Z", reason="t")
+        except certifier.CertificationError as error:
+            check("the authoritative store refuses an unrecognised producer",
+                  "can never be certified" in str(error))
+        else:
+            raise AssertionError("FAILED: an unrecognised producer reached certified")
+
+    # Recognised typed-claim families remain certifiable under their own contracts.
+    for recognised in ("governor_relation", "paired_y_removal", "plural_pattern"):
+        probe = copy.deepcopy(base)
+        probe["fact_type"] = recognised
+        probe["rule_projector"] = dict(probe["rule_projector"], projector_id="nobody.unregistered.v9")
+        probe["producer"] = {"id": "tools/other.py", "version": "1.0.0"}
+        check("recognised family %s is not blanket-refused" % recognised,
+              certifier.gate_refusal(probe) is None)
+
+
+def test_both_bridge_output_fact_types_are_registered() -> None:
+    """Candidate AND abstention outputs carry a real never_auto_resolve gate."""
+
+    from tools import certify_typed_fact as certifier
+
+    for fact_type in ("largelexicon_lexeme_candidate", "largelexicon_bridge_abstention"):
+        check("%s has a registered never_auto_resolve gate" % fact_type,
+              fact_projectors.REGISTRY.gate_tier_for_output_fact_type(fact_type)
+              == "never_auto_resolve")
+
+    record = bridge.bridge_row(crosswalk_row(), make_inputs(typed_edges={}))
+    abstention = [f for f in record["facts"] if f["fact_type"] == "largelexicon_bridge_abstention"]
+    check("the bridge emits a typed abstention", len(abstention) == 1)
+    fact = abstention[0]
+    check("the abstention names its own projector",
+          fact["rule_projector"]["projector_id"] == bridge.ABSTENTION_PROJECTOR_ID)
+    tier, _pid, basis = certifier.producing_projector_gate(fact)
+    check("the abstention resolves never_auto_resolve", tier == "never_auto_resolve")
+    check("the abstention refusal rests on a real gate, not an incoherence report",
+          basis == "registered projector_id")
+    check("the abstention id is recomputable", bridge.recompute_fact_id(fact) == fact["fact_id"])
+    check("the abstention is refused by the gate", certifier.gate_refusal(fact) is not None)
+
+    candidate = candidates_of(bridge.bridge_row(crosswalk_row(), make_inputs()))[0]
+    _tier, _pid, candidate_basis = certifier.producing_projector_gate(candidate)
+    check("the candidate refusal also rests on a real gate",
+          candidate_basis == "registered projector_id")
+
+    # The abstention projector is registration-only: it never manufactures a record.
+    try:
+        fact_projectors.REGISTRY.run(bridge.ABSTENTION_PROJECTOR_ID)
+    except fact_projectors.ProjectorValidationError as error:
+        check("the abstention projector refuses on-demand projection",
+              "not projected on demand" in str(error))
+    else:
+        raise AssertionError("FAILED: the abstention projector manufactured a record")
+
+
+def test_no_frozen_partial_suite_can_be_run() -> None:
+    """A module-level TESTS snapshot must not silently run a subset."""
+
+    import sys as _sys
+
+    module = _sys.modules[__name__]
+    frozen = getattr(module, "TESTS", None)
+    check("a TESTS attribute still exists for legacy callers", frozen is not None)
+    for operation, call in (("iteration", lambda: list(frozen)), ("len()", lambda: len(frozen))):
+        try:
+            call()
+        except RuntimeError as error:
+            check("frozen TESTS refuses %s and explains why" % operation,
+                  "all_tests()" in str(error))
+        else:
+            raise AssertionError("FAILED: frozen TESTS allowed %s" % operation)
+    collected = all_tests()
+    check("dynamic discovery is the only runnable suite", len(collected) >= EXPECTED_MINIMUM_TESTS)
+    names = {test.__name__ for test in collected}
+    for critical in CRITICAL_PROBES:
+        check("critical probe %s is discovered" % critical, critical in names)
 
 
 if __name__ == "__main__":

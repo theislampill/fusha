@@ -74,6 +74,11 @@ PRODUCER_ID = "tools/largelexicon_fact_bridge.py"
 PRODUCER_VERSION = "1.0.0"
 PROJECTOR_ID = "largelexicon.carried_lexeme_candidate.v1"
 RULE_ID = "largelexicon-carried-loc-first-exact-surface-candidate"
+# Abstentions are a distinct registered output with their own never_auto_resolve
+# contract, so their refusal rests on a real producer gate rather than on a
+# projector/fact-type incoherence report.
+ABSTENTION_PROJECTOR_ID = "largelexicon.bridge_abstention.v1"
+ABSTENTION_RULE_ID = "largelexicon-carried-admission-refusal"
 CONTRACT_PREFIX = "llxbridge"
 ACCEPTED_CROSSWALK_STATUS = "canonical_crosswalk_accepted"
 ACCEPTED_TRANSCLUSION_ROUTE = "entry_card_qword_to_canonical_crosswalk_accepted"
@@ -718,7 +723,9 @@ class SealedAuthority:
     def __init__(self, token: Any, *, origin: str, families: dict[str, list[dict[str, Any]]],
                  loc_surface: dict[str, str], typed_edges: dict[str, list[dict[str, Any]]],
                  lexeme_join: dict[str, list[dict[str, Any]]], bundles: list[dict[str, Any]],
-                 non_carried_crosswalk: list[dict[str, Any]]) -> None:
+                 non_carried_crosswalk: list[dict[str, Any]],
+                 released_carried_sha256: dict[str, str] | None = None,
+                 carried_scope: dict[str, str] | None = None) -> None:
         if token is not _SEAL_TOKEN:
             raise BridgeError(
                 "a SealedAuthority may only be produced by from_release() or seal_fixture()"
@@ -729,6 +736,8 @@ class SealedAuthority:
         self.typed_edges = typed_edges
         self.lexeme_join = lexeme_join
         self.non_carried_crosswalk = non_carried_crosswalk
+        released_carried_sha256 = dict(released_carried_sha256 or {})
+        carried_scope = dict(carried_scope or {name: "unknown" for name in families})
         edge_content = {
             loc: sorted(edge_content_digest(edge) for edge in typed_edges[loc])
             for loc in sorted(typed_edges)
@@ -747,6 +756,13 @@ class SealedAuthority:
                     key=lambda row: (str(row.get(CARRIED_FAMILY_IDENTITY[name])), row_body_digest(row)),
                 )) for name in sorted(families)
             },
+            # Whether each sealed family is the WHOLE released family or a filtered
+            # subset. A subset digest may never be published as a whole-family fact.
+            "carried_scope": dict(sorted(carried_scope.items())),
+            # The release's own declared per-family digest, verbatim, so a
+            # TARGET-RELEASE fragment address always names a digest that exists
+            # at that file address.
+            "released_carried_sha256": dict(sorted(released_carried_sha256.items())),
             "carried_row_counts": {name: len(families[name]) for name in sorted(families)},
             "lexeme_join_lattice": {
                 "content_sha256": _content_sha256(
@@ -772,7 +788,9 @@ class SealedAuthority:
     @staticmethod
     def _seal(origin: str, *, families: dict[str, list[dict[str, Any]]], loc_surface: dict[str, str],
               typed_edges: dict[str, list[dict[str, Any]]], lexeme_join: dict[str, list[dict[str, Any]]],
-              bundles: list[dict[str, Any]], non_carried_crosswalk: list[dict[str, Any]]) -> "SealedAuthority":
+              bundles: list[dict[str, Any]], non_carried_crosswalk: list[dict[str, Any]],
+              released_carried_sha256: dict[str, str] | None = None,
+              carried_scope: dict[str, str] | None = None) -> "SealedAuthority":
         problems: list[str] = []
         for name in sorted(CARRIED_FAMILY_IDENTITY):
             problems.extend(_validate_family(name, families.get(name, [])))
@@ -801,6 +819,8 @@ class SealedAuthority:
             _SEAL_TOKEN, origin=origin, families=families, loc_surface=loc_surface,
             typed_edges=typed_edges, lexeme_join=lexeme_join, bundles=bundles,
             non_carried_crosswalk=non_carried_crosswalk,
+            released_carried_sha256=released_carried_sha256,
+            carried_scope=carried_scope,
         )
 
     @classmethod
@@ -819,6 +839,19 @@ class SealedAuthority:
             "stem-source": tables.carried("stem-source"),
         }
         typed_edges, bundles = _load_typed_graph_sealed()
+        release = tables.release
+        declared = {
+            name: str(release["tables"][name]["carried_sha256"])
+            for name in families
+            if name in release.get("tables", {})
+        }
+        scope = {
+            name: ("whole_released_family"
+                   if len(families[name]) == release["tables"][name]["carried_row_count"]
+                   else "filtered_subset")
+            for name in families
+            if name in release.get("tables", {})
+        }
         return cls._seal(
             "release",
             families=families,
@@ -827,6 +860,8 @@ class SealedAuthority:
             lexeme_join=_load_lexeme_join_sealed(),
             bundles=bundles,
             non_carried_crosswalk=[],
+            released_carried_sha256=declared,
+            carried_scope=scope,
         )
 
     @classmethod
@@ -846,8 +881,12 @@ class SealedAuthority:
             "present": True,
             "schema": TYPED_GRAPH_SCHEMA,
         }]
+        # A fixture seal declares NO release digest: fixture authority is
+        # fixture-only and may never emit a TARGET-RELEASE fragment address.
         return cls._seal(
             "fixture",
+            released_carried_sha256={},
+            carried_scope={name: "fixture_only" for name in CARRIED_FAMILY_IDENTITY},
             families={
                 "qword-crosswalk": list(crosswalk),
                 "qword-denominator": list(denominator),
@@ -1096,14 +1135,42 @@ def _source_evidence(structured: dict[str, Any], addresses: list[dict[str, str]]
     return {"source_addresses": addresses, "structured_source_fact": structured}
 
 
-def _dependencies(hashes: dict[str, str], extra: list[dict[str, str]]) -> dict[str, Any]:
-    addresses = [
-        {
-            "address": f"qamus/indexes/largelexicon/target-schema/TARGET-RELEASE.json#{family}@sha256:{digest}",
-            "source_kind": "corpus_record",
-        }
-        for family, digest in sorted(hashes.items())
-    ]
+SEAL_ADDRESS_PREFIX = "sealed-authority:largelexicon-carried"
+
+
+def _dependencies(authority: dict[str, Any], extra: list[dict[str, str]]) -> dict[str, Any]:
+    """Bind BOTH provenance truths without letting either impersonate the other.
+
+    A ``TARGET-RELEASE.json#{family}@sha256:{digest}`` address is a claim that the
+    digest is *readable at that file address*, so it must always carry the
+    release-DECLARED ``carried_sha256``. The stronger recomputed digest of the
+    exact sealed row set is a different fact — and under a filtered run it is a
+    SUBSET digest — so it travels under its own ``sealed-authority:`` address that
+    makes no file-fragment claim, alongside the seal scope and origin.
+    """
+
+    declared = authority.get("released_carried_sha256") or {}
+    sealed = authority.get("carried_tables") or {}
+    scope = authority.get("carried_scope") or {}
+    addresses: list[dict[str, str]] = []
+    for family in sorted(set(declared) | set(sealed)):
+        release_digest = declared.get(family)
+        if release_digest:
+            addresses.append({
+                "address": (
+                    "qamus/indexes/largelexicon/target-schema/TARGET-RELEASE.json"
+                    f"#{family}@sha256:{release_digest}"
+                ),
+                "source_kind": "corpus_record",
+            })
+        seal_digest = sealed.get(family)
+        if seal_digest:
+            addresses.append({
+                "address": "%s:%s:%s@sha256:%s" % (
+                    SEAL_ADDRESS_PREFIX, family, scope.get(family, "unknown"), seal_digest,
+                ),
+                "source_kind": "corpus_record",
+            })
     return {"fact_ids": [], "source_addresses": addresses + extra}
 
 
@@ -1243,7 +1310,7 @@ def _candidate_fact(
         "contradiction_records": [],
         "defeaters": [],
         "dependencies": _dependencies(
-            hashes,
+            authority_binding,
             [
                 {"address": f"largelexicon:qword-crosswalk@2:{row['row_id']}", "source_kind": "corpus_record"},
                 {"address": f"largelexicon:form-source@2:{form['form_id']}", "source_kind": "corpus_record"},
@@ -1364,7 +1431,7 @@ def _abstention_fact(
         "defeaters": [
             {"defeater_id": name, "fact_ids": [], "reason": BLOCKER_REASONS[name]} for name in blockers
         ],
-        "dependencies": _dependencies(hashes, [{"address": address, "source_kind": "corpus_record"}]),
+        "dependencies": _dependencies(authority_binding, [{"address": address, "source_kind": "corpus_record"}]),
         "dependent_fact_ids": [],
         "dependent_projection_ids": [],
         "derivation_chain": [],
@@ -1384,7 +1451,7 @@ def _abstention_fact(
             "secondary": [{"owner_id": "largelexicon", "owner_type": "lookup_substrate"}],
         },
         "producer": {"id": PRODUCER_ID, "version": PRODUCER_VERSION},
-        "rule_projector": {"projector_id": PROJECTOR_ID, "rule_id": RULE_ID, "version": PRODUCER_VERSION},
+        "rule_projector": {"projector_id": ABSTENTION_PROJECTOR_ID, "rule_id": ABSTENTION_RULE_ID, "version": PRODUCER_VERSION},
         "source": {"source_id": address, "source_kind": "corpus_record"},
         "source_address": {"address": address, "source_kind": "corpus_record"},
         "source_evidence": _source_evidence(
@@ -1674,8 +1741,13 @@ def validate_records(records: Iterable[dict[str, Any]]) -> list[str]:
                 errors.append(f"{label}.facts[{fact_index}]: certification status {certification!r} is not candidate-or-blocked")
             if (fact.get("evidence") or {}).get("status") == "certified":
                 errors.append(f"{label}.facts[{fact_index}]: bridge evidence may never be certified")
-            if fact.get("rule_projector", {}).get("projector_id") != PROJECTOR_ID:
-                errors.append(f"{label}.facts[{fact_index}]: fact is not attributed to the registered bridge projector")
+            projector_id = fact.get("rule_projector", {}).get("projector_id")
+            if projector_id not in {PROJECTOR_ID, ABSTENTION_PROJECTOR_ID}:
+                errors.append(f"{label}.facts[{fact_index}]: fact is not attributed to a registered bridge projector")
+            expected_projector = (PROJECTOR_ID if fact.get("fact_type") == "largelexicon_lexeme_candidate"
+                                  else ABSTENTION_PROJECTOR_ID)
+            if projector_id != expected_projector:
+                errors.append(f"{label}.facts[{fact_index}]: {fact.get('fact_type')} must be attributed to {expected_projector}")
     return errors
 
 

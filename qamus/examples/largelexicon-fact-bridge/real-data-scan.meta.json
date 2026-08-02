@@ -30,7 +30,7 @@
   },
   "upstream_binding": {
     "authorities": {
-      "authority_sha256": "749f3220210f5c5968d4646bf4e2c6198e144c45887620e28440099dee3975b2",
+      "authority_sha256": "61ffdd13c19124875721d90fa21c8ae622c10146130b2e70547354d852edf829",
       "canonical_loc_index": {
         "content_sha256": "1e516a7b9517cd34ea6a0c11909dea9d9fda0b6c17a624dc718f810857d09865",
         "row_count": 77881
@@ -41,6 +41,13 @@
         "qword-crosswalk": 115638,
         "qword-denominator": 117117,
         "stem-source": 4089
+      },
+      "carried_scope": {
+        "form-source": "whole_released_family",
+        "lemma-source": "whole_released_family",
+        "qword-crosswalk": "whole_released_family",
+        "qword-denominator": "whole_released_family",
+        "stem-source": "whole_released_family"
       },
       "carried_tables": {
         "form-source": "f023500eac4fa676c98071d651969e861c81751a43ffe3cd3c87dc6bb311f61f",
@@ -54,6 +61,13 @@
         "row_count": 24391
       },
       "origin": "release",
+      "released_carried_sha256": {
+        "form-source": "82944f9950d318d1f1beccaf366d0cf19b9548f97c07263beb29681118064d45",
+        "lemma-source": "3fd9b85c2cab9ed033b3b0715304fe090c94c3622aba4da66f268177f0fac3ec",
+        "qword-crosswalk": "85c0415d74efd24d741a5ebcc9c1714150d7c4941ea367591944cfe4b1fb66f0",
+        "qword-denominator": "9d8f109d66f5317400d2437e8e5d1ab7d6f8150b85e47917c6b6de7f2deeadc5",
+        "stem-source": "fae45d7a4e83ee988605cc1d83d2fcee4ae86447003087e1680fb6bc671eed8b"
+      },
       "typed_graph": {
         "bundles": [
           {
@@ -100,7 +114,7 @@
       },
       "verified": true
     },
-    "authority_digest": "e0d785326d74917c21a49ec49ccb6791a44f0c1a170e4f463c387fdbcdd618bd",
+    "authority_digest": "8b1a433bf1ce7492b72355cebb0bbea9a7b7b934a23b93a3692e107a9c9591a5",
     "carried_table_sha256": {
       "form-source": "f023500eac4fa676c98071d651969e861c81751a43ffe3cd3c87dc6bb311f61f",
       "lemma-source": "3b0b87f0fb1f49744e25a602c826f8611ad08a05c5f50d8648aa750db8d5c6c7",

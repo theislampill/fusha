@@ -88,6 +88,26 @@ TWO_VOTE_FACT_TYPES = {
     "irab_rendering",
 }
 
+# Certification is a POSITIVE act: it requires a contract that says what evidence
+# this class of fact needs. A fact type is certifiable only if it is either
+# produced by a registered projector (whose gate then applies) or listed here as a
+# typed-claim family this plane already knows how to gate. Anything else has no
+# contract at all, so relabelling a gated fact's type/projector/producer sheds the
+# gate INTO refusal, never out of it. Extending this list is a deliberate edit.
+RECOGNISED_TYPED_CLAIM_FACT_TYPES = frozenset(TWO_VOTE_FACT_TYPES) | frozenset({
+    # proof-noun-sufaha typed-claim families (qamus/examples/proof-noun-sufaha/)
+    "case_ending",
+    "paired_y_removal",
+    "plural_formation",
+    "plural_introduced_letters",
+    "plural_lexical_body",
+    "plural_pattern",
+    "retained_radicals",
+    "root",
+    "singular_pattern",
+    "singular_plural_relation",
+})
+
 ADJUDICATION_EVIDENCE_PREFIX = "adjudication:"
 SUFAHA_CONTRACT = ROOT / "qamus" / "examples" / "proof-noun-sufaha" / "sufaha-contract.json"
 TWO_VOTE_SAMPLE = ROOT / "qamus" / "examples" / "two_vote_artifact.sample.jsonl"
@@ -183,6 +203,14 @@ def gate_refusal(fact: Dict[str, Any]) -> Optional[str]:
             "the producing projector is gated %s (%s: %s); the gate SSOT rejects this class outright, "
             "so no evidence bundle, dependency or vote can certify it"
             % (NEVER_AUTO_RESOLVE, basis, projector_id or fact.get("fact_type"))
+        )
+    if tier is None and str(fact.get("fact_type") or "") not in RECOGNISED_TYPED_CLAIM_FACT_TYPES:
+        # No registered producer AND no recognised typed-claim family: this fact has
+        # no contract deciding what evidence it needs, so it can never be certified.
+        return (
+            "no registered producer gate and no recognised typed-claim contract for fact_type %r "
+            "/ projector %r; an unrecognised producer can never be certified"
+            % (fact.get("fact_type"), projector_id)
         )
     return None
 
