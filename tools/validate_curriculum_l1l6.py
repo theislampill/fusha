@@ -489,12 +489,94 @@ def check_packet_presence(ctx, errors):
             errors.append("packet_presence: %s.json missing" % pid)
 
 
+INCREMENTS = ("inc-ownership", "inc-derivatives", "inc-ma", "inc-nawasikh",
+              "inc-hidden")
+INCREMENT_FILES = ("reference.md", "procedure.md", "staged-explanation.md",
+                   "fixtures.jsonl", "hover-fields.json", "guards.json",
+                   "unit-v1.json")
+
+
+def check_increments(ctx, errors):
+    for inc in INCREMENTS:
+        d = BASE / "increments" / inc
+        for f in INCREMENT_FILES:
+            if not (d / f).exists():
+                errors.append("increments: %s missing %s" % (inc, f))
+        fx_path = d / "fixtures.jsonl"
+        if fx_path.exists():
+            rows = _jsonl(fx_path)
+            classes = {r.get("class") for r in rows}
+            if not {"positive", "adversarial"} <= classes:
+                errors.append("increments: %s fixtures need positive + adversarial"
+                              % inc)
+            if not any(r.get("class") == "abstention"
+                       or r.get("expected", {}).get("decision") == "abstain"
+                       for r in rows):
+                errors.append("increments: %s has no abstention case" % inc)
+            for r in rows:
+                if r.get("status") != "candidate":
+                    errors.append("increments: %s fixture %s not candidate"
+                                  % (inc, r.get("fixture_id")))
+        for jf in ("unit-v1.json", "unit-v2.json", "hover-fields.json",
+                   "guards.json"):
+            p = d / jf
+            if p.exists():
+                obj = json.loads(p.read_text(encoding="utf-8"))
+                if obj.get("status") != "candidate":
+                    errors.append("increments: %s/%s status must be candidate"
+                                  % (inc, jf))
+
+
+def check_flywheel_loop(ctx, errors):
+    """The recorded loop must recompute byte-identically from the committed
+    packs via the real consumer, and its failure set must match the record."""
+    try:
+        sys.path.insert(0, str(ROOT / "tools"))
+        import curriculum_unit_consumer as consumer
+    except Exception as exc:  # noqa: BLE001
+        errors.append("flywheel_loop: consumer unimportable (%s)" % exc)
+        return
+    finally:
+        if str(ROOT / "tools") in sys.path:
+            sys.path.remove(str(ROOT / "tools"))
+    for run_file, unit_file, want_mism in (
+            ("run-1-ownership-v1.json", "unit-v1.json", 2),
+            ("run-2-ownership-v2.json", "unit-v2.json", 0)):
+        p = BASE / "loop" / run_file
+        if not p.exists():
+            errors.append("flywheel_loop: %s missing" % run_file)
+            continue
+        rec = consumer.run("inc-ownership", unit_file)
+        want = (json.dumps(rec, ensure_ascii=False, indent=2, sort_keys=True)
+                + "\n").encode("utf-8")
+        if p.read_bytes() != want:
+            errors.append("flywheel_loop: %s differs from a live recompute — "
+                          "packs/consumer/record have drifted" % run_file)
+        if rec["mismatches"] != want_mism:
+            errors.append("flywheel_loop: %s expected %d mismatches, got %d"
+                          % (run_file, want_mism, rec["mismatches"]))
+    fr = BASE / "loop" / "failure-record.json"
+    if not fr.exists():
+        errors.append("flywheel_loop: failure-record.json missing")
+    else:
+        rec1 = json.loads((BASE / "loop" / "run-1-ownership-v1.json")
+                          .read_text(encoding="utf-8"))
+        failed = sorted(r["fixture_id"] for r in rec1["results"] if not r["match"])
+        recorded = sorted(f["fixture_id"]
+                          for f in json.loads(fr.read_text(encoding="utf-8"))["failures"])
+        if failed != recorded:
+            errors.append("flywheel_loop: failure-record fixtures %r != run-1 "
+                          "failures %r" % (recorded, failed))
+    if not (BASE / "loop" / "repair-note.md").exists():
+        errors.append("flywheel_loop: repair-note.md missing")
+
+
 ALL_CHECKS = (
     check_manifest_shape, check_registry_consistency, check_graph_integrity,
     check_nfc, check_crosswalk_evidence, check_ledger_qualification,
     check_links_candidacy, check_material_classes, check_leakage,
     check_no_certification, check_pilot_parity, check_packet_presence,
-    check_units_semantic,
+    check_units_semantic, check_increments, check_flywheel_loop,
 )
 PILOT_CHECKS = (check_pilot_parity, check_no_certification)
 
