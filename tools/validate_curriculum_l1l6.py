@@ -643,13 +643,59 @@ def check_corpus_pilot(ctx, errors):
                                  f.get("certification_status_verbatim")))
 
 
+def check_precise_links(ctx, errors):
+    p = BASE / "links" / "pvn-precise-links.jsonl"
+    if not p.exists():
+        errors.append("precise_links: file missing")
+        return
+    try:
+        sys.path.insert(0, str(ROOT / "tools"))
+        import build_curriculum_pvn_links as linkbuilder
+        files = linkbuilder.serialize(linkbuilder.build())
+    except Exception as exc:  # noqa: BLE001
+        errors.append("precise_links: recompute failed (%s)" % exc)
+        return
+    finally:
+        if str(ROOT / "tools") in sys.path:
+            sys.path.remove(str(ROOT / "tools"))
+    for path, data in sorted(files.items()):
+        fp = Path(path)
+        if not fp.exists() or fp.read_bytes() != data:
+            errors.append("precise_links: %s differs from recompute" % fp.name)
+    unit_ids = {u["unit_id"] for u in ctx["units"]}
+    hover_keys = {}
+    for inc in INCREMENTS:
+        hp = BASE / "increments" / inc / "hover-fields.json"
+        if hp.exists():
+            hover_keys[inc] = {f["key"] for f in
+                               json.loads(hp.read_text(encoding="utf-8"))["fields"]}
+    for r in _jsonl(p):
+        lid = r.get("link_id")
+        if r.get("status") != "candidate":
+            errors.append("precise_links: %s not candidate" % lid)
+        if not re.fullmatch(r"[0-9a-f]{12}", r.get("entry_id") or ""):
+            errors.append("precise_links: %s entry_id not a store id" % lid)
+        occ = r.get("occurrence_id")
+        if occ is not None and not re.fullmatch(r"quran:\d+:\d+:\d+", occ):
+            errors.append("precise_links: %s bad occurrence_id %r" % (lid, occ))
+        if r.get("unit_ref") not in unit_ids:
+            errors.append("precise_links: %s unit_ref unresolved" % lid)
+        inc = r.get("increment")
+        if inc in hover_keys and r.get("expected_hover_component") not in hover_keys[inc]:
+            errors.append("precise_links: %s hover component %r not declared by %s"
+                          % (lid, r.get("expected_hover_component"), inc))
+        ev = r.get("promotion_evidence") or {}
+        if not ev.get("needed_for_promotion"):
+            errors.append("precise_links: %s missing promotion-evidence requirement" % lid)
+
+
 ALL_CHECKS = (
     check_manifest_shape, check_registry_consistency, check_graph_integrity,
     check_nfc, check_crosswalk_evidence, check_ledger_qualification,
     check_links_candidacy, check_material_classes, check_leakage,
     check_no_certification, check_pilot_parity, check_packet_presence,
     check_units_semantic, check_increments, check_flywheel_loop,
-    check_corpus_pilot,
+    check_corpus_pilot, check_precise_links,
 )
 PILOT_CHECKS = (check_pilot_parity, check_no_certification)
 
