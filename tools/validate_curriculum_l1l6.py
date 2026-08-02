@@ -597,12 +597,59 @@ def check_flywheel_loop(ctx, errors):
         errors.append("flywheel_loop: repair-note.md missing")
 
 
+def check_corpus_pilot(ctx, errors):
+    """Envelopes recompute byte-identically from p007 authority via the real
+    builder+consumer, preserve the unresolved host-ownership state, and mint
+    no certification."""
+    d = BASE / "corpus-pilot"
+    if not (d / "README.md").exists():
+        errors.append("corpus_pilot: README.md missing")
+    try:
+        sys.path.insert(0, str(ROOT / "tools"))
+        import build_curriculum_corpus_pilot as builder
+        files = builder.serialize(builder.build())
+    except Exception as exc:  # noqa: BLE001
+        errors.append("corpus_pilot: recompute failed (%s)" % exc)
+        return
+    finally:
+        if str(ROOT / "tools") in sys.path:
+            sys.path.remove(str(ROOT / "tools"))
+    for path, data in sorted(files.items()):
+        p = Path(path)
+        if not p.exists():
+            errors.append("corpus_pilot: %s missing" % p.name)
+        elif p.read_bytes() != data:
+            errors.append("corpus_pilot: %s differs from recompute (p007 "
+                          "store / consumer / envelope drift)" % p.name)
+    for name in ("envelope-2-34-5.json", "envelope-61-5-4.json"):
+        p = d / name
+        if not p.exists():
+            continue
+        env = json.loads(p.read_text(encoding="utf-8"))
+        if env.get("status") != "candidate":
+            errors.append("corpus_pilot: %s not candidate" % name)
+        host = env.get("letter_ownership", {}).get("host", {})
+        if host.get("consumer_verdict", {}).get("reason") != "no_root_evidence":
+            errors.append("corpus_pilot: %s lost the preserved unresolved "
+                          "host-ownership abstention" % name)
+        ch = env.get("colour_and_hover", {})
+        if not (ch.get("segment_hover_parity") and
+                env.get("appearances", {}).get("single_hash_parity")):
+            errors.append("corpus_pilot: %s parity flags not true" % name)
+        for f in env.get("repository_authority", {}).get("typed_facts", []):
+            if f.get("certification_status_verbatim") not in ("candidate", "certified"):
+                errors.append("corpus_pilot: %s fact %s odd certification %r"
+                              % (name, f.get("fact_id"),
+                                 f.get("certification_status_verbatim")))
+
+
 ALL_CHECKS = (
     check_manifest_shape, check_registry_consistency, check_graph_integrity,
     check_nfc, check_crosswalk_evidence, check_ledger_qualification,
     check_links_candidacy, check_material_classes, check_leakage,
     check_no_certification, check_pilot_parity, check_packet_presence,
     check_units_semantic, check_increments, check_flywheel_loop,
+    check_corpus_pilot,
 )
 PILOT_CHECKS = (check_pilot_parity, check_no_certification)
 

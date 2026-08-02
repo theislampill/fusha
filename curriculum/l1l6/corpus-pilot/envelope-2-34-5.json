@@ -1,0 +1,149 @@
+{
+  "appearances": {
+    "count": 5,
+    "rows": [
+      {
+        "appearance_id": "4211cb1f5355:u0:x4:w4",
+        "projection_hash": "52805d6e334d0a1573b62bf9ff7d0f3c9676f70261433f7c1d6b451f537e7abc"
+      },
+      {
+        "appearance_id": "430015446b77:u0:x1:w4",
+        "projection_hash": "52805d6e334d0a1573b62bf9ff7d0f3c9676f70261433f7c1d6b451f537e7abc"
+      },
+      {
+        "appearance_id": "6e35cbb25054:u0:x0:w4",
+        "projection_hash": "52805d6e334d0a1573b62bf9ff7d0f3c9676f70261433f7c1d6b451f537e7abc"
+      },
+      {
+        "appearance_id": "720e26330d5f:u1:x1:w4",
+        "projection_hash": "52805d6e334d0a1573b62bf9ff7d0f3c9676f70261433f7c1d6b451f537e7abc"
+      },
+      {
+        "appearance_id": "e0e500c4b7a5:u2:x1:w4",
+        "projection_hash": "52805d6e334d0a1573b62bf9ff7d0f3c9676f70261433f7c1d6b451f537e7abc"
+      }
+    ],
+    "single_hash_parity": true
+  },
+  "boundaries": [
+    "og-1",
+    "og-2",
+    "og-6",
+    "no certification minted by this envelope",
+    "no live surface touched"
+  ],
+  "colour_and_hover": {
+    "derived_from_single_projection_record": true,
+    "hover_card_components": [
+      "لِ"
+    ],
+    "segment_hover_parity": true,
+    "segments": [
+      {
+        "char_end": 2,
+        "char_start": 0,
+        "colour_class": "qg-particle-jarr-clitic",
+        "role": "jarr_clitic_lam",
+        "surface": "لِ"
+      },
+      {
+        "char_end": 9,
+        "char_start": 2,
+        "colour_class": "qg-proper-noun",
+        "role": "proper_name_majrur",
+        "surface": "ءَادَمَ"
+      }
+    ]
+  },
+  "letter_ownership": {
+    "clitic_morpheme": {
+      "class": "clitic (jarr lam)",
+      "rootlessness": "per particle_rootlessness fact (repo)",
+      "surface": "لِ"
+    },
+    "host": {
+      "consumer_verdict": {
+        "decision": "abstain",
+        "reason": "no_root_evidence"
+      },
+      "internal_ownership": "UNRESOLVED — the repository certifies the carve, not the host's root/pattern letter split; preserved as pending",
+      "resolution_path": "host root certification via the sarf evidence ladder, then inc-ownership rules (packet TP-CURR-ROOTPATTERN-PROMOTION)",
+      "surface": "ءَادَمَ"
+    }
+  },
+  "nahw_facts": [
+    "fact:p00slice:2_34_5:func",
+    "fact:p00slice:2_34_5:gov",
+    "fact:p00slice:2_34_5:case"
+  ],
+  "occurrence_id": "quran:2:34:5",
+  "repository_authority": {
+    "certification_event_trail": "qamus/examples/p007-li-pilot/certification/events.jsonl",
+    "projection_hash": "52805d6e334d0a1573b62bf9ff7d0f3c9676f70261433f7c1d6b451f537e7abc",
+    "projection_source": "qamus/examples/p007-li-pilot/projections.jsonl",
+    "typed_facts": [
+      {
+        "certification_status_verbatim": "candidate",
+        "fact_id": "fact:p00slice:2_34_5:case",
+        "fact_type": "case_mood_governor",
+        "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+      },
+      {
+        "certification_status_verbatim": "candidate",
+        "fact_id": "fact:p00slice:2_34_5:func",
+        "fact_type": "contextual_function",
+        "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+      },
+      {
+        "certification_status_verbatim": "candidate",
+        "fact_id": "fact:p00slice:2_34_5:gov",
+        "fact_type": "governor_relation",
+        "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+      },
+      {
+        "certification_status_verbatim": "candidate",
+        "fact_id": "fact:p00slice:2_34_5:seg",
+        "fact_type": "clitic_host_segmentation",
+        "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+      },
+      {
+        "certification_status_verbatim": "candidate",
+        "fact_id": "fact:p00slice:entry_b10a1ee04666:rootless",
+        "fact_type": "particle_rootlessness",
+        "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
+      }
+    ]
+  },
+  "reusable_lesson": {
+    "increment": "curriculum/l1l6/increments/inc-ownership/",
+    "lesson": "carve the jarr clitic, own letters only under evidence, abstain on the rest",
+    "reuse_note": "the SAME rules process both occurrences; nothing token-specific was copied between them (method transfer, og-2)",
+    "units": [
+      "u-s09",
+      "u-s01"
+    ]
+  },
+  "reverse_trace": {
+    "entry_id": "b10a1ee04666",
+    "occurrence_listed": true,
+    "source_file": "qamus/examples/p007-li-pilot/entry-reverse-index.json"
+  },
+  "sarf_facts": [
+    "fact:p00slice:2_34_5:seg",
+    "fact:p00slice:entry_b10a1ee04666:rootless"
+  ],
+  "schema": "curriculum.l1l6_corpus_pilot_envelope.v1",
+  "status": "candidate",
+  "surface": "لِءَادَمَ",
+  "unresolved_states": [
+    "host_internal_letter_ownership (consumer abstains: no certified host root in the pilot store)"
+  ],
+  "website_envelope": {
+    "deliverable": false,
+    "kind": "candidate_payload_shape",
+    "note": "shape-compatible candidate; NOT a payload for delivery — payload production stays with the established website-handoff lane",
+    "occurrence_id": "quran:2:34:5",
+    "projection_hash": "52805d6e334d0a1573b62bf9ff7d0f3c9676f70261433f7c1d6b451f537e7abc",
+    "schema": "qamus.website_projection_payload.v1"
+  }
+}
