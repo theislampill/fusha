@@ -15,6 +15,12 @@ on:
       - "tools/build_curriculum_corpus_pilot.py"
       - "tools/build_curriculum_pvn_links.py"
       - "tools/check_curriculum_fixture_corpus.py"
+      - "tools/build_curriculum_absorption.py"
+      - "tools/build_capability_matrix.py"
+      - "tools/build_curriculum_occurrence_bridge.py"
+      - "tools/curriculum_flywheel_runner.py"
+      - "tools/build_learner_projections.py"
+      - "tools/build_promotion_bundles.py"
       - ".github/workflows/curriculum-l1l6-gate.yml"
   workflow_dispatch:
 
@@ -55,3 +61,21 @@ jobs:
 
       - name: deterministic regeneration vs authorized fixture corpus
         run: python tools/check_curriculum_fixture_corpus.py
+
+      - name: absorption ledgers + queues + readiness recompute (226/226, unclassified=0)
+        run: python tools/build_curriculum_absorption.py --check
+
+      - name: capability matrix recompute (63 families)
+        run: python tools/build_capability_matrix.py --check
+
+      - name: occurrence bridge + P/V/N readiness recompute (wildcard-free)
+        run: python tools/build_curriculum_occurrence_bridge.py --check
+
+      - name: flywheel loops recompute (4 diverse families, defect sets pinned)
+        run: python tools/curriculum_flywheel_runner.py --manifest
+
+      - name: learner projections recompute (single-source invariant)
+        run: python tools/build_learner_projections.py --check
+
+      - name: promotion bundles recompute (every discovered increment)
+        run: python tools/build_promotion_bundles.py --check
