@@ -1,0 +1,185 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "eval runner green",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/run_nahw_evals.py"
+    },
+    {
+      "name": "behavioural gates hold",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/test_nahw_behavioural_gates.py"
+    },
+    {
+      "name": "two-vote artifact contract holds",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/validate_two_vote_artifacts.py --self-test"
+    },
+    {
+      "name": "full harness",
+      "pass_condition": "ends with ALL REGRESSION CHECKS PASS and no FAIL line",
+      "run": "python tools/check_regressions.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "a reason key derived from the row id (GP-WR-005:expected) must FAIL as reason_key_unregistered",
+        "id": "CAN-ADV-FABRICATED-KEY"
+      },
+      {
+        "expectation": "supplying reasoning_ok=True must not rescue a trap row",
+        "id": "CAN-ADV-CALLER-BOOL"
+      },
+      {
+        "expectation": "a case/mood row with no governor must FAIL as governor_not_justified",
+        "id": "CAN-ADV-NO-GOVERNOR"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "GP-WR-005 (bi always governs jarr; the fatha is a diptote jarr sign) grades honest-path PASS and trap-path FAIL from a REGISTERED reason key plus governor_type=preposition, with no invented key",
+        "id": "CAN-POS-WR005"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "nahw/evals/grammar-wrong-reasoning-cases.jsonl, measured by tools/run_nahw_evals.py --bank wrong-reasoning --json",
+    "selection_rule": "every row of nahw/evals/grammar-wrong-reasoning-cases.jsonl (GP-WR-001..008)",
+    "this_packet_size": 8,
+    "universe_size": 8
+  },
+  "commands": [
+    {
+      "expect": "classification == fixture_only, naming this packet",
+      "purpose": "Reproduce the honest classification the A2 runner reports",
+      "run": "python tools/run_nahw_evals.py --bank wrong-reasoning --json"
+    },
+    {
+      "expect": "the registered reason_key ids; anything else is unregistered and may not be used",
+      "purpose": "List the governed reason-key vocabulary this packet may consult but not amend",
+      "run": "python -c \"import sys;sys.path.insert(0,'.');from tools.grade_grammar_reasoning import registered_reason_keys;print(sorted(registered_reason_keys()[0]))\""
+    },
+    {
+      "expect": "PASS including the reason_key_unregistered adversarial case",
+      "purpose": "Prove the grader rejects a fabricated key before typing anything",
+      "run": "python tools/grade_grammar_reasoning.py"
+    },
+    {
+      "expect": "a real trap-blocked count instead of classification=fixture_only",
+      "purpose": "Re-run the bank after typing",
+      "run": "python tools/run_nahw_evals.py --bank wrong-reasoning"
+    }
+  ],
+  "defeaters": [
+    "A row cannot be typed without inventing a registry id or a schema enum value.",
+    "The typed contract would require executing a free-text when-clause as code.",
+    "Typing a row would change its linguistic conclusion rather than its structure."
+  ],
+  "definition_of_done": [
+    "every row either carries a registered expected reason key, or is explicitly left fixture-only with its missing-key request recorded for registry adjudication",
+    "qamus/skills/reason-key-registry.jsonl is byte-identical to its pre-packet state",
+    "python tools/run_nahw_evals.py --bank wrong-reasoning exits 0",
+    "docs/subsystems/nahw-executable-map.md GAP-N4 updated to the measured result",
+    "no eval expectation edited merely to make a consumer pass"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "a row honest path needs a reason key the registry does not contain",
+      "typing a row would require a scholar-level irab judgment rather than a structural addition"
+    ],
+    "route": "nahw/procedures/irab-case-mood.md -> scholar_irab_review; open an arbitration packet and leave the bank fixture-only"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If a row needs a reason key or state that no registry or schema provides, do NOT invent one: leave the row fixture-only and escalate for registry adjudication.",
+    "statement": "Every typed field must resolve to an id that already exists in qamus/skills/reason-key-registry.jsonl or to an enum in qamus/schemas/dependency-candidate-lattice.schema.json. No key may be invented, and no key may be derived from a fixture id.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "each row typed with a REGISTERED expected reason key, conclusion, case/mood where applicable, and governor evidence; rows needing an unregistered key stay untyped",
+      "path": "nahw/evals/grammar-wrong-reasoning-cases.jsonl"
+    },
+    {
+      "description": "the wrong-reasoning bank upgraded from fixture_only to structured grading for exactly the rows that could be typed",
+      "path": "tools/run_nahw_evals.py"
+    },
+    {
+      "description": "per-row typing record, plus the adjudication request listing every reason key the registry lacks (this packet may NOT add one)",
+      "path": "qamus/reports/nahw-wrong-reason-typing.md"
+    },
+    {
+      "description": "GAP-N4 wrong-reasoning status reconciled to the measured result",
+      "path": "docs/subsystems/nahw-executable-map.md"
+    }
+  ],
+  "guards": [
+    "The METHOD (require typed, registered evidence before claiming a behavioural comparison) transfers; the linguistic conclusions in these rows never transfer to another occurrence and must be re-derived per address.",
+    "A reason key must be registered in qamus/skills/reason-key-registry.jsonl; a key derived from a fixture id is a fabrication and must fail.",
+    "No caller label, boolean or prose condition may resolve a grammatical state; without typed source-addressed evidence the row stays pending/candidate with its rivals preserved.",
+    "Agreement is never certification: only tools/certify_typed_fact.py certifies, and only from a validated two-vote artifact.",
+    "Candidate nahw@2.1-@2.4 behaviour may be measured but never released or used to authorize a pass.",
+    "This packet has NO registry-write authority. A row that needs a reason key the registry lacks stays untyped and its key request goes to the adjudication list, never into the registry.",
+    "TWO INDEPENDENT CHECKS: every decision this packet records — the expected reason key assigned to each wrong-reasoning row — needs two independent checks that agree on BOTH the conclusion and the reason (the reason key and the repository citation that licenses it), validated through tools/validate_two_vote_artifacts.py. A boolean flag, a single model statement, or one reviewer restating their own reasoning is NOT a second check. This lane produces no votes, so an absent second check leaves the row PENDING and quarantined; it never becomes candidate or certified.",
+    "SERIALIZED WRITE SCOPE (dispatch order 4 of 5): this packet shares write paths nahw/evals/grammar-wrong-reasoning-cases.jsonl, tools/run_nahw_evals.py, docs/subsystems/nahw-executable-map.md with the other TP-NAHW-A2-* packets and MUST NOT be dispatched concurrently with them. Run only after TP-NAHW-A2-HOVER-KEY-SEAT, TP-NAHW-A2-OBSERVATION-PRODUCER, TP-NAHW-A2-STATE-VOCAB have landed, and before TP-NAHW-A2-TYPED-STATE-CONSUMER. Re-measure the runner and the harness after each predecessor: a concurrent run would interleave edits to the same eval bank and the same runner file."
+  ],
+  "inputs": {
+    "input_files": [
+      "nahw/SKILL.md",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/schemas/dependency-candidate-lattice.schema.json",
+      "docs/subsystems/nahw-executable-map.md"
+    ],
+    "permitted_write_files": [
+      "nahw/evals/grammar-wrong-reasoning-cases.jsonl",
+      "tools/run_nahw_evals.py",
+      "qamus/reports/nahw-wrong-reason-typing.md",
+      "docs/subsystems/nahw-executable-map.md"
+    ],
+    "prohibited_files": [
+      "qamus/skills/reason-key-registry.jsonl",
+      "tools/normalize_ar.py",
+      "tools/check_regressions.py",
+      "tools/certify_typed_fact.py",
+      "qamus/data/",
+      "sarf/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "This packet builds internal evaluation machinery only. It certifies nothing, publishes no hover, and never writes to the live site or the entry store; all outcomes stay candidate-mode inside this repository.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-NAHW-A2-TYPED-WR-BANK",
+  "provenance": {
+    "authored_by": "burst-a2-nahw lane (Opus 5 implementation worker)",
+    "cites": [
+      "docs/subsystems/nahw-executable-map.md",
+      "nahw/evals/grammar-decision-gates.json",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/schemas/dependency-candidate-lattice.schema.json",
+      "tools/run_nahw_evals.py",
+      "integrated A2 base commit 4d13fd2731d94f02be2f0e31b679eccf598606bd on branch codex/burst-a2-nahw-wiring"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "NAHW_TYPED_CONSUMER",
+    "out_of_scope": [
+      "editing eval expectations to make a consumer pass; every fixture correction needs explicit repository evidence and stays reviewable",
+      "authoring a generic nahw resolver that executes free-text when-clauses as code",
+      "promoting any candidate nahw@2.1-@2.4 increment",
+      "certifying any Quranic gloss or typed fact",
+      "amending qamus/skills/reason-key-registry.jsonl in any way — a worker may not extend the authority it is required to consult; missing keys route to separate registry adjudication"
+    ],
+    "summary": "The GP-WR bank states expected_reasoning and wrong_reasoning_trap as English prose. tools/grade_grammar_reasoning.grade_structured() grades a REGISTERED reason key plus governor evidence, so the bank supplies nothing it can grade. Deriving keys from row ids would only prove that two invented strings differ; it would evaluate no grammatical reasoning and would fabricate keys outside the governed registry. The A2 runner therefore classifies this bank fixture_only and checks only the routing contract the prose rows can support (gate >= two_vote, hover_safety not auto_safe, distinct honest and trap texts). Behavioural wrong-reason closure requires typing each row: a registered expected reason key, a registered trap key or an explicit unregistered-trap marker, the row conclusion, its case/mood where applicable, and the governor whose type licenses that case.",
+    "tranche": "burst-a2-defect-round-1"
+  },
+  "title": "grammar-wrong-reasoning-cases.jsonl is prose-only: it cannot support structured wrong-reason grading until each row carries a registered reason key, conclusion and governor evidence",
+  "tools_required": [
+    "python3",
+    "python tools/run_nahw_evals.py (the executable oracle for this packet)"
+  ]
+}

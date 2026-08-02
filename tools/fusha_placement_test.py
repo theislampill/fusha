@@ -14,8 +14,21 @@ Placement rule (faithful to placement-test.md "Scoring → starting level"):
     raise you past an earlier miss. Equivalently the runner recommends the highest CONTIGUOUS prefix of rungs the
     learner cleared, then starts them at the next rung. Clear every rung in the bank → "ready" (top rung + 1).
 
+TWO-VOTE ITEMS ARE HELD, AND THAT IS THE SAFE ANSWER. An item marked `two_vote_required` asserts a
+grammar FACT whose decision needs two independent, occurrence-bound reviews. This runner grades the CONTENT
+of a learner's answer; it cannot supply or verify such reviews, and a learner-supplied `second_check`
+Boolean is a declaration, not an artifact — it carries no exact Qurʾānic occurrence, no canonical vote
+envelope, no reviewer or session identity, no frozen worklist hash, no model proof and no isolation
+evidence. Such an item therefore stays HELD, its rung stays uncleared, and the learner is placed at that
+rung. Under-placing is the safe direction (they start a rung lower and climb); clearing a fact gate on a
+self-report is not. A placement result is a LEARNER-PLACEMENT statement only: it certifies nothing, promotes
+no Qurʾānic fact, and is never evidence about the language.
+
 HARD CONTRACTS (enforced by --self-test):
-  * Grading is content-only via fusha_tutor_runtime.grade; a payload `passed`/`correct`/`cleared` flag is IGNORED.
+  * Grading is content-only via fusha_tutor_runtime.grade; a payload `passed`/`correct`/`cleared`/`score`
+    flag is IGNORED, and so is a `second_check`/`two_vote_done` declaration on a `two_vote_required` item.
+  * A `two_vote_required` item can never be cleared by this runner. Until a separately governed contract
+    supplies canonical, occurrence-bound external vote artifacts, its rung is the learner's placement.
   * A rung counts as cleared ONLY if EVERY item at that rung cleared (a section is failed on any miss — placement-test.md
     "H (any miss)"). This is a deliberately CONSERVATIVE simplification: any per-section partial-credit threshold a
     prose section might allow (e.g. "4 of 5") is intentionally NOT modeled — under-placing a learner is safe (they
@@ -100,8 +113,20 @@ def grade_bank(bank, answers):
         if not g["reasoning_passed"]:
             reasons.append("required reasoning missing")
         if g["two_vote_status"] == "pending":
-            reasons.append("held: second independent check missing")
+            # ROUND-12: state WHY, so a held rung reads as a safe boundary rather than a learner failure.
+            reasons.append("held: this item asserts a grammar fact that needs two independent, "
+                           "occurrence-bound reviews; a declared second check is not one, so the runner "
+                           "cannot clear it")
+        # ROUND-13: report LEARNER/CONTENT mastery separately from linguistic-fact certification
+        # readiness. `cleared` still drives placement (it must, or a held fact gate would be bypassed), but
+        # a reader can now see that a held item was answered correctly and is waiting on certification —
+        # not that the learner got it wrong.
+        bucket.setdefault("content_mastered", 0)
+        if g["content_mastered"]:
+            bucket["content_mastered"] += 1
         bucket["items"].append({"id": row["id"], "cleared": bool(g["cleared"]),
+                                "content_mastered": bool(g["content_mastered"]),
+                                "awaiting_fact_certification": bool(g["held_for_fact_gate"]),
                                 "reasons": [] if g["cleared"] else reasons})
     return {"by_rung": by_rung, "rungs": sorted(by_rung)}
 
@@ -111,7 +136,8 @@ def recommend(graded):
 
     A rung is CLEARED iff every item at that rung cleared. The recommendation is the lowest rung that is NOT cleared —
     a later cleared rung can never lift the learner past an earlier gap. If every rung clears, the learner is `ready`
-    (top rung + 1). Returns (start_rung:int|None, label, cleared_prefix:[rungs])."""
+    (top rung + 1). A rung carrying a `two_vote_required` item cannot clear here, so `ready` is reachable only
+    for a bank with no such item. Returns (start_rung:int|None, label, cleared_prefix:[rungs])."""
     rungs = graded["rungs"]
     if not rungs:
         return None, "no_rungs", []
@@ -136,12 +162,17 @@ def run_placement(bank, answers):
     for r in graded["rungs"]:
         b = graded["by_rung"][r]
         rung_summary.append({"rung": r, "total": b["total"], "cleared": b["cleared"],
+                             "content_mastered": b.get("content_mastered", 0),
                              "passed": b["total"] > 0 and b["cleared"] == b["total"],
+                             # a rung every item was ANSWERED correctly on, even if a fact gate holds it
+                             "content_passed": b["total"] > 0 and b.get("content_mastered", 0) == b["total"],
                              "items": b["items"]})
     if label == READY_LABEL:
         note = "cleared every rung in the bank; ready for the rung above the top"
     elif label == "start_at_rung":
-        note = "start at the lowest rung not fully cleared; gaps below sink the rungs above"
+        note = ("start at the lowest rung not fully cleared; gaps below sink the rungs above. A rung held "
+                "only by a two-vote item is a SAFE boundary, not a learner failure: the runner cannot clear "
+                "a grammar-fact gate, so it places the learner there rather than past it")
     else:
         note = "no placeable rungs in the bank"
     result = {"schema": RESULT_SCHEMA, "start_rung": start_rung, "placement": label,
@@ -211,7 +242,11 @@ def _self_test():
     failures = []
     bank = _authored_bank()
 
-    # known-GOOD full set (every item cleared, two-vote item has an agreeing second check) -> READY at top+1
+    # ROUND-12: the known-good full set answers every item correctly AND declares an agreeing second check
+    # on the two-vote item QB2 (rung 2). The declaration is not a canonical, occurrence-bound pair of
+    # independent vote artifacts, so QB2 stays HELD and the honest placement is rung 2 with prefix [1].
+    # This is the SAFE result, not a failure: the runner under-places rather than clear a fact gate on a
+    # learner Boolean. `ready` is unreachable for this bank while QB2 keeps its two_vote_required gate.
     good = {
         "QA1": _ans("the article is al and the host noun is qalam",
                     ["the article identified as al", "the host noun identified as qalam"]),
@@ -221,11 +256,45 @@ def _self_test():
         "QC1": _ans("feminine by the ta marbuta", ["feminine stated", "the ta marbuta named"]),
     }
     res = run_placement(bank, good)
-    if res["placement"] != READY_LABEL or res["start_rung"] != 4 or res["cleared_prefix"] != [1, 2, 3]:
-        failures.append("known-good full set must map to ready/top+1, got %s/%s/%s"
+    if res["placement"] != "start_at_rung" or res["start_rung"] != 2 or res["cleared_prefix"] != [1]:
+        failures.append("known-good full set must hold at the two-vote rung (start_at_rung/2/[1]), got %s/%s/%s"
                         % (res["placement"], res["start_rung"], res["cleared_prefix"]))
+    _qb2 = [i for r in res["rung_summary"] for i in r["items"] if i["id"] == "QB2"]
+    if not _qb2 or _qb2[0]["cleared"] or not any("held" in x for x in _qb2[0]["reasons"]):
+        failures.append("QB2 must be reported as HELD with a stated reason, got %s" % _qb2)
+    if not any(r.get("two_vote_required") for r in bank if r["id"] == "QB2"):
+        failures.append("QB2 must keep its two_vote_required gate (it was not downgraded to clear the test)")
+    # ROUND-13: the held rung must report CONTENT mastery separately from fact-certification readiness.
+    _r2 = [r for r in res["rung_summary"] if r["rung"] == 2][0]
+    if not _r2["content_passed"] or _r2["passed"]:
+        failures.append("rung 2 must be content-passed but NOT cleared (held on the fact gate), got %s" % _r2)
+    if not _qb2[0].get("content_mastered") or not _qb2[0].get("awaiting_fact_certification"):
+        failures.append("QB2 must report content mastery + awaiting certification, got %s" % _qb2[0])
 
-    # WEAK set: rung-1 cleared, rung-2 fails (vague answers) -> start at rung 2, prefix [1]
+    # ROUND-12: NO self-reported field may lift the two-vote item above rung 2. The runner grades content;
+    # a declaration of any shape is ignored.
+    for _label, _extra in (("passed", {"passed": True}), ("correct", {"correct": True}),
+                           ("cleared", {"cleared": True}), ("score", {"score": 1.0}),
+                           ("two_vote_done", {"two_vote_done": True}),
+                           ("two_vote_status", {"two_vote_status": "cleared"}),
+                           ("all at once", {"passed": True, "correct": True, "cleared": True,
+                                            "score": 1.0, "two_vote_done": True,
+                                            "two_vote_status": "cleared"})):
+        _selfrep = dict(good)
+        _selfrep["QB2"] = dict(good["QB2"], **_extra)
+        _r = run_placement(bank, _selfrep)
+        if _r["start_rung"] != 2 or _r["placement"] != "start_at_rung":
+            failures.append("a self-reported %s must not lift the two-vote item above rung 2, got %s/%s"
+                            % (_label, _r["placement"], _r["start_rung"]))
+    # and a bank with NO two-vote item still reaches ready, so the ladder itself is not broken
+    _open_bank = [dict(r, two_vote_required=False) if r["id"] == "QB2" else r for r in bank]
+    _open = run_placement(_open_bank, good)
+    if _open["placement"] != READY_LABEL or _open["start_rung"] != 4 or _open["cleared_prefix"] != [1, 2, 3]:
+        failures.append("a bank with no two-vote item must still reach ready/top+1, got %s/%s/%s"
+                        % (_open["placement"], _open["start_rung"], _open["cleared_prefix"]))
+
+    # WEAK set: rung-1 cleared, rung-2 fails on CONTENT (vague answers) -> start at rung 2, prefix [1].
+    # Same placement as the known-good set above, but for a different reason: content miss, not a held gate.
     weak = dict(good)
     weak["QB1"] = _ans("not sure maybe who", ["dunno"])
     weak["QB2"] = _ans("i think they are the same", ["no reason"])
@@ -311,7 +380,10 @@ def _self_test():
         print("FAIL " + f)
     if not failures:
         print("ok   fusha_placement_test self-test: content-graded (no self-report); rung cleared iff all items clear; "
-              "lowest-uncleared-rung start; gap-below sinks higher clears; two-vote held; deterministic; source-clean")
+              "lowest-uncleared-rung start; gap-below sinks higher clears; a two_vote_required item is ALWAYS "
+              "held (a declared second_check/passed/correct/cleared/score field cannot clear a grammar-fact "
+              "gate, so the learner is placed at that rung rather than past it, and nothing is certified); "
+              "deterministic; source-clean")
     return 0 if not failures else 1
 
 

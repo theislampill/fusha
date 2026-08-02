@@ -1,0 +1,190 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "state-machine bank green at its recorded quarantine count",
+      "pass_condition": "exits 0, and stats.state-machine.quarantined equals the number of rows this packet leaves quarantined after its decisions (nine if every row escalates, fewer as rows are re-armed, zero only if every row could be re-armed). A remaining quarantine is a RECORDED ESCALATION, not a failure; what fails is a quarantine with no arbitration route recorded in the row.",
+      "run": "python tools/run_nahw_evals.py --bank state-machine"
+    },
+    {
+      "name": "behavioural gates still hold",
+      "pass_condition": "exits 0 with no failure lines",
+      "run": "python tools/test_nahw_behavioural_gates.py"
+    },
+    {
+      "name": "full harness green",
+      "pass_condition": "ends with ALL REGRESSION CHECKS PASS and no FAIL line",
+      "run": "python tools/check_regressions.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "setting any re-armed row's wrong_state equal to its correct_state must make tools/run_nahw_evals.py --bank state-machine FAIL; the negative gate can never be silently disabled again",
+        "id": "CAN-ADV-SAMESTATE"
+      },
+      {
+        "expectation": "setting a row's correct_state to a value absent from state_vocab must FAIL the runner",
+        "id": "CAN-ADV-OFFVOCAB"
+      },
+      {
+        "expectation": "lowering in_nafiya_negating's gate from human_source_review_required to two_vote_required must FAIL the runner's trigger-vs-gate reconciliation",
+        "id": "CAN-ADV-GATEWEAKEN"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "kulla_vs_kalla resolves to a quantifier-vs-deterrent state pair justified by nahw/rules/particle-context-rules.json#kull_vs_kalla, and tools/run_nahw_evals.py still shows the ḍamma-on-kāf branch A binding",
+        "id": "CAN-POS-KULLA"
+      },
+      {
+        "expectation": "halim_referent_human resolves to a referent-axis state pair justified by nahw/rules/referent-guard-rules.json#halim_referent, with the human-referent reading unchanged",
+        "id": "CAN-POS-HALIM"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "measured by `python tools/run_nahw_evals.py --bank state-machine --json` (stats.state-machine.quarantined)",
+    "selection_rule": "rows of nahw/evals/nahw-state-machine-eval.json carrying contract_status=state_vocab_pending | QUARANTINE-BINDING bank=state-machine; status=state_vocab_pending; rows=in_nafiya_negating,kulla_vs_kalla,salihan_proper_vs_deed,halim_referent_human,lamma_not_yet,la_nafiya_lil_jins,ma_relative_vs_negation,anna_how_adverbial,nima_praise_verb; property=state_axis_pair; disposition=excuse_semantic_consumer",
+    "this_packet_size": 9,
+    "universe_size": 24
+  },
+  "commands": [
+    {
+      "expect": "stats.state-machine.quarantined == 9, each row naming this packet",
+      "purpose": "Reproduce the quarantine and list every row with its stated reason",
+      "run": "python tools/run_nahw_evals.py --bank state-machine --json"
+    },
+    {
+      "expect": "the 14 released states; any new state must be justified from a repository rule file",
+      "purpose": "Show the released state vocabulary the decision must stay inside",
+      "run": "python -c \"import json,io,sys;sys.stdout.reconfigure(encoding='utf-8');print(json.dumps(json.load(io.open('nahw/evals/nahw-state-machine-eval.json',encoding='utf-8'))['state_vocab'],ensure_ascii=True,indent=2))\""
+    },
+    {
+      "expect": "the per-rule consumption inventory used to justify (or refuse) each new state",
+      "purpose": "Show which rule file already names each contested distinction",
+      "run": "python tools/fusha_nahw_particle_rules.py --status"
+    },
+    {
+      "expect": "exit 0 with a reduced quarantine count and an exact binding per re-armed row",
+      "purpose": "Re-run the bank after the decision is applied",
+      "run": "python tools/run_nahw_evals.py --bank state-machine"
+    },
+    {
+      "expect": "exit 0",
+      "purpose": "Confirm the wider lane is still green",
+      "run": "python tools/test_nahw_behavioural_gates.py"
+    }
+  ],
+  "defeaters": [
+    "A row's `note` contradicts its `evidence` list (the axis named in the note is not what the evidence discriminates) — escalate instead of choosing a state.",
+    "The proposed new state would require a new discriminator in tools/fusha_nahw_particle_rules.py — out of scope; escalate.",
+    "Two of the four rows would need the same new state for different distinctions — the vocabulary proposal is wrong; re-derive."
+  ],
+  "definition_of_done": [
+    "every quarantined row is either re-armed with distinct in-vocabulary states and an exact binding in tools/run_nahw_evals.py, or left quarantined with its arbitration route recorded in the row and its typed QUARANTINE-BINDING kept exact in this packet",
+    "python tools/run_nahw_evals.py --bank state-machine exits 0 at whatever quarantine count the decisions leave; zero quarantine is NOT required and is not evidence of completion",
+    "qamus/reports/nahw-state-vocabulary-decision.md records one decision per row with its repository citation, and names two independent checks agreeing on conclusion AND reason for each re-armed row",
+    "docs/subsystems/nahw-executable-map.md GAP-N4/GAP-N5 updated to the measured result",
+    "no gloss, evidence list, expected_decision or gate changed downward, and no new state invented to make a fixture green"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "a row's correct state is a scholar-level iʿrāb judgment (the إِنْ النافية third-state question) rather than a vocabulary gap",
+      "the four rows cannot be re-armed without changing a gloss or an expected_decision",
+      "two independent readings of a row disagree on the state axis itself"
+    ],
+    "route": "nahw/procedures/irab-case-mood.md -> scholar_irab_review; open an arbitration packet and leave the affected row quarantined"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "If no repository rule already names the distinction a row tests, do NOT invent a state; leave that row quarantined and escalate it rather than guessing a vocabulary entry.",
+    "statement": "The state vocabulary must be justified from repository rule files and skill text already in this repo (nahw/rules/*.json, nahw/SKILL.md). External grammar prose is internal evidence only and is never pasted into the bank.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "state_vocab extended under released authority; each re-armed row carries distinct in-vocabulary correct_state/wrong_state and drops contract_status/packet",
+      "path": "nahw/evals/nahw-state-machine-eval.json"
+    },
+    {
+      "description": "STATE_CASE_BINDINGS extended with an exact binding per re-armed row",
+      "path": "tools/run_nahw_evals.py"
+    },
+    {
+      "description": "GAP-N4/GAP-N5 status lines reconciled to the measured result",
+      "path": "docs/subsystems/nahw-executable-map.md"
+    },
+    {
+      "description": "per-row decision record: the repository rule that names the distinction, or the escalation if none does",
+      "path": "qamus/reports/nahw-state-vocabulary-decision.md"
+    }
+  ],
+  "guards": [
+    "The METHOD (quarantine a row whose negative direction is disabled, then decide its vocabulary from repository rules) transfers to any eval bank; the linguistic conclusions in these four rows never transfer to another occurrence and must be re-derived per address.",
+    "Never widen a row's gate while re-arming it downward: gates in this bank are already reconciled against nahw/evals/grammar-decision-gates.json and may only be strengthened.",
+    "correct_state and wrong_state must differ and both must be members of state_vocab; a row that cannot satisfy this stays quarantined.",
+    "Do not repurpose an existing state to mean something new — extend the vocabulary instead, so earlier rows keep their meaning.",
+    "TWO INDEPENDENT CHECKS: every decision this packet records — the state-axis pair chosen for each re-armed row — needs two independent checks that agree on BOTH the conclusion and the reason (the reason key and the repository citation that licenses it), validated through tools/validate_two_vote_artifacts.py. A boolean flag, a single model statement, or one reviewer restating their own reasoning is NOT a second check. This lane produces no votes, so an absent second check leaves the row PENDING and quarantined; it never becomes candidate or certified.",
+    "SERIALIZED WRITE SCOPE (dispatch order 3 of 5): this packet shares write paths nahw/evals/nahw-state-machine-eval.json, tools/run_nahw_evals.py, docs/subsystems/nahw-executable-map.md with the other TP-NAHW-A2-* packets and MUST NOT be dispatched concurrently with them. Run only after TP-NAHW-A2-HOVER-KEY-SEAT, TP-NAHW-A2-OBSERVATION-PRODUCER have landed, and before TP-NAHW-A2-TYPED-STATE-CONSUMER, TP-NAHW-A2-TYPED-WR-BANK. Re-measure the runner and the harness after each predecessor: a concurrent run would interleave edits to the same eval bank and the same runner file."
+  ],
+  "inputs": {
+    "input_files": [
+      "nahw/evals/nahw-state-machine-eval.json",
+      "nahw/rules/particle-context-rules.json",
+      "nahw/rules/state-transition-rules.json",
+      "nahw/rules/context-sense-rules.json",
+      "nahw/rules/referent-guard-rules.json",
+      "nahw/SKILL.md",
+      "docs/subsystems/nahw-executable-map.md"
+    ],
+    "permitted_write_files": [
+      "nahw/evals/nahw-state-machine-eval.json",
+      "tools/run_nahw_evals.py",
+      "docs/subsystems/nahw-executable-map.md",
+      "qamus/reports/nahw-state-vocabulary-decision.md"
+    ],
+    "prohibited_files": [
+      "nahw/rules/",
+      "nahw/evals/grammar-decision-gates.json",
+      "tools/normalize_ar.py",
+      "tools/check_regressions.py",
+      "qamus/data/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "This packet edits an internal eval bank and its runner only. It produces no public hover payload, certifies no Qurʾānic gloss, and never writes to the live site or the entry store; every outcome remains candidate-mode inside this repository.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-NAHW-A2-STATE-VOCAB",
+  "provenance": {
+    "authored_by": "burst-a2-nahw lane (Opus 5 implementation worker)",
+    "cites": [
+      "docs/subsystems/nahw-executable-map.md",
+      "nahw/evals/grammar-decision-gates.json",
+      "qamus/skills/reason-key-registry.jsonl",
+      "qamus/schemas/dependency-candidate-lattice.schema.json",
+      "tools/run_nahw_evals.py",
+      "integrated A2 base commit 4d13fd2731d94f02be2f0e31b679eccf598606bd on branch codex/burst-a2-nahw-wiring"
+    ],
+    "date": "2026-07-30"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "NAHW_EVAL_CONTRACT",
+    "out_of_scope": [
+      "changing any row's gloss, evidence, expected_decision, gate or reason — only correct_state/wrong_state and state_vocab are in scope",
+      "adding new cases to the bank",
+      "editing tools/fusha_nahw_particle_rules.py discriminators (a new state may need a binding in tools/run_nahw_evals.py STATE_CASE_BINDINGS, but the discriminator set is fixed)",
+      "writing any path outside inputs.permitted_write_files — in particular tools/check_regressions.py, nahw/rules/ and nahw/evals/grammar-decision-gates.json, which this packet may READ but never write",
+      "certifying any Qurʾānic gloss"
+    ],
+    "summary": "tools/run_nahw_evals.py --bank state-machine reports nine rows quarantined as state_vocab_pending. Four declare correct_state == wrong_state (in_nafiya_negating, kulla_vs_kalla, salihan_proper_vs_deed, halim_referent_human), which disables the negative direction outright. Five more are semantically malformed against their own descriptions: lamma_not_yet is the jazm-bearing 'not yet' lamma but records temporal_lamma; la_nafiya_lil_jins and ma_relative_vs_negation both use the lam-specific jazm-bearing negation_jazm as the rival for non-jazm negators; anna_how_adverbial types the interrogative ADVERB anna as interrogative_pronoun; nima_praise_verb names the affirmation particle naam as its rival but records interrogative_pronoun. Each needs a state the released state_vocab does not contain, and inventing one to make fixtures green is forbidden. This packet decides the vocabulary under released authority and re-arms the rows, or escalates the ones that are scholar judgments.",
+    "tranche": "burst-a2-followon"
+  },
+  "title": "nahw-state-machine-eval: nine quarantined rows need a state-vocabulary decision before their state axes can be armed",
+  "tools_required": [
+    "python3",
+    "python tools/run_nahw_evals.py --bank state-machine (the executable oracle for this packet)"
+  ]
+}

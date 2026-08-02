@@ -7,7 +7,8 @@ judgement on open prose; it makes the OBJECTIVE checkpoint loop runnable and hon
 
     load checkpoint bank (JSONL) + optional progress state
       -> select the next item (a due REVIEW, else a new item)        [deterministic]
-      -> accept an ANSWER PAYLOAD (the learner's answer + reasoning + optional second check)
+      -> accept an ANSWER PAYLOAD (the learner's answer + reasoning + an optional DECLARED second check,
+         which is recorded but never treated as an independent review)
       -> GRADE against the answer key/rubric  (NOT a model self-report)
       -> route a miss to its remediation procedure
       -> update the Leitner schedule (tools/fusha_review_scheduler.py)
@@ -23,7 +24,11 @@ HARD CONTRACTS (enforced by --self-test + tools/validate_tutor_runtime.py):
   * Grading is computed from the answer payload's CONTENT — expected/variant match, forbidden-answer detection,
     required-reasoning presence, and (for hard grammar) a second independent check. It NEVER reads a self-reported
     `correct`/`passed`/`cleared` flag from the payload. "It sounds right" cannot clear an item.
-  * Two-vote gate: a `two_vote_required` row with no agreeing second check is `pending` — HELD, never cleared.
+  * Two-vote gate: a `two_vote_required` row is ALWAYS `pending` — HELD, never cleared from inside the runtime.
+    The runtime grades answer and reasoning content; it cannot independently clear a mandatory two-vote FACT
+    gate, because a learner-supplied `second_check` Boolean is a declaration, not an occurrence-bound
+    canonical vote artifact. Clearing such a row needs a separately governed runtime contract that consumes
+    external, occurrence-bound vote artifacts; until then the checkpoint stays held.
   * No persistent write without `--write`. A dry run mutates no file.
   * Deterministic: "now" is an explicit integer `--now` day index; no wall clock, no RNG.
   * Source-clean: every emitted text field passes tools/leak_sot.
@@ -149,14 +154,37 @@ def grade(row, payload):
     reasoning_passed = not missing
 
     if row.get("two_vote_required"):
-        ok2 = bool(second) and bool(second.get("conclusion_agrees")) and bool(second.get("reason_agrees"))
-        two_vote_status = "cleared" if ok2 else "pending"
+        # ROUND-11: a mandatory two-vote FACT gate is never cleared from inside the tutoring runtime.
+        # `second_check` is a learner-supplied declaration: {"conclusion_agrees": true, "reason_agrees": true}
+        # carries no exact Qurʾānic occurrence, no canonical vote envelope, no reviewer or session identity,
+        # no frozen worklist hash, no model proof and no evidence that the two checks were isolated from each
+        # other. Reading it as an independent review promoted a hard-grammar checkpoint on a self-report.
+        #
+        # The runtime can grade answer and reasoning CONTENT. It cannot independently clear a two-vote fact
+        # gate, so such a row is HELD as pending until a separately governed runtime contract can consume
+        # canonical, occurrence-bound external vote artifacts. That contract is not invented here.
+        # ROUND-13: a truthy NON-mapping second_check (JSON true, 1, "yes", [1]) raised AttributeError on
+        # .get(). Malformed evidence fails closed; it never crashes and never counts as a declaration.
+        declared = (isinstance(second, dict) and bool(second.get("conclusion_agrees"))
+                    and bool(second.get("reason_agrees")))
+        two_vote_status = "pending"
+        second_check_declared = declared
     else:
         two_vote_status = "n/a"
+        second_check_declared = None
 
-    cleared = bool(passed and reasoning_passed and not forbidden_hit and two_vote_status != "pending")
+    # ROUND-13: LEARNER MASTERY and FACT READINESS are different questions and are reported separately.
+    # `content_mastered` is what the learner demonstrated: right answer, required reasoning, no forbidden
+    # path. `cleared` additionally needs the fact gate, which this runtime can never satisfy. A held row is
+    # therefore NOT content ignorance, and nothing downstream may treat it as a miss.
+    content_mastered = bool(passed and reasoning_passed and not forbidden_hit)
+    held_for_fact_gate = bool(content_mastered and two_vote_status == "pending")
+    cleared = bool(content_mastered and two_vote_status != "pending")
     return {"passed": bool(passed), "reasoning_passed": bool(reasoning_passed),
             "two_vote_status": two_vote_status, "forbidden_hit": bool(forbidden_hit),
+            # reported for transparency ONLY: what the learner declared, never what was proven
+            "second_check_declared": second_check_declared,
+            "content_mastered": content_mastered, "held_for_fact_gate": held_for_fact_gate,
             "cleared": cleared, "missing_reasoning": missing}
 
 
@@ -165,15 +193,21 @@ def grade(row, payload):
 # grading path above (grade/step) is the runtime's SOURCE OF TRUTH and is never altered by this bridge. When the
 # caller opts in (bridge_grade=True / --grammar-bridge), the runtime additionally translates its OWN computed grade
 # into the eval grader's `judgment` shape and asserts the two graders AGREE on the shared reasoning gate. They are
-# two views of the same invariant: a grammar decision clears only when the final answer AND the reasoning hold and
-# any required two-vote is done. The bridge is an agreement CHECK, not a second opinion that can override the runtime
+# two views of the same invariant: a grammar decision clears only when the final answer AND the reasoning hold,
+# and a decision that needs two independent occurrence-bound reviews clears in NEITHER grader without them —
+# so on a two_vote_required row both refuse, which is what makes them agree. The bridge is an agreement
+# CHECK, not a second opinion that can override the runtime
 # — a disagreement is surfaced (and, in --self-test, fails) rather than silently re-grading.
 #
 # Shared-gate mapping (runtime grade `g` for `row` -> grade_grammar_reasoning judgment):
 #   final_ok       <- g["passed"]                         (final answer matches the authored key)
 #   reasoning_ok   <- g["reasoning_passed"] and not g["forbidden_hit"]
 #                                                          (required reasoning present AND no forbidden path taken)
-#   two_vote_done  <- g["two_vote_status"] == "cleared"   (an agreeing second check, when the row requires one)
+#   two-vote gate  -> NOT translated. ROUND-11: the runtime holds every two_vote_required row as pending, and
+#       the eval grader requires canonical, occurrence-bound vote artifacts that a tutoring checkpoint does
+#       not have. The bridge therefore sends NO two-vote assertion at all. Both graders refuse the row for
+#       the same reason, so they agree; the gate is still REQUIRED (the case keeps required_gate=
+#       two_vote_required — it is never relabelled auto_safe).
 #   evidence_cited / source_address  -> the runtime checkpoint schema carries NO evidence-rung/source-address field,
 #       so the bridge runs the eval grader with its EVIDENCE gate neutralized (case-driven, satisfied) and compares
 #       ONLY on the gates both graders actually compute. This keeps the comparison honest: we never claim the runtime
@@ -189,10 +223,11 @@ def _grammar_bridge_judgment(g):
     """Translate a runtime grade dict `g` (from grade()) into a grade_grammar_reasoning `judgment`. Evidence is
     neutralized (the runtime checkpoint schema has no evidence rung/source-address) so the shared comparison is only
     over the answer + reasoning + two-vote gates both graders compute."""
+    # ROUND-11: no `two_vote_done` is sent. A declared Boolean is not evidence, and the runtime has no
+    # canonical vote artifact to offer, so the two-vote gate is left unproven on purpose.
     return {"final_ok": bool(g["passed"]),
             "reasoning_ok": bool(g["reasoning_passed"]) and not bool(g["forbidden_hit"]),
-            "evidence_cited": True, "source_address": "n/a-runtime-checkpoint",
-            "two_vote_done": g["two_vote_status"] == "cleared"}
+            "evidence_cited": True, "source_address": "n/a-runtime-checkpoint"}
 
 
 def grammar_bridge_check(row, g):
@@ -233,11 +268,28 @@ def select_next(bank, progress, now_day, interleave=False):
     due_reviews = [i for i in SCHED.select_due(states, now_day, interleave=interleave,
                                                group_key=(lambda i: level_of.get(i, "")) if interleave else None)
                    if int(states.get(i, {}).get("reps", 0)) > 0]
-    if due_reviews:
-        return due_reviews[0], "due_review"
+    # ROUND-13: a row awaiting external certification can NEVER clear, so it stays in box 0, is always the
+    # most overdue, and used to be served ahead of every unseen item forever. Genuine reviews still come
+    # first; unclearable fact-held rows yield to new content and are only offered when nothing else is.
+    # An item whose BANK ROW carries a two-vote fact gate can never be cleared here, so it is permanently
+    # due. Derive that from the bank rather than from a new state key (the progress schema is canonical).
+    # ROUND-14: only a CONTENT-CORRECT fact hold may yield to new material. A wrong answer to a two-vote
+    # row is a genuine learner miss and keeps normal due-review priority — the fact gate must not erase
+    # learner error. An open miss is recorded in `progress.missed` (a fact hold deliberately is not), so
+    # that list distinguishes the two cases without adding a key to the canonical progress schema.
+    _fact_gated = {r["id"] for r in bank if r.get("two_vote_required")}
+    _cleared = set(progress.get("cleared_item_ids") or [])
+    _open_misses = {m.get("item_id") for m in (progress.get("missed") or [])}
+    blocked = [i for i in due_reviews
+               if i in _fact_gated and i not in _cleared and i not in _open_misses]
+    live_reviews = [i for i in due_reviews if i not in blocked]
+    if live_reviews:
+        return live_reviews[0], "due_review"
     for r in bank:                                   # first unseen item, in bank order
         if r["id"] not in seen:
             return r["id"], "new_item"
+    if blocked:
+        return blocked[0], "due_review_awaiting_fact_certification"
     if states:                                        # all seen, none due -> soonest due
         nxt = min(states, key=lambda k: (int(states[k].get("due_day", 0)), k))
         return nxt, "soonest_due"
@@ -248,19 +300,29 @@ def step(row, state, payload, now_day):
     """Grade + schedule + build a (source-clean) event for one attempt. Pure (no I/O). Returns dict."""
     g = grade(row, payload)
     box_before = int((state or {}).get("box", 0))
+    # ROUND-13: the label said "miss" for a content-correct row held only by the fact gate. The scheduler
+    # reads the typed fields (and correctly answers `hold`), but the label itself was untrue and is what a
+    # reader sees. A fact hold is now labelled `held`, never `miss`.
     gr_for_sched = {"passed": g["passed"], "reasoning_passed": g["reasoning_passed"],
                     "two_vote_status": g["two_vote_status"], "forbidden_hit": g["forbidden_hit"],
-                    "grade": "cleared" if g["cleared"] else "miss"}
+                    "grade": ("cleared" if g["cleared"]
+                              else ("held" if g["held_for_fact_gate"] else "miss"))}
     new_state = SCHED.schedule(state or SCHED.new_state(), gr_for_sched, now_day)
     outcome = new_state["last_outcome"]
-    route = None if g["cleared"] else row.get("remediation_route")
+    # ROUND-13: remediation teaches a learner something they got wrong. A fact hold is not that.
+    route = None if (g["cleared"] or g["held_for_fact_gate"]) else row.get("remediation_route")
     note = ("cleared" if g["cleared"]
-            else ("held: " + ("pending two-vote" if g["two_vote_status"] == "pending"
+            else ("held: " + ("content mastered; awaiting external two-vote certification of the fact "
+                              "(not a learner miss)" if g["held_for_fact_gate"]
+                              else "pending two-vote" if g["two_vote_status"] == "pending"
                               else ("forbidden answer" if g["forbidden_hit"]
                                     else "reasoning incomplete" if not g["reasoning_passed"] else "review"))
                   if outcome == "hold" else "miss -> remediation"))
     event = {"schema": EVENT_SCHEMA, "seq": 0, "now_day": now_day, "item_id": row["id"],
              "level": str(row.get("level", "")), "outcome": outcome,
+             # NOTE: the event `grade` block is fixed by qamus/schemas/tutor-event.schema.json, which this
+             # lane may not edit, so the round-13 content_mastered / held_for_fact_gate axes are reported on
+             # the returned grade dict, in `note`, and on progress.awaiting_fact_certification instead.
              "grade": {k: g[k] for k in ("passed", "reasoning_passed", "two_vote_status", "forbidden_hit",
                                           "cleared", "missing_reasoning")},
              "box_before": box_before, "box_after": int(new_state["box"]),
@@ -282,7 +344,13 @@ def apply_event_to_progress(progress, row, result, seq):
         progress["cleared_item_ids"].append(item_id)
     # maintain the open-miss list
     progress["missed"] = [m for m in progress.get("missed", []) if m["item_id"] != item_id]
-    if not g["cleared"]:
+    # ROUND-13: `missed` is the open-MISS list — it drives remediation and reads as learner ignorance. A
+    # content-correct row held only by the external fact gate belongs on its own list instead.
+    # The progress object is fixed by its canonical schema (not editable in this lane), so the hold is
+    # recorded by ABSENCE from `missed` plus the event note, never by a new progress key.
+    if g["held_for_fact_gate"]:
+        pass
+    elif not g["cleared"]:
         status = "pending_two_vote" if g["two_vote_status"] == "pending" else "open"
         progress["missed"].append({"item_id": item_id, "error_reason": None,
                                    "remediation_route": row.get("remediation_route"), "status": status})
@@ -463,11 +531,15 @@ def _self_test():
     if r4["grade"]["two_vote_status"] != "pending" or r4["grade"]["cleared"] or r4["outcome"] != "hold":
         failures.append("two-vote with one check must be pending+held, got %s / %s" % (r4["grade"], r4["outcome"]))
 
-    # 5. hard-grammar with an AGREEING second check -> cleared + promote
+    # 5. ROUND-11: hard-grammar with a DECLARED agreeing second check -> still pending + HELD.
+    # The Boolean is a learner declaration, not an independent occurrence-bound review, so it may not clear
+    # or promote a two_vote_required row. It is reported as `second_check_declared` and nothing more.
     p_two = dict(p_one); p_two["second_check"] = {"conclusion_agrees": True, "reason_agrees": True}
     r5 = step(idx["T2-hardgrammar"], None, p_two, now_day=0)
-    if r5["grade"]["two_vote_status"] != "cleared" or not r5["grade"]["cleared"] or r5["outcome"] != "promote":
-        failures.append("two-vote with agreeing second check must clear+promote, got %s" % r5["grade"])
+    if (r5["grade"]["two_vote_status"] != "pending" or r5["grade"]["cleared"]
+            or r5["outcome"] != "hold" or r5["grade"].get("second_check_declared") is not True):
+        failures.append("a DECLARED second check must not clear or promote a two-vote row, got %s / %s"
+                        % (r5["grade"], r5["outcome"]))
 
     # 6. a SELF-REPORTED correctness flag must be IGNORED (no self-report grading)
     p_selfreport = {"answer": "totally wrong text", "reasoning": [], "passed": True, "correct": True, "cleared": True}
@@ -545,7 +617,7 @@ def _self_test():
                           ("no-reasoning", idx["T1-objective"], r2["grade"]),
                           ("forbidden", idx["T1-objective"], r3["grade"]),
                           ("two-vote-pending", idx["T2-hardgrammar"], r4["grade"]),
-                          ("two-vote-cleared", idx["T2-hardgrammar"], r5["grade"]),
+                          ("two-vote-declared-only", idx["T2-hardgrammar"], r5["grade"]),
                           ("self-report-ignored", idx["T1-objective"], r6["grade"])):
         b = grammar_bridge_check(row_, g_)
         if not b["agree"]:
@@ -585,7 +657,10 @@ def _self_test():
     for f in failures:
         print("FAIL " + f)
     if not failures:
-        print("ok   fusha_tutor_runtime self-test: schema-graded (no self-report); two-vote gating; "
+        print("ok   fusha_tutor_runtime self-test: schema-graded (no self-report); a two_vote_required row "
+              "is always HELD pending — the runtime grades answer/reasoning CONTENT but cannot "
+              "independently clear a mandatory two-vote FACT gate, and a declared second_check Boolean is "
+              "recorded, never believed; "
               "wrong-reason holds; --write-gated persistence; deterministic; source-clean; "
               "grammar-bridge default-off (grade byte-identical) + agrees with built-in grader")
     return 0 if not failures else 1
