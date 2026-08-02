@@ -1,0 +1,16 @@
+{
+  "generator": "tools/build_curriculum_absorption.py",
+  "queues": {
+    "q-error-fixtures": 205,
+    "q-hover-pedagogy": 21,
+    "q-lesson-qualification": 208,
+    "q-nahw-backprop": 12,
+    "q-paradigm-consumer": 56,
+    "q-pvn-grounding": 224,
+    "q-sarf-backprop": 9,
+    "q-scholar-owner-review": 9,
+    "q-tutor-adoption": 10,
+    "q-unit-authoring": 3
+  },
+  "schema": "curriculum.l1l6_queue_row.v1.meta"
+}

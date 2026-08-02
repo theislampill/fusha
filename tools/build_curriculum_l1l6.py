@@ -214,6 +214,7 @@ def parse_lesson(path, fname):
     module_line = parse_meta_line(lines, "Module") or ""
 
     headings = []
+    sections = []  # ordered inventory of EVERY ##/### section (kind rows)
     quiz_started = False
     n_quiz = n_passages = n_mistake_sections = 0
     for ln in lines:
@@ -224,22 +225,33 @@ def parse_lesson(path, fname):
         hlow = nfc(htext).lower()
         if hlow == "lesson quiz":
             quiz_started = True
+            sections.append({"kind": "quiz_header"})
             continue
         if quiz_started and re.match(r"^q\d+$", hlow):
             n_quiz += 1
+            sections.append({"kind": "quiz_question"})
             continue
         if hlow.startswith("reading passage"):
             n_passages += 1
+            sections.append({"kind": "reading_passage"})
             continue
         if MISTAKE_HEADING_RE.match(hlow):
             n_mistake_sections += 1
+            sections.append({"kind": "learner_error_section"})
             continue
         base = re.sub(r"\s*\(.*?\)\s*", " ", hlow).strip()
         if hlow in BOILERPLATE_HEADINGS or base in BOILERPLATE_HEADINGS:
+            kind = ("passage_translation" if hlow == "passage translation" else
+                    "vocabulary_support" if "vocabulary" in hlow else
+                    "supporting_example_group" if hlow.startswith("examples from") else
+                    "apparatus")
+            sections.append({"kind": kind})
             continue
         if any(hlow.startswith(p) and hlow != p for p in ()) or quiz_started:
+            sections.append({"kind": "apparatus"})
             continue
         headings.append(htext)
+        sections.append({"kind": "concept", "heading": nfc(htext)})
 
     vocab_rows = 0
     in_table = False
@@ -268,6 +280,7 @@ def parse_lesson(path, fname):
         "curriculum": curriculum,
         "module_title": nfc(module_line),
         "concept_headings": [nfc(h) for h in headings],
+        "sections": sections,
         "counts": {
             "words_total": words,
             "words_arabic": ar_words,
@@ -433,6 +446,18 @@ def build(source_dir):
             "linguistic_authority": "none_curriculum_prose_is_uncertified",
         })
 
+    # ---- section inventory (per lesson, ordered, EVERY section) ----
+    section_rows = []
+    for rec in lessons:
+        for i, s in enumerate(rec["sections"]):
+            row = {"schema": "curriculum.l1l6_section.v1",
+                   "section_id": "%s#%02d" % (rec["lesson_id"], i),
+                   "lesson_id": rec["lesson_id"], "ordinal": i,
+                   "kind": s["kind"]}
+            if "heading" in s:
+                row["heading"] = s["heading"]
+            section_rows.append(row)
+
     # ---- concept graph ----
     concept_rows = []
     seen_concept_ids = set()
@@ -560,6 +585,16 @@ def build(source_dir):
             "concepts": len(concept_rows),
             "quiz_questions_total": tot["quiz_questions"],
         }, os.path.join(OUT_BASE, "registry", "lessons.meta.json")),
+        dump_jsonl(section_rows, os.path.join(OUT_BASE, "registry", "section-inventory.jsonl")),
+        dump_review({
+            "schema": "curriculum.l1l6_section.v1.meta",
+            "generator": "tools/build_curriculum_l1l6.py",
+            "rows": len(section_rows),
+            "kind_histogram": {
+                k: sum(1 for r in section_rows if r["kind"] == k)
+                for k in sorted({r["kind"] for r in section_rows})
+            },
+        }, os.path.join(OUT_BASE, "registry", "section-inventory.meta.json")),
         dump_jsonl(concept_rows, os.path.join(OUT_BASE, "graph", "concepts.jsonl")),
         dump_jsonl(edge_rows, os.path.join(OUT_BASE, "graph", "concept-edges.jsonl")),
         dump_review({

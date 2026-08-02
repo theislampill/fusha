@@ -1,0 +1,40 @@
+{
+  "lessons_covered_by_authored_units": {
+    "domain_associated_only": 209,
+    "explicit_lesson_refs": 16
+  },
+  "lessons_fully_accounted": 226,
+  "lessons_mapped_to_nahw": 175,
+  "lessons_mapped_to_sarf": 213,
+  "lessons_mapped_to_tutor_drills": 226,
+  "lessons_with_entry_level_links": 147,
+  "lessons_with_exact_pvn_links": 1,
+  "lessons_with_family_only_links": 77,
+  "lessons_with_no_corpus_bridge": 1,
+  "queues": {
+    "q-error-fixtures": 205,
+    "q-hover-pedagogy": 21,
+    "q-lesson-qualification": 208,
+    "q-nahw-backprop": 12,
+    "q-paradigm-consumer": 56,
+    "q-pvn-grounding": 224,
+    "q-sarf-backprop": 9,
+    "q-scholar-owner-review": 9,
+    "q-tutor-adoption": 10,
+    "q-unit-authoring": 3
+  },
+  "schema": "curriculum.l1l6_full_readiness.v1",
+  "semantic_units_authored": 21,
+  "separation_note": "lesson METADATA coverage is 226/226; semantic KNOWLEDGE coverage is the claims+units numbers; CAPABILITY coverage is the increments; CONSUMER coverage is the exercised increments; OCCURRENCE coverage is the exact-link lessons — these are different denominators and are never merged",
+  "source_lessons": 226,
+  "state_histogram": {
+    "consumer_exercised": 8,
+    "semantically_qualified": 2,
+    "skill_mapped": 8,
+    "structurally_parsed": 208
+  },
+  "substantive_sections_classified": {
+    "classified": 6574,
+    "total": 6574
+  }
+}

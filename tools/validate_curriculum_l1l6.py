@@ -689,13 +689,85 @@ def check_precise_links(ctx, errors):
             errors.append("precise_links: %s missing promotion-evidence requirement" % lid)
 
 
+ABSORPTION_STATES = frozenset({
+    "metadata_only", "structurally_parsed", "semantically_qualified",
+    "unitized", "skill_mapped", "fixture_mapped", "occurrence_grounded",
+    "consumer_exercised", "backpropagated", "review_blocked",
+    "not_applicable_with_reason"})
+
+
+def check_absorption(ctx, errors):
+    """Full-curriculum gates: 226 controlling rows, closed states, no empty
+    next actions, zero unclassified sections, live recompute parity, queue
+    rows carry real consumers + canaries."""
+    try:
+        sys.path.insert(0, str(ROOT / "tools"))
+        import build_curriculum_absorption as ab
+        files = ab.serialize(*ab.build(ab.load()))
+    except Exception as exc:  # noqa: BLE001
+        errors.append("absorption: recompute failed (%s)" % exc)
+        return
+    finally:
+        if str(ROOT / "tools") in sys.path:
+            sys.path.remove(str(ROOT / "tools"))
+    for path, data in sorted(files.items()):
+        p = Path(path)
+        if not p.exists():
+            errors.append("absorption: %s missing (stale generation)" % p.name)
+        elif p.read_bytes() != data:
+            errors.append("absorption: %s differs from recompute (stale)" % p.name)
+    led_p = BASE / "reports" / "absorption-ledger.jsonl"
+    if not led_p.exists():
+        return
+    ledger = _jsonl(led_p)
+    lesson_ids = {l["lesson_id"] for l in ctx["lessons"]}
+    led_ids = {r["lesson_id"] for r in ledger}
+    if len(ledger) != len(lesson_ids):
+        errors.append("absorption: %d ledger rows != %d lessons"
+                      % (len(ledger), len(lesson_ids)))
+    for missing in sorted(lesson_ids - led_ids):
+        errors.append("absorption: lesson %s has no ledger row (orphan)" % missing)
+    for extra in sorted(led_ids - lesson_ids):
+        errors.append("absorption: ledger row %s cites no source lesson" % extra)
+    for r in ledger:
+        if r.get("absorption_state") not in ABSORPTION_STATES:
+            errors.append("absorption: %s state %r outside closed vocabulary"
+                          % (r["lesson_id"], r.get("absorption_state")))
+        if not r.get("next_action") and r.get("absorption_state") not in (
+                "backpropagated", "not_applicable_with_reason"):
+            errors.append("absorption: %s empty next_action" % r["lesson_id"])
+    comp_p = BASE / "reports" / "section-completeness.json"
+    if comp_p.exists():
+        comp = json.loads(comp_p.read_text(encoding="utf-8"))
+        if comp.get("unclassified", 1) != 0:
+            errors.append("absorption: %d unclassified sections"
+                          % comp.get("unclassified"))
+        inv = _jsonl(BASE / "registry" / "section-inventory.jsonl")
+        if comp.get("total_substantive_sections") != len(inv):
+            errors.append("absorption: completeness total %s != inventory %d"
+                          % (comp.get("total_substantive_sections"), len(inv)))
+    qdir = BASE / "reports" / "queues"
+    for qf in sorted(qdir.glob("q-*.jsonl")):
+        for r in _jsonl(qf):
+            if not r.get("target_consumer"):
+                errors.append("absorption: queue row %s lacks a real consumer"
+                              % r.get("row_id"))
+            can = r.get("canaries") or {}
+            if not (can.get("positive") and can.get("adversarial")):
+                errors.append("absorption: queue row %s lacks canaries"
+                              % r.get("row_id"))
+            if not r.get("abstention_requirement"):
+                errors.append("absorption: queue row %s lacks abstention req"
+                              % r.get("row_id"))
+
+
 ALL_CHECKS = (
     check_manifest_shape, check_registry_consistency, check_graph_integrity,
     check_nfc, check_crosswalk_evidence, check_ledger_qualification,
     check_links_candidacy, check_material_classes, check_leakage,
     check_no_certification, check_pilot_parity, check_packet_presence,
     check_units_semantic, check_increments, check_flywheel_loop,
-    check_corpus_pilot, check_precise_links,
+    check_corpus_pilot, check_precise_links, check_absorption,
 )
 PILOT_CHECKS = (check_pilot_parity, check_no_certification)
 

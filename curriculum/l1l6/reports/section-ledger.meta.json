@@ -1,0 +1,19 @@
+{
+  "class_histogram": {
+    "candidate_for_cleanroom_authorship": 153,
+    "contrast_set": 65,
+    "duplicate_revisit": 16,
+    "excluded_with_reason": 315,
+    "exercise_source": 3322,
+    "learner_error_source": 205,
+    "non_linguistic_apparatus": 456,
+    "paradigm": 159,
+    "reading_passage_application": 326,
+    "semantic_instructional_unit": 1345,
+    "supporting_example_group": 12,
+    "vocabulary_support": 200
+  },
+  "generator": "tools/build_curriculum_absorption.py",
+  "rows": 6574,
+  "schema": "curriculum.l1l6_section_ledger_row.v1.meta"
+}

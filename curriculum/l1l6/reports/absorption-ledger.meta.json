@@ -1,0 +1,11 @@
+{
+  "generator": "tools/build_curriculum_absorption.py",
+  "rows": 226,
+  "schema": "curriculum.l1l6_absorption_row.v1.meta",
+  "state_histogram": {
+    "consumer_exercised": 8,
+    "semantically_qualified": 2,
+    "skill_mapped": 8,
+    "structurally_parsed": 208
+  }
+}

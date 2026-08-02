@@ -1,0 +1,16 @@
+{
+  "generator": "tools/build_curriculum_l1l6.py",
+  "kind_histogram": {
+    "apparatus": 456,
+    "concept": 1738,
+    "learner_error_section": 205,
+    "passage_translation": 315,
+    "quiz_header": 226,
+    "quiz_question": 3096,
+    "reading_passage": 326,
+    "supporting_example_group": 12,
+    "vocabulary_support": 200
+  },
+  "rows": 6574,
+  "schema": "curriculum.l1l6_section.v1.meta"
+}
