@@ -21,8 +21,8 @@ structures only.
 | `registry/` | levels (6) / modules (32) / lessons (226) with stable IDs (`L4.M2.07`) | yes |
 | `graph/` | 1,738 heading-derived concept nodes (topic topology only — the SEMANTIC layer is `units/`) + order/revisit edges | yes |
 | `units/` | 21 authored semantic instructional units (9 ṣarf, 12 naḥw) with prerequisites, recognition criteria, procedures, exceptions, contrasts, learner errors, rival analyses, evidence + surfaces; 28 cross-level capability-dependency edges | authored |
-| `increments/` | 5 candidate skill increments (ownership, derivatives, مَا, nawāsikh, hidden structure): reference + procedure + staged explanation + machine unit packs + fixtures + hover fields + guards | authored |
-| `loop/` | recorded flywheel loop: v1 defect run → failure record → repair → v2 rerun incl. a new second token (validator recomputes both runs) | generated+authored |
+| `increments/` | 31 candidate skill increments across 6 registered capability interfaces: reference + procedure + staged explanation + machine unit packs + fixtures + hover fields + guards | authored + lanes |
+| `loop/` | 6 recorded flywheel loops (one per capability interface): defect/insufficiency → repair → rerun + transfer, validator-recomputed | generated+authored |
 | `corpus-pilot/` | candidate envelopes for canonical occurrences `2:34:5` and `61:5:4` built from committed p007 authority, unresolved states preserved | yes (builder) |
 | `eval-separation/` | material-class census: what may and may not serve as evaluation (3,096 quiz questions have NO answer key) | yes |
 | `crosswalk/` | ṣarf / naḥw capability crosswalks (curriculum domain → repository executable state) + instructional-method crosswalk (205 learner-error sections, semantic matcher) | authored |
@@ -33,13 +33,16 @@ structures only.
 | `reports/` | absorption ledger (226/226), section ledger (6,574 classified), 10 generated queues (757 rows), 63-family capability matrix, occurrence bridge + P/V/N readiness, source-locator audit, full-curriculum readiness | generated |
 | `projections/` | learner-projection sets: one fact artifact → beginner/intermediate/advanced/technical + colour + hover (single-source invariant) | generated |
 | `promotion/` | Sol-reviewable promotion bundles, one per discovered increment | generated |
+| `qualification/` | 226/226 clean-room per-lesson semantic qualification records (32 module lanes) | lanes |
+| `canonical/` | 166 canonical units, two-way lesson↔unit map, 166-unit operational-disposition ledger, V/N grounding | generated |
+| `misconceptions/` | 906-cluster registry (all routed) + 834 fixture candidates + 72 remediation projections | generated |
 | `testdata/` | clean-room fixture corpus + pinned digest for the CI determinism gate | authored |
 
 Executable plane: `tools/curriculum_unit_consumer.py` (capability-interface
 dispatch from pack data, directory-discovered increments) +
 `tools/curriculum_flywheel_runner.py` (generic defect→repair→transfer loops,
-4 recorded families, improvement classes verified against consumer
-evidence). CI gate: `.github/workflows/curriculum-l1l6-gate.yml` (14 steps;
+6 recorded families, improvement classes verified against consumer
+evidence). CI gate: `.github/workflows/curriculum-l1l6-gate.yml` (20 steps;
 every generated plane recomputed live — stale artifacts are red).
 
 Generated artifacts name their generator (`tools/build_curriculum_l1l6.py`);

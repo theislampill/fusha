@@ -5,11 +5,11 @@
   "schema": "curriculum.l1l6_unit_disposition.v1.meta",
   "state_participation": {
     "drill_or_remediation_ready": 18,
-    "evidence_blocked": 24,
+    "evidence_blocked": 29,
     "fixture_source_ready": 35,
     "instructional_only_with_consumer": 25,
     "machine_pack_consumed": 35,
-    "occurrence_grounding_ready": 18,
+    "occurrence_grounding_ready": 13,
     "owner_adjudication_blocked": 0,
     "promotion_bundle_ready": 35,
     "scholar_review_blocked": 0,
@@ -18,9 +18,9 @@
   },
   "strongest_state_histogram": {
     "drill_or_remediation_ready": 9,
-    "fixture_source_ready": 19,
+    "fixture_source_ready": 20,
     "machine_pack_consumed": 35,
-    "occurrence_grounding_ready": 8,
+    "occurrence_grounding_ready": 7,
     "tutor_projection_ready": 95
   },
   "strongest_sums_to_units": true,

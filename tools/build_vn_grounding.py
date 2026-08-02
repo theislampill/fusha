@@ -99,24 +99,44 @@ def build():
                "unit_id": uid, "axis": u["axis"], "status": "candidate"}
         hws = CANDIDATE_HEADWORDS.get(uid)
         if hws:
-            resolved, unresolved = [], []
+            resolved, ambiguous, unresolved = [], [], []
             for hw in hws:
+                import unicodedata
+                hw_nfc = unicodedata.normalize("NFC", hw)
                 hits = by_skel.get(skel(hw), [])
                 vn_hits = [h for h in hits
                            if any(k[0] in "vn" for k in h["source_keys"])]
-                if vn_hits:
-                    h = vn_hits[0]
+                # FULL citation-form identity: the exemplar must NFC-equal one
+                # of the entry's own /-split headword variants, harakat and
+                # all. A skeleton-only hit is root/shape resemblance — exactly
+                # the og-1 inference this builder prohibits — and is recorded
+                # as unresolved, never bound.
+                exact = [h for h in vn_hits if any(
+                    unicodedata.normalize("NFC", piece.strip()) == hw_nfc
+                    for piece in re.split(r"\s*/\s*", h["headword"]))]
+                if len(exact) == 1:
+                    h = exact[0]
                     resolved.append({
                         "candidate_headword": hw,
                         "entry_id": h["entry_id"],
                         "source_keys": [k for k in h["source_keys"]
                                         if k[0] in "vn"],
-                        "match_basis": "exact citation-form identity (harakat-stripped skeleton) against the entry store — NOT similarity",
+                        "match_basis": "full citation-form NFC identity (harakat included) against the entry's own headword — NOT skeleton, NOT similarity",
                         "selected_occurrences": occ_by_entry.get(h["entry_id"], []),
                         "appearance_relation": "entry-card selected words (entry identity); other cards are context-only appearances",
                     })
+                elif len(exact) > 1:
+                    ambiguous.append({
+                        "candidate_headword": hw,
+                        "state": "ambiguous_entry_identity",
+                        "candidate_entry_ids": sorted(h["entry_id"] for h in exact),
+                        "note": "more than one store entry carries this exact citation form; alternatives preserved (no arbitrary first-hit binding); resolution needs entry-sense evidence",
+                    })
                 else:
-                    unresolved.append(hw)
+                    note = (" (skeleton-level matches exist in the store but "
+                            "identity requires the full citation form — og-1 "
+                            "forbids binding them)") if vn_hits else ""
+                    unresolved.append(hw + note)
             kinds = {k[0] for r_ in resolved for k in r_["source_keys"]}
             if not resolved:
                 row["blocker"] = ("no curated exemplar resolves by exact "
@@ -133,6 +153,7 @@ def build():
                 "n_candidates": sum(1 for r_ in resolved
                                     for k in r_["source_keys"] if k[0] == "n"),
                 "resolved": resolved,
+                "ambiguous_identity": ambiguous,
                 "unresolved_headwords": unresolved,
                 "required_sarf_facts": "root + template identity per exemplar (evidence ladder; the unit's pack classifies, never certifies)",
                 "required_nahw_facts": "per-occurrence function/case facts remain two-vote gated",

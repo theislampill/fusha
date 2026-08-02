@@ -933,6 +933,30 @@ def check_freeze_planes(ctx, errors):
     if unroutable:
         errors.append("freeze_planes: %d misconception clusters unroutable "
                       "without a routing note" % unroutable)
+    # SEMANTIC identity gate for V/N grounding: a byte-recompute cannot catch
+    # a deterministic wrong binding, so every resolved sub-entry's exemplar
+    # must NFC-equal one of the bound entry's own headword variants
+    grow_p = BASE / "canonical" / "vn-grounding.jsonl"
+    entries_p = ROOT / "qamus" / "data" / "current" / "entries.jsonl"
+    if grow_p.exists() and entries_p.exists():
+        import unicodedata as _ud
+        heads = {}
+        with entries_p.open(encoding="utf-8") as f:
+            for line in f:
+                r = json.loads(line)
+                heads[r["id"]] = [
+                    _ud.normalize("NFC", piece.strip()) for piece in
+                    re.split(r"\s*/\s*", r.get("headword") or "") if piece]
+        for row in _jsonl(grow_p):
+            for sub in row.get("resolved", []):
+                hw = _ud.normalize("NFC", sub["candidate_headword"])
+                if hw not in heads.get(sub["entry_id"], []):
+                    errors.append(
+                        "freeze_planes: vn-grounding %s binds %r to entry %s "
+                        "whose headword variants do not contain it (identity "
+                        "violation)" % (row["unit_id"],
+                                        sub["candidate_headword"],
+                                        sub["entry_id"]))
 
 
 ALL_CHECKS = (

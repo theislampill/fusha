@@ -38,7 +38,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: curriculum validator (17 named fail-closed checks)
+      - name: curriculum validator (20 named fail-closed checks)
         run: python tools/validate_curriculum_l1l6.py
 
       - name: validator mutation self-test (red-first)
@@ -71,7 +71,7 @@ jobs:
       - name: occurrence bridge + P/V/N readiness recompute (wildcard-free)
         run: python tools/build_curriculum_occurrence_bridge.py --check
 
-      - name: flywheel loops recompute (4 diverse families, defect sets pinned)
+      - name: flywheel loops recompute (6 families — one per capability interface, defect sets pinned)
         run: python tools/curriculum_flywheel_runner.py --manifest
 
       - name: learner projections recompute (single-source invariant)
