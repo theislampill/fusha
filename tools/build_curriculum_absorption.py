@@ -344,7 +344,7 @@ def build(ctx):
     for i, row in enumerate(r for r in ledger if r["paradigms"] > 0):
         q.append(qrow("q-paradigm-consumer", i, row["lesson_id"],
                       "%d paradigm sections map to generative machinery" % row["paradigms"],
-                      ["sarf/rules/verb-measures.json (consumed store)"],
+                      ["the consumed paradigm store (crosswalk row xs-03)"],
                       ["curriculum/l1l6/reports/"],
                       "paradigm slots cross-checked against tools/fusha_paradigm_generate.py output",
                       "tools/fusha_paradigm_generate.py",
