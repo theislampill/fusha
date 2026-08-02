@@ -1,0 +1,134 @@
+{
+  "review_identity": {
+    "main": "92f267e4d1d342e8fd1b44d8257bbb470bbcb936",
+    "merge_tree": "337ed37dc50155f5894e07fbdc22f84f1855db1f",
+    "synthetic_commit": "36d46d9227a15beb5262d789168b5f7bd9b77dcc"
+  },
+  "reviewed_head": "5bca6d26b5e9d3d5bc035dfe0fd6b40f27fa005a",
+  "rows": [
+    {
+      "acceptance": "python tools/validate_curriculum_l1l6.py (witness re-verification gate) + self-test context-witness canary",
+      "files": [
+        "tools/build_vn_grounding.py",
+        "tools/validate_curriculum_l1l6.py",
+        "curriculum/l1l6/canonical/vn-grounding.jsonl"
+      ],
+      "finding": "1. entry/context identity false green (27 context-only misbindings; 12:43:6 canary)",
+      "links_changed": "all resolved sub-entries re-emitted with selected_witnesses (same-entry only); the 12:43:6 binding and every context-only link REMOVED",
+      "ownership": "fable_branch_repair",
+      "red_canary": "recorded pre-repair: quran:12:43:6 present under n904 in committed vn-grounding.jsonl",
+      "remaining_dependency": "none",
+      "repair": "same-entry selected:true witness join over the per-appearance universe (exact appearance_id + surface + relation + backlink); context rows excluded by construction; null-loc rows rejected"
+    },
+    {
+      "acceptance": "python tools/curriculum_unit_consumer.py --self-test",
+      "files": [
+        "tools/curriculum_unit_consumer.py",
+        "all 31 increments' fixtures"
+      ],
+      "finding": "2. private linguistic runtime",
+      "ownership": "fable_branch_repair (+ sol_adapter_required for authoritative consumption)",
+      "red_canary": "self-test probes previously asserted decision=analyzed",
+      "remaining_dependency": "adp-sarf-nahw-authority (Sol)",
+      "repair": "NON-AUTHORITATIVE banner; every resolution renamed candidate_pending with authority:none_fixture_harness; occurrence_binding names the missing Sol envelope; pedagogy emits candidate_projected (none_presentation_template)"
+    },
+    {
+      "acceptance": "python tools/curriculum_unit_consumer.py --all + --self-test",
+      "files": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "finding": "3. sarf false positives (4-radical/3-surface, letters!=surface, invalid weak, penult-alone voice)",
+      "ownership": "fable_branch_repair",
+      "red_canary": "adversarial probes returned analyzed pre-repair (Sol checkpoint)",
+      "remaining_dependency": "none",
+      "repair": "surface_letter_mismatch fail-closed; radical_accounting_incomplete (hidden positions must be declared); penult_vowel_evidence_unbound unless surface_mark-bound; weak substitutions remain declared-table-only (invalid outputs unmatched)"
+    },
+    {
+      "acceptance": "python tools/curriculum_unit_consumer.py --all",
+      "files": [
+        "tools/curriculum_unit_consumer.py",
+        "inc-ma",
+        "inc-negation",
+        "inc-hidden",
+        "inc-atf-case-following"
+      ],
+      "finding": "4. nahw conclusions lack occurrence bindings; la conflicts; missing laysa-like ma; hidden first-match collapse; missing school attribution; atf false-flags",
+      "ownership": "fable_branch_repair (+ sol_adapter_required for the A2 envelope)",
+      "red_canary": "ma-adv-03 (nominal-clause ma) pre-repair would have solo-resolved a school-dependent row",
+      "remaining_dependency": "adp-sarf-nahw-authority (occurrence envelope)",
+      "repair": "school_dependent_attributed abstention (school rows never solo-resolve); laysa-like Hijazi row added; prohibitive-la reconciled (mood-only separator); hidden multi-match -> alternatives_preserved; vocative school attribution; inc-atf-case-following harness DISABLED (candidate_disabled_pending_adapter)"
+    },
+    {
+      "acceptance": "python tools/build_curriculum_corpus_pilot.py --check + validator corpus_pilot checks",
+      "files": [
+        "tools/build_curriculum_corpus_pilot.py",
+        "tools/validate_curriculum_l1l6.py",
+        "corpus-pilot envelopes"
+      ],
+      "finding": "5. colour/hover parity overstated",
+      "ownership": "fable_branch_repair",
+      "red_canary": "2:34:5 claimed parity with 2 segments/1 hover component",
+      "remaining_dependency": "adp-occurrence-appearance-projection for main-plane mapping",
+      "repair": "fact-identity parity: segment fact bindings + hover fact bindings sharing canonical fact ids; uncovered segments REPORTED (2:34:5 and 61:5:4 host spans); validator enforces trace + covered/uncovered consistency"
+    },
+    {
+      "acceptance": "validator corpus_pilot certification-dependency check",
+      "files": [
+        "tools/build_curriculum_corpus_pilot.py"
+      ],
+      "finding": "6. certification/revocation not consumed",
+      "ownership": "fable_branch_repair (+ sol_adapter_required for the engine API)",
+      "red_canary": "envelopes copied raw status strings",
+      "remaining_dependency": "adp-typed-fact-certification (engine effective-state API replaces replay)",
+      "repair": "event-trail replay (last-event-wins) computes effective states; depends_on_fact_ids + invalidation rule on envelopes; derived candidates inherit the dependency"
+    },
+    {
+      "acceptance": "python tools/curriculum_flywheel_runner.py --manifest",
+      "files": [
+        "tools/curriculum_flywheel_runner.py"
+      ],
+      "finding": "7. curriculum flywheel isolated / mislabeled",
+      "ownership": "fable_branch_repair",
+      "remaining_dependency": "adp-canonical-dogfood (Sol)",
+      "repair": "reclassified as instructional/fixture QA harness (banner); improvement class renamed fixture_harness_improvement; canonical dogfood emission deferred to adp-canonical-dogfood"
+    },
+    {
+      "acceptance": "python tools/build_candidate_drills.py --check",
+      "files": [
+        "tools/build_unit_dispositions.py",
+        "tools/build_candidate_drills.py",
+        "drills-candidates/"
+      ],
+      "finding": "8. instructional consumption absent / overstated",
+      "ownership": "fable_branch_repair (+ sol_adapter_required for runtime integration)",
+      "remaining_dependency": "adp-tutor-kc-drills (Sol)",
+      "repair": "disposition states renamed (no consumption implication); 834 complete candidate drill records with adapter requirements; readiness reports carry runtime_integrated: 0 honesty"
+    },
+    {
+      "acceptance": "validator registry-row coverage gate",
+      "files": [
+        "tools/build_promotion_bundles.py",
+        "tools/validate_curriculum_l1l6.py"
+      ],
+      "finding": "9. promotion rows abbreviated",
+      "ownership": "fable_branch_repair",
+      "remaining_dependency": "Sol registry review",
+      "repair": "bundles emit COMPLETE candidate registry rows covering every current-main rule-registry field + guards payload with content hash; validator asserts field-for-field coverage"
+    },
+    {
+      "acceptance": "python tools/validate_task_packets.py curriculum/l1l6/packets/*.json + workflow-local runs",
+      "files": [
+        "curriculum/l1l6/packets/*",
+        ".github/workflows/curriculum-l1l6-gate.yml",
+        "tools/validate_lesson_qualification.py",
+        "tools/validate_curriculum_l1l6.py",
+        "curriculum/l1l6/custody/heading-review-queue.json"
+      ],
+      "finding": "10. CI/packets/custody gates incomplete",
+      "ownership": "fable_branch_repair (custody headings: owner_or_scholar_blocked for adjudication)",
+      "remaining_dependency": "owner adjudication of the heading review queue; Sol owns check_regressions wiring",
+      "repair": "packet pass_conditions made substantive; workflow trigger paths cover every executed tool; fixture-corpus step renamed synthetic-determinism; UNC and macOS home-directory path scans added; 8+-word heading review queue emitted for owner custody adjudication; counts regenerated"
+    }
+  ],
+  "schema": "curriculum.l1l6_sol_review_repair_ledger.v1"
+}

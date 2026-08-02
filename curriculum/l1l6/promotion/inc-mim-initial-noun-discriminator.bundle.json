@@ -1,6 +1,333 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+        "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+        "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+        "the form class of the source verb is supplied evidence and is never inferred from the surface shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "9d724586c27f059acdb35ef978efa6fb41d5bc12dc4ae2ec0934d2c9d202609f",
+      "guards_payload": [
+        {
+          "guard": "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+          "id": "g-mim-voc"
+        },
+        {
+          "guard": "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+          "id": "g-mim-lex"
+        },
+        {
+          "guard": "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+          "id": "g-mim-hom"
+        },
+        {
+          "guard": "the form class of the source verb is supplied evidence and is never inferred from the surface shape",
+          "id": "g-mim-src"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "mim-adv-01",
+        "mim-adv-02",
+        "mim-abs-01"
+      ],
+      "positive_examples": [
+        "mim-pos-01",
+        "mim-pos-02",
+        "mim-pos-03",
+        "mim-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "scope": {
+        "increment": "inc-mim-initial-noun-discriminator",
+        "statement": "prefix vowel, internal vowel, final ending and the form class of the source verb are SUPPLIED evidence; an unvocalized token supplies none of the vowel features and therefore resolves nothing",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-mim-initial-noun-discriminator-mim-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+        "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+        "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+        "the form class of the source verb is supplied evidence and is never inferred from the surface shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "9d724586c27f059acdb35ef978efa6fb41d5bc12dc4ae2ec0934d2c9d202609f",
+      "guards_payload": [
+        {
+          "guard": "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+          "id": "g-mim-voc"
+        },
+        {
+          "guard": "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+          "id": "g-mim-lex"
+        },
+        {
+          "guard": "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+          "id": "g-mim-hom"
+        },
+        {
+          "guard": "the form class of the source verb is supplied evidence and is never inferred from the surface shape",
+          "id": "g-mim-src"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "mim-adv-01",
+        "mim-adv-02",
+        "mim-abs-01"
+      ],
+      "positive_examples": [
+        "mim-pos-01",
+        "mim-pos-02",
+        "mim-pos-03",
+        "mim-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "scope": {
+        "increment": "inc-mim-initial-noun-discriminator",
+        "statement": "the prefix vowel is the only formal boundary between the tool class and the place-or-time class, so an unpointed prefix abstains and never defaults to the more frequent class",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-mim-initial-noun-discriminator-mim-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+        "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+        "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+        "the form class of the source verb is supplied evidence and is never inferred from the surface shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "9d724586c27f059acdb35ef978efa6fb41d5bc12dc4ae2ec0934d2c9d202609f",
+      "guards_payload": [
+        {
+          "guard": "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+          "id": "g-mim-voc"
+        },
+        {
+          "guard": "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+          "id": "g-mim-lex"
+        },
+        {
+          "guard": "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+          "id": "g-mim-hom"
+        },
+        {
+          "guard": "the form class of the source verb is supplied evidence and is never inferred from the surface shape",
+          "id": "g-mim-src"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "mim-adv-01",
+        "mim-adv-02",
+        "mim-abs-01"
+      ],
+      "positive_examples": [
+        "mim-pos-01",
+        "mim-pos-02",
+        "mim-pos-03",
+        "mim-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "scope": {
+        "increment": "inc-mim-initial-noun-discriminator",
+        "statement": "the derived-form verbal noun and the patient noun coincide in shape: where both are licensed, both are preserved and the function is decided by context outside this table",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-mim-initial-noun-discriminator-mim-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+        "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+        "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+        "the form class of the source verb is supplied evidence and is never inferred from the surface shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "9d724586c27f059acdb35ef978efa6fb41d5bc12dc4ae2ec0934d2c9d202609f",
+      "guards_payload": [
+        {
+          "guard": "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+          "id": "g-mim-voc"
+        },
+        {
+          "guard": "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+          "id": "g-mim-lex"
+        },
+        {
+          "guard": "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+          "id": "g-mim-hom"
+        },
+        {
+          "guard": "the form class of the source verb is supplied evidence and is never inferred from the surface shape",
+          "id": "g-mim-src"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "mim-adv-01",
+        "mim-adv-02",
+        "mim-abs-01"
+      ],
+      "positive_examples": [
+        "mim-pos-01",
+        "mim-pos-02",
+        "mim-pos-03",
+        "mim-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "scope": {
+        "increment": "inc-mim-initial-noun-discriminator",
+        "statement": "instrument templates are lexical, not derivable: this table classifies an attested token, it never predicts which template a root takes",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-mim-initial-noun-discriminator-mim-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+        "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+        "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+        "the form class of the source verb is supplied evidence and is never inferred from the surface shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "9d724586c27f059acdb35ef978efa6fb41d5bc12dc4ae2ec0934d2c9d202609f",
+      "guards_payload": [
+        {
+          "guard": "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+          "id": "g-mim-voc"
+        },
+        {
+          "guard": "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+          "id": "g-mim-lex"
+        },
+        {
+          "guard": "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+          "id": "g-mim-hom"
+        },
+        {
+          "guard": "the form class of the source verb is supplied evidence and is never inferred from the surface shape",
+          "id": "g-mim-src"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "mim-adv-01",
+        "mim-adv-02",
+        "mim-abs-01"
+      ],
+      "positive_examples": [
+        "mim-pos-01",
+        "mim-pos-02",
+        "mim-pos-03",
+        "mim-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "scope": {
+        "increment": "inc-mim-initial-noun-discriminator",
+        "statement": "a place-or-time reading presupposes a bare triliteral source; the same prefix vowel over a derived source is outside the table's regime",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-mim-initial-noun-discriminator-mim-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "discriminator_table",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-mim-initial-noun-discriminator",
@@ -8,43 +335,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
-      "rule_id": "curr-mim-initial-noun-discriminator-mim-r1",
-      "statement": "prefix vowel, internal vowel, final ending and the form class of the source verb are SUPPLIED evidence; an unvocalized token supplies none of the vowel features and therefore resolves nothing",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
-      "rule_id": "curr-mim-initial-noun-discriminator-mim-r2",
-      "statement": "the prefix vowel is the only formal boundary between the tool class and the place-or-time class, so an unpointed prefix abstains and never defaults to the more frequent class",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
-      "rule_id": "curr-mim-initial-noun-discriminator-mim-r3",
-      "statement": "the derived-form verbal noun and the patient noun coincide in shape: where both are licensed, both are preserved and the function is decided by context outside this table",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
-      "rule_id": "curr-mim-initial-noun-discriminator-mim-r4",
-      "statement": "instrument templates are lexical, not derivable: this table classifies an attested token, it never predicts which template a root takes",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
-      "rule_id": "curr-mim-initial-noun-discriminator-mim-r5",
-      "statement": "a place-or-time reading presupposes a bare triliteral source; the same prefix vowel over a derived source is outside the table's regime",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -185,6 +475,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "mim_class_panel",

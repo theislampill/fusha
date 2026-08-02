@@ -1,0 +1,91 @@
+{
+  "basis": "Sol checkpoint matrix at 5bca6d2, updated with post-repair closed states",
+  "rows": [
+    {
+      "change": "none",
+      "state": "instructional_only_correctly",
+      "subsystem": "Canonical units"
+    },
+    {
+      "change": "none",
+      "state": "instructional_only_correctly",
+      "subsystem": "Unit-to-lesson graph"
+    },
+    {
+      "change": "full candidate registry rows emitted (repair 9)",
+      "state": "conforms_adapter_required",
+      "subsystem": "Machine packs"
+    },
+    {
+      "change": "de-authorized; consumption of authoritative lattices via adp-sarf-nahw-authority",
+      "state": "candidate_harness_correctly_labeled",
+      "subsystem": "Capability interfaces"
+    },
+    {
+      "change": "NON-AUTHORITATIVE banner; candidate_pending outcomes; fail-closed sarf; envelope-gated nahw",
+      "state": "candidate_harness_correctly_labeled",
+      "subsystem": "Generic consumer"
+    },
+    {
+      "change": "reclassified; dogfood via adp-canonical-dogfood",
+      "state": "instructional_qa_harness_correctly_labeled",
+      "subsystem": "Flywheel runner"
+    },
+    {
+      "change": "none",
+      "state": "candidate_plane_correctly_isolated",
+      "subsystem": "Misconception registry"
+    },
+    {
+      "change": "none",
+      "state": "candidate_plane_correctly_isolated",
+      "subsystem": "Fixture candidates"
+    },
+    {
+      "change": "candidate_projected outcomes; tutor via adp-tutor-kc-drills",
+      "state": "candidate_presentation_correctly_labeled",
+      "subsystem": "Pedagogy consumer"
+    },
+    {
+      "change": "depends_on + invalidation via envelope dependency block (repair 6)",
+      "state": "candidate_with_certification_dependency",
+      "subsystem": "Learner projections"
+    },
+    {
+      "change": "complete rows + guard hashes",
+      "state": "conforms_adapter_required",
+      "subsystem": "Promotion bundles"
+    },
+    {
+      "change": "same-entry selected witnesses; context misbindings removed (repair 1)",
+      "state": "conforms",
+      "subsystem": "P/V/N grounding"
+    },
+    {
+      "change": "witness-backed",
+      "state": "candidate_plane_correctly_isolated",
+      "subsystem": "V candidates"
+    },
+    {
+      "change": "witness-backed",
+      "state": "candidate_plane_correctly_isolated",
+      "subsystem": "N candidates"
+    },
+    {
+      "change": "exact appearance ids + surfaces + relation + evidence",
+      "state": "conforms",
+      "subsystem": "Occurrence candidates"
+    },
+    {
+      "change": "deliverable:false shapes; adp-website-payload",
+      "state": "conforms_adapter_required",
+      "subsystem": "Website pedagogy"
+    },
+    {
+      "change": "counts recomputed; A2-dependent rows marked sol_integration_blocked",
+      "state": "regenerated_at_repair_head",
+      "subsystem": "Residual/blocker ledgers"
+    }
+  ],
+  "schema": "curriculum.l1l6_architecture_conformance.v1"
+}

@@ -1,6 +1,680 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+        "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+        "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+        "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+        "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+        "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+        "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "fecfabf7004939e30ab6653b0aaa5b1d47e2ca85a2eb980ec8e0da424f61a186",
+      "guards_payload": [
+        {
+          "guard": "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+          "id": "g-prp-1"
+        },
+        {
+          "guard": "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+          "id": "g-prp-2"
+        },
+        {
+          "guard": "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+          "id": "g-prp-3"
+        },
+        {
+          "guard": "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+          "id": "g-prp-4"
+        },
+        {
+          "guard": "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+          "id": "g-prp-5"
+        },
+        {
+          "guard": "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+          "id": "g-prp-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition",
+          "id": "g-prp-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "prp-adv-01",
+        "prp-adv-02",
+        "prp-adv-03",
+        "prp-adv-04",
+        "prp-abs-01",
+        "prp-abs-02"
+      ],
+      "positive_examples": [
+        "prp-pos-01",
+        "prp-pos-02",
+        "prp-pos-03",
+        "prp-trn-01",
+        "prp-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "scope": {
+        "increment": "inc-preposition-sense-discriminators",
+        "statement": "discriminator features are SUPPLIED evidence — the governing predicate's class, the complement's semantic type, and the outcome of the paraphrase test; the token alone never fixes the sense",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-preposition-sense-discriminators-prp-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+        "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+        "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+        "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+        "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+        "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+        "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "fecfabf7004939e30ab6653b0aaa5b1d47e2ca85a2eb980ec8e0da424f61a186",
+      "guards_payload": [
+        {
+          "guard": "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+          "id": "g-prp-1"
+        },
+        {
+          "guard": "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+          "id": "g-prp-2"
+        },
+        {
+          "guard": "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+          "id": "g-prp-3"
+        },
+        {
+          "guard": "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+          "id": "g-prp-4"
+        },
+        {
+          "guard": "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+          "id": "g-prp-5"
+        },
+        {
+          "guard": "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+          "id": "g-prp-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition",
+          "id": "g-prp-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "prp-adv-01",
+        "prp-adv-02",
+        "prp-adv-03",
+        "prp-adv-04",
+        "prp-abs-01",
+        "prp-abs-02"
+      ],
+      "positive_examples": [
+        "prp-pos-01",
+        "prp-pos-02",
+        "prp-pos-03",
+        "prp-trn-01",
+        "prp-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "scope": {
+        "increment": "inc-preposition-sense-discriminators",
+        "statement": "the preposition's identity is itself a discriminator, so a sense row is only ever reachable for its own preposition; a missing preposition feature abstains",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-preposition-sense-discriminators-prp-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+        "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+        "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+        "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+        "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+        "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+        "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "fecfabf7004939e30ab6653b0aaa5b1d47e2ca85a2eb980ec8e0da424f61a186",
+      "guards_payload": [
+        {
+          "guard": "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+          "id": "g-prp-1"
+        },
+        {
+          "guard": "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+          "id": "g-prp-2"
+        },
+        {
+          "guard": "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+          "id": "g-prp-3"
+        },
+        {
+          "guard": "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+          "id": "g-prp-4"
+        },
+        {
+          "guard": "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+          "id": "g-prp-5"
+        },
+        {
+          "guard": "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+          "id": "g-prp-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition",
+          "id": "g-prp-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "prp-adv-01",
+        "prp-adv-02",
+        "prp-adv-03",
+        "prp-adv-04",
+        "prp-abs-01",
+        "prp-abs-02"
+      ],
+      "positive_examples": [
+        "prp-pos-01",
+        "prp-pos-02",
+        "prp-pos-03",
+        "prp-trn-01",
+        "prp-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "scope": {
+        "increment": "inc-preposition-sense-discriminators",
+        "statement": "government is INVARIANT across senses: every preposition here assigns genitive whichever sense is selected, so a sense decision never touches the case and a case reading never selects a sense",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-preposition-sense-discriminators-prp-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+        "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+        "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+        "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+        "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+        "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+        "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "fecfabf7004939e30ab6653b0aaa5b1d47e2ca85a2eb980ec8e0da424f61a186",
+      "guards_payload": [
+        {
+          "guard": "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+          "id": "g-prp-1"
+        },
+        {
+          "guard": "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+          "id": "g-prp-2"
+        },
+        {
+          "guard": "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+          "id": "g-prp-3"
+        },
+        {
+          "guard": "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+          "id": "g-prp-4"
+        },
+        {
+          "guard": "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+          "id": "g-prp-5"
+        },
+        {
+          "guard": "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+          "id": "g-prp-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition",
+          "id": "g-prp-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "prp-adv-01",
+        "prp-adv-02",
+        "prp-adv-03",
+        "prp-adv-04",
+        "prp-abs-01",
+        "prp-abs-02"
+      ],
+      "positive_examples": [
+        "prp-pos-01",
+        "prp-pos-02",
+        "prp-pos-03",
+        "prp-trn-01",
+        "prp-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "scope": {
+        "increment": "inc-preposition-sense-discriminators",
+        "statement": "the paraphrase test is required evidence where the row declares it; an unrun test is missing evidence and abstains rather than defaulting to the commonest sense",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-preposition-sense-discriminators-prp-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+        "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+        "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+        "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+        "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+        "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+        "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "fecfabf7004939e30ab6653b0aaa5b1d47e2ca85a2eb980ec8e0da424f61a186",
+      "guards_payload": [
+        {
+          "guard": "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+          "id": "g-prp-1"
+        },
+        {
+          "guard": "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+          "id": "g-prp-2"
+        },
+        {
+          "guard": "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+          "id": "g-prp-3"
+        },
+        {
+          "guard": "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+          "id": "g-prp-4"
+        },
+        {
+          "guard": "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+          "id": "g-prp-5"
+        },
+        {
+          "guard": "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+          "id": "g-prp-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition",
+          "id": "g-prp-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "prp-adv-01",
+        "prp-adv-02",
+        "prp-adv-03",
+        "prp-adv-04",
+        "prp-abs-01",
+        "prp-abs-02"
+      ],
+      "positive_examples": [
+        "prp-pos-01",
+        "prp-pos-02",
+        "prp-pos-03",
+        "prp-trn-01",
+        "prp-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "scope": {
+        "increment": "inc-preposition-sense-discriminators",
+        "statement": "exactly one survivor -> that sense (candidate); more than one -> preserve_alternatives; none -> abstain insufficient_features. No preposition here has a default sense",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-preposition-sense-discriminators-prp-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+        "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+        "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+        "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+        "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+        "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+        "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "fecfabf7004939e30ab6653b0aaa5b1d47e2ca85a2eb980ec8e0da424f61a186",
+      "guards_payload": [
+        {
+          "guard": "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+          "id": "g-prp-1"
+        },
+        {
+          "guard": "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+          "id": "g-prp-2"
+        },
+        {
+          "guard": "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+          "id": "g-prp-3"
+        },
+        {
+          "guard": "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+          "id": "g-prp-4"
+        },
+        {
+          "guard": "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+          "id": "g-prp-5"
+        },
+        {
+          "guard": "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+          "id": "g-prp-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition",
+          "id": "g-prp-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "prp-adv-01",
+        "prp-adv-02",
+        "prp-adv-03",
+        "prp-adv-04",
+        "prp-abs-01",
+        "prp-abs-02"
+      ],
+      "positive_examples": [
+        "prp-pos-01",
+        "prp-pos-02",
+        "prp-pos-03",
+        "prp-trn-01",
+        "prp-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "scope": {
+        "increment": "inc-preposition-sense-discriminators",
+        "statement": "the contested comitative-vs-transitivising reading is declared as TWO overlapping rows, so that environment preserves both readings instead of asserting the source's pick",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-preposition-sense-discriminators-prp-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+        "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+        "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+        "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+        "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+        "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+        "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "fecfabf7004939e30ab6653b0aaa5b1d47e2ca85a2eb980ec8e0da424f61a186",
+      "guards_payload": [
+        {
+          "guard": "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+          "id": "g-prp-1"
+        },
+        {
+          "guard": "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+          "id": "g-prp-2"
+        },
+        {
+          "guard": "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+          "id": "g-prp-3"
+        },
+        {
+          "guard": "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+          "id": "g-prp-4"
+        },
+        {
+          "guard": "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+          "id": "g-prp-5"
+        },
+        {
+          "guard": "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+          "id": "g-prp-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition",
+          "id": "g-prp-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "prp-adv-01",
+        "prp-adv-02",
+        "prp-adv-03",
+        "prp-adv-04",
+        "prp-abs-01",
+        "prp-abs-02"
+      ],
+      "positive_examples": [
+        "prp-pos-01",
+        "prp-pos-02",
+        "prp-pos-03",
+        "prp-trn-01",
+        "prp-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "scope": {
+        "increment": "inc-preposition-sense-discriminators",
+        "statement": "the sense lists are the source's teaching inventories and are NOT the classical inventories, which are longer; a no-survivor outcome means unlisted here, never ill-formed",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-preposition-sense-discriminators-prp-r7",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+        "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+        "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+        "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+        "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+        "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+        "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "fecfabf7004939e30ab6653b0aaa5b1d47e2ca85a2eb980ec8e0da424f61a186",
+      "guards_payload": [
+        {
+          "guard": "og-3: no preposition here has a default sense; a one-preposition-one-gloss reading is the error this unit exists to block",
+          "id": "g-prp-1"
+        },
+        {
+          "guard": "og-4: sense selection and case assignment are separate — genitive is invariant across every sense and no row emits a case claim",
+          "id": "g-prp-2"
+        },
+        {
+          "guard": "the paraphrase test is SUPPLIED evidence; the consumer never runs it and never treats an unrun test as a weak positive",
+          "id": "g-prp-3"
+        },
+        {
+          "guard": "the contested comitative-vs-transitivising environment preserves both readings; the source's own assignment is not adopted as fact",
+          "id": "g-prp-4"
+        },
+        {
+          "guard": "the sense lists are teaching inventories, not the classical ones; no-survivor means unlisted here, never ill-formed",
+          "id": "g-prp-5"
+        },
+        {
+          "guard": "expletive and lexically selected occurrences are out of scope and are never given a compositional sense",
+          "id": "g-prp-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a sense resolved for one occurrence never projects to the next occurrence of the same preposition",
+          "id": "g-prp-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "prp-adv-01",
+        "prp-adv-02",
+        "prp-adv-03",
+        "prp-adv-04",
+        "prp-abs-01",
+        "prp-abs-02"
+      ],
+      "positive_examples": [
+        "prp-pos-01",
+        "prp-pos-02",
+        "prp-pos-03",
+        "prp-trn-01",
+        "prp-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "scope": {
+        "increment": "inc-preposition-sense-discriminators",
+        "statement": "expletive occurrences and prepositions selected lexically by a particular verb are outside this table and are never forced into a compositional sense",
+        "unit_ref": "cu-preposition-sense-discriminators"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-preposition-sense-discriminators-prp-r8",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-preposition-sense-discriminators/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "discriminator_table",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-preposition-sense-discriminators",
@@ -8,64 +682,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
-      "rule_id": "curr-preposition-sense-discriminators-prp-r1",
-      "statement": "discriminator features are SUPPLIED evidence — the governing predicate's class, the complement's semantic type, and the outcome of the paraphrase test; the token alone never fixes the sense",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
-      "rule_id": "curr-preposition-sense-discriminators-prp-r2",
-      "statement": "the preposition's identity is itself a discriminator, so a sense row is only ever reachable for its own preposition; a missing preposition feature abstains",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
-      "rule_id": "curr-preposition-sense-discriminators-prp-r3",
-      "statement": "government is INVARIANT across senses: every preposition here assigns genitive whichever sense is selected, so a sense decision never touches the case and a case reading never selects a sense",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
-      "rule_id": "curr-preposition-sense-discriminators-prp-r4",
-      "statement": "the paraphrase test is required evidence where the row declares it; an unrun test is missing evidence and abstains rather than defaulting to the commonest sense",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
-      "rule_id": "curr-preposition-sense-discriminators-prp-r5",
-      "statement": "exactly one survivor -> that sense (candidate); more than one -> preserve_alternatives; none -> abstain insufficient_features. No preposition here has a default sense",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
-      "rule_id": "curr-preposition-sense-discriminators-prp-r6",
-      "statement": "the contested comitative-vs-transitivising reading is declared as TWO overlapping rows, so that environment preserves both readings instead of asserting the source's pick",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
-      "rule_id": "curr-preposition-sense-discriminators-prp-r7",
-      "statement": "the sense lists are the source's teaching inventories and are NOT the classical inventories, which are longer; a no-survivor outcome means unlisted here, never ill-formed",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-preposition-sense-discriminators/unit-v1.json",
-      "rule_id": "curr-preposition-sense-discriminators-prp-r8",
-      "statement": "expletive occurrences and prepositions selected lexically by a particular verb are outside this table and are never forced into a compositional sense",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -372,6 +988,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "sense_inventory_panel",

@@ -21,6 +21,7 @@ on:
       - "tools/curriculum_flywheel_runner.py"
       - "tools/build_learner_projections.py"
       - "tools/build_promotion_bundles.py"
+      - "tools/build_candidate_drills.py"
       - ".github/workflows/curriculum-l1l6-gate.yml"
   workflow_dispatch:
 
@@ -59,7 +60,7 @@ jobs:
       - name: precise P/V/N links byte-match a live recompute
         run: python tools/build_curriculum_pvn_links.py --check
 
-      - name: deterministic regeneration vs authorized fixture corpus
+      - name: SYNTHETIC-corpus determinism gate (2-lesson clean-room fixture corpus; private-corpus byte fidelity is the owner-run --source-dir gate, NOT this step)
         run: python tools/check_curriculum_fixture_corpus.py
 
       - name: absorption ledgers + queues + readiness recompute (226/226, unclassified=0)
@@ -94,6 +95,9 @@ jobs:
 
       - name: misconception assets recompute (fixture candidates + remediations)
         run: python tools/build_misconception_assets.py --check
+
+      - name: candidate drill records recompute (0 runtime-integrated, honesty-gated)
+        run: python tools/build_candidate_drills.py --check
 
       - name: unit projections recompute (real pedagogy consumer, 166/166)
         run: python tools/build_pedagogy_projections.py --check

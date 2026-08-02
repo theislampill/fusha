@@ -1,6 +1,197 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-pedagogy/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-pedagogy/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "missing_pedagogical_inputs",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "projection compiles from the qualified unit; independent authoring of colour/hover/lesson text is structurally impossible (recompute parity)",
+        "simplification never overwrites the fact: technical_identity carries the unit fact_ref verbatim",
+        "uncertainty surfaces: a projection that hides a supplied rival notice is the recorded v0 defect, kept red",
+        "the method (contract) transfers across units; no unit's content is copied to another"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pedagogical_projection",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "9b8943e60c53139437ccfe49af15d585c26be0bde73ef17d3110d1e3da0c1389",
+      "guards_payload": [
+        {
+          "guard": "projection compiles from the qualified unit; independent authoring of colour/hover/lesson text is structurally impossible (recompute parity)",
+          "id": "g-ped-1"
+        },
+        {
+          "guard": "simplification never overwrites the fact: technical_identity carries the unit fact_ref verbatim",
+          "id": "g-ped-2"
+        },
+        {
+          "guard": "uncertainty surfaces: a projection that hides a supplied rival notice is the recorded v0 defect, kept red",
+          "id": "g-ped-3"
+        },
+        {
+          "guard": "the method (contract) transfers across units; no unit's content is copied to another",
+          "id": "g-ped-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ped-adv-01",
+        "ped-abs-01"
+      ],
+      "positive_examples": [
+        "ped-pos-01",
+        "ped-pos-02",
+        "ped-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n12"
+      },
+      "scope": {
+        "increment": "inc-pedagogy",
+        "statement": "teaching artifacts are compiled from the qualified unit's declared inputs; missing required evidence abstains — content is never invented",
+        "unit_ref": "u-n12"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-pedagogy-ped-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-pedagogy/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "missing_pedagogical_inputs",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "projection compiles from the qualified unit; independent authoring of colour/hover/lesson text is structurally impossible (recompute parity)",
+        "simplification never overwrites the fact: technical_identity carries the unit fact_ref verbatim",
+        "uncertainty surfaces: a projection that hides a supplied rival notice is the recorded v0 defect, kept red",
+        "the method (contract) transfers across units; no unit's content is copied to another"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pedagogical_projection",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "9b8943e60c53139437ccfe49af15d585c26be0bde73ef17d3110d1e3da0c1389",
+      "guards_payload": [
+        {
+          "guard": "projection compiles from the qualified unit; independent authoring of colour/hover/lesson text is structurally impossible (recompute parity)",
+          "id": "g-ped-1"
+        },
+        {
+          "guard": "simplification never overwrites the fact: technical_identity carries the unit fact_ref verbatim",
+          "id": "g-ped-2"
+        },
+        {
+          "guard": "uncertainty surfaces: a projection that hides a supplied rival notice is the recorded v0 defect, kept red",
+          "id": "g-ped-3"
+        },
+        {
+          "guard": "the method (contract) transfers across units; no unit's content is copied to another",
+          "id": "g-ped-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ped-adv-01",
+        "ped-abs-01"
+      ],
+      "positive_examples": [
+        "ped-pos-01",
+        "ped-pos-02",
+        "ped-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n12"
+      },
+      "scope": {
+        "increment": "inc-pedagogy",
+        "statement": "the fact_ref is carried verbatim (technical_identity): learner-level simplification can never overwrite the underlying fact",
+        "unit_ref": "u-n12"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-pedagogy-ped-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-pedagogy/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "missing_pedagogical_inputs",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "projection compiles from the qualified unit; independent authoring of colour/hover/lesson text is structurally impossible (recompute parity)",
+        "simplification never overwrites the fact: technical_identity carries the unit fact_ref verbatim",
+        "uncertainty surfaces: a projection that hides a supplied rival notice is the recorded v0 defect, kept red",
+        "the method (contract) transfers across units; no unit's content is copied to another"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "pedagogical_projection",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "9b8943e60c53139437ccfe49af15d585c26be0bde73ef17d3110d1e3da0c1389",
+      "guards_payload": [
+        {
+          "guard": "projection compiles from the qualified unit; independent authoring of colour/hover/lesson text is structurally impossible (recompute parity)",
+          "id": "g-ped-1"
+        },
+        {
+          "guard": "simplification never overwrites the fact: technical_identity carries the unit fact_ref verbatim",
+          "id": "g-ped-2"
+        },
+        {
+          "guard": "uncertainty surfaces: a projection that hides a supplied rival notice is the recorded v0 defect, kept red",
+          "id": "g-ped-3"
+        },
+        {
+          "guard": "the method (contract) transfers across units; no unit's content is copied to another",
+          "id": "g-ped-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ped-adv-01",
+        "ped-abs-01"
+      ],
+      "positive_examples": [
+        "ped-pos-01",
+        "ped-pos-02",
+        "ped-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n12"
+      },
+      "scope": {
+        "increment": "inc-pedagogy",
+        "statement": "where a unit carries uncertainty/rival flags, the projection MUST surface the unresolved notice (v1; the v0 defect drops it)",
+        "unit_ref": "u-n12"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-pedagogy-ped-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-pedagogy/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "pedagogical_projection",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-pedagogy",
@@ -8,29 +199,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
-      "rule_id": "curr-pedagogy-ped-r1",
-      "statement": "teaching artifacts are compiled from the qualified unit's declared inputs; missing required evidence abstains — content is never invented",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
-      "rule_id": "curr-pedagogy-ped-r2",
-      "statement": "the fact_ref is carried verbatim (technical_identity): learner-level simplification can never overwrite the underlying fact",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-pedagogy/unit-v1.json",
-      "rule_id": "curr-pedagogy-ped-r3",
-      "statement": "where a unit carries uncertainty/rival flags, the projection MUST surface the unresolved notice (v1; the v0 defect drops it)",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -128,6 +296,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "depth_tiered_explanations",

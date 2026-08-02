@@ -1,6 +1,648 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-voice-melody-templates/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-voice-melody-templates/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+        "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+        "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+        "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+        "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+        "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c54d210ea192551942f9f5b51ecf1032437951a683b47ee8e82ac0d68b9bf560",
+      "guards_payload": [
+        {
+          "guard": "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+          "id": "g-voi-1"
+        },
+        {
+          "guard": "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+          "id": "g-voi-2"
+        },
+        {
+          "guard": "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+          "id": "g-voi-3"
+        },
+        {
+          "guard": "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+          "id": "g-voi-4"
+        },
+        {
+          "guard": "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+          "id": "g-voi-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root",
+          "id": "g-voi-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "voi-adv-01",
+        "voi-adv-02",
+        "voi-adv-03",
+        "voi-adv-04",
+        "voi-adv-05",
+        "voi-abs-01"
+      ],
+      "positive_examples": [
+        "voi-pos-01",
+        "voi-pos-02",
+        "voi-pos-03",
+        "voi-pos-04",
+        "voi-trn-01",
+        "voi-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "scope": {
+        "increment": "inc-voice-melody-templates",
+        "statement": "voice is a MELODY imposed on an existing stem: no consonant is added or removed, so a voice row is a vocalised skeleton, not a new template family",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-voice-melody-templates-voi-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+        "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+        "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+        "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+        "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+        "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c54d210ea192551942f9f5b51ecf1032437951a683b47ee8e82ac0d68b9bf560",
+      "guards_payload": [
+        {
+          "guard": "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+          "id": "g-voi-1"
+        },
+        {
+          "guard": "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+          "id": "g-voi-2"
+        },
+        {
+          "guard": "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+          "id": "g-voi-3"
+        },
+        {
+          "guard": "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+          "id": "g-voi-4"
+        },
+        {
+          "guard": "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+          "id": "g-voi-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root",
+          "id": "g-voi-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "voi-adv-01",
+        "voi-adv-02",
+        "voi-adv-03",
+        "voi-adv-04",
+        "voi-adv-05",
+        "voi-abs-01"
+      ],
+      "positive_examples": [
+        "voi-pos-01",
+        "voi-pos-02",
+        "voi-pos-03",
+        "voi-pos-04",
+        "voi-trn-01",
+        "voi-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "scope": {
+        "increment": "inc-voice-melody-templates",
+        "statement": "each row is written as a letter shape over SUPPLIED radicals; a row is a survivor only on an exact letter match, and the radicals are never derived here",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-voice-melody-templates-voi-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+        "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+        "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+        "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+        "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+        "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c54d210ea192551942f9f5b51ecf1032437951a683b47ee8e82ac0d68b9bf560",
+      "guards_payload": [
+        {
+          "guard": "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+          "id": "g-voi-1"
+        },
+        {
+          "guard": "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+          "id": "g-voi-2"
+        },
+        {
+          "guard": "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+          "id": "g-voi-3"
+        },
+        {
+          "guard": "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+          "id": "g-voi-4"
+        },
+        {
+          "guard": "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+          "id": "g-voi-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root",
+          "id": "g-voi-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "voi-adv-01",
+        "voi-adv-02",
+        "voi-adv-03",
+        "voi-adv-04",
+        "voi-adv-05",
+        "voi-abs-01"
+      ],
+      "positive_examples": [
+        "voi-pos-01",
+        "voi-pos-02",
+        "voi-pos-03",
+        "voi-pos-04",
+        "voi-trn-01",
+        "voi-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "scope": {
+        "increment": "inc-voice-melody-templates",
+        "statement": "where the active and passive melodies of a cell share one consonant skeleton the pack declares BOTH rows, so the cell collides and the unit abstains ambiguous_template — that abstention IS the correct verdict for unvocalised text, not a defect",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-voice-melody-templates-voi-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+        "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+        "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+        "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+        "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+        "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c54d210ea192551942f9f5b51ecf1032437951a683b47ee8e82ac0d68b9bf560",
+      "guards_payload": [
+        {
+          "guard": "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+          "id": "g-voi-1"
+        },
+        {
+          "guard": "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+          "id": "g-voi-2"
+        },
+        {
+          "guard": "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+          "id": "g-voi-3"
+        },
+        {
+          "guard": "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+          "id": "g-voi-4"
+        },
+        {
+          "guard": "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+          "id": "g-voi-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root",
+          "id": "g-voi-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "voi-adv-01",
+        "voi-adv-02",
+        "voi-adv-03",
+        "voi-adv-04",
+        "voi-adv-05",
+        "voi-abs-01"
+      ],
+      "positive_examples": [
+        "voi-pos-01",
+        "voi-pos-02",
+        "voi-pos-03",
+        "voi-pos-04",
+        "voi-trn-01",
+        "voi-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "scope": {
+        "increment": "inc-voice-melody-templates",
+        "statement": "where the melody changes a LETTER — the third form's long low vowel becoming a long back vowel in the perfect passive, and the medial-weak cells in both tenses — the rows are distinct and the voice is decidable from the letters alone",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-voice-melody-templates-voi-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+        "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+        "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+        "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+        "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+        "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c54d210ea192551942f9f5b51ecf1032437951a683b47ee8e82ac0d68b9bf560",
+      "guards_payload": [
+        {
+          "guard": "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+          "id": "g-voi-1"
+        },
+        {
+          "guard": "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+          "id": "g-voi-2"
+        },
+        {
+          "guard": "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+          "id": "g-voi-3"
+        },
+        {
+          "guard": "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+          "id": "g-voi-4"
+        },
+        {
+          "guard": "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+          "id": "g-voi-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root",
+          "id": "g-voi-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "voi-adv-01",
+        "voi-adv-02",
+        "voi-adv-03",
+        "voi-adv-04",
+        "voi-adv-05",
+        "voi-abs-01"
+      ],
+      "positive_examples": [
+        "voi-pos-01",
+        "voi-pos-02",
+        "voi-pos-03",
+        "voi-pos-04",
+        "voi-trn-01",
+        "voi-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "scope": {
+        "increment": "inc-voice-melody-templates",
+        "statement": "medial-weak rows are matched against the two SOUND radicals, with the weak radical and its position carried in the evidence record; the melody letter is a template literal because it is an exponent of voice, not a realization of the radical",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-voice-melody-templates-voi-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+        "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+        "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+        "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+        "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+        "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c54d210ea192551942f9f5b51ecf1032437951a683b47ee8e82ac0d68b9bf560",
+      "guards_payload": [
+        {
+          "guard": "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+          "id": "g-voi-1"
+        },
+        {
+          "guard": "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+          "id": "g-voi-2"
+        },
+        {
+          "guard": "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+          "id": "g-voi-3"
+        },
+        {
+          "guard": "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+          "id": "g-voi-4"
+        },
+        {
+          "guard": "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+          "id": "g-voi-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root",
+          "id": "g-voi-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "voi-adv-01",
+        "voi-adv-02",
+        "voi-adv-03",
+        "voi-adv-04",
+        "voi-adv-05",
+        "voi-abs-01"
+      ],
+      "positive_examples": [
+        "voi-pos-01",
+        "voi-pos-02",
+        "voi-pos-03",
+        "voi-pos-04",
+        "voi-trn-01",
+        "voi-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "scope": {
+        "increment": "inc-voice-melody-templates",
+        "statement": "the imperfect passive melody overwrites the lexically stored active vowel, so that vowel is NOT recoverable from a passive surface and is never reported from one",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-voice-melody-templates-voi-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+        "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+        "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+        "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+        "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+        "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c54d210ea192551942f9f5b51ecf1032437951a683b47ee8e82ac0d68b9bf560",
+      "guards_payload": [
+        {
+          "guard": "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+          "id": "g-voi-1"
+        },
+        {
+          "guard": "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+          "id": "g-voi-2"
+        },
+        {
+          "guard": "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+          "id": "g-voi-3"
+        },
+        {
+          "guard": "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+          "id": "g-voi-4"
+        },
+        {
+          "guard": "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+          "id": "g-voi-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root",
+          "id": "g-voi-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "voi-adv-01",
+        "voi-adv-02",
+        "voi-adv-03",
+        "voi-adv-04",
+        "voi-adv-05",
+        "voi-abs-01"
+      ],
+      "positive_examples": [
+        "voi-pos-01",
+        "voi-pos-02",
+        "voi-pos-03",
+        "voi-pos-04",
+        "voi-trn-01",
+        "voi-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "scope": {
+        "increment": "inc-voice-melody-templates",
+        "statement": "promotion of the patient to subject and the agreement that follows are syntactic consequences; this unit classifies the verb's voice and emits no case or agreement fact",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-voice-melody-templates-voi-r7",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+        "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+        "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+        "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+        "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+        "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c54d210ea192551942f9f5b51ecf1032437951a683b47ee8e82ac0d68b9bf560",
+      "guards_payload": [
+        {
+          "guard": "og-2: the vowel-only cells collide BY DESIGN; ambiguous_template on a bare form-I skeleton is the honest verdict and must never be repaired into a default active reading",
+          "id": "g-voi-1"
+        },
+        {
+          "guard": "voice is never inferred from meaning, from an absent agent, or from a nominative patient inside this unit; those are syntactic evidence handled elsewhere",
+          "id": "g-voi-2"
+        },
+        {
+          "guard": "the lexically stored active imperfect vowel is unrecoverable from a passive surface and is never reported from one",
+          "id": "g-voi-3"
+        },
+        {
+          "guard": "og-4: this unit classifies the verb's voice only; the promoted argument's case and the agreement that follows are not emitted here",
+          "id": "g-voi-4"
+        },
+        {
+          "guard": "final-weak, doubly weak and geminate stems have no rows; no_template records the gap honestly rather than borrowing a sound-stem melody",
+          "id": "g-voi-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a decidable medial-weak cell never licenses a voice claim on a sound-stem cell of the same root",
+          "id": "g-voi-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "voi-adv-01",
+        "voi-adv-02",
+        "voi-adv-03",
+        "voi-adv-04",
+        "voi-adv-05",
+        "voi-abs-01"
+      ],
+      "positive_examples": [
+        "voi-pos-01",
+        "voi-pos-02",
+        "voi-pos-03",
+        "voi-pos-04",
+        "voi-trn-01",
+        "voi-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "scope": {
+        "increment": "inc-voice-melody-templates",
+        "statement": "final-weak, doubly weak and geminate stem classes have NO row in this pack; a surface from those classes abstains no_template rather than borrowing a sound-stem melody",
+        "unit_ref": "cu-voice-melody-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-voice-melody-templates-voi-r8",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-voice-melody-templates/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "template_classification",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-voice-melody-templates",
@@ -8,64 +650,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
-      "rule_id": "curr-voice-melody-templates-voi-r1",
-      "statement": "voice is a MELODY imposed on an existing stem: no consonant is added or removed, so a voice row is a vocalised skeleton, not a new template family",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
-      "rule_id": "curr-voice-melody-templates-voi-r2",
-      "statement": "each row is written as a letter shape over SUPPLIED radicals; a row is a survivor only on an exact letter match, and the radicals are never derived here",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
-      "rule_id": "curr-voice-melody-templates-voi-r3",
-      "statement": "where the active and passive melodies of a cell share one consonant skeleton the pack declares BOTH rows, so the cell collides and the unit abstains ambiguous_template — that abstention IS the correct verdict for unvocalised text, not a defect",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
-      "rule_id": "curr-voice-melody-templates-voi-r4",
-      "statement": "where the melody changes a LETTER — the third form's long low vowel becoming a long back vowel in the perfect passive, and the medial-weak cells in both tenses — the rows are distinct and the voice is decidable from the letters alone",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
-      "rule_id": "curr-voice-melody-templates-voi-r5",
-      "statement": "medial-weak rows are matched against the two SOUND radicals, with the weak radical and its position carried in the evidence record; the melody letter is a template literal because it is an exponent of voice, not a realization of the radical",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
-      "rule_id": "curr-voice-melody-templates-voi-r6",
-      "statement": "the imperfect passive melody overwrites the lexically stored active vowel, so that vowel is NOT recoverable from a passive surface and is never reported from one",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
-      "rule_id": "curr-voice-melody-templates-voi-r7",
-      "statement": "promotion of the patient to subject and the agreement that follows are syntactic consequences; this unit classifies the verb's voice and emits no case or agreement fact",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v1.json",
-      "rule_id": "curr-voice-melody-templates-voi-r8",
-      "statement": "final-weak, doubly weak and geminate stem classes have NO row in this pack; a surface from those classes abstains no_template rather than borrowing a sound-stem melody",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -436,6 +1020,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "voice_melody_chip",

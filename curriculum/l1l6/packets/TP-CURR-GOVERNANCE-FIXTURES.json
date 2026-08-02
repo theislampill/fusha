@@ -7,7 +7,7 @@
     },
     {
       "name": "curriculum_validator",
-      "pass_condition": "exit 0",
+      "pass_condition": "the command exits 0 AND prints its named PASS line (e.g. 'CURRICULUM L1L6 VALIDATION PASS'); any FAIL line is a packet failure regardless of exit code",
       "run": "python tools/validate_curriculum_l1l6.py"
     }
   ],

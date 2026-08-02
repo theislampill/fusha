@@ -1,6 +1,470 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-quality-adjective-templates/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-quality-adjective-templates/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+        "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+        "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+        "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+        "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_payload": [
+        {
+          "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+          "id": "g-qad-1"
+        },
+        {
+          "guard": "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+          "id": "g-qad-2"
+        },
+        {
+          "guard": "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+          "id": "g-qad-3"
+        },
+        {
+          "guard": "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+          "id": "g-qad-4"
+        },
+        {
+          "guard": "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+          "id": "g-qad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+          "id": "g-qad-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "qad-adv-01",
+        "qad-adv-02",
+        "qad-adv-03",
+        "qad-abs-01"
+      ],
+      "positive_examples": [
+        "qad-pos-01",
+        "qad-pos-02",
+        "qad-pos-03",
+        "qad-trn-01",
+        "qad-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "scope": {
+        "increment": "inc-quality-adjective-templates",
+        "statement": "a template matches only against SUPPLIED root radicals filling R1..R3 in order; no root is derived here",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quality-adjective-templates-qad-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+        "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+        "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+        "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+        "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_payload": [
+        {
+          "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+          "id": "g-qad-1"
+        },
+        {
+          "guard": "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+          "id": "g-qad-2"
+        },
+        {
+          "guard": "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+          "id": "g-qad-3"
+        },
+        {
+          "guard": "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+          "id": "g-qad-4"
+        },
+        {
+          "guard": "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+          "id": "g-qad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+          "id": "g-qad-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "qad-adv-01",
+        "qad-adv-02",
+        "qad-adv-03",
+        "qad-abs-01"
+      ],
+      "positive_examples": [
+        "qad-pos-01",
+        "qad-pos-02",
+        "qad-pos-03",
+        "qad-trn-01",
+        "qad-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "scope": {
+        "increment": "inc-quality-adjective-templates",
+        "statement": "a matched row names the TEMPLATE and the template's home class; it does not settle class membership where the row is declared shared, because that decision is semantic (stable attribute vs reported action) and is not readable off letters",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quality-adjective-templates-qad-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+        "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+        "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+        "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+        "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_payload": [
+        {
+          "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+          "id": "g-qad-1"
+        },
+        {
+          "guard": "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+          "id": "g-qad-2"
+        },
+        {
+          "guard": "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+          "id": "g-qad-3"
+        },
+        {
+          "guard": "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+          "id": "g-qad-4"
+        },
+        {
+          "guard": "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+          "id": "g-qad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+          "id": "g-qad-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "qad-adv-01",
+        "qad-adv-02",
+        "qad-adv-03",
+        "qad-abs-01"
+      ],
+      "positive_examples": [
+        "qad-pos-01",
+        "qad-pos-02",
+        "qad-pos-03",
+        "qad-trn-01",
+        "qad-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "scope": {
+        "increment": "inc-quality-adjective-templates",
+        "statement": "the feminine of a row is a declared template, never a suffixation: the فعلان row takes the فعلى shape and the أفعل row takes the فعلاء shape",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quality-adjective-templates-qad-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+        "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+        "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+        "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+        "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_payload": [
+        {
+          "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+          "id": "g-qad-1"
+        },
+        {
+          "guard": "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+          "id": "g-qad-2"
+        },
+        {
+          "guard": "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+          "id": "g-qad-3"
+        },
+        {
+          "guard": "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+          "id": "g-qad-4"
+        },
+        {
+          "guard": "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+          "id": "g-qad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+          "id": "g-qad-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "qad-adv-01",
+        "qad-adv-02",
+        "qad-adv-03",
+        "qad-abs-01"
+      ],
+      "positive_examples": [
+        "qad-pos-01",
+        "qad-pos-02",
+        "qad-pos-03",
+        "qad-trn-01",
+        "qad-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "scope": {
+        "increment": "inc-quality-adjective-templates",
+        "statement": "restricted (diptote) inflection is a property carried by the row and is emitted as a flag only; the definiteness and annexation conditions that relax it are NOT decided here",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quality-adjective-templates-qad-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+        "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+        "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+        "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+        "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_payload": [
+        {
+          "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+          "id": "g-qad-1"
+        },
+        {
+          "guard": "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+          "id": "g-qad-2"
+        },
+        {
+          "guard": "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+          "id": "g-qad-3"
+        },
+        {
+          "guard": "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+          "id": "g-qad-4"
+        },
+        {
+          "guard": "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+          "id": "g-qad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+          "id": "g-qad-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "qad-adv-01",
+        "qad-adv-02",
+        "qad-adv-03",
+        "qad-abs-01"
+      ],
+      "positive_examples": [
+        "qad-pos-01",
+        "qad-pos-02",
+        "qad-pos-03",
+        "qad-trn-01",
+        "qad-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "scope": {
+        "increment": "inc-quality-adjective-templates",
+        "statement": "where two rows are letter-identical the pack declares both, so the skeleton abstains ambiguous_template — the vowel-only disposition/short split and the colour/elative split are both pinned this way",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quality-adjective-templates-qad-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+        "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+        "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+        "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+        "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_payload": [
+        {
+          "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+          "id": "g-qad-1"
+        },
+        {
+          "guard": "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+          "id": "g-qad-2"
+        },
+        {
+          "guard": "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+          "id": "g-qad-3"
+        },
+        {
+          "guard": "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+          "id": "g-qad-4"
+        },
+        {
+          "guard": "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+          "id": "g-qad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+          "id": "g-qad-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "qad-adv-01",
+        "qad-adv-02",
+        "qad-adv-03",
+        "qad-abs-01"
+      ],
+      "positive_examples": [
+        "qad-pos-01",
+        "qad-pos-02",
+        "qad-pos-03",
+        "qad-trn-01",
+        "qad-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "scope": {
+        "increment": "inc-quality-adjective-templates",
+        "statement": "the أفعل skeleton is routed to the elative discriminator unit; this unit never resolves it",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quality-adjective-templates-qad-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "template_classification",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-quality-adjective-templates",
@@ -8,50 +472,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
-      "rule_id": "curr-quality-adjective-templates-qad-r1",
-      "statement": "a template matches only against SUPPLIED root radicals filling R1..R3 in order; no root is derived here",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
-      "rule_id": "curr-quality-adjective-templates-qad-r2",
-      "statement": "a matched row names the TEMPLATE and the template's home class; it does not settle class membership where the row is declared shared, because that decision is semantic (stable attribute vs reported action) and is not readable off letters",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
-      "rule_id": "curr-quality-adjective-templates-qad-r3",
-      "statement": "the feminine of a row is a declared template, never a suffixation: the فعلان row takes the فعلى shape and the أفعل row takes the فعلاء shape",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
-      "rule_id": "curr-quality-adjective-templates-qad-r4",
-      "statement": "restricted (diptote) inflection is a property carried by the row and is emitted as a flag only; the definiteness and annexation conditions that relax it are NOT decided here",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
-      "rule_id": "curr-quality-adjective-templates-qad-r5",
-      "statement": "where two rows are letter-identical the pack declares both, so the skeleton abstains ambiguous_template — the vowel-only disposition/short split and the colour/elative split are both pinned this way",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
-      "rule_id": "curr-quality-adjective-templates-qad-r6",
-      "statement": "the أفعل skeleton is routed to the elative discriminator unit; this unit never resolves it",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -263,6 +683,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "quality_template_chip",

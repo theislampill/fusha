@@ -1,6 +1,338 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-waw-function-discriminator/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-waw-function-discriminator/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the connective has no default sense; an unresolved occurrence is never glossed as coordination by convenience",
+        "an unpointed following nominal has an unrecoverable case and is recorded as such, never assigned one",
+        "animacy is a cue, never a gate: an animate nominal is not excluded from the accompaniment reading",
+        "the emphasis difference between two licensed readings is a teaching note, never an emitted fact"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "99df0a51209c68050e3f057044a16eeb5b2802088ed85ce2df3188f5326004f1",
+      "guards_payload": [
+        {
+          "guard": "the connective has no default sense; an unresolved occurrence is never glossed as coordination by convenience",
+          "id": "g-waw-def"
+        },
+        {
+          "guard": "an unpointed following nominal has an unrecoverable case and is recorded as such, never assigned one",
+          "id": "g-waw-case"
+        },
+        {
+          "guard": "animacy is a cue, never a gate: an animate nominal is not excluded from the accompaniment reading",
+          "id": "g-waw-anim"
+        },
+        {
+          "guard": "the emphasis difference between two licensed readings is a teaching note, never an emitted fact",
+          "id": "g-waw-emph"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "waw-adv-01",
+        "waw-adv-02",
+        "waw-abs-01"
+      ],
+      "positive_examples": [
+        "waw-pos-01",
+        "waw-pos-02",
+        "waw-pos-03",
+        "waw-pos-04",
+        "waw-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-waw-function-discriminator"
+      },
+      "scope": {
+        "increment": "inc-waw-function-discriminator",
+        "statement": "the case of the following nominal, the presence of a verbal governor, the definiteness and role saturation of the preceding nominal, the linking pronoun and the presence of a response clause are SUPPLIED evidence, never reconstructed from an unvocalized string",
+        "unit_ref": "cu-waw-function-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-waw-function-discriminator-waw-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-waw-function-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the connective has no default sense; an unresolved occurrence is never glossed as coordination by convenience",
+        "an unpointed following nominal has an unrecoverable case and is recorded as such, never assigned one",
+        "animacy is a cue, never a gate: an animate nominal is not excluded from the accompaniment reading",
+        "the emphasis difference between two licensed readings is a teaching note, never an emitted fact"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "99df0a51209c68050e3f057044a16eeb5b2802088ed85ce2df3188f5326004f1",
+      "guards_payload": [
+        {
+          "guard": "the connective has no default sense; an unresolved occurrence is never glossed as coordination by convenience",
+          "id": "g-waw-def"
+        },
+        {
+          "guard": "an unpointed following nominal has an unrecoverable case and is recorded as such, never assigned one",
+          "id": "g-waw-case"
+        },
+        {
+          "guard": "animacy is a cue, never a gate: an animate nominal is not excluded from the accompaniment reading",
+          "id": "g-waw-anim"
+        },
+        {
+          "guard": "the emphasis difference between two licensed readings is a teaching note, never an emitted fact",
+          "id": "g-waw-emph"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "waw-adv-01",
+        "waw-adv-02",
+        "waw-abs-01"
+      ],
+      "positive_examples": [
+        "waw-pos-01",
+        "waw-pos-02",
+        "waw-pos-03",
+        "waw-pos-04",
+        "waw-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-waw-function-discriminator"
+      },
+      "scope": {
+        "increment": "inc-waw-function-discriminator",
+        "statement": "the accompaniment reading requires a preceding verbal governor and an accusative following nominal; a nominative following nominal selects coordination instead",
+        "unit_ref": "cu-waw-function-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-waw-function-discriminator-waw-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-waw-function-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the connective has no default sense; an unresolved occurrence is never glossed as coordination by convenience",
+        "an unpointed following nominal has an unrecoverable case and is recorded as such, never assigned one",
+        "animacy is a cue, never a gate: an animate nominal is not excluded from the accompaniment reading",
+        "the emphasis difference between two licensed readings is a teaching note, never an emitted fact"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "99df0a51209c68050e3f057044a16eeb5b2802088ed85ce2df3188f5326004f1",
+      "guards_payload": [
+        {
+          "guard": "the connective has no default sense; an unresolved occurrence is never glossed as coordination by convenience",
+          "id": "g-waw-def"
+        },
+        {
+          "guard": "an unpointed following nominal has an unrecoverable case and is recorded as such, never assigned one",
+          "id": "g-waw-case"
+        },
+        {
+          "guard": "animacy is a cue, never a gate: an animate nominal is not excluded from the accompaniment reading",
+          "id": "g-waw-anim"
+        },
+        {
+          "guard": "the emphasis difference between two licensed readings is a teaching note, never an emitted fact",
+          "id": "g-waw-emph"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "waw-adv-01",
+        "waw-adv-02",
+        "waw-abs-01"
+      ],
+      "positive_examples": [
+        "waw-pos-01",
+        "waw-pos-02",
+        "waw-pos-03",
+        "waw-pos-04",
+        "waw-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-waw-function-discriminator"
+      },
+      "scope": {
+        "increment": "inc-waw-function-discriminator",
+        "statement": "the participation test is a strong cue, not a gate: an animate capable nominal may still be construed as accompanying, so animacy never closes the decision on its own",
+        "unit_ref": "cu-waw-function-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-waw-function-discriminator-waw-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-waw-function-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the connective has no default sense; an unresolved occurrence is never glossed as coordination by convenience",
+        "an unpointed following nominal has an unrecoverable case and is recorded as such, never assigned one",
+        "animacy is a cue, never a gate: an animate nominal is not excluded from the accompaniment reading",
+        "the emphasis difference between two licensed readings is a teaching note, never an emitted fact"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "99df0a51209c68050e3f057044a16eeb5b2802088ed85ce2df3188f5326004f1",
+      "guards_payload": [
+        {
+          "guard": "the connective has no default sense; an unresolved occurrence is never glossed as coordination by convenience",
+          "id": "g-waw-def"
+        },
+        {
+          "guard": "an unpointed following nominal has an unrecoverable case and is recorded as such, never assigned one",
+          "id": "g-waw-case"
+        },
+        {
+          "guard": "animacy is a cue, never a gate: an animate nominal is not excluded from the accompaniment reading",
+          "id": "g-waw-anim"
+        },
+        {
+          "guard": "the emphasis difference between two licensed readings is a teaching note, never an emitted fact",
+          "id": "g-waw-emph"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "waw-adv-01",
+        "waw-adv-02",
+        "waw-abs-01"
+      ],
+      "positive_examples": [
+        "waw-pos-01",
+        "waw-pos-02",
+        "waw-pos-03",
+        "waw-pos-04",
+        "waw-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-waw-function-discriminator"
+      },
+      "scope": {
+        "increment": "inc-waw-function-discriminator",
+        "statement": "where the case is unrecoverable and both readings are licensed, both are preserved; the emphasis difference between them is not a fact this unit may emit",
+        "unit_ref": "cu-waw-function-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-waw-function-discriminator-waw-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-waw-function-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the connective has no default sense; an unresolved occurrence is never glossed as coordination by convenience",
+        "an unpointed following nominal has an unrecoverable case and is recorded as such, never assigned one",
+        "animacy is a cue, never a gate: an animate nominal is not excluded from the accompaniment reading",
+        "the emphasis difference between two licensed readings is a teaching note, never an emitted fact"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "99df0a51209c68050e3f057044a16eeb5b2802088ed85ce2df3188f5326004f1",
+      "guards_payload": [
+        {
+          "guard": "the connective has no default sense; an unresolved occurrence is never glossed as coordination by convenience",
+          "id": "g-waw-def"
+        },
+        {
+          "guard": "an unpointed following nominal has an unrecoverable case and is recorded as such, never assigned one",
+          "id": "g-waw-case"
+        },
+        {
+          "guard": "animacy is a cue, never a gate: an animate nominal is not excluded from the accompaniment reading",
+          "id": "g-waw-anim"
+        },
+        {
+          "guard": "the emphasis difference between two licensed readings is a teaching note, never an emitted fact",
+          "id": "g-waw-emph"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "waw-adv-01",
+        "waw-adv-02",
+        "waw-abs-01"
+      ],
+      "positive_examples": [
+        "waw-pos-01",
+        "waw-pos-02",
+        "waw-pos-03",
+        "waw-pos-04",
+        "waw-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-waw-function-discriminator"
+      },
+      "scope": {
+        "increment": "inc-waw-function-discriminator",
+        "statement": "a nominal state clause requires both the state connective and a linking pronoun; a clause-initial connective is not by itself an oath",
+        "unit_ref": "cu-waw-function-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-waw-function-discriminator-waw-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-waw-function-discriminator/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "discriminator_table",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-waw-function-discriminator",
@@ -8,43 +340,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
-      "rule_id": "curr-waw-function-discriminator-waw-r1",
-      "statement": "the case of the following nominal, the presence of a verbal governor, the definiteness and role saturation of the preceding nominal, the linking pronoun and the presence of a response clause are SUPPLIED evidence, never reconstructed from an unvocalized string",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
-      "rule_id": "curr-waw-function-discriminator-waw-r2",
-      "statement": "the accompaniment reading requires a preceding verbal governor and an accusative following nominal; a nominative following nominal selects coordination instead",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
-      "rule_id": "curr-waw-function-discriminator-waw-r3",
-      "statement": "the participation test is a strong cue, not a gate: an animate capable nominal may still be construed as accompanying, so animacy never closes the decision on its own",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
-      "rule_id": "curr-waw-function-discriminator-waw-r4",
-      "statement": "where the case is unrecoverable and both readings are licensed, both are preserved; the emphasis difference between them is not a fact this unit may emit",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-waw-function-discriminator/unit-v1.json",
-      "rule_id": "curr-waw-function-discriminator-waw-r5",
-      "statement": "a nominal state clause requires both the state connective and a linking pronoun; a clause-initial connective is not by itself an oath",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -178,6 +473,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "sense_panel",

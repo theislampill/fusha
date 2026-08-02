@@ -79,7 +79,7 @@ PACKET_IDS = (
     "TP-CURR-TUTOR-METHOD-ROUTING", "TP-CURR-QUIZ-KEY-REVIEW",
 )
 SERVER_PATH_RE = re.compile(
-    r"(?:/var/www|/srv/|/home/[a-z]|/etc/|[A-Za-z]:\\\\|[A-Za-z]:\\)")
+    r"(?:/var/www|/srv/|/home/[a-z]|/etc/|/Users/|\\\\[A-Za-z0-9]|[A-Za-z]:\\\\|[A-Za-z]:\\)")
 AR_WORD_RE = re.compile(r"[؀-ۿ][؀-ۿـً-ْٰ]*")
 SHA_RE = re.compile(r"^[0-9a-f]{64}$")
 PROSE_RUN_LIMIT = 12  # >= this many consecutive Arabic words on a line = prose
@@ -885,6 +885,23 @@ def check_generated_planes(ctx, errors):
             p = Path(path)
             if not p.exists() or p.read_bytes() != data:
                 errors.append("generated_planes: %s stale (%s)" % (label, p.name))
+    # Sol repair 9: bundle registry rows must cover the CURRENT-MAIN
+    # rule-registry field set field-for-field (no abbreviated shapes)
+    main_row_p = ROOT / "qamus" / "skills" / "rule-registry.jsonl"
+    if main_row_p.exists():
+        with main_row_p.open(encoding="utf-8") as f:
+            main_keys = set(json.loads(f.readline()).keys())
+        for bp in sorted((BASE / "promotion").glob("*.bundle.json")):
+            b = json.loads(bp.read_text(encoding="utf-8"))
+            for row in b.get("candidate_registry_rows", []):
+                missing = main_keys - set(row)
+                if missing:
+                    errors.append("generated_planes: %s registry row %s missing "
+                                  "main-schema fields %s" % (bp.name,
+                                  row.get("skill_rule_id"), sorted(missing)))
+                if row.get("status") != "candidate":
+                    errors.append("generated_planes: %s registry row not "
+                                  "candidate" % bp.name)
     # every discovered increment must have a bundle
     for inc in discovered_increments():
         if not (BASE / "promotion" / ("%s.bundle.json" % inc)).exists():

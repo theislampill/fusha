@@ -1,6 +1,260 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-negation/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-negation/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "content-letter harakah decides لم/لِمَ upstream; this unit never receives an unresolved homograph",
+        "og-3 analog: bare لا has no default reading",
+        "tense is set by the governor, never by the verb's surface shape",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-negation/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "54357e9d0a81b90b2882f82e8262383d76b076ac559959f1f83cc7f15479c5ce",
+      "guards_payload": [
+        {
+          "guard": "content-letter harakah decides لم/لِمَ upstream; this unit never receives an unresolved homograph",
+          "id": "g-neg-1"
+        },
+        {
+          "guard": "og-3 analog: bare لا has no default reading",
+          "id": "g-neg-2"
+        },
+        {
+          "guard": "tense is set by the governor, never by the verb's surface shape",
+          "id": "g-neg-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-neg-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "neg-adv-01",
+        "neg-adv-02",
+        "neg-abs-01"
+      ],
+      "positive_examples": [
+        "neg-pos-01",
+        "neg-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-negation/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n01"
+      },
+      "scope": {
+        "increment": "inc-negation",
+        "statement": "discriminator features (particle identity incl. content-letter harakah, following-verb mood, person, clause type) are SUPPLIED evidence, never guessed",
+        "unit_ref": "u-n01"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-negation-neg-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-negation/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "content-letter harakah decides لم/لِمَ upstream; this unit never receives an unresolved homograph",
+        "og-3 analog: bare لا has no default reading",
+        "tense is set by the governor, never by the verb's surface shape",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-negation/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "54357e9d0a81b90b2882f82e8262383d76b076ac559959f1f83cc7f15479c5ce",
+      "guards_payload": [
+        {
+          "guard": "content-letter harakah decides لم/لِمَ upstream; this unit never receives an unresolved homograph",
+          "id": "g-neg-1"
+        },
+        {
+          "guard": "og-3 analog: bare لا has no default reading",
+          "id": "g-neg-2"
+        },
+        {
+          "guard": "tense is set by the governor, never by the verb's surface shape",
+          "id": "g-neg-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-neg-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "neg-adv-01",
+        "neg-adv-02",
+        "neg-abs-01"
+      ],
+      "positive_examples": [
+        "neg-pos-01",
+        "neg-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-negation/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n01"
+      },
+      "scope": {
+        "increment": "inc-negation",
+        "statement": "the governing negative sets the TENSE reading (lam+imperfect = past) — never gloss the bare surface tense under a negative",
+        "unit_ref": "u-n01"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-negation-neg-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-negation/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "content-letter harakah decides لم/لِمَ upstream; this unit never receives an unresolved homograph",
+        "og-3 analog: bare لا has no default reading",
+        "tense is set by the governor, never by the verb's surface shape",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-negation/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "54357e9d0a81b90b2882f82e8262383d76b076ac559959f1f83cc7f15479c5ce",
+      "guards_payload": [
+        {
+          "guard": "content-letter harakah decides لم/لِمَ upstream; this unit never receives an unresolved homograph",
+          "id": "g-neg-1"
+        },
+        {
+          "guard": "og-3 analog: bare لا has no default reading",
+          "id": "g-neg-2"
+        },
+        {
+          "guard": "tense is set by the governor, never by the verb's surface shape",
+          "id": "g-neg-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-neg-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "neg-adv-01",
+        "neg-adv-02",
+        "neg-abs-01"
+      ],
+      "positive_examples": [
+        "neg-pos-01",
+        "neg-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-negation/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n01"
+      },
+      "scope": {
+        "increment": "inc-negation",
+        "statement": ">1 survivor -> preserve_alternatives; 0 -> insufficient_features (lam/lima homograph must be resolved upstream by the harakah guard)",
+        "unit_ref": "u-n01"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-negation-neg-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-negation/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "content-letter harakah decides لم/لِمَ upstream; this unit never receives an unresolved homograph",
+        "og-3 analog: bare لا has no default reading",
+        "tense is set by the governor, never by the verb's surface shape",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-negation/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "54357e9d0a81b90b2882f82e8262383d76b076ac559959f1f83cc7f15479c5ce",
+      "guards_payload": [
+        {
+          "guard": "content-letter harakah decides لم/لِمَ upstream; this unit never receives an unresolved homograph",
+          "id": "g-neg-1"
+        },
+        {
+          "guard": "og-3 analog: bare لا has no default reading",
+          "id": "g-neg-2"
+        },
+        {
+          "guard": "tense is set by the governor, never by the verb's surface shape",
+          "id": "g-neg-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-neg-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "neg-adv-01",
+        "neg-adv-02",
+        "neg-abs-01"
+      ],
+      "positive_examples": [
+        "neg-pos-01",
+        "neg-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-negation/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-n01"
+      },
+      "scope": {
+        "increment": "inc-negation",
+        "statement": "reconciliation (Sol repair 4): the prohibitive is not restricted to 2nd person; the sole formal separator from verbal negation is the following verb mood — matching inc-la-negative-vs-prohibitive-discriminator la-r2/la-r6",
+        "unit_ref": "u-n01"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-negation-neg-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-negation/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "discriminator_table",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-negation",
@@ -8,36 +262,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-negation/unit-v1.json",
-      "rule_id": "curr-negation-neg-r1",
-      "statement": "discriminator features (particle identity incl. content-letter harakah, following-verb mood, person, clause type) are SUPPLIED evidence, never guessed",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-negation/unit-v1.json",
-      "rule_id": "curr-negation-neg-r2",
-      "statement": "the governing negative sets the TENSE reading (lam+imperfect = past) — never gloss the bare surface tense under a negative",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-negation/unit-v1.json",
-      "rule_id": "curr-negation-neg-r3",
-      "statement": ">1 survivor -> preserve_alternatives; 0 -> insufficient_features (lam/lima homograph must be resolved upstream by the harakah guard)",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-negation/unit-v1.json",
-      "rule_id": "curr-negation-neg-r4",
-      "statement": "reconciliation (Sol repair 4): the prohibitive is not restricted to 2nd person; the sole formal separator from verbal negation is the following verb mood — matching inc-la-negative-vs-prohibitive-discriminator la-r2/la-r6",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -182,6 +406,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "negation_effect_chip",

@@ -1,6 +1,328 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "reject_reconstruction; response_opener_unclassified; response_boundary_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the opener class is a declared input read at the left edge of the response; it is never inferred from the sentence's meaning",
+        "the forbidding outcome is emitted explicitly, so a vacuous connective is a recorded error rather than a stylistic choice",
+        "the taught opener inventory is recorded as non-exhaustive; unlisted openers abstain and are never assimilated",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "dbc6f0610d87f94a6884e40a7943e9d56dc0ee6a0530c11ed94b88799c3b96b6",
+      "guards_payload": [
+        {
+          "guard": "the opener class is a declared input read at the left edge of the response; it is never inferred from the sentence's meaning",
+          "id": "g-jsh-1"
+        },
+        {
+          "guard": "the forbidding outcome is emitted explicitly, so a vacuous connective is a recorded error rather than a stylistic choice",
+          "id": "g-jsh-2"
+        },
+        {
+          "guard": "the taught opener inventory is recorded as non-exhaustive; unlisted openers abstain and are never assimilated",
+          "id": "g-jsh-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-jsh-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "jsh-adv-01",
+        "jsh-adv-02",
+        "jsh-abs-01"
+      ],
+      "positive_examples": [
+        "jsh-pos-01",
+        "jsh-pos-02",
+        "jsh-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-jawab-al-shart-fa-licensing"
+      },
+      "scope": {
+        "increment": "inc-jawab-al-shart-fa-licensing",
+        "statement": "the licensing test is applied to the LEFTMOST element of the response, never to the clause as a whole",
+        "unit_ref": "cu-jawab-al-shart-fa-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-jawab-al-shart-fa-licensing-jsh-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; response_opener_unclassified; response_boundary_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the opener class is a declared input read at the left edge of the response; it is never inferred from the sentence's meaning",
+        "the forbidding outcome is emitted explicitly, so a vacuous connective is a recorded error rather than a stylistic choice",
+        "the taught opener inventory is recorded as non-exhaustive; unlisted openers abstain and are never assimilated",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "dbc6f0610d87f94a6884e40a7943e9d56dc0ee6a0530c11ed94b88799c3b96b6",
+      "guards_payload": [
+        {
+          "guard": "the opener class is a declared input read at the left edge of the response; it is never inferred from the sentence's meaning",
+          "id": "g-jsh-1"
+        },
+        {
+          "guard": "the forbidding outcome is emitted explicitly, so a vacuous connective is a recorded error rather than a stylistic choice",
+          "id": "g-jsh-2"
+        },
+        {
+          "guard": "the taught opener inventory is recorded as non-exhaustive; unlisted openers abstain and are never assimilated",
+          "id": "g-jsh-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-jsh-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "jsh-adv-01",
+        "jsh-adv-02",
+        "jsh-abs-01"
+      ],
+      "positive_examples": [
+        "jsh-pos-01",
+        "jsh-pos-02",
+        "jsh-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-jawab-al-shart-fa-licensing"
+      },
+      "scope": {
+        "increment": "inc-jawab-al-shart-fa-licensing",
+        "statement": "the connective is a repair for responses that cannot receive jussive marking; where jussive marking is available it is forbidden, not optional",
+        "unit_ref": "cu-jawab-al-shart-fa-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-jawab-al-shart-fa-licensing-jsh-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; response_opener_unclassified; response_boundary_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the opener class is a declared input read at the left edge of the response; it is never inferred from the sentence's meaning",
+        "the forbidding outcome is emitted explicitly, so a vacuous connective is a recorded error rather than a stylistic choice",
+        "the taught opener inventory is recorded as non-exhaustive; unlisted openers abstain and are never assimilated",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "dbc6f0610d87f94a6884e40a7943e9d56dc0ee6a0530c11ed94b88799c3b96b6",
+      "guards_payload": [
+        {
+          "guard": "the opener class is a declared input read at the left edge of the response; it is never inferred from the sentence's meaning",
+          "id": "g-jsh-1"
+        },
+        {
+          "guard": "the forbidding outcome is emitted explicitly, so a vacuous connective is a recorded error rather than a stylistic choice",
+          "id": "g-jsh-2"
+        },
+        {
+          "guard": "the taught opener inventory is recorded as non-exhaustive; unlisted openers abstain and are never assimilated",
+          "id": "g-jsh-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-jsh-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "jsh-adv-01",
+        "jsh-adv-02",
+        "jsh-abs-01"
+      ],
+      "positive_examples": [
+        "jsh-pos-01",
+        "jsh-pos-02",
+        "jsh-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-jawab-al-shart-fa-licensing"
+      },
+      "scope": {
+        "increment": "inc-jawab-al-shart-fa-licensing",
+        "statement": "once the connective is present, mood inside the response is assigned by the nearest response-internal operator and not by the conditional trigger",
+        "unit_ref": "cu-jawab-al-shart-fa-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-jawab-al-shart-fa-licensing-jsh-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; response_opener_unclassified; response_boundary_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the opener class is a declared input read at the left edge of the response; it is never inferred from the sentence's meaning",
+        "the forbidding outcome is emitted explicitly, so a vacuous connective is a recorded error rather than a stylistic choice",
+        "the taught opener inventory is recorded as non-exhaustive; unlisted openers abstain and are never assimilated",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "dbc6f0610d87f94a6884e40a7943e9d56dc0ee6a0530c11ed94b88799c3b96b6",
+      "guards_payload": [
+        {
+          "guard": "the opener class is a declared input read at the left edge of the response; it is never inferred from the sentence's meaning",
+          "id": "g-jsh-1"
+        },
+        {
+          "guard": "the forbidding outcome is emitted explicitly, so a vacuous connective is a recorded error rather than a stylistic choice",
+          "id": "g-jsh-2"
+        },
+        {
+          "guard": "the taught opener inventory is recorded as non-exhaustive; unlisted openers abstain and are never assimilated",
+          "id": "g-jsh-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-jsh-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "jsh-adv-01",
+        "jsh-adv-02",
+        "jsh-abs-01"
+      ],
+      "positive_examples": [
+        "jsh-pos-01",
+        "jsh-pos-02",
+        "jsh-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-jawab-al-shart-fa-licensing"
+      },
+      "scope": {
+        "increment": "inc-jawab-al-shart-fa-licensing",
+        "statement": "the opener inventory recorded here is the taught set and is NOT exhaustive over attested responses; an unlisted opener abstains rather than being assimilated to the nearest row",
+        "unit_ref": "cu-jawab-al-shart-fa-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-jawab-al-shart-fa-licensing-jsh-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; response_opener_unclassified; response_boundary_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the opener class is a declared input read at the left edge of the response; it is never inferred from the sentence's meaning",
+        "the forbidding outcome is emitted explicitly, so a vacuous connective is a recorded error rather than a stylistic choice",
+        "the taught opener inventory is recorded as non-exhaustive; unlisted openers abstain and are never assimilated",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "dbc6f0610d87f94a6884e40a7943e9d56dc0ee6a0530c11ed94b88799c3b96b6",
+      "guards_payload": [
+        {
+          "guard": "the opener class is a declared input read at the left edge of the response; it is never inferred from the sentence's meaning",
+          "id": "g-jsh-1"
+        },
+        {
+          "guard": "the forbidding outcome is emitted explicitly, so a vacuous connective is a recorded error rather than a stylistic choice",
+          "id": "g-jsh-2"
+        },
+        {
+          "guard": "the taught opener inventory is recorded as non-exhaustive; unlisted openers abstain and are never assimilated",
+          "id": "g-jsh-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-jsh-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "jsh-adv-01",
+        "jsh-adv-02",
+        "jsh-abs-01"
+      ],
+      "positive_examples": [
+        "jsh-pos-01",
+        "jsh-pos-02",
+        "jsh-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-jawab-al-shart-fa-licensing"
+      },
+      "scope": {
+        "increment": "inc-jawab-al-shart-fa-licensing",
+        "statement": "negation of the condition half is a different question from negation of the response half and never licenses a response connective",
+        "unit_ref": "cu-jawab-al-shart-fa-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-jawab-al-shart-fa-licensing-jsh-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "licensing_table",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-jawab-al-shart-fa-licensing",
@@ -8,43 +330,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
-      "rule_id": "curr-jawab-al-shart-fa-licensing-jsh-r1",
-      "statement": "the licensing test is applied to the LEFTMOST element of the response, never to the clause as a whole",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
-      "rule_id": "curr-jawab-al-shart-fa-licensing-jsh-r2",
-      "statement": "the connective is a repair for responses that cannot receive jussive marking; where jussive marking is available it is forbidden, not optional",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
-      "rule_id": "curr-jawab-al-shart-fa-licensing-jsh-r3",
-      "statement": "once the connective is present, mood inside the response is assigned by the nearest response-internal operator and not by the conditional trigger",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
-      "rule_id": "curr-jawab-al-shart-fa-licensing-jsh-r4",
-      "statement": "the opener inventory recorded here is the taught set and is NOT exhaustive over attested responses; an unlisted opener abstains rather than being assimilated to the nearest row",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-jawab-al-shart-fa-licensing/unit-v1.json",
-      "rule_id": "curr-jawab-al-shart-fa-licensing-jsh-r5",
-      "statement": "negation of the condition half is a different question from negation of the response half and never licenses a response connective",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -187,6 +472,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "opener_class_chip",

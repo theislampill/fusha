@@ -1,0 +1,7 @@
+{
+  "generator": "tools/build_candidate_drills.py",
+  "honesty": "0 drills are runnable in the ordinary tutor today; these are complete promotion/adapter artifacts awaiting the Sol-owned integration",
+  "rows": 834,
+  "runtime_integrated": 0,
+  "schema": "curriculum.l1l6_drill_candidate.v1.meta"
+}

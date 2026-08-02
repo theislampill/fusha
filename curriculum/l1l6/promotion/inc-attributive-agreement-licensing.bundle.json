@@ -1,6 +1,328 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "reject_reconstruction; head_features_unknown; referent_animacy_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "referent animacy and the head's four features are declared inputs; a missing one abstains",
+        "an undecidable attachment is emitted as an outcome, never resolved by preference or by word order",
+        "reduced-agreement rows are attributed and never widened into the general agreement licence",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "34e7c7ed7226b1a6e127e914d55a51aeee905b3f5391f11e02a76865e61e815f",
+      "guards_payload": [
+        {
+          "guard": "referent animacy and the head's four features are declared inputs; a missing one abstains",
+          "id": "g-agr-1"
+        },
+        {
+          "guard": "an undecidable attachment is emitted as an outcome, never resolved by preference or by word order",
+          "id": "g-agr-2"
+        },
+        {
+          "guard": "reduced-agreement rows are attributed and never widened into the general agreement licence",
+          "id": "g-agr-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-agr-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "agr-adv-01",
+        "agr-adv-02",
+        "agr-abs-01"
+      ],
+      "positive_examples": [
+        "agr-pos-01",
+        "agr-pos-02",
+        "agr-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-attributive-agreement-licensing"
+      },
+      "scope": {
+        "increment": "inc-attributive-agreement-licensing",
+        "statement": "an attributive modifier is licensed only by simultaneous agreement on case, gender, number and definiteness against one head",
+        "unit_ref": "cu-attributive-agreement-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-attributive-agreement-licensing-agr-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-attributive-agreement-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; head_features_unknown; referent_animacy_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "referent animacy and the head's four features are declared inputs; a missing one abstains",
+        "an undecidable attachment is emitted as an outcome, never resolved by preference or by word order",
+        "reduced-agreement rows are attributed and never widened into the general agreement licence",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "34e7c7ed7226b1a6e127e914d55a51aeee905b3f5391f11e02a76865e61e815f",
+      "guards_payload": [
+        {
+          "guard": "referent animacy and the head's four features are declared inputs; a missing one abstains",
+          "id": "g-agr-1"
+        },
+        {
+          "guard": "an undecidable attachment is emitted as an outcome, never resolved by preference or by word order",
+          "id": "g-agr-2"
+        },
+        {
+          "guard": "reduced-agreement rows are attributed and never widened into the general agreement licence",
+          "id": "g-agr-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-agr-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "agr-adv-01",
+        "agr-adv-02",
+        "agr-abs-01"
+      ],
+      "positive_examples": [
+        "agr-pos-01",
+        "agr-pos-02",
+        "agr-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-attributive-agreement-licensing"
+      },
+      "scope": {
+        "increment": "inc-attributive-agreement-licensing",
+        "statement": "referent animacy is a declared input and is applied before gender and number are set: a non-human plural head licenses feminine singular modification",
+        "unit_ref": "cu-attributive-agreement-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-attributive-agreement-licensing-agr-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-attributive-agreement-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; head_features_unknown; referent_animacy_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "referent animacy and the head's four features are declared inputs; a missing one abstains",
+        "an undecidable attachment is emitted as an outcome, never resolved by preference or by word order",
+        "reduced-agreement rows are attributed and never widened into the general agreement licence",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "34e7c7ed7226b1a6e127e914d55a51aeee905b3f5391f11e02a76865e61e815f",
+      "guards_payload": [
+        {
+          "guard": "referent animacy and the head's four features are declared inputs; a missing one abstains",
+          "id": "g-agr-1"
+        },
+        {
+          "guard": "an undecidable attachment is emitted as an outcome, never resolved by preference or by word order",
+          "id": "g-agr-2"
+        },
+        {
+          "guard": "reduced-agreement rows are attributed and never widened into the general agreement licence",
+          "id": "g-agr-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-agr-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "agr-adv-01",
+        "agr-adv-02",
+        "agr-abs-01"
+      ],
+      "positive_examples": [
+        "agr-pos-01",
+        "agr-pos-02",
+        "agr-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-attributive-agreement-licensing"
+      },
+      "scope": {
+        "increment": "inc-attributive-agreement-licensing",
+        "statement": "definiteness is the axis that decides phrase versus predication; a definite head with an indefinite follower is not modification",
+        "unit_ref": "cu-attributive-agreement-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-attributive-agreement-licensing-agr-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-attributive-agreement-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; head_features_unknown; referent_animacy_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "referent animacy and the head's four features are declared inputs; a missing one abstains",
+        "an undecidable attachment is emitted as an outcome, never resolved by preference or by word order",
+        "reduced-agreement rows are attributed and never widened into the general agreement licence",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "34e7c7ed7226b1a6e127e914d55a51aeee905b3f5391f11e02a76865e61e815f",
+      "guards_payload": [
+        {
+          "guard": "referent animacy and the head's four features are declared inputs; a missing one abstains",
+          "id": "g-agr-1"
+        },
+        {
+          "guard": "an undecidable attachment is emitted as an outcome, never resolved by preference or by word order",
+          "id": "g-agr-2"
+        },
+        {
+          "guard": "reduced-agreement rows are attributed and never widened into the general agreement licence",
+          "id": "g-agr-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-agr-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "agr-adv-01",
+        "agr-adv-02",
+        "agr-abs-01"
+      ],
+      "positive_examples": [
+        "agr-pos-01",
+        "agr-pos-02",
+        "agr-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-attributive-agreement-licensing"
+      },
+      "scope": {
+        "increment": "inc-attributive-agreement-licensing",
+        "statement": "after an annexation chain the modifier's case identifies its attachment target; where both members share a case the outcome is an explicit undecidable, emitted as such and not silently resolved",
+        "unit_ref": "cu-attributive-agreement-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-attributive-agreement-licensing-agr-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-attributive-agreement-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; head_features_unknown; referent_animacy_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "referent animacy and the head's four features are declared inputs; a missing one abstains",
+        "an undecidable attachment is emitted as an outcome, never resolved by preference or by word order",
+        "reduced-agreement rows are attributed and never widened into the general agreement licence",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "34e7c7ed7226b1a6e127e914d55a51aeee905b3f5391f11e02a76865e61e815f",
+      "guards_payload": [
+        {
+          "guard": "referent animacy and the head's four features are declared inputs; a missing one abstains",
+          "id": "g-agr-1"
+        },
+        {
+          "guard": "an undecidable attachment is emitted as an outcome, never resolved by preference or by word order",
+          "id": "g-agr-2"
+        },
+        {
+          "guard": "reduced-agreement rows are attributed and never widened into the general agreement licence",
+          "id": "g-agr-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-agr-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "agr-adv-01",
+        "agr-adv-02",
+        "agr-abs-01"
+      ],
+      "positive_examples": [
+        "agr-pos-01",
+        "agr-pos-02",
+        "agr-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-attributive-agreement-licensing"
+      },
+      "scope": {
+        "increment": "inc-attributive-agreement-licensing",
+        "statement": "a post-nominal accusative that fails the definiteness parity test is not licensed as modification by resemblance -> reject_reconstruction",
+        "unit_ref": "cu-attributive-agreement-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-attributive-agreement-licensing-agr-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-attributive-agreement-licensing/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "licensing_table",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-attributive-agreement-licensing",
@@ -8,43 +330,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
-      "rule_id": "curr-attributive-agreement-licensing-agr-r1",
-      "statement": "an attributive modifier is licensed only by simultaneous agreement on case, gender, number and definiteness against one head",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
-      "rule_id": "curr-attributive-agreement-licensing-agr-r2",
-      "statement": "referent animacy is a declared input and is applied before gender and number are set: a non-human plural head licenses feminine singular modification",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
-      "rule_id": "curr-attributive-agreement-licensing-agr-r3",
-      "statement": "definiteness is the axis that decides phrase versus predication; a definite head with an indefinite follower is not modification",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
-      "rule_id": "curr-attributive-agreement-licensing-agr-r4",
-      "statement": "after an annexation chain the modifier's case identifies its attachment target; where both members share a case the outcome is an explicit undecidable, emitted as such and not silently resolved",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-attributive-agreement-licensing/unit-v1.json",
-      "rule_id": "curr-attributive-agreement-licensing-agr-r5",
-      "statement": "a post-nominal accusative that fails the definiteness parity test is not licensed as modification by resemblance -> reject_reconstruction",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -170,6 +455,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "agreement_axes_chip",

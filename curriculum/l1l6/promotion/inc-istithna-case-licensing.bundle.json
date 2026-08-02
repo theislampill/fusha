@@ -1,6 +1,328 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-istithna-case-licensing/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-istithna-case-licensing/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "reject_reconstruction; polarity_unknown; set_overtness_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "clause polarity and set-overtness are declared inputs; a missing one abstains rather than defaulting to the accusative",
+        "both licensed readings under negation are emitted together; the pack never picks a school",
+        "the exclusion-word inventory is closed in every pack version; resemblance is not membership",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e3a83b3d4b94438ab14df96fe3c8a38ec62f2538b734bf601e9b540e377e9e0d",
+      "guards_payload": [
+        {
+          "guard": "clause polarity and set-overtness are declared inputs; a missing one abstains rather than defaulting to the accusative",
+          "id": "g-ist-1"
+        },
+        {
+          "guard": "both licensed readings under negation are emitted together; the pack never picks a school",
+          "id": "g-ist-2"
+        },
+        {
+          "guard": "the exclusion-word inventory is closed in every pack version; resemblance is not membership",
+          "id": "g-ist-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-ist-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ist-adv-01",
+        "ist-adv-02",
+        "ist-abs-01"
+      ],
+      "positive_examples": [
+        "ist-pos-01",
+        "ist-pos-02",
+        "ist-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-istithna-case-licensing"
+      },
+      "scope": {
+        "increment": "inc-istithna-case-licensing",
+        "statement": "case for the excluded item is read off the cell fixed by clause polarity and by whether the set excluded from is overt; no other feature selects it",
+        "unit_ref": "cu-istithna-case-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-istithna-case-licensing-ist-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-istithna-case-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; polarity_unknown; set_overtness_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "clause polarity and set-overtness are declared inputs; a missing one abstains rather than defaulting to the accusative",
+        "both licensed readings under negation are emitted together; the pack never picks a school",
+        "the exclusion-word inventory is closed in every pack version; resemblance is not membership",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e3a83b3d4b94438ab14df96fe3c8a38ec62f2538b734bf601e9b540e377e9e0d",
+      "guards_payload": [
+        {
+          "guard": "clause polarity and set-overtness are declared inputs; a missing one abstains rather than defaulting to the accusative",
+          "id": "g-ist-1"
+        },
+        {
+          "guard": "both licensed readings under negation are emitted together; the pack never picks a school",
+          "id": "g-ist-2"
+        },
+        {
+          "guard": "the exclusion-word inventory is closed in every pack version; resemblance is not membership",
+          "id": "g-ist-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-ist-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ist-adv-01",
+        "ist-adv-02",
+        "ist-abs-01"
+      ],
+      "positive_examples": [
+        "ist-pos-01",
+        "ist-pos-02",
+        "ist-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-istithna-case-licensing"
+      },
+      "scope": {
+        "increment": "inc-istithna-case-licensing",
+        "statement": "the exclusion word never assigns the accusative by itself; with the set omitted the clause role assigns the case",
+        "unit_ref": "cu-istithna-case-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-istithna-case-licensing-ist-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-istithna-case-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; polarity_unknown; set_overtness_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "clause polarity and set-overtness are declared inputs; a missing one abstains rather than defaulting to the accusative",
+        "both licensed readings under negation are emitted together; the pack never picks a school",
+        "the exclusion-word inventory is closed in every pack version; resemblance is not membership",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e3a83b3d4b94438ab14df96fe3c8a38ec62f2538b734bf601e9b540e377e9e0d",
+      "guards_payload": [
+        {
+          "guard": "clause polarity and set-overtness are declared inputs; a missing one abstains rather than defaulting to the accusative",
+          "id": "g-ist-1"
+        },
+        {
+          "guard": "both licensed readings under negation are emitted together; the pack never picks a school",
+          "id": "g-ist-2"
+        },
+        {
+          "guard": "the exclusion-word inventory is closed in every pack version; resemblance is not membership",
+          "id": "g-ist-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-ist-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ist-adv-01",
+        "ist-adv-02",
+        "ist-abs-01"
+      ],
+      "positive_examples": [
+        "ist-pos-01",
+        "ist-pos-02",
+        "ist-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-istithna-case-licensing"
+      },
+      "scope": {
+        "increment": "inc-istithna-case-licensing",
+        "statement": "the nominal exclusion words invert the pattern: they carry the case the excluded item would have taken and their complement stays genitive unconditionally",
+        "unit_ref": "cu-istithna-case-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-istithna-case-licensing-ist-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-istithna-case-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; polarity_unknown; set_overtness_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "clause polarity and set-overtness are declared inputs; a missing one abstains rather than defaulting to the accusative",
+        "both licensed readings under negation are emitted together; the pack never picks a school",
+        "the exclusion-word inventory is closed in every pack version; resemblance is not membership",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e3a83b3d4b94438ab14df96fe3c8a38ec62f2538b734bf601e9b540e377e9e0d",
+      "guards_payload": [
+        {
+          "guard": "clause polarity and set-overtness are declared inputs; a missing one abstains rather than defaulting to the accusative",
+          "id": "g-ist-1"
+        },
+        {
+          "guard": "both licensed readings under negation are emitted together; the pack never picks a school",
+          "id": "g-ist-2"
+        },
+        {
+          "guard": "the exclusion-word inventory is closed in every pack version; resemblance is not membership",
+          "id": "g-ist-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-ist-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ist-adv-01",
+        "ist-adv-02",
+        "ist-abs-01"
+      ],
+      "positive_examples": [
+        "ist-pos-01",
+        "ist-pos-02",
+        "ist-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-istithna-case-licensing"
+      },
+      "scope": {
+        "increment": "inc-istithna-case-licensing",
+        "statement": "under negation with an overt set both licensed readings survive together, attributed and uncertified",
+        "unit_ref": "cu-istithna-case-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-istithna-case-licensing-ist-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-istithna-case-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; polarity_unknown; set_overtness_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "clause polarity and set-overtness are declared inputs; a missing one abstains rather than defaulting to the accusative",
+        "both licensed readings under negation are emitted together; the pack never picks a school",
+        "the exclusion-word inventory is closed in every pack version; resemblance is not membership",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e3a83b3d4b94438ab14df96fe3c8a38ec62f2538b734bf601e9b540e377e9e0d",
+      "guards_payload": [
+        {
+          "guard": "clause polarity and set-overtness are declared inputs; a missing one abstains rather than defaulting to the accusative",
+          "id": "g-ist-1"
+        },
+        {
+          "guard": "both licensed readings under negation are emitted together; the pack never picks a school",
+          "id": "g-ist-2"
+        },
+        {
+          "guard": "the exclusion-word inventory is closed in every pack version; resemblance is not membership",
+          "id": "g-ist-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-ist-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ist-adv-01",
+        "ist-adv-02",
+        "ist-abs-01"
+      ],
+      "positive_examples": [
+        "ist-pos-01",
+        "ist-pos-02",
+        "ist-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-istithna-case-licensing"
+      },
+      "scope": {
+        "increment": "inc-istithna-case-licensing",
+        "statement": "the exclusion-word inventory recorded here is the taught closed set; a word outside it is not licensed by resemblance -> reject_reconstruction",
+        "unit_ref": "cu-istithna-case-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-istithna-case-licensing-ist-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-istithna-case-licensing/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "licensing_table",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-istithna-case-licensing",
@@ -8,43 +330,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
-      "rule_id": "curr-istithna-case-licensing-ist-r1",
-      "statement": "case for the excluded item is read off the cell fixed by clause polarity and by whether the set excluded from is overt; no other feature selects it",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
-      "rule_id": "curr-istithna-case-licensing-ist-r2",
-      "statement": "the exclusion word never assigns the accusative by itself; with the set omitted the clause role assigns the case",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
-      "rule_id": "curr-istithna-case-licensing-ist-r3",
-      "statement": "the nominal exclusion words invert the pattern: they carry the case the excluded item would have taken and their complement stays genitive unconditionally",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
-      "rule_id": "curr-istithna-case-licensing-ist-r4",
-      "statement": "under negation with an overt set both licensed readings survive together, attributed and uncertified",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-istithna-case-licensing/unit-v1.json",
-      "rule_id": "curr-istithna-case-licensing-ist-r5",
-      "statement": "the exclusion-word inventory recorded here is the taught closed set; a word outside it is not licensed by resemblance -> reject_reconstruction",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -163,6 +448,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "exclusion_cell_chip",

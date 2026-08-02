@@ -1,6 +1,343 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-mansub-role-discriminator/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-mansub-role-discriminator/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the accusative ending is never sufficient evidence for any of the four roles",
+        "a failed hard precondition abstains; it never downgrades to a weaker role assignment",
+        "the root test and the question test are peers; neither is allowed to override the other",
+        "definiteness of the holder and definiteness of the descriptor are separate features and are never conflated"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c68c06f8194d51a79bf7d2498542e569f3743659789d701b1a45f2fd1cea09fe",
+      "guards_payload": [
+        {
+          "guard": "the accusative ending is never sufficient evidence for any of the four roles",
+          "id": "g-mans-surface"
+        },
+        {
+          "guard": "a failed hard precondition abstains; it never downgrades to a weaker role assignment",
+          "id": "g-mans-pre"
+        },
+        {
+          "guard": "the root test and the question test are peers; neither is allowed to override the other",
+          "id": "g-mans-alt"
+        },
+        {
+          "guard": "definiteness of the holder and definiteness of the descriptor are separate features and are never conflated",
+          "id": "g-mans-def"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "mans-adv-01",
+        "mans-adv-02",
+        "mans-adv-03",
+        "mans-abs-01"
+      ],
+      "positive_examples": [
+        "mans-pos-01",
+        "mans-pos-02",
+        "mans-pos-03",
+        "mans-pos-04",
+        "mans-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-mansub-role-discriminator"
+      },
+      "scope": {
+        "increment": "inc-mansub-role-discriminator",
+        "statement": "root identity with the governing verb, verbal-noun status, the question the noun answers and agreement with a definite holder are SUPPLIED evidence, never inferred from the surface accusative alone",
+        "unit_ref": "cu-mansub-role-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-mansub-role-discriminator-mans-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-mansub-role-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the accusative ending is never sufficient evidence for any of the four roles",
+        "a failed hard precondition abstains; it never downgrades to a weaker role assignment",
+        "the root test and the question test are peers; neither is allowed to override the other",
+        "definiteness of the holder and definiteness of the descriptor are separate features and are never conflated"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c68c06f8194d51a79bf7d2498542e569f3743659789d701b1a45f2fd1cea09fe",
+      "guards_payload": [
+        {
+          "guard": "the accusative ending is never sufficient evidence for any of the four roles",
+          "id": "g-mans-surface"
+        },
+        {
+          "guard": "a failed hard precondition abstains; it never downgrades to a weaker role assignment",
+          "id": "g-mans-pre"
+        },
+        {
+          "guard": "the root test and the question test are peers; neither is allowed to override the other",
+          "id": "g-mans-alt"
+        },
+        {
+          "guard": "definiteness of the holder and definiteness of the descriptor are separate features and are never conflated",
+          "id": "g-mans-def"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "mans-adv-01",
+        "mans-adv-02",
+        "mans-adv-03",
+        "mans-abs-01"
+      ],
+      "positive_examples": [
+        "mans-pos-01",
+        "mans-pos-02",
+        "mans-pos-03",
+        "mans-pos-04",
+        "mans-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-mansub-role-discriminator"
+      },
+      "scope": {
+        "increment": "inc-mansub-role-discriminator",
+        "statement": "all four roles share one surface signature (an indefinite accusative noun after a verb), so the case marking alone can never select a role",
+        "unit_ref": "cu-mansub-role-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-mansub-role-discriminator-mans-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-mansub-role-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the accusative ending is never sufficient evidence for any of the four roles",
+        "a failed hard precondition abstains; it never downgrades to a weaker role assignment",
+        "the root test and the question test are peers; neither is allowed to override the other",
+        "definiteness of the holder and definiteness of the descriptor are separate features and are never conflated"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c68c06f8194d51a79bf7d2498542e569f3743659789d701b1a45f2fd1cea09fe",
+      "guards_payload": [
+        {
+          "guard": "the accusative ending is never sufficient evidence for any of the four roles",
+          "id": "g-mans-surface"
+        },
+        {
+          "guard": "a failed hard precondition abstains; it never downgrades to a weaker role assignment",
+          "id": "g-mans-pre"
+        },
+        {
+          "guard": "the root test and the question test are peers; neither is allowed to override the other",
+          "id": "g-mans-alt"
+        },
+        {
+          "guard": "definiteness of the holder and definiteness of the descriptor are separate features and are never conflated",
+          "id": "g-mans-def"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "mans-adv-01",
+        "mans-adv-02",
+        "mans-adv-03",
+        "mans-abs-01"
+      ],
+      "positive_examples": [
+        "mans-pos-01",
+        "mans-pos-02",
+        "mans-pos-03",
+        "mans-pos-04",
+        "mans-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-mansub-role-discriminator"
+      },
+      "scope": {
+        "increment": "inc-mansub-role-discriminator",
+        "statement": "the motive role has hard preconditions: verbal-noun status, causal sense, one agent at one time, and indefiniteness; a failed precondition abstains, and the prepositional construction is the recorded repair",
+        "unit_ref": "cu-mansub-role-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-mansub-role-discriminator-mans-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-mansub-role-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the accusative ending is never sufficient evidence for any of the four roles",
+        "a failed hard precondition abstains; it never downgrades to a weaker role assignment",
+        "the root test and the question test are peers; neither is allowed to override the other",
+        "definiteness of the holder and definiteness of the descriptor are separate features and are never conflated"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c68c06f8194d51a79bf7d2498542e569f3743659789d701b1a45f2fd1cea09fe",
+      "guards_payload": [
+        {
+          "guard": "the accusative ending is never sufficient evidence for any of the four roles",
+          "id": "g-mans-surface"
+        },
+        {
+          "guard": "a failed hard precondition abstains; it never downgrades to a weaker role assignment",
+          "id": "g-mans-pre"
+        },
+        {
+          "guard": "the root test and the question test are peers; neither is allowed to override the other",
+          "id": "g-mans-alt"
+        },
+        {
+          "guard": "definiteness of the holder and definiteness of the descriptor are separate features and are never conflated",
+          "id": "g-mans-def"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "mans-adv-01",
+        "mans-adv-02",
+        "mans-adv-03",
+        "mans-abs-01"
+      ],
+      "positive_examples": [
+        "mans-pos-01",
+        "mans-pos-02",
+        "mans-pos-03",
+        "mans-pos-04",
+        "mans-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-mansub-role-discriminator"
+      },
+      "scope": {
+        "increment": "inc-mansub-role-discriminator",
+        "statement": "same root with a causal reading leaves reinforcement and motive both live: preserve alternatives rather than letting either test override the other",
+        "unit_ref": "cu-mansub-role-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-mansub-role-discriminator-mans-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-mansub-role-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the accusative ending is never sufficient evidence for any of the four roles",
+        "a failed hard precondition abstains; it never downgrades to a weaker role assignment",
+        "the root test and the question test are peers; neither is allowed to override the other",
+        "definiteness of the holder and definiteness of the descriptor are separate features and are never conflated"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "c68c06f8194d51a79bf7d2498542e569f3743659789d701b1a45f2fd1cea09fe",
+      "guards_payload": [
+        {
+          "guard": "the accusative ending is never sufficient evidence for any of the four roles",
+          "id": "g-mans-surface"
+        },
+        {
+          "guard": "a failed hard precondition abstains; it never downgrades to a weaker role assignment",
+          "id": "g-mans-pre"
+        },
+        {
+          "guard": "the root test and the question test are peers; neither is allowed to override the other",
+          "id": "g-mans-alt"
+        },
+        {
+          "guard": "definiteness of the holder and definiteness of the descriptor are separate features and are never conflated",
+          "id": "g-mans-def"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "mans-adv-01",
+        "mans-adv-02",
+        "mans-adv-03",
+        "mans-abs-01"
+      ],
+      "positive_examples": [
+        "mans-pos-01",
+        "mans-pos-02",
+        "mans-pos-03",
+        "mans-pos-04",
+        "mans-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-mansub-role-discriminator"
+      },
+      "scope": {
+        "increment": "inc-mansub-role-discriminator",
+        "statement": "the state role requires a DEFINITE holder and an indefinite accusative descriptor; the respect role requires an identifiable vagueness to resolve",
+        "unit_ref": "cu-mansub-role-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-mansub-role-discriminator-mans-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-mansub-role-discriminator/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "discriminator_table",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-mansub-role-discriminator",
@@ -8,43 +345,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
-      "rule_id": "curr-mansub-role-discriminator-mans-r1",
-      "statement": "root identity with the governing verb, verbal-noun status, the question the noun answers and agreement with a definite holder are SUPPLIED evidence, never inferred from the surface accusative alone",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
-      "rule_id": "curr-mansub-role-discriminator-mans-r2",
-      "statement": "all four roles share one surface signature (an indefinite accusative noun after a verb), so the case marking alone can never select a role",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
-      "rule_id": "curr-mansub-role-discriminator-mans-r3",
-      "statement": "the motive role has hard preconditions: verbal-noun status, causal sense, one agent at one time, and indefiniteness; a failed precondition abstains, and the prepositional construction is the recorded repair",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
-      "rule_id": "curr-mansub-role-discriminator-mans-r4",
-      "statement": "same root with a causal reading leaves reinforcement and motive both live: preserve alternatives rather than letting either test override the other",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-mansub-role-discriminator/unit-v1.json",
-      "rule_id": "curr-mansub-role-discriminator-mans-r5",
-      "statement": "the state role requires a DEFINITE holder and an indefinite accusative descriptor; the respect role requires an identifiable vagueness to resolve",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -185,6 +485,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "role_panel",

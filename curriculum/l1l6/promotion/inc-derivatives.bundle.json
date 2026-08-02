@@ -1,6 +1,313 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-derivatives/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-derivatives/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "penult_vowel_unknown; ambiguous_template; no_template; no_root_evidence",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+        "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "f15ec6a937839f12cd53090edb0f5d28c1819f17cad755688399869d91a96622",
+      "guards_payload": [
+        {
+          "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+          "id": "g-der-1"
+        },
+        {
+          "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+          "id": "g-der-2"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+          "id": "g-der-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "der-adv-01",
+        "der-abs-01",
+        "der-adv-02"
+      ],
+      "positive_examples": [
+        "der-pos-01",
+        "der-pos-02",
+        "der-pos-03",
+        "der-trn-01",
+        "der-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s03"
+      },
+      "scope": {
+        "increment": "inc-derivatives",
+        "statement": "a template matches only with supplied root radicals filling R1..R3 in order (no root derivation in the consumer)",
+        "unit_ref": "u-s03"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-derivatives-der-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-derivatives/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "penult_vowel_unknown; ambiguous_template; no_template; no_root_evidence",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+        "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "f15ec6a937839f12cd53090edb0f5d28c1819f17cad755688399869d91a96622",
+      "guards_payload": [
+        {
+          "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+          "id": "g-der-1"
+        },
+        {
+          "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+          "id": "g-der-2"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+          "id": "g-der-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "der-adv-01",
+        "der-abs-01",
+        "der-adv-02"
+      ],
+      "positive_examples": [
+        "der-pos-01",
+        "der-pos-02",
+        "der-pos-03",
+        "der-trn-01",
+        "der-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s03"
+      },
+      "scope": {
+        "increment": "inc-derivatives",
+        "statement": "mu_participle without a known penult vowel -> abstain penult_vowel_unknown (never default to active)",
+        "unit_ref": "u-s03"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-derivatives-der-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-derivatives/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "penult_vowel_unknown; ambiguous_template; no_template; no_root_evidence",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+        "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "f15ec6a937839f12cd53090edb0f5d28c1819f17cad755688399869d91a96622",
+      "guards_payload": [
+        {
+          "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+          "id": "g-der-1"
+        },
+        {
+          "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+          "id": "g-der-2"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+          "id": "g-der-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "der-adv-01",
+        "der-abs-01",
+        "der-adv-02"
+      ],
+      "positive_examples": [
+        "der-pos-01",
+        "der-pos-02",
+        "der-pos-03",
+        "der-trn-01",
+        "der-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s03"
+      },
+      "scope": {
+        "increment": "inc-derivatives",
+        "statement": "gloss SHAPE is nominal for every class here; the consumer flags (does not author) any verbal-gloss pairing",
+        "unit_ref": "u-s03"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-derivatives-der-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-derivatives/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "penult_vowel_unknown; ambiguous_template; no_template; no_root_evidence",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+        "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "f15ec6a937839f12cd53090edb0f5d28c1819f17cad755688399869d91a96622",
+      "guards_payload": [
+        {
+          "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+          "id": "g-der-1"
+        },
+        {
+          "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+          "id": "g-der-2"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+          "id": "g-der-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "der-adv-01",
+        "der-abs-01",
+        "der-adv-02"
+      ],
+      "positive_examples": [
+        "der-pos-01",
+        "der-pos-02",
+        "der-pos-03",
+        "der-trn-01",
+        "der-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s03"
+      },
+      "scope": {
+        "increment": "inc-derivatives",
+        "statement": "zero or >1 surviving template -> abstain (ambiguous_template or no_template)",
+        "unit_ref": "u-s03"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-derivatives-der-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-derivatives/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "penult_vowel_unknown; ambiguous_template; no_template; no_root_evidence",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+        "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "f15ec6a937839f12cd53090edb0f5d28c1819f17cad755688399869d91a96622",
+      "guards_payload": [
+        {
+          "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+          "id": "g-der-1"
+        },
+        {
+          "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+          "id": "g-der-2"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+          "id": "g-der-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "der-adv-01",
+        "der-abs-01",
+        "der-adv-02"
+      ],
+      "positive_examples": [
+        "der-pos-01",
+        "der-pos-02",
+        "der-pos-03",
+        "der-trn-01",
+        "der-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s03"
+      },
+      "scope": {
+        "increment": "inc-derivatives",
+        "statement": "a weak radical may surface via the declared weak_substitutions table only (data-driven; guard: substitutions never apply to sound radicals)",
+        "unit_ref": "u-s03"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-derivatives-der-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-derivatives/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "template_classification",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-derivatives",
@@ -8,43 +315,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
-      "rule_id": "curr-derivatives-der-r1",
-      "statement": "a template matches only with supplied root radicals filling R1..R3 in order (no root derivation in the consumer)",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
-      "rule_id": "curr-derivatives-der-r2",
-      "statement": "mu_participle without a known penult vowel -> abstain penult_vowel_unknown (never default to active)",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
-      "rule_id": "curr-derivatives-der-r3",
-      "statement": "gloss SHAPE is nominal for every class here; the consumer flags (does not author) any verbal-gloss pairing",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
-      "rule_id": "curr-derivatives-der-r4",
-      "statement": "zero or >1 surviving template -> abstain (ambiguous_template or no_template)",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
-      "rule_id": "curr-derivatives-der-r5",
-      "statement": "a weak radical may surface via the declared weak_substitutions table only (data-driven; guard: substitutions never apply to sound radicals)",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -235,6 +505,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "derivative_class_chip",

@@ -1,6 +1,333 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-ownership/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-ownership/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "pending_letter_ownership; false_stem_risk; no_root_evidence",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-1: root colouring never implies lexeme/sense sharing; hover wording must say 'same radicals', never 'same meaning'",
+        "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+        "og-6: consumer output is candidate analysis; it never writes entries, senses or certified facts",
+        "method transfers, conclusions do not: the unit's rules apply to new tokens; a specific token's analysis is never copied to another token"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "letter_ownership",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "b52a84ac56171a1407309c6bfbb3a64af7118c7ae418f71a81ffa0e458312f98",
+      "guards_payload": [
+        {
+          "guard": "og-1: root colouring never implies lexeme/sense sharing; hover wording must say 'same radicals', never 'same meaning'",
+          "id": "g-own-1"
+        },
+        {
+          "guard": "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+          "id": "g-own-2"
+        },
+        {
+          "guard": "og-6: consumer output is candidate analysis; it never writes entries, senses or certified facts",
+          "id": "g-own-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: the unit's rules apply to new tokens; a specific token's analysis is never copied to another token",
+          "id": "g-own-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "own-adv-01",
+        "own-adv-02",
+        "own-abs-01",
+        "own-abs-02"
+      ],
+      "positive_examples": [
+        "own-pos-01",
+        "own-pos-02",
+        "own-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s01"
+      },
+      "scope": {
+        "increment": "inc-ownership",
+        "statement": "peel leading ال then single-letter proclitics from clitic_inventory; a peel that leaves <2 letters is invalid (abstain false_stem_risk)",
+        "unit_ref": "u-s01"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-ownership-own-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-ownership/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "pending_letter_ownership; false_stem_risk; no_root_evidence",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-1: root colouring never implies lexeme/sense sharing; hover wording must say 'same radicals', never 'same meaning'",
+        "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+        "og-6: consumer output is candidate analysis; it never writes entries, senses or certified facts",
+        "method transfers, conclusions do not: the unit's rules apply to new tokens; a specific token's analysis is never copied to another token"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "letter_ownership",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "b52a84ac56171a1407309c6bfbb3a64af7118c7ae418f71a81ffa0e458312f98",
+      "guards_payload": [
+        {
+          "guard": "og-1: root colouring never implies lexeme/sense sharing; hover wording must say 'same radicals', never 'same meaning'",
+          "id": "g-own-1"
+        },
+        {
+          "guard": "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+          "id": "g-own-2"
+        },
+        {
+          "guard": "og-6: consumer output is candidate analysis; it never writes entries, senses or certified facts",
+          "id": "g-own-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: the unit's rules apply to new tokens; a specific token's analysis is never copied to another token",
+          "id": "g-own-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "own-adv-01",
+        "own-adv-02",
+        "own-abs-01",
+        "own-abs-02"
+      ],
+      "positive_examples": [
+        "own-pos-01",
+        "own-pos-02",
+        "own-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s01"
+      },
+      "scope": {
+        "increment": "inc-ownership",
+        "statement": "letter ownership REQUIRES supplied root_evidence (root radicals + basis). A letter is root iff it matches the next expected radical in order; an initial م is pattern_augment ONLY when root_evidence exists and م is not the expected radical. NO root_evidence -> abstain no_root_evidence. (repairs own-r2-v1; guard og-2/og-6)",
+        "unit_ref": "u-s01"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-ownership-own-r2-v2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-ownership/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "pending_letter_ownership; false_stem_risk; no_root_evidence",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-1: root colouring never implies lexeme/sense sharing; hover wording must say 'same radicals', never 'same meaning'",
+        "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+        "og-6: consumer output is candidate analysis; it never writes entries, senses or certified facts",
+        "method transfers, conclusions do not: the unit's rules apply to new tokens; a specific token's analysis is never copied to another token"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "letter_ownership",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "b52a84ac56171a1407309c6bfbb3a64af7118c7ae418f71a81ffa0e458312f98",
+      "guards_payload": [
+        {
+          "guard": "og-1: root colouring never implies lexeme/sense sharing; hover wording must say 'same radicals', never 'same meaning'",
+          "id": "g-own-1"
+        },
+        {
+          "guard": "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+          "id": "g-own-2"
+        },
+        {
+          "guard": "og-6: consumer output is candidate analysis; it never writes entries, senses or certified facts",
+          "id": "g-own-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: the unit's rules apply to new tokens; a specific token's analysis is never copied to another token",
+          "id": "g-own-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "own-adv-01",
+        "own-adv-02",
+        "own-abs-01",
+        "own-abs-02"
+      ],
+      "positive_examples": [
+        "own-pos-01",
+        "own-pos-02",
+        "own-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s01"
+      },
+      "scope": {
+        "increment": "inc-ownership",
+        "statement": "an inflection prefix from inflection_prefixes may be assigned only when token_kind=verb_imperfect is declared AND the letter is not the expected radical",
+        "unit_ref": "u-s01"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-ownership-own-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-ownership/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "pending_letter_ownership; false_stem_risk; no_root_evidence",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-1: root colouring never implies lexeme/sense sharing; hover wording must say 'same radicals', never 'same meaning'",
+        "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+        "og-6: consumer output is candidate analysis; it never writes entries, senses or certified facts",
+        "method transfers, conclusions do not: the unit's rules apply to new tokens; a specific token's analysis is never copied to another token"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "letter_ownership",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "b52a84ac56171a1407309c6bfbb3a64af7118c7ae418f71a81ffa0e458312f98",
+      "guards_payload": [
+        {
+          "guard": "og-1: root colouring never implies lexeme/sense sharing; hover wording must say 'same radicals', never 'same meaning'",
+          "id": "g-own-1"
+        },
+        {
+          "guard": "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+          "id": "g-own-2"
+        },
+        {
+          "guard": "og-6: consumer output is candidate analysis; it never writes entries, senses or certified facts",
+          "id": "g-own-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: the unit's rules apply to new tokens; a specific token's analysis is never copied to another token",
+          "id": "g-own-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "own-adv-01",
+        "own-adv-02",
+        "own-abs-01",
+        "own-abs-02"
+      ],
+      "positive_examples": [
+        "own-pos-01",
+        "own-pos-02",
+        "own-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s01"
+      },
+      "scope": {
+        "increment": "inc-ownership",
+        "statement": "any letter left unowned, or owned twice, forces abstain pending_letter_ownership for the WHOLE token",
+        "unit_ref": "u-s01"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-ownership-own-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-ownership/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "pending_letter_ownership; false_stem_risk; no_root_evidence",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-1: root colouring never implies lexeme/sense sharing; hover wording must say 'same radicals', never 'same meaning'",
+        "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+        "og-6: consumer output is candidate analysis; it never writes entries, senses or certified facts",
+        "method transfers, conclusions do not: the unit's rules apply to new tokens; a specific token's analysis is never copied to another token"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "letter_ownership",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "b52a84ac56171a1407309c6bfbb3a64af7118c7ae418f71a81ffa0e458312f98",
+      "guards_payload": [
+        {
+          "guard": "og-1: root colouring never implies lexeme/sense sharing; hover wording must say 'same radicals', never 'same meaning'",
+          "id": "g-own-1"
+        },
+        {
+          "guard": "og-2: surface shape never assigns ownership; root evidence required (v2 rule own-r2-v2)",
+          "id": "g-own-2"
+        },
+        {
+          "guard": "og-6: consumer output is candidate analysis; it never writes entries, senses or certified facts",
+          "id": "g-own-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: the unit's rules apply to new tokens; a specific token's analysis is never copied to another token",
+          "id": "g-own-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "own-adv-01",
+        "own-adv-02",
+        "own-abs-01",
+        "own-abs-02"
+      ],
+      "positive_examples": [
+        "own-pos-01",
+        "own-pos-02",
+        "own-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s01"
+      },
+      "scope": {
+        "increment": "inc-ownership",
+        "statement": "weak roots: a radical absent from the surface is recorded as hidden_radical, never forced onto a surface letter",
+        "unit_ref": "u-s01"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-ownership-own-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-ownership/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "letter_ownership",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-ownership",
@@ -8,43 +335,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
-      "rule_id": "curr-ownership-own-r1",
-      "statement": "peel leading ال then single-letter proclitics from clitic_inventory; a peel that leaves <2 letters is invalid (abstain false_stem_risk)",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
-      "rule_id": "curr-ownership-own-r2-v2",
-      "statement": "letter ownership REQUIRES supplied root_evidence (root radicals + basis). A letter is root iff it matches the next expected radical in order; an initial م is pattern_augment ONLY when root_evidence exists and م is not the expected radical. NO root_evidence -> abstain no_root_evidence. (repairs own-r2-v1; guard og-2/og-6)",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
-      "rule_id": "curr-ownership-own-r3",
-      "statement": "an inflection prefix from inflection_prefixes may be assigned only when token_kind=verb_imperfect is declared AND the letter is not the expected radical",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
-      "rule_id": "curr-ownership-own-r4",
-      "statement": "any letter left unowned, or owned twice, forces abstain pending_letter_ownership for the WHOLE token",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "provenance": "curriculum/l1l6/increments/inc-ownership/unit-v2.json",
-      "rule_id": "curr-ownership-own-r5",
-      "statement": "weak roots: a radical absent from the surface is recorded as hidden_radical, never forced onto a surface letter",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -147,6 +437,7 @@
     "br-pl-occ-61-5-4",
     "br-pl-occ-9-120-3"
   ],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "owner_colour_segments",

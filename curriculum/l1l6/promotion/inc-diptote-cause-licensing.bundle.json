@@ -1,6 +1,328 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-diptote-cause-licensing/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-diptote-cause-licensing/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "reject_reconstruction; triggers_unstated; register_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "both triggers are declared inputs; sounding foreign or being a name is never itself evidence",
+        "definiteness and construct headship are tested before any override, since they explain most ordinary sightings of the restored exponent",
+        "the verse override is register-gated and requires identified metrical or rhyme pressure; it is emitted attributed and never certifies",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0e5e25692e69f6af22e860e04f4b92061bfe1bb6689e9589b431fb6d6c0e4695",
+      "guards_payload": [
+        {
+          "guard": "both triggers are declared inputs; sounding foreign or being a name is never itself evidence",
+          "id": "g-dpc-1"
+        },
+        {
+          "guard": "definiteness and construct headship are tested before any override, since they explain most ordinary sightings of the restored exponent",
+          "id": "g-dpc-2"
+        },
+        {
+          "guard": "the verse override is register-gated and requires identified metrical or rhyme pressure; it is emitted attributed and never certifies",
+          "id": "g-dpc-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-dpc-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "dpc-adv-01",
+        "dpc-adv-02",
+        "dpc-abs-01"
+      ],
+      "positive_examples": [
+        "dpc-pos-01",
+        "dpc-pos-02",
+        "dpc-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-diptote-cause-licensing"
+      },
+      "scope": {
+        "increment": "inc-diptote-cause-licensing",
+        "statement": "the feature-based route needs a pair: one semantic trigger (name-hood or adjectival status) together with one formal trigger; either alone leaves the noun fully declining",
+        "unit_ref": "cu-diptote-cause-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-diptote-cause-licensing-dpc-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-diptote-cause-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; triggers_unstated; register_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "both triggers are declared inputs; sounding foreign or being a name is never itself evidence",
+        "definiteness and construct headship are tested before any override, since they explain most ordinary sightings of the restored exponent",
+        "the verse override is register-gated and requires identified metrical or rhyme pressure; it is emitted attributed and never certifies",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0e5e25692e69f6af22e860e04f4b92061bfe1bb6689e9589b431fb6d6c0e4695",
+      "guards_payload": [
+        {
+          "guard": "both triggers are declared inputs; sounding foreign or being a name is never itself evidence",
+          "id": "g-dpc-1"
+        },
+        {
+          "guard": "definiteness and construct headship are tested before any override, since they explain most ordinary sightings of the restored exponent",
+          "id": "g-dpc-2"
+        },
+        {
+          "guard": "the verse override is register-gated and requires identified metrical or rhyme pressure; it is emitted attributed and never certifies",
+          "id": "g-dpc-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-dpc-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "dpc-adv-01",
+        "dpc-adv-02",
+        "dpc-abs-01"
+      ],
+      "positive_examples": [
+        "dpc-pos-01",
+        "dpc-pos-02",
+        "dpc-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-diptote-cause-licensing"
+      },
+      "scope": {
+        "increment": "inc-diptote-cause-licensing",
+        "statement": "the ultimate-plural template family blocks on template evidence alone and does not run the paired-trigger test",
+        "unit_ref": "cu-diptote-cause-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-diptote-cause-licensing-dpc-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-diptote-cause-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; triggers_unstated; register_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "both triggers are declared inputs; sounding foreign or being a name is never itself evidence",
+        "definiteness and construct headship are tested before any override, since they explain most ordinary sightings of the restored exponent",
+        "the verse override is register-gated and requires identified metrical or rhyme pressure; it is emitted attributed and never certifies",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0e5e25692e69f6af22e860e04f4b92061bfe1bb6689e9589b431fb6d6c0e4695",
+      "guards_payload": [
+        {
+          "guard": "both triggers are declared inputs; sounding foreign or being a name is never itself evidence",
+          "id": "g-dpc-1"
+        },
+        {
+          "guard": "definiteness and construct headship are tested before any override, since they explain most ordinary sightings of the restored exponent",
+          "id": "g-dpc-2"
+        },
+        {
+          "guard": "the verse override is register-gated and requires identified metrical or rhyme pressure; it is emitted attributed and never certifies",
+          "id": "g-dpc-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-dpc-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "dpc-adv-01",
+        "dpc-adv-02",
+        "dpc-abs-01"
+      ],
+      "positive_examples": [
+        "dpc-pos-01",
+        "dpc-pos-02",
+        "dpc-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-diptote-cause-licensing"
+      },
+      "scope": {
+        "increment": "inc-diptote-cause-licensing",
+        "statement": "blocking surfaces only while the noun is indefinite and unannexed; the article and construct headship cancel it in ordinary prose, which is grammar and not a licence",
+        "unit_ref": "cu-diptote-cause-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-diptote-cause-licensing-dpc-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-diptote-cause-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; triggers_unstated; register_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "both triggers are declared inputs; sounding foreign or being a name is never itself evidence",
+        "definiteness and construct headship are tested before any override, since they explain most ordinary sightings of the restored exponent",
+        "the verse override is register-gated and requires identified metrical or rhyme pressure; it is emitted attributed and never certifies",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0e5e25692e69f6af22e860e04f4b92061bfe1bb6689e9589b431fb6d6c0e4695",
+      "guards_payload": [
+        {
+          "guard": "both triggers are declared inputs; sounding foreign or being a name is never itself evidence",
+          "id": "g-dpc-1"
+        },
+        {
+          "guard": "definiteness and construct headship are tested before any override, since they explain most ordinary sightings of the restored exponent",
+          "id": "g-dpc-2"
+        },
+        {
+          "guard": "the verse override is register-gated and requires identified metrical or rhyme pressure; it is emitted attributed and never certifies",
+          "id": "g-dpc-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-dpc-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "dpc-adv-01",
+        "dpc-adv-02",
+        "dpc-abs-01"
+      ],
+      "positive_examples": [
+        "dpc-pos-01",
+        "dpc-pos-02",
+        "dpc-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-diptote-cause-licensing"
+      },
+      "scope": {
+        "increment": "inc-diptote-cause-licensing",
+        "statement": "the verse override is register-gated and requires identified metrical or rhyme pressure; it never reaches prose",
+        "unit_ref": "cu-diptote-cause-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-diptote-cause-licensing-dpc-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-diptote-cause-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; triggers_unstated; register_unknown",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "both triggers are declared inputs; sounding foreign or being a name is never itself evidence",
+        "definiteness and construct headship are tested before any override, since they explain most ordinary sightings of the restored exponent",
+        "the verse override is register-gated and requires identified metrical or rhyme pressure; it is emitted attributed and never certifies",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0e5e25692e69f6af22e860e04f4b92061bfe1bb6689e9589b431fb6d6c0e4695",
+      "guards_payload": [
+        {
+          "guard": "both triggers are declared inputs; sounding foreign or being a name is never itself evidence",
+          "id": "g-dpc-1"
+        },
+        {
+          "guard": "definiteness and construct headship are tested before any override, since they explain most ordinary sightings of the restored exponent",
+          "id": "g-dpc-2"
+        },
+        {
+          "guard": "the verse override is register-gated and requires identified metrical or rhyme pressure; it is emitted attributed and never certifies",
+          "id": "g-dpc-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-dpc-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "dpc-adv-01",
+        "dpc-adv-02",
+        "dpc-abs-01"
+      ],
+      "positive_examples": [
+        "dpc-pos-01",
+        "dpc-pos-02",
+        "dpc-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-diptote-cause-licensing"
+      },
+      "scope": {
+        "increment": "inc-diptote-cause-licensing",
+        "statement": "a template that the trigger chart does not list is not a trigger by resemblance, however many worked examples sit on it -> reject_reconstruction",
+        "unit_ref": "cu-diptote-cause-licensing"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-diptote-cause-licensing-dpc-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-diptote-cause-licensing/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "licensing_table",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-diptote-cause-licensing",
@@ -8,43 +330,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
-      "rule_id": "curr-diptote-cause-licensing-dpc-r1",
-      "statement": "the feature-based route needs a pair: one semantic trigger (name-hood or adjectival status) together with one formal trigger; either alone leaves the noun fully declining",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
-      "rule_id": "curr-diptote-cause-licensing-dpc-r2",
-      "statement": "the ultimate-plural template family blocks on template evidence alone and does not run the paired-trigger test",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
-      "rule_id": "curr-diptote-cause-licensing-dpc-r3",
-      "statement": "blocking surfaces only while the noun is indefinite and unannexed; the article and construct headship cancel it in ordinary prose, which is grammar and not a licence",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
-      "rule_id": "curr-diptote-cause-licensing-dpc-r4",
-      "statement": "the verse override is register-gated and requires identified metrical or rhyme pressure; it never reaches prose",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-diptote-cause-licensing/unit-v1.json",
-      "rule_id": "curr-diptote-cause-licensing-dpc-r5",
-      "statement": "a template that the trigger chart does not list is not a trigger by resemblance, however many worked examples sit on it -> reject_reconstruction",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -219,6 +504,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "trigger_pair_chip",

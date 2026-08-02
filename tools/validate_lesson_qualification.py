@@ -52,7 +52,7 @@ AR_WORD_RE = re.compile(r"[؀-ۿ][؀-ۿـً-ْٰ]*")
 # between terms breaks the run (the custody rule is 4 CONSECUTIVE words; an
 # inventory of single terms with English connectors is not prose)
 AR_RUN_RE = re.compile(r"[؀-ۿ][؀-ۿـً-ْٰ]*(?:[\s،,]+[؀-ۿ][؀-ۿـً-ْٰ]*)*")
-SERVER_RE = re.compile(r"(?:/srv/|/var/www|/home/[a-z]|[A-Za-z]:\\)")
+SERVER_RE = re.compile(r"(?:/srv/|/var/www|/home/[a-z]|/Users/|\\\\[A-Za-z0-9]|[A-Za-z]:\\)")
 
 
 def max_arabic_run(s):

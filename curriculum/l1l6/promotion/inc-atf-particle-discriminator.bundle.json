@@ -1,6 +1,343 @@
 {
   "candidate_procedure": "curriculum/l1l6/increments/inc-atf-particle-discriminator/procedure.md",
   "candidate_reference": "curriculum/l1l6/increments/inc-atf-particle-discriminator/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a second term with an independent governor is never labelled a conjunct",
+        "the coordinating and clause-negating readings of one form are separated by position only, never by frequency",
+        "disputed coordinator membership is preserved as attributed alternatives; the pack never resolves a school dispute",
+        "later looser usage of the alternation particles is a teaching note, never a licensing rule"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "8c1f6078e8278c4a78fa71b40c0d01753442369f3418077261c6d6317c112c6e",
+      "guards_payload": [
+        {
+          "guard": "a second term with an independent governor is never labelled a conjunct",
+          "id": "g-atf-case"
+        },
+        {
+          "guard": "the coordinating and clause-negating readings of one form are separated by position only, never by frequency",
+          "id": "g-atf-pos"
+        },
+        {
+          "guard": "disputed coordinator membership is preserved as attributed alternatives; the pack never resolves a school dispute",
+          "id": "g-atf-disp"
+        },
+        {
+          "guard": "later looser usage of the alternation particles is a teaching note, never a licensing rule",
+          "id": "g-atf-mod"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-pos-04",
+        "atf-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-particle-discriminator"
+      },
+      "scope": {
+        "increment": "inc-atf-particle-discriminator",
+        "statement": "particle identity, position relative to the two terms, case identity, polarity of the preceding clause, the size of the following unit and gemination are SUPPLIED evidence, never guessed from the bare form",
+        "unit_ref": "cu-atf-particle-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-particle-discriminator-atf-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-particle-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a second term with an independent governor is never labelled a conjunct",
+        "the coordinating and clause-negating readings of one form are separated by position only, never by frequency",
+        "disputed coordinator membership is preserved as attributed alternatives; the pack never resolves a school dispute",
+        "later looser usage of the alternation particles is a teaching note, never a licensing rule"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "8c1f6078e8278c4a78fa71b40c0d01753442369f3418077261c6d6317c112c6e",
+      "guards_payload": [
+        {
+          "guard": "a second term with an independent governor is never labelled a conjunct",
+          "id": "g-atf-case"
+        },
+        {
+          "guard": "the coordinating and clause-negating readings of one form are separated by position only, never by frequency",
+          "id": "g-atf-pos"
+        },
+        {
+          "guard": "disputed coordinator membership is preserved as attributed alternatives; the pack never resolves a school dispute",
+          "id": "g-atf-disp"
+        },
+        {
+          "guard": "later looser usage of the alternation particles is a teaching note, never a licensing rule",
+          "id": "g-atf-mod"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-pos-04",
+        "atf-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-particle-discriminator"
+      },
+      "scope": {
+        "increment": "inc-atf-particle-discriminator",
+        "statement": "case transmission from the first term to the second is the formal content of the coordination relation; a second term with an independent governor is not a conjunct",
+        "unit_ref": "cu-atf-particle-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-particle-discriminator-atf-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-particle-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a second term with an independent governor is never labelled a conjunct",
+        "the coordinating and clause-negating readings of one form are separated by position only, never by frequency",
+        "disputed coordinator membership is preserved as attributed alternatives; the pack never resolves a school dispute",
+        "later looser usage of the alternation particles is a teaching note, never a licensing rule"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "8c1f6078e8278c4a78fa71b40c0d01753442369f3418077261c6d6317c112c6e",
+      "guards_payload": [
+        {
+          "guard": "a second term with an independent governor is never labelled a conjunct",
+          "id": "g-atf-case"
+        },
+        {
+          "guard": "the coordinating and clause-negating readings of one form are separated by position only, never by frequency",
+          "id": "g-atf-pos"
+        },
+        {
+          "guard": "disputed coordinator membership is preserved as attributed alternatives; the pack never resolves a school dispute",
+          "id": "g-atf-disp"
+        },
+        {
+          "guard": "later looser usage of the alternation particles is a teaching note, never a licensing rule",
+          "id": "g-atf-mod"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-pos-04",
+        "atf-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-particle-discriminator"
+      },
+      "scope": {
+        "increment": "inc-atf-particle-discriminator",
+        "statement": "position between two terms separates the coordinating negator from clause negation, and gemination separates the adversative coordinator from its governing homograph",
+        "unit_ref": "cu-atf-particle-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-particle-discriminator-atf-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-particle-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a second term with an independent governor is never labelled a conjunct",
+        "the coordinating and clause-negating readings of one form are separated by position only, never by frequency",
+        "disputed coordinator membership is preserved as attributed alternatives; the pack never resolves a school dispute",
+        "later looser usage of the alternation particles is a teaching note, never a licensing rule"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "8c1f6078e8278c4a78fa71b40c0d01753442369f3418077261c6d6317c112c6e",
+      "guards_payload": [
+        {
+          "guard": "a second term with an independent governor is never labelled a conjunct",
+          "id": "g-atf-case"
+        },
+        {
+          "guard": "the coordinating and clause-negating readings of one form are separated by position only, never by frequency",
+          "id": "g-atf-pos"
+        },
+        {
+          "guard": "disputed coordinator membership is preserved as attributed alternatives; the pack never resolves a school dispute",
+          "id": "g-atf-disp"
+        },
+        {
+          "guard": "later looser usage of the alternation particles is a teaching note, never a licensing rule",
+          "id": "g-atf-mod"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-pos-04",
+        "atf-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-particle-discriminator"
+      },
+      "scope": {
+        "increment": "inc-atf-particle-discriminator",
+        "statement": "the disputed members carry an attributed no-decision path: when both the coordinating and the governing reading are licensed, both are kept with their attribution and neither is promoted",
+        "unit_ref": "cu-atf-particle-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-particle-discriminator-atf-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-particle-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a second term with an independent governor is never labelled a conjunct",
+        "the coordinating and clause-negating readings of one form are separated by position only, never by frequency",
+        "disputed coordinator membership is preserved as attributed alternatives; the pack never resolves a school dispute",
+        "later looser usage of the alternation particles is a teaching note, never a licensing rule"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "8c1f6078e8278c4a78fa71b40c0d01753442369f3418077261c6d6317c112c6e",
+      "guards_payload": [
+        {
+          "guard": "a second term with an independent governor is never labelled a conjunct",
+          "id": "g-atf-case"
+        },
+        {
+          "guard": "the coordinating and clause-negating readings of one form are separated by position only, never by frequency",
+          "id": "g-atf-pos"
+        },
+        {
+          "guard": "disputed coordinator membership is preserved as attributed alternatives; the pack never resolves a school dispute",
+          "id": "g-atf-disp"
+        },
+        {
+          "guard": "later looser usage of the alternation particles is a teaching note, never a licensing rule",
+          "id": "g-atf-mod"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "atf-adv-01",
+        "atf-adv-02",
+        "atf-adv-03",
+        "atf-abs-01"
+      ],
+      "positive_examples": [
+        "atf-pos-01",
+        "atf-pos-02",
+        "atf-pos-03",
+        "atf-pos-04",
+        "atf-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-atf-particle-discriminator"
+      },
+      "scope": {
+        "increment": "inc-atf-particle-discriminator",
+        "statement": "the classical division of the two alternation particles by clause type is recorded as taught; looser later usage is a teaching note and is never emitted as a licensing rule",
+        "unit_ref": "cu-atf-particle-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-atf-particle-discriminator-atf-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-atf-particle-discriminator/fixtures.jsonl"
+      ]
+    }
+  ],
   "capability": "discriminator_table",
   "exact_consumer": "tools/curriculum_unit_consumer.py",
   "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-atf-particle-discriminator",
@@ -8,43 +345,6 @@
     "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
     "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
     "no live surface, no certified store"
-  ],
-  "expected_skill_registry_entries": [
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
-      "rule_id": "curr-atf-particle-discriminator-atf-r1",
-      "statement": "particle identity, position relative to the two terms, case identity, polarity of the preceding clause, the size of the following unit and gemination are SUPPLIED evidence, never guessed from the bare form",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
-      "rule_id": "curr-atf-particle-discriminator-atf-r2",
-      "statement": "case transmission from the first term to the second is the formal content of the coordination relation; a second term with an independent governor is not a conjunct",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
-      "rule_id": "curr-atf-particle-discriminator-atf-r3",
-      "statement": "position between two terms separates the coordinating negator from clause negation, and gemination separates the adversative coordinator from its governing homograph",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
-      "rule_id": "curr-atf-particle-discriminator-atf-r4",
-      "statement": "the disputed members carry an attributed no-decision path: when both the coordinating and the governing reading are licensed, both are kept with their attribution and neither is promoted",
-      "status": "candidate"
-    },
-    {
-      "gate": "@curriculum-candidate:redfirst",
-      "provenance": "curriculum/l1l6/increments/inc-atf-particle-discriminator/unit-v1.json",
-      "rule_id": "curr-atf-particle-discriminator-atf-r5",
-      "statement": "the classical division of the two alternation particles by clause type is recorded as taught; looser later usage is a teaching note and is never emitted as a licensing rule",
-      "status": "candidate"
-    }
   ],
   "fixtures_by_class": {
     "abstention": [
@@ -303,6 +603,7 @@
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
   "rich_hover_fields": [
     {
       "key": "coordination_panel",

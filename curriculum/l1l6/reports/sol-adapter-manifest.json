@@ -1,0 +1,62 @@
+{
+  "adapters": [
+    {
+      "acceptance": "python tools/curriculum_unit_consumer.py --all (post-adapter fixtures include envelope-supplied rows)",
+      "canaries": [
+        "a harness candidate_pending proposal with a supplied authoritative envelope must carry occurrence_binding=supplied",
+        "a proposal without the envelope must stay generic (occurrence_binding names the missing adapter)"
+      ],
+      "contract": "authoritative morphology/dependency lattice outputs (fusha_morphology_lattice / fusha_governor candidate lattices) supplied as the evidence envelope the harness analyzers require (root_evidence with hidden_positions; occurrence envelope with governor, reason_key, complete rivals, review posture)",
+      "direction": "main -> PR harness",
+      "id": "adp-sarf-nahw-authority"
+    },
+    {
+      "acceptance": "python tools/build_curriculum_corpus_pilot.py --check after a ledger change shows drift (red) until regenerated",
+      "canaries": [
+        "revoking a depended-on fact must invalidate the 2:34:5 envelope and its derived projections on regeneration"
+      ],
+      "contract": "effective certification/dependency/revocation state per fact id (the certify_typed_fact engine's ledger), replacing this PR's event-trail replay with the engine's own effective-state API; every envelope/projection carries depends_on_fact_ids and regenerates on revocation",
+      "direction": "main -> PR planes",
+      "id": "adp-typed-fact-certification"
+    },
+    {
+      "acceptance": "Sol-owned tutor tests; PR-side: python tools/build_candidate_drills.py --check",
+      "canaries": [
+        "a drill whose deciding evidence is absent must surface as undecidable, never forced"
+      ],
+      "contract": "drill-candidates.jsonl rows map to KC ids; gate ladder wraps every routed answer; remediation routes via misconception_id; tutor state is written ONLY by the existing runtime",
+      "direction": "PR candidates -> main tutor",
+      "id": "adp-tutor-kc-drills"
+    },
+    {
+      "acceptance": "tools/validate_particle_projection_parity.py (main) over adapter-mapped samples",
+      "canaries": [
+        "a hover component without a fact-id trace to its segment must be rejected by the payload validator"
+      ],
+      "contract": "candidate hover/colour fields map into the existing canonical-hover payload cards keyed by the SAME fact identities; appearances resolve through the occurrence/appearance graph (selected witnesses only)",
+      "direction": "PR candidates -> main projection plane",
+      "id": "adp-occurrence-appearance-projection"
+    },
+    {
+      "acceptance": "website-handoff lane validation (Sol/website agent)",
+      "canaries": [
+        "deliverable:false must remain on every PR-side shape"
+      ],
+      "contract": "qamus.website_projection_payload.v1 envelopes produced ONLY by the established website-handoff lane from certified projections; PR candidate_payload_shape rows are inputs to that lane, never deliverables",
+      "direction": "PR candidates -> website agent",
+      "id": "adp-website-payload"
+    },
+    {
+      "acceptance": "Sol-owned dogfood ledger validation",
+      "canaries": [
+        "no dogfood-event row may claim a production defect from a harness-only measurement"
+      ],
+      "contract": "loop records translate to dogfood-event rows (defect found/repaired, fixture added) in the canonical dogfood-event ledger schema; until wired, loop records remain development evidence only",
+      "direction": "PR harness -> main dogfood ledger",
+      "id": "adp-canonical-dogfood"
+    }
+  ],
+  "purpose": "exact adapter contracts through which this PR's candidate planes reach the authoritative current-main interfaces; nothing in this PR counterfeits these adapters",
+  "schema": "curriculum.l1l6_sol_adapter_manifest.v1",
+  "status": "contracts prepared; ALL adapters Sol-owned; nothing simulated in this PR"
+}
