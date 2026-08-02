@@ -32,7 +32,8 @@
         "repair": "both validators gain a forward-slash scan whose lookbehinds exclude URL schemes (a drive letter is a single letter before the colon, so https:/ cannot match; forward-slash UNC requires a host segment and a further slash, so http:// and arithmetic like a // b cannot match). Two red-first mutations plus an explicit NO-FALSE-POSITIVE probe (URLs, relative paths and fractions must stay quiet) are committed in the self-test",
         "acceptance": "python tools/validate_curriculum_l1l6.py --self-test (windows_drive_forward_slash_leak, unc_forward_slash_leak trip; forward_slash_no_false_positive stays quiet) && python tools/validate_lesson_qualification.py --complete",
         "files": ["tools/validate_curriculum_l1l6.py", "tools/validate_lesson_qualification.py"],
-        "remaining_dependency": "none beyond Sol re-review"
+        "remaining_dependency": "none beyond Sol re-review",
+        "cross_gate_interaction_found_at_merge": "the FIRST synthetic merge of this repair failed main's RM-09 tree-wide recurrence lint (1 offender: tools/validate_curriculum_l1l6.py). Cause: main's RM-09 already folds path separators before matching its operator-path needles (NF-T3-1), and the new canary string spelled a real operator path, so the canary itself became the recurrence. Repair: the canary now uses a neutral drive and directory, which exercises the same regex without reproducing a protected path. This was found only by running the complete harness on the merge tree — the PR-side gates alone would not have caught it, and the branch is now pre-cleared against main's RM-09 needle logic before every merge test"
       }
     ]
   },

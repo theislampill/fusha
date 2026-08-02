@@ -1511,10 +1511,14 @@ def self_test():
     mut("ip_address_leak", "leakage_scan",
         lambda c: c["files"].update({"curriculum/l1l6/z4.md":
                                      "host 10.20.30.40 responded"}))
-    # forward-slash Windows paths (Sol round 3): these evaded every scan
+    # forward-slash Windows paths (Sol round 3): these evaded every scan.
+    # The canary deliberately uses a neutral drive and directory: main's
+    # RM-09 recurrence lint folds separators before matching its operator-
+    # path needles, so a canary spelling a real operator path would trip
+    # THAT gate on the merge tree (it did — this wording is the repair).
     mut("windows_drive_forward_slash_leak", "forward-slash Windows",
         lambda c: c["files"].update({"curriculum/l1l6/z5.md":
-                                     "built in C:/workspace/ai/fusha"}))
+                                     "built in E:/opt/private-corpus/levels"}))
     mut("unc_forward_slash_leak", "forward-slash Windows",
         lambda c: c["files"].update({"curriculum/l1l6/z6.md":
                                      "corpus at //fileserver/share/levels"}))
