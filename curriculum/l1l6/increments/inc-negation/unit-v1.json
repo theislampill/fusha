@@ -1,0 +1,116 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives"
+  ],
+  "capability": "discriminator_table",
+  "declarative_addition_proof": "this pack was added WITHOUT any edit to tools/curriculum_unit_consumer.py — it reuses the registered discriminator_table capability (shared with inc-ma), proving capability-keyed dispatch",
+  "functions": [
+    {
+      "discriminators": {
+        "following_verb": [
+          "imperfect_jussive"
+        ],
+        "particle": [
+          "لم"
+        ]
+      },
+      "id": "lam_jussive_past",
+      "name": "لم + jussive = negated PAST"
+    },
+    {
+      "discriminators": {
+        "following_verb": [
+          "imperfect_subjunctive"
+        ],
+        "particle": [
+          "لن"
+        ]
+      },
+      "id": "lan_subjunctive_future",
+      "name": "لن + subjunctive = negated future"
+    },
+    {
+      "discriminators": {
+        "following_verb": [
+          "imperfect_jussive"
+        ],
+        "particle": [
+          "لا"
+        ],
+        "person": [
+          "second"
+        ]
+      },
+      "id": "la_nahiya",
+      "name": "لا الناهية (prohibition)"
+    },
+    {
+      "discriminators": {
+        "following_verb": [
+          "imperfect_indicative"
+        ],
+        "particle": [
+          "لا"
+        ]
+      },
+      "id": "la_nafiya_verbal",
+      "name": "لا نافية over an imperfect"
+    },
+    {
+      "discriminators": {
+        "following_form": [
+          "indefinite_noun_nasb_or_mabni"
+        ],
+        "particle": [
+          "لا"
+        ]
+      },
+      "id": "la_jins",
+      "name": "لا النافية للجنس"
+    },
+    {
+      "discriminators": {
+        "following_verb": [
+          "perfect"
+        ],
+        "particle": [
+          "ما"
+        ]
+      },
+      "id": "ma_nafiya_past",
+      "name": "ما نافية over a perfect"
+    },
+    {
+      "discriminators": {
+        "clause": [
+          "nominal"
+        ],
+        "particle": [
+          "ليس"
+        ]
+      },
+      "id": "laysa_verbal_negation",
+      "name": "ليس nominal negation"
+    }
+  ],
+  "increment": "inc-negation",
+  "rules": [
+    {
+      "id": "neg-r1",
+      "text": "discriminator features (particle identity incl. content-letter harakah, following-verb mood, person, clause type) are SUPPLIED evidence, never guessed"
+    },
+    {
+      "id": "neg-r2",
+      "text": "the governing negative sets the TENSE reading (lam+imperfect = past) — never gloss the bare surface tense under a negative"
+    },
+    {
+      "id": "neg-r3",
+      "text": ">1 survivor -> preserve_alternatives; 0 -> insufficient_features (lam/lima homograph must be resolved upstream by the harakah guard)"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "u-n01",
+  "version": 1
+}

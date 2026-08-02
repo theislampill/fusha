@@ -4,6 +4,7 @@
     "non_governing_use",
     "out_of_regime"
   ],
+  "capability": "pattern_consistency",
   "families": {
     "inna": {
       "ism": "nasb",

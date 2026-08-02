@@ -5,6 +5,7 @@
     "no_template",
     "no_root_evidence"
   ],
+  "capability": "template_classification",
   "increment": "inc-derivatives",
   "rules": [
     {

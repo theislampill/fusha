@@ -445,6 +445,8 @@ UNIT_REQUIRED_FIELDS = (
     "common_learner_errors", "worked_analysis_stages",
     "required_evidence", "skill_surface", "rich_hover_component",
     "corpus_pvn_application", "backprop_destination", "concept_node_query",
+    "explanation_ladder", "abstention_conditions", "transfer_fixtures",
+    "promotion_state",
 )
 
 
@@ -515,15 +517,27 @@ def check_packet_presence(ctx, errors):
             errors.append("packet_presence: %s.json missing" % pid)
 
 
-INCREMENTS = ("inc-ownership", "inc-derivatives", "inc-ma", "inc-nawasikh",
-              "inc-hidden")
+def discovered_increments():
+    """Discovery-based, never a hard-coded list (mirrors the consumer)."""
+    inc_dir = BASE / "increments"
+    if not inc_dir.exists():
+        return []
+    return sorted(p.name for p in inc_dir.iterdir()
+                  if p.is_dir() and list(p.glob("unit-v*.json")))
+
+
 INCREMENT_FILES = ("reference.md", "procedure.md", "staged-explanation.md",
                    "fixtures.jsonl", "hover-fields.json", "guards.json",
                    "unit-v1.json")
+MIN_INCREMENTS = 6
 
 
 def check_increments(ctx, errors):
-    for inc in INCREMENTS:
+    incs = discovered_increments()
+    if len(incs) < MIN_INCREMENTS:
+        errors.append("increments: discovery found %d < %d increments"
+                      % (len(incs), MIN_INCREMENTS))
+    for inc in incs:
         d = BASE / "increments" / inc
         for f in INCREMENT_FILES:
             if not (d / f).exists():
@@ -664,7 +678,7 @@ def check_precise_links(ctx, errors):
             errors.append("precise_links: %s differs from recompute" % fp.name)
     unit_ids = {u["unit_id"] for u in ctx["units"]}
     hover_keys = {}
-    for inc in INCREMENTS:
+    for inc in discovered_increments():
         hp = BASE / "increments" / inc / "hover-fields.json"
         if hp.exists():
             hover_keys[inc] = {f["key"] for f in

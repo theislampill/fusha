@@ -3,6 +3,7 @@
     "insufficient_features",
     "preserve_alternatives"
   ],
+  "capability": "discriminator_table",
   "functions": [
     {
       "discriminators": {

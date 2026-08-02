@@ -41,17 +41,26 @@ if hasattr(sys.stdout, "reconfigure"):
 ROOT = Path(__file__).resolve().parents[1]
 INC_BASE = ROOT / "curriculum" / "l1l6" / "increments"
 
-LATEST_UNIT = {
-    "inc-ownership": "unit-v2.json",
-    "inc-derivatives": "unit-v1.json",
-    "inc-ma": "unit-v1.json",
-    "inc-nawasikh": "unit-v1.json",
-    "inc-hidden": "unit-v1.json",
-}
+
+def discover_increments():
+    """Directory discovery — the consumer is NOT hard-coded to any increment
+    list. An increment is any increments/<name>/ dir containing unit-v*.json;
+    the latest pack is the highest version number."""
+    found = {}
+    for d in sorted(p for p in INC_BASE.iterdir() if p.is_dir()):
+        packs = sorted(d.glob("unit-v*.json"),
+                       key=lambda p: int(p.stem.split("-v")[1]))
+        if packs:
+            found[d.name] = packs[-1].name
+    return found
+
+
+def latest_unit(inc):
+    return discover_increments()[inc]
 
 
 def load(inc, unit_file=None):
-    unit = json.loads((INC_BASE / inc / (unit_file or LATEST_UNIT[inc]))
+    unit = json.loads((INC_BASE / inc / (unit_file or latest_unit(inc)))
                       .read_text(encoding="utf-8"))
     fixtures = [json.loads(l) for l in
                 (INC_BASE / inc / "fixtures.jsonl").read_text(encoding="utf-8").splitlines()
@@ -158,8 +167,8 @@ def analyze_derivative(inp, unit):
     return {"decision": "analyzed", "class": t["class"], "template": t["id"]}
 
 
-# ------------------------------------------------------------------- inc-ma
-def analyze_ma(inp, unit):
+# ------------------------------------------- capability: discriminator_table
+def analyze_discriminator_table(inp, unit):
     feats = inp.get("features") or {}
     survivors = []
     for fn in unit["functions"]:
@@ -211,13 +220,23 @@ def analyze_hidden(inp, unit):
     return {"decision": "abstain", "reason": "reject_reconstruction"}
 
 
-ANALYZERS = {
-    "inc-ownership": analyze_ownership,
-    "inc-derivatives": analyze_derivative,
-    "inc-ma": analyze_ma,
-    "inc-nawasikh": analyze_nawasikh,
-    "inc-hidden": analyze_hidden,
+# Registered CAPABILITY interfaces. Dispatch is by the unit pack's declared
+# `capability` field, never by increment name — a new increment that reuses a
+# registered capability needs ZERO consumer edits (declarative addition).
+CAPABILITIES = {
+    "letter_ownership": analyze_ownership,
+    "template_classification": analyze_derivative,
+    "discriminator_table": analyze_discriminator_table,
+    "pattern_consistency": analyze_nawasikh,
+    "licensing_table": analyze_hidden,
 }
+
+
+def analyzer_for(unit):
+    cap = unit.get("capability")
+    if cap not in CAPABILITIES:
+        raise KeyError("unit pack declares unregistered capability %r" % cap)
+    return CAPABILITIES[cap]
 
 
 def _subset_match(expected, actual):
@@ -230,7 +249,7 @@ def _subset_match(expected, actual):
 
 def run(inc, unit_file=None):
     unit, fixtures = load(inc, unit_file)
-    analyzer = ANALYZERS[inc]
+    analyzer = analyzer_for(unit)
     results = []
     mismatches = 0
     for fx in fixtures:
@@ -243,7 +262,7 @@ def run(inc, unit_file=None):
     return {
         "schema": "curriculum.l1l6_consumer_run.v1",
         "increment": inc,
-        "unit_file": unit_file or LATEST_UNIT[inc],
+        "unit_file": unit_file or latest_unit(inc),
         "unit_version": unit.get("version"),
         "consumer": "tools/curriculum_unit_consumer.py",
         "fixtures": len(results),
@@ -281,7 +300,7 @@ def self_test():
     fx = next(f for f in fixtures if f["fixture_id"] == "ma-adv-01")
     unit_m = json.loads(json.dumps(unit))
     unit_m["functions"] = [f_ for f_ in unit_m["functions"] if f_["id"] != "nafiya"]
-    a1, a2 = analyze_ma(fx["input"], unit), analyze_ma(fx["input"], unit_m)
+    a1, a2 = analyze_discriminator_table(fx["input"], unit), analyze_discriminator_table(fx["input"], unit_m)
     if a1 == a2 or a2.get("decision") != "analyzed":
         failures.append("ma pack mutation did not collapse alternatives as expected")
     # 5. nawasikh: swapping the inna pattern in the pack must flip consistency
@@ -300,11 +319,29 @@ def self_test():
                                  if r["construction"] != "imperative_verb"]
     if analyze_hidden(fx["input"], unit_m).get("reason") != "reject_reconstruction":
         failures.append("hidden pack mutation did not revoke the licence")
-    # 7. all latest packs green
-    for inc in sorted(LATEST_UNIT):
+    # 7. all DISCOVERED latest packs green (directory discovery, no list)
+    discovered = discover_increments()
+    if len(discovered) < 5:
+        failures.append("discovery found only %d increments" % len(discovered))
+    for inc in sorted(discovered):
         rec = run(inc)
         if rec["mismatches"] != 0:
             failures.append("%s latest pack has %d mismatches" % (inc, rec["mismatches"]))
+
+    # 8. capability dispatch: every discovered pack declares a REGISTERED
+    # capability, and at least two increments share one capability (proving
+    # dispatch is capability-keyed, not increment-keyed)
+    caps = []
+    for inc in sorted(discover_increments()):
+        u, _ = load(inc)
+        try:
+            analyzer_for(u)
+        except KeyError as exc:
+            failures.append(str(exc))
+        caps.append(u.get("capability"))
+    if len(set(caps)) >= len(caps):
+        failures.append("no capability is shared by two increments — declarative "
+                        "reuse unproven (add an increment reusing a capability)")
 
     if failures:
         print("SELF-TEST FAIL:")
@@ -319,7 +356,7 @@ def self_test():
 def main(argv):
     if "--self-test" in argv:
         return self_test()
-    incs = sorted(LATEST_UNIT) if "--all" in argv else None
+    incs = sorted(discover_increments()) if "--all" in argv else None
     if incs is None:
         if "--increment" not in argv:
             print("usage: --increment inc-X [--unit unit-vN.json] [--record OUT] "

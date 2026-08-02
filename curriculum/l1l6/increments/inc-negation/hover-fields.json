@@ -1,0 +1,14 @@
+{
+  "fields": [
+    {
+      "key": "negation_effect_chip",
+      "teaching": "shows the particle AND its tense/mood effect (لم + present shape = past meaning) — the effect, not just the label"
+    },
+    {
+      "key": "scope_note",
+      "teaching": "what the negative governs; ambiguous scope shows alternatives"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

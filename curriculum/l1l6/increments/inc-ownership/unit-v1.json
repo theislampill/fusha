@@ -4,6 +4,7 @@
     "false_stem_risk",
     "no_root_evidence"
   ],
+  "capability": "letter_ownership",
   "clitic_inventory": {
     "ال": "definite_article",
     "ب": "preposition",

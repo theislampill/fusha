@@ -3,6 +3,7 @@
     "reject_reconstruction",
     "alternatives_preserved"
   ],
+  "capability": "licensing_table",
   "increment": "inc-hidden",
   "licensing_table": [
     {
