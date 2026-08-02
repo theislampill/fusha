@@ -61,6 +61,16 @@ def max_arabic_run(s):
         best = max(best, len(AR_WORD_RE.findall(m.group(0))))
     return best
 LESSON_RE = re.compile(r"^L[1-6]\.M\d+\.\d{2}$")
+REQUIRED_KEYS = frozenset({
+    "schema", "lesson_id", "inspected", "instructional_purpose",
+    "concepts_taught", "linguistic_propositions", "recognition_criteria",
+    "procedures", "conditions", "exceptions", "contrasts", "common_mistakes",
+    "misleading_shortcuts", "worked_analysis_stages", "paradigms",
+    "exercise_types", "prerequisite_knowledge", "reuses_from_earlier",
+    "new_knowledge", "later_dependencies", "sarf_relevance", "nahw_relevance",
+    "tutor_drill_relevance", "rich_hover_relevance", "corpus_pvn_relevance",
+    "required_evidence", "uncertainty_flags", "unit_mapping",
+    "repository_destination", "new_capability_required"})
 
 
 def _walk_strings(obj):
@@ -104,6 +114,16 @@ def main(argv):
                 continue
             if not r.get("inspected"):
                 errors.append("%s: %s not marked inspected" % (f.name, lid))
+            missing_keys = REQUIRED_KEYS - set(r)
+            if missing_keys:
+                errors.append("%s: %s missing schema keys %s (truncated/"
+                              "interrupted record?)" % (f.name, lid,
+                                                        sorted(missing_keys)))
+            file_module = f.stem  # e.g. L5M4
+            want = "L%s.M%s." % (file_module[1], file_module[3:])
+            if not lid.startswith(want):
+                errors.append("%s: foreign lesson_id %s (module-file "
+                              "consistency)" % (f.name, lid))
             for p in r.get("linguistic_propositions") or []:
                 if p.get("status") not in STATUSES:
                     errors.append("%s: %s proposition status %r invalid"
