@@ -136,6 +136,12 @@
       "change": "untouched; no completed-custody claim"
     },
     {
+      "subsystem": "p007-derived planes (merge sequencing)",
+      "state": "shared_integration_gate",
+      "remaining_dependency": "Sol merge sequencing: main's GAP-N12 re-bound the pilot's iʿrāb-bearing fact ids, so four derived planes must be regenerated AT MERGE (procedure and end-to-end verification in the repair ledger, row R3-3). Correct on this branch against its own base; this branch does not rebase on its own initiative",
+      "change": "reported, not silently absorbed — the recompute gates went red on the merge tree rather than serving artifacts built on superseded fact ids (R3-3)"
+    },
+    {
       "subsystem": "Residual/blocker ledgers",
       "state": "fable_branch_repair",
       "remaining_dependency": "none",

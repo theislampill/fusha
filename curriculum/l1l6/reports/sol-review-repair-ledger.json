@@ -34,6 +34,25 @@
         "files": ["tools/validate_curriculum_l1l6.py", "tools/validate_lesson_qualification.py"],
         "remaining_dependency": "none beyond Sol re-review",
         "cross_gate_interaction_found_at_merge": "the FIRST synthetic merge of this repair failed main's RM-09 tree-wide recurrence lint (1 offender: tools/validate_curriculum_l1l6.py). Cause: main's RM-09 already folds path separators before matching its operator-path needles (NF-T3-1), and the new canary string spelled a real operator path, so the canary itself became the recurrence. Repair: the canary now uses a neutral drive and directory, which exercises the same regex without reproducing a protected path. This was found only by running the complete harness on the merge tree — the PR-side gates alone would not have caught it, and the branch is now pre-cleared against main's RM-09 needle logic before every merge test"
+      },
+      {
+        "finding": "R3-3. MERGE-SEQUENCING OBLIGATION (not a branch defect): main's GAP-N12 (PR #139, 'bind two-vote claims exactly') re-bound the p007 pilot's iʿrāb-bearing facts to new :v2 fact ids and appended events, so four curriculum planes derived from that store are stale AGAINST THE MERGE TREE while remaining correct against this branch's own base",
+        "ownership": "shared_integration_gate",
+        "status": "reported_awaiting_merge_sequencing",
+        "red_canary": "on the synthetic merge tree the PR validator reports exactly four rows red: corpus-pilot envelope-2-34-5.json and envelope-61-5-4.json differ from recompute, pvn-precise-links.jsonl differs from recompute, and the occurrence bridge is stale. On the branch itself every one of those planes is byte-identical to recompute — the redness is upstream authority moving, which is precisely what these recompute gates exist to catch instead of silently serving derived artifacts built on superseded fact ids",
+        "detail": "the pilot's case/func/gov facts for both occurrences moved from their v1 ids to :v2 ids and the seg fact gained a fourth event; recomputing on the merge tree resolves every dependency to effective_status certified, so nothing is revoked and no envelope withholds — the artifacts simply must be regenerated against the newer store",
+        "repair": "NOT performed on this branch: regenerating here would require incorporating main's newer p007 store, i.e. a rebase or merge, which the owner has not authorized ('do not rebase onto moving main unless Sol directs'). The branch therefore stays pinned to its merge-base authority and the obligation is handed to merge sequencing, with the exact procedure verified end to end",
+        "merge_time_procedure": [
+          "python tools/build_curriculum_pvn_links.py",
+          "python tools/build_curriculum_corpus_pilot.py",
+          "python tools/build_curriculum_occurrence_bridge.py",
+          "python tools/build_promotion_bundles.py",
+          "python tools/build_unit_dispositions.py"
+        ],
+        "merge_time_verification": "executed on the throwaway synthetic merge worktree (never on this branch): the five commands touch exactly four tracked files (the two envelopes, the precise links and the occurrence bridge), after which the PR validator returns PASS (23 checks), both self-tests pass (38/38 mutations; 10 consumer probes) and the complete integrated harness returns ALL REGRESSION CHECKS PASS (1,363 ok) on the regenerated merge tree",
+        "acceptance": "at merge: run the five commands above, then python tools/validate_curriculum_l1l6.py && python -B tools/check_regressions.py",
+        "files": ["curriculum/l1l6/corpus-pilot/envelope-2-34-5.json", "curriculum/l1l6/corpus-pilot/envelope-61-5-4.json", "curriculum/l1l6/links/pvn-precise-links.jsonl", "curriculum/l1l6/reports/occurrence-bridge.jsonl"],
+        "remaining_dependency": "Sol merge sequencing (and, if Sol prefers the branch carry the regeneration instead, an explicit direction to rebase — this branch will not rebase on its own initiative)"
       }
     ]
   },

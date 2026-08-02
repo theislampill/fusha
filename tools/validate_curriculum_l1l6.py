@@ -1381,10 +1381,19 @@ def check_sol_ledgers(ctx, errors):
             errors.append("sol_ledgers: ledger row %r ownership %r outside "
                           "the owner's closed vocabulary"
                           % (r.get("finding", "?")[:40], r.get("ownership")))
-        if r.get("status") != "repaired_awaiting_sol_reverification":
+        # closed, non-closure status vocabulary: a row either records a repair
+        # awaiting Sol's re-verification, or records an obligation this branch
+        # deliberately did NOT absorb (a shared integration gate). Neither
+        # asserts that the finding is closed — closure is Sol's call.
+        if r.get("status") not in ("repaired_awaiting_sol_reverification",
+                                   "reported_awaiting_merge_sequencing"):
             errors.append("sol_ledgers: ledger row %r status %r — closure "
                           "is Sol's call, rows may only await re-review"
                           % (r.get("finding", "?")[:40], r.get("status")))
+        if r.get("status") == "reported_awaiting_merge_sequencing" \
+                and r.get("ownership") == "fable_branch_repair":
+            errors.append("sol_ledgers: ledger row %r defers a repair this "
+                          "branch owns" % r.get("finding", "?")[:40])
         for k in ("finding", "repair", "acceptance", "red_canary"):
             if not r.get(k):
                 errors.append("sol_ledgers: ledger row missing %s" % k)
@@ -1552,6 +1561,9 @@ def self_test():
         lambda c: c["repair_ledger"]["rows"][0].update(status="complete"))
     mut("adapter_owner_drift", "owner sol",
         lambda c: c["adapters"].update(owner="fable"))
+    mut("branch_repair_deferred_to_merge", "defers a repair this branch owns",
+        lambda c: c["repair_ledger"]["round_3"]["rows"][0].update(
+            status="reported_awaiting_merge_sequencing"))
     mut("family_unit_uncovered", "ledger_qualification",
         lambda c: [c["families"].__setitem__(i, dict(r, family="u-s01"))
                    for i, r in enumerate(c["families"]) if r["family"] == "u-n12"])
