@@ -1,0 +1,22 @@
+{
+  "lessons_total": 226,
+  "lessons_with_entry_level_links": 147,
+  "lessons_with_exact_occurrence_candidates": 1,
+  "lessons_with_family_level_links_only": 77,
+  "lessons_with_n_links": 0,
+  "lessons_with_no_corpus_bridge": 1,
+  "lessons_with_p_links": 148,
+  "lessons_with_v_links": 0,
+  "no_bridge_lessons": [
+    "L1.M1.03"
+  ],
+  "reasons_and_next_actions": {
+    "entry_links": "entry resolved in the store; next: per-occurrence evidence rows to reach exact links (q-pvn-grounding)",
+    "exact_occurrences": "committed pilot/payload authority exists; next: widen fact coverage per occurrence (q-pvn-grounding downstream)",
+    "family_links": "domain association only; next: entry-level resolution through unit->entry plans (never surface similarity)",
+    "no_corpus_bridge": "no repo-authoritative bridge exists for these lessons' domains yet; next: author units (q-unit-authoring), then entry plans",
+    "v_and_n_links_zero_note": "all current precise links are P-entries — the honest state: verb/noun entry bridges await v/n-entry link plans grounded in their own authority stores"
+  },
+  "schema": "curriculum.l1l6_pvn_readiness.v1",
+  "wildcard_free": true
+}
