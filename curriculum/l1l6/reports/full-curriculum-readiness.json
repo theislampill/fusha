@@ -1,4 +1,23 @@
 {
+  "campaign_13": {
+    "canonical_units_cross": 55,
+    "canonical_units_nahw": 78,
+    "canonical_units_sarf": 41,
+    "canonical_units_total": 174,
+    "canonical_units_with_machine_pack": 10,
+    "error_section_lessons_processed": 226,
+    "honesty": "canonical units from the qualification wave are AUTHORED CANDIDATE UNITS (summary, capability family, contributing lessons, two-way map); their machine packs are the bounded remaining executable work, not silent gaps",
+    "lessons_instructional_only_with_reason": 5,
+    "lessons_merely_structurally_parsed": 0,
+    "lessons_represented_by_canonical_units": 225,
+    "lessons_semantically_inspected": 226,
+    "lessons_semantically_qualified": 226,
+    "misconception_clusters": 906,
+    "misconception_manifestations": 912,
+    "pack_authoring_remaining": 138,
+    "sections_linked_to_canonical_units": 1491,
+    "sections_still_only_domain_classified": 0
+  },
   "lessons_covered_by_authored_units": {
     "domain_associated_only": 209,
     "explicit_lesson_refs": 16
@@ -14,14 +33,14 @@
   "queues": {
     "q-error-fixtures": 205,
     "q-hover-pedagogy": 21,
-    "q-lesson-qualification": 208,
+    "q-lesson-qualification": 0,
     "q-nahw-backprop": 12,
     "q-paradigm-consumer": 56,
     "q-pvn-grounding": 224,
     "q-sarf-backprop": 9,
     "q-scholar-owner-review": 10,
     "q-tutor-adoption": 10,
-    "q-unit-authoring": 3
+    "q-unit-authoring": 0
   },
   "schema": "curriculum.l1l6_full_readiness.v1",
   "semantic_units_authored": 21,
@@ -29,9 +48,9 @@
   "source_lessons": 226,
   "state_histogram": {
     "consumer_exercised": 8,
-    "semantically_qualified": 2,
-    "skill_mapped": 8,
-    "structurally_parsed": 208
+    "not_applicable_with_reason": 1,
+    "skill_mapped": 193,
+    "unitized": 24
   },
   "substantive_sections_classified": {
     "classified": 6574,

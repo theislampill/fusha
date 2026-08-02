@@ -1,0 +1,25 @@
+{
+  "authored_units": 21,
+  "canonical_units": 174,
+  "contribution_kinds": {
+    "expands_unit": 137,
+    "instructional_only": 5,
+    "new_contrasts": 9,
+    "new_exceptions": 5,
+    "new_material": 56,
+    "new_paradigms": 10,
+    "new_sequencing": 3,
+    "redundant": 1
+  },
+  "dispositions": {
+    "candidate_fixture": 829,
+    "instructional_only": 77
+  },
+  "generator": "tools/build_curriculum_canonical.py",
+  "misconception_clusters": 906,
+  "misconception_manifestations": 912,
+  "orphan_canonical_units": [],
+  "proposed_units_merged": 153,
+  "qualified_lessons": 226,
+  "schema": "curriculum.l1l6_consolidation.meta.v1"
+}

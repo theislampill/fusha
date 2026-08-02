@@ -61,7 +61,16 @@ def _jsonl(p):
 
 
 def load():
+    quals = []
+    qdir = BASE / "qualification"
+    if qdir.exists():
+        for f in sorted(qdir.glob("L*.jsonl")):
+            quals.extend(_jsonl(f))
+    lum_p = BASE / "canonical" / "lesson-unit-map.jsonl"
     ctx = {
+        "quals": {q["lesson_id"]: q for q in quals},
+        "lesson_unit_map": ({r["lesson_id"]: r for r in _jsonl(lum_p)}
+                            if lum_p.exists() else {}),
         "lessons": _jsonl(BASE / "registry" / "lessons.jsonl"),
         "sections": _jsonl(BASE / "registry" / "section-inventory.jsonl"),
         "concepts": _jsonl(BASE / "graph" / "concepts.jsonl"),
@@ -82,6 +91,56 @@ def consumer_ran_increments():
     increments; the gate is in CI). We count only increments that EXIST."""
     inc_dir = BASE / "increments"
     return sorted(p.name for p in inc_dir.iterdir() if p.is_dir())
+
+
+def _campaign_numbers(ctx, ledger, section_rows, completeness):
+    """The §13 completion-report numbers, computed, never asserted."""
+    can_p = BASE / "canonical" / "canonical-units.jsonl"
+    mis_p = BASE / "misconceptions" / "misconception-registry.jsonl"
+    cans = _jsonl(can_p) if can_p.exists() else []
+    mis = _jsonl(mis_p) if mis_p.exists() else []
+    quals = ctx["quals"]
+    inspected = sum(1 for q in quals.values() if q.get("inspected"))
+    qualified = sum(1 for q in quals.values()
+                    if q.get("linguistic_propositions"))
+    instructional_only = sum(
+        1 for q in quals.values()
+        if (q.get("unit_mapping") or {}).get("contribution_kind") == "instructional_only")
+    represented = sum(1 for r in ledger
+                      if (r.get("qualification") or {}).get("canonical_units")
+                      or r["semantic_units_explicit"])
+    error_lessons_processed = sum(
+        1 for r in ledger
+        if r["learner_errors"] == 0 or
+        (quals.get(r["lesson_id"], {}).get("common_mistakes")))
+    unit_sections = [s for s in section_rows
+                     if s["absorption_class"] == "semantic_instructional_unit"]
+    return {
+        "lessons_semantically_inspected": inspected,
+        "lessons_semantically_qualified": qualified,
+        "lessons_represented_by_canonical_units": represented,
+        "lessons_instructional_only_with_reason": instructional_only,
+        "lessons_merely_structurally_parsed": sum(
+            1 for r in ledger if r["absorption_state"] == "structurally_parsed"),
+        "sections_linked_to_canonical_units": sum(
+            1 for s in unit_sections if s["detail"].get("explicitly_unitized")),
+        "sections_still_only_domain_classified": sum(
+            1 for s in unit_sections if not s["detail"].get("explicitly_unitized"))
+            + completeness["candidate_for_cleanroom_authorship"],
+        "canonical_units_total": len(cans),
+        "canonical_units_sarf": sum(1 for c in cans if c["axis"] == "sarf"),
+        "canonical_units_nahw": sum(1 for c in cans if c["axis"] == "nahw"),
+        "canonical_units_cross": sum(1 for c in cans if c["axis"] == "cross"),
+        "canonical_units_with_machine_pack": sum(
+            1 for c in cans if c.get("machine_increments")),
+        "misconception_clusters": len(mis),
+        "misconception_manifestations": sum(len(m["manifestations"]) for m in mis),
+        "error_section_lessons_processed": error_lessons_processed,
+        "pack_authoring_remaining": sum(
+            1 for c in cans if not c.get("machine_increments")
+            and c.get("capability_family") not in (None, "instructional_only")),
+        "honesty": "canonical units from the qualification wave are AUTHORED CANDIDATE UNITS (summary, capability family, contributing lessons, two-way map); their machine packs are the bounded remaining executable work, not silent gaps",
+    }
 
 
 def build(ctx):
@@ -128,11 +187,22 @@ def build(ctx):
                            "curriculum/l1l6/increments/")})
         occs = sorted({o for u in explicit_units for o in unit_occ_links.get(u, [])})
 
+        qual = ctx["quals"].get(lid)
+        lum = ctx["lesson_unit_map"].get(lid)
+        canon_units = sorted(lum["units"]) if lum else []
+        instructional_only_no_units = bool(
+            qual and not canon_units and not units_by_lesson.get(lid)
+            and (qual.get("unit_mapping") or {}).get("contribution_kind")
+            == "instructional_only")
         state = "structurally_parsed"
-        if claims:
+        if qual and qual.get("linguistic_propositions"):
             state = "semantically_qualified"
-        if explicit_units:
-            state = "skill_mapped"  # every unit names a skill surface
+        if instructional_only_no_units:
+            state = "not_applicable_with_reason"
+        if canon_units or explicit_units:
+            state = "unitized"
+            if explicit_units or any(u.startswith("u-") for u in canon_units):
+                state = "skill_mapped"
             if incs:
                 state = "fixture_mapped"
                 if occs:
@@ -164,6 +234,12 @@ def build(ctx):
             },
             "instructional_concepts": [c["concept_id"] for c in cs],
             "linguistic_claims": claims,
+            "qualification": ({
+                "inspected": bool(qual.get("inspected")),
+                "propositions": len(qual.get("linguistic_propositions") or []),
+                "contribution_kind": (qual.get("unit_mapping") or {}).get("contribution_kind"),
+                "canonical_units": canon_units,
+            } if qual else None),
             "morphology_topics": sorted(set(domains) & SARF_DOMAINS),
             "syntax_topics": sorted(set(domains) & NAHW_DOMAINS),
             "learner_errors": counts["common_mistakes_sections"],
@@ -188,7 +264,12 @@ def build(ctx):
             "blockers": (["quiz keys blocked on TP-CURR-QUIZ-KEY-REVIEW (certifier-class)"]
                          if counts["quiz_questions"] else []),
             "absorption_state": state,
-            "next_action": NEXT_ACTION_BY_STATE[state],
+            "next_action": (
+                "none required — instructional-method material (no linguistic "
+                "unit applicable; reason: %s); routed to the instructional-"
+                "methods crosswalk" % (qual.get("instructional_purpose", "")[:80])
+                if state == "not_applicable_with_reason"
+                else NEXT_ACTION_BY_STATE[state]),
         })
 
     # ---------------- section ledger ----------------
@@ -203,7 +284,17 @@ def build(ctx):
             match = next((c for c in concepts_by_lesson.get(s["lesson_id"], [])
                           if c["heading"] == heading), None)
             domain = match["domain"] if match else None
-            if match and match["concept_id"] in revisit_targets:
+            lesson_instr_only = (
+                (ctx["quals"].get(s["lesson_id"], {}).get("unit_mapping") or
+                 {}).get("contribution_kind") == "instructional_only"
+                and not ctx["lesson_unit_map"].get(s["lesson_id"], {}).get("units"))
+            if lesson_instr_only:
+                cls = "excluded_with_reason"
+                detail = {"reason": "instructional-method material — the lesson "
+                          "is qualified instructional_only with no linguistic "
+                          "unit applicable; routed via its qualification record "
+                          "to the instructional-methods crosswalk"}
+            elif match and match["concept_id"] in revisit_targets:
                 cls = "duplicate_revisit"
             elif domain == "paradigms" or "table" in heading.lower():
                 cls = "paradigm"
@@ -212,9 +303,19 @@ def build(ctx):
             elif domain in covered_domains:
                 cls = "semantic_instructional_unit"
                 detail = {"unitized_by": units_by_domain[domain],
-                          "explicitly_unitized":
+                          "explicitly_unitized": bool(
                               s["lesson_id"] in {l for u in units_by_domain[domain]
-                                                 for l in unit_index[u].get("lesson_refs", [])}}
+                                                 for l in unit_index[u].get("lesson_refs", [])}
+                              or ctx["lesson_unit_map"].get(s["lesson_id"], {}).get("units"))}
+            elif ctx["lesson_unit_map"].get(s["lesson_id"], {}).get("units"):
+                # the qualification campaign gave this lesson canonical units,
+                # so the section has a real semantic destination even though
+                # its DOMAIN had no authored-wave unit
+                cls = "semantic_instructional_unit"
+                detail = {"unitized_by": sorted(
+                              ctx["lesson_unit_map"][s["lesson_id"]]["units"]),
+                          "explicitly_unitized": True,
+                          "via": "qualification_campaign"}
             else:
                 cls = "candidate_for_cleanroom_authorship"
                 detail = {"uncovered_domain": domain}
@@ -456,6 +557,7 @@ def build(ctx):
         "lessons_with_no_corpus_bridge": sum(1 for r in ledger
                                              if r["pvn_opportunity"] == "no_corpus_bridge"),
         "state_histogram": st,
+        "campaign_13": _campaign_numbers(ctx, ledger, section_rows, completeness),
         "queues": {k: len(v) for k, v in sorted(queues.items())},
         "separation_note": "lesson METADATA coverage is 226/226; semantic KNOWLEDGE coverage is the claims+units numbers; CAPABILITY coverage is the increments; CONSUMER coverage is the exercised increments; OCCURRENCE coverage is the exact-link lessons — these are different denominators and are never merged",
     }

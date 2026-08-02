@@ -385,6 +385,23 @@ def check_leakage(ctx, errors):
                 units = text.splitlines()
         else:
             units = text.splitlines()
+        # qualification records use the CONSECUTIVE-run custody rule (owned by
+        # tools/validate_lesson_qualification.py, also gated in CI): their
+        # strings legally contain many single Arabic terms with English
+        # connectors, which the per-string total would misread as prose
+        if "/qualification/" in rel:
+            run_re = re.compile(
+                r"[؀-ۿ][؀-ۿـً-ْٰ]*(?:[\s،,]+[؀-ۿ][؀-ۿـً-ْٰ]*)*")
+            for unit in units:
+                for m in run_re.finditer(unit):
+                    if len(AR_WORD_RE.findall(m.group(0))) > 4:
+                        errors.append("leakage_scan: %s Arabic run >4 "
+                                      "consecutive words" % rel)
+                        break
+                else:
+                    continue
+                break
+            continue
         for unit in units:
             if len(AR_WORD_RE.findall(unit)) >= PROSE_RUN_LIMIT:
                 errors.append("leakage_scan: %s has a %d+-word Arabic prose run "

@@ -1,24 +1,23 @@
 {
-  "candidate_for_cleanroom_authorship": 153,
+  "candidate_for_cleanroom_authorship": 0,
   "class_histogram": {
-    "candidate_for_cleanroom_authorship": 153,
     "contrast_set": 65,
     "duplicate_revisit": 16,
-    "excluded_with_reason": 315,
+    "excluded_with_reason": 322,
     "exercise_source": 3322,
     "learner_error_source": 205,
     "non_linguistic_apparatus": 456,
     "paradigm": 159,
     "reading_passage_application": 326,
-    "semantic_instructional_unit": 1345,
+    "semantic_instructional_unit": 1491,
     "supporting_example_group": 12,
     "vocabulary_support": 200
   },
-  "excluded_with_reason": 315,
+  "excluded_with_reason": 322,
   "honesty_note": "a domain label maps a section to unit machinery; it does NOT mean the section's knowledge is absorbed — absorption is the lesson-state ladder + claims + fixtures",
-  "mapped_but_not_unitized": 1311,
+  "mapped_but_not_unitized": 0,
   "schema": "curriculum.l1l6_section_completeness.v1",
   "total_substantive_sections": 6574,
   "unclassified": 0,
-  "unitized": 34
+  "unitized": 1491
 }
