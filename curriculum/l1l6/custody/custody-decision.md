@@ -11,11 +11,35 @@ levels A1–C2, each file self-declaring a `https://kitabite.com/...` source URL
 
 ## Publication-rights determination
 
-- The Fusha repository contains **no** prior reference to kitabite.com and no
-  record of a redistribution grant for this corpus.
-- No licence file, terms grant, or owner authorization for **public**
-  re-publication of the full lesson text was available to this lane.
-- Attribution alone does not permit redistribution (PR-brief boundary).
+**Controlling owner ruling** (owner §6A, 2026-07-29, recorded in the private
+continuation archive as `TP-EXTERNAL-CURRICULUM-MAP-001`):
+
+```text
+KITABITE_FULL_CONTENT_REUSE_LICENSE: NOT_VERIFIED_BY_THIS_PROGRAMME
+KITABITE_CURRICULUM_ABSORPTION: FUTURE_CLEAN_ROOM_TOPIC_AND_COVERAGE_ANALYSIS_ONLY
+KITABITE_CONTENT_COPYING: NOT_AUTHORIZED
+```
+
+Never reproduce or closely paraphrase lesson prose, exercises, answer keys,
+stories, distinctive examples, or non-public sequencing. Technically
+accessible ≠ licensed; attribution alone does not permit redistribution.
+This subtree is exactly the ruling's *permitted* objective: topic/coverage
+metadata inventory + crosswalk + independently authored materials.
+
+Required public-metadata provenance fields (per the ruling):
+
+- **exact source**: `https://kitabite.com/level/level-{1..6}` and per-lesson
+  URLs recorded in the manifest;
+- **capture date**: archives dated 2026-08-02 (owner-supplied exports);
+- **public-accessibility status**: the recorded URLs are public pages; the
+  archive files are an owner-supplied export, treated as non-public;
+- **licensing status**: NOT_VERIFIED (see ruling above);
+- **metadata-vs-content classification**: everything committed here is
+  metadata (hashes, counts, titles/slugs/topic-heading labels, URLs) or
+  independently authored derivation; zero content class;
+- **no-copying declaration**: no lesson prose, exercise text, story text,
+  distinctive example, or answer key is reproduced or closely paraphrased in
+  this repository.
 
 **Therefore the full lesson corpus is NOT committed.** Basis recorded without
 private information: authority not established in-repo or in-lane at build
