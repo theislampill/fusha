@@ -293,6 +293,22 @@ def check_ledger_qualification(ctx, errors):
             if cid not in claim_ids:
                 errors.append("ledger_qualification: guard %s cites missing claim %s"
                               % (g.get("guard_id"), cid))
+    # source-locator fidelity: every claim's lesson_id must resolve to a real
+    # registry lesson (no wildcards) and its manifest_file_id to a real
+    # manifest row; "corpus-wide" is the only allowed non-lesson scope
+    lesson_ids = {l["lesson_id"] for l in ctx["lessons"]}
+    manifest_ids = {m["file_id"] for m in ctx["manifest"]}
+    for c in ctx["ledger"]:
+        ref = c.get("source_ref") or {}
+        lid = ref.get("lesson_id")
+        if lid != "corpus-wide" and lid not in lesson_ids:
+            errors.append("ledger_qualification: %s source_ref lesson_id %r "
+                          "does not resolve (wildcards forbidden)"
+                          % (c.get("claim_id"), lid))
+        fid = ref.get("manifest_file_id")
+        if fid is not None and fid not in manifest_ids:
+            errors.append("ledger_qualification: %s manifest_file_id %r "
+                          "unresolved" % (c.get("claim_id"), fid))
 
 
 def check_links_candidacy(ctx, errors):
@@ -468,6 +484,8 @@ def self_test():
         lambda c: c["manifest"][0].update(sha256="zz"))
     mut("nonzero_heldout", "material_classes",
         lambda c: c["classes"]["classes"]["genuinely_held_out_evaluation_material"].update(count=5))
+    mut("wildcard_source_ref", "ledger_qualification",
+        lambda c: c["ledger"][0]["source_ref"].update(lesson_id="L6.M1.*"))
 
     failed = [n for n, ok in mutations if not ok]
     print("self-test: %d/%d mutations tripped their checks"

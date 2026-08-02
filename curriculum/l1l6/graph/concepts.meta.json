@@ -1,7 +1,7 @@
 {
-  "concept_count": 1740,
+  "concept_count": 1738,
   "domain_histogram": {
-    "ambiguity": 67,
+    "ambiguity": 66,
     "case_mood": 122,
     "clitics_affixes": 14,
     "contextual_interpretation": 51,
@@ -9,7 +9,7 @@
     "governance": 37,
     "hidden_structure": 9,
     "inflection": 27,
-    "morphology_general": 596,
+    "morphology_general": 595,
     "paradigms": 141,
     "particles": 141,
     "quranic_classical": 24,

@@ -45,6 +45,11 @@ SCHEMA_CLASSES = "curriculum.l1l6_material_classes.v1"
 CUSTODY_STATUS = "private_source_custody_metadata_only"
 
 FILename_RE = re.compile(r"^Level(\d)_Module(\d+)_Lesson(\d+)\.md$")
+# Semantic matcher for learner-error sections. NEVER rely on one exact English
+# spelling: the corpus uses "Common Mistakes", "Common Mistakes to Avoid",
+# "Common Mistakes: \u2026", "Common Mistakes in \u2026", "Common Errors to Avoid" and
+# "Common Confusion Points" (audit 2026-08-02: 205 lessons carry one).
+MISTAKE_HEADING_RE = re.compile(r"^common (mistakes?|errors?|confusion)", re.I)
 AR_RE = re.compile(r"[\u0600-\u06FF]")
 AR_WORD_RE = re.compile(r"[\u0600-\u06FF][\u0600-\u06FF\u0640\u064B-\u0652\u0670]*")
 
@@ -226,7 +231,7 @@ def parse_lesson(path, fname):
         if hlow.startswith("reading passage"):
             n_passages += 1
             continue
-        if hlow.startswith("common mistakes"):
+        if MISTAKE_HEADING_RE.match(hlow):
             n_mistake_sections += 1
             continue
         base = re.sub(r"\s*\(.*?\)\s*", " ", hlow).strip()
