@@ -12,13 +12,13 @@
       "repaired_pack": "unit-v2.json"
     },
     {
-      "baseline_pack": "unit-v2.json",
-      "expected_run1_mismatches": 6,
+      "baseline_pack": "unit-v3.json",
+      "expected_run1_mismatches": 4,
       "family": "sarf derivation (weak-root complication)",
       "increment": "inc-derivatives",
       "loop": "derivation",
-      "proof": "lesson unit -> candidate classifier -> v2's GLOBAL weak-substitution table FALSE-PASSES non-words (hamza inserted into the mafuul/tafiil sound slots), trusts claimed penult marks against unpointed or contradicting surfaces, and accepts undeclared weak realization -> pack-only repair (template-scoped substitution licences + written-surface mark verification + bound weak declaration) -> the committed transfer fixtures (hollow-root participles and weak-root voice) stay green under the repaired pack",
-      "repaired_pack": "unit-v3.json"
+      "proof": "lesson unit -> candidate classifier -> v3 gated only SUBSTITUTED weak realizations, so a hollow root whose weak radical stood LITERALLY in a form-I template passed as though the root were sound (uncontracted agent- and passive-participle shapes), and a weak declaration contradicting the supplied radicals was silently ignored -> pack-only repair (unified weak_realizations table licensing every realization per template/slot/radical, nothing licensed by default, plus a root-contradiction gate) -> the committed transfer fixtures (hamza-seat hollow participles and weak-root voice) stay green under the repaired pack",
+      "repaired_pack": "unit-v4.json"
     },
     {
       "baseline_pack": "unit-v0.json",

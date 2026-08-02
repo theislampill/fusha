@@ -53,6 +53,10 @@ AR_WORD_RE = re.compile(r"[؀-ۿ][؀-ۿـً-ْٰ]*")
 # inventory of single terms with English connectors is not prose)
 AR_RUN_RE = re.compile(r"[؀-ۿ][؀-ۿـً-ْٰ]*(?:[\s،,]+[؀-ۿ][؀-ۿـً-ْٰ]*)*")
 SERVER_RE = re.compile(r"(?:/srv/|/var/www|/home/[a-z]|/Users/|\\\\[A-Za-z0-9]|[A-Za-z]:\\)")
+# forward-slash Windows drive / UNC paths (Sol round 3); the lookbehinds keep
+# URL schemes (https:/ , http://) out of the match
+WIN_FWD_RE = re.compile(
+    r"(?:(?<![A-Za-z])[A-Za-z]:/|(?<![A-Za-z:])//[A-Za-z0-9][A-Za-z0-9._-]*/)")
 
 
 def max_arabic_run(s):
@@ -158,7 +162,7 @@ def main(argv):
                     errors.append("%s: %s Arabic run >4 consecutive words "
                                   "(custody): %r" % (f.name, lid, s[:60]))
                     break
-                if SERVER_RE.search(s):
+                if SERVER_RE.search(s) or WIN_FWD_RE.search(s):
                     errors.append("%s: %s server/absolute path leak" % (f.name, lid))
                     break
     if "--complete" in argv:

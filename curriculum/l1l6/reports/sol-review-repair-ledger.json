@@ -9,6 +9,33 @@
   "reviewed_head": "eb51278c626ebe9b65b5a3e1be3a3895783e1233",
   "prior_round": "the round repairing Sol's architecture checkpoint at reviewed head 5bca6d26b5e9d3d5bc035dfe0fd6b40f27fa005a is superseded by this ledger; its rows live in git history of this file",
   "closure_note": "no row in this ledger claims closure: closure is Sol's determination on independent re-review of the new frozen head; every row status is repaired_awaiting_sol_reverification",
+  "round_3": {
+    "trigger": "Sol readiness report naming two outstanding Fable repairs (hollow form-I weak-metadata gate; forward-slash Windows path detection), with Sol's own side clean: main fc4a2607414a52fdd24089c8ec8f115a8f565479, Sol integration 19c4876d3d4ae7ae52959fcc4728018af2d9ed57, three independent REVIEW_PASS, complete harness exit 0",
+    "reviewed_head": "ce4c93e61a2e852f895d9b7e726675c0a2a40999",
+    "main_at_repair": "fc4a2607414a52fdd24089c8ec8f115a8f565479",
+    "rows": [
+      {
+        "finding": "R3-1. hollow form-I weak-metadata gate: the round-2 gate covered only SUBSTITUTED weak realizations, so a weak radical STANDING LITERALLY in a form-I template passed as though the root were sound; and a weak declaration contradicting the supplied radicals was silently ignored",
+        "ownership": "fable_branch_repair",
+        "status": "repaired_awaiting_sol_reverification",
+        "red_canary": "reproduced pre-repair on the committed v3 pack: قاول -> candidate_pending active_participle/faail; مقوول -> candidate_pending passive_participle/mafuul; مبيوع -> candidate_pending passive_participle/mafuul (all three are uncontracted non-words; the real forms contract); مكتوب carrying weak_position R2 + weak_radical و over the SOUND root ك-ت-ب -> candidate_pending passive_participle, the false declaration ignored. All four are pinned RED under v3 (and under v2) by the consumer self-test",
+        "repair": "pack v4 replaces the substitution-only table with a unified weak_realizations.by_template[template][slot][radical] = {substituted[], literal_licensed, basis}: EVERY realization of a weak radical must be licensed for that template, slot and radical, whether altered or literal, and nothing is licensed by default. New fail-closed reasons weak_realization_unlicensed and weak_declaration_contradicts_root. The licence table is deliberately minimal — only realizations backed by committed fixtures are licensed (hamza seat in the agent participle; literal retention in derived-form مُـ participles); widening it is a ṣarf-authority decision made in DATA with no consumer edit. Derivation loop rebased v3 (4 defects) -> v4 (green, no regressions)",
+        "acceptance": "python tools/curriculum_unit_consumer.py --self-test && python tools/curriculum_flywheel_runner.py --manifest",
+        "files": ["tools/curriculum_unit_consumer.py", "curriculum/l1l6/increments/inc-derivatives/unit-v4.json", "curriculum/l1l6/increments/inc-derivatives/fixtures.jsonl", "curriculum/l1l6/increments/inc-derivatives/guards.json", "curriculum/l1l6/loop/loops-manifest.json"],
+        "remaining_dependency": "adp-sarf-nahw-authority — the licence table's contents are candidate scope declarations, not morphological authority"
+      },
+      {
+        "finding": "R3-2. forward-slash Windows path detection: drive-letter paths written with forward slashes, and UNC host paths written with forward slashes, evaded the leak scans in BOTH validators, which matched only the backslash spellings of the same paths. (This ledger deliberately does not spell the leak forms out: the repaired scan flags them on sight, including inside this file.)",
+        "ownership": "fable_branch_repair",
+        "status": "repaired_awaiting_sol_reverification",
+        "red_canary": "reproduced pre-repair against the committed regexes: a drive letter followed by a colon and a FORWARD slash (both an ai-workspace path and a private-corpus path), and a forward-slash UNC host path, were ALL undetected by validate_curriculum_l1l6.SERVER_PATH_RE and validate_lesson_qualification.SERVER_RE, while the same path in backslash form was caught. The exact leak strings are not reproduced in this ledger — the repaired scan flags them, which is itself the demonstration",
+        "repair": "both validators gain a forward-slash scan whose lookbehinds exclude URL schemes (a drive letter is a single letter before the colon, so https:/ cannot match; forward-slash UNC requires a host segment and a further slash, so http:// and arithmetic like a // b cannot match). Two red-first mutations plus an explicit NO-FALSE-POSITIVE probe (URLs, relative paths and fractions must stay quiet) are committed in the self-test",
+        "acceptance": "python tools/validate_curriculum_l1l6.py --self-test (windows_drive_forward_slash_leak, unc_forward_slash_leak trip; forward_slash_no_false_positive stays quiet) && python tools/validate_lesson_qualification.py --complete",
+        "files": ["tools/validate_curriculum_l1l6.py", "tools/validate_lesson_qualification.py"],
+        "remaining_dependency": "none beyond Sol re-review"
+      }
+    ]
+  },
   "rows": [
     {
       "finding": "1. sarf weak-substitution false passes: the v2 GLOBAL substitution table matched non-words built by inserting hamza into sound-slot templates (passive-participle and form-II-masdar shapes); claimed penult marks were trusted without the written surface; weak realization needed no declaration",

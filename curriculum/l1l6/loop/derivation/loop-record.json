@@ -7,14 +7,18 @@
     "der-adv-04",
     "der-adv-05",
     "der-adv-06",
-    "der-adv-07"
+    "der-adv-07",
+    "der-adv-08",
+    "der-adv-09",
+    "der-adv-10",
+    "der-adv-11"
   ],
   "backprop_proposal": {
-    "content": "repair unit-v2.json -> unit-v3.json with the recorded defect set as adversarial evidence",
+    "content": "repair unit-v3.json -> unit-v4.json with the recorded defect set as adversarial evidence",
     "no_auto_promotion": true,
     "target": "curriculum/l1l6/promotion/ bundle for inc-derivatives"
   },
-  "baseline_pack": "unit-v2.json",
+  "baseline_pack": "unit-v3.json",
   "canonical_dogfood_eligible": false,
   "capability": "template_classification",
   "defects_recorded": [
@@ -23,14 +27,14 @@
         "authority": "none_fixture_harness",
         "class": "active_participle",
         "decision": "candidate_pending",
-        "template": "mu_participle"
+        "template": "faail"
       },
-      "class": "abstention",
+      "class": "adversarial",
       "expected": {
         "decision": "abstain",
-        "reason": "penult_mark_not_in_surface"
+        "reason": "weak_realization_unlicensed"
       },
-      "fixture_id": "der-abs-02"
+      "fixture_id": "der-adv-08"
     },
     {
       "actual": {
@@ -42,65 +46,37 @@
       "class": "adversarial",
       "expected": {
         "decision": "abstain",
-        "reason": "no_template"
+        "reason": "weak_realization_unlicensed"
       },
-      "fixture_id": "der-adv-03"
+      "fixture_id": "der-adv-09"
     },
     {
       "actual": {
         "authority": "none_fixture_harness",
-        "class": "masdar_II",
+        "class": "passive_participle",
         "decision": "candidate_pending",
-        "template": "tafiil"
+        "template": "mafuul"
       },
       "class": "adversarial",
       "expected": {
         "decision": "abstain",
-        "reason": "no_template"
+        "reason": "weak_realization_unlicensed"
       },
-      "fixture_id": "der-adv-04"
+      "fixture_id": "der-adv-10"
     },
     {
       "actual": {
         "authority": "none_fixture_harness",
-        "class": "active_participle",
+        "class": "passive_participle",
         "decision": "candidate_pending",
-        "template": "mu_participle"
+        "template": "mafuul"
       },
       "class": "adversarial",
       "expected": {
         "decision": "abstain",
-        "reason": "penult_mark_mismatch"
+        "reason": "weak_declaration_contradicts_root"
       },
-      "fixture_id": "der-adv-05"
-    },
-    {
-      "actual": {
-        "authority": "none_fixture_harness",
-        "class": "active_participle",
-        "decision": "candidate_pending",
-        "template": "faail"
-      },
-      "class": "adversarial",
-      "expected": {
-        "decision": "abstain",
-        "reason": "weak_declaration_unbound"
-      },
-      "fixture_id": "der-adv-06"
-    },
-    {
-      "actual": {
-        "authority": "none_fixture_harness",
-        "class": "active_participle",
-        "decision": "candidate_pending",
-        "template": "mu_participle"
-      },
-      "class": "adversarial",
-      "expected": {
-        "decision": "abstain",
-        "reason": "weak_declaration_unbound"
-      },
-      "fixture_id": "der-adv-07"
+      "fixture_id": "der-adv-11"
     }
   ],
   "downstream_work": {
@@ -114,30 +90,30 @@
     "g-der-m",
     "g-der-3",
     "g-der-4",
-    "g-der-5"
+    "g-der-5",
+    "g-der-6",
+    "g-der-7"
   ],
   "improvement_classes_verified": [
     "fixture_harness_improvement",
     "instructional_improvement"
   ],
   "improvements": [
-    "der-abs-02",
-    "der-adv-03",
-    "der-adv-04",
-    "der-adv-05",
-    "der-adv-06",
-    "der-adv-07"
+    "der-adv-08",
+    "der-adv-09",
+    "der-adv-10",
+    "der-adv-11"
   ],
   "increment": "inc-derivatives",
   "loop": "derivation",
   "regressions": [],
-  "repaired_pack": "unit-v3.json",
+  "repaired_pack": "unit-v4.json",
   "rivals_preserved": [],
   "run1": {
     "consumer": "tools/curriculum_unit_consumer.py",
-    "fixtures": 15,
+    "fixtures": 19,
     "increment": "inc-derivatives",
-    "mismatches": 6,
+    "mismatches": 4,
     "results": [
       {
         "actual": {
@@ -218,10 +194,8 @@
       },
       {
         "actual": {
-          "authority": "none_fixture_harness",
-          "class": "active_participle",
-          "decision": "candidate_pending",
-          "template": "mu_participle"
+          "decision": "abstain",
+          "reason": "penult_mark_not_in_surface"
         },
         "class": "abstention",
         "expected": {
@@ -229,7 +203,7 @@
           "reason": "penult_mark_not_in_surface"
         },
         "fixture_id": "der-abs-02",
-        "match": false
+        "match": true
       },
       {
         "actual": {
@@ -246,10 +220,8 @@
       },
       {
         "actual": {
-          "authority": "none_fixture_harness",
-          "class": "passive_participle",
-          "decision": "candidate_pending",
-          "template": "mafuul"
+          "decision": "abstain",
+          "reason": "no_template"
         },
         "class": "adversarial",
         "expected": {
@@ -257,14 +229,12 @@
           "reason": "no_template"
         },
         "fixture_id": "der-adv-03",
-        "match": false
+        "match": true
       },
       {
         "actual": {
-          "authority": "none_fixture_harness",
-          "class": "masdar_II",
-          "decision": "candidate_pending",
-          "template": "tafiil"
+          "decision": "abstain",
+          "reason": "no_template"
         },
         "class": "adversarial",
         "expected": {
@@ -272,14 +242,12 @@
           "reason": "no_template"
         },
         "fixture_id": "der-adv-04",
-        "match": false
+        "match": true
       },
       {
         "actual": {
-          "authority": "none_fixture_harness",
-          "class": "active_participle",
-          "decision": "candidate_pending",
-          "template": "mu_participle"
+          "decision": "abstain",
+          "reason": "penult_mark_mismatch"
         },
         "class": "adversarial",
         "expected": {
@@ -287,7 +255,33 @@
           "reason": "penult_mark_mismatch"
         },
         "fixture_id": "der-adv-05",
-        "match": false
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "weak_declaration_unbound"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_declaration_unbound"
+        },
+        "fixture_id": "der-adv-06",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "weak_declaration_unbound"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_declaration_unbound"
+        },
+        "fixture_id": "der-adv-07",
+        "match": true
       },
       {
         "actual": {
@@ -299,24 +293,54 @@
         "class": "adversarial",
         "expected": {
           "decision": "abstain",
-          "reason": "weak_declaration_unbound"
+          "reason": "weak_realization_unlicensed"
         },
-        "fixture_id": "der-adv-06",
+        "fixture_id": "der-adv-08",
         "match": false
       },
       {
         "actual": {
           "authority": "none_fixture_harness",
-          "class": "active_participle",
+          "class": "passive_participle",
           "decision": "candidate_pending",
-          "template": "mu_participle"
+          "template": "mafuul"
         },
         "class": "adversarial",
         "expected": {
           "decision": "abstain",
-          "reason": "weak_declaration_unbound"
+          "reason": "weak_realization_unlicensed"
         },
-        "fixture_id": "der-adv-07",
+        "fixture_id": "der-adv-09",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "class": "passive_participle",
+          "decision": "candidate_pending",
+          "template": "mafuul"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_realization_unlicensed"
+        },
+        "fixture_id": "der-adv-10",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "class": "passive_participle",
+          "decision": "candidate_pending",
+          "template": "mafuul"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_declaration_contradicts_root"
+        },
+        "fixture_id": "der-adv-11",
         "match": false
       },
       {
@@ -370,12 +394,12 @@
     ],
     "schema": "curriculum.l1l6_consumer_run.v1",
     "status": "candidate",
-    "unit_file": "unit-v2.json",
-    "unit_version": 2
+    "unit_file": "unit-v3.json",
+    "unit_version": 3
   },
   "run2": {
     "consumer": "tools/curriculum_unit_consumer.py",
-    "fixtures": 15,
+    "fixtures": 19,
     "increment": "inc-derivatives",
     "mismatches": 0,
     "results": [
@@ -524,7 +548,10 @@
       {
         "actual": {
           "decision": "abstain",
-          "reason": "weak_declaration_unbound"
+          "reason": "weak_declaration_unbound",
+          "template": "faail",
+          "unbound_slot": "R2",
+          "weak_radical": "و"
         },
         "class": "adversarial",
         "expected": {
@@ -537,7 +564,10 @@
       {
         "actual": {
           "decision": "abstain",
-          "reason": "weak_declaration_unbound"
+          "reason": "weak_declaration_unbound",
+          "template": "mu_participle",
+          "unbound_slot": "R2",
+          "weak_radical": "و"
         },
         "class": "adversarial",
         "expected": {
@@ -545,6 +575,79 @@
           "reason": "weak_declaration_unbound"
         },
         "fixture_id": "der-adv-07",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "note": "the pack licenses no literal realization of this weak radical in this template (an uncontracted hollow/weak shape is not a classification)",
+          "reason": "weak_realization_unlicensed",
+          "template": "faail",
+          "unlicensed_slot": "R2",
+          "weak_radical": "و"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_realization_unlicensed"
+        },
+        "fixture_id": "der-adv-08",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "note": "the pack licenses no literal realization of this weak radical in this template (an uncontracted hollow/weak shape is not a classification)",
+          "reason": "weak_realization_unlicensed",
+          "template": "mafuul",
+          "unlicensed_slot": "R2",
+          "weak_radical": "و"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_realization_unlicensed"
+        },
+        "fixture_id": "der-adv-09",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "note": "the pack licenses no literal realization of this weak radical in this template (an uncontracted hollow/weak shape is not a classification)",
+          "reason": "weak_realization_unlicensed",
+          "template": "mafuul",
+          "unlicensed_slot": "R2",
+          "weak_radical": "ي"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_realization_unlicensed"
+        },
+        "fixture_id": "der-adv-10",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "declared": {
+            "weak_position": "R2",
+            "weak_radical": "و"
+          },
+          "radicals": [
+            "ك",
+            "ت",
+            "ب"
+          ],
+          "reason": "weak_declaration_contradicts_root"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_declaration_contradicts_root"
+        },
+        "fixture_id": "der-adv-11",
         "match": true
       },
       {
@@ -598,8 +701,8 @@
     ],
     "schema": "curriculum.l1l6_consumer_run.v1",
     "status": "candidate",
-    "unit_file": "unit-v3.json",
-    "unit_version": 3
+    "unit_file": "unit-v4.json",
+    "unit_version": 4
   },
   "schema": "curriculum.l1l6_flywheel_loop.v1",
   "site_payload_improvement": "never_claimable_here_owner_gated",

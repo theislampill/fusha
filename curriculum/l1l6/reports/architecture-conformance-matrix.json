@@ -25,7 +25,13 @@
       "subsystem": "Machine packs",
       "state": "sol_adapter_required",
       "remaining_dependency": "adp-sarf-nahw-authority",
-      "change": "template-scoped weak-substitution licences; written-surface mark verification; bound weak declarations (finding 1)"
+      "change": "round 2: template-scoped weak-substitution licences, written-surface mark verification, bound weak declarations (finding 1). Round 3: unified weak_realizations table — every realization licensed per template/slot/radical, literal retention included, nothing licensed by default (R3-1)"
+    },
+    {
+      "subsystem": "Generic consumer (weak-root gate)",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority",
+      "change": "round 3: literal weak realizations gated (قاول / مقوول / مبيوع abstain weak_realization_unlicensed) and self-contradicting weak evidence rejected (weak_declaration_contradicts_root); the licence table's contents remain candidate scope declarations, never morphological authority (R3-1)"
     },
     {
       "subsystem": "Capability interfaces",
@@ -121,7 +127,7 @@
       "subsystem": "CI gate",
       "state": "fable_branch_repair",
       "remaining_dependency": "none",
-      "change": "trigger paths equal the executed-tool set (finding 9); boundary canaries extended to drive paths / UNC / macOS / IP (finding 12)"
+      "change": "trigger paths equal the executed-tool set (finding 9); boundary canaries extended to drive paths / UNC / macOS / IP (finding 12); round 3: forward-slash Windows drive and UNC paths detected in BOTH validators with a committed no-false-positive probe (R3-2)"
     },
     {
       "subsystem": "Custody heading queue",

@@ -1,0 +1,196 @@
+{
+  "abstention_reasons": [
+    "penult_vowel_unknown",
+    "penult_vowel_evidence_unbound",
+    "penult_mark_not_in_surface",
+    "penult_mark_mismatch",
+    "weak_declaration_unbound",
+    "weak_declaration_contradicts_root",
+    "weak_realization_unlicensed",
+    "ambiguous_template",
+    "no_template",
+    "no_root_evidence",
+    "surface_letter_mismatch"
+  ],
+  "capability": "template_classification",
+  "increment": "inc-derivatives",
+  "penult_mark_verification": true,
+  "repair_of": "unit-v3.json (the weak gate covered only SUBSTITUTED realizations, so a hollow root whose weak radical stood LITERALLY in a Form-I template passed as if the root were sound — the uncontracted hollow shapes are non-words; and a weak declaration contradicting the supplied radicals was silently ignored — Sol round 3)",
+  "require_weak_declaration": true,
+  "rules": [
+    {
+      "id": "der-r1",
+      "text": "a template matches only with supplied root radicals filling R1..R3 in order (no root derivation in the consumer)"
+    },
+    {
+      "id": "der-r2",
+      "text": "mu_participle without a known penult vowel -> abstain penult_vowel_unknown (never default to active)"
+    },
+    {
+      "id": "der-r3",
+      "text": "gloss SHAPE is nominal for every class here; the consumer flags (does not author) any verbal-gloss pairing"
+    },
+    {
+      "id": "der-r4",
+      "text": "zero or >1 surviving template -> abstain (ambiguous_template or no_template)"
+    },
+    {
+      "id": "der-r5",
+      "text": "every realization of a weak radical is licensed per template, slot and radical by weak_realizations.by_template: an altered letter must appear in that entry's substituted list, and a weak radical may stand literally only where literal_licensed is true; nothing is licensed by default"
+    },
+    {
+      "id": "der-r6",
+      "text": "a claimed penult surface mark must be verifiable on the written surface: unpointed -> penult_mark_not_in_surface; differing written mark -> penult_mark_mismatch (never trust the claim alone)"
+    },
+    {
+      "id": "der-r7",
+      "text": "every weak radical of the matched template requires the exact bound declaration (weak_position + weak_radical) -> otherwise weak_declaration_unbound; an unlicensed realization -> weak_realization_unlicensed"
+    },
+    {
+      "id": "der-r8",
+      "text": "a weak declaration that the supplied radicals do not bear is contradictory evidence, not a harmless extra -> weak_declaration_contradicts_root"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "templates": [
+    {
+      "class": "active_participle",
+      "id": "faail",
+      "name": "فاعل active participle (form I)",
+      "requires": [],
+      "shape": [
+        "R1",
+        "ا",
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "class": "passive_participle",
+      "id": "mafuul",
+      "name": "مفعول passive participle (form I)",
+      "requires": [],
+      "shape": [
+        "م",
+        "R1",
+        "R2",
+        "و",
+        "R3"
+      ]
+    },
+    {
+      "class": "mu_participle",
+      "id": "mu_participle",
+      "name": "مُـ participle (derived forms)",
+      "requires": [
+        "penult_vowel"
+      ],
+      "shape": [
+        "م",
+        "..."
+      ],
+      "split": {
+        "fatha": "passive_participle",
+        "kasra": "active_participle"
+      }
+    },
+    {
+      "class": "masdar_II",
+      "id": "tafiil",
+      "name": "تفعيل masdar (form II)",
+      "requires": [],
+      "shape": [
+        "ت",
+        "R1",
+        "R2",
+        "ي",
+        "R3"
+      ]
+    },
+    {
+      "class": "masdar_IV",
+      "id": "ifaal",
+      "name": "إفعال masdar (form IV)",
+      "requires": [],
+      "shape": [
+        "إ",
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "masdar_X",
+      "id": "istifaal",
+      "name": "استفعال masdar (form X)",
+      "requires": [],
+      "shape": [
+        "ا",
+        "س",
+        "ت",
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "place_time_noun",
+      "id": "mafal_place",
+      "name": "مَفْعَل/مَفْعِل place-noun",
+      "requires": [],
+      "shape": [
+        "م",
+        "R1",
+        "R2",
+        "R3"
+      ]
+    }
+  ],
+  "unit_ref": "u-s03",
+  "version": 4,
+  "weak_radicals": [
+    "و",
+    "ي"
+  ],
+  "weak_realization_gate": true,
+  "weak_realizations": {
+    "licensing_note": "DELIBERATELY MINIMAL. Only realizations this increment holds committed fixture evidence for are licensed; every other weak realization abstains. Widening this table is a linguistic decision for the ṣarf authority (adp-sarf-nahw-authority), made in DATA — no consumer edit is required to license a further realization.",
+    "by_template": {
+      "faail": {
+        "R2": {
+          "و": {
+            "substituted": [
+              "ئ"
+            ],
+            "literal_licensed": false,
+            "basis": "the hollow form-I agent participle carries a hamza seat in place of the medial weak radical (committed fixtures der-trn-01/02); the uncontracted medial radical is NOT a form-I agent participle"
+          },
+          "ي": {
+            "substituted": [
+              "ئ"
+            ],
+            "literal_licensed": false,
+            "basis": "same seat behaviour for a medial yāʾ (committed fixture der-trn-02)"
+          }
+        }
+      },
+      "mu_participle": {
+        "R2": {
+          "و": {
+            "substituted": [],
+            "literal_licensed": true,
+            "basis": "derived-form مُـ participles retain the medial weak radical in writing; the active/passive split is carried by the verified penult mark, not by the radical (committed fixture der-trn-03)"
+          },
+          "ي": {
+            "substituted": [],
+            "literal_licensed": true,
+            "basis": "same retention for a medial yāʾ"
+          }
+        }
+      }
+    }
+  }
+}

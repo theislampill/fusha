@@ -11,10 +11,13 @@ Place/time مَفْعَل/مَفْعِل؛ instrument مِفْعَل/مِفْع�
 All classes gloss nominally. Exact-template matching only (a loose letter
 overlap is not a match — تَكْتُبُ is not تفعيل).
 
-Weak roots: a weak radical's altered surface realization is admitted only
-where the pack licenses it FOR THAT TEMPLATE, and only with the exact bound
-declaration of which radical went weak in which position. A licence held by
-the agent-participle template does not extend to the passive-participle or
-form-II-masdar shapes; inserting a hamza seat into those shapes yields a
-non-word, not a classification. A penult vowel decides voice only when the
-mark is written on the surface being analyzed.
+Weak roots: **every** realization of a weak radical is licensed per template,
+slot and radical — the altered letter must be listed, and a weak radical may
+stand unchanged only where the pack says it may. Nothing is regular by
+default. A licence held by the agent-participle template does not extend to
+the passive-participle or form-II-masdar shapes: inserting a hamza seat into
+those shapes yields a non-word, and so does leaving the medial weak radical
+standing where the form contracts. Both require the exact bound declaration
+of which radical went weak in which position, and that declaration must agree
+with the supplied radicals. A penult vowel decides voice only when the mark
+is written on the surface being analyzed.

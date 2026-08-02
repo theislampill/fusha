@@ -23,6 +23,14 @@
     {
       "guard": "no weak realization is accepted without the exact bound declaration of which radical went weak in which position",
       "id": "g-der-5"
+    },
+    {
+      "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+      "id": "g-der-6"
+    },
+    {
+      "guard": "evidence must agree with itself: a declared weak position/radical that the supplied radicals do not bear refutes the evidence rather than decorating it",
+      "id": "g-der-7"
     }
   ],
   "schema": "curriculum.l1l6_increment_guards.v1",

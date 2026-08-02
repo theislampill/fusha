@@ -204,14 +204,72 @@ def _match_template(shape, letters, radicals, subs):
 
 
 def _template_subs(unit, template_id):
-    """Template-scoped substitution licence. Packs with the repaired
-    by_template shape scope licences per template id; the retired flat shape
-    (the recorded v2 defect) keeps its historical global semantics so the
-    defect run stays honestly reproducible."""
+    """Template-scoped substitution licence, derived from whichever
+    declaration shape the pack carries:
+
+    - weak_realizations.by_template (v4): the unified table — per template,
+      slot and radical, which altered letters are licensed AND whether the
+      weak radical may stand literally;
+    - weak_substitutions.by_template (v3): substitutions only;
+    - flat weak_substitutions (the recorded v2 defect): global semantics,
+      kept so the defect run stays honestly reproducible.
+    """
+    real = (unit.get("weak_realizations") or {}).get("by_template")
+    if real is not None:
+        out = {}
+        for slot, per_radical in (real.get(template_id) or {}).items():
+            out[slot] = {rad: list(rule.get("substituted") or [])
+                         for rad, rule in per_radical.items()}
+        return out
     decl = unit.get("weak_substitutions") or {}
     if "by_template" in decl:
         return decl["by_template"].get(template_id, {})
     return decl
+
+
+def _weak_gate(unit, template_id, radicals, used_subs, ev):
+    """Fail closed on EVERY weak radical of the matched template, whether it
+    surfaces altered or literally (Sol round 3).
+
+    v3 gated only SUBSTITUTED realizations, so a hollow root whose weak
+    radical stood literally in a Form-I template passed as though the root
+    were sound — the uncontracted hollow shapes are non-words, not
+    classifications. A weak radical now requires BOTH:
+
+      (a) the exact bound declaration (weak_position + weak_radical), and
+      (b) a realization the pack licenses FOR THAT TEMPLATE — an altered
+          letter from its `substituted` list, or `literal_licensed` when the
+          weak radical may stand unchanged there.
+
+    Nothing is licensed by default: an undeclared realization abstains
+    rather than being assumed regular. Returns an abstention dict, or None
+    when every weak radical passes.
+    """
+    weak_letters = set(unit.get("weak_radicals") or [])
+    if not weak_letters:
+        return None
+    lic = ((unit.get("weak_realizations") or {})
+           .get("by_template", {}).get(template_id) or {})
+    subs_slots = {u["slot"] for u in used_subs}
+    for k, radical in enumerate(radicals):
+        if radical not in weak_letters:
+            continue
+        slot = "R%d" % (k + 1)
+        if ev.get("weak_position") != slot or ev.get("weak_radical") != radical:
+            return {"decision": "abstain", "reason": "weak_declaration_unbound",
+                    "unbound_slot": slot, "weak_radical": radical,
+                    "template": template_id}
+        if slot in subs_slots:
+            continue  # altered realization, already matched against the licence
+        if not ((lic.get(slot) or {}).get(radical) or {}).get("literal_licensed"):
+            return {"decision": "abstain",
+                    "reason": "weak_realization_unlicensed",
+                    "unlicensed_slot": slot, "weak_radical": radical,
+                    "template": template_id,
+                    "note": "the pack licenses no literal realization of this "
+                            "weak radical in this template (an uncontracted "
+                            "hollow/weak shape is not a classification)"}
+    return None
 
 
 def analyze_derivative(inp, unit):
@@ -222,6 +280,18 @@ def analyze_derivative(inp, unit):
         return {"decision": "abstain", "reason": "surface_letter_mismatch"}
     radicals = list(ev.get("radicals", []))
     letters = list(inp["letters"])
+    if unit.get("weak_realization_gate"):
+        # evidence self-consistency first: a weak declaration that the root
+        # does not bear is contradictory evidence, never a harmless extra
+        wp, wr = ev.get("weak_position"), ev.get("weak_radical")
+        if wp is not None or wr is not None:
+            idx = {"R1": 0, "R2": 1, "R3": 2}.get(wp)
+            if (idx is None or idx >= len(radicals) or radicals[idx] != wr
+                    or wr not in set(unit.get("weak_radicals") or [])):
+                return {"decision": "abstain",
+                        "reason": "weak_declaration_contradicts_root",
+                        "declared": {"weak_position": wp, "weak_radical": wr},
+                        "radicals": radicals}
     survivors = []
     for t in unit["templates"]:
         if t["id"] == "mu_participle":
@@ -240,6 +310,19 @@ def analyze_derivative(inp, unit):
     def weak_declaration_bound(required_slot, required_radical):
         return (ev.get("weak_position") == required_slot
                 and ev.get("weak_radical") == required_radical)
+
+    def weak_check(template_id, used_subs):
+        """v4 unified gate (declared realization, literal or altered); v3
+        and earlier keep the substitution-only requirement so their recorded
+        defect sets stay reproducible."""
+        if unit.get("weak_realization_gate"):
+            return _weak_gate(unit, template_id, radicals, used_subs, ev)
+        if unit.get("require_weak_declaration"):
+            for u_ in used_subs:
+                if not weak_declaration_bound(u_["slot"], u_["radical"]):
+                    return {"decision": "abstain",
+                            "reason": "weak_declaration_unbound"}
+        return None
 
     ids = sorted(t["id"] for t, _u in survivors)
     if ids == ["mafal_place", "mu_participle"] or ids == ["mu_participle"]:
@@ -263,7 +346,13 @@ def analyze_derivative(inp, unit):
             if written != pv:
                 return {"decision": "abstain",
                         "reason": "penult_mark_mismatch"}
-        if unit.get("require_weak_declaration"):
+        if unit.get("weak_realization_gate"):
+            # voice over a weak root needs the declared realization licensed
+            # for THIS template, not merely a bound declaration
+            blocked = _weak_gate(unit, "mu_participle", radicals, [], ev)
+            if blocked:
+                return blocked
+        elif unit.get("require_weak_declaration"):
             # voice on a weak-radical root additionally needs the exact weak
             # declaration (position + radical) bound in the evidence
             for k, radical in enumerate(radicals):
@@ -278,13 +367,9 @@ def analyze_derivative(inp, unit):
     if len(survivors) > 1:
         return {"decision": "abstain", "reason": "ambiguous_template"}
     t, used = survivors[0]
-    if unit.get("require_weak_declaration"):
-        for u_ in used:
-            if not weak_declaration_bound(u_["slot"], u_["radical"]):
-                # a weak substitution was exercised without the exact bound
-                # declaration of which radical went weak where — fail closed
-                return {"decision": "abstain",
-                        "reason": "weak_declaration_unbound"}
+    blocked = weak_check(t["id"], used)
+    if blocked:
+        return blocked
     return {"decision": "candidate_pending", "authority": "none_fixture_harness", "class": t["class"], "template": t["id"]}
 
 
@@ -472,24 +557,34 @@ def self_test():
     bad = sorted(r["fixture_id"] for r in rec1["results"] if not r["match"])
     if bad != ["own-abs-01", "own-adv-01"]:
         failures.append("ownership v1 defect set drifted: %r" % bad)
-    # 2b. derivatives v3 baseline green; v2 must fail EXACTLY its recorded
-    # defect set (Sol fix-request 1: مقئول/تقئيل false passes under the
-    # global substitution table, unverified/false penult marks, missing weak
-    # declarations) — red-first pinned forever
-    rec3 = run("inc-derivatives", "unit-v3.json")
-    if rec3["mismatches"] != 0:
-        failures.append("derivatives v3 should be green, got %d mismatches"
-                        % rec3["mismatches"])
-    rec2 = run("inc-derivatives", "unit-v2.json")
-    bad2 = sorted(r["fixture_id"] for r in rec2["results"] if not r["match"])
-    if bad2 != ["der-abs-02", "der-adv-03", "der-adv-04", "der-adv-05",
-                "der-adv-06", "der-adv-07"]:
-        failures.append("derivatives v2 defect set drifted: %r" % bad2)
-    for r in rec2["results"]:
-        if r["fixture_id"] in ("der-adv-03", "der-adv-04") \
-                and r["actual"].get("decision") != "candidate_pending":
-            failures.append("%s no longer red under v2 — the recorded false "
-                            "pass has been papered over" % r["fixture_id"])
+    # 2b. derivatives v4 green; the v3 AND v2 defect sets are pinned red
+    # forever, so no recorded false pass can be papered over:
+    #   v2 (Sol round 2): مقئول/تقئيل under the global substitution table,
+    #       unverified/false penult marks, missing weak declarations
+    #   v3 (Sol round 3): LITERAL weak realizations in form-I templates
+    #       (قاول/مقوول/مبيوع) and a weak declaration contradicting the root
+    rec4 = run("inc-derivatives", "unit-v4.json")
+    if rec4["mismatches"] != 0:
+        failures.append("derivatives v4 should be green, got %d mismatches"
+                        % rec4["mismatches"])
+    v3_defects = ["der-adv-08", "der-adv-09", "der-adv-10", "der-adv-11"]
+    v2_defects = ["der-abs-02", "der-adv-03", "der-adv-04", "der-adv-05",
+                  "der-adv-06", "der-adv-07"] + v3_defects
+    for pack, want in (("unit-v3.json", v3_defects), ("unit-v2.json", v2_defects)):
+        rec = run("inc-derivatives", pack)
+        bad = sorted(r["fixture_id"] for r in rec["results"] if not r["match"])
+        if bad != want:
+            failures.append("derivatives %s defect set drifted: %r" % (pack, bad))
+        for r in rec["results"]:
+            # the recorded false passes must still be FALSE PASSES under the
+            # defective pack (a defect that became an abstention would prove
+            # the gate moved, not that the pack was repaired)
+            if r["fixture_id"] in ("der-adv-03", "der-adv-04", "der-adv-08",
+                                   "der-adv-09", "der-adv-10", "der-adv-11") \
+                    and r["fixture_id"] in bad \
+                    and r["actual"].get("decision") != "candidate_pending":
+                failures.append("%s under %s is no longer the recorded false "
+                                "pass" % (r["fixture_id"], pack))
     # 3. pack mutation flips a decision (rules are read from the pack)
     unit, fixtures = load("inc-ownership", "unit-v2.json")
     unit_m = json.loads(json.dumps(unit))
@@ -551,9 +646,10 @@ def self_test():
         for f in failures:
             print("  - " + f)
         return 1
-    print("SELF-TEST PASS (9 probes: ownership v2 + derivatives v3 green, "
-          "v1/v2 defect sets pinned red, 4 pack mutations flip decisions, "
-          "discovery + shared-capability dispatch, all latest packs green)")
+    print("SELF-TEST PASS (10 probes: ownership v2 + derivatives v4 green, "
+          "ownership-v1 / derivatives-v3 / derivatives-v2 defect sets pinned "
+          "red, 4 pack mutations flip decisions, discovery + "
+          "shared-capability dispatch, all latest packs green)")
     return 0
 
 

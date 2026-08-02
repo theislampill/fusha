@@ -89,6 +89,13 @@ PACKET_IDS = (
 )
 SERVER_PATH_RE = re.compile(
     r"(?:/var/www|/srv/|/home/[a-z]|/etc/|/Users/|\\\\[A-Za-z0-9]|[A-Za-z]:\\\\|[A-Za-z]:\\)")
+# Windows paths written with FORWARD slashes evaded the scan above (Sol
+# round 3): a drive letter is a single letter before the colon, so the
+# lookbehind excludes URL schemes (https:/...), and forward-slash UNC must
+# be followed by a host segment and a further slash, which excludes both
+# "http://" (colon lookbehind) and arithmetic like "a // b".
+WIN_FWD_PATH_RE = re.compile(
+    r"(?:(?<![A-Za-z])[A-Za-z]:/|(?<![A-Za-z:])//[A-Za-z0-9][A-Za-z0-9._-]*/)")
 IP_ADDR_RE = re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")
 AR_WORD_RE = re.compile(r"[؀-ۿ][؀-ۿـً-ْٰ]*")
 SHA_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -104,6 +111,9 @@ OWNERSHIP_VOCAB = frozenset({
 # (github.com/theislampill/fusha/pull/136#issuecomment-5158892104)
 R2_REVIEWED_HEAD = "eb51278c626ebe9b65b5a3e1be3a3895783e1233"
 R2_REVIEW_TREE = "fd574a6f483995e5fce5a94368ea0b5fc7d37d14"
+# round 3: the head Sol reviewed, and the main Sol reported clean alongside it
+R3_REVIEWED_HEAD = "ce4c93e61a2e852f895d9b7e726675c0a2a40999"
+R3_MAIN = "fc4a2607414a52fdd24089c8ec8f115a8f565479"
 
 
 def _jsonl(path):
@@ -397,6 +407,9 @@ def check_leakage(ctx, errors):
     for rel, text in ctx["files"].items():
         if SERVER_PATH_RE.search(text):
             errors.append("leakage_scan: %s contains a server/absolute path" % rel)
+        if WIN_FWD_PATH_RE.search(text):
+            errors.append("leakage_scan: %s contains a forward-slash Windows "
+                          "drive or UNC path" % rel)
         if IP_ADDR_RE.search(text):
             errors.append("leakage_scan: %s contains an IP address" % rel)
         if "informed_by" in text and "packets" not in rel:
@@ -1354,7 +1367,16 @@ def check_sol_ledgers(ctx, errors):
                       "request comment")
     if not led.get("rows"):
         errors.append("sol_ledgers: repair ledger has no rows")
-    for r in led.get("rows", []):
+    r3 = led.get("round_3") or {}
+    if r3.get("reviewed_head") != R3_REVIEWED_HEAD:
+        errors.append("sol_ledgers: round-3 reviewed_head %r is not the head "
+                      "Sol reviewed" % r3.get("reviewed_head"))
+    if r3.get("main_at_repair") != R3_MAIN:
+        errors.append("sol_ledgers: round-3 main_at_repair drifted from the "
+                      "main Sol reported")
+    if len(r3.get("rows") or []) < 2:
+        errors.append("sol_ledgers: round-3 must carry both named repairs")
+    for r in list(led.get("rows", [])) + list(r3.get("rows") or []):
         if r.get("ownership") not in OWNERSHIP_VOCAB:
             errors.append("sol_ledgers: ledger row %r ownership %r outside "
                           "the owner's closed vocabulary"
@@ -1489,6 +1511,21 @@ def self_test():
     mut("ip_address_leak", "leakage_scan",
         lambda c: c["files"].update({"curriculum/l1l6/z4.md":
                                      "host 10.20.30.40 responded"}))
+    # forward-slash Windows paths (Sol round 3): these evaded every scan
+    mut("windows_drive_forward_slash_leak", "forward-slash Windows",
+        lambda c: c["files"].update({"curriculum/l1l6/z5.md":
+                                     "built in C:/workspace/ai/fusha"}))
+    mut("unc_forward_slash_leak", "forward-slash Windows",
+        lambda c: c["files"].update({"curriculum/l1l6/z6.md":
+                                     "corpus at //fileserver/share/levels"}))
+    # and the benign forms must stay quiet (a scan that flags every URL is
+    # not a boundary gate, it is noise)
+    quiet = copy.deepcopy(base)
+    quiet["files"].update({"curriculum/l1l6/z7.md":
+                           "see https://example.org/a/b and a // b, ratio 3/4"})
+    mutations.append(("forward_slash_no_false_positive",
+                      not any("forward-slash" in e
+                              for e in run_checks(quiet, ALL_CHECKS))))
     # written-surface binding canaries (finding 2)
     mut("wrong_letters_mutually_consistent", "WRITTEN surface",
         lambda c: (c["facts"]["tokens"][0]["letters"][3].update(letter="ص"),
