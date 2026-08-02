@@ -580,11 +580,17 @@ def build(source_dir):
 
 
 def main():
+    global OUT_BASE
     ap = argparse.ArgumentParser()
     ap.add_argument("--source-dir", required=True)
     ap.add_argument("--check", action="store_true",
                     help="verify committed artifacts byte-match a regeneration")
+    ap.add_argument("--out-dir", default=None,
+                    help="write artifacts under this directory instead of "
+                         "curriculum/l1l6 (CI fixture-corpus runs)")
     args = ap.parse_args()
+    if args.out_dir:
+        OUT_BASE = os.path.abspath(args.out_dir)
     if not os.path.isdir(args.source_dir):
         print("FAIL: source dir not found: %s" % args.source_dir)
         return 2

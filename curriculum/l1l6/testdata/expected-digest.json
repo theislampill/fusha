@@ -1,0 +1,17 @@
+{
+  "combined_sha256": "b8ffca3cde9de2c80d6dee56c63b79d4d2fb5449f3a9fe8678e0b2a2cf974c5e",
+  "files": [
+    "custody/source-manifest.jsonl",
+    "custody/source-manifest.meta.json",
+    "eval-separation/material-classes.json",
+    "graph/concept-edges.jsonl",
+    "graph/concepts.jsonl",
+    "graph/concepts.meta.json",
+    "registry/lessons.jsonl",
+    "registry/lessons.meta.json",
+    "registry/levels.json",
+    "registry/modules.jsonl"
+  ],
+  "note": "pinned output digest of the builder over the clean-room fixture corpus; re-pin ONLY with an intended extractor change",
+  "schema": "curriculum.l1l6_fixture_digest.v1"
+}
