@@ -43,13 +43,13 @@
   },
   "tools_required": [
     "python3",
-    "tools/lattice_projectors.py (repo copy, run as-is; --self-test must pass before the wave)",
+    "tools/lattice_projectors.py (repo copy, run as-is; the self-test subcommand must pass before the wave)",
     "the whitelist snapshot input designated by the custody plan (see evidence_policy; NOT a repo file)"
   ],
   "commands": [
     {
       "purpose": "Prove the projector toolchain is green before touching the population",
-      "run": "python tools/lattice_projectors.py --self-test && python tools/test_lattice_projectors.py",
+      "run": "python tools/lattice_projectors.py self-test && python tools/test_lattice_projectors.py",
       "expect": "exit 0 on both; a red self-test stops the wave before any output"
     },
     {
@@ -106,7 +106,7 @@
     {"name": "determinism", "run": "run the projector twice into temp files and diff", "pass_condition": "byte-identical candidates + instrumentation on re-run"},
     {"name": "arithmetic closure", "run": "python - (inline: reachable == replaced + needs-root-chain + no-safe-template + guard-blocked)", "pass_condition": "closure holds exactly"},
     {"name": "gate tier universal", "run": "python - (inline: every candidate record has certification_state candidate and gate_tier two_vote_required)", "pass_condition": "no exceptions"},
-    {"name": "toolchain self-test", "run": "python tools/lattice_projectors.py --self-test", "pass_condition": "exit 0"},
+    {"name": "toolchain self-test", "run": "python tools/lattice_projectors.py self-test", "pass_condition": "exit code 0"},
     {"name": "no unauthorized writes", "run": "git status --porcelain", "pass_condition": "changes only under the three permitted output paths"}
   ],
   "non_deployment": {
