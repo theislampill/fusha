@@ -2579,6 +2579,26 @@ for _script, _args, _label in (
         ("validate_curriculum_assessment.py",
          [os.path.join(_R, "curriculum", "assessment", "level-checkpoints.sample.jsonl")],
          "curriculum assessment checkpoint sample validates"),
+        ("validate_curriculum_l1l6.py", [],
+         "L1-L6 curriculum substrate validates against canonical consumers"),
+        ("validate_curriculum_l1l6.py", ["--self-test"],
+         "L1-L6 curriculum validator red-first mutation suite passes"),
+        ("curriculum_unit_consumer.py", ["--self-test"],
+         "L1-L6 curriculum consumer self-test passes"),
+        ("curriculum_unit_consumer.py", ["--all"],
+         "all L1-L6 executable increment fixtures pass"),
+        ("test_curriculum_corpus_pilot_certification.py", [],
+         "curriculum pilot consumes authoritative certification state"),
+        ("build_candidate_drills.py", ["--check"],
+         "L1-L6 candidate drill artifacts are fresh"),
+        ("build_curriculum_corpus_pilot.py", ["--check"],
+         "L1-L6 corpus-pilot envelopes are fresh"),
+        ("build_curriculum_pvn_links.py", ["--check"],
+         "L1-L6 P/V/N candidate links are fresh"),
+        ("build_curriculum_occurrence_bridge.py", ["--check"],
+         "L1-L6 occurrence bridge artifacts are fresh"),
+        ("build_p007_website_payloads.py", ["--check"],
+         "p007 website-handoff samples follow canonical occurrence facts"),
         ("validate_detector_maturity.py", ["--self-test"], "Phase2 detector maturity validator self-test"),
         ("validate_detector_maturity.py",
          [os.path.join(_R, "qamus", "examples", "detector_maturity.sample.json")],
@@ -4042,7 +4062,11 @@ try:
     _coverage_exempt_count = 0
     _coverage_offenders = []
     for _dirpath, _dirnames, _filenames in os.walk(ROOT):
-        _dirnames[:] = [_d for _d in _dirnames if _d != ".git"]
+        # Repository-local worktrees and generated run output live under
+        # gitignored out/.  They are not members of this checkout's tracked
+        # documentation set and must not be re-scanned as if they were
+        # current-tree claims.
+        _dirnames[:] = [_d for _d in _dirnames if _d not in {".git", "out"}]
         for _filename in _filenames:
             if not _filename.endswith(".md"):
                 continue

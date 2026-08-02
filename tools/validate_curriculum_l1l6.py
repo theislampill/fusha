@@ -53,8 +53,10 @@ from __future__ import annotations
 import copy
 import json
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 import unicodedata
 from pathlib import Path
 
@@ -870,27 +872,41 @@ def check_corpus_pilot(ctx, errors):
         if not cd.get("effective_states") or not cd.get("invalidation_rule"):
             errors.append("corpus_pilot: %s missing effective-certification "
                           "dependency block" % name)
-        if "cascade" in (cd.get("invalidation_rule") or "").lower() \
-                and "not claimed" not in (cd.get("invalidation_rule") or "").lower():
-            errors.append("corpus_pilot: %s invalidation rule claims cascade "
-                          "behavior (forbidden: Sol adapter contract)" % name)
+        if cd.get("trail_valid") is not True or cd.get("trail_errors") != []:
+            errors.append("corpus_pilot: %s did not consume a valid "
+                          "authoritative certification trail" % name)
+        if "TypedFactCertificationStore" not in (cd.get("basis") or ""):
+            errors.append("corpus_pilot: %s uses a private certification "
+                          "fold instead of the authoritative store" % name)
         for f in env.get("repository_authority", {}).get("typed_facts", []):
             if f.get("certification_status_verbatim") not in ("candidate", "certified"):
                 errors.append("corpus_pilot: %s fact %s odd certification %r"
                               % (name, f.get("fact_id"),
                                  f.get("certification_status_verbatim")))
-    # LIVE WITHHOLDING CANARY (Sol fix-request round 2, finding 5): inject a
-    # synthetic revocation of one depended-on fact and require every envelope
-    # to withhold its learner-facing artifact classes — learner projections,
-    # colour/hover bindings, website envelope, appearances, fixture
-    # derivations and metrics must all be absent from the withheld form
+    # LIVE WITHHOLDING CANARY (Sol integration): copy the authoritative store,
+    # call its real revoke() API for one occurrence-specific dependency, and
+    # require only the affected envelope to withhold.  This proves both
+    # invalidation and unrelated-occurrence isolation without synthetic
+    # transition strings or a private state machine.
     if dep_fids:
+        target = "quran:2:34:5"
+        fact_id = "fact:p00slice:2_34_5:seg"
         try:
             sys.path.insert(0, str(ROOT / "tools"))
             import build_curriculum_corpus_pilot as builder
-            revoked = builder.build(
-                extra_events=[{"fact_id": fid, "to_status": "revoked"}
-                              for fid in sorted(dep_fids)])
+            from certify_typed_fact import TypedFactCertificationStore
+            with tempfile.TemporaryDirectory() as td:
+                store_dir = Path(td) / "certification"
+                shutil.copytree(
+                    ROOT / "qamus" / "examples" / "p007-li-pilot" /
+                    "certification", store_dir)
+                TypedFactCertificationStore(store_dir).revoke(
+                    fact_id,
+                    actor="validator:curriculum-l1l6",
+                    timestamp="2026-08-02T00:00:00Z",
+                    reason="targeted downstream invalidation canary",
+                )
+                revoked = builder.build(certification_dir=store_dir)
         except Exception as exc:  # noqa: BLE001
             errors.append("corpus_pilot: withholding canary crashed (%s)" % exc)
             revoked = {}
@@ -898,11 +914,19 @@ def check_corpus_pilot(ctx, errors):
             if str(ROOT / "tools") in sys.path:
                 sys.path.remove(str(ROOT / "tools"))
         for target, env in sorted(revoked.items()):
-            if not env.get("withheld") \
-                    or env.get("status") != "withheld_invalid_dependency":
+            affected = target == "quran:2:34:5"
+            if affected and (not env.get("withheld")
+                             or env.get("status") !=
+                             "withheld_invalid_dependency"):
                 errors.append("corpus_pilot: withholding canary FAILED — %s "
-                              "did not withhold under a revoked dependency"
+                              "did not withhold under authoritative revoke"
                               % target)
+                continue
+            if not affected and env.get("withheld"):
+                errors.append("corpus_pilot: withholding canary FAILED — %s "
+                              "was affected by an unrelated revocation" % target)
+                continue
+            if not affected:
                 continue
             for banned in ("colour_and_hover", "website_envelope",
                            "appearances", "letter_ownership", "sarf_facts",

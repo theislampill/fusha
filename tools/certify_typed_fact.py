@@ -1046,6 +1046,15 @@ class TypedFactCertificationStore:
     def status_by_id(self) -> Dict[str, str]:
         return {fact_id: entry["status"] for fact_id, entry in self.state().items()}
 
+    def event_counts_by_id(self) -> Dict[str, int]:
+        """Return audit-only event counts without reimplementing state fold."""
+        counts: Dict[str, int] = {}
+        for event in self._events():
+            fact_id = event.get("fact_id")
+            if fact_id:
+                counts[fact_id] = counts.get(fact_id, 0) + 1
+        return counts
+
     def certified_fact_ids(self) -> List[str]:
         return sorted(
             fact_id for fact_id, status in self.status_by_id().items() if status == "certified"

@@ -47,6 +47,7 @@ OUT = ROOT / "curriculum" / "l1l6" / "corpus-pilot"
 
 sys.path.insert(0, str(ROOT / "tools"))
 import curriculum_unit_consumer as consumer  # noqa: E402
+from certify_typed_fact import TypedFactCertificationStore  # noqa: E402
 
 TARGETS = ("quran:2:34:5", "quran:61:5:4")
 HARAKAT_RE = re.compile("[ً-ْٰۖ-ۭ]")
@@ -68,38 +69,26 @@ WITHHELD_ARTIFACT_CLASSES = [
 ]
 
 
-def _effective_certification(fact_ids, extra_events=None):
-    """Replay the hash-chained certification event trail and fold the
-    EFFECTIVE state per fact id (certify -> certified; revoke -> revoked).
-    Copied raw status strings are never used (Sol repair 6). extra_events is
-    the canary channel: the validator injects a synthetic revocation and
-    asserts the envelope withholds (fail-closed proof, Sol fix-request
-    round 2, finding 5)."""
-    events_p = P007 / "certification" / "events.jsonl"
-    state = {}
-    counts = {}
-    events = []
-    if events_p.exists():
-        for line in events_p.read_text(encoding="utf-8").splitlines():
-            if line.strip():
-                events.append(json.loads(line))
-    events.extend(extra_events or [])
-    for ev in events:
-        fid = ev.get("fact_id") or (ev.get("fact") or {}).get("fact_id")
-        if fid is None:
-            continue
-        counts[fid] = counts.get(fid, 0) + 1
-        # last-event-wins fold: the trail is ordered; each event carries
-        # the fact's post-event certification status (register ->
-        # candidate; transition -> the engine's new status; a revocation
-        # transition surfaces as its post-event status)
-        post = (ev.get("to_status")
-                or (ev.get("fact") or {}).get("certification", {}).get("status"))
-        if post:
-            state[fid] = post
-    return {fid: {"effective_status": state.get(fid, "no_event_in_trail"),
-                  "event_count": counts.get(fid, 0)}
-            for fid in fact_ids}
+def _effective_certification(fact_ids, certification_dir=None):
+    """Consume the authoritative certifier's validated folded state.
+
+    No local transition semantics are permitted here.  A structurally invalid
+    or semantically illegal event trail fails closed for every dependency.
+    """
+    store_dir = Path(certification_dir or (P007 / "certification"))
+    store = TypedFactCertificationStore(store_dir)
+    errors = store.validate_trail()
+    if errors:
+        return ({fid: {"effective_status": "invalid_event_trail",
+                       "event_count": 0}
+                 for fid in fact_ids}, errors)
+    statuses = store.status_by_id()
+    counts = store.event_counts_by_id()
+    return ({fid: {
+                "effective_status": statuses.get(fid, "no_event_in_trail"),
+                "event_count": counts.get(fid, 0),
+            }
+            for fid in fact_ids}, [])
 
 
 def _canonical_loc_surface():
@@ -148,7 +137,7 @@ def _canonical_binding(canonical_idx, target, surface, _ud):
     return out
 
 
-def build(extra_events=None):
+def build(certification_dir=None):
     import unicodedata as _ud
     canonical_idx = _canonical_loc_surface()
     facts = [json.loads(l) for l in
@@ -173,27 +162,29 @@ def build(extra_events=None):
 
         # CERTIFICATION fail-close (Sol fix-request round 2, finding 5): the
         # envelope's learner-facing planes exist ONLY while every depended-on
-        # fact's replayed effective state is valid. Any revoked/invalid/
-        # unknown dependency WITHHOLDS the envelope at build time. No cascade
-        # behavior across canonical planes is claimed from this last-event-
-        # wins replay — cascade/regeneration is the Sol certifier adapter's
-        # contract (adp-certifier-effective-state).
+        # fact's authoritative effective state is valid. Invalid trails,
+        # illegal transitions, unknown facts, and non-available dependency
+        # states all fail closed. Revocation cascades belong exclusively to
+        # TypedFactCertificationStore.
         dep_fids = sorted({f["fact_id"] for f in tf + rootless})
-        eff = _effective_certification(dep_fids, extra_events)
+        eff, trail_errors = _effective_certification(
+            dep_fids, certification_dir=certification_dir)
         blocking = {fid: st for fid, st in eff.items()
                     if st["effective_status"] not in VALID_EFFECTIVE_STATUSES}
         cert_dep = {
             "effective_states": eff,
-            "basis": "replayed from the hash-chained event trail — raw status strings are never treated as authority",
+            "basis": "tools.certify_typed_fact.TypedFactCertificationStore validated trail and folded effective state",
+            "trail_valid": not trail_errors,
+            "trail_errors": trail_errors,
             "depends_on_fact_ids": dep_fids,
             "invalidation_rule": (
-                "fail-closed withholding by THIS builder: while any "
-                "depended-on fact's replayed effective state is outside %s, "
+                "fail-closed withholding by THIS builder: while the "
+                "authoritative event trail is invalid or any depended-on "
+                "fact's effective state is outside %s, "
                 "the envelope's learner-facing artifact classes %s are "
-                "WITHHELD (not emitted). Append-only cascade/regeneration "
-                "across the canonical planes is the Sol certifier adapter's "
-                "contract (adp-certifier-effective-state) — cascade behavior "
-                "is NOT claimed from last-event-wins replay."
+                "WITHHELD (not emitted). Revocation and dependent-fact "
+                "cascades are performed only by TypedFactCertificationStore; "
+                "this consumer never invents transitions."
                 % (list(VALID_EFFECTIVE_STATUSES), WITHHELD_ARTIFACT_CLASSES)),
         }
         if blocking:

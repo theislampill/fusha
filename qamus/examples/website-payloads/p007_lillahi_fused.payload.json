@@ -1,168 +1,206 @@
 {
- "schema": "qamus.website_projection_payload.v1",
- "schema_version": "1.0.0",
- "payload_kind": "occurrence_projection",
- "occurrence_id": "quran:12:31:24",
- "artifact_id": "artifact:p007:12:31:24",
- "appearance": {
-  "appearance_id": "0135b6be178e:u0:x0:w2",
-  "page_id": "reader:12:31",
-  "page_kind": "reader",
-  "page_local": {
-   "selected_highlight": false,
-   "entry_relationship": "reader",
-   "focus": null,
-   "navigation": []
-  }
- },
- "projection": {
-  "occurrence_id": "quran:12:31:24",
-  "surface": "لِلَّهِ",
-  "normalization": "NFC",
-  "kind": "particle_clitic_word",
-  "segments": [
-   {
-    "segment_index": 0,
-    "surface": "لِ",
-    "char_start": 0,
-    "char_end": 2,
-    "semantic_class": "jarr_clitic_lam",
-    "renderer_class": "qg-particle-jarr-clitic",
-    "gloss": "for",
-    "sarf_note": "Sarf - how this piece forms or attaches: an indeclinable tool word written joined to its host; the host keeps its own letters.",
-    "nahw_note": "Nahw - what this piece does here: it governs the next word, pulling it into the jarr (genitive) state, shown by the kasra."
-   },
-   {
-    "segment_index": 1,
-    "surface": "لَّهِ",
-    "char_start": 2,
-    "char_end": 7,
-    "semantic_class": "proper_name_majrur",
-    "renderer_class": "qg-proper-noun",
-    "gloss": "Allah",
-    "sarf_note": "Sarf - in this fused writing the name's first letter carries a shadda: the clitic lam and the name's lam are written as one doubled letter, so the boundary is shown here rather than by a separate letter.",
-    "nahw_note": null
-   }
-  ],
-  "whole_word_gloss": "for Allah",
-  "learner_explanation": "The little lam means 'for'; it is written fused into the name that follows, so one doubled lam carries both pieces.",
-  "entry_links": [
-   {
-    "entry_id": "b10a1ee04666",
-    "sense_id": "li-sense-2",
-    "relation_kind": "clitic_component_of_entry",
-    "segment_index": 0
-   }
-  ],
-  "entry_link_state": "linked",
-  "morpheme_spans": [
-   {
-    "morpheme_occurrence_id": "morph:p007:12:31:24:li",
-    "segment_index": 0,
-    "char_start": 0,
-    "char_end": 2
-   }
-  ],
-  "root": null,
-  "rootless_pedagogy": "This little lam is not built from a three-letter root - it is an indeclinable tool word (a particle). It attaches to the word after it.",
-  "hover_cards": [
-   {
-    "component_surface": "لِ",
-    "contextual_gloss": "for Allah",
-    "particle_identity": {
-     "headword": "لَـ / لِـ",
-     "entry_id": "b10a1ee04666",
-     "sense": "li-sense-2"
-    },
-    "contextual_function": "preposition (jarr) - marks 'for / to / belonging to' on the following noun",
-    "sarf_note": "Sarf - how this piece forms or attaches: an indeclinable tool word written joined to its host; the host keeps its own letters. In this word the attachment is fused: the two lams are written as one doubled letter.",
-    "nahw_note": "Nahw - what this piece does here: it governs the next word, pulling it into the jarr (genitive) state, shown by the kasra.",
-    "governor": {
-     "loc": "quran:12:31:23",
-     "surface": "حاش",
-     "relation": "muta-alliq"
-    },
-    "governed_expression": "الله",
-    "scope": null,
-    "attachment": {
-     "host": "له",
-     "boundary": "clitic letter لِ | host (fused, doubled lam)"
-    },
-    "alternatives": [],
-    "reason": "both independent reviewers agreed on the jarr reading and its sign (agreement key: jarr-clitic-li-majrur-visible-kasra)",
-    "unresolved": null,
-    "entry_link": "/qamus/entry/b10a1ee04666"
-   }
-  ],
-  "unresolved": null,
-  "certification": {
-   "status": "certified",
-   "plane": {
-    "segmentation": "certified",
-    "function": "certified",
-    "governor": "certified",
-    "case": "certified"
-   }
-  },
-  "evidence_refs": [
-   "fact:p00slice:12_31_24:seg",
-   "fact:p00slice:12_31_24:func",
-   "fact:p00slice:12_31_24:gov",
-   "fact:p00slice:12_31_24:case",
-   "two-vote-artifact:quran_12_31_24:p00slice-li-jarr"
-  ]
- },
- "projection_hash": "a92f1e959b17abb9777ae87284402386303a07ee3b860bcf5cb59c11cebb2733",
- "reverse_links": {
-  "occurrence_to_appearances": [
-   {
+  "appearance": {
     "appearance_id": "0135b6be178e:u0:x0:w2",
-    "page_id": "reader:12:31",
-    "page_kind": "reader",
-    "projection_hash": "a92f1e959b17abb9777ae87284402386303a07ee3b860bcf5cb59c11cebb2733"
-   },
-   {
-    "appearance_id": "4211cb1f5355:u0:x1:w24",
-    "page_id": "example:4211cb1f5355",
-    "page_kind": "example_card",
-    "projection_hash": "a92f1e959b17abb9777ae87284402386303a07ee3b860bcf5cb59c11cebb2733"
-   },
-   {
-    "appearance_id": "99f8d3c2cad5:u5:x0:w24",
-    "page_id": "example:99f8d3c2cad5",
-    "page_kind": "example_card",
-    "projection_hash": "a92f1e959b17abb9777ae87284402386303a07ee3b860bcf5cb59c11cebb2733"
-   },
-   {
-    "appearance_id": "e7fa3fadaf4a:u0:x0:w24",
-    "page_id": "entry:b10a1ee04666",
+    "page_id": "entry:0135b6be178e",
     "page_kind": "entry",
-    "projection_hash": "a92f1e959b17abb9777ae87284402386303a07ee3b860bcf5cb59c11cebb2733"
-   }
-  ],
-  "entry_to_occurrences": [
-   {
-    "entry_id": "b10a1ee04666",
-    "occurrences": [
-     {
-      "occurrence_id": "quran:12:31:24",
-      "surface": "لِلَّهِ",
-      "loc": "12:31:24",
-      "page_refs": [
-       "reader:12:31",
-       "entry:b10a1ee04666"
-      ]
-     }
+    "page_local": {
+      "entry_relationship": "context_only",
+      "focus": "example-card",
+      "navigation": [],
+      "selected_highlight": true
+    }
+  },
+  "artifact_id": "artifact:p007:12:31:24",
+  "candidate_only": true,
+  "deliverable": false,
+  "occurrence_id": "quran:12:31:24",
+  "payload_kind": "occurrence_projection",
+  "projection": {
+    "certification": {
+      "plane": {
+        "case": "certified",
+        "function": "certified",
+        "governor_identity": "certified",
+        "governor_relation": "unresolved",
+        "segmentation": "certified",
+        "sense": "candidate_pending"
+      },
+      "status": "unresolved"
+    },
+    "entry_link_state": "linked",
+    "entry_links": [
+      {
+        "entry_id": "b10a1ee04666",
+        "relation_kind": "clitic_component_of_entry",
+        "segment_index": 0,
+        "sense_id": null
+      }
+    ],
+    "evidence_refs": [
+      "fact:p00slice:12_31_24:case:v2",
+      "fact:p00slice:12_31_24:func:v2",
+      "fact:p00slice:12_31_24:gov:v2",
+      "fact:p00slice:12_31_24:seg",
+      "fact:p00slice:entry_b10a1ee04666:rootless"
+    ],
+    "hover_cards": [
+      {
+        "alternatives": [],
+        "attachment": {
+          "boundary": "clitic letter لِ | host",
+          "host": "له"
+        },
+        "component_surface": "لِ",
+        "contextual_function": "preposition (jarr) - marks 'for / to / belonging to' on the following noun",
+        "contextual_gloss": "for Allah",
+        "entry_link": "/qamus/entry/b10a1ee04666",
+        "fact_ids": [
+          "fact:p00slice:12_31_24:case:v2",
+          "fact:p00slice:12_31_24:func:v2",
+          "fact:p00slice:12_31_24:gov:v2",
+          "fact:p00slice:12_31_24:seg",
+          "fact:p00slice:entry_b10a1ee04666:rootless"
+        ],
+        "governed_expression": "الله",
+        "governor": {
+          "loc": "quran:12:31:23",
+          "surface": "حاش"
+        },
+        "nahw_note": "Nahw - what this piece does here: it governs the next word, pulling it into the jarr (genitive) state, shown by the kasra",
+        "particle_identity": {
+          "entry_id": "b10a1ee04666",
+          "headword": "لَـ / لِـ",
+          "sense_candidate": "لِـ (sense 2)",
+          "sense_state": "candidate_pending"
+        },
+        "reason": "both independent reviewers agreed on the jarr reading and its sign (agreement key: jarr-clitic-li-majrur-visible-kasra)",
+        "sarf_note": "Sarf - how this piece forms or attaches: This little lam is not built from a three-letter root - it is an indeclinable tool word (a particle). It attaches to the word after it. Written joined to its host; the host keeps its own letters.",
+        "scope": null,
+        "unresolved": null
+      }
+    ],
+    "kind": "particle_clitic_word",
+    "learner_explanation": "The joined lam contributes the prepositional function and is written fused with the following name. The exact sense link and governor relation remain unresolved.",
+    "morpheme_spans": [
+      {
+        "char_end": 2,
+        "char_start": 0,
+        "morpheme_occurrence_id": "mocc:p007:12:31:24",
+        "segment_index": 0
+      }
+    ],
+    "normalization": "NFC",
+    "occurrence_id": "quran:12:31:24",
+    "root": null,
+    "rootless_pedagogy": "This little lam is not built from a three-letter root - it is an indeclinable tool word (a particle). It attaches to the word after it.",
+    "segments": [
+      {
+        "char_end": 2,
+        "char_start": 0,
+        "fact_ids": [
+          "fact:p00slice:12_31_24:case:v2",
+          "fact:p00slice:12_31_24:func:v2",
+          "fact:p00slice:12_31_24:gov:v2",
+          "fact:p00slice:12_31_24:seg",
+          "fact:p00slice:entry_b10a1ee04666:rootless"
+        ],
+        "gloss": "for / to",
+        "nahw_note": "Nahw - what this piece does here: it governs the next word, pulling it into the jarr (genitive) state, shown by the kasra",
+        "renderer_class": "qg-particle-jarr-clitic",
+        "sarf_note": "Sarf - how this piece forms or attaches: This little lam is not built from a three-letter root - it is an indeclinable tool word (a particle). It attaches to the word after it. Written joined to its host; the host keeps its own letters.",
+        "segment_index": 0,
+        "semantic_class": "jarr_clitic_lam",
+        "surface": "لِ"
+      },
+      {
+        "char_end": 7,
+        "char_start": 2,
+        "fact_ids": [
+          "fact:p00slice:12_31_24:seg"
+        ],
+        "gloss": "Allah",
+        "nahw_note": null,
+        "renderer_class": "qg-proper-noun",
+        "sarf_note": null,
+        "segment_index": 1,
+        "semantic_class": "proper_name_majrur",
+        "surface": "لَّهِ"
+      }
+    ],
+    "surface": "لِلَّهِ",
+    "unresolved": {
+      "dependencies": [
+        "occurrence_to_sense_certification",
+        "governor_relation_governed_key"
+      ],
+      "message": "The exact dictionary sense and the governor relation remain under review; the certified segmentation, function, governor identity, and case are preserved.",
+      "state": "canonical_dependencies_unresolved"
+    },
+    "whole_word_gloss": "for Allah"
+  },
+  "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae",
+  "provenance": {
+    "built_by": "tools/build_p007_website_payloads.py",
+    "provenance_class": "certified",
+    "source_refs": [
+      "qamus/examples/p007-li-pilot/projections.jsonl#quran:12:31:24",
+      "qamus/examples/p007-li-pilot/certification/events.jsonl"
     ]
-   }
-  ]
- },
- "provenance": {
-  "provenance_class": "certified",
-  "built_by": "packets.website-handoff.sample-builder v1 (2026-07-29)",
-  "source_refs": [
-   "packet:p00-vertical-slice:projections#quran:12:31:24",
-   "typed-fact-store:events#p00slice:12_31_24"
-  ]
- }
+  },
+  "reverse_links": {
+    "entry_to_occurrences": [],
+    "occurrence_to_appearances": [
+      {
+        "appearance_id": "0135b6be178e:u0:x0:w2",
+        "page_id": "entry:0135b6be178e",
+        "page_kind": "entry",
+        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+      },
+      {
+        "appearance_id": "4211cb1f5355:u0:x1:w24",
+        "page_id": "entry:4211cb1f5355",
+        "page_kind": "entry",
+        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+      },
+      {
+        "appearance_id": "99f8d3c2cad5:u5:x0:w24",
+        "page_id": "entry:99f8d3c2cad5",
+        "page_kind": "entry",
+        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+      },
+      {
+        "appearance_id": "a6de8fd64244:u4:x2:w24",
+        "page_id": "entry:a6de8fd64244",
+        "page_kind": "entry",
+        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+      },
+      {
+        "appearance_id": "d82582d4c8e6:u0:x2:w24",
+        "page_id": "entry:d82582d4c8e6",
+        "page_kind": "entry",
+        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+      },
+      {
+        "appearance_id": "e0e500c4b7a5:u0:x14:w24",
+        "page_id": "entry:e0e500c4b7a5",
+        "page_kind": "entry",
+        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+      },
+      {
+        "appearance_id": "e7fa3fadaf4a:u0:x0:w24",
+        "page_id": "entry:e7fa3fadaf4a",
+        "page_kind": "entry",
+        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+      },
+      {
+        "appearance_id": "fbd04177b8dd:u0:x26:w24",
+        "page_id": "entry:fbd04177b8dd",
+        "page_kind": "entry",
+        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+      }
+    ]
+  },
+  "schema": "qamus.website_projection_payload.v1",
+  "schema_version": "1.0.0",
+  "source_projection_hash": "dcafb9c38683931f4d2a45e444c01b09a8679949e5151190ccb2b99abdd78288"
 }

@@ -27,6 +27,7 @@ red-first self-test gated in tools/check_regressions.py.
 from __future__ import annotations
 
 import argparse
+import copy
 import glob
 import hashlib
 import json
@@ -40,6 +41,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 ROOT = Path(__file__).resolve().parents[1]
 SAMPLES_DIR = ROOT / "qamus" / "examples" / "website-payloads"
+P007_DIR = ROOT / "qamus" / "examples" / "p007-li-pilot"
 
 PAYLOAD_SCHEMA = "qamus.website_projection_payload.v1"
 ACCEPTED_MAJOR = 1
@@ -437,6 +439,197 @@ def check_no_server_paths(payload, errors):
             % hit.group(0))
 
 
+def check_p007_authority(payload, errors):
+    """Bind p007 handoff samples to the current canonical occurrence plane."""
+    if not str(payload.get("artifact_id") or "").startswith("artifact:p007:"):
+        return
+    projections = [
+        json.loads(line)
+        for line in (P007_DIR / "projections.jsonl").read_text(
+            encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    occurrence_id = payload.get("occurrence_id")
+    source = next((row for row in projections
+                   if row.get("projection", {}).get("occurrence_id") ==
+                   occurrence_id), None)
+    if source is None:
+        errors.append("p007_authority: occurrence is absent from canonical "
+                      "p007 projections")
+        return
+    projection = payload.get("projection") or {}
+    canonical = source["projection"]
+    if payload.get("candidate_only") is not True \
+            or payload.get("deliverable") is not False:
+        errors.append("p007_authority: p007 handoff samples must remain "
+                      "candidate_only and non-deliverable")
+    if payload.get("source_projection_hash") != source.get("projection_hash"):
+        errors.append("p007_authority: source projection hash is stale or "
+                      "missing")
+    if unicodedata.normalize("NFC", projection.get("surface") or "") != \
+            unicodedata.normalize("NFC", canonical.get("surface") or ""):
+        errors.append("p007_authority: written surface differs from the "
+                      "canonical occurrence projection")
+    canonical_segments = []
+    cursor = 0
+    for row in canonical.get("segments") or []:
+        surface = unicodedata.normalize("NFC", row.get("surface") or "")
+        canonical_segments.append({
+            "surface": surface,
+            "char_start": cursor,
+            "char_end": cursor + len(surface),
+            "semantic_class": row.get("role"),
+            "renderer_class": row.get("colour_class"),
+        })
+        cursor += len(surface)
+    projected_segments = [
+        {key: row.get(key) for key in (
+            "surface", "char_start", "char_end", "semantic_class",
+            "renderer_class")}
+        for row in projection.get("segments") or []
+    ]
+    if projected_segments != canonical_segments:
+        errors.append("p007_authority: colour/span segments fork from the "
+                      "canonical occurrence projection")
+    expected_plane = canonical.get("certification_plane") or {}
+    certification = projection.get("certification") or {}
+    if certification.get("plane") != expected_plane:
+        errors.append("p007_authority: certification plane differs from "
+                      "canonical p007 posture")
+    unresolved_dependencies = canonical.get("unresolved_dependencies") or []
+    unresolved = projection.get("unresolved") or {}
+    if unresolved_dependencies:
+        if certification.get("status") != "unresolved":
+            errors.append("p007_authority: unresolved canonical dependencies "
+                          "were presented as settled")
+        if unresolved.get("dependencies") != unresolved_dependencies:
+            errors.append("p007_authority: unresolved dependency set drifted")
+    facts = [
+        json.loads(line)
+        for line in (P007_DIR / "typed-facts.jsonl").read_text(
+            encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    expected_fact_ids = sorted(
+        fact["fact_id"] for fact in facts
+        if fact.get("fact_type") == "particle_rootlessness"
+        or any(span.get("quran_loc") == occurrence_id
+               for span in fact.get("surface_spans") or [])
+    )
+    expected_hover = copy.deepcopy((canonical.get("hover_cards") or [])[0])
+    expected_hover["component_surface"] = unicodedata.normalize(
+        "NFC", expected_hover.get("component_surface") or "")
+    expected_hover.setdefault("particle_identity", {}).pop("sense", None)
+    expected_hover["fact_ids"] = expected_fact_ids
+    if projection.get("hover_cards") != [expected_hover]:
+        errors.append("p007_authority: hover content or fact trace forked "
+                      "from the canonical occurrence projection")
+    for card in projection.get("hover_cards") or []:
+        if "relation" in (card.get("governor") or {}):
+            errors.append("p007_authority: uncompared governor relation was "
+                          "rendered in public hover")
+        identity = card.get("particle_identity") or {}
+        if expected_plane.get("sense") != "certified" \
+                and identity.get("sense") is not None:
+            errors.append("p007_authority: candidate sense was rendered as "
+                          "settled identity")
+    if expected_plane.get("sense") != "certified":
+        for link in projection.get("entry_links") or []:
+            if link.get("sense_id") is not None:
+                errors.append("p007_authority: candidate sense was emitted "
+                              "as a website sense link")
+    source_appearance_ids = {
+        row.get("appearance_id") for row in source.get("appearances") or []
+    }
+    payload_appearance_rows = (
+        (payload.get("reverse_links") or {}).get(
+            "occurrence_to_appearances") or []
+    )
+    payload_appearance_ids = {
+        row.get("appearance_id") for row in payload_appearance_rows
+    }
+    if len(payload_appearance_rows) != len(payload_appearance_ids):
+        errors.append("p007_authority: duplicate reverse appearance id")
+    if payload_appearance_ids != source_appearance_ids:
+        errors.append("p007_authority: reverse appearance set is incomplete "
+                      "or contains page-local inventions")
+    universe = {
+        row["appearance_id"]: row
+        for row in (
+            json.loads(line)
+            for line in (ROOT / "qamus" / "lattice" /
+                          "example-ayah-universe.jsonl").read_text(
+                              encoding="utf-8").splitlines()
+            if line.strip()
+        )
+    }
+    reverse_rows = {
+        row.get("appearance_id"): row
+        for row in (payload.get("reverse_links") or {}).get(
+            "occurrence_to_appearances") or []
+    }
+    for appearance_id in source_appearance_ids:
+        expected = universe.get(appearance_id)
+        actual = reverse_rows.get(appearance_id) or {}
+        if expected is None or actual.get("page_id") != \
+                "entry:%s" % expected.get("entry_id") \
+                or actual.get("page_kind") != "entry":
+            errors.append("p007_authority: appearance %s page binding "
+                          "differs from the canonical appearance universe"
+                          % appearance_id)
+    chosen = payload.get("appearance") or {}
+    chosen_id = chosen.get("appearance_id")
+    chosen_source = universe.get(chosen_id)
+    if chosen_id not in source_appearance_ids or chosen_source is None:
+        errors.append("p007_authority: selected envelope appearance is not "
+                      "an authoritative occurrence appearance")
+    else:
+        expected_local = {
+            "selected_highlight": bool(chosen_source.get("selected")),
+            "entry_relationship": (
+                "entry_relation" if
+                chosen_source.get("appearance_index_entry_linked") else
+                "context_only"
+            ),
+            "focus": "example-card",
+            "navigation": [],
+        }
+        if chosen.get("page_id") != "entry:%s" % chosen_source["entry_id"] \
+                or chosen.get("page_kind") != "entry" \
+                or chosen.get("page_local") != expected_local:
+            errors.append("p007_authority: selected appearance page/local "
+                          "binding forks from the canonical universe")
+    sys.path.insert(0, str(ROOT / "tools"))
+    try:
+        from certify_typed_fact import TypedFactCertificationStore
+        store = TypedFactCertificationStore(P007_DIR / "certification")
+        trail_errors = store.validate_trail()
+        status_by_id = store.status_by_id() if not trail_errors else {}
+    finally:
+        if str(ROOT / "tools") in sys.path:
+            sys.path.remove(str(ROOT / "tools"))
+    if trail_errors:
+        errors.append("p007_authority: certification trail is invalid")
+    fact_refs = sorted(ref for ref in projection.get("evidence_refs") or []
+                       if str(ref).startswith("fact:"))
+    if fact_refs != expected_fact_ids:
+        errors.append("p007_authority: evidence fact set is not the exact "
+                      "canonical occurrence dependency set")
+    for fact_id in fact_refs:
+        if status_by_id.get(fact_id) != "certified":
+            errors.append("p007_authority: evidence fact %s is not currently "
+                          "certified" % fact_id)
+    segment_rows = projection.get("segments") or []
+    clitic_fact_ids = sorted((segment_rows[0] if segment_rows else {}).get(
+        "fact_ids") or [])
+    hover_fact_ids = sorted((projection.get("hover_cards") or [{}])[0].get(
+        "fact_ids") or [])
+    if clitic_fact_ids != expected_fact_ids \
+            or hover_fact_ids != clitic_fact_ids:
+        errors.append("p007_authority: hover component lacks the exact "
+                      "fact-id trace carried by its colour segment")
+
+
 def validate_payload(payload: dict) -> list[str]:
     errors: list[str] = []
     check_envelope(payload, errors)
@@ -448,6 +641,7 @@ def validate_payload(payload: dict) -> list[str]:
     check_unresolved_and_rootless(payload, errors)
     check_provenance(payload, errors)
     check_no_server_paths(payload, errors)
+    check_p007_authority(payload, errors)
     return errors
 
 
@@ -701,6 +895,96 @@ def _self_test() -> int:
     bad = _green_payload()
     bad["schema_version"] = "2.0.0"
     expect_red("red: unaccepted schema major", bad, "envelope_version")
+
+    # red 16-18 — p007 samples may never fork from the canonical occurrence
+    # projection or cite a revoked pre-claim-binding fact.
+    p007 = json.loads((SAMPLES_DIR /
+                       "p007_li_adam_clean.payload.json").read_text(
+                           encoding="utf-8"))
+    bad = copy.deepcopy(p007)
+    bad["source_projection_hash"] = "0" * 64
+    expect_red("red: stale p007 source projection hash", bad,
+               "p007_authority")
+
+    bad = copy.deepcopy(p007)
+    bad["projection"]["hover_cards"][0]["governor"]["relation"] = \
+        "muta-alliq"
+    bad["projection_hash"] = projection_hash(bad["projection"])
+    for app in bad["reverse_links"]["occurrence_to_appearances"]:
+        app["projection_hash"] = bad["projection_hash"]
+    expect_red("red: uncompared p007 governor relation rendered", bad,
+               "p007_authority")
+
+    bad = copy.deepcopy(p007)
+    bad["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:func" if ref.endswith(":func:v2") else ref
+        for ref in bad["projection"]["evidence_refs"]
+    ]
+    bad["projection_hash"] = projection_hash(bad["projection"])
+    for app in bad["reverse_links"]["occurrence_to_appearances"]:
+        app["projection_hash"] = bad["projection_hash"]
+    expect_red("red: revoked legacy p007 fact cited", bad,
+               "p007_authority")
+
+    bad = copy.deepcopy(p007)
+    bad["candidate_only"] = False
+    bad["deliverable"] = True
+    expect_red("red: p007 candidate payload marked deliverable", bad,
+               "p007_authority")
+
+    bad = copy.deepcopy(p007)
+    bad["projection"]["hover_cards"][0]["contextual_gloss"] = \
+        "invented page-local gloss"
+    bad["projection_hash"] = projection_hash(bad["projection"])
+    for app in bad["reverse_links"]["occurrence_to_appearances"]:
+        app["projection_hash"] = bad["projection_hash"]
+    expect_red("red: p007 hover prose forked from canonical projection", bad,
+               "p007_authority")
+
+    bad = copy.deepcopy(p007)
+    bad["projection"]["evidence_refs"] = [
+        ref for ref in bad["projection"]["evidence_refs"]
+        if not ref.endswith(":gov:v2")
+    ]
+    bad["projection_hash"] = projection_hash(bad["projection"])
+    for app in bad["reverse_links"]["occurrence_to_appearances"]:
+        app["projection_hash"] = bad["projection_hash"]
+    expect_red("red: required p007 fact omitted", bad, "p007_authority")
+
+    bad = copy.deepcopy(p007)
+    bad["projection"]["evidence_refs"][-1] = \
+        "fact:p00slice:61_5_4:func:v2"
+    bad["projection_hash"] = projection_hash(bad["projection"])
+    for app in bad["reverse_links"]["occurrence_to_appearances"]:
+        app["projection_hash"] = bad["projection_hash"]
+    expect_red("red: foreign certified p007 fact substituted", bad,
+               "p007_authority")
+
+    bad = copy.deepcopy(p007)
+    bad["appearance"]["page_id"] = "entry:invented"
+    expect_red("red: selected p007 appearance page fork", bad,
+               "p007_authority")
+
+    bad = copy.deepcopy(p007)
+    bad["appearance"]["page_local"]["entry_relationship"] = "entry_relation"
+    expect_red("red: p007 context appearance promoted to entry relation", bad,
+               "p007_authority")
+
+    bad = copy.deepcopy(p007)
+    bad["projection"]["hover_cards"][0]["fact_ids"] = []
+    bad["projection_hash"] = projection_hash(bad["projection"])
+    for app in bad["reverse_links"]["occurrence_to_appearances"]:
+        app["projection_hash"] = bad["projection_hash"]
+    expect_red("red: p007 hover lost its segment fact trace", bad,
+               "p007_authority")
+
+    bad = copy.deepcopy(p007)
+    duplicate = copy.deepcopy(
+        bad["reverse_links"]["occurrence_to_appearances"][0])
+    duplicate["page_id"] = "entry:invented"
+    bad["reverse_links"]["occurrence_to_appearances"].insert(0, duplicate)
+    expect_red("red: duplicate p007 appearance shadows page binding", bad,
+               "p007_authority")
 
     if failures:
         print("\n%d SELF-TEST CASE(S) FAILED" % len(failures))

@@ -4,19 +4,19 @@
     "rows": [
       {
         "appearance_id": "01133eb5431b:u0:x1:w3",
-        "projection_hash": "1317f79e00d553f3aea50cbbb3c99e0cec809d6786a06329c155b72fdcee9f9b"
+        "projection_hash": "f4f1da458b5eeb1561b42f92aad53762d04c59957fe237386d55a8bcdcdb80aa"
       },
       {
         "appearance_id": "3041d6f44a27:u11:x1:w3",
-        "projection_hash": "1317f79e00d553f3aea50cbbb3c99e0cec809d6786a06329c155b72fdcee9f9b"
+        "projection_hash": "f4f1da458b5eeb1561b42f92aad53762d04c59957fe237386d55a8bcdcdb80aa"
       },
       {
         "appearance_id": "65d3d5c51f24:u0:x2:w3",
-        "projection_hash": "1317f79e00d553f3aea50cbbb3c99e0cec809d6786a06329c155b72fdcee9f9b"
+        "projection_hash": "f4f1da458b5eeb1561b42f92aad53762d04c59957fe237386d55a8bcdcdb80aa"
       },
       {
         "appearance_id": "7f1f8b8e29e6:u0:x0:w3",
-        "projection_hash": "1317f79e00d553f3aea50cbbb3c99e0cec809d6786a06329c155b72fdcee9f9b"
+        "projection_hash": "f4f1da458b5eeb1561b42f92aad53762d04c59957fe237386d55a8bcdcdb80aa"
       }
     ],
     "single_hash_parity": true
@@ -35,37 +35,39 @@
     "verified": true
   },
   "certification_dependency": {
-    "basis": "replayed from the hash-chained event trail — raw status strings are never treated as authority",
+    "basis": "tools.certify_typed_fact.TypedFactCertificationStore validated trail and folded effective state",
     "depends_on_fact_ids": [
-      "fact:p00slice:61_5_4:case",
-      "fact:p00slice:61_5_4:func",
-      "fact:p00slice:61_5_4:gov",
+      "fact:p00slice:61_5_4:case:v2",
+      "fact:p00slice:61_5_4:func:v2",
+      "fact:p00slice:61_5_4:gov:v2",
       "fact:p00slice:61_5_4:seg",
       "fact:p00slice:entry_b10a1ee04666:rootless"
     ],
     "effective_states": {
-      "fact:p00slice:61_5_4:case": {
+      "fact:p00slice:61_5_4:case:v2": {
         "effective_status": "certified",
         "event_count": 3
       },
-      "fact:p00slice:61_5_4:func": {
+      "fact:p00slice:61_5_4:func:v2": {
         "effective_status": "certified",
         "event_count": 3
       },
-      "fact:p00slice:61_5_4:gov": {
+      "fact:p00slice:61_5_4:gov:v2": {
         "effective_status": "certified",
         "event_count": 3
       },
       "fact:p00slice:61_5_4:seg": {
         "effective_status": "certified",
-        "event_count": 3
+        "event_count": 4
       },
       "fact:p00slice:entry_b10a1ee04666:rootless": {
         "effective_status": "certified",
         "event_count": 3
       }
     },
-    "invalidation_rule": "fail-closed withholding by THIS builder: while any depended-on fact's replayed effective state is outside ['certified', 'candidate'], the envelope's learner-facing artifact classes ['learner_projection_fields', 'colour_and_hover_bindings', 'letter_ownership_presentation', 'website_envelope', 'appearance_enumeration', 'derived_fixture_candidates', 'disposition_and_readiness_metrics'] are WITHHELD (not emitted). Append-only cascade/regeneration across the canonical planes is the Sol certifier adapter's contract (adp-certifier-effective-state) — cascade behavior is NOT claimed from last-event-wins replay."
+    "invalidation_rule": "fail-closed withholding by THIS builder: while the authoritative event trail is invalid or any depended-on fact's effective state is outside ['certified', 'candidate'], the envelope's learner-facing artifact classes ['learner_projection_fields', 'colour_and_hover_bindings', 'letter_ownership_presentation', 'website_envelope', 'appearance_enumeration', 'derived_fixture_candidates', 'disposition_and_readiness_metrics'] are WITHHELD (not emitted). Revocation and dependent-fact cascades are performed only by TypedFactCertificationStore; this consumer never invents transitions.",
+    "trail_errors": [],
+    "trail_valid": true
   },
   "colour_and_hover": {
     "alignment_basis": "CANDIDATE span alignment: hover components are matched to segments by component_surface WITHIN this one projection record and copy that segment's fact ids; authoritative same-fact identity (shared fact ids minted by the certifier/projection plane) is Sol adapter work and is NOT claimed here",
@@ -77,9 +79,9 @@
       {
         "component_surface": "لِ",
         "fact_ids": [
-          "fact:p00slice:61_5_4:case",
-          "fact:p00slice:61_5_4:func",
-          "fact:p00slice:61_5_4:gov",
+          "fact:p00slice:61_5_4:case:v2",
+          "fact:p00slice:61_5_4:func:v2",
+          "fact:p00slice:61_5_4:gov:v2",
           "fact:p00slice:61_5_4:seg",
           "fact:p00slice:entry_b10a1ee04666:rootless"
         ],
@@ -89,9 +91,9 @@
     "segment_fact_bindings": [
       {
         "fact_ids": [
-          "fact:p00slice:61_5_4:case",
-          "fact:p00slice:61_5_4:func",
-          "fact:p00slice:61_5_4:gov",
+          "fact:p00slice:61_5_4:case:v2",
+          "fact:p00slice:61_5_4:func:v2",
+          "fact:p00slice:61_5_4:gov:v2",
           "fact:p00slice:61_5_4:seg",
           "fact:p00slice:entry_b10a1ee04666:rootless"
         ],
@@ -161,31 +163,31 @@
     }
   },
   "nahw_facts": [
-    "fact:p00slice:61_5_4:func",
-    "fact:p00slice:61_5_4:gov",
-    "fact:p00slice:61_5_4:case"
+    "fact:p00slice:61_5_4:func:v2",
+    "fact:p00slice:61_5_4:gov:v2",
+    "fact:p00slice:61_5_4:case:v2"
   ],
   "occurrence_id": "quran:61:5:4",
   "repository_authority": {
     "certification_event_trail": "qamus/examples/p007-li-pilot/certification/events.jsonl",
-    "projection_hash": "1317f79e00d553f3aea50cbbb3c99e0cec809d6786a06329c155b72fdcee9f9b",
+    "projection_hash": "f4f1da458b5eeb1561b42f92aad53762d04c59957fe237386d55a8bcdcdb80aa",
     "projection_source": "qamus/examples/p007-li-pilot/projections.jsonl",
     "typed_facts": [
       {
         "certification_status_verbatim": "candidate",
-        "fact_id": "fact:p00slice:61_5_4:case",
+        "fact_id": "fact:p00slice:61_5_4:case:v2",
         "fact_type": "case_mood_governor",
         "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
       },
       {
         "certification_status_verbatim": "candidate",
-        "fact_id": "fact:p00slice:61_5_4:func",
+        "fact_id": "fact:p00slice:61_5_4:func:v2",
         "fact_type": "contextual_function",
         "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
       },
       {
         "certification_status_verbatim": "candidate",
-        "fact_id": "fact:p00slice:61_5_4:gov",
+        "fact_id": "fact:p00slice:61_5_4:gov:v2",
         "fact_type": "governor_relation",
         "source_file": "qamus/examples/p007-li-pilot/typed-facts.jsonl"
       },
