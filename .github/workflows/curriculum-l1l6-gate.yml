@@ -22,6 +22,13 @@ on:
       - "tools/build_learner_projections.py"
       - "tools/build_promotion_bundles.py"
       - "tools/build_candidate_drills.py"
+      - "tools/build_curriculum_canonical.py"
+      - "tools/build_misconception_assets.py"
+      - "tools/build_pedagogy_projections.py"
+      - "tools/build_unit_dispositions.py"
+      - "tools/build_vn_grounding.py"
+      - "tools/validate_lesson_qualification.py"
+      - "tools/validate_task_packets.py"
       - ".github/workflows/curriculum-l1l6-gate.yml"
   workflow_dispatch:
 
@@ -39,7 +46,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: curriculum validator (20 named fail-closed checks)
+      - name: curriculum validator (23 named fail-closed checks)
         run: python tools/validate_curriculum_l1l6.py
 
       - name: validator mutation self-test (red-first)

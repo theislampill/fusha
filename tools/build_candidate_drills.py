@@ -68,12 +68,19 @@ def build():
                                      "remediation via misconception_link; "
                                      "this repo does NOT write tutor state"),
         })
+    canon = _jsonl(BASE / "canonical" / "canonical-units.jsonl")
+    canon_ids = {u["unit_id"] for u in canon}
+    linked_units = sorted(canon_ids & {u for r in rows
+                                       for u in r.get("unit_links", [])})
     meta = {
         "schema": "curriculum.l1l6_drill_candidate.v1.meta",
         "generator": "tools/build_candidate_drills.py",
         "rows": len(rows),
         "runtime_integrated": 0,
-        "honesty": "0 drills are runnable in the ordinary tutor today; these are complete promotion/adapter artifacts awaiting the Sol-owned integration",
+        "canonical_units_total": len(canon_ids),
+        "canonical_units_with_candidates": len(linked_units),
+        "answer_visibility": "answer_visible_candidate_packets",
+        "honesty": "0 of these drill records are runnable in the ordinary tutor today; every record is an answer-visible candidate packet (derived from lesson-answered material — never usable as independent assessment) awaiting the Sol-owned tutor/KC integration",
     }
     return rows, meta
 

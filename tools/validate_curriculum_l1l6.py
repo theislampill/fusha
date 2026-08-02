@@ -20,14 +20,23 @@ needed; manifest reproducibility against the corpus is the builder's
                         Arabic prose runs (source-prose heuristic), in ANY
                         subtree file
 - no_certification      no artifact claims certified state anywhere
-- pilot_parity          letter partition = facts; every letter owned exactly
-                        once; projection.json byte-equals recompilation from
-                        pilot-facts.json (facts -> segments -> hover, one
-                        source); fixtures have positive+adversarial incl. the
-                        rootless-particle and shared-root-distinct-lexeme
-                        guards
+- pilot_parity          letter partition = facts; letters[] AND
+                        surface_bare_letters bound to the exact WRITTEN
+                        surface (mutually consistent but wrong fails); hover
+                        case vowel verified against the written final mark;
+                        projection.json byte-equals recompilation from
+                        pilot-facts.json; fixtures have positive+adversarial
+                        incl. the rootless-particle and
+                        shared-root-distinct-lexeme guards
 - packet_presence       the 8 TP-CURR packets exist (deep validation is
                         tools/validate_task_packets.py, run on these paths)
+- ma_payload_binding    payload-backed bridge rows preserve the committed
+                        payload's exact surface/appearances/binding
+- drill_candidates      semantic validation of every drill record + honest
+                        counts (0 runtime-integrated, answer-visible)
+- sol_ledgers           repair ledger / conformance matrix / adapter
+                        manifest: current review identities, closed
+                        ownership vocabulary only, no false closure
 
 Usage:
     python tools/validate_curriculum_l1l6.py                # all checks
@@ -80,9 +89,21 @@ PACKET_IDS = (
 )
 SERVER_PATH_RE = re.compile(
     r"(?:/var/www|/srv/|/home/[a-z]|/etc/|/Users/|\\\\[A-Za-z0-9]|[A-Za-z]:\\\\|[A-Za-z]:\\)")
+IP_ADDR_RE = re.compile(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")
 AR_WORD_RE = re.compile(r"[؀-ۿ][؀-ۿـً-ْٰ]*")
 SHA_RE = re.compile(r"^[0-9a-f]{64}$")
 PROSE_RUN_LIMIT = 12  # >= this many consecutive Arabic words on a line = prose
+PILOT_HARAKAT_RE = re.compile("[ً-ْٰۖ-ۭـ]")
+VOWEL_MARK_NAMES = {"َ": "fatha", "ِ": "kasra", "ُ": "damma"}
+# the owner's closed ownership-split vocabulary (Sol checkpoint): the ONLY
+# admissible state terms for the repair ledger and conformance matrix
+OWNERSHIP_VOCAB = frozenset({
+    "fable_branch_repair", "sol_adapter_required", "shared_integration_gate",
+    "linguistic_review_blocked", "owner_or_scholar_blocked"})
+# review identity of the Sol fix-request round this branch repairs
+# (github.com/theislampill/fusha/pull/136#issuecomment-5158892104)
+R2_REVIEWED_HEAD = "eb51278c626ebe9b65b5a3e1be3a3895783e1233"
+R2_REVIEW_TREE = "fd574a6f483995e5fce5a94368ea0b5fc7d37d14"
 
 
 def _jsonl(path):
@@ -111,6 +132,15 @@ def load_context():
     ctx["fixtures"] = _jsonl(BASE / "pilot" / "fixtures.jsonl")
     proj = BASE / "pilot" / "projection.json"
     ctx["projection_bytes"] = proj.read_bytes() if proj.exists() else None
+    ctx["drills"] = _jsonl(BASE / "drills-candidates" / "drill-candidates.jsonl")
+    ctx["drills_meta"] = json.loads(
+        (BASE / "drills-candidates" / "drill-candidates.meta.json").read_text(encoding="utf-8"))
+    ctx["repair_ledger"] = json.loads(
+        (BASE / "reports" / "sol-review-repair-ledger.json").read_text(encoding="utf-8"))
+    ctx["conformance"] = json.loads(
+        (BASE / "reports" / "architecture-conformance-matrix.json").read_text(encoding="utf-8"))
+    ctx["adapters"] = json.loads(
+        (BASE / "reports" / "sol-adapter-manifest.json").read_text(encoding="utf-8"))
     # every subtree file's text, for the leakage scan
     ctx["files"] = {
         str(p.relative_to(ROOT)).replace("\\", "/"): p.read_text(encoding="utf-8")
@@ -367,6 +397,8 @@ def check_leakage(ctx, errors):
     for rel, text in ctx["files"].items():
         if SERVER_PATH_RE.search(text):
             errors.append("leakage_scan: %s contains a server/absolute path" % rel)
+        if IP_ADDR_RE.search(text):
+            errors.append("leakage_scan: %s contains an IP address" % rel)
         if "informed_by" in text and "packets" not in rel:
             errors.append("leakage_scan: %s leaks informed_by" % rel)
         # prose heuristic: for JSON artifacts the unit is a string VALUE (a
@@ -417,6 +449,24 @@ def check_no_certification(ctx, errors):
         errors.append("no_certification: pilot facts status must be candidate")
 
 
+def _final_surface_vowel(surface):
+    """The short-vowel name written on the LAST base letter of surface, or
+    None when it carries no vowel mark (tanwin marks are not folded)."""
+    groups = []
+    for ch in surface:
+        if PILOT_HARAKAT_RE.match(ch):
+            if groups:
+                groups[-1][1].append(ch)
+        else:
+            groups.append((ch, []))
+    if not groups:
+        return None
+    for m in groups[-1][1]:
+        if m in VOWEL_MARK_NAMES:
+            return VOWEL_MARK_NAMES[m]
+    return None
+
+
 def check_pilot_parity(ctx, errors):
     facts = ctx["facts"]
     for tok in facts.get("tokens", []):
@@ -426,6 +476,26 @@ def check_pilot_parity(ctx, errors):
         if [l["letter"] for l in letters] != bare:
             errors.append("pilot_parity: %s letters[] disagrees with "
                           "surface_bare_letters" % tid)
+        # WRITTEN-SURFACE binding (Sol fix-request round 2, finding 2):
+        # mutual letters[]/surface_bare_letters consistency is not enough —
+        # both must equal the bare letters of the exact written surface, and
+        # a hover-claimed final case vowel must be the mark actually written
+        # on the surface's final letter (or "none" when unpointed there)
+        surface = tok.get("surface") or ""
+        written_bare = [ch for ch in PILOT_HARAKAT_RE.sub("", surface)]
+        if written_bare != bare:
+            errors.append("pilot_parity: %s surface_bare_letters/letters[] "
+                          "disagree with the WRITTEN surface (mutually "
+                          "consistent but wrong fails too)" % tid)
+        case = tok.get("analysis", {}).get("case_vowel") or {}
+        claimed = str(case.get("value") or "").split("_")[0]
+        if claimed:
+            written_final = _final_surface_vowel(surface) or "none"
+            if claimed != written_final:
+                errors.append("pilot_parity: %s hover case vowel claims %r "
+                              "but the written surface's final mark is %r "
+                              "(false hover mark)" % (tid, claimed,
+                                                      written_final))
         for l in letters:
             if l.get("owner") not in OWNER_CLASSES:
                 errors.append("pilot_parity: %s letter %r owner %r invalid"
@@ -671,10 +741,23 @@ def check_flywheel_loop(ctx, errors):
                           "consumer evidence" % row["loop"])
 
 
+def _canonical_loc_surface():
+    idx = {}
+    p = ROOT / "qamus" / "indexes" / "quran-loc-surface" / "index.jsonl"
+    if p.exists():
+        with p.open(encoding="utf-8") as f:
+            for line in f:
+                r = json.loads(line)
+                idx[r["loc"]] = r["surface"]
+    return idx
+
+
 def check_corpus_pilot(ctx, errors):
     """Envelopes recompute byte-identically from p007 authority via the real
-    builder+consumer, preserve the unresolved host-ownership state, and mint
-    no certification."""
+    builder+consumer, preserve the unresolved host-ownership state, bind
+    every declared span to the exact written canonical surface, mint no
+    certification, and PROVE fail-closed withholding under a synthetic
+    revocation (live canary, Sol fix-request round 2, finding 5)."""
     d = BASE / "corpus-pilot"
     if not (d / "README.md").exists():
         errors.append("corpus_pilot: README.md missing")
@@ -695,13 +778,21 @@ def check_corpus_pilot(ctx, errors):
         elif p.read_bytes() != data:
             errors.append("corpus_pilot: %s differs from recompute (p007 "
                           "store / consumer / envelope drift)" % p.name)
+    canonical_idx = _canonical_loc_surface()
+    import unicodedata as _ud
+    dep_fids = set()
     for name in ("envelope-2-34-5.json", "envelope-61-5-4.json"):
         p = d / name
         if not p.exists():
             continue
         env = json.loads(p.read_text(encoding="utf-8"))
-        if env.get("status") != "candidate":
-            errors.append("corpus_pilot: %s not candidate" % name)
+        if env.get("status") != "candidate" or env.get("withheld"):
+            errors.append("corpus_pilot: %s not a live candidate envelope "
+                          "(withheld or drifted status with all-valid "
+                          "dependencies)" % name)
+            continue
+        dep_fids.update(env.get("certification_dependency", {})
+                        .get("depends_on_fact_ids") or [])
         host = env.get("letter_ownership", {}).get("host", {})
         if host.get("consumer_verdict", {}).get("reason") != "no_root_evidence":
             errors.append("corpus_pilot: %s lost the preserved unresolved "
@@ -709,8 +800,40 @@ def check_corpus_pilot(ctx, errors):
         ch = env.get("colour_and_hover", {})
         if not env.get("appearances", {}).get("single_hash_parity"):
             errors.append("corpus_pilot: %s appearance hash parity not true" % name)
-        # FACT-IDENTITY parity (Sol repair 5): every hover binding must trace
-        # to its segment's fact ids; uncovered segments must be REPORTED
+        # WRITTEN-SURFACE binding (Sol fix-request round 2, finding 2): the
+        # segment surfaces must concatenate to the exact envelope surface,
+        # and the envelope surface must equal the canonical loc surface
+        segs = ch.get("segments", [])
+        if "".join(s.get("surface", "") for s in segs) != env.get("surface"):
+            errors.append("corpus_pilot: %s segment surfaces do not "
+                          "concatenate to the written surface" % name)
+        # the envelope must DECLARE its canonical-surface binding accurately:
+        # equality where the index agrees, an explicit reported divergence
+        # (with ownership) where main's own artifacts encode it differently
+        loc = (env.get("occurrence_id") or "").replace("quran:", "")
+        canonical = canonical_idx.get(loc)
+        csb = env.get("canonical_surface_binding") or {}
+        verified = (canonical is not None
+                    and _ud.normalize("NFC", canonical)
+                    == _ud.normalize("NFC", env.get("surface") or ""))
+        if csb.get("canonical_surface") != canonical \
+                or bool(csb.get("verified")) != verified:
+            errors.append("corpus_pilot: %s canonical-surface binding "
+                          "misdeclared against the committed index" % name)
+        if not verified and not (csb.get("divergence") or {}).get("ownership"):
+            errors.append("corpus_pilot: %s diverges from the canonical loc "
+                          "surface without a reported, owned divergence "
+                          "(silent equality claim)" % name)
+        # CANDIDATE span alignment (claim narrowed, Sol fix-request round 2,
+        # finding 13): every hover binding must carry its aligned segment's
+        # fact ids; uncovered segments must be REPORTED; and the envelope
+        # must declare that this is alignment, not authoritative same-fact
+        # identity
+        if "candidate" not in (ch.get("alignment_basis") or "").lower() \
+                or "sol" not in (ch.get("alignment_basis") or "").lower():
+            errors.append("corpus_pilot: %s missing/overclaiming alignment "
+                          "basis (must declare candidate alignment + Sol "
+                          "adapter ownership of same-fact identity)" % name)
         seg_binds = {b["surface"]: set(b["fact_ids"])
                      for b in ch.get("segment_fact_bindings", [])}
         if not seg_binds:
@@ -719,7 +842,7 @@ def check_corpus_pilot(ctx, errors):
             segf = seg_binds.get(hb["component_surface"])
             if segf is None or not hb.get("traces_to_segment_facts")                     or not set(hb["fact_ids"]) <= segf or not hb["fact_ids"]:
                 errors.append("corpus_pilot: %s hover component %r does not "
-                              "trace to its segment's fact ids" %
+                              "carry its aligned segment's fact ids" %
                               (name, hb.get("component_surface")))
         claimed_cov = set(ch.get("covered_segments", []))
         actual_cov = {hb["component_surface"]
@@ -734,11 +857,50 @@ def check_corpus_pilot(ctx, errors):
         if not cd.get("effective_states") or not cd.get("invalidation_rule"):
             errors.append("corpus_pilot: %s missing effective-certification "
                           "dependency block" % name)
+        if "cascade" in (cd.get("invalidation_rule") or "").lower() \
+                and "not claimed" not in (cd.get("invalidation_rule") or "").lower():
+            errors.append("corpus_pilot: %s invalidation rule claims cascade "
+                          "behavior (forbidden: Sol adapter contract)" % name)
         for f in env.get("repository_authority", {}).get("typed_facts", []):
             if f.get("certification_status_verbatim") not in ("candidate", "certified"):
                 errors.append("corpus_pilot: %s fact %s odd certification %r"
                               % (name, f.get("fact_id"),
                                  f.get("certification_status_verbatim")))
+    # LIVE WITHHOLDING CANARY (Sol fix-request round 2, finding 5): inject a
+    # synthetic revocation of one depended-on fact and require every envelope
+    # to withhold its learner-facing artifact classes — learner projections,
+    # colour/hover bindings, website envelope, appearances, fixture
+    # derivations and metrics must all be absent from the withheld form
+    if dep_fids:
+        try:
+            sys.path.insert(0, str(ROOT / "tools"))
+            import build_curriculum_corpus_pilot as builder
+            revoked = builder.build(
+                extra_events=[{"fact_id": fid, "to_status": "revoked"}
+                              for fid in sorted(dep_fids)])
+        except Exception as exc:  # noqa: BLE001
+            errors.append("corpus_pilot: withholding canary crashed (%s)" % exc)
+            revoked = {}
+        finally:
+            if str(ROOT / "tools") in sys.path:
+                sys.path.remove(str(ROOT / "tools"))
+        for target, env in sorted(revoked.items()):
+            if not env.get("withheld") \
+                    or env.get("status") != "withheld_invalid_dependency":
+                errors.append("corpus_pilot: withholding canary FAILED — %s "
+                              "did not withhold under a revoked dependency"
+                              % target)
+                continue
+            for banned in ("colour_and_hover", "website_envelope",
+                           "appearances", "letter_ownership", "sarf_facts",
+                           "nahw_facts", "reusable_lesson"):
+                if banned in env:
+                    errors.append("corpus_pilot: withholding canary FAILED — "
+                                  "%s still emits %s while withheld"
+                                  % (target, banned))
+            if not env.get("withheld_artifact_classes"):
+                errors.append("corpus_pilot: %s withheld form does not name "
+                              "its withheld artifact classes" % target)
 
 
 def check_precise_links(ctx, errors):
@@ -999,6 +1161,7 @@ def check_freeze_planes(ctx, errors):
                 for line in f:
                     u = json.loads(line)
                     universe_idx[u["appearance_id"]] = u
+        canonical_idx = _canonical_loc_surface()
         for row in _jsonl(grow_p):
             for sub in row.get("resolved", []):
                 hw = _ud.normalize("NFC", sub["candidate_headword"])
@@ -1027,6 +1190,205 @@ def check_freeze_planes(ctx, errors):
                             "(context appearances never become entry "
                             "occurrences)" % (row["unit_id"],
                                               w.get("appearance_id")))
+                    # CANONICAL-SURFACE re-verification (Sol fix-request
+                    # round 2, finding 3): a witness may claim to ground a
+                    # canonical occurrence ONLY when its card surface
+                    # NFC-equals the canonical loc surface; diverging
+                    # witnesses must be labelled card_display_only
+                    loc = (w.get("occurrence_id") or "").replace("quran:", "")
+                    canonical = canonical_idx.get(loc)
+                    verified = (canonical is not None
+                                and _ud.normalize("NFC", canonical)
+                                == _ud.normalize("NFC", w.get("surface") or ""))
+                    if bool(w.get("canonical_surface_verified")) != verified:
+                        errors.append(
+                            "freeze_planes: vn-grounding %s witness %s "
+                            "canonical_surface verification flag is FALSE "
+                            "for the committed canonical index (card "
+                            "orthography must not claim canonical equality)"
+                            % (row["unit_id"], w.get("appearance_id")))
+                    want_scope = ("canonical_occurrence" if verified
+                                  else "card_display_only")
+                    if w.get("witness_scope") != want_scope:
+                        errors.append(
+                            "freeze_planes: vn-grounding %s witness %s scope "
+                            "%r != required %r (canonical_surface gate)"
+                            % (row["unit_id"], w.get("appearance_id"),
+                               w.get("witness_scope"), want_scope))
+                    if w.get("canonical_surface") != canonical:
+                        errors.append(
+                            "freeze_planes: vn-grounding %s witness %s "
+                            "records a canonical_surface differing from the "
+                            "index" % (row["unit_id"], w.get("appearance_id")))
+
+
+def check_ma_payload_binding(ctx, errors):
+    """Sol fix-request round 2, finding 4: payload-backed bridge rows (the
+    two مَا canaries) must preserve the committed payload's EXACT surface,
+    appearances and binding — degradation to surface:null / zero appearances
+    is red. Every payload_binding is re-verified against the payload file."""
+    bridge_p = BASE / "reports" / "occurrence-bridge.jsonl"
+    if not bridge_p.exists():
+        errors.append("ma_payload_binding: occurrence-bridge.jsonl missing")
+        return
+    rows = _jsonl(bridge_p)
+    ma_occ_rows = [r for r in rows
+                   if r.get("increment") == "inc-ma" and r.get("occurrence_id")]
+    if len(ma_occ_rows) < 2:
+        errors.append("ma_payload_binding: the two ma payload canary rows "
+                      "are missing from the bridge")
+    for r in rows:
+        pb = r.get("payload_binding")
+        if r in ma_occ_rows and not pb:
+            errors.append("ma_payload_binding: %s lost its payload binding"
+                          % r.get("bridge_id"))
+            continue
+        if not pb:
+            continue
+        pf = ROOT / pb.get("payload_file", "")
+        if not pf.exists():
+            errors.append("ma_payload_binding: %s cites missing payload %s"
+                          % (r.get("bridge_id"), pb.get("payload_file")))
+            continue
+        pl = json.loads(pf.read_text(encoding="utf-8"))
+        apps = pl["reverse_links"]["occurrence_to_appearances"]
+        if r.get("surface") != pl["projection"]["surface"]:
+            errors.append("ma_payload_binding: %s surface %r != payload "
+                          "surface (degraded/drifted)" % (r.get("bridge_id"),
+                                                          r.get("surface")))
+        if pb.get("projection_hash") != pl["projection_hash"] \
+                or pb.get("artifact_id") != pl["artifact_id"]:
+            errors.append("ma_payload_binding: %s binding identity differs "
+                          "from the payload" % r.get("bridge_id"))
+        got = r.get("appearances", {})
+        if got.get("rows") != apps or got.get("count") != len(apps) \
+                or not got.get("count"):
+            errors.append("ma_payload_binding: %s appearances degraded from "
+                          "the payload's reverse links" % r.get("bridge_id"))
+        if not r.get("required_nahw_facts"):
+            errors.append("ma_payload_binding: %s lost the payload's "
+                          "required-fact evidence refs" % r.get("bridge_id"))
+
+
+def check_drill_candidates(ctx, errors):
+    """Sol fix-request round 2, finding 8: SEMANTIC validation of every
+    drill-candidate record (regeneration identity alone is insufficient) +
+    the honest counts (0 runtime-integrated, answer-visible packets)."""
+    rows = ctx["drills"]
+    meta = ctx["drills_meta"]
+    reg_ids = {c["misconception_id"] for c in
+               _jsonl(BASE / "misconceptions" / "misconception-registry.jsonl")}
+    canon_ids = {u["unit_id"] for u in
+                 _jsonl(BASE / "canonical" / "canonical-units.jsonl")}
+    caps = {"letter_ownership", "template_classification",
+            "discriminator_table", "pattern_consistency", "licensing_table",
+            "pedagogical_projection"} | set(discovered_increments())
+    if meta.get("rows") != len(rows):
+        errors.append("drill_candidates: meta rows %r != %d records"
+                      % (meta.get("rows"), len(rows)))
+    if meta.get("runtime_integrated") != 0:
+        errors.append("drill_candidates: runtime_integrated must be 0 (the "
+                      "honest count) — nothing here is tutor-runnable")
+    if meta.get("answer_visibility") != "answer_visible_candidate_packets":
+        errors.append("drill_candidates: meta must declare answer-visible "
+                      "candidate packets")
+    linked = sorted(canon_ids & {u for r in rows
+                                 for u in r.get("unit_links", [])})
+    if meta.get("canonical_units_with_candidates") != len(linked) \
+            or meta.get("canonical_units_total") != len(canon_ids):
+        errors.append("drill_candidates: units-with-candidates counts drift "
+                      "from the records (%r/%r vs %d/%d)"
+                      % (meta.get("canonical_units_with_candidates"),
+                         meta.get("canonical_units_total"),
+                         len(linked), len(canon_ids)))
+    seen = set()
+    required = ("prompt_specification", "expected_rubric", "explanation",
+                "answer_leakage_posture", "abstention_behaviour",
+                "intended_runtime_consumer", "adapter_requirement",
+                "prerequisites", "difficulty_band")
+    for r in rows:
+        did = r.get("drill_id")
+        if not (isinstance(did, str) and did.startswith("dr-")):
+            errors.append("drill_candidates: bad drill_id %r" % did)
+        if did in seen:
+            errors.append("drill_candidates: duplicate drill_id %r" % did)
+        seen.add(did)
+        if r.get("status") != "candidate_not_runtime_integrated":
+            errors.append("drill_candidates: %s status %r claims more than "
+                          "candidacy" % (did, r.get("status")))
+        if r.get("misconception_link") not in reg_ids:
+            errors.append("drill_candidates: %s misconception_link %r "
+                          "unresolved" % (did, r.get("misconception_link")))
+        for u in r.get("unit_links", []):
+            if u not in canon_ids:
+                errors.append("drill_candidates: %s unit_link %r not a "
+                              "canonical unit" % (did, u))
+        for c in r.get("capability_link", []):
+            if c not in caps:
+                errors.append("drill_candidates: %s capability_link %r "
+                              "unknown" % (did, c))
+        for k in required:
+            if not r.get(k):
+                errors.append("drill_candidates: %s missing %s" % (did, k))
+        if "NEVER usable as independent assessment" not in \
+                (r.get("answer_leakage_posture") or ""):
+            errors.append("drill_candidates: %s answer-visibility posture "
+                          "weakened" % did)
+        if "Sol" not in (r.get("adapter_requirement") or ""):
+            errors.append("drill_candidates: %s adapter requirement lost "
+                          "Sol ownership" % did)
+
+
+def check_sol_ledgers(ctx, errors):
+    """Sol fix-request round 2, finding 10: the repair ledger, conformance
+    matrix and adapter manifest carry current review identities and ONLY the
+    owner's closed ownership-split vocabulary; no false closure claims."""
+    led = ctx["repair_ledger"]
+    if led.get("reviewed_head") != R2_REVIEWED_HEAD:
+        errors.append("sol_ledgers: repair ledger reviewed_head %r is not "
+                      "the current reviewed head" % led.get("reviewed_head"))
+    if (led.get("review_identity") or {}).get("review_tree") != R2_REVIEW_TREE:
+        errors.append("sol_ledgers: repair ledger review_tree drifted")
+    if "5158892104" not in json.dumps(led.get("review_identity", {})):
+        errors.append("sol_ledgers: repair ledger not bound to the fix-"
+                      "request comment")
+    if not led.get("rows"):
+        errors.append("sol_ledgers: repair ledger has no rows")
+    for r in led.get("rows", []):
+        if r.get("ownership") not in OWNERSHIP_VOCAB:
+            errors.append("sol_ledgers: ledger row %r ownership %r outside "
+                          "the owner's closed vocabulary"
+                          % (r.get("finding", "?")[:40], r.get("ownership")))
+        if r.get("status") != "repaired_awaiting_sol_reverification":
+            errors.append("sol_ledgers: ledger row %r status %r — closure "
+                          "is Sol's call, rows may only await re-review"
+                          % (r.get("finding", "?")[:40], r.get("status")))
+        for k in ("finding", "repair", "acceptance", "red_canary"):
+            if not r.get(k):
+                errors.append("sol_ledgers: ledger row missing %s" % k)
+    conf = ctx["conformance"]
+    for r in conf.get("rows", []):
+        if r.get("state") not in OWNERSHIP_VOCAB:
+            errors.append("sol_ledgers: conformance row %r state %r outside "
+                          "the owner's closed vocabulary"
+                          % (r.get("subsystem"), r.get("state")))
+        if "remaining_dependency" not in r:
+            errors.append("sol_ledgers: conformance row %r lacks "
+                          "remaining_dependency" % r.get("subsystem"))
+    adp = ctx["adapters"]
+    adapters = adp.get("adapters", [])
+    if len(adapters) < 6:
+        errors.append("sol_ledgers: adapter manifest has %d < 6 adapters"
+                      % len(adapters))
+    if adp.get("owner") != "sol":
+        errors.append("sol_ledgers: adapter manifest must declare owner sol")
+    for a in adapters:
+        if not str(a.get("id", "")).startswith("adp-"):
+            errors.append("sol_ledgers: adapter id %r malformed" % a.get("id"))
+        for k in ("contract", "direction", "canaries", "acceptance"):
+            if not a.get(k):
+                errors.append("sol_ledgers: adapter %s missing %s"
+                              % (a.get("id"), k))
 
 
 ALL_CHECKS = (
@@ -1036,7 +1398,8 @@ ALL_CHECKS = (
     check_no_certification, check_pilot_parity, check_packet_presence,
     check_units_semantic, check_increments, check_flywheel_loop,
     check_corpus_pilot, check_precise_links, check_absorption,
-    check_generated_planes, check_freeze_planes,
+    check_generated_planes, check_freeze_planes, check_ma_payload_binding,
+    check_drill_candidates, check_sol_ledgers,
 )
 PILOT_CHECKS = (check_pilot_parity, check_no_certification)
 
@@ -1113,6 +1476,41 @@ def self_test():
         lambda c: c["units"][0]["concept_node_query"].update(min_nodes=99999))
     mut("family_certified_claim", "ledger_qualification",
         lambda c: c["families"][0].update(status="repository-certified"))
+    # public-boundary canaries (Sol fix-request round 2, finding 12)
+    mut("windows_drive_leak", "leakage_scan",
+        lambda c: c["files"].update({"curriculum/l1l6/z1.md":
+                                     "dump at C:" + "\\" + "secret"}))
+    mut("unc_path_leak", "leakage_scan",
+        lambda c: c["files"].update({"curriculum/l1l6/z2.md":
+                                     "share " + "\\\\" + "srv1" + "\\" + "d"}))
+    mut("macos_users_leak", "leakage_scan",
+        lambda c: c["files"].update({"curriculum/l1l6/z3.md":
+                                     "copy of /Users" + "/alice/notes"}))
+    mut("ip_address_leak", "leakage_scan",
+        lambda c: c["files"].update({"curriculum/l1l6/z4.md":
+                                     "host 10.20.30.40 responded"}))
+    # written-surface binding canaries (finding 2)
+    mut("wrong_letters_mutually_consistent", "WRITTEN surface",
+        lambda c: (c["facts"]["tokens"][0]["letters"][3].update(letter="ص"),
+                   c["facts"]["tokens"][0]["surface_bare_letters"]
+                   .__setitem__(3, "ص")))
+    mut("false_final_hover_mark", "false hover mark",
+        lambda c: c["facts"]["tokens"][0]["analysis"]["case_vowel"]
+        .update(value="kasra_forged_claim"))
+    # drill-record semantic canaries (finding 8)
+    mut("drill_runtime_claim", "drill_candidates",
+        lambda c: c["drills_meta"].update(runtime_integrated=1))
+    mut("drill_status_overclaim", "claims more than candidacy",
+        lambda c: c["drills"][0].update(status="runtime_integrated"))
+    mut("drill_unroutable", "unresolved",
+        lambda c: c["drills"][0].update(misconception_link="mc-x999"))
+    # ledger/matrix closed-vocabulary canaries (finding 10)
+    mut("conformance_invented_state", "closed vocabulary",
+        lambda c: c["conformance"]["rows"][0].update(state="fully_conformant"))
+    mut("ledger_false_closure", "closure is Sol",
+        lambda c: c["repair_ledger"]["rows"][0].update(status="complete"))
+    mut("adapter_owner_drift", "owner sol",
+        lambda c: c["adapters"].update(owner="fable"))
     mut("family_unit_uncovered", "ledger_qualification",
         lambda c: [c["families"].__setitem__(i, dict(r, family="u-s01"))
                    for i, r in enumerate(c["families"]) if r["family"] == "u-n12"])
@@ -1151,6 +1549,59 @@ def self_test():
             mutations.append(("context_witness_canary_12_43_6", ok))
             if not ok:
                 print("  context-witness canary did NOT trip the gate")
+
+    # card_display_only witness upgraded to a canonical claim must trip the
+    # canonical-surface gate (Sol fix-request round 2, finding 3)
+    if p_g.exists():
+        raw = p_g.read_bytes()
+        rows_ = [json.loads(l) for l in raw.decode("utf-8").splitlines() if l.strip()]
+        touched = False
+        for r in rows_:
+            for sub in r.get("resolved", []):
+                for w in sub.get("selected_witnesses", []):
+                    if not touched and not w.get("canonical_surface_verified"):
+                        w["canonical_surface_verified"] = True
+                        touched = True
+        if touched:
+            p_g.write_bytes("".join(
+                json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n"
+                for r in rows_).encode("utf-8"))
+            errs3 = []
+            try:
+                check_freeze_planes(_copy.deepcopy(base), errs3)
+            finally:
+                p_g.write_bytes(raw)
+            ok = any("canonical_surface" in e for e in errs3)
+            mutations.append(("card_display_witness_upgrade_canary", ok))
+            if not ok:
+                print("  card-display upgrade canary did NOT trip the gate")
+
+    # ma payload degradation (surface null / zero appearances) must trip the
+    # payload-binding gate (Sol fix-request round 2, finding 4)
+    p_b = BASE / "reports" / "occurrence-bridge.jsonl"
+    if p_b.exists():
+        raw = p_b.read_bytes()
+        rows_ = [json.loads(l) for l in raw.decode("utf-8").splitlines() if l.strip()]
+        touched = False
+        for r in rows_:
+            if r.get("increment") == "inc-ma" and r.get("occurrence_id") \
+                    and not touched:
+                r["surface"] = None
+                r["appearances"] = {"rows": [], "count": 0}
+                touched = True
+        if touched:
+            p_b.write_bytes("".join(
+                json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n"
+                for r in rows_).encode("utf-8"))
+            errs4 = []
+            try:
+                check_ma_payload_binding(_copy.deepcopy(base), errs4)
+            finally:
+                p_b.write_bytes(raw)
+            ok = any("ma_payload_binding" in e for e in errs4)
+            mutations.append(("ma_payload_degradation_canary", ok))
+            if not ok:
+                print("  ma payload degradation canary did NOT trip the gate")
 
     failed = [n for n, ok in mutations if not ok]
     print("self-test: %d/%d mutations tripped their checks"

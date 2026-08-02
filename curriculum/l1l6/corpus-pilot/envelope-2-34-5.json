@@ -32,6 +32,18 @@
     "no certification minted by this envelope",
     "no live surface touched"
   ],
+  "canonical_surface_binding": {
+    "canonical_index": "qamus/indexes/quran-loc-surface/index.jsonl",
+    "canonical_surface": "لِـَٔادَمَ",
+    "divergence": {
+      "class": "orthographic_encoding_difference_between_committed_main_artifacts",
+      "consequence": "the envelope is anchored to the p007 projection surface it was built from; no canonical-surface equality claim is made for it",
+      "detail": "the committed p007 pilot projection and the canonical loc-surface index encode this occurrence's surface differently (both are current-main artifacts); this branch REPORTS the divergence and does not assert that the two encodings are equal",
+      "ownership": "sol_adapter_required (adp-occurrence-appearance-projection: canonical surface normalization is the projection plane's call)"
+    },
+    "projection_surface": "لِءَادَمَ",
+    "verified": false
+  },
   "certification_dependency": {
     "basis": "replayed from the hash-chained event trail — raw status strings are never treated as authority",
     "depends_on_fact_ids": [
@@ -63,9 +75,10 @@
         "event_count": 3
       }
     },
-    "invalidation_rule": "revocation or repair of ANY depended-on fact invalidates this envelope, its learner projections, hover bindings, derived fixtures, readiness counts and harness measurements (regeneration required)"
+    "invalidation_rule": "fail-closed withholding by THIS builder: while any depended-on fact's replayed effective state is outside ['certified', 'candidate'], the envelope's learner-facing artifact classes ['learner_projection_fields', 'colour_and_hover_bindings', 'letter_ownership_presentation', 'website_envelope', 'appearance_enumeration', 'derived_fixture_candidates', 'disposition_and_readiness_metrics'] are WITHHELD (not emitted). Append-only cascade/regeneration across the canonical planes is the Sol certifier adapter's contract (adp-certifier-effective-state) — cascade behavior is NOT claimed from last-event-wins replay."
   },
   "colour_and_hover": {
+    "alignment_basis": "CANDIDATE span alignment: hover components are matched to segments by component_surface WITHIN this one projection record and copy that segment's fact ids; authoritative same-fact identity (shared fact ids minted by the certifier/projection plane) is Sol adapter work and is NOT claimed here",
     "covered_segments": [
       "لِ"
     ],
@@ -83,7 +96,6 @@
         "traces_to_segment_facts": true
       }
     ],
-    "parity_basis": "shared canonical fact ids per owned span (never surface-text overlap)",
     "segment_fact_bindings": [
       {
         "fact_ids": [
@@ -216,5 +228,15 @@
     "occurrence_id": "quran:2:34:5",
     "projection_hash": "52805d6e334d0a1573b62bf9ff7d0f3c9676f70261433f7c1d6b451f537e7abc",
     "schema": "qamus.website_projection_payload.v1"
-  }
+  },
+  "withheld": false,
+  "withheld_artifact_classes_on_invalid_dependency": [
+    "learner_projection_fields",
+    "colour_and_hover_bindings",
+    "letter_ownership_presentation",
+    "website_envelope",
+    "appearance_enumeration",
+    "derived_fixture_candidates",
+    "disposition_and_readiness_metrics"
+  ]
 }

@@ -1,70 +1,143 @@
 {
   "abstentions_preserved": [
     "der-abs-01",
-    "der-adv-02"
+    "der-abs-02",
+    "der-adv-02",
+    "der-adv-03",
+    "der-adv-04",
+    "der-adv-05",
+    "der-adv-06",
+    "der-adv-07"
   ],
   "backprop_proposal": {
-    "content": "repair unit-v1.json -> unit-v2.json with the recorded defect set as adversarial evidence",
+    "content": "repair unit-v2.json -> unit-v3.json with the recorded defect set as adversarial evidence",
     "no_auto_promotion": true,
     "target": "curriculum/l1l6/promotion/ bundle for inc-derivatives"
   },
-  "baseline_pack": "unit-v1.json",
+  "baseline_pack": "unit-v2.json",
+  "canonical_dogfood_eligible": false,
   "capability": "template_classification",
   "defects_recorded": [
     {
       "actual": {
-        "decision": "abstain",
-        "reason": "no_template"
-      },
-      "class": "transfer",
-      "expected": {
+        "authority": "none_fixture_harness",
         "class": "active_participle",
         "decision": "candidate_pending",
-        "template": "faail"
+        "template": "mu_participle"
       },
-      "fixture_id": "der-trn-01"
+      "class": "abstention",
+      "expected": {
+        "decision": "abstain",
+        "reason": "penult_mark_not_in_surface"
+      },
+      "fixture_id": "der-abs-02"
     },
     {
       "actual": {
+        "authority": "none_fixture_harness",
+        "class": "passive_participle",
+        "decision": "candidate_pending",
+        "template": "mafuul"
+      },
+      "class": "adversarial",
+      "expected": {
         "decision": "abstain",
         "reason": "no_template"
       },
-      "class": "transfer",
+      "fixture_id": "der-adv-03"
+    },
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
+        "class": "masdar_II",
+        "decision": "candidate_pending",
+        "template": "tafiil"
+      },
+      "class": "adversarial",
       "expected": {
+        "decision": "abstain",
+        "reason": "no_template"
+      },
+      "fixture_id": "der-adv-04"
+    },
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
+        "class": "active_participle",
+        "decision": "candidate_pending",
+        "template": "mu_participle"
+      },
+      "class": "adversarial",
+      "expected": {
+        "decision": "abstain",
+        "reason": "penult_mark_mismatch"
+      },
+      "fixture_id": "der-adv-05"
+    },
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
         "class": "active_participle",
         "decision": "candidate_pending",
         "template": "faail"
       },
-      "fixture_id": "der-trn-02"
+      "class": "adversarial",
+      "expected": {
+        "decision": "abstain",
+        "reason": "weak_declaration_unbound"
+      },
+      "fixture_id": "der-adv-06"
+    },
+    {
+      "actual": {
+        "authority": "none_fixture_harness",
+        "class": "active_participle",
+        "decision": "candidate_pending",
+        "template": "mu_participle"
+      },
+      "class": "adversarial",
+      "expected": {
+        "decision": "abstain",
+        "reason": "weak_declaration_unbound"
+      },
+      "fixture_id": "der-adv-07"
     }
   ],
   "downstream_work": {
     "hover_pedagogy": "queue q-hover-pedagogy rows for linked entries",
     "occurrence_grounding": "queue q-pvn-grounding rows for lessons mapped to inc-derivatives"
   },
+  "evidence_class": "development_evidence_only",
   "guards_loaded": [
     "g-der-1",
     "g-der-2",
-    "g-der-m"
+    "g-der-m",
+    "g-der-3",
+    "g-der-4",
+    "g-der-5"
   ],
   "improvement_classes_verified": [
     "fixture_harness_improvement",
     "instructional_improvement"
   ],
   "improvements": [
-    "der-trn-01",
-    "der-trn-02"
+    "der-abs-02",
+    "der-adv-03",
+    "der-adv-04",
+    "der-adv-05",
+    "der-adv-06",
+    "der-adv-07"
   ],
   "increment": "inc-derivatives",
   "loop": "derivation",
   "regressions": [],
-  "repaired_pack": "unit-v2.json",
+  "repaired_pack": "unit-v3.json",
   "rivals_preserved": [],
   "run1": {
     "consumer": "tools/curriculum_unit_consumer.py",
-    "fixtures": 8,
+    "fixtures": 15,
     "increment": "inc-derivatives",
-    "mismatches": 2,
+    "mismatches": 6,
     "results": [
       {
         "actual": {
@@ -145,6 +218,21 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
+          "class": "active_participle",
+          "decision": "candidate_pending",
+          "template": "mu_participle"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "penult_mark_not_in_surface"
+        },
+        "fixture_id": "der-abs-02",
+        "match": false
+      },
+      {
+        "actual": {
           "decision": "abstain",
           "reason": "no_template"
         },
@@ -158,8 +246,85 @@
       },
       {
         "actual": {
+          "authority": "none_fixture_harness",
+          "class": "passive_participle",
+          "decision": "candidate_pending",
+          "template": "mafuul"
+        },
+        "class": "adversarial",
+        "expected": {
           "decision": "abstain",
           "reason": "no_template"
+        },
+        "fixture_id": "der-adv-03",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "class": "masdar_II",
+          "decision": "candidate_pending",
+          "template": "tafiil"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "no_template"
+        },
+        "fixture_id": "der-adv-04",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "class": "active_participle",
+          "decision": "candidate_pending",
+          "template": "mu_participle"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "penult_mark_mismatch"
+        },
+        "fixture_id": "der-adv-05",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "class": "active_participle",
+          "decision": "candidate_pending",
+          "template": "faail"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_declaration_unbound"
+        },
+        "fixture_id": "der-adv-06",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "class": "active_participle",
+          "decision": "candidate_pending",
+          "template": "mu_participle"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_declaration_unbound"
+        },
+        "fixture_id": "der-adv-07",
+        "match": false
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "class": "active_participle",
+          "decision": "candidate_pending",
+          "template": "faail"
         },
         "class": "transfer",
         "expected": {
@@ -168,12 +333,14 @@
           "template": "faail"
         },
         "fixture_id": "der-trn-01",
-        "match": false
+        "match": true
       },
       {
         "actual": {
-          "decision": "abstain",
-          "reason": "no_template"
+          "authority": "none_fixture_harness",
+          "class": "active_participle",
+          "decision": "candidate_pending",
+          "template": "faail"
         },
         "class": "transfer",
         "expected": {
@@ -182,17 +349,33 @@
           "template": "faail"
         },
         "fixture_id": "der-trn-02",
-        "match": false
+        "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "class": "active_participle",
+          "decision": "candidate_pending",
+          "template": "mu_participle"
+        },
+        "class": "transfer",
+        "expected": {
+          "class": "active_participle",
+          "decision": "candidate_pending",
+          "template": "mu_participle"
+        },
+        "fixture_id": "der-trn-03",
+        "match": true
       }
     ],
     "schema": "curriculum.l1l6_consumer_run.v1",
     "status": "candidate",
-    "unit_file": "unit-v1.json",
-    "unit_version": 1
+    "unit_file": "unit-v2.json",
+    "unit_version": 2
   },
   "run2": {
     "consumer": "tools/curriculum_unit_consumer.py",
-    "fixtures": 8,
+    "fixtures": 15,
     "increment": "inc-derivatives",
     "mismatches": 0,
     "results": [
@@ -276,6 +459,19 @@
       {
         "actual": {
           "decision": "abstain",
+          "reason": "penult_mark_not_in_surface"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "penult_mark_not_in_surface"
+        },
+        "fixture_id": "der-abs-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
           "reason": "no_template"
         },
         "class": "adversarial",
@@ -284,6 +480,71 @@
           "reason": "no_template"
         },
         "fixture_id": "der-adv-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "no_template"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "no_template"
+        },
+        "fixture_id": "der-adv-03",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "no_template"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "no_template"
+        },
+        "fixture_id": "der-adv-04",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "penult_mark_mismatch"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "penult_mark_mismatch"
+        },
+        "fixture_id": "der-adv-05",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "weak_declaration_unbound"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_declaration_unbound"
+        },
+        "fixture_id": "der-adv-06",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "weak_declaration_unbound"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "weak_declaration_unbound"
+        },
+        "fixture_id": "der-adv-07",
         "match": true
       },
       {
@@ -317,19 +578,32 @@
         },
         "fixture_id": "der-trn-02",
         "match": true
+      },
+      {
+        "actual": {
+          "authority": "none_fixture_harness",
+          "class": "active_participle",
+          "decision": "candidate_pending",
+          "template": "mu_participle"
+        },
+        "class": "transfer",
+        "expected": {
+          "class": "active_participle",
+          "decision": "candidate_pending",
+          "template": "mu_participle"
+        },
+        "fixture_id": "der-trn-03",
+        "match": true
       }
     ],
     "schema": "curriculum.l1l6_consumer_run.v1",
     "status": "candidate",
-    "unit_file": "unit-v2.json",
-    "unit_version": 2
+    "unit_file": "unit-v3.json",
+    "unit_version": 3
   },
   "schema": "curriculum.l1l6_flywheel_loop.v1",
   "site_payload_improvement": "never_claimable_here_owner_gated",
   "status": "candidate",
-  "transfer_improvements": [
-    "der-trn-01",
-    "der-trn-02"
-  ],
+  "transfer_improvements": [],
   "unit_ref": "u-s03"
 }

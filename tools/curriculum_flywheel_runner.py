@@ -117,6 +117,8 @@ def run_loop(name, inc, baseline, repaired):
         "rivals_preserved": rivals_preserved,
         "abstentions_preserved": abstentions_preserved,
         "improvement_classes_verified": sorted(classes),
+        "evidence_class": "development_evidence_only",
+        "canonical_dogfood_eligible": False,
         "site_payload_improvement": "never_claimable_here_owner_gated",
         "backprop_proposal": {
             "target": "curriculum/l1l6/promotion/ bundle for %s" % inc,

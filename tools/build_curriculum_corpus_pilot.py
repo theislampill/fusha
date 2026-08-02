@@ -19,8 +19,13 @@ Honesty invariants:
   no_root_evidence ABSTENTION is recorded — unresolved state preserved,
   not papered over;
 - colour segments and hover cards are read from the SAME projection record;
-  the builder asserts their parity and carries the projection hash shared
-  by every appearance;
+  hover components are ALIGNED to segments by component surface within that
+  record (a CANDIDATE alignment — authoritative same-fact identity is Sol
+  adapter work, never claimed here) and the projection hash shared by every
+  appearance travels with the envelope;
+- every depended-on fact's certification is consumed as a REPLAYED effective
+  state; any invalid dependency withholds the envelope's learner-facing
+  artifact classes at build time (fail-closed; no cascade claim);
 - the website envelope for 61:5:4 references the EXISTING payload sample;
   for 2:34:5 (no payload exists) a candidate_payload_shape is derived and
   explicitly marked non-deliverable.
@@ -51,36 +56,101 @@ def bare_letters(surface):
     return [ch for ch in HARAKAT_RE.sub("", surface)]
 
 
-def _effective_certification(fact_ids):
+VALID_EFFECTIVE_STATUSES = ("certified", "candidate")
+WITHHELD_ARTIFACT_CLASSES = [
+    "learner_projection_fields",
+    "colour_and_hover_bindings",
+    "letter_ownership_presentation",
+    "website_envelope",
+    "appearance_enumeration",
+    "derived_fixture_candidates",
+    "disposition_and_readiness_metrics",
+]
+
+
+def _effective_certification(fact_ids, extra_events=None):
     """Replay the hash-chained certification event trail and fold the
     EFFECTIVE state per fact id (certify -> certified; revoke -> revoked).
-    Copied raw status strings are never used (Sol repair 6)."""
+    Copied raw status strings are never used (Sol repair 6). extra_events is
+    the canary channel: the validator injects a synthetic revocation and
+    asserts the envelope withholds (fail-closed proof, Sol fix-request
+    round 2, finding 5)."""
     events_p = P007 / "certification" / "events.jsonl"
     state = {}
     counts = {}
+    events = []
     if events_p.exists():
         for line in events_p.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            ev = json.loads(line)
-            fid = ev.get("fact_id") or (ev.get("fact") or {}).get("fact_id")
-            if fid is None:
-                continue
-            counts[fid] = counts.get(fid, 0) + 1
-            # last-event-wins fold: the trail is ordered; each event carries
-            # the fact's post-event certification status (register ->
-            # candidate; transition -> the engine's new status; a revocation
-            # transition surfaces as its post-event status)
-            post = (ev.get("to_status")
-                    or (ev.get("fact") or {}).get("certification", {}).get("status"))
-            if post:
-                state[fid] = post
+            if line.strip():
+                events.append(json.loads(line))
+    events.extend(extra_events or [])
+    for ev in events:
+        fid = ev.get("fact_id") or (ev.get("fact") or {}).get("fact_id")
+        if fid is None:
+            continue
+        counts[fid] = counts.get(fid, 0) + 1
+        # last-event-wins fold: the trail is ordered; each event carries
+        # the fact's post-event certification status (register ->
+        # candidate; transition -> the engine's new status; a revocation
+        # transition surfaces as its post-event status)
+        post = (ev.get("to_status")
+                or (ev.get("fact") or {}).get("certification", {}).get("status"))
+        if post:
+            state[fid] = post
     return {fid: {"effective_status": state.get(fid, "no_event_in_trail"),
                   "event_count": counts.get(fid, 0)}
             for fid in fact_ids}
 
 
-def build():
+def _canonical_loc_surface():
+    idx = {}
+    p = ROOT / "qamus" / "indexes" / "quran-loc-surface" / "index.jsonl"
+    if p.exists():
+        with p.open(encoding="utf-8") as f:
+            for line in f:
+                r = json.loads(line)
+                idx[r["loc"]] = r["surface"]
+    return idx
+
+
+def _canonical_binding(canonical_idx, target, surface, _ud):
+    """Bind the envelope's written surface to the canonical loc surface and
+    DECLARE the outcome (Sol fix-request round 2, finding 2). Where the
+    committed p007 pilot projection encodes the word differently from the
+    canonical index (an orthographic-encoding difference in main's own
+    artifacts), the divergence is REPORTED — this branch does not decide
+    that two encodings are the same word, which is a normalization policy
+    call for the Sol projection plane."""
+    loc = target.replace("quran:", "")
+    canonical = canonical_idx.get(loc)
+    verified = (canonical is not None
+                and _ud.normalize("NFC", canonical)
+                == _ud.normalize("NFC", surface))
+    out = {
+        "canonical_index": "qamus/indexes/quran-loc-surface/index.jsonl",
+        "canonical_surface": canonical,
+        "projection_surface": surface,
+        "verified": verified,
+    }
+    if not verified:
+        out["divergence"] = {
+            "class": "orthographic_encoding_difference_between_committed_main_artifacts",
+            "detail": ("the committed p007 pilot projection and the canonical "
+                       "loc-surface index encode this occurrence's surface "
+                       "differently (both are current-main artifacts); this "
+                       "branch REPORTS the divergence and does not assert "
+                       "that the two encodings are equal"),
+            "ownership": "sol_adapter_required (adp-occurrence-appearance-projection: canonical surface normalization is the projection plane's call)",
+            "consequence": ("the envelope is anchored to the p007 projection "
+                            "surface it was built from; no canonical-surface "
+                            "equality claim is made for it"),
+        }
+    return out
+
+
+def build(extra_events=None):
+    import unicodedata as _ud
+    canonical_idx = _canonical_loc_surface()
     facts = [json.loads(l) for l in
              (P007 / "typed-facts.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
     projections = [json.loads(l) for l in
@@ -101,12 +171,62 @@ def build():
         surface = proj["surface"]
         seg_fact = next(f for f in tf if f["fact_type"] == "clitic_host_segmentation")
 
-        # FACT-IDENTITY parity (Sol repair 5): parity is shared canonical
-        # fact ids per owned span, never surface-text overlap. Each segment
-        # is bound to the fact ids that own it; each hover card must trace
-        # to the SAME fact ids as its segment; segments without a hover
-        # component are reported UNCOVERED (no parity claim is made for
-        # them).
+        # CERTIFICATION fail-close (Sol fix-request round 2, finding 5): the
+        # envelope's learner-facing planes exist ONLY while every depended-on
+        # fact's replayed effective state is valid. Any revoked/invalid/
+        # unknown dependency WITHHOLDS the envelope at build time. No cascade
+        # behavior across canonical planes is claimed from this last-event-
+        # wins replay — cascade/regeneration is the Sol certifier adapter's
+        # contract (adp-certifier-effective-state).
+        dep_fids = sorted({f["fact_id"] for f in tf + rootless})
+        eff = _effective_certification(dep_fids, extra_events)
+        blocking = {fid: st for fid, st in eff.items()
+                    if st["effective_status"] not in VALID_EFFECTIVE_STATUSES}
+        cert_dep = {
+            "effective_states": eff,
+            "basis": "replayed from the hash-chained event trail — raw status strings are never treated as authority",
+            "depends_on_fact_ids": dep_fids,
+            "invalidation_rule": (
+                "fail-closed withholding by THIS builder: while any "
+                "depended-on fact's replayed effective state is outside %s, "
+                "the envelope's learner-facing artifact classes %s are "
+                "WITHHELD (not emitted). Append-only cascade/regeneration "
+                "across the canonical planes is the Sol certifier adapter's "
+                "contract (adp-certifier-effective-state) — cascade behavior "
+                "is NOT claimed from last-event-wins replay."
+                % (list(VALID_EFFECTIVE_STATUSES), WITHHELD_ARTIFACT_CLASSES)),
+        }
+        if blocking:
+            envelopes[target] = {
+                "schema": "curriculum.l1l6_corpus_pilot_envelope.v1",
+                "status": "withheld_invalid_dependency",
+                "occurrence_id": target,
+                "withheld": True,
+                "withheld_artifact_classes": list(WITHHELD_ARTIFACT_CLASSES),
+                "blocking_dependencies": blocking,
+                "certification_dependency": cert_dep,
+                "withholding_note": (
+                    "learner projections, colour/hover bindings, website "
+                    "envelope, appearance enumeration, fixture derivations "
+                    "and readiness metrics for this occurrence are WITHHELD "
+                    "until every dependency's effective state is valid "
+                    "again; nothing is served from a revoked or unknown "
+                    "certification state"),
+                "boundaries": ["og-1", "og-2", "og-6",
+                               "no certification minted by this envelope",
+                               "no live surface touched"],
+            }
+            continue
+
+        # CANDIDATE span alignment (claim narrowed per Sol fix-request
+        # round 2, finding 13): each segment is bound to the fact ids that
+        # own it; each hover card is ALIGNED to a segment by its
+        # component_surface WITHIN this single projection record and copies
+        # that segment's fact ids. This is a candidate alignment, NOT
+        # authoritative same-fact identity — shared fact ids minted at
+        # projection time are the Sol projection/certifier adapter's work.
+        # Segments without a hover component are reported UNCOVERED (no
+        # alignment claim is made for them).
         clitic_fact_ids = sorted(f["fact_id"] for f in tf + rootless)
         seg_fact_bindings = []
         for s_ in proj["segments"]:
@@ -151,13 +271,12 @@ def build():
             "status": "candidate",
             "occurrence_id": target,
             "surface": surface,
-            "certification_dependency": {
-                "effective_states": _effective_certification(
-                    sorted({f["fact_id"] for f in tf + rootless})),
-                "basis": "replayed from the hash-chained event trail — raw status strings are never treated as authority",
-                "depends_on_fact_ids": sorted({f["fact_id"] for f in tf + rootless}),
-                "invalidation_rule": "revocation or repair of ANY depended-on fact invalidates this envelope, its learner projections, hover bindings, derived fixtures, readiness counts and harness measurements (regeneration required)",
-            },
+            "canonical_surface_binding": _canonical_binding(
+                canonical_idx, target, surface, _ud),
+            "withheld": False,
+            "withheld_artifact_classes_on_invalid_dependency":
+                list(WITHHELD_ARTIFACT_CLASSES),
+            "certification_dependency": cert_dep,
             "repository_authority": {
                 "typed_facts": sorted(
                     [{"fact_id": f["fact_id"], "fact_type": f["fact_type"],
@@ -193,7 +312,13 @@ def build():
                 "segments": proj["segments"],
                 "segment_fact_bindings": seg_fact_bindings,
                 "hover_fact_bindings": hover_bindings,
-                "parity_basis": "shared canonical fact ids per owned span (never surface-text overlap)",
+                "alignment_basis": (
+                    "CANDIDATE span alignment: hover components are matched "
+                    "to segments by component_surface WITHIN this one "
+                    "projection record and copy that segment's fact ids; "
+                    "authoritative same-fact identity (shared fact ids "
+                    "minted by the certifier/projection plane) is Sol "
+                    "adapter work and is NOT claimed here"),
                 "covered_segments": sorted(covered),
                 "uncovered_segments": uncovered,
                 "uncovered_note": ("segments without a hover component are "

@@ -1,91 +1,139 @@
 {
-  "basis": "Sol checkpoint matrix at 5bca6d2, updated with post-repair closed states",
+  "basis": "Sol fix-request round at reviewed head eb51278c626ebe9b65b5a3e1be3a3895783e1233 (review tree fd574a6f483995e5fce5a94368ea0b5fc7d37d14); states are drawn EXCLUSIVELY from the owner's closed ownership-split vocabulary — a state names where the subsystem's remaining work sits; remaining_dependency: none means the subsystem's PR-side work is repaired and awaits only Sol re-review",
+  "schema": "curriculum.l1l6_architecture_conformance.v2",
+  "state_vocabulary": [
+    "fable_branch_repair",
+    "sol_adapter_required",
+    "shared_integration_gate",
+    "linguistic_review_blocked",
+    "owner_or_scholar_blocked"
+  ],
   "rows": [
     {
-      "change": "none",
-      "state": "instructional_only_correctly",
-      "subsystem": "Canonical units"
+      "subsystem": "Canonical units",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "instructional plane only; no defect in this round"
     },
     {
-      "change": "none",
-      "state": "instructional_only_correctly",
-      "subsystem": "Unit-to-lesson graph"
+      "subsystem": "Unit-to-lesson graph",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "two-way map unchanged; no defect in this round"
     },
     {
-      "change": "full candidate registry rows emitted (repair 9)",
-      "state": "conforms_adapter_required",
-      "subsystem": "Machine packs"
+      "subsystem": "Machine packs",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority",
+      "change": "template-scoped weak-substitution licences; written-surface mark verification; bound weak declarations (finding 1)"
     },
     {
-      "change": "de-authorized; consumption of authoritative lattices via adp-sarf-nahw-authority",
-      "state": "candidate_harness_correctly_labeled",
-      "subsystem": "Capability interfaces"
+      "subsystem": "Capability interfaces",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority",
+      "change": "unchanged de-authorized dispatch; authoritative consumption stays adapter-gated"
     },
     {
-      "change": "NON-AUTHORITATIVE banner; candidate_pending outcomes; fail-closed sarf; envelope-gated nahw",
-      "state": "candidate_harness_correctly_labeled",
-      "subsystem": "Generic consumer"
+      "subsystem": "Generic consumer",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority",
+      "change": "new fail-closed reasons: penult_mark_not_in_surface, penult_mark_mismatch, weak_declaration_unbound; مقئول/تقئيل red-first pinned (finding 1)"
     },
     {
-      "change": "reclassified; dogfood via adp-canonical-dogfood",
-      "state": "instructional_qa_harness_correctly_labeled",
-      "subsystem": "Flywheel runner"
+      "subsystem": "Flywheel runner",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-canonical-dogfood",
+      "change": "every loop record stamped development_evidence_only + canonical_dogfood_eligible:false; transfer-fixture wording (finding 11)"
     },
     {
-      "change": "none",
-      "state": "candidate_plane_correctly_isolated",
-      "subsystem": "Misconception registry"
+      "subsystem": "Misconception registry",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "no defect in this round"
     },
     {
-      "change": "none",
-      "state": "candidate_plane_correctly_isolated",
-      "subsystem": "Fixture candidates"
+      "subsystem": "Fixture candidates",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "no defect in this round"
     },
     {
-      "change": "candidate_projected outcomes; tutor via adp-tutor-kc-drills",
-      "state": "candidate_presentation_correctly_labeled",
-      "subsystem": "Pedagogy consumer"
+      "subsystem": "Drill candidates",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-tutor-kc-drills",
+      "change": "semantic validation of all records in the ordinary validator; honest counts preserved (finding 8)"
     },
     {
-      "change": "depends_on + invalidation via envelope dependency block (repair 6)",
-      "state": "candidate_with_certification_dependency",
-      "subsystem": "Learner projections"
+      "subsystem": "Pedagogy consumer",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-tutor-kc-drills",
+      "change": "projected/candidate_projected metadata contradiction repaired (finding 6); stale disposition docs rewritten (finding 7)"
     },
     {
-      "change": "complete rows + guard hashes",
-      "state": "conforms_adapter_required",
-      "subsystem": "Promotion bundles"
+      "subsystem": "Learner projections",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-typed-fact-certification",
+      "change": "fail-closed withholding under invalid dependencies with a live synthetic-revocation canary; cascade claim removed (finding 5)"
     },
     {
-      "change": "same-entry selected witnesses; context misbindings removed (repair 1)",
-      "state": "conforms",
-      "subsystem": "P/V/N grounding"
+      "subsystem": "Promotion bundles",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "Sol review + application",
+      "change": "regenerated over the v3 derivation pack; rows remain full main-schema candidates"
     },
     {
-      "change": "witness-backed",
-      "state": "candidate_plane_correctly_isolated",
-      "subsystem": "V candidates"
+      "subsystem": "P/V/N grounding",
+      "state": "linguistic_review_blocked",
+      "remaining_dependency": "orthography-equivalence policy for card_display_only witnesses (Sol/scholar)",
+      "change": "canonical loc-surface verification; 11 diverging witnesses downgraded to card_display_only, never canonical (finding 3)"
     },
     {
-      "change": "witness-backed",
-      "state": "candidate_plane_correctly_isolated",
-      "subsystem": "N candidates"
+      "subsystem": "V candidates",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority + per-occurrence evidence",
+      "change": "witness canonical verification inherited from grounding (finding 3)"
     },
     {
-      "change": "exact appearance ids + surfaces + relation + evidence",
-      "state": "conforms",
-      "subsystem": "Occurrence candidates"
+      "subsystem": "N candidates",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-sarf-nahw-authority + per-occurrence evidence",
+      "change": "witness canonical verification inherited from grounding (finding 3)"
     },
     {
-      "change": "deliverable:false shapes; adp-website-payload",
-      "state": "conforms_adapter_required",
-      "subsystem": "Website pedagogy"
+      "subsystem": "Occurrence candidates",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "ma payload surface/appearances/facts/binding preserved verbatim with validator re-verification (finding 4)"
     },
     {
-      "change": "counts recomputed; A2-dependent rows marked sol_integration_blocked",
-      "state": "regenerated_at_repair_head",
-      "subsystem": "Residual/blocker ledgers"
+      "subsystem": "Colour/hover bindings",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-occurrence-appearance-projection",
+      "change": "claims narrowed to candidate span alignment; authoritative same-fact identity is adapter work (finding 13); pilot letters + hover marks bound to the written surface (finding 2)"
+    },
+    {
+      "subsystem": "Website pedagogy",
+      "state": "sol_adapter_required",
+      "remaining_dependency": "adp-website-payload",
+      "change": "unchanged deliverable:false shapes"
+    },
+    {
+      "subsystem": "CI gate",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "trigger paths equal the executed-tool set (finding 9); boundary canaries extended to drive paths / UNC / macOS / IP (finding 12)"
+    },
+    {
+      "subsystem": "Custody heading queue",
+      "state": "owner_or_scholar_blocked",
+      "remaining_dependency": "owner adjudication of 213 owner_review_pending rows",
+      "change": "untouched; no completed-custody claim"
+    },
+    {
+      "subsystem": "Residual/blocker ledgers",
+      "state": "fable_branch_repair",
+      "remaining_dependency": "none",
+      "change": "repair ledger + conformance matrix rebound to current review identities; closed vocabulary enforced by the validator (finding 10)"
     }
-  ],
-  "schema": "curriculum.l1l6_architecture_conformance.v1"
+  ]
 }

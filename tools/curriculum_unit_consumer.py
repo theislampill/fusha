@@ -148,31 +148,70 @@ def analyze_ownership(inp, unit):
 
 
 # ----------------------------------------------------------- inc-derivatives
-def _radical_matches(slot, letter, radical, subs):
-    """A surface letter realizes a radical if equal, or if the unit pack's
-    weak_substitutions table licenses the substitution for that slot
-    (data-driven: an empty/absent table changes nothing)."""
-    if letter == radical:
-        return True
-    return letter in (subs.get(slot, {}) or {}).get(radical, [])
+_VOWEL_MARK_NAMES = {"َ": "fatha", "ِ": "kasra", "ُ": "damma"}
+_MARK_RE = None
 
 
-def _match_template(shape, letters, radicals, subs=None):
-    subs = subs or {}
+def _penult_surface_mark(surface):
+    """The short-vowel name actually WRITTEN on the penult base letter of
+    surface, or None when the surface carries no vowel mark there. This is
+    the only admissible source for a claimed penult surface mark: an
+    unpointed surface can never evidence a vowel (Sol fix-request 1)."""
+    global _MARK_RE
+    import re as _re
+    if _MARK_RE is None:
+        _MARK_RE = _re.compile("[ً-ْٰۖ-ۭ]")
+    groups = []  # (base_letter, [attached marks])
+    for ch in surface:
+        if _MARK_RE.match(ch):
+            if groups:
+                groups[-1][1].append(ch)
+        else:
+            groups.append((ch, []))
+    if len(groups) < 2:
+        return None
+    for m in groups[-2][1]:
+        if m in _VOWEL_MARK_NAMES:
+            return _VOWEL_MARK_NAMES[m]
+    return None
+
+
+def _match_template(shape, letters, radicals, subs):
+    """None if the template does not match; otherwise the (possibly empty)
+    list of weak substitutions actually EXERCISED, each {slot, radical,
+    letter}. `subs` must already be the slot table licensed for THIS template
+    — a substitution licensed for one template never licenses another (Sol
+    fix-request 1: the global table produced the مقئول/تقئيل false passes)."""
     if "..." in shape:
-        return False  # handled by the mu/mafal special-case below
+        return None  # handled by the mu/mafal special-case below
     if len(shape) != len(letters):
-        return False
+        return None
+    used = []
     j = 0
     for slot, letter in zip(shape, letters):
         if slot in ("R1", "R2", "R3"):
-            if j >= len(radicals) or not _radical_matches(slot, letter,
-                                                          radicals[j], subs):
-                return False
+            if j >= len(radicals):
+                return None
+            radical = radicals[j]
+            if letter != radical:
+                if letter not in (subs.get(slot, {}) or {}).get(radical, []):
+                    return None
+                used.append({"slot": slot, "radical": radical, "letter": letter})
             j += 1
         elif slot != letter:
-            return False
-    return j == len(radicals)
+            return None
+    return used if j == len(radicals) else None
+
+
+def _template_subs(unit, template_id):
+    """Template-scoped substitution licence. Packs with the repaired
+    by_template shape scope licences per template id; the retired flat shape
+    (the recorded v2 defect) keeps its historical global semantics so the
+    defect run stays honestly reproducible."""
+    decl = unit.get("weak_substitutions") or {}
+    if "by_template" in decl:
+        return decl["by_template"].get(template_id, {})
+    return decl
 
 
 def analyze_derivative(inp, unit):
@@ -183,7 +222,6 @@ def analyze_derivative(inp, unit):
         return {"decision": "abstain", "reason": "surface_letter_mismatch"}
     radicals = list(ev.get("radicals", []))
     letters = list(inp["letters"])
-    subs = unit.get("weak_substitutions") or {}
     survivors = []
     for t in unit["templates"]:
         if t["id"] == "mu_participle":
@@ -192,11 +230,18 @@ def analyze_derivative(inp, unit):
             # discriminated from مَفْعَل by the penult vowel (REQUIRED)
             if (letters and letters[0] == "م" and len(letters) >= 4
                     and letters[1:] == radicals):
-                survivors.append(t)
+                survivors.append((t, []))
             continue
-        if _match_template(t["shape"], letters, radicals, subs):
-            survivors.append(t)
-    ids = sorted(t["id"] for t in survivors)
+        used = _match_template(t["shape"], letters, radicals,
+                               _template_subs(unit, t["id"]))
+        if used is not None:
+            survivors.append((t, used))
+
+    def weak_declaration_bound(required_slot, required_radical):
+        return (ev.get("weak_position") == required_slot
+                and ev.get("weak_radical") == required_radical)
+
+    ids = sorted(t["id"] for t, _u in survivors)
     if ids == ["mafal_place", "mu_participle"] or ids == ["mu_participle"]:
         pv = inp.get("penult_vowel")
         if pv is None:
@@ -206,13 +251,40 @@ def analyze_derivative(inp, unit):
             # decide voice (Sol repair 3): evidence must be bound
             return {"decision": "abstain",
                     "reason": "penult_vowel_evidence_unbound"}
-        t = next(t for t in survivors if t["id"] == "mu_participle")
+        if unit.get("penult_mark_verification"):
+            # the claimed mark must be VERIFIABLE on the written surface: an
+            # unpointed surface evidences nothing; a differing written mark
+            # refutes the claim (Sol fix-request 1)
+            written = (None if inp.get("surface") is None
+                       else _penult_surface_mark(inp["surface"]))
+            if written is None:
+                return {"decision": "abstain",
+                        "reason": "penult_mark_not_in_surface"}
+            if written != pv:
+                return {"decision": "abstain",
+                        "reason": "penult_mark_mismatch"}
+        if unit.get("require_weak_declaration"):
+            # voice on a weak-radical root additionally needs the exact weak
+            # declaration (position + radical) bound in the evidence
+            for k, radical in enumerate(radicals):
+                if radical in ("و", "ي") and not weak_declaration_bound(
+                        "R%d" % (k + 1), radical):
+                    return {"decision": "abstain",
+                            "reason": "weak_declaration_unbound"}
+        t = next(t for t, _u in survivors if t["id"] == "mu_participle")
         return {"decision": "candidate_pending", "authority": "none_fixture_harness", "class": t["split"][pv], "template": t["id"]}
     if not survivors:
         return {"decision": "abstain", "reason": "no_template"}
     if len(survivors) > 1:
         return {"decision": "abstain", "reason": "ambiguous_template"}
-    t = survivors[0]
+    t, used = survivors[0]
+    if unit.get("require_weak_declaration"):
+        for u_ in used:
+            if not weak_declaration_bound(u_["slot"], u_["radical"]):
+                # a weak substitution was exercised without the exact bound
+                # declaration of which radical went weak where — fail closed
+                return {"decision": "abstain",
+                        "reason": "weak_declaration_unbound"}
     return {"decision": "candidate_pending", "authority": "none_fixture_harness", "class": t["class"], "template": t["id"]}
 
 
@@ -400,6 +472,24 @@ def self_test():
     bad = sorted(r["fixture_id"] for r in rec1["results"] if not r["match"])
     if bad != ["own-abs-01", "own-adv-01"]:
         failures.append("ownership v1 defect set drifted: %r" % bad)
+    # 2b. derivatives v3 baseline green; v2 must fail EXACTLY its recorded
+    # defect set (Sol fix-request 1: مقئول/تقئيل false passes under the
+    # global substitution table, unverified/false penult marks, missing weak
+    # declarations) — red-first pinned forever
+    rec3 = run("inc-derivatives", "unit-v3.json")
+    if rec3["mismatches"] != 0:
+        failures.append("derivatives v3 should be green, got %d mismatches"
+                        % rec3["mismatches"])
+    rec2 = run("inc-derivatives", "unit-v2.json")
+    bad2 = sorted(r["fixture_id"] for r in rec2["results"] if not r["match"])
+    if bad2 != ["der-abs-02", "der-adv-03", "der-adv-04", "der-adv-05",
+                "der-adv-06", "der-adv-07"]:
+        failures.append("derivatives v2 defect set drifted: %r" % bad2)
+    for r in rec2["results"]:
+        if r["fixture_id"] in ("der-adv-03", "der-adv-04") \
+                and r["actual"].get("decision") != "candidate_pending":
+            failures.append("%s no longer red under v2 — the recorded false "
+                            "pass has been papered over" % r["fixture_id"])
     # 3. pack mutation flips a decision (rules are read from the pack)
     unit, fixtures = load("inc-ownership", "unit-v2.json")
     unit_m = json.loads(json.dumps(unit))
@@ -461,9 +551,9 @@ def self_test():
         for f in failures:
             print("  - " + f)
         return 1
-    print("SELF-TEST PASS (8 probes: v2 green, v1 defect pinned, 4 pack "
-          "mutations flip decisions, discovery + shared-capability dispatch, "
-          "all latest packs green)")
+    print("SELF-TEST PASS (9 probes: ownership v2 + derivatives v3 green, "
+          "v1/v2 defect sets pinned red, 4 pack mutations flip decisions, "
+          "discovery + shared-capability dispatch, all latest packs green)")
     return 0
 
 

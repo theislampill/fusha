@@ -8,6 +8,7 @@
     "target": "curriculum/l1l6/promotion/ bundle for inc-pedagogy"
   },
   "baseline_pack": "unit-v0.json",
+  "canonical_dogfood_eligible": false,
   "capability": "pedagogical_projection",
   "defects_recorded": [
     {
@@ -66,6 +67,7 @@
     "hover_pedagogy": "queue q-hover-pedagogy rows for linked entries",
     "occurrence_grounding": "queue q-pvn-grounding rows for lessons mapped to inc-pedagogy"
   },
+  "evidence_class": "development_evidence_only",
   "guards_loaded": [
     "g-ped-1",
     "g-ped-2",

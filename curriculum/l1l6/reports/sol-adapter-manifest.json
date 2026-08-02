@@ -56,6 +56,12 @@
       "id": "adp-canonical-dogfood"
     }
   ],
+  "bound_to_review": {
+    "fix_request_comment": "https://github.com/theislampill/fusha/pull/136#issuecomment-5158892104",
+    "reviewed_head": "eb51278c626ebe9b65b5a3e1be3a3895783e1233"
+  },
+  "owner": "sol",
+  "ownership_note": "every adapter below is Sol-owned work: this branch supplies the contract, canaries and acceptance command only, and implements none of them (no private parallel runtime counterfeits an adapter)",
   "purpose": "exact adapter contracts through which this PR's candidate planes reach the authoritative current-main interfaces; nothing in this PR counterfeits these adapters",
   "schema": "curriculum.l1l6_sol_adapter_manifest.v1",
   "status": "contracts prepared; ALL adapters Sol-owned; nothing simulated in this PR"

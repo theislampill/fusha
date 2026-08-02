@@ -3,49 +3,71 @@
   "candidate_reference": "curriculum/l1l6/increments/inc-derivatives/reference.md",
   "candidate_registry_rows": [
     {
-      "abstention_condition": "penult_vowel_unknown; ambiguous_template; no_template; no_root_evidence",
+      "abstention_condition": "penult_vowel_unknown; penult_vowel_evidence_unbound; penult_mark_not_in_surface; penult_mark_mismatch; weak_declaration_unbound; ambiguous_template; no_template; no_root_evidence; surface_letter_mismatch",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
       "defeaters": [
         "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
-        "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
-        "method transfers, conclusions do not; per-token class needs per-token evidence"
+        "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence",
+        "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+        "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+        "no weak realization is accepted without the exact bound declaration of which radical went weak in which position"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+        "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "guards_hash": "f15ec6a937839f12cd53090edb0f5d28c1819f17cad755688399869d91a96622",
+      "guards_hash": "87c5a2237f48660436994f358a2141e9f2a551787f3dd13355bfd52bf851debd",
       "guards_payload": [
         {
           "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
           "id": "g-der-1"
         },
         {
-          "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+          "guard": "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
           "id": "g-der-2"
         },
         {
           "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
           "id": "g-der-m"
+        },
+        {
+          "guard": "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+          "id": "g-der-3"
+        },
+        {
+          "guard": "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+          "id": "g-der-4"
+        },
+        {
+          "guard": "no weak realization is accepted without the exact bound declaration of which radical went weak in which position",
+          "id": "g-der-5"
         }
       ],
       "negative_or_boundary_examples": [
         "der-adv-01",
         "der-abs-01",
-        "der-adv-02"
+        "der-abs-02",
+        "der-adv-02",
+        "der-adv-03",
+        "der-adv-04",
+        "der-adv-05",
+        "der-adv-06",
+        "der-adv-07"
       ],
       "positive_examples": [
         "der-pos-01",
         "der-pos-02",
         "der-pos-03",
         "der-trn-01",
-        "der-trn-02"
+        "der-trn-02",
+        "der-trn-03"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "u-s03"
@@ -64,49 +86,71 @@
       ]
     },
     {
-      "abstention_condition": "penult_vowel_unknown; ambiguous_template; no_template; no_root_evidence",
+      "abstention_condition": "penult_vowel_unknown; penult_vowel_evidence_unbound; penult_mark_not_in_surface; penult_mark_mismatch; weak_declaration_unbound; ambiguous_template; no_template; no_root_evidence; surface_letter_mismatch",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
       "defeaters": [
         "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
-        "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
-        "method transfers, conclusions do not; per-token class needs per-token evidence"
+        "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence",
+        "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+        "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+        "no weak realization is accepted without the exact bound declaration of which radical went weak in which position"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+        "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "guards_hash": "f15ec6a937839f12cd53090edb0f5d28c1819f17cad755688399869d91a96622",
+      "guards_hash": "87c5a2237f48660436994f358a2141e9f2a551787f3dd13355bfd52bf851debd",
       "guards_payload": [
         {
           "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
           "id": "g-der-1"
         },
         {
-          "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+          "guard": "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
           "id": "g-der-2"
         },
         {
           "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
           "id": "g-der-m"
+        },
+        {
+          "guard": "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+          "id": "g-der-3"
+        },
+        {
+          "guard": "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+          "id": "g-der-4"
+        },
+        {
+          "guard": "no weak realization is accepted without the exact bound declaration of which radical went weak in which position",
+          "id": "g-der-5"
         }
       ],
       "negative_or_boundary_examples": [
         "der-adv-01",
         "der-abs-01",
-        "der-adv-02"
+        "der-abs-02",
+        "der-adv-02",
+        "der-adv-03",
+        "der-adv-04",
+        "der-adv-05",
+        "der-adv-06",
+        "der-adv-07"
       ],
       "positive_examples": [
         "der-pos-01",
         "der-pos-02",
         "der-pos-03",
         "der-trn-01",
-        "der-trn-02"
+        "der-trn-02",
+        "der-trn-03"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "u-s03"
@@ -125,49 +169,71 @@
       ]
     },
     {
-      "abstention_condition": "penult_vowel_unknown; ambiguous_template; no_template; no_root_evidence",
+      "abstention_condition": "penult_vowel_unknown; penult_vowel_evidence_unbound; penult_mark_not_in_surface; penult_mark_mismatch; weak_declaration_unbound; ambiguous_template; no_template; no_root_evidence; surface_letter_mismatch",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
       "defeaters": [
         "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
-        "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
-        "method transfers, conclusions do not; per-token class needs per-token evidence"
+        "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence",
+        "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+        "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+        "no weak realization is accepted without the exact bound declaration of which radical went weak in which position"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+        "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "guards_hash": "f15ec6a937839f12cd53090edb0f5d28c1819f17cad755688399869d91a96622",
+      "guards_hash": "87c5a2237f48660436994f358a2141e9f2a551787f3dd13355bfd52bf851debd",
       "guards_payload": [
         {
           "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
           "id": "g-der-1"
         },
         {
-          "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+          "guard": "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
           "id": "g-der-2"
         },
         {
           "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
           "id": "g-der-m"
+        },
+        {
+          "guard": "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+          "id": "g-der-3"
+        },
+        {
+          "guard": "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+          "id": "g-der-4"
+        },
+        {
+          "guard": "no weak realization is accepted without the exact bound declaration of which radical went weak in which position",
+          "id": "g-der-5"
         }
       ],
       "negative_or_boundary_examples": [
         "der-adv-01",
         "der-abs-01",
-        "der-adv-02"
+        "der-abs-02",
+        "der-adv-02",
+        "der-adv-03",
+        "der-adv-04",
+        "der-adv-05",
+        "der-adv-06",
+        "der-adv-07"
       ],
       "positive_examples": [
         "der-pos-01",
         "der-pos-02",
         "der-pos-03",
         "der-trn-01",
-        "der-trn-02"
+        "der-trn-02",
+        "der-trn-03"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "u-s03"
@@ -186,49 +252,71 @@
       ]
     },
     {
-      "abstention_condition": "penult_vowel_unknown; ambiguous_template; no_template; no_root_evidence",
+      "abstention_condition": "penult_vowel_unknown; penult_vowel_evidence_unbound; penult_mark_not_in_surface; penult_mark_mismatch; weak_declaration_unbound; ambiguous_template; no_template; no_root_evidence; surface_letter_mismatch",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
       "defeaters": [
         "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
-        "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
-        "method transfers, conclusions do not; per-token class needs per-token evidence"
+        "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence",
+        "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+        "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+        "no weak realization is accepted without the exact bound declaration of which radical went weak in which position"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+        "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "guards_hash": "f15ec6a937839f12cd53090edb0f5d28c1819f17cad755688399869d91a96622",
+      "guards_hash": "87c5a2237f48660436994f358a2141e9f2a551787f3dd13355bfd52bf851debd",
       "guards_payload": [
         {
           "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
           "id": "g-der-1"
         },
         {
-          "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+          "guard": "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
           "id": "g-der-2"
         },
         {
           "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
           "id": "g-der-m"
+        },
+        {
+          "guard": "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+          "id": "g-der-3"
+        },
+        {
+          "guard": "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+          "id": "g-der-4"
+        },
+        {
+          "guard": "no weak realization is accepted without the exact bound declaration of which radical went weak in which position",
+          "id": "g-der-5"
         }
       ],
       "negative_or_boundary_examples": [
         "der-adv-01",
         "der-abs-01",
-        "der-adv-02"
+        "der-abs-02",
+        "der-adv-02",
+        "der-adv-03",
+        "der-adv-04",
+        "der-adv-05",
+        "der-adv-06",
+        "der-adv-07"
       ],
       "positive_examples": [
         "der-pos-01",
         "der-pos-02",
         "der-pos-03",
         "der-trn-01",
-        "der-trn-02"
+        "der-trn-02",
+        "der-trn-03"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "u-s03"
@@ -247,60 +335,248 @@
       ]
     },
     {
-      "abstention_condition": "penult_vowel_unknown; ambiguous_template; no_template; no_root_evidence",
+      "abstention_condition": "penult_vowel_unknown; penult_vowel_evidence_unbound; penult_mark_not_in_surface; penult_mark_mismatch; weak_declaration_unbound; ambiguous_template; no_template; no_root_evidence; surface_letter_mismatch",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
       "defeaters": [
         "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
-        "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
-        "method transfers, conclusions do not; per-token class needs per-token evidence"
+        "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence",
+        "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+        "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+        "no weak realization is accepted without the exact bound declaration of which radical went weak in which position"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+        "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst+loop-measured",
-      "guards_hash": "f15ec6a937839f12cd53090edb0f5d28c1819f17cad755688399869d91a96622",
+      "guards_hash": "87c5a2237f48660436994f358a2141e9f2a551787f3dd13355bfd52bf851debd",
       "guards_payload": [
         {
           "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
           "id": "g-der-1"
         },
         {
-          "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+          "guard": "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
           "id": "g-der-2"
         },
         {
           "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
           "id": "g-der-m"
+        },
+        {
+          "guard": "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+          "id": "g-der-3"
+        },
+        {
+          "guard": "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+          "id": "g-der-4"
+        },
+        {
+          "guard": "no weak realization is accepted without the exact bound declaration of which radical went weak in which position",
+          "id": "g-der-5"
         }
       ],
       "negative_or_boundary_examples": [
         "der-adv-01",
         "der-abs-01",
-        "der-adv-02"
+        "der-abs-02",
+        "der-adv-02",
+        "der-adv-03",
+        "der-adv-04",
+        "der-adv-05",
+        "der-adv-06",
+        "der-adv-07"
       ],
       "positive_examples": [
         "der-pos-01",
         "der-pos-02",
         "der-pos-03",
         "der-trn-01",
-        "der-trn-02"
+        "der-trn-02",
+        "der-trn-03"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v2.json",
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "u-s03"
       },
       "scope": {
         "increment": "inc-derivatives",
-        "statement": "a weak radical may surface via the declared weak_substitutions table only (data-driven; guard: substitutions never apply to sound radicals)",
+        "statement": "a weak radical may surface only via the substitutions the pack licenses FOR THAT TEMPLATE (by_template scope); a substitution licensed for one template never licenses another",
         "unit_ref": "u-s03"
       },
       "skill": "sarf",
       "skill_rule_id": "curr-derivatives-der-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-derivatives/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "penult_vowel_unknown; penult_vowel_evidence_unbound; penult_mark_not_in_surface; penult_mark_mismatch; weak_declaration_unbound; ambiguous_template; no_template; no_root_evidence; surface_letter_mismatch",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+        "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence",
+        "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+        "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+        "no weak realization is accepted without the exact bound declaration of which radical went weak in which position"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "87c5a2237f48660436994f358a2141e9f2a551787f3dd13355bfd52bf851debd",
+      "guards_payload": [
+        {
+          "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+          "id": "g-der-1"
+        },
+        {
+          "guard": "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
+          "id": "g-der-2"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+          "id": "g-der-m"
+        },
+        {
+          "guard": "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+          "id": "g-der-3"
+        },
+        {
+          "guard": "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+          "id": "g-der-4"
+        },
+        {
+          "guard": "no weak realization is accepted without the exact bound declaration of which radical went weak in which position",
+          "id": "g-der-5"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "der-adv-01",
+        "der-abs-01",
+        "der-abs-02",
+        "der-adv-02",
+        "der-adv-03",
+        "der-adv-04",
+        "der-adv-05",
+        "der-adv-06",
+        "der-adv-07"
+      ],
+      "positive_examples": [
+        "der-pos-01",
+        "der-pos-02",
+        "der-pos-03",
+        "der-trn-01",
+        "der-trn-02",
+        "der-trn-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s03"
+      },
+      "scope": {
+        "increment": "inc-derivatives",
+        "statement": "a claimed penult surface mark must be verifiable on the written surface: unpointed surface -> penult_mark_not_in_surface; differing written mark -> penult_mark_mismatch (never trust the claim alone)",
+        "unit_ref": "u-s03"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-derivatives-der-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-derivatives/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "penult_vowel_unknown; penult_vowel_evidence_unbound; penult_mark_not_in_surface; penult_mark_mismatch; weak_declaration_unbound; ambiguous_template; no_template; no_root_evidence; surface_letter_mismatch",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+        "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
+        "method transfers, conclusions do not; per-token class needs per-token evidence",
+        "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+        "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+        "no weak realization is accepted without the exact bound declaration of which radical went weak in which position"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst+loop-measured",
+      "guards_hash": "87c5a2237f48660436994f358a2141e9f2a551787f3dd13355bfd52bf851debd",
+      "guards_payload": [
+        {
+          "guard": "og-4: a template classifies FORM only; it never fixes contextual nahw or sense",
+          "id": "g-der-1"
+        },
+        {
+          "guard": "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
+          "id": "g-der-2"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+          "id": "g-der-m"
+        },
+        {
+          "guard": "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+          "id": "g-der-3"
+        },
+        {
+          "guard": "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+          "id": "g-der-4"
+        },
+        {
+          "guard": "no weak realization is accepted without the exact bound declaration of which radical went weak in which position",
+          "id": "g-der-5"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "der-adv-01",
+        "der-abs-01",
+        "der-abs-02",
+        "der-adv-02",
+        "der-adv-03",
+        "der-adv-04",
+        "der-adv-05",
+        "der-adv-06",
+        "der-adv-07"
+      ],
+      "positive_examples": [
+        "der-pos-01",
+        "der-pos-02",
+        "der-pos-03",
+        "der-trn-01",
+        "der-trn-02",
+        "der-trn-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-derivatives/unit-v3.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "u-s03"
+      },
+      "scope": {
+        "increment": "inc-derivatives",
+        "statement": "any exercised weak substitution, and any voice split over a weak-radical root, requires the exact bound weak declaration (weak_position + weak_radical) in the root evidence -> otherwise weak_declaration_unbound",
+        "unit_ref": "u-s03"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-derivatives-der-r7",
       "skill_version": "@curriculum-candidate",
       "status": "candidate",
       "test_references": [
@@ -318,11 +594,17 @@
   ],
   "fixtures_by_class": {
     "abstention": [
-      "der-abs-01"
+      "der-abs-01",
+      "der-abs-02"
     ],
     "adversarial": [
       "der-adv-01",
-      "der-adv-02"
+      "der-adv-02",
+      "der-adv-03",
+      "der-adv-04",
+      "der-adv-05",
+      "der-adv-06",
+      "der-adv-07"
     ],
     "positive": [
       "der-pos-01",
@@ -331,7 +613,8 @@
     ],
     "transfer": [
       "der-trn-01",
-      "der-trn-02"
+      "der-trn-02",
+      "der-trn-03"
     ]
   },
   "flywheel_evidence": "curriculum/l1l6/loop/derivation/loop-record.json",
@@ -362,13 +645,20 @@
   "machine_unit_pack": {
     "abstention_reasons": [
       "penult_vowel_unknown",
+      "penult_vowel_evidence_unbound",
+      "penult_mark_not_in_surface",
+      "penult_mark_mismatch",
+      "weak_declaration_unbound",
       "ambiguous_template",
       "no_template",
-      "no_root_evidence"
+      "no_root_evidence",
+      "surface_letter_mismatch"
     ],
     "capability": "template_classification",
     "increment": "inc-derivatives",
-    "repair_of": "unit-v1.json (no weak-root substitution: hollow participles false-negative, loop derivation run-1)",
+    "penult_mark_verification": true,
+    "repair_of": "unit-v2.json (GLOBAL weak-substitution table false-passed non-words built by inserting hamza into sound-slot templates, e.g. the mafuul and tafiil shapes; claimed penult marks were trusted without the written surface; weak realization was undeclared — Sol fix-request round 2, finding 1)",
+    "require_weak_declaration": true,
     "rules": [
       {
         "id": "der-r1",
@@ -388,7 +678,15 @@
       },
       {
         "id": "der-r5",
-        "text": "a weak radical may surface via the declared weak_substitutions table only (data-driven; guard: substitutions never apply to sound radicals)"
+        "text": "a weak radical may surface only via the substitutions the pack licenses FOR THAT TEMPLATE (by_template scope); a substitution licensed for one template never licenses another"
+      },
+      {
+        "id": "der-r6",
+        "text": "a claimed penult surface mark must be verifiable on the written surface: unpointed surface -> penult_mark_not_in_surface; differing written mark -> penult_mark_mismatch (never trust the claim alone)"
+      },
+      {
+        "id": "der-r7",
+        "text": "any exercised weak substitution, and any voice split over a weak-radical root, requires the exact bound weak declaration (weak_position + weak_radical) in the root evidence -> otherwise weak_declaration_unbound"
       }
     ],
     "schema": "curriculum.l1l6_machine_unit.v1",
@@ -490,16 +788,19 @@
       }
     ],
     "unit_ref": "u-s03",
-    "version": 2,
+    "version": 3,
     "weak_substitutions": {
-      "R2": {
-        "و": [
-          "ئ",
-          "ا"
-        ],
-        "ي": [
-          "ئ"
-        ]
+      "by_template": {
+        "faail": {
+          "R2": {
+            "و": [
+              "ئ"
+            ],
+            "ي": [
+              "ئ"
+            ]
+          }
+        }
       }
     }
   },
@@ -520,7 +821,7 @@
       "teaching": "why the gloss is a noun phrase, not a finite verb"
     }
   ],
-  "rollback_condition": "revert to unit-v1.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
+  "rollback_condition": "revert to unit-v2.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
   "schema": "curriculum.l1l6_promotion_bundle.v1",
   "status": "candidate_awaiting_sol_review"
 }

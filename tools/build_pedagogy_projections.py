@@ -86,9 +86,12 @@ def build():
             "result": result,
             "status": "candidate",
         })
+    # the de-authorized consumer emits candidate_projected (Sol fix-request
+    # round 2, finding 6: comparing against the retired "projected" label
+    # made every row count as abstained while also counting as projected)
     projected = sum(1 for r in rows if r["result"]["decision"] == "candidate_projected")
     abstained = [r["unit_id"] for r in rows
-                 if r["result"]["decision"] != "projected"]
+                 if r["result"]["decision"] != "candidate_projected"]
     meta = {
         "schema": "curriculum.l1l6_unit_projection.v1.meta",
         "generator": "tools/build_pedagogy_projections.py",

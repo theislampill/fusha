@@ -1,6 +1,9 @@
 {
+  "answer_visibility": "answer_visible_candidate_packets",
+  "canonical_units_total": 166,
+  "canonical_units_with_candidates": 35,
   "generator": "tools/build_candidate_drills.py",
-  "honesty": "0 drills are runnable in the ordinary tutor today; these are complete promotion/adapter artifacts awaiting the Sol-owned integration",
+  "honesty": "0 of these drill records are runnable in the ordinary tutor today; every record is an answer-visible candidate packet (derived from lesson-answered material — never usable as independent assessment) awaiting the Sol-owned tutor/KC integration",
   "rows": 834,
   "runtime_integrated": 0,
   "schema": "curriculum.l1l6_drill_candidate.v1.meta"

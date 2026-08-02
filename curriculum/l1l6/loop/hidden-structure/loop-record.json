@@ -9,6 +9,7 @@
     "target": "curriculum/l1l6/promotion/ bundle for inc-hidden"
   },
   "baseline_pack": "unit-v0.json",
+  "canonical_dogfood_eligible": false,
   "capability": "licensing_table",
   "defects_recorded": [
     {
@@ -42,6 +43,7 @@
     "hover_pedagogy": "queue q-hover-pedagogy rows for linked entries",
     "occurrence_grounding": "queue q-pvn-grounding rows for lessons mapped to inc-hidden"
   },
+  "evidence_class": "development_evidence_only",
   "guards_loaded": [
     "g-hid-1",
     "g-hid-2",

@@ -4,7 +4,7 @@
   "note": "every state is computed from committed evidence; machine states require a discovered pack (invented consumer claims are structurally impossible); blockers carry exact causes",
   "schema": "curriculum.l1l6_unit_disposition.v1.meta",
   "state_participation": {
-    "candidate_occurrence_witnesses": 13,
+    "candidate_occurrence_witnesses": 12,
     "candidate_pack_harnessed": 35,
     "candidate_presentation_template": 166,
     "candidate_remediation_material": 18,

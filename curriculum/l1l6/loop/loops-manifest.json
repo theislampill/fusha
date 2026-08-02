@@ -1,4 +1,6 @@
 {
+  "canonical_dogfood_eligible": false,
+  "evidence_class": "development_evidence_only",
   "loops": [
     {
       "baseline_pack": "unit-v1.json",
@@ -10,13 +12,13 @@
       "repaired_pack": "unit-v2.json"
     },
     {
-      "baseline_pack": "unit-v1.json",
-      "expected_run1_mismatches": 2,
+      "baseline_pack": "unit-v2.json",
+      "expected_run1_mismatches": 6,
       "family": "sarf derivation (weak-root complication)",
       "increment": "inc-derivatives",
       "loop": "derivation",
-      "proof": "lesson unit -> candidate classifier -> FALSE NEGATIVES on hollow-root participles (قائل، بائع) -> pack-only repair (declared weak_substitutions table) -> later unseen token improves (transfer class)",
-      "repaired_pack": "unit-v2.json"
+      "proof": "lesson unit -> candidate classifier -> v2's GLOBAL weak-substitution table FALSE-PASSES non-words (hamza inserted into the mafuul/tafiil sound slots), trusts claimed penult marks against unpointed or contradicting surfaces, and accepts undeclared weak realization -> pack-only repair (template-scoped substitution licences + written-surface mark verification + bound weak declaration) -> the committed transfer fixtures (hollow-root participles and weak-root voice) stay green under the repaired pack",
+      "repaired_pack": "unit-v3.json"
     },
     {
       "baseline_pack": "unit-v0.json",
@@ -55,6 +57,7 @@
       "repaired_pack": "unit-v1.json"
     }
   ],
+  "naming_note": "these are instructional/fixture QA-harness loop records, NOT the canonical linguistic flywheel; canonical dogfood-event emission is Sol-owned (adp-canonical-dogfood)",
   "note": "every loop is recomputed live by tools/curriculum_flywheel_runner.py --manifest and byte-compared in the validator; expected_run1_mismatches pins each recorded defect set. Five families beyond the original ownership loop — one per registered capability interface (letter_ownership, template_classification, discriminator_table, licensing_table, pattern_consistency, pedagogical_projection): sarf derivation (weak-root complication), nahw ambiguity (global-ma refuted, rivals preserved), nahw structural (licensing-table hidden structure).",
   "schema": "curriculum.l1l6_loops_manifest.v1"
 }

@@ -5,12 +5,24 @@
       "id": "g-der-1"
     },
     {
-      "guard": "og-2: identical skeletons split by harakat (معلم active/passive); no vowel -> abstain",
+      "guard": "og-2: identical skeletons split by harakat (active/passive mu-participles); no vowel -> abstain",
       "id": "g-der-2"
     },
     {
       "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
       "id": "g-der-m"
+    },
+    {
+      "guard": "a weak-substitution licence is TEMPLATE-SCOPED: licensing a hamza seat for the agent-participle template never licenses it inside the passive-participle or form-II-masdar shapes (a global table false-passes non-words)",
+      "id": "g-der-3"
+    },
+    {
+      "guard": "a claimed penult surface mark is evidence only if it is WRITTEN on the surface's penult letter: unpointed evidences nothing, and a differing written mark refutes the claim",
+      "id": "g-der-4"
+    },
+    {
+      "guard": "no weak realization is accepted without the exact bound declaration of which radical went weak in which position",
+      "id": "g-der-5"
     }
   ],
   "schema": "curriculum.l1l6_increment_guards.v1",

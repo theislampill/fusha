@@ -89,6 +89,11 @@ def build():
                 abst.get(inc, []) + [link["ambiguity_abstention"]])),
             "linkage_basis": link["linkage_basis"],
         }
+        if link.get("surface") is not None:
+            row["surface"] = link["surface"]
+        payload_files = [p for p in (link.get("promotion_evidence", {})
+                                     .get("existing") or [])
+                         if p.endswith(".payload.json")]
         if occ and occ in proj_by_occ:
             pr = proj_by_occ[occ]
             row["appearances"] = {
@@ -107,6 +112,43 @@ def build():
                                       "case_mood_governor"))
             row["unresolved_dependencies"] = [
                 "host_internal_letter_ownership (host-root certification pending)"]
+        elif occ and payload_files:
+            # committed website-payload authority (Sol fix-request round 2,
+            # finding 4): the payload's EXACT surface, appearances, fact
+            # planes and binding are preserved — never degraded to
+            # surface:null / zero appearances
+            pl = json.loads((ROOT / payload_files[0]).read_text(encoding="utf-8"))
+            assert pl["occurrence_id"] == occ, "payload/occ drift: %s" % occ
+            apps = pl["reverse_links"]["occurrence_to_appearances"]
+            row["surface"] = pl["projection"]["surface"]
+            row["payload_binding"] = {
+                "payload_file": payload_files[0],
+                "artifact_id": pl["artifact_id"],
+                "projection_hash": pl["projection_hash"],
+                "schema": pl["schema"],
+            }
+            row["appearances"] = {
+                "rows": apps,
+                "count": len(apps),
+                "page_relation_note": "appearance ids are page-scoped renderings from the committed payload's reverse links; page relations are the payload's own (verbatim)",
+                "single_hash_parity": {a["projection_hash"] for a in apps}
+                                      == {pl["projection_hash"]},
+            }
+            plane = (pl["projection"].get("certification") or {}).get("plane", {})
+            row["required_fact_planes"] = plane
+            row["required_sarf_facts"] = []
+            row["required_sarf_facts_note"] = (
+                "rootless particle per the payload (root: null); no sarf "
+                "fact is required for this occurrence")
+            row["required_nahw_facts"] = sorted(
+                pl["projection"].get("evidence_refs") or [])
+            row["required_nahw_facts_note"] = (
+                "the payload's function plane evidence refs, verbatim — the "
+                "contextual-function fact backing this occurrence")
+            row["unresolved_dependencies"] = [
+                "per-occurrence discriminator features (following form, "
+                "clause type) as declared evidence for any FURTHER "
+                "occurrence beyond the payload exemplars"]
         elif occ:
             row["appearances"] = {"rows": [], "count": 0,
                                   "page_relation_note": "no committed projection row for this occurrence; appearances enumerable only after its projection artifact exists"}

@@ -9,6 +9,7 @@
     "target": "curriculum/l1l6/promotion/ bundle for inc-ownership"
   },
   "baseline_pack": "unit-v1.json",
+  "canonical_dogfood_eligible": false,
   "capability": "letter_ownership",
   "defects_recorded": [
     {
@@ -50,6 +51,7 @@
     "hover_pedagogy": "queue q-hover-pedagogy rows for linked entries",
     "occurrence_grounding": "queue q-pvn-grounding rows for lessons mapped to inc-ownership"
   },
+  "evidence_class": "development_evidence_only",
   "guards_loaded": [
     "g-own-1",
     "g-own-2",

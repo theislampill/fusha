@@ -10,7 +10,10 @@ repository authority:
   qamus/data/current/entries.jsonl (harakat-stripped skeleton equality of the
   entry's own headword — identity matching, NOT root/surface similarity);
 - resolved entries pull up to 3 SELECTED occurrences from the committed
-  example-ayah universe (the entry's own selected words on its own card);
+  example-ayah universe (the entry's own selected words on its own card),
+  each verified against qamus/indexes/quran-loc-surface (canonical surface
+  NFC-equality); diverging witnesses are downgraded to card_display_only
+  and never ground a canonical occurrence;
 - every canonical unit ends in a closed grounding state:
     exact_v_candidates / exact_n_candidates / occurrence_plan_ready /
     authority_blocked (named missing evidence) / not_applicable_with_reason /
@@ -86,6 +89,25 @@ def build():
     # with selected:true — the existence of a selected appearance on some
     # OTHER entry's card never authorizes this entry (12:43:6 canary: the
     # بقرات token appears on the سبع card as context and must never bind).
+    #
+    # CANONICAL-SURFACE verification (Sol fix-request round 2, finding 3): a
+    # card's displayed surface may use a different orthographic convention
+    # than the canonical text (wasla, dagger alif, quranic marks — e.g. the
+    # 12:43:5 card shows سَبْعُ while the canonical surface is سَبْعَ). Every
+    # witness is therefore verified against the committed canonical
+    # loc->surface index; only NFC-equal witnesses ground a canonical
+    # occurrence. A diverging witness is kept but DOWNGRADED to
+    # card_display_only — establishing an orthography-normalization
+    # equivalence would be a linguistic policy decision this programme may
+    # not make (linguistic_review_blocked), so the row abstains from the
+    # canonical claim instead.
+    import unicodedata as _ud
+    canonical_by_loc = {}
+    with (ROOT / "qamus" / "indexes" / "quran-loc-surface" / "index.jsonl"
+          ).open(encoding="utf-8") as f:
+        for line in f:
+            r = json.loads(line)
+            canonical_by_loc[r["loc"]] = r["surface"]
     witnesses_by_entry = {}
     with (ROOT / "qamus" / "lattice" / "example-ayah-universe.jsonl"
           ).open(encoding="utf-8") as f:
@@ -98,14 +120,34 @@ def build():
             eid = r["entry_id"]
             witnesses_by_entry.setdefault(eid, [])
             if len(witnesses_by_entry[eid]) < 3:
-                witnesses_by_entry[eid].append({
+                canonical = canonical_by_loc.get(r["canonical_loc"])
+                verified = (canonical is not None
+                            and _ud.normalize("NFC", canonical)
+                            == _ud.normalize("NFC", r["displayed_surface"]))
+                w = {
                     "occurrence_id": "quran:" + r["canonical_loc"],
                     "appearance_id": r["appearance_id"],
                     "surface": r["displayed_surface"],
+                    "canonical_surface": canonical,
+                    "canonical_surface_verified": verified,
                     "selected": True,
-                    "relation": "entry_selected_word",
                     "evidence": r.get("source_card_backlink"),
-                })
+                }
+                if verified:
+                    w["relation"] = "entry_selected_word"
+                    w["witness_scope"] = "canonical_occurrence"
+                else:
+                    w["relation"] = "entry_selected_word_card_display_only"
+                    w["witness_scope"] = "card_display_only"
+                    w["scope_note"] = (
+                        "card orthography diverges from the canonical surface "
+                        "(or the loc is absent from the canonical index): "
+                        "canonical equality is NOT established by this "
+                        "programme — orthography-normalization equivalence is "
+                        "a linguistic policy decision (linguistic_review_"
+                        "blocked); this witness supports card display only "
+                        "and never grounds a canonical occurrence")
+                witnesses_by_entry[eid].append(w)
 
     rows = []
     for u in sorted(units, key=lambda x: x["unit_id"]):
@@ -138,7 +180,7 @@ def build():
                                         if k[0] in "vn"],
                         "match_basis": "full citation-form NFC identity (harakat included) against the entry's own headword — NOT skeleton, NOT similarity",
                         "selected_witnesses": witnesses_by_entry.get(h["entry_id"], []),
-                        "witness_rule": "every witness is an appearance of THIS entry's own card with selected:true (exact appearance_id + surface + backlink); context appearances are excluded by construction",
+                        "witness_rule": "every witness is an appearance of THIS entry's own card with selected:true (exact appearance_id + surface + backlink); context appearances are excluded by construction; each witness is additionally verified against the canonical loc->surface index — only canonical_surface_verified witnesses ground a canonical occurrence, diverging witnesses are downgraded to card_display_only",
                     })
                 elif len(exact) > 1:
                     ambiguous.append({
@@ -203,8 +245,26 @@ def build():
         "total_v_candidates": sum(r.get("v_candidates", 0) for r in rows),
         "total_n_candidates": sum(r.get("n_candidates", 0) for r in rows),
         "units_with_occurrences": sum(
-            1 for r in rows if any(x.get("selected_witnesses")
-                                   for x in r.get("resolved", []))),
+            1 for r in rows
+            if any(w.get("canonical_surface_verified")
+                   for x in r.get("resolved", [])
+                   for w in x.get("selected_witnesses", []))),
+        "witnesses_total": sum(
+            len(x.get("selected_witnesses", []))
+            for r in rows for x in r.get("resolved", [])),
+        "witnesses_canonical_verified": sum(
+            1 for r in rows for x in r.get("resolved", [])
+            for w in x.get("selected_witnesses", [])
+            if w.get("canonical_surface_verified")),
+        "witnesses_card_display_only": sum(
+            1 for r in rows for x in r.get("resolved", [])
+            for w in x.get("selected_witnesses", [])
+            if not w.get("canonical_surface_verified")),
+        "card_display_only_note": (
+            "card_display_only witnesses diverge from the canonical "
+            "loc->surface index (orthographic convention); they never ground "
+            "a canonical occurrence — equivalence, if any, is a Sol/scholar "
+            "policy decision (linguistic_review_blocked)"),
     }
     return rows, meta
 

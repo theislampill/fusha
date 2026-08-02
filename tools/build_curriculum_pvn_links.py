@@ -105,8 +105,13 @@ def build():
             "ambiguity_abstention": "host_internal_letter_ownership unresolved (consumer abstains no_root_evidence)",
             "linkage_basis": "committed pilot store (never surface similarity)",
         })
-    # class 2: the ma exemplars
+    # class 2: the ma exemplars — the payload is READ, never paraphrased:
+    # its exact surface, artifact identity and projection hash travel with
+    # the link (Sol fix-request round 2, finding 4: surface:null degraded
+    # the committed payload binding)
     for loc, kind, payload in MA_OCCURRENCES:
+        pl = json.loads((ROOT / payload).read_text(encoding="utf-8"))
+        assert pl["occurrence_id"] == loc, "payload/loc drift: %s" % payload
         rows.append({
             "schema": "curriculum.l1l6_pvn_precise_link.v1",
             "link_id": "pl-ma-" + loc.replace("quran:", "").replace(":", "-"),
@@ -117,7 +122,13 @@ def build():
             "entry_id": entries_by_key["p099"]["entry_id"],
             "source_key": "p099",
             "occurrence_id": loc,
-            "surface": None,
+            "surface": pl["projection"]["surface"],
+            "payload_binding": {
+                "payload_file": payload,
+                "artifact_id": pl["artifact_id"],
+                "projection_hash": pl["projection_hash"],
+                "schema": pl["schema"],
+            },
             "expected_hover_component": "function_inventory_panel",
             "promotion_evidence": {
                 "existing": [payload],

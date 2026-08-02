@@ -9,6 +9,7 @@
     "target": "curriculum/l1l6/promotion/ bundle for inc-nawasikh"
   },
   "baseline_pack": "unit-v0.json",
+  "canonical_dogfood_eligible": false,
   "capability": "pattern_consistency",
   "defects_recorded": [
     {
@@ -28,6 +29,7 @@
     "hover_pedagogy": "queue q-hover-pedagogy rows for linked entries",
     "occurrence_grounding": "queue q-pvn-grounding rows for lessons mapped to inc-nawasikh"
   },
+  "evidence_class": "development_evidence_only",
   "guards_loaded": [
     "g-naw-1",
     "g-naw-2",

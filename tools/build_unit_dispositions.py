@@ -5,24 +5,32 @@
 Every canonical unit ends in one or more CLOSED states, with a single
 strongest_state; the strongest-state totals sum to exactly the unit count.
 States are COMPUTED from committed evidence (packs, projections, grounding,
-misconception bindings, bundles, loops) — never asserted:
+misconception bindings, bundles, loops) — never asserted. The closed state
+vocabulary (NOTHING here is consumed by any runtime — every state is a
+candidate/readiness label awaiting Sol-owned integration):
 
-  machine_pack_consumed        latest pack exists AND the consumer decides
-                               its fixtures (all-increments gate is green)
-  occurrence_grounding_ready   exact V/N candidates with selected
-                               occurrences, or committed occurrence links
-  promotion_bundle_ready       a review-ready bundle exists for its increment
-  fixture_source_ready         bound misconception fixture-candidates exist
-  drill_or_remediation_ready   bound remediation projections exist
-  tutor_projection_ready       its unit projection compiled (real consumer)
-  instructional_only_with_consumer  declared instructional-only AND projected
+  candidate_pack_harnessed     a discovered machine pack exists and the
+                               NON-AUTHORITATIVE fixture harness decides its
+                               fixtures (development evidence only)
+  candidate_occurrence_witnesses  canonical-surface-verified same-entry
+                               selected witnesses, or committed occurrence
+                               links (card_display_only never counts)
+  promotion_bundle_prepared    a Sol-reviewable bundle exists for its
+                               increment (nothing applied automatically)
+  fixture_source_candidate     bound misconception fixture-candidates exist
+  candidate_remediation_material  bound remediation projections exist
+  candidate_presentation_template  its unit projection compiled through the
+                               presentation-template contract (not tutor-
+                               consumed)
+  instructional_only_candidate_presentation  declared instructional-only AND
+                               carries a candidate presentation template
   evidence_blocked / scholar_review_blocked / owner_adjudication_blocked /
   sol_integration_blocked      dimension blockers, named exactly
 
 Output: curriculum/l1l6/canonical/unit-dispositions.jsonl (+ meta).
 Gates (enforced by the validator): N/N dispositioned, 0 generic remainders,
 0 invented consumer claims (machine states require a discovered pack), 0
-blockers without exact cause, 0 operational states without a real consumer.
+blockers without exact cause.
 """
 
 from __future__ import annotations
@@ -75,8 +83,12 @@ def build():
         if incs:
             states.append("candidate_pack_harnessed")
         if (grow.get("grounding_state") == "exact_vn_candidates"
-                and any(x.get("selected_witnesses")
-                        for x in grow.get("resolved", []))) or uid in occ_units:
+                and any(w.get("canonical_surface_verified")
+                        for x in grow.get("resolved", [])
+                        for w in x.get("selected_witnesses", []))
+                ) or uid in occ_units:
+            # card_display_only witnesses never count: the state claims a
+            # CANONICAL occurrence witness (Sol fix-request round 2)
             states.append("candidate_occurrence_witnesses")
         if any(i in bundles for i in incs):
             states.append("promotion_bundle_prepared")
