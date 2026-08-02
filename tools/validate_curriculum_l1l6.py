@@ -707,9 +707,33 @@ def check_corpus_pilot(ctx, errors):
             errors.append("corpus_pilot: %s lost the preserved unresolved "
                           "host-ownership abstention" % name)
         ch = env.get("colour_and_hover", {})
-        if not (ch.get("segment_hover_parity") and
-                env.get("appearances", {}).get("single_hash_parity")):
-            errors.append("corpus_pilot: %s parity flags not true" % name)
+        if not env.get("appearances", {}).get("single_hash_parity"):
+            errors.append("corpus_pilot: %s appearance hash parity not true" % name)
+        # FACT-IDENTITY parity (Sol repair 5): every hover binding must trace
+        # to its segment's fact ids; uncovered segments must be REPORTED
+        seg_binds = {b["surface"]: set(b["fact_ids"])
+                     for b in ch.get("segment_fact_bindings", [])}
+        if not seg_binds:
+            errors.append("corpus_pilot: %s missing segment fact bindings" % name)
+        for hb in ch.get("hover_fact_bindings", []):
+            segf = seg_binds.get(hb["component_surface"])
+            if segf is None or not hb.get("traces_to_segment_facts")                     or not set(hb["fact_ids"]) <= segf or not hb["fact_ids"]:
+                errors.append("corpus_pilot: %s hover component %r does not "
+                              "trace to its segment's fact ids" %
+                              (name, hb.get("component_surface")))
+        claimed_cov = set(ch.get("covered_segments", []))
+        actual_cov = {hb["component_surface"]
+                      for hb in ch.get("hover_fact_bindings", [])
+                      if hb.get("traces_to_segment_facts")}
+        if claimed_cov != actual_cov:
+            errors.append("corpus_pilot: %s covered-segment claim drifts from "
+                          "hover bindings" % name)
+        if set(ch.get("uncovered_segments", [])) !=                 set(seg_binds) - claimed_cov:
+            errors.append("corpus_pilot: %s uncovered segments misreported" % name)
+        cd = env.get("certification_dependency", {})
+        if not cd.get("effective_states") or not cd.get("invalidation_rule"):
+            errors.append("corpus_pilot: %s missing effective-certification "
+                          "dependency block" % name)
         for f in env.get("repository_authority", {}).get("typed_facts", []):
             if f.get("certification_status_verbatim") not in ("candidate", "certified"):
                 errors.append("corpus_pilot: %s fact %s odd certification %r"

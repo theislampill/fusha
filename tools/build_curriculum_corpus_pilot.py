@@ -51,6 +51,35 @@ def bare_letters(surface):
     return [ch for ch in HARAKAT_RE.sub("", surface)]
 
 
+def _effective_certification(fact_ids):
+    """Replay the hash-chained certification event trail and fold the
+    EFFECTIVE state per fact id (certify -> certified; revoke -> revoked).
+    Copied raw status strings are never used (Sol repair 6)."""
+    events_p = P007 / "certification" / "events.jsonl"
+    state = {}
+    counts = {}
+    if events_p.exists():
+        for line in events_p.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            ev = json.loads(line)
+            fid = ev.get("fact_id") or (ev.get("fact") or {}).get("fact_id")
+            if fid is None:
+                continue
+            counts[fid] = counts.get(fid, 0) + 1
+            # last-event-wins fold: the trail is ordered; each event carries
+            # the fact's post-event certification status (register ->
+            # candidate; transition -> the engine's new status; a revocation
+            # transition surfaces as its post-event status)
+            post = (ev.get("to_status")
+                    or (ev.get("fact") or {}).get("certification", {}).get("status"))
+            if post:
+                state[fid] = post
+    return {fid: {"effective_status": state.get(fid, "no_event_in_trail"),
+                  "event_count": counts.get(fid, 0)}
+            for fid in fact_ids}
+
+
 def build():
     facts = [json.loads(l) for l in
              (P007 / "typed-facts.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
@@ -72,11 +101,39 @@ def build():
         surface = proj["surface"]
         seg_fact = next(f for f in tf if f["fact_type"] == "clitic_host_segmentation")
 
-        # parity within the single projection record: every colour segment's
-        # component must be explained by a hover card and vice versa
-        seg_surfaces = [s["surface"] for s in proj["segments"]]
-        hover_surfaces = [h["component_surface"] for h in proj.get("hover_cards", [])]
-        parity_ok = all(h in seg_surfaces for h in hover_surfaces) and bool(hover_surfaces)
+        # FACT-IDENTITY parity (Sol repair 5): parity is shared canonical
+        # fact ids per owned span, never surface-text overlap. Each segment
+        # is bound to the fact ids that own it; each hover card must trace
+        # to the SAME fact ids as its segment; segments without a hover
+        # component are reported UNCOVERED (no parity claim is made for
+        # them).
+        clitic_fact_ids = sorted(f["fact_id"] for f in tf + rootless)
+        seg_fact_bindings = []
+        for s_ in proj["segments"]:
+            if s_["role"].startswith("jarr_clitic"):
+                seg_fact_bindings.append({
+                    "surface": s_["surface"], "role": s_["role"],
+                    "fact_ids": clitic_fact_ids})
+            else:
+                seg_fact_bindings.append({
+                    "surface": s_["surface"], "role": s_["role"],
+                    "fact_ids": [f["fact_id"] for f in tf
+                                 if f["fact_type"] == "clitic_host_segmentation"],
+                    "note": "host span owned by the carve fact only; "
+                            "host-internal facts pending (unresolved state)"})
+        hover_bindings = []
+        covered = set()
+        for h in proj.get("hover_cards", []):
+            match = next((b for b in seg_fact_bindings
+                          if b["surface"] == h["component_surface"]), None)
+            hover_bindings.append({
+                "component_surface": h["component_surface"],
+                "fact_ids": match["fact_ids"] if match else [],
+                "traces_to_segment_facts": bool(match)})
+            if match:
+                covered.add(match["surface"])
+        uncovered = [b["surface"] for b in seg_fact_bindings
+                     if b["surface"] not in covered]
 
         # appearance-level parity: one hash everywhere
         hashes = {a["projection_hash"] for a in proj_row["appearances"]}
@@ -94,6 +151,13 @@ def build():
             "status": "candidate",
             "occurrence_id": target,
             "surface": surface,
+            "certification_dependency": {
+                "effective_states": _effective_certification(
+                    sorted({f["fact_id"] for f in tf + rootless})),
+                "basis": "replayed from the hash-chained event trail — raw status strings are never treated as authority",
+                "depends_on_fact_ids": sorted({f["fact_id"] for f in tf + rootless}),
+                "invalidation_rule": "revocation or repair of ANY depended-on fact invalidates this envelope, its learner projections, hover bindings, derived fixtures, readiness counts and harness measurements (regeneration required)",
+            },
             "repository_authority": {
                 "typed_facts": sorted(
                     [{"fact_id": f["fact_id"], "fact_type": f["fact_type"],
@@ -127,8 +191,16 @@ def build():
             "colour_and_hover": {
                 "derived_from_single_projection_record": True,
                 "segments": proj["segments"],
-                "hover_card_components": hover_surfaces,
-                "segment_hover_parity": parity_ok,
+                "segment_fact_bindings": seg_fact_bindings,
+                "hover_fact_bindings": hover_bindings,
+                "parity_basis": "shared canonical fact ids per owned span (never surface-text overlap)",
+                "covered_segments": sorted(covered),
+                "uncovered_segments": uncovered,
+                "uncovered_note": ("segments without a hover component are "
+                                    "REPORTED, not papered over: no parity "
+                                    "claim exists for them until the hover "
+                                    "plane carries their fact ids"
+                                    if uncovered else None),
             },
             "appearances": {
                 "rows": proj_row["appearances"],

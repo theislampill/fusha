@@ -28,12 +28,87 @@
     "no certification minted by this envelope",
     "no live surface touched"
   ],
+  "certification_dependency": {
+    "basis": "replayed from the hash-chained event trail — raw status strings are never treated as authority",
+    "depends_on_fact_ids": [
+      "fact:p00slice:61_5_4:case",
+      "fact:p00slice:61_5_4:func",
+      "fact:p00slice:61_5_4:gov",
+      "fact:p00slice:61_5_4:seg",
+      "fact:p00slice:entry_b10a1ee04666:rootless"
+    ],
+    "effective_states": {
+      "fact:p00slice:61_5_4:case": {
+        "effective_status": "certified",
+        "event_count": 3
+      },
+      "fact:p00slice:61_5_4:func": {
+        "effective_status": "certified",
+        "event_count": 3
+      },
+      "fact:p00slice:61_5_4:gov": {
+        "effective_status": "certified",
+        "event_count": 3
+      },
+      "fact:p00slice:61_5_4:seg": {
+        "effective_status": "certified",
+        "event_count": 3
+      },
+      "fact:p00slice:entry_b10a1ee04666:rootless": {
+        "effective_status": "certified",
+        "event_count": 3
+      }
+    },
+    "invalidation_rule": "revocation or repair of ANY depended-on fact invalidates this envelope, its learner projections, hover bindings, derived fixtures, readiness counts and harness measurements (regeneration required)"
+  },
   "colour_and_hover": {
-    "derived_from_single_projection_record": true,
-    "hover_card_components": [
+    "covered_segments": [
       "لِ"
     ],
-    "segment_hover_parity": true,
+    "derived_from_single_projection_record": true,
+    "hover_fact_bindings": [
+      {
+        "component_surface": "لِ",
+        "fact_ids": [
+          "fact:p00slice:61_5_4:case",
+          "fact:p00slice:61_5_4:func",
+          "fact:p00slice:61_5_4:gov",
+          "fact:p00slice:61_5_4:seg",
+          "fact:p00slice:entry_b10a1ee04666:rootless"
+        ],
+        "traces_to_segment_facts": true
+      }
+    ],
+    "parity_basis": "shared canonical fact ids per owned span (never surface-text overlap)",
+    "segment_fact_bindings": [
+      {
+        "fact_ids": [
+          "fact:p00slice:61_5_4:case",
+          "fact:p00slice:61_5_4:func",
+          "fact:p00slice:61_5_4:gov",
+          "fact:p00slice:61_5_4:seg",
+          "fact:p00slice:entry_b10a1ee04666:rootless"
+        ],
+        "role": "jarr_clitic_lam",
+        "surface": "لِ"
+      },
+      {
+        "fact_ids": [
+          "fact:p00slice:61_5_4:seg"
+        ],
+        "note": "host span owned by the carve fact only; host-internal facts pending (unresolved state)",
+        "role": "noun_host_majrur",
+        "surface": "قَوْمِ"
+      },
+      {
+        "fact_ids": [
+          "fact:p00slice:61_5_4:seg"
+        ],
+        "note": "host span owned by the carve fact only; host-internal facts pending (unresolved state)",
+        "role": "attached_pronoun_mudaf_ilayh",
+        "surface": "هِۦ"
+      }
+    ],
     "segments": [
       {
         "char_end": 2,
@@ -56,6 +131,11 @@
         "role": "attached_pronoun_mudaf_ilayh",
         "surface": "هِۦ"
       }
+    ],
+    "uncovered_note": "segments without a hover component are REPORTED, not papered over: no parity claim exists for them until the hover plane carries their fact ids",
+    "uncovered_segments": [
+      "قَوْمِ",
+      "هِۦ"
     ]
   },
   "letter_ownership": {
