@@ -1,0 +1,325 @@
+{
+  "abstentions_preserved": [
+    "der-abs-01",
+    "der-adv-02"
+  ],
+  "backprop_proposal": {
+    "content": "repair unit-v1.json -> unit-v2.json with the recorded defect set as adversarial evidence",
+    "no_auto_promotion": true,
+    "target": "curriculum/l1l6/promotion/ bundle for inc-derivatives"
+  },
+  "baseline_pack": "unit-v1.json",
+  "capability": "template_classification",
+  "defects_recorded": [
+    {
+      "actual": {
+        "decision": "abstain",
+        "reason": "no_template"
+      },
+      "class": "transfer",
+      "expected": {
+        "class": "active_participle",
+        "decision": "analyzed",
+        "template": "faail"
+      },
+      "fixture_id": "der-trn-01"
+    },
+    {
+      "actual": {
+        "decision": "abstain",
+        "reason": "no_template"
+      },
+      "class": "transfer",
+      "expected": {
+        "class": "active_participle",
+        "decision": "analyzed",
+        "template": "faail"
+      },
+      "fixture_id": "der-trn-02"
+    }
+  ],
+  "downstream_work": {
+    "hover_pedagogy": "queue q-hover-pedagogy rows for linked entries",
+    "occurrence_grounding": "queue q-pvn-grounding rows for lessons mapped to inc-derivatives"
+  },
+  "guards_loaded": [
+    "g-der-1",
+    "g-der-2",
+    "g-der-m"
+  ],
+  "improvement_classes_verified": [
+    "instructional_improvement",
+    "linguistic_consumer_improvement"
+  ],
+  "improvements": [
+    "der-trn-01",
+    "der-trn-02"
+  ],
+  "increment": "inc-derivatives",
+  "loop": "derivation",
+  "regressions": [],
+  "repaired_pack": "unit-v2.json",
+  "rivals_preserved": [],
+  "run1": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 8,
+    "increment": "inc-derivatives",
+    "mismatches": 2,
+    "results": [
+      {
+        "actual": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "faail"
+        },
+        "class": "positive",
+        "expected": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "faail"
+        },
+        "fixture_id": "der-pos-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "class": "passive_participle",
+          "decision": "analyzed",
+          "template": "mafuul"
+        },
+        "class": "positive",
+        "expected": {
+          "class": "passive_participle",
+          "decision": "analyzed",
+          "template": "mafuul"
+        },
+        "fixture_id": "der-pos-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "mu_participle"
+        },
+        "class": "positive",
+        "expected": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "mu_participle"
+        },
+        "fixture_id": "der-pos-03",
+        "match": true
+      },
+      {
+        "actual": {
+          "class": "passive_participle",
+          "decision": "analyzed",
+          "template": "mu_participle"
+        },
+        "class": "adversarial",
+        "expected": {
+          "class": "passive_participle",
+          "decision": "analyzed",
+          "template": "mu_participle"
+        },
+        "fixture_id": "der-adv-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "penult_vowel_unknown"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "penult_vowel_unknown"
+        },
+        "fixture_id": "der-abs-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "no_template"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "no_template"
+        },
+        "fixture_id": "der-adv-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "no_template"
+        },
+        "class": "transfer",
+        "expected": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "faail"
+        },
+        "fixture_id": "der-trn-01",
+        "match": false
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "no_template"
+        },
+        "class": "transfer",
+        "expected": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "faail"
+        },
+        "fixture_id": "der-trn-02",
+        "match": false
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v1.json",
+    "unit_version": 1
+  },
+  "run2": {
+    "consumer": "tools/curriculum_unit_consumer.py",
+    "fixtures": 8,
+    "increment": "inc-derivatives",
+    "mismatches": 0,
+    "results": [
+      {
+        "actual": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "faail"
+        },
+        "class": "positive",
+        "expected": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "faail"
+        },
+        "fixture_id": "der-pos-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "class": "passive_participle",
+          "decision": "analyzed",
+          "template": "mafuul"
+        },
+        "class": "positive",
+        "expected": {
+          "class": "passive_participle",
+          "decision": "analyzed",
+          "template": "mafuul"
+        },
+        "fixture_id": "der-pos-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "mu_participle"
+        },
+        "class": "positive",
+        "expected": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "mu_participle"
+        },
+        "fixture_id": "der-pos-03",
+        "match": true
+      },
+      {
+        "actual": {
+          "class": "passive_participle",
+          "decision": "analyzed",
+          "template": "mu_participle"
+        },
+        "class": "adversarial",
+        "expected": {
+          "class": "passive_participle",
+          "decision": "analyzed",
+          "template": "mu_participle"
+        },
+        "fixture_id": "der-adv-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "penult_vowel_unknown"
+        },
+        "class": "abstention",
+        "expected": {
+          "decision": "abstain",
+          "reason": "penult_vowel_unknown"
+        },
+        "fixture_id": "der-abs-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "no_template"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "no_template"
+        },
+        "fixture_id": "der-adv-02",
+        "match": true
+      },
+      {
+        "actual": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "faail"
+        },
+        "class": "transfer",
+        "expected": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "faail"
+        },
+        "fixture_id": "der-trn-01",
+        "match": true
+      },
+      {
+        "actual": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "faail"
+        },
+        "class": "transfer",
+        "expected": {
+          "class": "active_participle",
+          "decision": "analyzed",
+          "template": "faail"
+        },
+        "fixture_id": "der-trn-02",
+        "match": true
+      }
+    ],
+    "schema": "curriculum.l1l6_consumer_run.v1",
+    "status": "candidate",
+    "unit_file": "unit-v2.json",
+    "unit_version": 2
+  },
+  "schema": "curriculum.l1l6_flywheel_loop.v1",
+  "site_payload_improvement": "never_claimable_here_owner_gated",
+  "status": "candidate",
+  "transfer_improvements": [
+    "der-trn-01",
+    "der-trn-02"
+  ],
+  "unit_ref": "u-s03"
+}

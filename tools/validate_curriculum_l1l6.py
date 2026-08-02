@@ -609,6 +609,49 @@ def check_flywheel_loop(ctx, errors):
                           "failures %r" % (recorded, failed))
     if not (BASE / "loop" / "repair-note.md").exists():
         errors.append("flywheel_loop: repair-note.md missing")
+    # generic loops: every manifest row recomputes live through the runner,
+    # byte-matches its committed record, pins its defect count, ends green
+    # with zero regressions, and claims no improvement class without consumer
+    # evidence
+    man_p = BASE / "loop" / "loops-manifest.json"
+    if not man_p.exists():
+        errors.append("flywheel_loop: loops-manifest.json missing")
+        return
+    try:
+        sys.path.insert(0, str(ROOT / "tools"))
+        import curriculum_flywheel_runner as runner
+    except Exception as exc:  # noqa: BLE001
+        errors.append("flywheel_loop: runner unimportable (%s)" % exc)
+        return
+    finally:
+        if str(ROOT / "tools") in sys.path:
+            sys.path.remove(str(ROOT / "tools"))
+    manifest = json.loads(man_p.read_text(encoding="utf-8"))
+    if len(manifest.get("loops", [])) < 4:
+        errors.append("flywheel_loop: manifest has <4 loops (3 diverse families "
+                      "+ ownership required)")
+    families = {row.get("family", "") for row in manifest.get("loops", [])}
+    if len(families) < 4:
+        errors.append("flywheel_loop: loop families not diverse (need 4 distinct)")
+    for row in manifest.get("loops", []):
+        rec = runner.run_loop(row["loop"], row["increment"],
+                              row["baseline_pack"], row["repaired_pack"])
+        p = BASE / "loop" / row["loop"] / "loop-record.json"
+        want = (json.dumps(rec, ensure_ascii=False, indent=2, sort_keys=True)
+                + "\n").encode("utf-8")
+        if not p.exists() or p.read_bytes() != want:
+            errors.append("flywheel_loop: %s record stale vs live recompute"
+                          % row["loop"])
+        if rec["run1"]["mismatches"] != row["expected_run1_mismatches"]:
+            errors.append("flywheel_loop: %s defect count drifted (%d != %d)"
+                          % (row["loop"], rec["run1"]["mismatches"],
+                             row["expected_run1_mismatches"]))
+        if rec["run2"]["mismatches"] != 0 or rec["regressions"]:
+            errors.append("flywheel_loop: %s repair not green/regressed" % row["loop"])
+        if ("linguistic_consumer_improvement" in rec["improvement_classes_verified"]
+                and not rec["improvements"]):
+            errors.append("flywheel_loop: %s claims consumer improvement without "
+                          "consumer evidence" % row["loop"])
 
 
 def check_corpus_pilot(ctx, errors):

@@ -1,0 +1,42 @@
+{
+  "schema": "curriculum.l1l6_loops_manifest.v1",
+  "note": "every loop is recomputed live by tools/curriculum_flywheel_runner.py --manifest and byte-compared in the validator; expected_run1_mismatches pins each recorded defect set. Three substantially different families beyond the original ownership loop: sarf derivation (weak-root complication), nahw ambiguity (global-ma refuted, rivals preserved), nahw structural (licensing-table hidden structure).",
+  "loops": [
+    {
+      "loop": "ownership",
+      "family": "sarf letter ownership",
+      "increment": "inc-ownership",
+      "baseline_pack": "unit-v1.json",
+      "repaired_pack": "unit-v2.json",
+      "expected_run1_mismatches": 2,
+      "proof": "shape-only rule refuted by radical-mim + evidence-free minting; repaired by evidence-required rule; second token مجلس improves"
+    },
+    {
+      "loop": "derivation",
+      "family": "sarf derivation (weak-root complication)",
+      "increment": "inc-derivatives",
+      "baseline_pack": "unit-v1.json",
+      "repaired_pack": "unit-v2.json",
+      "expected_run1_mismatches": 2,
+      "proof": "lesson unit -> candidate classifier -> FALSE NEGATIVES on hollow-root participles (قائل، بائع) -> pack-only repair (declared weak_substitutions table) -> later unseen token improves (transfer class)"
+    },
+    {
+      "loop": "ma-ambiguity",
+      "family": "nahw ambiguity (multifunction ma)",
+      "increment": "inc-ma",
+      "baseline_pack": "unit-v0.json",
+      "repaired_pack": "unit-v1.json",
+      "expected_run1_mismatches": 6,
+      "proof": "one global surface reading (v0 'what') fails EVERY fixture -> occurrence/context discriminators introduced (v1) -> two different ma readings retained on different feature sets (nafiya vs mawsula), genuine ambiguity preserved as alternatives, zero-evidence input abstains -> learner-facing explanations differ by function id"
+    },
+    {
+      "loop": "hidden-structure",
+      "family": "nahw structural (licensing-table taqdir)",
+      "increment": "inc-hidden",
+      "baseline_pack": "unit-v0.json",
+      "repaired_pack": "unit-v1.json",
+      "expected_run1_mismatches": 2,
+      "proof": "flat label insufficient: v0 licenses only the imperative mustatir, so the relative-clause 'a'id gap and vocative deleted-verb analyses fail -> typed licensing relations introduced (v1) -> transfer example (relative gap) handled; unlicensed reconstruction stays rejected in BOTH versions (wrong-reason fixture)"
+    }
+  ]
+}

@@ -118,7 +118,17 @@ def analyze_ownership(inp, unit):
 
 
 # ----------------------------------------------------------- inc-derivatives
-def _match_template(shape, letters, radicals):
+def _radical_matches(slot, letter, radical, subs):
+    """A surface letter realizes a radical if equal, or if the unit pack's
+    weak_substitutions table licenses the substitution for that slot
+    (data-driven: an empty/absent table changes nothing)."""
+    if letter == radical:
+        return True
+    return letter in (subs.get(slot, {}) or {}).get(radical, [])
+
+
+def _match_template(shape, letters, radicals, subs=None):
+    subs = subs or {}
     if "..." in shape:
         return False  # handled by the mu/mafal special-case below
     if len(shape) != len(letters):
@@ -126,7 +136,8 @@ def _match_template(shape, letters, radicals):
     j = 0
     for slot, letter in zip(shape, letters):
         if slot in ("R1", "R2", "R3"):
-            if j >= len(radicals) or letter != radicals[j]:
+            if j >= len(radicals) or not _radical_matches(slot, letter,
+                                                          radicals[j], subs):
                 return False
             j += 1
         elif slot != letter:
@@ -140,6 +151,7 @@ def analyze_derivative(inp, unit):
         return {"decision": "abstain", "reason": "no_root_evidence"}
     radicals = list(ev.get("radicals", []))
     letters = list(inp["letters"])
+    subs = unit.get("weak_substitutions") or {}
     survivors = []
     for t in unit["templates"]:
         if t["id"] == "mu_participle":
@@ -150,7 +162,7 @@ def analyze_derivative(inp, unit):
                     and letters[1:] == radicals):
                 survivors.append(t)
             continue
-        if _match_template(t["shape"], letters, radicals):
+        if _match_template(t["shape"], letters, radicals, subs):
             survivors.append(t)
     ids = sorted(t["id"] for t in survivors)
     if ids == ["mafal_place", "mu_participle"] or ids == ["mu_participle"]:
