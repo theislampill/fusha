@@ -947,6 +947,17 @@ def check_freeze_planes(ctx, errors):
                 heads[r["id"]] = [
                     _ud.normalize("NFC", piece.strip()) for piece in
                     re.split(r"\s*/\s*", r.get("headword") or "") if piece]
+        # universal fail-closed witness gate (Sol repair 1): every claimed
+        # occurrence witness must be re-verifiable in the appearance universe
+        # as an appearance of the SAME entry with selected:true and the exact
+        # recorded surface; context appearances can never pass
+        universe_idx = {}
+        uni_p = ROOT / "qamus" / "lattice" / "example-ayah-universe.jsonl"
+        if uni_p.exists():
+            with uni_p.open(encoding="utf-8") as f:
+                for line in f:
+                    u = json.loads(line)
+                    universe_idx[u["appearance_id"]] = u
         for row in _jsonl(grow_p):
             for sub in row.get("resolved", []):
                 hw = _ud.normalize("NFC", sub["candidate_headword"])
@@ -957,6 +968,24 @@ def check_freeze_planes(ctx, errors):
                         "violation)" % (row["unit_id"],
                                         sub["candidate_headword"],
                                         sub["entry_id"]))
+                for w in sub.get("selected_witnesses", []):
+                    u = universe_idx.get(w.get("appearance_id"))
+                    if u is None:
+                        errors.append("freeze_planes: vn-grounding %s witness "
+                                      "%r not in the appearance universe"
+                                      % (row["unit_id"], w.get("appearance_id")))
+                        continue
+                    if (u["entry_id"] != sub["entry_id"]
+                            or not u.get("selected")
+                            or "quran:" + (u.get("canonical_loc") or "")
+                                != w.get("occurrence_id")
+                            or u.get("displayed_surface") != w.get("surface")):
+                        errors.append(
+                            "freeze_planes: vn-grounding %s witness %s fails "
+                            "same-entry/selected/surface re-verification "
+                            "(context appearances never become entry "
+                            "occurrences)" % (row["unit_id"],
+                                              w.get("appearance_id")))
 
 
 ALL_CHECKS = (
@@ -1046,6 +1075,41 @@ def self_test():
     mut("family_unit_uncovered", "ledger_qualification",
         lambda c: [c["families"].__setitem__(i, dict(r, family="u-s01"))
                    for i, r in enumerate(c["families"]) if r["family"] == "u-n12"])
+    # Sol witness canaries: a context-only appearance injected as a witness
+    # must trip the same-entry/selected re-verification gate (file-level
+    # mutation: checked via a temp-modified copy of the grounding rows)
+    # implemented as a direct check call on mutated rows:
+    import copy as _copy
+    base_errs = []
+    check_freeze_planes(_copy.deepcopy(base), base_errs)
+    canary_rows = None
+    p_g = BASE / "canonical" / "vn-grounding.jsonl"
+    if p_g.exists():
+        raw = p_g.read_bytes()
+        rows_ = [json.loads(l) for l in raw.decode("utf-8").splitlines() if l.strip()]
+        touched = False
+        for r in rows_:
+            for sub in r.get("resolved", []):
+                if "n904" in sub.get("source_keys", []):
+                    sub["selected_witnesses"] = list(sub["selected_witnesses"]) + [{
+                        "occurrence_id": "quran:12:43:6",
+                        "appearance_id": "CONTEXT:FAKE",
+                        "surface": "بقرات", "selected": True,
+                        "relation": "entry_selected_word"}]
+                    touched = True
+        if touched:
+            tmp = "".join(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n"
+                          for r in rows_).encode("utf-8")
+            p_g.write_bytes(tmp)
+            errs2 = []
+            try:
+                check_freeze_planes(_copy.deepcopy(base), errs2)
+            finally:
+                p_g.write_bytes(raw)
+            ok = any("witness" in e for e in errs2)
+            mutations.append(("context_witness_canary_12_43_6", ok))
+            if not ok:
+                print("  context-witness canary did NOT trip the gate")
 
     failed = [n for n, ok in mutations if not ok]
     print("self-test: %d/%d mutations tripped their checks"

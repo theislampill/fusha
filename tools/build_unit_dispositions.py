@@ -75,7 +75,7 @@ def build():
         if incs:
             states.append("machine_pack_consumed")
         if (grow.get("grounding_state") == "exact_vn_candidates"
-                and any(x.get("selected_occurrences")
+                and any(x.get("selected_witnesses")
                         for x in grow.get("resolved", []))) or uid in occ_units:
             states.append("occurrence_grounding_ready")
         if any(i in bundles for i in incs):

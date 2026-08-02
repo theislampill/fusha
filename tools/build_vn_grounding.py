@@ -81,16 +81,31 @@ def build():
                         {"entry_id": r["id"],
                          "source_keys": sorted(r.get("source_keys", [])),
                          "headword": hw})
-    occ_by_entry = {}
-    with (ROOT / "qamus" / "lattice" / "example-ayah-universe.occurrences.jsonl"
+    # SAME-ENTRY selected-witness join (Sol architecture repair): an entry
+    # occurrence claim requires an appearance row of THAT entry's own card
+    # with selected:true — the existence of a selected appearance on some
+    # OTHER entry's card never authorizes this entry (12:43:6 canary: the
+    # بقرات token appears on the سبع card as context and must never bind).
+    witnesses_by_entry = {}
+    with (ROOT / "qamus" / "lattice" / "example-ayah-universe.jsonl"
           ).open(encoding="utf-8") as f:
         for line in f:
             r = json.loads(line)
-            if r.get("selected_appearances", 0) > 0:
-                for eid in r.get("entry_ids", []):
-                    occ_by_entry.setdefault(eid, [])
-                    if len(occ_by_entry[eid]) < 3:
-                        occ_by_entry[eid].append(r["occurrence_id"])
+            if not r.get("selected"):
+                continue  # context appearances NEVER become entry occurrences
+            if not r.get("canonical_loc"):
+                continue  # a witness requires an EXACT occurrence identity
+            eid = r["entry_id"]
+            witnesses_by_entry.setdefault(eid, [])
+            if len(witnesses_by_entry[eid]) < 3:
+                witnesses_by_entry[eid].append({
+                    "occurrence_id": "quran:" + r["canonical_loc"],
+                    "appearance_id": r["appearance_id"],
+                    "surface": r["displayed_surface"],
+                    "selected": True,
+                    "relation": "entry_selected_word",
+                    "evidence": r.get("source_card_backlink"),
+                })
 
     rows = []
     for u in sorted(units, key=lambda x: x["unit_id"]):
@@ -122,8 +137,8 @@ def build():
                         "source_keys": [k for k in h["source_keys"]
                                         if k[0] in "vn"],
                         "match_basis": "full citation-form NFC identity (harakat included) against the entry's own headword — NOT skeleton, NOT similarity",
-                        "selected_occurrences": occ_by_entry.get(h["entry_id"], []),
-                        "appearance_relation": "entry-card selected words (entry identity); other cards are context-only appearances",
+                        "selected_witnesses": witnesses_by_entry.get(h["entry_id"], []),
+                        "witness_rule": "every witness is an appearance of THIS entry's own card with selected:true (exact appearance_id + surface + backlink); context appearances are excluded by construction",
                     })
                 elif len(exact) > 1:
                     ambiguous.append({
@@ -188,7 +203,7 @@ def build():
         "total_v_candidates": sum(r.get("v_candidates", 0) for r in rows),
         "total_n_candidates": sum(r.get("n_candidates", 0) for r in rows),
         "units_with_occurrences": sum(
-            1 for r in rows if any(x.get("selected_occurrences")
+            1 for r in rows if any(x.get("selected_witnesses")
                                    for x in r.get("resolved", []))),
     }
     return rows, meta
