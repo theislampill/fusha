@@ -360,8 +360,9 @@ def self_test():
         for f in failures:
             print("  - " + f)
         return 1
-    print("SELF-TEST PASS (7 probes: v2 green, v1 defect pinned, 4 pack "
-          "mutations flip decisions, all latest packs green)")
+    print("SELF-TEST PASS (8 probes: v2 green, v1 defect pinned, 4 pack "
+          "mutations flip decisions, discovery + shared-capability dispatch, "
+          "all latest packs green)")
     return 0
 
 

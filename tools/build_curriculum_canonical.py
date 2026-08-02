@@ -42,6 +42,31 @@ BASE = ROOT / "curriculum" / "l1l6"
 EXEC_CAPS = {"letter_ownership", "template_classification",
              "discriminator_table", "pattern_consistency", "licensing_table"}
 
+# Audit-driven merge table (independent completeness audit at f7ecf02):
+# same-axis, same-substance unit pairs where one summary is a declared
+# superset of the other, plus the mood-exponent trio that carried THREE
+# capability families for one table (contradiction). Alias -> survivor;
+# contributing lessons union into the survivor; the lesson-unit map is
+# rewritten through this table so the two-way invariant holds.
+MERGE_ALIASES = {
+    "cu-mim-noun-function-discriminator": "cu-mim-initial-noun-discriminator",
+    "cu-prohibitive-la-discriminator": "cu-la-negative-vs-prohibitive-discriminator",
+    "cu-imperfect-mood-exponent-licensing": "cu-mood-exponent-matrix",
+    "cu-mood-exponent-by-verb-class": "cu-mood-exponent-matrix",
+    "cu-order-conditioned-agreement": "cu-agreement-order-animacy",
+    "cu-naat-agreement-licensing": "cu-attributive-agreement-licensing",
+    "cu-augmented-passive-vocalization": "cu-passive-voice-vocalization",
+    "cu-diptote-licensing-table": "cu-diptote-cause-licensing",
+}
+# the mood-exponent survivor is pinned to ONE consumer interface
+CAPABILITY_OVERRIDES = {
+    "cu-mood-exponent-matrix": ("discriminator_table",
+        "capability pinned by merge adjudication: three source lessons "
+        "proposed three different families for one verb-class x mood -> "
+        "exponent table; discriminator_table matches the inc-negation "
+        "consumer that already reads mood evidence"),
+}
+
 
 def _jsonl(p):
     return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
@@ -80,10 +105,13 @@ def build(ctx):
             "contributing_lessons": {}, "status": "candidate",
         }
     proposals = {}
+    merged_from = {}
     for q in quals:
         um = q.get("unit_mapping") or {}
         for pu in um.get("proposed_new_units") or []:
-            pid = pu["proposed_id"]
+            pid = MERGE_ALIASES.get(pu["proposed_id"], pu["proposed_id"])
+            if pu["proposed_id"] != pid:
+                merged_from.setdefault(pid, set()).add(pu["proposed_id"])
             row = proposals.setdefault(pid, {
                 "schema": "curriculum.l1l6_canonical_unit.v1",
                 "unit_id": pid, "origin": "qualification_wave",
@@ -97,6 +125,13 @@ def build(ctx):
             row["contributing_lessons"][q["lesson_id"]] = "proposer"
             if len(pu.get("summary", "")) > len(row["summary"]):
                 row["summary"] = pu["summary"]
+    for pid, row in proposals.items():
+        if pid in merged_from:
+            row["merged_from"] = sorted(merged_from[pid])
+        if pid in CAPABILITY_OVERRIDES:
+            cap, why = CAPABILITY_OVERRIDES[pid]
+            row["capability_family"] = cap
+            row["capability_adjudication"] = why
     canonical.update(proposals)
 
     # ---- two-way lesson<->unit map ----
@@ -105,7 +140,8 @@ def build(ctx):
         um = q.get("unit_mapping") or {}
         kind = um.get("contribution_kind")
         targets = sorted(set(um.get("existing_units") or []) |
-                         {pu["proposed_id"] for pu in um.get("proposed_new_units") or []})
+                         {MERGE_ALIASES.get(pu["proposed_id"], pu["proposed_id"])
+                          for pu in um.get("proposed_new_units") or []})
         for t in targets:
             if t in canonical:
                 canonical[t]["contributing_lessons"].setdefault(q["lesson_id"], kind)
@@ -161,6 +197,12 @@ def build(ctx):
                                      key=lambda m: m["lesson_id"])
         c["disposition"] = ("candidate_fixture" if has_consumer else
                             "instructional_only")
+        c["unit_routable"] = bool(c["related_units"])
+        if has_consumer and not c["related_units"]:
+            c["routing_note"] = ("capability-level only: the source lesson "
+                                 "linked no specific unit — route via the "
+                                 "capability family's increment when its pack "
+                                 "is authored")
         c["disposition_reason"] = (
             "violated capability has a real consumer; eligible for fixture "
             "restatement" if has_consumer else

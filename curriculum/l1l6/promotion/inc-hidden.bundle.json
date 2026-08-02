@@ -40,8 +40,11 @@
     }
   ],
   "fixtures_by_class": {
-    "adversarial": [
+    "abstention": [
       "hid-adv-01"
+    ],
+    "adversarial": [
+      "hid-adv-02"
     ],
     "positive": [
       "hid-pos-01",

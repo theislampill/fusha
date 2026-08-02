@@ -1,6 +1,7 @@
 {
   "abstentions_preserved": [
-    "hid-adv-01"
+    "hid-adv-01",
+    "hid-adv-02"
   ],
   "backprop_proposal": {
     "content": "repair unit-v0.json -> unit-v1.json with the recorded defect set as adversarial evidence",
@@ -62,7 +63,7 @@
   "rivals_preserved": [],
   "run1": {
     "consumer": "tools/curriculum_unit_consumer.py",
-    "fixtures": 4,
+    "fixtures": 5,
     "increment": "inc-hidden",
     "mismatches": 2,
     "results": [
@@ -100,7 +101,7 @@
           "decision": "abstain",
           "reason": "reject_reconstruction"
         },
-        "class": "adversarial",
+        "class": "abstention",
         "expected": {
           "decision": "abstain",
           "reason": "reject_reconstruction"
@@ -121,6 +122,19 @@
         },
         "fixture_id": "hid-pos-03",
         "match": false
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "fixture_id": "hid-adv-02",
+        "match": true
       }
     ],
     "schema": "curriculum.l1l6_consumer_run.v1",
@@ -130,7 +144,7 @@
   },
   "run2": {
     "consumer": "tools/curriculum_unit_consumer.py",
-    "fixtures": 4,
+    "fixtures": 5,
     "increment": "inc-hidden",
     "mismatches": 0,
     "results": [
@@ -169,7 +183,7 @@
           "decision": "abstain",
           "reason": "reject_reconstruction"
         },
-        "class": "adversarial",
+        "class": "abstention",
         "expected": {
           "decision": "abstain",
           "reason": "reject_reconstruction"
@@ -191,6 +205,19 @@
           "hidden_type": "deleted_verb"
         },
         "fixture_id": "hid-pos-03",
+        "match": true
+      },
+      {
+        "actual": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "class": "adversarial",
+        "expected": {
+          "decision": "abstain",
+          "reason": "reject_reconstruction"
+        },
+        "fixture_id": "hid-adv-02",
         "match": true
       }
     ],

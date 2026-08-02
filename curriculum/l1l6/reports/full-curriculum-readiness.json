@@ -1,9 +1,9 @@
 {
   "campaign_13": {
-    "canonical_units_cross": 55,
-    "canonical_units_nahw": 78,
-    "canonical_units_sarf": 41,
-    "canonical_units_total": 174,
+    "canonical_units_cross": 51,
+    "canonical_units_nahw": 76,
+    "canonical_units_sarf": 39,
+    "canonical_units_total": 166,
     "canonical_units_with_machine_pack": 10,
     "error_section_lessons_processed": 226,
     "honesty": "canonical units from the qualification wave are AUTHORED CANDIDATE UNITS (summary, capability family, contributing lessons, two-way map); their machine packs are the bounded remaining executable work, not silent gaps",
@@ -14,7 +14,7 @@
     "lessons_semantically_qualified": 226,
     "misconception_clusters": 906,
     "misconception_manifestations": 912,
-    "pack_authoring_remaining": 138,
+    "pack_authoring_remaining": 130,
     "sections_linked_to_canonical_units": 1491,
     "sections_still_only_domain_classified": 0
   },
