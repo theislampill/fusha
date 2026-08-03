@@ -26,7 +26,20 @@ from tools.fusha_context_parser import token_context_candidates  # noqa: E402
 SCHEMA = "fusha/standalone-parse@1"
 PUBLIC_BOUNDARY = {"src": "qamus", "kind": "authored", "lang": "en"}
 CONTEXT_REQUIRED_FUNCTION_KEYS = {"ما", "وما", "لما", "انما", "إنما", "من", "لا", "إلا", "الا"}
-HIGH_RISK_BARE_MATCH_SURFACES = {"إله", "اله"}
+
+_COLLISION_REGISTRY_PATH = os.path.join(_REPO, "fusha", "parser", "collision-classes.json")
+with open(_COLLISION_REGISTRY_PATH, encoding="utf-8") as _cr_fh:
+    _COLLISION_REGISTRY = json.load(_cr_fh)
+HIGH_RISK_BARE_MATCH_SURFACES = set(_COLLISION_REGISTRY.get("high_risk_bare_match_surfaces") or [])
+
+# R4: noun|proper_noun -> ism, verb -> fil, particle -> harf.
+POS_TRICHOTOMY = {"noun": "ism", "proper_noun": "ism", "verb": "fil", "particle": "harf"}
+# R7 scoped collision: these qg roles carry the disputed stem's own reading
+# and are withheld; everything else is affix/clitic layer and is preserved.
+STEM_QG_ROLES = {"stem", "verb_stem", "adjective_stem"}
+# cu-clitic-pronoun-role-discriminator: the clitic span survives but its role,
+# which presupposes the disputed host category, degrades to undetermined.
+PRONOUN_CLITIC_QG_ROLES = {"object_pronoun", "subject_pronoun"}
 
 
 def _selected(seg_cands, morph_cands):
@@ -80,6 +93,7 @@ def _candidate_collision(surface, seg_cands, morph_cands, morph):
             "surface": surface,
             "route": ["sarf", "nahw"],
             "basis": features.get("match_basis"),
+            "decided_by": "unsafe_bare_match",
             "reason": "bare-match largelexicon evidence is useful internally but not a public hover selection for this high-risk surface",
         }
     tops = []
@@ -102,8 +116,77 @@ def _candidate_collision(surface, seg_cands, morph_cands, morph):
             "candidate_refs": sorted(int(ref) for ref in refs if ref is not None),
             "pos_values": sorted(str(v) for v in pos_values),
             "route": ["sarf", "nahw"],
+            "decided_by": "segmentation_or_pos_collision",
         }
     return None
+
+
+def _skeleton_collision(surface, seg_cands, morph):
+    """R4/R5: classify the SELECTED candidate's own competitor set.
+
+    Competitors come from morph["collision"]["competitors"], which
+    fusha_pattern_engine.py scopes to the one stem this candidate was matched
+    against (R6): never a union over other segmentation hypotheses, so a
+    rejected split can never manufacture a competitor here.
+    """
+    if not morph:
+        return None
+    competitors = ((morph.get("collision") or {}).get("competitors")) or []
+    if len(competitors) < 2:
+        return None
+    classes = {POS_TRICHOTOMY.get(c.get("pos")) for c in competitors}
+    classes.discard(None)
+    if len(classes) >= 2:
+        kind = "pos_trichotomy_conflict"
+    else:
+        roots = {c.get("root") for c in competitors if c.get("root")}
+        kind = "root_conflict" if len(roots) >= 2 else None
+    if not kind:
+        return None
+    ref = morph.get("segment_candidate_ref")
+    seg_count = 0
+    if isinstance(ref, int) and 0 <= ref < len(seg_cands):
+        seg_count = len(seg_cands[ref].get("segments") or [])
+    scope = "stem_identity" if seg_count > 1 else "whole_token"
+    return {
+        "kind": kind,
+        "scope": scope,
+        "surface": surface,
+        "route": ["sarf_collision_review", "nahw_function_review"],
+        "competing_entry_ids": (morph.get("collision") or {}).get("competing_entry_ids") or [],
+        "decided_by": kind,
+    }
+
+
+def _scope_collision_segments(qg_segments):
+    """R7: under stem_identity scope, withhold the stem, keep the rest."""
+    out = []
+    for seg in qg_segments:
+        role = seg.get("role")
+        if role in STEM_QG_ROLES:
+            continue
+        if role in PRONOUN_CLITIC_QG_ROLES:
+            seg = dict(seg)
+            seg["role"] = "clitic_undetermined"
+            seg["label"] = "UNDET"
+            seg["gloss_contribution"] = None
+            out.append(seg)
+        else:
+            out.append(dict(seg))
+    return out
+
+
+def _strip_collision_identity(cand):
+    """R4/R5 effect: no lemma/root/pos/voice/number/gloss for the withheld stem."""
+    cand["lemma"] = None
+    cand["root"] = None
+    cand["pos"] = None
+    cand["pattern"] = None
+    cand["gloss_hint"] = None
+    feats = cand.get("features")
+    if isinstance(feats, dict):
+        for key in ("voice", "verb_form", "number"):
+            feats.pop(key, None)
 
 
 def _function_needs_context(surface, morph):
@@ -125,6 +208,15 @@ def _gate(surface, seg_cands, morph, context, morph_cands=None):
             "route": ["validator", "sarf"],
             "reason": "morphology candidate references a segment candidate that does not exist",
         }
+    # Stage 1: source_provenance (R1). Short-circuits: the pipeline records
+    # the conflict and stops rather than letting a later filter re-decide.
+    risk_flags = set((morph.get("features") or {}).get("source_risk_flags") or [])
+    if "requires_nahw_function" in risk_flags:
+        return "pending_context", None
+    # Stage 3: skeleton_collision (R4/R5), scoped to the selected stem (R6).
+    skeleton = _skeleton_collision(surface, seg_cands, morph)
+    if skeleton:
+        return "lexical_collision_requires_context", skeleton
     collision = _candidate_collision(surface, seg_cands, morph_cands or [], morph)
     if collision:
         return "lexical_collision_requires_context", collision
@@ -152,16 +244,23 @@ def _hover(surface, qg, morph, context, gate):
     if gate == "lexical_collision_requires_context":
         return {
             "public_boundary": dict(PUBLIC_BOUNDARY),
-            "token_contribution_gloss": "candidate analysis pending",
+            "token_contribution_gloss": None,
             "morphline": "lexical collision requires context",
-            "segments": [],
+            "segments": qg,
             "context_notes": [c.get("explanation") for c in context],
             "learner_explanation": "Multiple analyses compete here; keep the token pending until source/context evidence selects one.",
         }
-    segment_bits = [seg.get("gloss_contribution") for seg in qg if seg.get("gloss_contribution")]
-    gloss = " + ".join(segment_bits) if segment_bits else (morph or {}).get("gloss_hint")
-    if not gloss:
-        gloss = "surface candidate"
+    features = (morph or {}).get("features") or {}
+    # R2/R3: identity withheld at candidate build time; no public gloss either,
+    # even if an affix qg segment still carries its own gloss fragment.
+    identity_withheld = bool(features.get("entry_identity_status") or features.get("root_identity_status"))
+    if identity_withheld:
+        gloss = None
+    else:
+        segment_bits = [seg.get("gloss_contribution") for seg in qg if seg.get("gloss_contribution")]
+        gloss = " + ".join(segment_bits) if segment_bits else (morph or {}).get("gloss_hint")
+        if not gloss:
+            gloss = "surface candidate"
     explanation = "Token preview preserves visible grammar pieces."
     if gate == "pending_context":
         explanation = "Context is needed before this can become a certified token hover."
@@ -227,7 +326,12 @@ def parse_text(text, document_id=None, db="smoke"):
                 if cand.get("rank") == 1:
                     cand["selection_status"] = "candidate_only"
                     cand["selection_blocker"] = gate
-            tok["qg_segments"] = []
+                    if collision.get("kind") in {"pos_trichotomy_conflict", "root_conflict"}:
+                        _strip_collision_identity(cand)
+            if collision.get("scope") == "stem_identity":
+                tok["qg_segments"] = _scope_collision_segments(tok.get("qg_segments") or [])
+            else:
+                tok["qg_segments"] = []
             tok["selected_preview"] = None
         if gate in {"pending_context", "ambiguous", "blocked", "lexical_collision_requires_context"}:
             blocked_class = "no_parse_candidate"

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/theIslampill/fusha/fusha/parser/schemas/collision-class-registry.schema.json",
+  "title": "Fusha largelexicon collision/provenance class registry",
+  "type": "object",
+  "required": ["schema", "classes"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": { "const": "fusha/parser/collision-class-registry@1" },
+    "classes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["class_id", "rule_id", "trigger_keys", "gate_effect", "route", "canonical_unit_ids", "filter_order"],
+        "additionalProperties": true,
+        "properties": {
+          "class_id": { "type": "string" },
+          "rule_id": { "type": "string" },
+          "trigger_keys": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "gate_effect": {
+            "type": "object",
+            "required": ["cap"],
+            "properties": {
+              "cap": { "type": ["string", "null"] }
+            }
+          },
+          "route": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "canonical_unit_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "filter_order": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "high_risk_bare_match_surfaces": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "projection_reconciliation": { "type": "object" },
+    "not_a_registered_class": { "type": "object" },
+    "generator": { "type": ["string", "null"] }
+  }
+}
