@@ -810,6 +810,20 @@ _OWNERSHIP_CLASSES = ("root", "pattern_augment", "clitic", "inflection", "affix"
 _OWNERSHIP_ABSTAIN_REASONS = ("pending_letter_ownership", "false_stem_risk", "no_root_evidence",
                               "radical_accounting_incomplete")
 _OWNERSHIP_RECORD_KEYS = frozenset(("decision", "owners", "reason", "hidden_radicals", "mark_owners"))
+# The ALLOWLISTED projection of a bank row into genuine analysis inputs: every field
+# analyze_ownership_carve actually reads to DECIDE a token (curriculum_unit_consumer.py's own
+# _own_validate/analyze_ownership_carve). Every other row field -- expected_decision,
+# expected_owners, expected_reason, teaches, id, occurrence_id, loc, class, evidence_note -- is
+# answer-key, identity or prose metadata that must NEVER reach the consumer: an external consumer
+# that is handed the whole row could echo the answer key back and pass with zero analysis (I-1).
+_OWN_CONSUMER_INPUT_FIELDS = ("mode", "letters", "surface", "token_kind", "suffix_kind",
+                              "root_evidence", "clitic_layers")
+
+
+def _own_consumer_input(row):
+    """Project one bank row down to `_OWN_CONSUMER_INPUT_FIELDS` before it reaches the external
+    consumer. This is the ONLY thing analyze_ownership_carve is ever called with for this bank."""
+    return {k: row[k] for k in _OWN_CONSUMER_INPUT_FIELDS if k in row}
 
 
 def adapter_letter_ownership_carve(rows, spec, ctx, root):
@@ -819,11 +833,14 @@ def adapter_letter_ownership_carve(rows, spec, ctx, root):
     cu-nisba-attribution-suffix's affix layer, and the p007 clitic/host carve for
     quran:2:34:5 / quran:12:31:24 / quran:24:35:44 / quran:2:187:63).
 
-    Every row is DECIDED from its `letters` + evidence; nothing here echoes a row's own `expected_*` fields into
-    the verdict, and a same-surface group is re-decided per row (never copied from a sibling row's result). Two
-    rows carrying EQUIVALENT evidence for the same surface must reach the SAME decision (sarf/SKILL.md's
-    same-surface fork prohibition runs this direction, never the inverse); a row whose own evidence is withheld
-    must abstain rather than borrow a sibling's verdict.
+    Every row is DECIDED from its `letters` + evidence; the row is projected through
+    `_own_consumer_input` (mode/letters/surface/token_kind/suffix_kind/root_evidence/clitic_layers ONLY) before it
+    ever reaches the consumer, so nothing here -- and no consumer, honest or hostile -- can echo a row's own
+    `expected_decision`/`expected_owners`/`expected_reason`/`teaches`/`id`/`occurrence_id`/`loc`/`class`/
+    `evidence_note` into the verdict (I-1). A same-surface group is re-decided per row (never copied from a
+    sibling row's result). Two rows carrying EQUIVALENT evidence for the same surface must reach the SAME decision
+    (sarf/SKILL.md's same-surface fork prohibition runs this direction, never the inverse); a row whose own
+    evidence is withheld must abstain rather than borrow a sibling's verdict.
     """
     fails, decided = [], 0
     props = _Props()
@@ -835,7 +852,7 @@ def adapter_letter_ownership_carve(rows, spec, ctx, root):
         if not letters:
             fails.append("%s: empty letters" % rid)
             continue
-        rec = ctx.letter_ownership_decide(row)
+        rec = ctx.letter_ownership_decide(_own_consumer_input(row))
         decided += 1
         props.hit(rid, _OWN, "decision_behaviorally_computed", "no_semantic_identity_leak", "never_certified")
         decisions_by_id[rid] = rec.get("decision")

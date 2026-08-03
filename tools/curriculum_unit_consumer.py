@@ -45,6 +45,7 @@ from __future__ import annotations
 
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -172,7 +173,9 @@ _OWN_INFLECTION_PREFIXES = {"أ": "imperfect_1sg", "ت": "imperfect_2_or_3f",
 # (م، ت، ا، ن، س، همزة وصل) -> pattern_augment". This is the ONLY set a non-radical letter
 # may ever be licensed pattern_augment from. Every other non-radical, non-clitic,
 # non-inflection letter is UNLICENSED and forces whole-token abstention -- never a guess.
-_OWN_PATTERN_AUGMENT_LETTERS = frozenset("متانسء")
+# همزة وصل is the seated letter U+0671 (ٱ), not a bare hamza (ء): a bare hamza seat is a
+# radical/root letter in its own right and is never licensed here by shape alone.
+_OWN_PATTERN_AUGMENT_LETTERS = frozenset("متانسٱ")
 _OWN_MODES = ("root_stem", "clitic_host")
 _OWN_SUFFIX_KINDS = ("nisba",)
 _OWN_TOKEN_KINDS = ("noun", "particle", "verb_imperfect")
@@ -180,10 +183,6 @@ _OWN_TOKEN_KINDS = ("noun", "particle", "verb_imperfect")
 # "Qamus entry", and the rootless-particle special case): not new authority, just the two bases
 # this lane's rows may cite for a radicals claim.
 _OWN_EVIDENCE_BASES = ("qamus_entry_ladder", "rootless_particle_entry")
-_OWN_CLASSES = ("root", "pattern_augment", "clitic", "inflection", "affix", "host")
-_OWN_ABSTAIN_REASONS = ("pending_letter_ownership", "false_stem_risk", "no_root_evidence",
-                        "radical_accounting_incomplete")
-_OWN_RECORD_KEYS = frozenset(("decision", "owners", "reason", "hidden_radicals", "mark_owners"))
 
 
 def _own_abstain(reason):
@@ -209,9 +208,11 @@ def _own_validate(token):
     if not (isinstance(letters, list) and letters
             and all(isinstance(ch, str) and len(ch) == 1 for ch in letters)):
         return False
+    # surface is a REQUIRED bank field (exact reconstruction is an invariant, not an optional
+    # extra): a missing/None/empty surface must abstain rather than be silently skipped.
     surface = token.get("surface")
-    if surface is not None and (not isinstance(surface, str)
-                                or not _own_letters_reconstruct(letters, surface)):
+    if (not isinstance(surface, str) or not surface
+            or not _own_letters_reconstruct(letters, surface)):
         return False
     suffix_kind = token.get("suffix_kind")
     if suffix_kind is not None and suffix_kind not in _OWN_SUFFIX_KINDS:
@@ -273,7 +274,7 @@ def analyze_ownership_carve(token):
 
     mode=root_stem   — peel a declared clitic layer, then walk every letter against
                         `root_evidence.radicals`: a match is `root`; a LICENSED template letter
-                        (م ت ا ن س ء) that is not the expected radical is `pattern_augment`;
+                        (م ت ا ن س ٱ) that is not the expected radical is `pattern_augment`;
                         every other non-radical letter is UNLICENSED and stays unowned (forcing
                         whole-token abstention, never a guessed augment class); an imperfect
                         prefix is `inflection` only when declared verb_imperfect AND it is not
@@ -383,12 +384,15 @@ def analyze_ownership_carve(token):
 
     # own-r5, computed AFTER every ownership decision above (including the nisba override):
     # an unconsumed radical with no declared hidden/weak-root position fails closed rather than
-    # silently dropping it from the record.
+    # silently dropping it from the record. `hidden_positions` must name the EXACT multiset of
+    # unconsumed radicals -- not merely the right COUNT of them -- so a contradictory declaration
+    # (wrong letter, junk, a foreign letter, a duplicate, an empty string, or the right count with
+    # the wrong identity) can never manufacture a licensed candidate for a radical it does not
+    # actually account for. Counter (not set) so a genuine duplicate radical is never masked.
     hidden_radicals = radicals[ri:]
     if hidden_radicals:
-        declared_hidden = set(evidence.get("hidden_positions") or [])
-        consumed = sum(1 for c in claims if "root" in c)
-        if consumed + len(declared_hidden) != len(radicals):
+        declared_hidden = evidence.get("hidden_positions") or []
+        if Counter(declared_hidden) != Counter(hidden_radicals):
             return _own_abstain("radical_accounting_incomplete")
 
     result = {"decision": "candidate_pending", "owners": [next(iter(c)) for c in claims]}

@@ -1302,6 +1302,70 @@ class LetterOwnershipCarve(unittest.TestCase):
             CUC.analyze_ownership_carve = original
         self.assertTrue(failures, "a broken EXTERNAL consumer module must turn the bank red")
 
+    def test_answer_key_never_reaches_the_consumer_and_a_hostile_echo_goes_red(self):
+        """I1 RED-FIRST: run_sarf_evals.py must hand the consumer an ALLOWLISTED analysis-input
+        projection (mode/letters/surface/token_kind/suffix_kind/root_evidence/clitic_layers), never the
+        raw bank row. A hostile consumer that tries to cheat by echoing the bank's own
+        expected_decision/expected_owners/expected_reason must find those fields simply ABSENT --
+        proven here by turning the bank red -- because a fixture-echo stub that merely reads the
+        answer key back can never again pass with zero failures."""
+        rows = _rows(_LOB)
+
+        def _cheat(token):
+            # a hostile consumer's best attempt at reading the answer key straight off the token
+            return {"decision": token.get("expected_decision"), "owners": token.get("expected_owners") or [],
+                   "reason": token.get("expected_reason")}
+        ctx = _ctx()
+        ctx.letter_ownership_decide = _cheat
+        failures, _m = _run(_LOB, rows, ctx)
+        failing_ids = {f.split(" ", 1)[0] for f in failures}
+        all_ids = {r["id"] for r in rows}
+        self.assertTrue(all_ids <= failing_ids,
+                        "every row must fail once expected_* fields are withheld from the consumer; "
+                        "missing: %s" % sorted(all_ids - failing_ids))
+
+        # sanity: the SAME cheat consumer, handed the RAW row directly (bypassing the runner's
+        # projection), trivially echoes every row's own answer key back -- proving the projection,
+        # not some other accidental property of the cheat function, is what closes the exposure.
+        for row in rows:
+            rec = _cheat(row)
+            self.assertEqual(rec["decision"], row.get("expected_decision"))
+            if rec["decision"] == "abstain":
+                self.assertEqual(rec["reason"], row.get("expected_reason"))
+            else:
+                self.assertEqual(rec["owners"], row.get("expected_owners"))
+
+    def test_stripping_answer_key_and_identity_fields_never_changes_the_real_decision(self):
+        """I1: the real consumer never reads expected_decision/expected_owners/expected_reason/teaches/
+        id/occurrence_id/loc/class/evidence_note in the first place, so poisoning or removing them must
+        never change ITS OWN decision -- the projection removes exposure without removing behaviour."""
+        rows = _rows(_LOB)
+        real = R.consumers_module("curriculum_unit_consumer").analyze_ownership_carve
+        for row in rows:
+            projected = R._own_consumer_input(row)
+            poisoned = dict(row)
+            poisoned.update({"expected_decision": "bogus", "expected_owners": ["bogus"],
+                             "expected_reason": "bogus", "teaches": "bogus", "id": "bogus",
+                             "occurrence_id": "bogus", "loc": "0:0:0", "class": "bogus",
+                             "evidence_note": "bogus"})
+            self.assertEqual(real(row), real(poisoned),
+                             "%s: poisoning answer-key/prose/identity fields changed the consumer's "
+                             "own decision" % row["id"])
+            self.assertEqual(real(row), real(projected),
+                             "%s: the allowlisted projection changed the consumer's own decision "
+                             "relative to the full row" % row["id"])
+
+    def test_consumer_input_projection_is_exactly_the_allowlisted_fields(self):
+        """I1: `_own_consumer_input` carries ONLY the declared analysis-input fields; every answer-key,
+        identity or prose field is absent, never merely blanked."""
+        for row in _rows(_LOB):
+            projected = R._own_consumer_input(row)
+            self.assertTrue(set(projected) <= set(R._OWN_CONSUMER_INPUT_FIELDS))
+            for forbidden in ("expected_decision", "expected_owners", "expected_reason", "teaches",
+                              "id", "occurrence_id", "loc", "class", "evidence_note"):
+                self.assertNotIn(forbidden, projected,
+                                 "%s: consumer-input projection leaked %r" % (row["id"], forbidden))
+
     def test_doubly_owned_and_unownable_tokens_abstain_the_whole_token(self):
         rows = _rows(_LOB)
         by_id = {r["id"]: r for r in rows}
@@ -1330,9 +1394,17 @@ class LetterOwnershipCarve(unittest.TestCase):
         self.assertTrue(any("[owners_match]" in f for f in failures), failures[:3])
 
     def test_unlicensed_internal_letter_forces_abstention_not_a_guessed_augment(self):
-        """I4: own-sharedroot-01 (مكتوب) has an internal waw that is not a radical and is not in the
-        licensed pattern_augment vocabulary (م ت ا ن س ء) — it must stay unowned and force whole-token
-        abstention, never be labelled pattern_augment by elimination."""
+        """I4/m-4: own-sharedroot-01 (مكتوب) has an internal waw that is not a radical and is not in
+        the licensed pattern_augment vocabulary (م ت ا ن س ٱ) — it must stay unowned and force
+        whole-token abstention, never be labelled pattern_augment by elimination.
+
+        The synthetic probes below use the root ج ل س (sit) with the hostile/licensed letter inserted
+        at radical_1's OWN position (letters[0] = ج is radical_1 itself, never clitic-shaped: ج is not
+        in the clitic inventory), so no leading-letter double-claim (clitic-shape-vs-radical_1) can ever
+        mask the property under test. A prior version of this probe used ك at position 0, which is
+        BOTH clitic-shaped and radical_1: every case forced whole-token abstention via the double-claim
+        guard regardless of the tested letter's own licensing, so the loop never actually exercised the
+        pattern_augment vocabulary boundary."""
         rows = _rows(_LOB)
         row = next(r for r in rows if r["id"] == "own-sharedroot-01")
         self.assertEqual(row["expected_decision"], "abstain")
@@ -1341,15 +1413,31 @@ class LetterOwnershipCarve(unittest.TestCase):
         self.assertEqual(rec["decision"], "abstain")
         self.assertEqual(rec["reason"], "pending_letter_ownership")
 
-        for hostile_letter in ("ز", "ع", "٧", "X"):
-            token = {"mode": "root_stem", "letters": ["ك", hostile_letter, "ت", "ب"],
-                     "surface": "ك" + hostile_letter + "تب", "token_kind": "noun",
-                     "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ك", "ت", "ب"]}}
-            rec = ctx.letter_ownership_decide(token)
+        def _token(middle):
+            return {"mode": "root_stem", "letters": ["ج", middle, "ل", "س"],
+                    "surface": "ج" + middle + "لس", "token_kind": "noun",
+                    "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ج", "ل", "س"]}}
+
+        # unlicensed: real Arabic consonants outside the vocabulary, a foreign letter, junk, and (after
+        # m-1) the bare hamza ء itself -- hamzat al-wasl is licensed only as the SEATED letter ٱ.
+        for hostile_letter in ("ز", "ع", "٧", "X", "ء"):
+            rec = ctx.letter_ownership_decide(_token(hostile_letter))
             self.assertEqual(rec["decision"], "abstain",
                              "an unlicensed non-radical letter %r must never buy pattern_augment "
                              "by elimination" % hostile_letter)
             self.assertEqual(rec["reason"], "pending_letter_ownership")
+
+        # licensed: at least one template letter (from the same closed vocabulary, in the same shape)
+        # must genuinely yield pattern_augment, proving the vocabulary boundary is a real fork, not a
+        # loop that abstains unconditionally.
+        rec = ctx.letter_ownership_decide(_token("م"))
+        self.assertEqual(rec["decision"], "candidate_pending")
+        self.assertEqual(rec["owners"], ["root", "pattern_augment", "root", "root"])
+
+        # m-1: the seated hamzat-al-wasl letter ٱ (U+0671) is licensed in the same shape.
+        rec = ctx.letter_ownership_decide(_token("ٱ"))
+        self.assertEqual(rec["decision"], "candidate_pending")
+        self.assertEqual(rec["owners"], ["root", "pattern_augment", "root", "root"])
 
     def test_nisba_mark_ownership_never_swallows_the_carrier_consonant(self):
         """C1: the base-letter (consonant) ownership of the letter preceding a nisba yaa must stay
@@ -1384,10 +1472,14 @@ class LetterOwnershipCarve(unittest.TestCase):
         self.assertEqual(rec["reason"], "pending_letter_ownership")
 
     def test_radical_accounting_incomplete_is_ported_and_fail_closed(self):
-        """C1/minor: the own-r2-v2 radical_accounting_incomplete fail-closed check (from
+        """C1/minor/I2: the own-r2-v2 radical_accounting_incomplete fail-closed check (from
         analyze_ownership) is ported into analyze_ownership_carve and computed AFTER every other
         ownership decision. A synthetic token with an unconsumed radical and no declared
-        hidden_positions must abstain rather than silently drop the leftover radical."""
+        hidden_positions must abstain rather than silently drop the leftover radical. I2: a
+        CONTRADICTORY hidden_positions declaration must never manufacture a licensed candidate --
+        `hidden_positions` must name the EXACT multiset of unconsumed radicals, not merely the right
+        COUNT of them (the round-1 defect: len(set(hidden_positions)) let a wrong/junk/duplicate
+        declaration buy a candidate as long as the cardinality happened to match)."""
         # letters/surface use جلس (sit) deliberately: none of ج/ل/س at position 0 is clitic-shaped in a
         # way that collides here (ل only collides as letters[0], which this token does not use), so the
         # unconsumed 4th radical و is the ONLY thing that can trigger the accounting check.
@@ -1397,12 +1489,42 @@ class LetterOwnershipCarve(unittest.TestCase):
         rec = ctx.letter_ownership_decide(token)
         self.assertEqual(rec["decision"], "abstain")
         self.assertEqual(rec["reason"], "radical_accounting_incomplete")
-        # declaring the unconsumed radical as hidden licenses the same token.
+
+        # POSITIVE: declaring the unconsumed radical TRUTHFULLY (و) licenses the same token.
         licensed = copy.deepcopy(token)
         licensed["root_evidence"]["hidden_positions"] = ["و"]
         rec2 = ctx.letter_ownership_decide(licensed)
         self.assertEqual(rec2["decision"], "candidate_pending")
         self.assertEqual(rec2.get("hidden_radicals"), ["و"])
+
+        # I2 ADVERSARIAL: a declaration of the RIGHT CARDINALITY but the WRONG identity, junk, an
+        # empty string, or a duplicate of the truthful letter must all still abstain -- the same
+        # cardinality (1 declared position for 1 unconsumed radical) must never be enough on its own.
+        for hostile_hidden in (["ب"], ["zzz"], [""], ["و", "و"]):
+            hostile = copy.deepcopy(token)
+            hostile["root_evidence"]["hidden_positions"] = hostile_hidden
+            rec = ctx.letter_ownership_decide(hostile)
+            self.assertEqual(rec["decision"], "abstain",
+                             "hidden_positions=%r must never manufacture a candidate for radical و"
+                             % hostile_hidden)
+            self.assertEqual(rec["reason"], "radical_accounting_incomplete")
+            self.assertFalse(rec.get("owners"))
+
+        # I2 ADVERSARIAL: two unconsumed radicals, declared with two JUNK positions (right cardinality,
+        # wrong identity) must still abstain -- the multiset identity check, not the count, decides.
+        two_hidden = {"mode": "root_stem", "letters": ["ج", "ل"], "surface": "جل", "token_kind": "noun",
+                     "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ج", "ل", "س", "و"]}}
+        junk_two = copy.deepcopy(two_hidden)
+        junk_two["root_evidence"]["hidden_positions"] = ["zzz", "yyy"]
+        rec = ctx.letter_ownership_decide(junk_two)
+        self.assertEqual(rec["decision"], "abstain")
+        self.assertEqual(rec["reason"], "radical_accounting_incomplete")
+        self.assertFalse(rec.get("owners"))
+        truthful_two = copy.deepcopy(two_hidden)
+        truthful_two["root_evidence"]["hidden_positions"] = ["س", "و"]
+        rec = ctx.letter_ownership_decide(truthful_two)
+        self.assertEqual(rec["decision"], "candidate_pending")
+        self.assertEqual(sorted(rec.get("hidden_radicals") or []), ["س", "و"])
 
     def test_malformed_or_contradictory_input_never_yields_a_claim(self):
         """I3: a closed mode, single-base-letter `letters` that reconstruct the supplied surface, a
@@ -1464,12 +1586,21 @@ class LetterOwnershipCarve(unittest.TestCase):
 
         # ADVERSARIAL: two rows sharing a surface with EQUIVALENT (identical clitic_layers) evidence
         # that reach DIFFERENT decisions must be caught -- an equivalent-evidence disagreement is
-        # never acceptable, whichever way it goes.
+        # never acceptable, whichever way it goes. occurrence_id is answer-key/identity metadata that
+        # the consumer never receives (I1's allowlisted projection strips it), so the two equipped
+        # rows are distinguished here only by CALL ORDER -- exactly what the consumer itself would see
+        # if it tried to borrow a sibling's verdict from anything but its own evidence.
         real = R.consumers_module("curriculum_unit_consumer").analyze_ownership_carve
+        seen = {"n": 0}
+        shared_surface = by_id["own-carve-24-35-44"]["surface"]
+        shared_clitic_layers = by_id["own-carve-24-35-44"]["clitic_layers"]
 
         def _one_wrong(token):
-            if token.get("occurrence_id") == "quran:2:187:63":
-                return {"decision": "abstain", "reason": "pending_letter_ownership", "owners": []}
+            if (token.get("mode") == "clitic_host" and token.get("clitic_layers") == shared_clitic_layers
+                    and token.get("surface") == shared_surface):
+                seen["n"] += 1
+                if seen["n"] == 2:
+                    return {"decision": "abstain", "reason": "pending_letter_ownership", "owners": []}
             return real(token)
         ctx2 = _ctx()
         ctx2.letter_ownership_decide = _one_wrong
@@ -1477,12 +1608,20 @@ class LetterOwnershipCarve(unittest.TestCase):
         self.assertTrue(any("same_surface_independent_verification" in f for f in failures2), failures2[:3])
 
     def test_all_quran_occurrence_rows_match_p007_repository_evidence(self):
-        """I5/C2: EVERY bank row whose occurrence_id begins `quran:` is checked against the byte-exact
+        """I5/C2: EVERY bank row whose occurrence_id begins `quran:` is checked against the LITERAL
         repository surface (qamus/examples/p007-li-pilot/locations.json) and the applicable
         typed-facts.jsonl carve evidence -- not only the first lam of one row. Verifies exact surface,
-        base-letter reconstruction, carve roles/spans, and the resulting owners. Scripture is never
-        altered to make a fixture green; the synthetic withheld-evidence row is excluded because its
-        occurrence_id is NOT a quran: address."""
+        base-letter reconstruction, carve-piece/base-letter partition parity (NOT a character-span /
+        index-range validation -- see the contract's not_enforced_properties), and the resulting
+        owners. Scripture is never altered to make a fixture green; the synthetic withheld-evidence row
+        is excluded because its occurrence_id is NOT a quran: address.
+
+        Scope, honestly: this covers 4 of the 12 occurrences in locations.json and 2 of the 4 distinct
+        carve shapes there (the bare-noun-host shape and the attached-pronoun shape are OUT of scope;
+        this carve's owner-class vocabulary has no mapping for an attached-pronoun/mudaf_ilayh role).
+        Byte-exact scripture parity against the canonical text is the canonical harness's job, not
+        this consumer's: analyze_ownership_carve only reconstructs base-letter clusters from whatever
+        surface it is handed."""
         with open(os.path.join(_ROOT, "qamus", "examples", "p007-li-pilot", "locations.json"),
                   encoding="utf-8") as fh:
             locations = json.load(fh)
@@ -1495,24 +1634,27 @@ class LetterOwnershipCarve(unittest.TestCase):
         # role -> owner class this letter-ownership carve licenses for a p007 clitic_host carve.
         role_owner = {"jarr_clitic_lam": "clitic", "definite_article_assimilated": "clitic",
                      "proper_name_majrur": "host", "noun_host_majrur": "host"}
+        self.assertEqual(len(locations["occurrences"]), 12,
+                         "locations.json occurrence count drifted; the 4-of-12 scope note would go stale")
 
         rows = _rows(_LOB)
         quran_rows = [r for r in rows if str(r.get("occurrence_id") or "").startswith("quran:")]
         self.assertEqual(len(quran_rows), 4, "expected exactly the 4 grounded quran occurrence rows")
         ctx = _ctx()
-        import unicodedata
         for row in quran_rows:
             occ = occ_by_id[row["occurrence_id"]]
-            # 1. exact byte-exact (NFC) surface -- never the altered/spurious shadda+fatha surface.
-            self.assertEqual(unicodedata.normalize("NFC", row["surface"]),
-                             unicodedata.normalize("NFC", occ["surface"]),
+            # 1. LITERAL equality (not NFC-normalized): both strings are repository artifacts, so any
+            # difference -- including a normalization-only one -- is a real drift, never waved through.
+            self.assertEqual(row["surface"], occ["surface"],
                              "%s: bank surface must be byte-exact against locations.json, never altered "
                              "to make the fixture green" % row["id"])
             # 2. base-letter reconstruction under the repo's own cluster contract.
             from tools.fusha_text_check import _clusters
             self.assertEqual(row["letters"], [c[0] for c in _clusters(occ["surface"])],
                              "%s: letters must reconstruct the repository surface" % row["id"])
-            # 3. carve roles/spans from typed-facts.jsonl agree with the row's clitic_layers + owners.
+            # 3. carve-piece/base-letter partition parity: typed-facts.jsonl's carve pieces, converted
+            # to per-letter owner classes by base-letter COUNT per piece, must equal the row's
+            # expected_owners. This proves partition parity, NOT character-span (index-range) identity.
             loc_key = row["occurrence_id"].split(":", 1)[1].replace(":", "_")
             seg = seg_by_loc[loc_key]
             expected_owners = []
@@ -1530,6 +1672,18 @@ class LetterOwnershipCarve(unittest.TestCase):
         synthetic = next(r for r in rows if r["id"] == "own-carve-no-borrow")
         self.assertNotIn(synthetic["occurrence_id"], occ_by_id)
         self.assertFalse(synthetic["occurrence_id"].startswith("quran:"))
+
+        # honest scope: the 2 carve shapes NOT covered by this bank (bare-noun-host, attached-pronoun)
+        # really exist in locations.json, and the attached-pronoun role really has no owner mapping here.
+        covered_shapes = {tuple(occ_by_id[r["occurrence_id"]]["segments"] and
+                                [s["role"] for s in occ_by_id[r["occurrence_id"]]["segments"]])
+                         for r in quran_rows}
+        all_shapes = {tuple(s["role"] for s in o["segments"]) for o in locations["occurrences"]}
+        uncovered_shapes = all_shapes - covered_shapes
+        self.assertEqual(len(all_shapes), 4, "distinct carve-shape count in locations.json drifted")
+        self.assertEqual(len(uncovered_shapes), 2)
+        self.assertTrue(any(any(role not in role_owner for role in shape) for shape in uncovered_shapes),
+                        "expected the attached-pronoun (mudaf_ilayh) shape to lack an owner-class mapping")
 
     def test_analyses_stay_candidate_and_never_certify(self):
         rows = _rows(_LOB)
