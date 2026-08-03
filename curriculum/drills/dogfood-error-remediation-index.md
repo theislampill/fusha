@@ -54,8 +54,8 @@ These rows route a miss to the exact Knowledge Component in `curriculum/kc-catal
 | `kc-suffix-pronoun-missing` | an attached object/possessive pronoun dropped from the gloss | `hover-composition-and-routing.md` | `../../sarf/procedures/suffix-pronoun-state.md` |
 | `kc-number-suffix-hidden` | a dual/plural ending hidden behind a plain singular host or an English-only number | `parse-key-and-color-layer.md` | `../../sarf/procedures/noun-plural-gender.md` |
 | `kc-derivative-shape-hidden` | a participle/derived noun glossed as the verb, or its derivative shape hidden | `parse-key-and-color-layer.md` | `../../sarf/procedures/nominal-derivative-decision.md` |
-| `kc-dictionary-infinitive-leakage` | the dictionary "to ..." infinitive pasted onto a finite or derived form | `root-pattern-practice.md` | `../../sarf/procedures/masdar-participle.md` |
-| `kc-unvoweled-homograph` | one reading of an unvoweled token forced instead of kept as a ranked candidate set | `root-pattern-practice.md` | `../../sarf/procedures/homograph-risk.md` |
+| `kc-masdar-template-not-uniform` | a Form-I verb's maṣdar (verbal noun) shape is assumed from one uniform template instead of checked per verb | `root-pattern-practice.md` | `../../sarf/procedures/masdar-participle.md` |
+| `kc-root-template-slot-classification` | a weak letter or template-added letter is called a root radical (or the reverse) by shape or position alone, or a root is named by counting the first three consonants before the word is matched to its template | `root-pattern-practice.md` | `../../sarf/procedures/homograph-risk.md` |
 | `kc-particle-function` | a multi-function particle (mā, wāw, ...) given one fixed gloss regardless of context | `quranic-function-words.md` | `../../nahw/procedures/particle-decision.md` |
 | `kc-case-mood-context` | a case/mood ending asserted with no visible ending and no governor named | `sentence-foundations.md` | `../../nahw/procedures/irab-case-mood.md` |
 | `kc-governor-justification` | a correct case ending given with an absent or unjustified governor (right answer, wrong reason) | `sentence-foundations.md` | `../../nahw/procedures/irab-case-mood.md` |

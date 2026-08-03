@@ -67,8 +67,7 @@
     "nahw_route": null,
     "curriculum_misconception_ids": ["mc-0142"],
     "curriculum_error_examples": [
-      {"kind": "error_pattern", "en": "A learner picks the more familiar reading of an unvoweled word and drops the other possible reading, instead of keeping both until something in the sentence decides."},
-      {"kind": "error_pattern", "en": "A learner assumes every letter in an unvoweled word is a root letter without checking whether one of them actually belongs to the pattern instead."}
+      {"kind": "error_pattern", "en": "A learner picks the more familiar reading of an unvoweled word and drops the other possible reading, instead of keeping both until something in the sentence decides."}
     ]
   },
   {
@@ -315,8 +314,7 @@
     "nahw_route": null,
     "curriculum_misconception_ids": ["mc-0019", "mc-0117", "mc-0094", "mc-0030", "mc-0073", "mc-0069"],
     "curriculum_error_examples": [
-      {"kind": "error_pattern", "en": "A learner copies the dictionary's 'to ...' gloss onto a verb that is actually conjugated in the text, instead of glossing the form that is actually there."},
-      {"kind": "error_pattern", "en": "A learner invents one all-purpose noun for 'the act of doing X' without checking whether that particular verb actually has a noun in that shape."}
+      {"kind": "error_pattern", "en": "A learner copies the dictionary's 'to ...' gloss onto a verb that is actually conjugated in the text, instead of glossing the form that is actually there."}
     ]
   },
   {

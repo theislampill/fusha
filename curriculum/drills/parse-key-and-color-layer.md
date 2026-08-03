@@ -99,11 +99,11 @@ Component in `curriculum/kc-catalog.json`. A miss routes back to this drill and 
 | item id | token | task |
 |---|---|---|
 | `PK-6-dual-referent-count` | `ٱلْمُعَلِّمَانِ` | State what the `-āni` ending requires about the referent, and what must be checked before applying a dual ending to any noun. |
-| `PK-7-dual-plural-oblique-overlap` | oblique `-ayni` vs. `-īna` | The dual and sound masculine-plural oblique endings share their final letter. Name the parts of the ending that must be read, in order, to tell them apart — and why the shared letter alone is not enough. |
+| `PK-7-dual-plural-oblique-overlap` | `الْمُعَلِّمَيْنِ` / `الْمُهَنْدِسِينَ` | The dual and sound masculine-plural oblique endings share their final letter. Name the parts of the ending that must be read, in order, to tell them apart — and why the shared letter alone is not enough. |
 | `PK-8-sound-plural-rationality` | `مُهَنْدِسُونَ` vs. `كِتَابُونَ` | State what must be checked about the referent before the suffixal masculine plural `-ūna`/`-īna` may be attached to a noun. |
 | `PK-9-mafaul-form-class-first` | `مَكْتُوب` | State which verb-form class the bare `مفعول` template belongs to, and what must be settled before assuming any word instantiates it. |
 | `PK-10-hollow-root-patient-skeleton` | root `ق و ل` | State whether a hollow root keeps the canonical `مفعول` skeleton unchanged, and what must be classified first. |
-| `PK-11-mim-noun-present-stem` | `جَلَسَ` / `يَجْلِسُ` | State which stem — past or present — decides the vowel of the mīm-prefixed place noun, and why the other stem is not enough. |
+| `PK-11-mim-noun-present-stem` | `جَلَسَ` | State which stem — past or present — decides the vowel of the mīm-prefixed place noun, and why the other stem is not enough. |
 
 ## Renderer-Class Normalization Drill
 

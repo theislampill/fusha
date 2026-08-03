@@ -54,10 +54,10 @@ pairing as equivalent ONLY if it appears on this list.
 |---|---|---|
 | `hidden_number_morphology` | `kc-number-suffix-hidden` | yes — a dual/plural ending hidden behind a plain singular gloss |
 | `hidden_derivative_shape` | `kc-derivative-shape-hidden` | yes — a participle/derived noun collapsed to the verb, or its derivative shape hidden |
-| `finite_verb_dictionary_gloss` | `kc-dictionary-infinitive-leakage` | yes — the dictionary "to ..." infinitive pasted onto a finite or derived form |
+| `finite_verb_dictionary_gloss` | `kc-dictionary-infinitive-leakage` | describes the same defect (the dictionary "to ..." infinitive pasted onto a finite or derived form), but `kc-dictionary-infinitive-leakage` is not bound to any drill-key row yet and cannot currently be emitted as an `error_reason`; only `finite_verb_dictionary_gloss` is reachable today |
 | `suffix_omitted` | `kc-suffix-pronoun-missing` | yes — an attached object/possessive pronoun dropped from the answer |
 | `particle_function_flattened` | `kc-particle-function` | yes — a multi-function particle given one fixed gloss regardless of context |
-| `wrong_irab_reasoning` | `kc-governor-justification` | yes — a correct case ending given with an absent or unjustified governor (right answer, wrong reason) |
+| `wrong_irab_reasoning` | `kc-governor-justification` | describes the same defect (a correct case ending given with an absent or unjustified governor, right answer, wrong reason), but `kc-governor-justification` is not bound to any drill-key row yet and cannot currently be emitted as an `error_reason`; only `wrong_irab_reasoning` is reachable today |
 
 Every other `kc_id` currently reachable as an `error_reason` (`kc-clitic-segmentation`,
 `kc-root-template-slot-classification`, `kc-masdar-template-not-uniform`) has NO legacy equivalent above; treat
@@ -65,10 +65,10 @@ it as its own distinct error class, not a re-spelling of anything in the "Error 
 legacy code not listed in the crosswalk table (`script_harakat`, `root_family_vibes`, `pp_attachment_unclear`,
 etc.) has no `kc_id` equivalent yet and stays a legacy-only code until a drill row binds it. The remaining KCs in
 `curriculum/kc-catalog.json` (e.g. `kc-attached-pronoun`, `kc-unvoweled-homograph`, `kc-preposition-host`,
-`kc-case-mood-context`, `kc-orthography`, `kc-hidden-proclitic`, `kc-passive-voice-hidden`,
-`kc-token-vs-phrase-hover`, `kc-source-address-scope`, `kc-canonical-address-crosswalk`,
-`kc-public-boundary-source-clean`) are not yet bound to any drill-key row and so cannot appear as an
-`error_reason` at all.
+`kc-case-mood-context`, `kc-governor-justification`, `kc-dictionary-infinitive-leakage`, `kc-orthography`,
+`kc-hidden-proclitic`, `kc-passive-voice-hidden`, `kc-token-vs-phrase-hover`, `kc-source-address-scope`,
+`kc-canonical-address-crosswalk`, `kc-public-boundary-source-clean`) are not yet bound to any drill-key row and
+so cannot appear as an `error_reason` at all, even where they are listed as a "same symptom" pairing above.
 
 ## Review Standard
 
