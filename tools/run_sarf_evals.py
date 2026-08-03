@@ -86,6 +86,7 @@ DECISION_CONSUMERS = (
     "tools/corpus_to_qamus_candidates.py:classify",
     "tools/curriculum_unit_consumer.py:analyze_ownership_carve",
     "tools/curriculum_unit_consumer.py:analyze_derivative",
+    "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
     "tools/rm40_gate_stack.py:slot_gate",
     "tools/rm40_gate_stack.py:plural_gate",
     "tools/fusha_paradigm_generate.py:generate_verb",
@@ -99,6 +100,7 @@ CONSUMER_SLOTS = {
     "tools/corpus_to_qamus_candidates.py:classify": "classify",
     "tools/curriculum_unit_consumer.py:analyze_ownership_carve": "letter_ownership_decide",
     "tools/curriculum_unit_consumer.py:analyze_derivative": "derivative_decide",
+    "tools/curriculum_unit_consumer.py:analyze_discriminator_table": "discriminator_decide",
     "tools/rm40_gate_stack.py:slot_gate": "slot_gate",
     "tools/rm40_gate_stack.py:plural_gate": "plural_gate",
     "tools/fusha_paradigm_generate.py:generate_verb": "generate_verb",
@@ -112,6 +114,7 @@ REQUIRED_BEHAVIORAL_BANKS = (
     "sarf/evals/largelexicon-collision-safety.jsonl",
     "sarf/evals/letter-ownership-carve-eval.jsonl",
     "sarf/evals/morphology-candidate-lattice.jsonl",
+    "sarf/evals/nominal-class-discrimination-eval.jsonl",
     "sarf/evals/weak-root-and-voice-eval.jsonl",
 )
 # How a Store A rule file is (or is not) used by production code.
@@ -163,6 +166,7 @@ _LAT = "tools/fusha_morphology_lattice.py:build_morphology_lattice"
 _NORM = "structural:tools/normalize_ar.py"
 _OWN = "tools/curriculum_unit_consumer.py:analyze_ownership_carve"
 _DER = "tools/curriculum_unit_consumer.py:analyze_derivative"
+_DISC = "tools/curriculum_unit_consumer.py:analyze_discriminator_table"
 _SLOT_GATE = "tools/rm40_gate_stack.py:slot_gate"
 _PLURAL_GATE = "tools/rm40_gate_stack.py:plural_gate"
 _GEN_VERB = "tools/fusha_paradigm_generate.py:generate_verb"
@@ -189,7 +193,8 @@ class Consumers(object):
 
     __slots__ = ("segment_candidates", "build_lattice", "check_text", "clusters", "classify", "load_index",
                  "norm", "norm_strict", "bare", "shadda_on", "haraka_on", "ends_tanwin_alef",
-                 "letter_ownership_decide", "derivative_decide", "slot_gate", "plural_gate", "generate_verb")
+                 "letter_ownership_decide", "derivative_decide", "discriminator_decide", "slot_gate",
+                 "plural_gate", "generate_verb")
 
     @classmethod
     def real(cls):
@@ -222,6 +227,10 @@ class Consumers(object):
         # curriculum_unit_consumer module's own template-classification function, bound directly (never a local
         # wrapper) -- the same genuine-cross-module-invocation contract as letter_ownership_decide above.
         self.derivative_decide = cu.analyze_derivative
+        # the DECLARED behavioural consumer for the nominal-class-discrimination bank is the EXTERNAL
+        # curriculum_unit_consumer module's own discriminator-table function, bound directly (never a local
+        # wrapper).
+        self.discriminator_decide = cu.analyze_discriminator_table
         # the DECLARED behavioural consumer for the weak-root-and-voice bank is the REAL RM-40 gate stack
         # (tools/rm40_gate_stack.py:slot_gate, already used in production by tools/fusha_paradigm_generate.py) plus
         # the REAL paradigm generator (tools/fusha_paradigm_generate.py:generate_verb) for voice/melody comparison;
@@ -1155,6 +1164,137 @@ def adapter_derivational_template_carve(rows, spec, ctx, root):
                    "candidate_pending_rows": candidate_pending_rows, "property_hits": props.as_metric()}
 
 
+# ---------------------------------------------------------- nominal-class-discrimination
+_NCD_CONSUMER_INPUT_FIELDS = ("features",)
+
+
+def _ncd_consumer_input(row):
+    """Project one nominal-class-discrimination bank row down to `{features}` ONLY before it ever reaches the
+    external consumer -- the I-1 echo defence: `expected_decision`/`expected_function`/`expected_reason`/
+    `expected_alternatives`/`id`/`teaches`/`increment` can never reach `analyze_discriminator_table`."""
+    return {k: row[k] for k in _NCD_CONSUMER_INPUT_FIELDS if k in row}
+
+
+def _ncd_pack(increment, root=_REPO):
+    """MODULE-LEVEL indirection (mirrors `_dtc_pack`/`_weak_root_gate_data`): the adapter below always calls this
+    name, never a pack captured at import time, so a bounded mutation prover can swap this exact function in
+    memory and prove the decision genuinely depends on the loaded pack's CONTENT."""
+    import tools.curriculum_unit_consumer as cu
+    return cu.load(increment)[0]
+
+
+_NCD_DECISIONS = ("candidate_pending", "abstain")
+_NCD_ABSTAIN_REASONS = ("insufficient_features", "preserve_alternatives", "school_dependent_attributed")
+_NCD_NONE_GENERIC_PREFIX = "none_generic_candidate:"
+_NCD_RECORD_KEYS = frozenset((
+    "decision", "authority", "function", "occurrence_binding", "reason", "alternatives",
+    "attributed_function", "school_attribution",
+))
+
+
+def adapter_nominal_class_discrimination(rows, spec, ctx, root):
+    """sarf/evals/nominal-class-discrimination-eval.jsonl -> tools/curriculum_unit_consumer.py:
+    analyze_discriminator_table (the SAME registered `discriminator_table` capability inc-ma and inc-mim-
+    initial-noun-discriminator/inc-elative-template-discriminator already share -- declarative reuse, no
+    consumer edit needed to add a new discriminator pack).
+
+    Every row is decided by EXACTLY ONE call to `analyze_discriminator_table`, against the pack its own
+    `increment` field names, loaded through the module-level `_ncd_pack` indirection so a bounded mutation can
+    prove the decision depends on pack CONTENT (deleting a function from the in-memory pack must flip a
+    `preserve_alternatives` row to `insufficient_features`, never silently resolve). The row is projected through
+    `_ncd_consumer_input` (`features` ONLY) before it ever reaches the consumer, so no row -- honest or hostile
+    -- can echo its own `expected_*` fields into the verdict (I-1). No row may supply an `envelope`: this bank
+    has no occurrence-level dogfood evidence (`no_occurrence_dogfood_evidence: true` on every row), so every
+    `candidate_pending` row must carry the consumer's own `none_generic_candidate: ...` occurrence_binding
+    string -- proving a candidate_pending decision here is never mistaken for an occurrence resolution.
+    """
+    fails, decided = [], 0
+    props = _Props()
+    abstain_rows = candidate_pending_rows = 0
+    for i, row in enumerate(rows):
+        rid = _rid(row, spec, i)
+        fails.extend(_required_field_failures(row, spec, rid))
+        increment = row.get("increment")
+        if not increment:
+            fails.append(_f(rid, "decision_behaviorally_computed", "row names no increment"))
+            continue
+        if "envelope" in row:
+            fails.append(_f(rid, "no_occurrence_resolution_leak",
+                            "this bank has no occurrence-level dogfood evidence; no row may supply an envelope"))
+            continue
+        if not row.get("no_occurrence_dogfood_evidence"):
+            fails.append(_f(rid, "no_occurrence_resolution_leak",
+                            "every row must declare no_occurrence_dogfood_evidence: true"))
+        proj = _ncd_consumer_input(row)
+        leaked = [k for k in row if k.startswith("expected_") and k in proj]
+        if leaked:
+            fails.append(_f(rid, "no_occurrence_resolution_leak",
+                            "projected consumer input carries answer-key field(s) %s" % leaked))
+        pack = _ncd_pack(increment, root)
+        rec = ctx.discriminator_decide(proj, pack)
+        decided += 1
+        props.hit(rid, _DISC, "decision_behaviorally_computed", "never_certified")
+        got_decision = rec.get("decision")
+        if got_decision not in _NCD_DECISIONS:
+            fails.append(_f(rid, "decision_behaviorally_computed",
+                            "analyze_discriminator_table returned %r" % got_decision))
+        extra_keys = set(rec) - _NCD_RECORD_KEYS
+        if extra_keys:
+            fails.append(_f(rid, "no_occurrence_resolution_leak",
+                            "discriminator record carries key(s) %s outside the closed vocabulary"
+                            % sorted(extra_keys)))
+        if "certified" in json.dumps(rec, ensure_ascii=False).lower():
+            fails.append(_f(rid, "never_certified", "the decision record claims a certified state"))
+
+        expected_decision = row.get("expected_decision")
+        if got_decision != expected_decision:
+            fails.append(_f(rid, "decision_behaviorally_computed",
+                            "decided %r, bank expects %r" % (got_decision, expected_decision)))
+
+        if expected_decision == "abstain":
+            abstain_rows += 1
+            props.hit(rid, _DISC, "abstains_never_claim_function")
+            want_reason = row.get("expected_reason")
+            if want_reason not in _NCD_ABSTAIN_REASONS:
+                fails.append(_f(rid, "reason_matches",
+                                "bank's expected_reason %r outside the closed abstention vocabulary"
+                                % want_reason))
+            if rec.get("reason") != want_reason:
+                fails.append(_f(rid, "reason_matches",
+                                "decided reason %r, bank expects %r" % (rec.get("reason"), want_reason)))
+            if rec.get("function") is not None:
+                fails.append(_f(rid, "abstains_never_claim_function",
+                                "an abstaining row must never carry a function"))
+            if rec.get("occurrence_binding") is not None:
+                fails.append(_f(rid, "no_occurrence_resolution_leak",
+                                "an abstaining row must never carry an occurrence_binding"))
+            if want_reason == "preserve_alternatives":
+                props.hit(rid, _DISC, "preserve_alternatives_never_votes")
+                want_alts = row.get("expected_alternatives")
+                if rec.get("alternatives") != want_alts:
+                    fails.append(_f(rid, "preserve_alternatives_never_votes",
+                                    "decided alternatives %r, bank expects %r"
+                                    % (rec.get("alternatives"), want_alts)))
+                if not want_alts or len(want_alts) < 2:
+                    fails.append(_f(rid, "preserve_alternatives_never_votes",
+                                    "a preserve_alternatives row must declare at least two alternatives"))
+        else:
+            candidate_pending_rows += 1
+            want_function = row.get("expected_function")
+            if rec.get("function") != want_function:
+                fails.append(_f(rid, "decision_behaviorally_computed",
+                                "decided function %r, bank expects %r" % (rec.get("function"), want_function)))
+            props.hit(rid, _DISC, "candidate_pending_never_occurrence_bound")
+            binding = rec.get("occurrence_binding")
+            if not (isinstance(binding, str) and binding.startswith(_NCD_NONE_GENERIC_PREFIX)):
+                fails.append(_f(rid, "candidate_pending_never_occurrence_bound",
+                                "a candidate_pending row with no supplied envelope must carry the consumer's own "
+                                "none_generic_candidate occurrence_binding string, got %r" % binding))
+
+    return fails, {"rows": len(rows), "decided_rows": decided, "abstain_rows": abstain_rows,
+                   "candidate_pending_rows": candidate_pending_rows, "property_hits": props.as_metric()}
+
+
 def _weak_root_gate_data(root=_REPO):
     """Load `sarf/rules/weak-root-gates.json`.
 
@@ -1415,6 +1555,7 @@ ADAPTERS = {
     "corpus_classifier": adapter_corpus_classifier,
     "letter_ownership_carve": adapter_letter_ownership_carve,
     "derivational_template_carve": adapter_derivational_template_carve,
+    "nominal_class_discrimination": adapter_nominal_class_discrimination,
     "weak_root_and_voice": adapter_weak_root_and_voice,
     "structural": adapter_structural,
 }
@@ -2461,6 +2602,22 @@ def self_test(root=_REPO):
         _mutate(ctx, plural_gate=lambda *a, **kw: {"decision": "emit", "defeater": None, "detail": "stub",
                                                    "gates": []}))
 
+    red("nominal-class-discrimination consumer stubbed always-first-survivor",
+        "sarf/evals/nominal-class-discrimination-eval.jsonl",
+        _mutate(ctx, discriminator_decide=lambda inp, unit: {
+            "decision": "candidate_pending", "authority": "none_fixture_harness",
+            "function": unit["functions"][0]["id"],
+            "occurrence_binding": "none_generic_candidate: stub"}))
+    _real_discriminator = _cu.analyze_discriminator_table
+    _cu.analyze_discriminator_table = lambda inp, unit: {
+        "decision": "candidate_pending", "authority": "none_fixture_harness",
+        "function": unit["functions"][0]["id"], "occurrence_binding": "none_generic_candidate: stub"}
+    try:
+        red("nominal-class-discrimination EXTERNAL module stubbed (proves genuine cross-module invocation)",
+            "sarf/evals/nominal-class-discrimination-eval.jsonl", Consumers.real())
+    finally:
+        _cu.analyze_discriminator_table = _real_discriminator
+
     red("weak-root-and-voice gate stack stubbed always-emit",
         "sarf/evals/weak-root-and-voice-eval.jsonl",
         _mutate(ctx, slot_gate=lambda *a, **kw: {"decision": "emit", "defeater": None, "detail": "stub",
@@ -2588,11 +2745,12 @@ def self_test(root=_REPO):
     if failures:
         return 1
     print("ok   run_sarf_evals self-test: contract valid; %d banks / %d rows green through real consumers; "
-          "13 Store A rows dispositioned; 35 mutation/negative gates all caught (incl. a stubbed declared "
+          "13 Store A rows dispositioned; 37 mutation/negative gates all caught (incl. a stubbed declared "
           "consumer, a property relabelled to a callable that never ran, a fictitious zero-row property, "
           "schema execution, path containment with no I/O against a rejected target, nested candidate "
-          "certified/public-boundary records, the weak-root-and-voice gate-stack/paradigm-generator stubs, and "
-          "the derivational-template-carve consumer/external-module/plural_gate stubs); "
+          "certified/public-boundary records, the weak-root-and-voice gate-stack/paradigm-generator stubs, the "
+          "derivational-template-carve consumer/external-module/plural_gate stubs, and the "
+          "nominal-class-discrimination consumer/external-module stubs); "
           "@2.1-@2.4 not promoted"
           % (rep["total_banks"], rep["total_rows"]))
     print(TERMINAL_SELFTEST)

@@ -570,6 +570,88 @@
       ]
     },
     {
+      "adapter": "nominal_class_discrimination",
+      "behavioral_consumer": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+      "consumers": [
+        "tools/curriculum_unit_consumer.py",
+        "tools/run_sarf_evals.py"
+      ],
+      "disposition": "implemented_and_consumed",
+      "enforced_properties": [
+        "every row is decided by the EXTERNAL tools/curriculum_unit_consumer.py:analyze_discriminator_table from its features against the pack its OWN increment field names (loaded via a module-level indirection, never a pack captured at import time), never echoed from the row's own expected_* fields and never re-implemented locally in run_sarf_evals.py",
+        "the row is projected through an ALLOWLISTED consumer-input set (features ONLY) before the consumer is invoked, so an external consumer -- honest or hostile -- can never read expected_decision/expected_function/expected_reason/expected_alternatives/teaches/id/increment and echo them back as its own analysis (I-1)",
+        "a zero-evidence row (features={}) abstains insufficient_features for every pack in this bank",
+        "where more than one function survives, ALL survivors are preserved as alternatives (never a vote, never the commoner class); a preserve_alternatives row must declare at least two alternatives and the decided list must match exactly",
+        "ela-r4: the two superlative constructions exclude the comparison complement; a row supplying a comparison complement alongside definiteness evidence that alone would suggest the superlative never lets that extra evidence contaminate the resolution",
+        "no row may supply an envelope: this bank has no occurrence-level dogfood evidence, and every candidate_pending row must carry the consumer's own none_generic_candidate occurrence_binding string, proving a template-level candidate is never mistaken for an occurrence resolution",
+        "every emitted decision record stays candidate_pending or abstain, never a certified state, and carries no lexeme/sense/meaning/translation/occurrence key",
+        "no row carries an occurrence_id, loc, entry_id, lexeme, sense, gloss or translation field; every row declares no_occurrence_dogfood_evidence: true"
+      ],
+      "followup_packet": null,
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {},
+      "nonempty_list_fields": [],
+      "note": "Behavioural through the EXTERNAL tools/curriculum_unit_consumer.py:analyze_discriminator_table, the SAME registered discriminator_table capability inc-ma already shares (declarative reuse: this bank's packs were added WITHOUT any consumer edit). Covers cu-mim-initial-noun-discriminator's 5-way mim-initial collision and cu-elative-template-discriminator's أفعل skeleton across three parts of speech. sarf@2.1-@2.4 stay CANDIDATE; nothing here certifies or promotes any of them. A candidate_pending row means only 'this feature set is consistent with this named function under this named candidate pack' -- not a lexeme, not a sense, not an occurrence meaning.",
+      "not_enforced_properties": [
+        "the classical conditions restricting which bases admit an elative reading at all (ela-r7) are not encoded in the pack and are not enforced here",
+        "whether sequence and otherness items belong to the elative inventory (ela-r8) is disputed in the tradition and is not decided by this bank",
+        "instrument templates are lexical, not derivable (mim-r4): this bank classifies an attested token's supplied features, it never predicts which template a root takes",
+        "the school_dependent_attributed abstention reason is declared in the closed vocabulary but no row in this bank exercises it (no function in either pack carries a school_attribution)"
+      ],
+      "path": "sarf/evals/nominal-class-discrimination-eval.jsonl",
+      "pinned_metrics": {
+        "abstain_rows": 5,
+        "candidate_pending_rows": 9,
+        "decided_rows": 14,
+        "rows": 14
+      },
+      "property_coverage": [
+        {
+          "applicable_rows": 14,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "property": "decision_behaviorally_computed"
+        },
+        {
+          "applicable_rows": 14,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "property": "never_certified"
+        },
+        {
+          "applicable_rows": 5,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "note": "the 5 abstaining rows only",
+          "property": "abstains_never_claim_function"
+        },
+        {
+          "applicable_rows": 2,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "note": "ncd-mim-adv-01, ncd-ela-adv-01",
+          "property": "preserve_alternatives_never_votes"
+        },
+        {
+          "applicable_rows": 9,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "note": "the 9 candidate_pending rows only",
+          "property": "candidate_pending_never_occurrence_bound"
+        }
+      ],
+      "required_fields": [
+        "id",
+        "increment",
+        "expected_decision",
+        "teaches"
+      ],
+      "row_key": null,
+      "secondary_consumers": []
+    },
+    {
       "adapter": "weak_root_and_voice",
       "behavioral_consumer": "tools/rm40_gate_stack.py:slot_gate",
       "consumers": [

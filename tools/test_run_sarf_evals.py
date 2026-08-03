@@ -1915,6 +1915,162 @@ class DerivationalTemplateCarve(unittest.TestCase):
 
 
 # ---------------------------------------------------------------------------
+# nominal-class-discrimination — the SAME registered discriminator_table capability inc-ma already shares,
+# decided through the EXTERNAL tools/curriculum_unit_consumer.py:analyze_discriminator_table against
+# inc-mim-initial-noun-discriminator and inc-elative-template-discriminator's committed packs.
+# ---------------------------------------------------------------------------
+_NCD = "sarf/evals/nominal-class-discrimination-eval.jsonl"
+
+
+class NominalClassDiscrimination(unittest.TestCase):
+
+    def test_bank_is_registered_implemented_and_consumed(self):
+        contract = R.load_contract(_ROOT)
+        spec = R.bank_spec(contract, _NCD)
+        self.assertEqual(spec["disposition"], "implemented_and_consumed")
+        self.assertEqual(spec["behavioral_consumer"],
+                         "tools/curriculum_unit_consumer.py:analyze_discriminator_table")
+        self.assertIn(spec["behavioral_consumer"], R.DECISION_CONSUMERS)
+        self.assertIn(_NCD, R.REQUIRED_BEHAVIORAL_BANKS)
+        rows = _rows(_NCD)
+        self.assertGreaterEqual(len(rows), 10)
+        self.assertLessEqual(len(rows), 16)
+        failures, metrics = _run(_NCD, rows)
+        self.assertEqual(failures, [], "nominal-class-discrimination bank failed: %s" % failures[:5])
+        self.assertEqual(metrics["decided_rows"], len(rows))
+        self.assertEqual(metrics["consumer_calls"][spec["behavioral_consumer"]], len(rows))
+
+    def test_zero_evidence_abstains_insufficient_features_for_both_packs(self):
+        ctx = _ctx()
+        for increment in ("inc-mim-initial-noun-discriminator", "inc-elative-template-discriminator"):
+            import tools.curriculum_unit_consumer as CUC
+            unit, _fx = CUC.load(increment)
+            rec = ctx.discriminator_decide({"features": {}}, unit)
+            self.assertEqual(rec, {"decision": "abstain", "reason": "insufficient_features"}, increment)
+
+    def test_mim_initial_collision_preserves_both_named_alternatives(self):
+        row = next(r for r in _rows(_NCD) if r["id"] == "ncd-mim-adv-01")
+        self.assertEqual(row["features"], {"prefix_vowel": "damma", "penult_vowel": "fatha",
+                                           "source_form_class": "form_three", "final_ending": "taa_marbuta"})
+        self.assertEqual(sorted(row["expected_alternatives"]), ["form_three_verbal_noun", "patient_noun"])
+
+    def test_every_candidate_pending_row_carries_the_generic_occurrence_binding(self):
+        ctx = _ctx()
+        import tools.curriculum_unit_consumer as CUC
+        for row in _rows(_NCD):
+            if row["expected_decision"] != "candidate_pending":
+                continue
+            unit, _fx = CUC.load(row["increment"])
+            rec = ctx.discriminator_decide({"features": row["features"]}, unit)
+            self.assertTrue(str(rec.get("occurrence_binding") or "").startswith("none_generic_candidate:"),
+                            "%s: candidate_pending row must carry the generic occurrence_binding string"
+                            % row["id"])
+
+    def test_no_row_supplies_an_envelope_and_all_declare_no_occurrence_dogfood_evidence(self):
+        for row in _rows(_NCD):
+            self.assertNotIn("envelope", row)
+            self.assertTrue(row.get("no_occurrence_dogfood_evidence") is True, row["id"])
+        spec = R.bank_spec(R.load_contract(_ROOT), _NCD)
+        self.assertIsNone(spec["followup_packet"])
+
+    def test_no_local_reimplementation_survives_in_the_runner(self):
+        ctx = _ctx()
+        from tools import curriculum_unit_consumer as CUC
+        self.assertIs(ctx.discriminator_decide, CUC.analyze_discriminator_table,
+                      "Consumers.real() must bind the EXTERNAL module's function directly")
+
+    def test_a_stubbed_consumer_turns_the_bank_red(self):
+        ctx = _ctx()
+        ctx.discriminator_decide = lambda inp, unit: {"decision": "candidate_pending",
+                                                      "authority": "none_fixture_harness",
+                                                      "function": unit["functions"][0]["id"],
+                                                      "occurrence_binding": "none_generic_candidate: stub"}
+        failures, _m = _run(_NCD, ctx=ctx)
+        self.assertTrue(failures, "a stubbed analyze_discriminator_table must fail the bank")
+
+    def test_external_consumer_module_is_genuinely_invoked(self):
+        import tools.curriculum_unit_consumer as CUC
+        original = CUC.analyze_discriminator_table
+        CUC.analyze_discriminator_table = lambda inp, unit: {"decision": "candidate_pending",
+                                                             "authority": "none_fixture_harness",
+                                                             "function": unit["functions"][0]["id"],
+                                                             "occurrence_binding": "none_generic_candidate: stub"}
+        try:
+            failures, _m = _run(_NCD, ctx=R.Consumers.real())
+        finally:
+            CUC.analyze_discriminator_table = original
+        self.assertTrue(failures, "a stubbed EXTERNAL analyze_discriminator_table must fail the bank")
+
+    def test_pack_loader_mutation_always_returning_first_function_turns_preserve_alternatives_rows_red(self):
+        """(a) rebind the pack loader to a stub that always resolves to the first declared function: every
+        preserve_alternatives row must go RED."""
+        original = R._ncd_pack
+
+        def _first_only(increment, root=_ROOT):
+            pack = original(increment, root)
+            import copy as _c
+            pack = _c.deepcopy(pack)
+            pack["functions"] = pack["functions"][:1]
+            return pack
+        R._ncd_pack = _first_only
+        try:
+            failures, _m = _run(_NCD)
+        finally:
+            R._ncd_pack = original
+        self.assertTrue(any(f.startswith("ncd-mim-adv-01 ") for f in failures), failures[:5])
+        self.assertTrue(any(f.startswith("ncd-ela-adv-01 ") for f in failures), failures[:5])
+
+    def test_pack_loader_mutation_deleting_a_function_flips_the_row_to_insufficient_features(self):
+        """(b) delete a function from the in-memory pack: the corresponding row must flip to
+        insufficient_features (a positive row loses its only surviving function)."""
+        original = R._ncd_pack
+
+        def _dropped(increment, root=_ROOT):
+            pack = original(increment, root)
+            if increment == "inc-mim-initial-noun-discriminator":
+                import copy as _c
+                pack = _c.deepcopy(pack)
+                pack["functions"] = [f for f in pack["functions"] if f["id"] != "agent_noun"]
+            return pack
+        R._ncd_pack = _dropped
+        try:
+            failures, _m = _run(_NCD)
+        finally:
+            R._ncd_pack = original
+        self.assertTrue(any(f.startswith("ncd-mim-pos-01 ") for f in failures), failures[:5])
+
+    def test_envelope_injection_fails_closed(self):
+        """(c) inject an envelope into a row: the run must fail (this bank has no occurrence evidence and may
+        not accept one)."""
+        rows = copy.deepcopy(_rows(_NCD))
+        hostile = dict(next(r for r in rows if r["id"] == "ncd-mim-pos-01"))
+        hostile["id"] = "ncd-hostile-envelope"
+        hostile["envelope"] = {"occurrence_id": "quran:1:1:1"}
+        rows.append(hostile)
+        failures, _m = _run(_NCD, rows)
+        self.assertTrue(any("ncd-hostile-envelope" in f and "no_occurrence_resolution_leak" in f
+                            for f in failures), failures[:5])
+
+    def test_projected_expected_key_leak_fails_closed(self):
+        """Mutate the projection allowlist itself so expected_function reaches the consumer, on a row where the
+        leaked value is wrong: the adapter's own projection guard must still fail the row on the closed-key
+        check, since analyze_discriminator_table never even reads it."""
+        original_fields = R._NCD_CONSUMER_INPUT_FIELDS
+        R._NCD_CONSUMER_INPUT_FIELDS = original_fields + ("expected_function",)
+        try:
+            rows = copy.deepcopy(_rows(_NCD))
+            hostile = dict(next(r for r in rows if r["id"] == "ncd-mim-pos-01"))
+            hostile["id"] = "ncd-hostile-echo"
+            hostile["expected_function"] = "not_the_real_function"
+            rows.append(hostile)
+            failures, _m = _run(_NCD, rows)
+        finally:
+            R._NCD_CONSUMER_INPUT_FIELDS = original_fields
+        self.assertTrue(any("ncd-hostile-echo" in f and "no_occurrence_resolution_leak" in f for f in failures),
+                        failures[:5])
+
+
+# ---------------------------------------------------------------------------
 # weak-root-and-voice — entry/paradigm-level weak-root and voice decision behaviour, decided through the REAL
 # tools/rm40_gate_stack.py:slot_gate (RM-40's own weak-root gate) and tools/fusha_paradigm_generate.py:generate_verb
 # (the REAL melody/template generator), layered with sarf/rules/weak-root-gates.json data this adapter reads
