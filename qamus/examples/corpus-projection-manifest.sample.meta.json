@@ -1,0 +1,12 @@
+{
+  "builder": {
+    "id": "build_corpus_projection_manifest",
+    "version": "2.0.0"
+  },
+  "sample_row_count": 480,
+  "sample_selection_rule": "Deterministic, bounded, order-preserving selection over the full manifest (source order from example-ayah-universe.jsonl): (1) every P009/P099 canary appearance; (2) up to 60 multi-entry-transclusion-fanout appearances (lowest appearance_id first); (3) up to 20 unaligned-word appearances; (4) up to 20 pause-mark appearances; (5) a fixed-stride fill of remaining rows across the full manifest until the target sample size is reached. No random sampling.",
+  "sample_sha256": "0514106feb0dd75f02d3d99a4faee42d41f760d66c9492a900f3397ac0c5e661",
+  "schema": "qamus.corpus_projection_manifest.v1",
+  "source_full_manifest_row_count": 117117,
+  "source_full_manifest_sha256": "04a440ca219775eb754a337984cc2d32a7578adac372a7d7afd55e68e3435338"
+}
