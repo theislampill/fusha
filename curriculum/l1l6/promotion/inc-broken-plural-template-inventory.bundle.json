@@ -3,7 +3,7 @@
   "candidate_reference": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/reference.md",
   "candidate_registry_rows": [
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -12,15 +12,16 @@
         "the attested plural is a LEXICAL fact: the singular's template is a prior only, and this unit never generates or repairs a plural",
         "og-4: a template classifies FORM; concord is decided by the referent's rationality and is never emitted here",
         "the six rows are a core, not a closed inventory; no_template means unclassified by this pack, never ill-formed",
-        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape"
+        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "e1e07db0f72c60760375f40f148ecafed0951cfd0131f816fde8661c9ec534ed",
+      "guards_hash": "4cb7e331951a996f8d58615990e1c3ab681b3717618429eb116e3d75abf25cee",
       "guards_payload": [
         {
           "guard": "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
@@ -41,13 +42,18 @@
         {
           "guard": "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
           "id": "g-bpl-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-bpl-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "bpl-adv-01",
         "bpl-adv-02",
         "bpl-adv-03",
-        "bpl-abs-01"
+        "bpl-abs-01",
+        "bpl-adv-04"
       ],
       "positive_examples": [
         "bpl-pos-01",
@@ -56,7 +62,7 @@
         "bpl-trn-01",
         "bpl-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-broken-plural-template-inventory"
@@ -75,7 +81,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -84,15 +90,16 @@
         "the attested plural is a LEXICAL fact: the singular's template is a prior only, and this unit never generates or repairs a plural",
         "og-4: a template classifies FORM; concord is decided by the referent's rationality and is never emitted here",
         "the six rows are a core, not a closed inventory; no_template means unclassified by this pack, never ill-formed",
-        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape"
+        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "e1e07db0f72c60760375f40f148ecafed0951cfd0131f816fde8661c9ec534ed",
+      "guards_hash": "4cb7e331951a996f8d58615990e1c3ab681b3717618429eb116e3d75abf25cee",
       "guards_payload": [
         {
           "guard": "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
@@ -113,13 +120,18 @@
         {
           "guard": "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
           "id": "g-bpl-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-bpl-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "bpl-adv-01",
         "bpl-adv-02",
         "bpl-adv-03",
-        "bpl-abs-01"
+        "bpl-abs-01",
+        "bpl-adv-04"
       ],
       "positive_examples": [
         "bpl-pos-01",
@@ -128,7 +140,7 @@
         "bpl-trn-01",
         "bpl-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-broken-plural-template-inventory"
@@ -147,7 +159,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -156,15 +168,16 @@
         "the attested plural is a LEXICAL fact: the singular's template is a prior only, and this unit never generates or repairs a plural",
         "og-4: a template classifies FORM; concord is decided by the referent's rationality and is never emitted here",
         "the six rows are a core, not a closed inventory; no_template means unclassified by this pack, never ill-formed",
-        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape"
+        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "e1e07db0f72c60760375f40f148ecafed0951cfd0131f816fde8661c9ec534ed",
+      "guards_hash": "4cb7e331951a996f8d58615990e1c3ab681b3717618429eb116e3d75abf25cee",
       "guards_payload": [
         {
           "guard": "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
@@ -185,13 +198,18 @@
         {
           "guard": "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
           "id": "g-bpl-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-bpl-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "bpl-adv-01",
         "bpl-adv-02",
         "bpl-adv-03",
-        "bpl-abs-01"
+        "bpl-abs-01",
+        "bpl-adv-04"
       ],
       "positive_examples": [
         "bpl-pos-01",
@@ -200,7 +218,7 @@
         "bpl-trn-01",
         "bpl-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-broken-plural-template-inventory"
@@ -219,7 +237,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -228,15 +246,16 @@
         "the attested plural is a LEXICAL fact: the singular's template is a prior only, and this unit never generates or repairs a plural",
         "og-4: a template classifies FORM; concord is decided by the referent's rationality and is never emitted here",
         "the six rows are a core, not a closed inventory; no_template means unclassified by this pack, never ill-formed",
-        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape"
+        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "e1e07db0f72c60760375f40f148ecafed0951cfd0131f816fde8661c9ec534ed",
+      "guards_hash": "4cb7e331951a996f8d58615990e1c3ab681b3717618429eb116e3d75abf25cee",
       "guards_payload": [
         {
           "guard": "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
@@ -257,13 +276,18 @@
         {
           "guard": "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
           "id": "g-bpl-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-bpl-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "bpl-adv-01",
         "bpl-adv-02",
         "bpl-adv-03",
-        "bpl-abs-01"
+        "bpl-abs-01",
+        "bpl-adv-04"
       ],
       "positive_examples": [
         "bpl-pos-01",
@@ -272,7 +296,7 @@
         "bpl-trn-01",
         "bpl-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-broken-plural-template-inventory"
@@ -291,7 +315,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -300,15 +324,16 @@
         "the attested plural is a LEXICAL fact: the singular's template is a prior only, and this unit never generates or repairs a plural",
         "og-4: a template classifies FORM; concord is decided by the referent's rationality and is never emitted here",
         "the six rows are a core, not a closed inventory; no_template means unclassified by this pack, never ill-formed",
-        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape"
+        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "e1e07db0f72c60760375f40f148ecafed0951cfd0131f816fde8661c9ec534ed",
+      "guards_hash": "4cb7e331951a996f8d58615990e1c3ab681b3717618429eb116e3d75abf25cee",
       "guards_payload": [
         {
           "guard": "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
@@ -329,13 +354,18 @@
         {
           "guard": "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
           "id": "g-bpl-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-bpl-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "bpl-adv-01",
         "bpl-adv-02",
         "bpl-adv-03",
-        "bpl-abs-01"
+        "bpl-abs-01",
+        "bpl-adv-04"
       ],
       "positive_examples": [
         "bpl-pos-01",
@@ -344,7 +374,7 @@
         "bpl-trn-01",
         "bpl-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-broken-plural-template-inventory"
@@ -363,7 +393,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -372,15 +402,16 @@
         "the attested plural is a LEXICAL fact: the singular's template is a prior only, and this unit never generates or repairs a plural",
         "og-4: a template classifies FORM; concord is decided by the referent's rationality and is never emitted here",
         "the six rows are a core, not a closed inventory; no_template means unclassified by this pack, never ill-formed",
-        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape"
+        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "e1e07db0f72c60760375f40f148ecafed0951cfd0131f816fde8661c9ec534ed",
+      "guards_hash": "4cb7e331951a996f8d58615990e1c3ab681b3717618429eb116e3d75abf25cee",
       "guards_payload": [
         {
           "guard": "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
@@ -401,13 +432,18 @@
         {
           "guard": "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
           "id": "g-bpl-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-bpl-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "bpl-adv-01",
         "bpl-adv-02",
         "bpl-adv-03",
-        "bpl-abs-01"
+        "bpl-abs-01",
+        "bpl-adv-04"
       ],
       "positive_examples": [
         "bpl-pos-01",
@@ -416,7 +452,7 @@
         "bpl-trn-01",
         "bpl-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-broken-plural-template-inventory"
@@ -428,6 +464,162 @@
       },
       "skill": "sarf",
       "skill_rule_id": "curr-broken-plural-template-inventory-bpl-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
+        "the attested plural is a LEXICAL fact: the singular's template is a prior only, and this unit never generates or repairs a plural",
+        "og-4: a template classifies FORM; concord is decided by the referent's rationality and is never emitted here",
+        "the six rows are a core, not a closed inventory; no_template means unclassified by this pack, never ill-formed",
+        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4cb7e331951a996f8d58615990e1c3ab681b3717618429eb116e3d75abf25cee",
+      "guards_payload": [
+        {
+          "guard": "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
+          "id": "g-bpl-1"
+        },
+        {
+          "guard": "the attested plural is a LEXICAL fact: the singular's template is a prior only, and this unit never generates or repairs a plural",
+          "id": "g-bpl-2"
+        },
+        {
+          "guard": "og-4: a template classifies FORM; concord is decided by the referent's rationality and is never emitted here",
+          "id": "g-bpl-3"
+        },
+        {
+          "guard": "the six rows are a core, not a closed inventory; no_template means unclassified by this pack, never ill-formed",
+          "id": "g-bpl-4"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
+          "id": "g-bpl-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-bpl-weak"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "bpl-adv-01",
+        "bpl-adv-02",
+        "bpl-adv-03",
+        "bpl-abs-01",
+        "bpl-adv-04"
+      ],
+      "positive_examples": [
+        "bpl-pos-01",
+        "bpl-pos-02",
+        "bpl-pos-03",
+        "bpl-trn-01",
+        "bpl-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-broken-plural-template-inventory"
+      },
+      "scope": {
+        "increment": "inc-broken-plural-template-inventory",
+        "statement": "every realization of a weak radical (و، ي) is licensed per template, slot and radical by weak_realizations.by_template: an altered letter must appear in that entry's substituted list, and a weak radical may stand literally only where literal_licensed is true; nothing is licensed by default — an uncontracted hollow/weak singular does not by itself license a restructured-plural classification",
+        "unit_ref": "cu-broken-plural-template-inventory"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-broken-plural-template-inventory-bpl-r7",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
+        "the attested plural is a LEXICAL fact: the singular's template is a prior only, and this unit never generates or repairs a plural",
+        "og-4: a template classifies FORM; concord is decided by the referent's rationality and is never emitted here",
+        "the six rows are a core, not a closed inventory; no_template means unclassified by this pack, never ill-formed",
+        "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4cb7e331951a996f8d58615990e1c3ab681b3717618429eb116e3d75abf25cee",
+      "guards_payload": [
+        {
+          "guard": "og-2: identical skeletons split by harakat and by entry; the فعال row collides with a singular template, so that skeleton abstains — colliding skeletons declared: فعال، فعول، فعلاء (all three abstain ambiguous_template)",
+          "id": "g-bpl-1"
+        },
+        {
+          "guard": "the attested plural is a LEXICAL fact: the singular's template is a prior only, and this unit never generates or repairs a plural",
+          "id": "g-bpl-2"
+        },
+        {
+          "guard": "og-4: a template classifies FORM; concord is decided by the referent's rationality and is never emitted here",
+          "id": "g-bpl-3"
+        },
+        {
+          "guard": "the six rows are a core, not a closed inventory; no_template means unclassified by this pack, never ill-formed",
+          "id": "g-bpl-4"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a classified plural never licenses the same template for another lexeme of the same singular shape",
+          "id": "g-bpl-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (مقاول over ق و ل) is not evidence of a restructured plural, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-bpl-weak"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "bpl-adv-01",
+        "bpl-adv-02",
+        "bpl-adv-03",
+        "bpl-abs-01",
+        "bpl-adv-04"
+      ],
+      "positive_examples": [
+        "bpl-pos-01",
+        "bpl-pos-02",
+        "bpl-pos-03",
+        "bpl-trn-01",
+        "bpl-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-broken-plural-template-inventory/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-broken-plural-template-inventory"
+      },
+      "scope": {
+        "increment": "inc-broken-plural-template-inventory",
+        "statement": "every weak radical of the matched template requires the exact bound declaration (weak_position + weak_radical) -> otherwise weak_declaration_unbound; an unlicensed realization -> weak_realization_unlicensed; a declared weak position/radical the supplied radicals do not bear -> weak_declaration_contradicts_root",
+        "unit_ref": "cu-broken-plural-template-inventory"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-broken-plural-template-inventory-bpl-r8",
       "skill_version": "@curriculum-candidate",
       "status": "candidate",
       "test_references": [
@@ -450,7 +642,8 @@
     "adversarial": [
       "bpl-adv-01",
       "bpl-adv-02",
-      "bpl-adv-03"
+      "bpl-adv-03",
+      "bpl-adv-04"
     ],
     "positive": [
       "bpl-pos-01",
@@ -469,11 +662,16 @@
     "abstention_reasons": [
       "no_root_evidence",
       "no_template",
-      "ambiguous_template"
+      "ambiguous_template",
+      "weak_declaration_contradicts_root",
+      "weak_declaration_unbound",
+      "weak_realization_unlicensed"
     ],
     "capability": "template_classification",
     "increment": "inc-broken-plural-template-inventory",
     "inventory_note": "the six plural rows below are the high-frequency core, NOT a closed inventory; a surface that matches none of them is unclassified here, not ill-formed",
+    "repair_of": "unit-v1.json (no weak-realization gate: a literal, uncontracted weak radical in a hollow-root singular false-passed a plural template as though the root were sound; Sol round-3-style repair, ported from inc-derivatives/unit-v4.json's weak_realization_gate)",
+    "require_weak_declaration": true,
     "rules": [
       {
         "id": "bpl-r1",
@@ -498,6 +696,14 @@
       {
         "id": "bpl-r6",
         "text": "concord follows the referent's rationality, not the plural's template; this unit emits no concord claim"
+      },
+      {
+        "id": "bpl-r7",
+        "text": "every realization of a weak radical (و، ي) is licensed per template, slot and radical by weak_realizations.by_template: an altered letter must appear in that entry's substituted list, and a weak radical may stand literally only where literal_licensed is true; nothing is licensed by default — an uncontracted hollow/weak singular does not by itself license a restructured-plural classification"
+      },
+      {
+        "id": "bpl-r8",
+        "text": "every weak radical of the matched template requires the exact bound declaration (weak_position + weak_radical) -> otherwise weak_declaration_unbound; an unlicensed realization -> weak_realization_unlicensed; a declared weak position/radical the supplied radicals do not bear -> weak_declaration_contradicts_root"
       }
     ],
     "schema": "curriculum.l1l6_machine_unit.v1",
@@ -616,7 +822,16 @@
       }
     ],
     "unit_ref": "cu-broken-plural-template-inventory",
-    "version": 1
+    "version": 2,
+    "weak_radicals": [
+      "و",
+      "ي"
+    ],
+    "weak_realization_gate": true,
+    "weak_realizations": {
+      "by_template": {},
+      "licensing_note": "DELIBERATELY MINIMAL. No realization of a weak radical is licensed for any template in this increment: no committed fixture in this pack evidences a licensed substitution or a licensed literal weak realization, so every weak radical of a matched template abstains (weak_declaration_unbound or weak_realization_unlicensed). Widening this table is a linguistic decision for the ṣarf authority (adp-sarf-nahw-authority), made in DATA — no consumer edit is required to license a further realization."
+    }
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
@@ -639,7 +854,7 @@
       "teaching": "reminds the reader that agreement is chosen from the referent, not from the plural's shape"
     }
   ],
-  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "rollback_condition": "revert to unit-v1.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
   "schema": "curriculum.l1l6_promotion_bundle.v1",
   "status": "candidate_awaiting_sol_review"
 }

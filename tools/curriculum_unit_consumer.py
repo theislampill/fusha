@@ -548,14 +548,23 @@ def analyze_derivative(inp, unit):
                         "reason": "weak_declaration_contradicts_root",
                         "declared": {"weak_position": wp, "weak_radical": wr},
                         "radicals": radicals}
+    radical_arity = unit.get("radical_arity", 3)
     survivors = []
     for t in unit["templates"]:
         if t["id"] == "mu_participle":
             # مُـ + a stem that is exactly the radicals (the derived-form
             # skeleton with gemination carried by harakat, not letters);
             # discriminated from مَفْعَل by the penult vowel (REQUIRED)
-            if (letters and letters[0] == "م" and len(letters) >= 4
-                    and letters[1:] == radicals):
+            if letters and letters[0] == "م" and letters[1:] == radicals:
+                if len(radicals) != radical_arity:
+                    # every current interface in this catalogue is written
+                    # against a `radical_arity`-slot root (default 3); a
+                    # non-matching radical count is refused here, not
+                    # silently routed through a three-slot template (L5.M4.06)
+                    return {"decision": "abstain",
+                            "reason": "radical_arity_unsupported",
+                            "declared_arity": radical_arity,
+                            "supplied_radicals": radicals}
                 survivors.append((t, []))
             continue
         used = _match_template(t["shape"], letters, radicals,
@@ -626,6 +635,14 @@ def analyze_derivative(inp, unit):
     blocked = weak_check(t["id"], used)
     if blocked:
         return blocked
+    if str(t.get("class") or "").startswith("shared_"):
+        # a `shared_*` class is a ROUTING LABEL, not a resolved class (the row
+        # is letter-identical to a row in a sibling pack): the discriminating
+        # decision belongs to cu-adjective-class-discriminator, which this
+        # batch does not author. The label must never be reachable as an
+        # ordinary class -- it always abstains here instead.
+        return {"decision": "abstain", "reason": "shared_row_class_undecided",
+                "template": t["id"], "shared_with": t.get("shared_with") or []}
     return {"decision": "candidate_pending", "authority": "none_fixture_harness", "class": t["class"], "template": t["id"]}
 
 
@@ -949,6 +966,110 @@ def self_test():
     finally:
         _self_mod.analyze_ownership_carve = _orig_carve
 
+    # 10. radical-arity refusal (analyze_derivative's mu_participle branch): the recorded false
+    # pass at 525ddc6 routed a four-radical root (مُدَحْرِج، radicals د ح ر ج) through the
+    # three-slot mu_participle template as though it were a sound triliteral (L5.M4.06 — "every
+    # current interface in the catalogue is written against a three-slot root"). Reproduced here
+    # against the UNCHANGED inc-derivatives/unit-v4.json pack (proving the fix is a pure consumer
+    # change, not a pack edit): a 2-radical and a 5-radical root reach the SAME abstention.
+    _der_unit, _ = load("inc-derivatives", "unit-v4.json")
+    _mudahrij = {"letters": list("مدحرج"), "surface": "مُدَحْرِج", "penult_vowel": "kasra",
+                "penult_vowel_evidence": "surface_mark",
+                "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list("دحرج")}}
+    _mudahrij_rec = analyze_derivative(_mudahrij, _der_unit)
+    if _mudahrij_rec != {"decision": "abstain", "reason": "radical_arity_unsupported",
+                         "declared_arity": 3, "supplied_radicals": list("دحرج")}:
+        failures.append("analyze_derivative: the recorded four-radical mu_participle false pass "
+                        "(مُدَحْرِج) is no longer refused: %r" % (_mudahrij_rec,))
+    _two_rad = analyze_derivative({"letters": ["م", "ي", "د"],
+                                   "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ي", "د"]}},
+                                  _der_unit)
+    _five_rad = analyze_derivative({"letters": list("مخندرس"),
+                                    "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list("خندرس")}},
+                                   _der_unit)
+    if not (_two_rad.get("reason") == _five_rad.get("reason") == "radical_arity_unsupported"):
+        failures.append("analyze_derivative: a 2-radical and a 5-radical mu_participle-shaped root "
+                        "must reach the SAME radical_arity_unsupported abstention, got %r / %r"
+                        % (_two_rad, _five_rad))
+    _der_unit_arity4 = json.loads(json.dumps(_der_unit))
+    _der_unit_arity4["radical_arity"] = 4
+    if analyze_derivative(_mudahrij, _der_unit_arity4).get("decision") == "abstain":
+        failures.append("analyze_derivative: radical_arity is not genuinely PACK-declared "
+                        "(declaring radical_arity: 4 in the pack did not license the four-radical root)")
+
+    # 11. shared-row refusal: a template whose declared class begins with shared_ must never
+    # surface as a resolved class (cu-adjective-class-discriminator's abstention obligation).
+    _qad_unit, _qad_fixtures = load("inc-quality-adjective-templates")
+    _kabiir = {"letters": list("كبير"), "surface": "كبير",
+              "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list("كبر")}}
+    _kabiir_rec = analyze_derivative(_kabiir, _qad_unit)
+    if _kabiir_rec.get("decision") != "abstain" or _kabiir_rec.get("reason") != "shared_row_class_undecided":
+        failures.append("analyze_derivative: a shared_-classed template survivor must abstain "
+                        "shared_row_class_undecided, got %r" % (_kabiir_rec,))
+    _qad_unit_unshared = json.loads(json.dumps(_qad_unit))
+    for _t in _qad_unit_unshared["templates"]:
+        if _t["id"] == "faiil":
+            _t["class"] = "quality_adjective"  # PACK mutation: strip the shared_ prefix
+    if analyze_derivative(_kabiir, _qad_unit_unshared).get("decision") != "candidate_pending":
+        failures.append("analyze_derivative: the shared_row_class_undecided refusal is not "
+                        "genuinely PACK-declared (stripping the shared_ prefix from the PACK's own "
+                        "template class did not unblock the decision)")
+
+    # 12. the three repaired sibling packs (inc-quality-adjective-templates,
+    # inc-intensive-agent-templates, inc-broken-plural-template-inventory): the recorded false
+    # passes at 525ddc6 (قوال/قويل over ق و ل, a literal uncontracted weak radical) must never
+    # recur, and — because the shared_row refusal above is a consumer-level fix that applies
+    # regardless of pack version — قوال/قويل abstain under BOTH the unrepaired unit-v1.json packs
+    # (proving the consumer fix alone already closes the shared-row half of the defect) and the
+    # repaired unit-v2.json packs (which add the weak-realization-gate DATA closing the remaining,
+    # non-shared half: inc-intensive-agent-templates' OWN faaal row is not shared, so only the v2
+    # pack's weak_realization_gate — not the shared_ check — refuses it).
+    def _qawaal(radicals_letters=("ق", "و", "ل")):
+        return {"letters": list("قوال"), "surface": "قوال",
+                "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list(radicals_letters),
+                                  "weak_position": "R2", "weak_radical": "و"}}
+
+    def _qawiil(radicals_letters=("ق", "و", "ل")):
+        return {"letters": list("قويل"), "surface": "قويل",
+                "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list(radicals_letters),
+                                  "weak_position": "R2", "weak_radical": "و"}}
+
+    _int_unit_v1, _ = load("inc-intensive-agent-templates", "unit-v1.json")
+    _int_unit_v2, _ = load("inc-intensive-agent-templates", "unit-v2.json")
+    _qad_unit_v1, _ = load("inc-quality-adjective-templates", "unit-v1.json")
+    _qad_unit_v2, _ = load("inc-quality-adjective-templates", "unit-v2.json")
+    _bpl_unit_v1, _ = load("inc-broken-plural-template-inventory", "unit-v1.json")
+    _bpl_unit_v2, _ = load("inc-broken-plural-template-inventory", "unit-v2.json")
+
+    _int_v1_qawaal = analyze_derivative(_qawaal(), _int_unit_v1)
+    if _int_v1_qawaal.get("decision") != "candidate_pending":
+        failures.append("self-test drift: inc-intensive-agent-templates/unit-v1.json no longer "
+                        "reproduces the recorded قوال false pass (%r) — the v1 defect set must stay "
+                        "reproducible" % (_int_v1_qawaal,))
+    for _label, _unit in (("inc-intensive-agent-templates v2", _int_unit_v2),
+                          ("inc-quality-adjective-templates v1", _qad_unit_v1),
+                          ("inc-quality-adjective-templates v2", _qad_unit_v2)):
+        for _mk, _inp in (("قوال", _qawaal()), ("قويل", _qawiil())):
+            _rec = analyze_derivative(_inp, _unit)
+            if _rec.get("decision") != "abstain":
+                failures.append("%s / %s must abstain (recorded false pass), got %r"
+                                % (_label, _mk, _rec))
+    # inc-broken-plural-template-inventory: قوال is masked by the pack's OWN declared
+    # فعال/singular-homograph collision (ambiguous_template) regardless of the weak gate, so the
+    # weak-gate-specific defect/repair is proven on مقاول (مفاعل template) instead.
+    _muqaawil = {"letters": list("مقاول"), "surface": "مقاول",
+                "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list("قول"),
+                                  "weak_position": "R2", "weak_radical": "و"}}
+    _bpl_v1_rec = analyze_derivative(_muqaawil, _bpl_unit_v1)
+    if _bpl_v1_rec.get("decision") != "candidate_pending":
+        failures.append("self-test drift: inc-broken-plural-template-inventory/unit-v1.json no "
+                        "longer reproduces the literal-weak-radical false pass on مقاول (%r)"
+                        % (_bpl_v1_rec,))
+    _bpl_v2_rec = analyze_derivative(_muqaawil, _bpl_unit_v2)
+    if _bpl_v2_rec.get("decision") != "abstain":
+        failures.append("inc-broken-plural-template-inventory/unit-v2.json must abstain on مقاول "
+                        "(weak-realization gate), got %r" % (_bpl_v2_rec,))
+
     if failures:
         print("SELF-TEST FAIL:")
         for f in failures:
@@ -961,7 +1082,14 @@ def self_test():
           "probe 9, analyze_ownership_carve: licensed-augment/unlicensed-abstain, the nisba mark "
           "override never swallowing the carrier consonant, an unpointed surface buying "
           "no mark claim, malformed-mode/malformed-letter abstention, and a module-level "
-          "rebind proof)")
+          "rebind proof; probe 10, radical_arity_unsupported: the recorded مُدَحْرِج false pass "
+          "refused against the UNCHANGED inc-derivatives/unit-v4.json pack, 2- and 5-radical "
+          "roots reaching the same abstention, and a pack-declared radical_arity mutation "
+          "licensing the four-radical root; probe 11, shared_row_class_undecided: a shared_-"
+          "classed survivor abstains and a pack mutation stripping the prefix unblocks it; "
+          "probe 12, the three repaired sibling packs (quality-adjective/intensive-agent/"
+          "broken-plural): the recorded قوال/قويل/مقاول false passes stay reproducible under "
+          "their unrepaired unit-v1.json packs and abstain under the repaired unit-v2.json packs)")
     return 0
 
 

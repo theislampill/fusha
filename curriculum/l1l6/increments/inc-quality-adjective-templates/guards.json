@@ -23,6 +23,10 @@
     {
       "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
       "id": "g-qad-m"
+    },
+    {
+      "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+      "id": "g-qad-weak"
     }
   ],
   "schema": "curriculum.l1l6_increment_guards.v1",

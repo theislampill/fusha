@@ -3,7 +3,7 @@
   "candidate_reference": "curriculum/l1l6/increments/inc-quality-adjective-templates/reference.md",
   "candidate_registry_rows": [
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -13,15 +13,16 @@
         "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
         "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
         "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
-        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_hash": "40d142c7471145913993555cbf816122d7a5682378b79493f3af3ee33151234d",
       "guards_payload": [
         {
           "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
@@ -46,22 +47,28 @@
         {
           "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
           "id": "g-qad-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-qad-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "qad-adv-01",
         "qad-adv-02",
         "qad-adv-03",
-        "qad-abs-01"
+        "qad-abs-01",
+        "qad-trn-01",
+        "qad-trn-02",
+        "qad-adv-04",
+        "qad-adv-05"
       ],
       "positive_examples": [
         "qad-pos-01",
         "qad-pos-02",
-        "qad-pos-03",
-        "qad-trn-01",
-        "qad-trn-02"
+        "qad-pos-03"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-quality-adjective-templates"
@@ -80,7 +87,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -90,15 +97,16 @@
         "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
         "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
         "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
-        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_hash": "40d142c7471145913993555cbf816122d7a5682378b79493f3af3ee33151234d",
       "guards_payload": [
         {
           "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
@@ -123,22 +131,28 @@
         {
           "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
           "id": "g-qad-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-qad-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "qad-adv-01",
         "qad-adv-02",
         "qad-adv-03",
-        "qad-abs-01"
+        "qad-abs-01",
+        "qad-trn-01",
+        "qad-trn-02",
+        "qad-adv-04",
+        "qad-adv-05"
       ],
       "positive_examples": [
         "qad-pos-01",
         "qad-pos-02",
-        "qad-pos-03",
-        "qad-trn-01",
-        "qad-trn-02"
+        "qad-pos-03"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-quality-adjective-templates"
@@ -157,7 +171,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -167,15 +181,16 @@
         "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
         "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
         "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
-        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_hash": "40d142c7471145913993555cbf816122d7a5682378b79493f3af3ee33151234d",
       "guards_payload": [
         {
           "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
@@ -200,22 +215,28 @@
         {
           "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
           "id": "g-qad-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-qad-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "qad-adv-01",
         "qad-adv-02",
         "qad-adv-03",
-        "qad-abs-01"
+        "qad-abs-01",
+        "qad-trn-01",
+        "qad-trn-02",
+        "qad-adv-04",
+        "qad-adv-05"
       ],
       "positive_examples": [
         "qad-pos-01",
         "qad-pos-02",
-        "qad-pos-03",
-        "qad-trn-01",
-        "qad-trn-02"
+        "qad-pos-03"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-quality-adjective-templates"
@@ -234,7 +255,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -244,15 +265,16 @@
         "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
         "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
         "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
-        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_hash": "40d142c7471145913993555cbf816122d7a5682378b79493f3af3ee33151234d",
       "guards_payload": [
         {
           "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
@@ -277,22 +299,28 @@
         {
           "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
           "id": "g-qad-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-qad-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "qad-adv-01",
         "qad-adv-02",
         "qad-adv-03",
-        "qad-abs-01"
+        "qad-abs-01",
+        "qad-trn-01",
+        "qad-trn-02",
+        "qad-adv-04",
+        "qad-adv-05"
       ],
       "positive_examples": [
         "qad-pos-01",
         "qad-pos-02",
-        "qad-pos-03",
-        "qad-trn-01",
-        "qad-trn-02"
+        "qad-pos-03"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-quality-adjective-templates"
@@ -311,7 +339,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -321,15 +349,16 @@
         "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
         "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
         "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
-        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_hash": "40d142c7471145913993555cbf816122d7a5682378b79493f3af3ee33151234d",
       "guards_payload": [
         {
           "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
@@ -354,22 +383,28 @@
         {
           "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
           "id": "g-qad-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-qad-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "qad-adv-01",
         "qad-adv-02",
         "qad-adv-03",
-        "qad-abs-01"
+        "qad-abs-01",
+        "qad-trn-01",
+        "qad-trn-02",
+        "qad-adv-04",
+        "qad-adv-05"
       ],
       "positive_examples": [
         "qad-pos-01",
         "qad-pos-02",
-        "qad-pos-03",
-        "qad-trn-01",
-        "qad-trn-02"
+        "qad-pos-03"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-quality-adjective-templates"
@@ -388,7 +423,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -398,15 +433,16 @@
         "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
         "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
         "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
-        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row"
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "bfe28d65b2fe868a2136a1cf014afc86f38501fffd7ce160173f7bc139ca1612",
+      "guards_hash": "40d142c7471145913993555cbf816122d7a5682378b79493f3af3ee33151234d",
       "guards_payload": [
         {
           "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
@@ -431,22 +467,28 @@
         {
           "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
           "id": "g-qad-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-qad-weak"
         }
       ],
       "negative_or_boundary_examples": [
         "qad-adv-01",
         "qad-adv-02",
         "qad-adv-03",
-        "qad-abs-01"
+        "qad-abs-01",
+        "qad-trn-01",
+        "qad-trn-02",
+        "qad-adv-04",
+        "qad-adv-05"
       ],
       "positive_examples": [
         "qad-pos-01",
         "qad-pos-02",
-        "qad-pos-03",
-        "qad-trn-01",
-        "qad-trn-02"
+        "qad-pos-03"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-quality-adjective-templates"
@@ -458,6 +500,258 @@
       },
       "skill": "sarf",
       "skill_rule_id": "curr-quality-adjective-templates-qad-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+        "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+        "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+        "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+        "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "40d142c7471145913993555cbf816122d7a5682378b79493f3af3ee33151234d",
+      "guards_payload": [
+        {
+          "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+          "id": "g-qad-1"
+        },
+        {
+          "guard": "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+          "id": "g-qad-2"
+        },
+        {
+          "guard": "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+          "id": "g-qad-3"
+        },
+        {
+          "guard": "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+          "id": "g-qad-4"
+        },
+        {
+          "guard": "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+          "id": "g-qad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+          "id": "g-qad-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-qad-weak"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "qad-adv-01",
+        "qad-adv-02",
+        "qad-adv-03",
+        "qad-abs-01",
+        "qad-trn-01",
+        "qad-trn-02",
+        "qad-adv-04",
+        "qad-adv-05"
+      ],
+      "positive_examples": [
+        "qad-pos-01",
+        "qad-pos-02",
+        "qad-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "scope": {
+        "increment": "inc-quality-adjective-templates",
+        "statement": "every realization of a weak radical (و، ي) is licensed per template, slot and radical by weak_realizations.by_template: an altered letter must appear in that entry's substituted list, and a weak radical may stand literally only where literal_licensed is true; nothing is licensed by default — an uncontracted hollow/weak shape is not a classification",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quality-adjective-templates-qad-r7",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+        "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+        "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+        "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+        "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "40d142c7471145913993555cbf816122d7a5682378b79493f3af3ee33151234d",
+      "guards_payload": [
+        {
+          "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+          "id": "g-qad-1"
+        },
+        {
+          "guard": "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+          "id": "g-qad-2"
+        },
+        {
+          "guard": "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+          "id": "g-qad-3"
+        },
+        {
+          "guard": "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+          "id": "g-qad-4"
+        },
+        {
+          "guard": "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+          "id": "g-qad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+          "id": "g-qad-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-qad-weak"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "qad-adv-01",
+        "qad-adv-02",
+        "qad-adv-03",
+        "qad-abs-01",
+        "qad-trn-01",
+        "qad-trn-02",
+        "qad-adv-04",
+        "qad-adv-05"
+      ],
+      "positive_examples": [
+        "qad-pos-01",
+        "qad-pos-02",
+        "qad-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "scope": {
+        "increment": "inc-quality-adjective-templates",
+        "statement": "every weak radical of the matched template requires the exact bound declaration (weak_position + weak_radical) -> otherwise weak_declaration_unbound; an unlicensed realization -> weak_realization_unlicensed; a declared weak position/radical the supplied radicals do not bear -> weak_declaration_contradicts_root",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quality-adjective-templates-qad-r8",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+        "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+        "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+        "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+        "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+        "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "40d142c7471145913993555cbf816122d7a5682378b79493f3af3ee33151234d",
+      "guards_payload": [
+        {
+          "guard": "og-2: the disposition and short rows are letter-identical, so that skeleton abstains rather than defaulting to the more familiar row",
+          "id": "g-qad-1"
+        },
+        {
+          "guard": "og-4: a template classifies FORM; whether the intended reading is a stable attribute or a reported action is semantic and is never inferred from the shape",
+          "id": "g-qad-2"
+        },
+        {
+          "guard": "the shared rows (فعيل، فعول، فعال) never emit a final class; the intensive unit's transitivity test is required before any class claim",
+          "id": "g-qad-3"
+        },
+        {
+          "guard": "the diptote flag is a row property emitted WITHOUT the definiteness and annexation conditions that relax it; it is a prompt to check, not a case fact",
+          "id": "g-qad-4"
+        },
+        {
+          "guard": "the أفعل skeleton is never resolved here; it is routed to cu-elative-template-discriminator",
+          "id": "g-qad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row matched on one lexeme never fixes the class of another lexeme on the same row",
+          "id": "g-qad-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال، قويل over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-qad-weak"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "qad-adv-01",
+        "qad-adv-02",
+        "qad-adv-03",
+        "qad-abs-01",
+        "qad-trn-01",
+        "qad-trn-02",
+        "qad-adv-04",
+        "qad-adv-05"
+      ],
+      "positive_examples": [
+        "qad-pos-01",
+        "qad-pos-02",
+        "qad-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quality-adjective-templates/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "scope": {
+        "increment": "inc-quality-adjective-templates",
+        "statement": "a matched row whose declared class begins with shared_ never resolves to that class here: the consumer abstains shared_row_class_undecided (the label is a routing hint, not a class the letters alone decide)",
+        "unit_ref": "cu-quality-adjective-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quality-adjective-templates-qad-r9",
       "skill_version": "@curriculum-candidate",
       "status": "candidate",
       "test_references": [
@@ -480,16 +774,16 @@
     "adversarial": [
       "qad-adv-01",
       "qad-adv-02",
-      "qad-adv-03"
+      "qad-adv-03",
+      "qad-adv-04",
+      "qad-adv-05",
+      "qad-trn-01",
+      "qad-trn-02"
     ],
     "positive": [
       "qad-pos-01",
       "qad-pos-02",
       "qad-pos-03"
-    ],
-    "transfer": [
-      "qad-trn-01",
-      "qad-trn-02"
     ]
   },
   "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
@@ -499,16 +793,21 @@
     "abstention_reasons": [
       "no_root_evidence",
       "no_template",
-      "ambiguous_template"
+      "ambiguous_template",
+      "weak_declaration_contradicts_root",
+      "weak_declaration_unbound",
+      "weak_realization_unlicensed",
+      "shared_row_class_undecided"
     ],
     "capability": "template_classification",
     "class_semantics": {
-      "colour_or_defect_adjective": "a colour or a bodily defect",
       "elative_homograph": "not this unit's class — routed to the elative discriminator",
       "quality_adjective": "a lasting attribute of the referent",
-      "shared_quality_intensive": "the row is shared with the intensive-agent inventory; the class is decided semantically, not by shape"
+      "shared_quality_intensive": "the row is shared with the intensive-agent inventory; cu-adjective-class-discriminator, not this pack, would decide it — the consumer refuses this label as a class (shared_row_class_undecided)"
     },
     "increment": "inc-quality-adjective-templates",
+    "repair_of": "unit-v1.json (no weak-realization gate: a literal, uncontracted weak radical in a hollow root false-passed the faiil/faul/faaal rows as though the root were sound — قوال and قويل over root ق و ل are non-words, not template classifications; Sol round-3-style repair, ported from inc-derivatives/unit-v4.json's weak_realization_gate)",
+    "require_weak_declaration": true,
     "rules": [
       {
         "id": "qad-r1",
@@ -533,6 +832,18 @@
       {
         "id": "qad-r6",
         "text": "the أفعل skeleton is routed to the elative discriminator unit; this unit never resolves it"
+      },
+      {
+        "id": "qad-r7",
+        "text": "every realization of a weak radical (و، ي) is licensed per template, slot and radical by weak_realizations.by_template: an altered letter must appear in that entry's substituted list, and a weak radical may stand literally only where literal_licensed is true; nothing is licensed by default — an uncontracted hollow/weak shape is not a classification"
+      },
+      {
+        "id": "qad-r8",
+        "text": "every weak radical of the matched template requires the exact bound declaration (weak_position + weak_radical) -> otherwise weak_declaration_unbound; an unlicensed realization -> weak_realization_unlicensed; a declared weak position/radical the supplied radicals do not bear -> weak_declaration_contradicts_root"
+      },
+      {
+        "id": "qad-r9",
+        "text": "a matched row whose declared class begins with shared_ never resolves to that class here: the consumer abstains shared_row_class_undecided (the label is a routing hint, not a class the letters alone decide)"
       }
     ],
     "schema": "curriculum.l1l6_machine_unit.v1",
@@ -679,7 +990,16 @@
       }
     ],
     "unit_ref": "cu-quality-adjective-templates",
-    "version": 1
+    "version": 2,
+    "weak_radicals": [
+      "و",
+      "ي"
+    ],
+    "weak_realization_gate": true,
+    "weak_realizations": {
+      "by_template": {},
+      "licensing_note": "DELIBERATELY MINIMAL. No realization of a weak radical is licensed for any template in this increment: no committed fixture in this pack evidences a licensed substitution or a licensed literal weak realization, so every weak radical of a matched template abstains (weak_declaration_unbound or weak_realization_unlicensed). Widening this table is a linguistic decision for the ṣarf authority (adp-sarf-nahw-authority), made in DATA — no consumer edit is required to license a further realization."
+    }
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
@@ -702,7 +1022,7 @@
       "teaching": "when the row is shared with the intensive class or with the elative, the card shows the rival reading and the test that would decide it — not a winner"
     }
   ],
-  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "rollback_condition": "revert to unit-v1.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
   "schema": "curriculum.l1l6_promotion_bundle.v1",
   "status": "candidate_awaiting_sol_review"
 }
