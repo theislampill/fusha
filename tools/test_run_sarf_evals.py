@@ -1268,6 +1268,15 @@ class LetterOwnershipCarve(unittest.TestCase):
         self.assertIs(ctx.letter_ownership_decide, CUC.analyze_ownership_carve,
                       "Consumers.real() must bind the EXTERNAL module's function directly")
 
+    def test_missing_row_id_is_a_structured_failure_not_a_keyerror(self):
+        """A bank row missing its required `id` field must surface as an ordinary structured
+        failure (missing/empty required field) -- the adapter must never raise."""
+        rows = copy.deepcopy(_rows(_LOB))
+        del rows[0]["id"]
+        failures, _metrics = _run(_LOB, rows)
+        self.assertTrue(any("missing/empty required field 'id'" in f for f in failures),
+                         "expected a missing-id failure, got: %r" % failures[:5])
+
     def test_single_row_expected_owner_mutation_names_bank_row_and_property(self):
         """RED-FIRST: mutating exactly one row's expected owners must fail naming that row and property."""
         rows = copy.deepcopy(_rows(_LOB))
@@ -1539,6 +1548,9 @@ class LetterOwnershipCarve(unittest.TestCase):
             dict(base, mode="unknown_mode"),
             dict(base, mode=None),
             {k: v for k, v in base.items() if k != "mode"},
+            {k: v for k, v in base.items() if k != "surface"},  # surface omitted entirely
+            dict(base, surface=None),                  # surface explicitly None
+            dict(base, surface=""),                     # surface explicitly empty
             dict(base, letters=["جل", "س"]),          # multi-char "letter"
             dict(base, letters=[]),                    # empty letters
             dict(base, letters="جلس"),                 # not a list

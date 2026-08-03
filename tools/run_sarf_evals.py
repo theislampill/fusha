@@ -901,15 +901,15 @@ def adapter_letter_ownership_carve(rows, spec, ctx, root):
                 if o not in _OWNERSHIP_CLASSES:
                     fails.append(_f(rid, "owner_classes_closed_set",
                                     "owner class %r outside the closed set" % o))
-            if row["id"] == "own-adv-01":
+            if row.get("id") == "own-adv-01":
                 props.hit(rid, _OWN, "shape_only_augment_rejected")
                 if got_owners[:1] != ["root"]:
                     fails.append(_f(rid, "shape_only_augment_rejected",
                                     "an initial mim that IS radical_1 must never default to pattern_augment"))
-            if row.get("suffix_kind") == "nisba" or row["id"] == "own-nisba-02":
+            if row.get("suffix_kind") == "nisba" or row.get("id") == "own-nisba-02":
                 props.hit(rid, _OWN, "nisba_affix_never_root")
 
-        if row["id"] == "own-double-01":
+        if row.get("id") == "own-double-01":
             props.hit(rid, _OWN, "double_claim_forces_abstention")
             if rec.get("decision") != "abstain" or rec.get("reason") != "pending_letter_ownership":
                 fails.append(_f(rid, "double_claim_forces_abstention",
