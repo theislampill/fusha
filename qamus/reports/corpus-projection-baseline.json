@@ -1,6 +1,6 @@
 {
   "canaries": {
-    "al_dhakar_al_untha_article_ownership": {
+    "al_dhakar_al_untha_article_shape_recall": {
       "matched_rows": [
         {
           "appearance_id": "b8e480aebafe:u0:x1:w2",
@@ -22,9 +22,9 @@
         }
       ],
       "reason": "definite-article prefix separately recalled from stem for AL-DHAKAR/AL-UNTHA tokens in P099's own 92:3 example (shape recall only, not a morpheme-ownership claim)",
-      "status": "measured"
+      "status": "shape_recall_signal_present"
     },
-    "al_samawat_plural_ownership": {
+    "al_samawat_plural_shape_recall": {
       "matched_rows": [
         {
           "appearance_id": "b8e480aebafe:u0:x0:w3",
@@ -36,7 +36,7 @@
         }
       ],
       "reason": "plural suffix separately recalled from stem for AL-SAMAWAT in P099's own 2:284 example (shape recall only, not a morpheme-ownership claim)",
-      "status": "measured"
+      "status": "shape_recall_signal_present"
     },
     "ma_function_disambiguation_deficit": {
       "distinct_function_candidate_variants": 1,

@@ -510,15 +510,35 @@ class FullCorpusCanaryTests(unittest.TestCase):
         self.assertGreater(p009["candidate_occurrence_count"], 0)
         self.assertGreater(p009["context_appearance_total"], p009["candidate_occurrence_count"])
 
-    def test_al_dhakar_al_untha_article_ownership_is_measured(self):
+    def test_al_dhakar_al_untha_article_shape_recall_is_explicitly_non_ownership(self):
         canary = m.compute_canary_report(self.context)
-        self.assertEqual(canary["al_dhakar_al_untha_article_ownership"]["status"], "measured")
-        self.assertGreaterEqual(len(canary["al_dhakar_al_untha_article_ownership"]["matched_rows"]), 2)
+        self.assertEqual(
+            canary["al_dhakar_al_untha_article_shape_recall"]["status"],
+            "shape_recall_signal_present",
+        )
+        self.assertGreaterEqual(
+            len(canary["al_dhakar_al_untha_article_shape_recall"]["matched_rows"]), 2
+        )
 
-    def test_al_samawat_plural_ownership_is_measured(self):
+    def test_al_samawat_plural_shape_recall_is_explicitly_non_ownership(self):
         canary = m.compute_canary_report(self.context)
-        self.assertEqual(canary["al_samawat_plural_ownership"]["status"], "measured")
-        self.assertGreaterEqual(len(canary["al_samawat_plural_ownership"]["matched_rows"]), 1)
+        self.assertEqual(
+            canary["al_samawat_plural_shape_recall"]["status"],
+            "shape_recall_signal_present",
+        )
+        self.assertGreaterEqual(
+            len(canary["al_samawat_plural_shape_recall"]["matched_rows"]), 1
+        )
+
+    def test_canary_shape_recall_never_republishes_measured_ownership(self):
+        canary = m.compute_canary_report(self.context)
+        self.assertFalse(
+            any(
+                key.endswith("_ownership") and value.get("status") == "measured"
+                for key, value in canary.items()
+                if isinstance(value, dict)
+            )
+        )
 
     def test_ma_function_disambiguation_deficit_is_reported_not_fabricated(self):
         canary = m.compute_canary_report(self.context)

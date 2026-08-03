@@ -904,7 +904,7 @@ def compute_canary_report(context):
                 "token_count (P009's own example-card context appearances).",
     }
 
-    # AL-DHAKAR / AL-UNTHA definite-article shape recall: measured within P099's own
+    # AL-DHAKAR / AL-UNTHA definite-article shape recall within P099's own
     # example fragments (92:3 "وما خلق الذكر والأنثى"), general article-detection rule.
     article_hits = [
         {"appearance_id": r["appearance_id"], "displayed_surface": r["displayed_surface"],
@@ -913,9 +913,9 @@ def compute_canary_report(context):
         if r["dispositions"]["orthographic_shape_recall"]["article"]["present"] is True
         and r["dispositions"]["orthographic_shape_recall"]["article"]["stem_after_article"] in ("ذكر", "أنثى")
     ]
-    report["al_dhakar_al_untha_article_ownership"] = {
+    report["al_dhakar_al_untha_article_shape_recall"] = {
         "matched_rows": article_hits,
-        "status": "measured" if article_hits else "blocked",
+        "status": "shape_recall_signal_present" if article_hits else "no_shape_recall_signal",
         "reason": (
             "definite-article prefix separately recalled from stem for AL-DHAKAR/AL-UNTHA "
             "tokens in P099's own 92:3 example (shape recall only, not a morpheme-ownership claim)"
@@ -924,7 +924,7 @@ def compute_canary_report(context):
         ),
     }
 
-    # AL-SAMAWAT plural/inflection shape recall: measured within P099's own 2:284 example.
+    # AL-SAMAWAT plural/inflection shape recall within P099's own 2:284 example.
     plural_hits = [
         {"appearance_id": r["appearance_id"], "displayed_surface": r["displayed_surface"],
          "plural": r["dispositions"]["orthographic_shape_recall"]["plural"]}
@@ -932,9 +932,9 @@ def compute_canary_report(context):
         if r["dispositions"]["orthographic_shape_recall"]["plural"]["suffix"] == "ات"
         and r["dispositions"]["orthographic_shape_recall"]["article"]["present"] is True
     ]
-    report["al_samawat_plural_ownership"] = {
+    report["al_samawat_plural_shape_recall"] = {
         "matched_rows": plural_hits,
-        "status": "measured" if plural_hits else "blocked",
+        "status": "shape_recall_signal_present" if plural_hits else "no_shape_recall_signal",
         "reason": (
             "plural suffix separately recalled from stem for AL-SAMAWAT in P099's own "
             "2:284 example (shape recall only, not a morpheme-ownership claim)"
