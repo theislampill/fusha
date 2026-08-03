@@ -21,22 +21,32 @@ def _project(row: dict) -> dict:
     parsed = parse_text(row["visible_surface"], document_id=row["row_id"], db="largelexicon")
     token = (parsed.get("tokens") or [{}])[0]
     segments = token.get("qg_segments") or []
-    segment_surface = "".join(seg.get("surface", "") for seg in segments)
+    collision = token.get("collision")
     parser_gate = token.get("confidence_gate")
     missing_source = not row.get("canonical_quran_loc") or not row.get("canonical_wbw_loc")
     bad_classes = sorted({seg.get("class") for seg in segments if seg.get("class") not in ALLOWED_QG_CLASSES})
-    if bad_classes:
-        status = "validator_packet"
-        route = "executor_validator_patch_ready"
-    elif missing_source:
-        status = "source_crosswalk_packet"
-        route = "executor_source_crosswalk_patch_ready"
-    elif parser_gate in {"likely_from_internal_pattern", "pending_context"}:
-        status = "candidate_for_executor_validation"
-        route = "executor_validation_queue"
-    else:
+    if collision:
+        # R8: a withheld (fully or partially, per collision.scope) stem must
+        # not be asked to reconstruct visible_surface, and carries no gloss.
+        segment_surface = None
+        token_contribution = None
         status = "parser_packet"
         route = "executor_parser_or_sarf_nahw_packet_ready"
+    else:
+        segment_surface = "".join(seg.get("surface", "") for seg in segments)
+        token_contribution = (token.get("hover_preview") or {}).get("token_contribution_gloss")
+        if bad_classes:
+            status = "validator_packet"
+            route = "executor_validator_patch_ready"
+        elif missing_source:
+            status = "source_crosswalk_packet"
+            route = "executor_source_crosswalk_patch_ready"
+        elif parser_gate in {"likely_from_internal_pattern", "pending_context"}:
+            status = "candidate_for_executor_validation"
+            route = "executor_validation_queue"
+        else:
+            status = "parser_packet"
+            route = "executor_parser_or_sarf_nahw_packet_ready"
     return {
         "schema": "qamus/largelexicon-hover-candidate@1",
         "row_id": row["row_id"],
@@ -47,7 +57,8 @@ def _project(row: dict) -> dict:
         "segment_surface": segment_surface,
         "segments": segments,
         "qg_classes": [seg.get("class") for seg in segments],
-        "token_contribution": (token.get("hover_preview") or {}).get("token_contribution_gloss"),
+        "token_contribution": token_contribution,
+        "collision": collision,
         "parser_gate": parser_gate,
         "status": status,
         "route": route,
