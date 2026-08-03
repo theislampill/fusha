@@ -1725,31 +1725,58 @@ def check_evidence_resolution(payload, errors):
     ``authoritative_for_certification`` (contract §8); an unknown scheme or
     an unresolvable, candidate, or otherwise non-authoritative reference
     fails a certified payload rather than passing through as a non-empty
-    string. ``public_projection_eligible`` may only be true when the
-    payload is genuinely certified on authoritative evidence. Every
-    non-authoritative posture (candidate, unresolved, review_required)
-    must set it to explicit ``false`` — omission, ``null``, a non-boolean
-    value, or ``true`` all fail closed rather than passing silently.
+    string. ``evidence_refs`` itself must be an array of reference strings —
+    a non-array shape or a non-string element fails closed by name rather
+    than being silently skipped or filtered out. ``public_projection_eligible``
+    may only be true when the payload is genuinely certified on
+    authoritative evidence. Every non-authoritative posture (candidate,
+    unresolved, review_required) must set it to explicit ``false`` —
+    omission, ``null``, a non-boolean value, or ``true`` all fail closed
+    rather than passing silently.
     """
     projection = payload.get("projection")
     if not isinstance(projection, dict):
         return
     refs = projection.get("evidence_refs")
-    if not isinstance(refs, list):
-        return
     certification = projection.get("certification")
     status = (
         certification.get("status")
         if isinstance(certification, dict)
         else None
     )
+    public_eligible = projection.get("public_projection_eligible")
+    if not isinstance(refs, list):
+        errors.append(
+            "evidence_resolution: projection.evidence_refs must be an "
+            "array of reference strings, got %s"
+            % type(refs).__name__
+        )
+        if public_eligible is True:
+            errors.append(
+                "public_projection_eligible: public_projection_eligible is "
+                "true but projection.evidence_refs is not an array of "
+                "reference strings"
+            )
+        return
+    non_string_indices = [
+        index for index, ref in enumerate(refs) if not isinstance(ref, str)
+    ]
+    for index in non_string_indices:
+        errors.append(
+            "evidence_resolution: evidence_refs[%d] must be a string "
+            "reference, got %r" % (index, refs[index])
+        )
     resolver = _website_evidence_resolver()
-    resolutions = resolver.resolve_many(
-        ref for ref in refs if isinstance(ref, str)
-    )
-    all_authoritative = bool(resolutions) and all(
-        resolution.authoritative_for_certification
-        for resolution in resolutions
+    resolutions = [
+        resolver.resolve(ref) for ref in refs if isinstance(ref, str)
+    ]
+    all_authoritative = (
+        bool(refs)
+        and not non_string_indices
+        and all(
+            resolution.authoritative_for_certification
+            for resolution in resolutions
+        )
     )
     if status == "certified":
         for resolution in resolutions:
@@ -1764,7 +1791,6 @@ def check_evidence_resolution(payload, errors):
                         resolution.reason,
                     )
                 )
-    public_eligible = projection.get("public_projection_eligible")
     if status in {"candidate", "unresolved", "review_required"}:
         if public_eligible is not False:
             errors.append(
@@ -2956,6 +2982,73 @@ def _self_test() -> int:
         "fails closed",
         bad,
         "public_projection_eligible",
+    )
+
+    # red 46 (C1) — evidence_refs as a bare string, not an array, must fail
+    # closed rather than silently short-circuiting evidence resolution.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = "fact:bogus:not-real"
+    _rehash_payload(bad)
+    expect_red(
+        "red: evidence_refs as a string instead of an array fails closed",
+        bad,
+        "evidence_resolution",
+    )
+
+    # red 47 (C1) — the same malformed evidence_refs shape must also refuse
+    # an explicit public_projection_eligible true rather than pass through.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = "fact:bogus:not-real"
+    bad["projection"]["public_projection_eligible"] = True
+    _rehash_payload(bad)
+    expect_red(
+        "red: public_projection_eligible true cannot ride on a malformed "
+        "evidence_refs string",
+        bad,
+        "public_projection_eligible",
+    )
+
+    # red 48 (I1) — a non-string evidence_refs entry must be reported, never
+    # silently filtered out, even alongside a genuinely authoritative ref.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg", {"x": 1},
+    ]
+    _rehash_payload(bad)
+    expect_red(
+        "red: non-string evidence_refs entry is reported, never filtered "
+        "out",
+        bad,
+        "evidence_resolution",
+    )
+
+    # red 49 (I1) — the same non-string entry must also refuse an explicit
+    # public_projection_eligible true; a good ref elsewhere in the array may
+    # never rescue it.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg", {"x": 1},
+    ]
+    bad["projection"]["public_projection_eligible"] = True
+    _rehash_payload(bad)
+    expect_red(
+        "red: public_projection_eligible true cannot be rescued by a good "
+        "ref alongside a non-string evidence_refs entry",
+        bad,
+        "public_projection_eligible",
+    )
+
+    # red 50 (I1) — an integer evidence_refs entry must not launder through
+    # either, matching the reproduced finding exactly.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg", 123,
+    ]
+    _rehash_payload(bad)
+    expect_red(
+        "red: integer evidence_refs entry is reported, never filtered out",
+        bad,
+        "evidence_resolution",
     )
 
     if failures:

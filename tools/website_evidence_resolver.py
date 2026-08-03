@@ -2,11 +2,15 @@
 # -*- coding: utf-8 -*-
 """Repository evidence resolution for website-payload ``evidence_refs`` (stdlib only).
 
-Standalone resolver: it is not yet wired into ``tools/validate_website_payload.py``
-and never touches payload files. Given one evidence reference string (as it
-appears in ``projection.evidence_refs``), it resolves the reference against the
-committed typed-fact certification authority in this repository and reports a
-closed, fail-closed effective state -- never a copied status string.
+``tools/validate_website_payload.py``'s ``check_evidence_resolution`` consumes
+this module directly (via ``WebsiteEvidenceResolver``) to fail closed on
+unauthoritative evidence and public-delivery claims. This module itself never
+writes to or otherwise mutates any payload file -- it only reads committed
+certification/evidence state and reports a resolution. Given one evidence
+reference string (as it appears in ``projection.evidence_refs``), it resolves
+the reference against the committed typed-fact certification authority in
+this repository and reports a closed, fail-closed effective state -- never a
+copied status string.
 
 Four kinds of committed repository authority are consulted:
 
@@ -46,6 +50,7 @@ instance is constructed or asked to resolve a reference.
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import re
@@ -110,6 +115,8 @@ EFFECTIVE_STATES: FrozenSet[str] = frozenset({
     "contradictory",
     "certified_support",
     "review_verified",
+    "two_vote_disagreement",
+    "two_vote_claimed_unverified",
     "custody_verified",
     "custody_hash_mismatch",
     "custody_invalid",
@@ -128,6 +135,20 @@ _STATUS_TO_EFFECTIVE: Dict[str, str] = {
     "certified": "certified",
     "blocked": "invalidated",
     "rejected": "revoked",
+}
+
+# Two-vote artifact claim_state -> closed effective-state vocabulary, for an
+# artifact_id that is not (or not yet) bound by a certification event trail
+# to a currently effectively certified typed fact. A valid but unbound
+# ``two_vote_verified`` row is review evidence on its own (``review_verified``);
+# ``two_vote_disagreement`` and ``two_vote_claimed_unverified`` are honest
+# closed non-authoritative states in their own right, never relabelled as
+# review_verified. A claim_state this module has never seen is refused
+# rather than guessed at (mirrors ``_STATUS_TO_EFFECTIVE`` above).
+_TWO_VOTE_CLAIM_STATE_TO_EFFECTIVE: Dict[str, str] = {
+    "two_vote_verified": "review_verified",
+    "two_vote_disagreement": "two_vote_disagreement",
+    "two_vote_claimed_unverified": "two_vote_claimed_unverified",
 }
 
 
@@ -152,6 +173,7 @@ def effective_typed_fact_state(
     fact_id: str,
     folded_state: Dict[str, dict],
     *,
+    conflicts: FrozenSet[str] = frozenset(),
     _visiting: FrozenSet[str] = frozenset(),
 ) -> Tuple[str, bool, str]:
     """Pure recursive helper: effective state of one folded typed fact.
@@ -161,6 +183,13 @@ def effective_typed_fact_state(
     certified fact whose every ``dependencies.fact_ids`` entry is itself
     effectively certified is authoritative; a missing dependency, a
     dependency cycle, or any non-certified status fails closed.
+
+    ``conflicts`` is the set of fact_ids registered with disagreeing content
+    across more than one committed certification store (``_StoreView.conflicts``).
+    A conflicting fact_id fails closed here at every depth it is consulted --
+    not only when it is the directly queried reference -- so a certified fact
+    can never launder a conflicting dependency into authority by folding
+    whichever store's copy happened to be indexed first.
     """
 
     if fact_id in _visiting:
@@ -168,6 +197,13 @@ def effective_typed_fact_state(
             "dependency_failed",
             False,
             "dependency cycle detected: %s is already being resolved" % fact_id,
+        )
+    if fact_id in conflicts:
+        return (
+            "contradictory",
+            False,
+            "fact_id %s is registered with conflicting content in more than one "
+            "committed certification store" % fact_id,
         )
     entry = folded_state.get(fact_id)
     if entry is None:
@@ -194,7 +230,7 @@ def effective_typed_fact_state(
     visiting = _visiting | {fact_id}
     for dependency_id in dependency_ids:
         dep_state, dep_authoritative, dep_reason = effective_typed_fact_state(
-            dependency_id, folded_state, _visiting=visiting
+            dependency_id, folded_state, conflicts=conflicts, _visiting=visiting
         )
         if not dep_authoritative:
             return (
@@ -520,7 +556,7 @@ class WebsiteEvidenceResolver:
             origin_dir = self._view.origin[ref]
             locator = self._repo_relative(self.repo_root / origin_dir / "events.jsonl")
             effective_state, authoritative, reason = effective_typed_fact_state(
-                ref, self._view.state
+                ref, self._view.state, conflicts=self._view.conflicts
             )
             return EvidenceResolution(
                 ref, scheme, True, effective_state, authoritative, reason, locator,
@@ -573,7 +609,7 @@ class WebsiteEvidenceResolver:
             return None
         for fact_id in sorted(self._view.two_vote_bound_fact_ids.get(artifact_id) or ()):
             _effective_state, authoritative, _reason = effective_typed_fact_state(
-                fact_id, self._view.state
+                fact_id, self._view.state, conflicts=self._view.conflicts
             )
             if authoritative:
                 return fact_id
@@ -606,12 +642,34 @@ class WebsiteEvidenceResolver:
                 % (ref, row.get("claim_state"), bound_fact_id),
                 locator,
             )
+        claim_state = row.get("claim_state")
+        effective_state = _TWO_VOTE_CLAIM_STATE_TO_EFFECTIVE.get(claim_state)
+        if effective_state is None:
+            return EvidenceResolution(
+                ref, scheme, True, "evidence_unresolved", False,
+                "two-vote artifact %r carries an unrecognised claim_state %r"
+                % (ref, claim_state),
+                locator,
+            )
+        if claim_state == "two_vote_verified":
+            reason = (
+                "two-vote artifact %r (two_vote_verified) is valid review evidence but is "
+                "not bound by any certification event trail to a currently effectively "
+                "certified typed fact" % ref
+            )
+        elif claim_state == "two_vote_disagreement":
+            reason = (
+                "two-vote artifact %r recorded reviewer disagreement (two_vote_disagreement) "
+                "and is never certification authority" % ref
+            )
+        else:  # two_vote_claimed_unverified
+            reason = (
+                "two-vote artifact %r is a reclassified historical claim "
+                "(two_vote_claimed_unverified) with no reconstructible vote pair and is "
+                "never certification authority" % ref
+            )
         return EvidenceResolution(
-            ref, scheme, True, "review_verified", False,
-            "two-vote artifact %r (%s) is valid review evidence but is not bound by any "
-            "certification event trail to a currently effectively certified typed fact"
-            % (ref, row.get("claim_state")),
-            locator,
+            ref, scheme, True, effective_state, False, reason, locator,
         )
 
     def _resolve_cert_event(self, ref: str, rest: str) -> EvidenceResolution:
@@ -641,7 +699,7 @@ class WebsiteEvidenceResolver:
                 "no committed certification-store event_id matches %r" % ref, None,
             )
         effective_state, authoritative, reason = effective_typed_fact_state(
-            fact_id, self._view.state
+            fact_id, self._view.state, conflicts=self._view.conflicts
         )
         return EvidenceResolution(
             ref, scheme, True, effective_state, authoritative,
@@ -733,25 +791,27 @@ def _event_sha256(event: dict) -> str:
     return "sha256:" + hashlib.sha256(_canonical(event).encode("utf-8")).hexdigest()
 
 
-def _build_valid_authority_events(fact_id: str) -> List[dict]:
-    """A minimal, hand-assembled, structurally valid certified event chain.
+def _authority_fact_event_templates(
+    fact_id: str, dependency_ids: Optional[List[str]] = None,
+) -> List[dict]:
+    """Unchained register/review/certify event templates for one fact_id.
 
     Deliberately avoids ``fact_type``/``evidence_mode`` values that would pull
     in the two-vote-reopening or derived-cascade checks in
     ``TypedFactCertificationStore.validate_trail`` -- this is a self-test
     fixture for authority-integrity plumbing, not a certification-gate proof.
+    ``seq``/``prev_event_sha256`` are filled in by ``_chain_events`` so several
+    facts' templates can be concatenated into one globally-sequenced store.
     """
 
     fact = {
         "fact_id": fact_id,
         "fact_type": "selftest_authority_integrity_fact",
         "evidence_mode": "selftest_direct",
-        "dependencies": {"fact_ids": []},
+        "dependencies": {"fact_ids": list(dependency_ids or [])},
     }
     register = {
         "schema": "qamus.certification_event.v1",
-        "seq": 1,
-        "prev_event_sha256": "genesis",
         "event_id": "cert-event:1:%s" % fact_id,
         "event_type": "register",
         "fact_id": fact_id,
@@ -768,8 +828,6 @@ def _build_valid_authority_events(fact_id: str) -> List[dict]:
     }
     to_review = {
         "schema": "qamus.certification_event.v1",
-        "seq": 2,
-        "prev_event_sha256": _event_sha256(register),
         "event_id": "cert-event:2:%s" % fact_id,
         "event_type": "transition",
         "fact_id": fact_id,
@@ -786,8 +844,6 @@ def _build_valid_authority_events(fact_id: str) -> List[dict]:
     }
     to_certified = {
         "schema": "qamus.certification_event.v1",
-        "seq": 3,
-        "prev_event_sha256": _event_sha256(to_review),
         "event_id": "cert-event:3:%s" % fact_id,
         "event_type": "transition",
         "fact_id": fact_id,
@@ -803,6 +859,74 @@ def _build_valid_authority_events(fact_id: str) -> List[dict]:
         "triggered_by": None,
     }
     return [register, to_review, to_certified]
+
+
+def _blocked_fact_event_templates(fact_id: str) -> List[dict]:
+    """Unchained register + transition-to-blocked templates for one fact_id."""
+
+    fact = {
+        "fact_id": fact_id,
+        "fact_type": "selftest_authority_integrity_fact",
+        "evidence_mode": "selftest_direct",
+        "dependencies": {"fact_ids": []},
+    }
+    register = {
+        "schema": "qamus.certification_event.v1",
+        "event_id": "cert-event:1:%s" % fact_id,
+        "event_type": "register",
+        "fact_id": fact_id,
+        "contract_id": "selftest-contract",
+        "fact_type": fact["fact_type"],
+        "evidence_mode": fact["evidence_mode"],
+        "from_status": None,
+        "to_status": "candidate",
+        "actor": "selftest",
+        "timestamp": "2026-01-01T00:00:00Z",
+        "reason": "selftest registration",
+        "evidence_bundle_ref": None,
+        "fact": fact,
+    }
+    to_blocked = {
+        "schema": "qamus.certification_event.v1",
+        "event_id": "cert-event:2:%s" % fact_id,
+        "event_type": "transition",
+        "fact_id": fact_id,
+        "contract_id": "selftest-contract",
+        "fact_type": fact["fact_type"],
+        "evidence_mode": fact["evidence_mode"],
+        "from_status": "candidate",
+        "to_status": "blocked",
+        "actor": "selftest",
+        "timestamp": "2026-01-01T00:00:01Z",
+        "reason": "selftest defeater",
+        "evidence_bundle_ref": None,
+        "triggered_by": None,
+    }
+    return [register, to_blocked]
+
+
+def _chain_events(templates: List[dict]) -> List[dict]:
+    """Assign a globally-sequential ``seq``/``prev_event_sha256`` chain."""
+
+    chained: List[dict] = []
+    previous_event: Optional[dict] = None
+    for index, template in enumerate(templates, start=1):
+        event = dict(template)
+        event["seq"] = index
+        event["prev_event_sha256"] = (
+            _event_sha256(previous_event) if previous_event is not None else "genesis"
+        )
+        chained.append(event)
+        previous_event = event
+    return chained
+
+
+def _build_valid_authority_events(
+    fact_id: str, dependency_ids: Optional[List[str]] = None,
+) -> List[dict]:
+    """A minimal, hand-assembled, structurally valid certified event chain."""
+
+    return _chain_events(_authority_fact_event_templates(fact_id, dependency_ids))
 
 
 def _write_events_jsonl(directory: Path, lines: List[str]) -> None:
@@ -869,6 +993,78 @@ def _focused_proof_authority_integrity() -> int:
         print("\n%d AUTHORITY-INTEGRITY PROOF CASE(S) FAILED" % failures)
         return 1
     print("\nALL AUTHORITY-INTEGRITY PROOF CASES PASSED")
+    return 0
+
+
+def _focused_proof_conflicting_dependency_integrity() -> int:
+    """I2: a conflicting dependency must fail closed at every recursion depth.
+
+    Two individually-valid, individually-trail-clean stores each carry their
+    own committed content for the SAME dependency fact_id B: one certifies
+    it, the other blocks it. Both stores are otherwise intact, so this is not
+    the whole-snapshot authority-integrity failure covered above -- it is a
+    genuine cross-store content conflict for one fact_id. A certified fact A
+    that depends on B must become ``dependency_failed`` because B itself is
+    ``contradictory`` -- never silently fold whichever store's copy of B was
+    indexed first into settled authority.
+    """
+
+    failures = 0
+    good_relative_dir, bad_relative_dir = CERTIFICATION_STORE_RELATIVE_DIRS
+    fact_a = "fact:selftest:conflict-dependency:A"
+    fact_b = "fact:selftest:conflict-dependency:B"
+
+    def run_case(
+        label: str, repo_root: Path, fact_id: str,
+        expected_state: str, expected_authoritative: bool,
+    ) -> None:
+        nonlocal failures
+        resolver = WebsiteEvidenceResolver(repo_root)
+        result = resolver.resolve(fact_id)
+        ok = (
+            result.effective_state == expected_state
+            and result.authoritative_for_certification == expected_authoritative
+        )
+        print(
+            ("ok   " if ok else "FAIL ")
+            + "%s -> effective_state=%s authoritative=%s reason=%s"
+            % (label, result.effective_state, result.authoritative_for_certification, result.reason)
+        )
+        if not ok:
+            failures += 1
+
+    with tempfile.TemporaryDirectory(
+        prefix="website-evidence-conflicting-dependency-selftest-"
+    ) as tmp:
+        tmp_root = Path(tmp)
+
+        store1_events = _chain_events(
+            _authority_fact_event_templates(fact_a, [fact_b])
+            + _authority_fact_event_templates(fact_b)
+        )
+        store2_events = _chain_events(_blocked_fact_event_templates(fact_b))
+        _write_events_jsonl(
+            tmp_root / good_relative_dir,
+            [_canonical(event) for event in store1_events],
+        )
+        _write_events_jsonl(
+            tmp_root / bad_relative_dir,
+            [_canonical(event) for event in store2_events],
+        )
+
+        run_case(
+            "10. queried directly, the conflicting dependency itself",
+            tmp_root, fact_b, "contradictory", False,
+        )
+        run_case(
+            "11. certified fact depending on a cross-store conflicting fact",
+            tmp_root, fact_a, "dependency_failed", False,
+        )
+
+    if failures:
+        print("\n%d CONFLICTING-DEPENDENCY PROOF CASE(S) FAILED" % failures)
+        return 1
+    print("\nALL CONFLICTING-DEPENDENCY PROOF CASES PASSED")
     return 0
 
 
@@ -979,6 +1175,107 @@ def _focused_proof_custody_manifest_integrity() -> int:
         )
 
     return failures
+
+
+def _build_two_vote_disagreement_row() -> dict:
+    """An otherwise-valid ``two_vote_disagreement`` row (m1 fixture).
+
+    Reuses ``validate_two_vote_artifacts.sample_verified_row()`` -- already
+    proven valid by that module's own self-test -- and disagrees the second
+    vote's ``reason_key`` only, which is sufficient on its own to make the row
+    a genuine (not recomputed-as-agreeing) disagreement.
+    """
+
+    row = copy.deepcopy(validate_two_vote_artifacts.sample_verified_row())
+    row["artifact_id"] = "two-vote-artifact:quran_2_13_12:selftest-disagreement"
+    row["claim_state"] = "two_vote_disagreement"
+    row["votes"][1]["reason_key"] = "selftest-disagreement-reason-key"
+    row["agreement"] = {
+        "conclusion_agrees": True,
+        "reason_agrees": False,
+        "agreement_key": None,
+        "compared_fields": ["conclusion", "reason_key"],
+        "gloss_text_used_for_agreement": False,
+    }
+    return row
+
+
+def _write_jsonl_rows(path: Path, rows: List[dict]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "\n".join(json.dumps(row, ensure_ascii=False) for row in rows) + "\n",
+        encoding="utf-8",
+    )
+
+
+def _focused_proof_two_vote_claim_states() -> int:
+    """m1: an unbound two-vote row reports its own honest claim_state.
+
+    A valid, unbound ``two_vote_verified`` row stays ``review_verified``; a
+    ``two_vote_disagreement`` or ``two_vote_claimed_unverified`` row is its
+    own closed non-authoritative effective state, never uniformly relabelled
+    ``review_verified`` regardless of what the row actually claims.
+    """
+
+    failures = 0
+    good_relative_path, second_relative_path = TWO_VOTE_ARTIFACT_BUNDLE_RELATIVE_PATHS
+    verified_row = validate_two_vote_artifacts.sample_verified_row()
+    disagreement_row = _build_two_vote_disagreement_row()
+    unverified_row = validate_two_vote_artifacts.sample_unverified_row()
+
+    def run_case(
+        label: str, repo_root: Path, artifact_id: str,
+        expected_state: str, expected_authoritative: bool,
+    ) -> None:
+        nonlocal failures
+        resolver = WebsiteEvidenceResolver(repo_root)
+        result = resolver.resolve(artifact_id)
+        ok = (
+            result.effective_state == expected_state
+            and result.authoritative_for_certification == expected_authoritative
+        )
+        print(
+            ("ok   " if ok else "FAIL ")
+            + "%s -> effective_state=%s authoritative=%s reason=%s"
+            % (label, result.effective_state, result.authoritative_for_certification, result.reason)
+        )
+        if not ok:
+            failures += 1
+
+    with tempfile.TemporaryDirectory(
+        prefix="website-evidence-two-vote-claim-state-selftest-"
+    ) as tmp:
+        tmp_root = Path(tmp)
+        _write_jsonl_rows(
+            tmp_root / good_relative_path,
+            [verified_row, disagreement_row, unverified_row],
+        )
+        _write_jsonl_rows(
+            tmp_root / second_relative_path,
+            [validate_two_vote_artifacts.sample_verified_row_v11()],
+        )
+
+        run_case(
+            "m1a. unbound two_vote_disagreement row",
+            tmp_root, disagreement_row["artifact_id"],
+            "two_vote_disagreement", False,
+        )
+        run_case(
+            "m1b. unbound two_vote_claimed_unverified row",
+            tmp_root, unverified_row["artifact_id"],
+            "two_vote_claimed_unverified", False,
+        )
+        run_case(
+            "m1c. unbound two_vote_verified row stays review_verified",
+            tmp_root, verified_row["artifact_id"],
+            "review_verified", False,
+        )
+
+    if failures:
+        print("\n%d TWO-VOTE CLAIM-STATE PROOF CASE(S) FAILED" % failures)
+        return 1
+    print("\nALL TWO-VOTE CLAIM-STATE PROOF CASES PASSED")
+    return 0
 
 
 def _focused_proof_remaining_schemes() -> int:
@@ -1176,5 +1473,13 @@ def _focused_proof() -> int:
 if __name__ == "__main__":
     base_exit = _focused_proof()
     integrity_exit = _focused_proof_authority_integrity()
+    conflicting_dependency_exit = _focused_proof_conflicting_dependency_integrity()
+    two_vote_claim_state_exit = _focused_proof_two_vote_claim_states()
     remaining_schemes_exit = _focused_proof_remaining_schemes()
-    sys.exit(base_exit or integrity_exit or remaining_schemes_exit)
+    sys.exit(
+        base_exit
+        or integrity_exit
+        or conflicting_dependency_exit
+        or two_vote_claim_state_exit
+        or remaining_schemes_exit
+    )
