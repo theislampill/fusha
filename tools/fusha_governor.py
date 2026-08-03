@@ -1094,6 +1094,82 @@ def build_dependency_lattice(unit):
 
 
 # ---------------------------------------------------------------------------
+# TRAIN-B/C L2.M2 nawāsikh diagnostic-export adapter — bounded, additive.
+#
+# The lattice above ALREADY discriminates five coherent nawāsikh families through fields it already emits
+# (`governing_regime`, `abstention_reason`) — it never needed a new branch to expose them. This adapter is a
+# pure, read-only CLASSIFIER + FORMATTER over `build_dependency_lattice()` output; it adds no new governing
+# behaviour to `_h_nawasikh` or the address-bearing sweep. A sixth candidate family named in the L2.M2 batch —
+# inna-family MODAL FORCE (kaʾanna/laṭta/laʿalla's semantic stance) — is deliberately NOT classified here:
+# `curriculum/l1l6/canonical/canonical-units.jsonl#cu-inna-modal-force` records it as
+# `capability_family: instructional_only` with "no current consumer can act on it", and this lattice has no
+# feature modelling presupposed likelihood or figurative intent. Inventing a branch for it would be exactly the
+# false-consumption claim this adapter must not make; those two candidate rows stay ordinary practice items with
+# no KC/diagnostic binding.
+# ---------------------------------------------------------------------------
+NAWASIKH_DIAGNOSTIC_FAMILIES = (
+    "kana_laysa_government", "continuative_licensing", "inna_family_government",
+    "qalb_verb_transitivity", "stacked_governor_scope",
+)
+_NAWASIKH_PROCEDURE_ROUTE = ("nahw", "nahw/procedures/nawasikh-government.md")
+
+
+def nawasikh_lattice_family(edge):
+    """Classify one governor-lattice EDGE into one of the five genuinely-emitted nawāsikh families, or None.
+
+    Reads only fields `_mk_edge`/`_h_nawasikh` already populate (`abstention_reason`, `governing_regime`) — it
+    never infers a family from silence or from edge text. `abstention_reason` is checked first because the
+    continuative-licensing and stacked-governor-scope branches abstain BEFORE `governing_regime` is ever set."""
+    reason = edge.get("abstention_reason")
+    if reason == "licenser_absent":
+        return "continuative_licensing"
+    if reason == "bracketing_ambiguous":
+        return "stacked_governor_scope"
+    regime = edge.get("governing_regime")
+    if regime == "zanna_family":
+        return "qalb_verb_transitivity"
+    if regime == "kana_family":
+        return "kana_laysa_government"
+    if regime == "inna_family":
+        return "inna_family_government"
+    return None
+
+
+def nawasikh_pending_diagnostics(unit):
+    """Adapt one CheckUnit's governor lattice into a list of PENDING diagnostic dicts for the five nawāsikh
+    families above. Each dict carries: `issue_class` (the existing closed fusha-text-check value
+    `possible_governor_unresolved` — this adapter registers no new issue class, since none of the five families
+    is anything OTHER than a governor pending justification), `family`, `gate` (from the edge, never downgraded),
+    `route` ({lane, procedure} — nahw/procedures/nawasikh-government.md, which already documents all five
+    families' abstention vocabulary), `target_loc`, `decision_status`, `contradiction_marker`, and
+    `unresolved_alternatives` (rivals preserved verbatim). An edge outside the five families, or a `resolved`
+    edge (never happens here — the lattice asserts `gate != auto_safe` for every nawāsikh edge), is skipped.
+    Never certifies: every emitted dict carries `decision_status` from the edge, which is 'pending' or
+    'unresolved' for every nawāsikh edge this lattice can produce."""
+    lattice = build_dependency_lattice(unit)
+    lane, proc = _NAWASIKH_PROCEDURE_ROUTE
+    out = []
+    for edge in lattice["edges"]:
+        family = nawasikh_lattice_family(edge)
+        if family is None:
+            continue
+        out.append({
+            "issue_class": "possible_governor_unresolved",
+            "family": family,
+            "gate": edge["gate"],
+            "route": {"lane": lane, "procedure": proc},
+            "target_loc": edge["dependent"],
+            "source_unit": lattice["source_unit"],
+            "decision_status": edge["decision_status"],
+            "contradiction_marker": edge["contradiction_marker"],
+            "unresolved_alternatives": edge["unresolved_alternatives"],
+            "abstention_reason": edge.get("abstention_reason"),
+            "governor_justification": edge.get("governor_justification"),
+        })
+    return out
+
+
+# ---------------------------------------------------------------------------
 # regression units (authored; Qurʾānic surfaces verbatim; no copied gloss)
 # ---------------------------------------------------------------------------
 def regression_units():
@@ -1191,6 +1267,60 @@ def _self_test():
         failures.append("K: arbitrary iḍāfa edge must not assert a case (iḍāfa-genitive vs nominal-sentence-nominative undetermined)")
     if not any(a.get("case") == "nominative" for a in _ie["unresolved_alternatives"]):
         failures.append("K: iḍāfa edge must keep the nominal-sentence (nominative khabar) alternative")
+
+    # NAWASIKH-ADAPTER: the five-family classifier + pending-diagnostic adapter (L2.M2 batch).
+    def _constructed(features):
+        return {"input_mode": "arbitrary_typing", "frame_kind": "constructed", "construction_family": "nawasikh",
+                "source_unit": {"address": "", "scope": "arbitrary"}, "tokens": [{"ref": "tok:0", "surface": "x"}],
+                "features": features}
+
+    _naw_cases = [
+        ("kana", _constructed({"ism_marking": "raf3", "khabar_marking": "nasb", "regime": "kana_family"}),
+         "kana_laysa_government"),
+        ("inna-contradiction", _constructed({"ism_marking": "raf3", "khabar_marking": "nasb", "regime": "inna_family"}),
+         "inna_family_government"),
+        ("continuative", _constructed({"polarity_licenser": "absent", "regime": "kana_family_polarity_licensed"}),
+         "continuative_licensing"),
+        ("qalb-judgemental", _constructed({"regime": "zanna_family", "sense": "judgemental",
+                                           "first_object_marking": "nasb", "second_object_marking": "raf3"}),
+         "qalb_verb_transitivity"),
+        ("qalb-literal", _constructed({"regime": "zanna_family", "sense": "literal_perception"}),
+         "qalb_verb_transitivity"),
+        ("stacked", _constructed({"abrogator_count": 2, "bracketing": "ambiguous"}), "stacked_governor_scope"),
+    ]
+    for name, unit, expected_family in _naw_cases:
+        diags = nawasikh_pending_diagnostics(unit)
+        if not diags:
+            failures.append("nawasikh-adapter %s: expected a diagnostic, got none" % name)
+            continue
+        d = diags[0]
+        if d["family"] != expected_family:
+            failures.append("nawasikh-adapter %s: family %r != %r" % (name, d["family"], expected_family))
+        if d["issue_class"] != "possible_governor_unresolved":
+            failures.append("nawasikh-adapter %s: issue_class must be the existing closed value" % name)
+        if d["gate"] == "auto_safe":
+            failures.append("nawasikh-adapter %s: gate must never be auto_safe" % name)
+        if d["decision_status"] not in ("pending", "unresolved"):
+            failures.append("nawasikh-adapter %s: decision_status must never be resolved" % name)
+        if d["route"]["procedure"] != "nahw/procedures/nawasikh-government.md":
+            failures.append("nawasikh-adapter %s: must route to the nawāsikh procedure" % name)
+    # hostile: a light (non-geminate) لكن is a recognized NON-governor -> no nawāsikh family, no diagnostic.
+    _light_lakin = build_dependency_lattice({
+        "input_mode": "arbitrary_typing",
+        "tokens": [{"ref": "tok:0", "surface": "لَٰكِنْ", "pos": "particle"}, {"ref": "tok:1", "surface": "قَالَ", "pos": "verb"}],
+    })
+    if any(nawasikh_lattice_family(e) is not None for e in _light_lakin["edges"]):
+        failures.append("nawasikh-adapter hostile: a light لكن must not classify into any nawāsikh family")
+    # hostile: ordinary coordinating وَ must not acquire an invented nawāsikh family.
+    if any(nawasikh_lattice_family(e) is not None for e in by["coordination-headless"]["edges"]):
+        failures.append("nawasikh-adapter hostile: coordinating وَ must not classify into any nawāsikh family")
+    # C4-equivalent: literal-perception sense must abstain (sense_dependent_gate), never assert two accusatives.
+    _lit = nawasikh_pending_diagnostics(_constructed({"regime": "zanna_family", "sense": "literal_perception"}))
+    if not _lit or _lit[0]["abstention_reason"] != "sense_dependent_gate":
+        failures.append("nawasikh-adapter hostile: literal-perception qalb-verb must abstain(sense_dependent_gate)")
+    if _lit and _lit[0]["contradiction_marker"]:
+        failures.append("nawasikh-adapter hostile: literal-perception abstention must not be a contradiction")
+
     for f in failures:
         print("FAIL " + f)
     if not failures:

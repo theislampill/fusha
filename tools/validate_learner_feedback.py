@@ -285,6 +285,19 @@ def _self_test():
     if real_cat_errs:
         failures.append("the real curriculum/kc-catalog.json should validate clean but: %s" % real_cat_errs[:3])
 
+    # NAWASIKH-ADAPTER (Train B/C L2.M2): every event the five-family export produces must itself validate
+    # clean against this same schema/FAIL-LF gate — the adapter gets no special exemption.
+    _naw_unit = {"input_mode": "arbitrary_typing", "frame_kind": "constructed", "construction_family": "nawasikh",
+                "source_unit": {"address": "", "scope": "arbitrary"}, "tokens": [{"ref": "tok:0", "surface": "x"}],
+                "features": {"ism_marking": "raf3", "khabar_marking": "nasb", "regime": "kana_family"}}
+    _naw_evs = LF.nawasikh_family_events(_naw_unit)
+    if not _naw_evs:
+        failures.append("nawasikh-adapter: no event produced for the validator round-trip fixture")
+    for ev in _naw_evs:
+        errs = validate_event(ev)
+        if errs:
+            failures.append("nawasikh-adapter event should validate clean but: %s" % errs[:3])
+
     for f in failures:
         print("FAIL " + f)
     if not failures:

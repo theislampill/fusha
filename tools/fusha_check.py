@@ -110,6 +110,21 @@ ISSUE_ROUTE = {
     "display_local_canonical_crosswalk_missing": ("curriculum", "curriculum/drills/hover-composition-and-routing.md"),
     "source_clean_boundary_violation": ("validator", "provenance/source-boundaries.md"),
 }
+
+# TRAIN-B/C L2.M2 nawāsikh diagnostic export: the SINGLE map from a `tools.fusha_governor.nawasikh_lattice_family`
+# label to the KC that owns it. Registered here (not invented per-caller) because `possible_governor_unresolved`
+# is ALREADY generic-owned by `kc-governor-justification` for the arbitrary-text checker; a nawāsikh-lattice
+# diagnostic must resolve to its OWN family KC instead, never the generic one, and never a broad case/mood or
+# particle KC used as a substitute. Every value here names a KC in curriculum/kc-catalog.json whose
+# `diagnostic_classes` includes `possible_governor_unresolved` and whose semantics match the family exactly —
+# inna-family MODAL FORCE has no entry: see the note at `fusha_governor.NAWASIKH_DIAGNOSTIC_FAMILIES`.
+NAWASIKH_FAMILY_KC = {
+    "kana_laysa_government": "kc-nawasikh-kana-laysa-government",
+    "continuative_licensing": "kc-nawasikh-continuative-licensing",
+    "inna_family_government": "kc-nawasikh-inna-family-government",
+    "qalb_verb_transitivity": "kc-nawasikh-qalb-verb-transitivity",
+    "stacked_governor_scope": "kc-nawasikh-stacked-governor-scope",
+}
 _PUBLIC_BOUNDARY = {
     "public_gloss_src": "qamus", "public_gloss_kind": "authored",
     "public_gloss_lang": "en", "external_source_names_public": False,

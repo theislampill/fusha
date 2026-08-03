@@ -60,15 +60,21 @@ pairing as equivalent ONLY if it appears on this list.
 | `wrong_irab_reasoning` | `kc-governor-justification` | describes the same defect (a correct case ending given with an absent or unjustified governor, right answer, wrong reason), but `kc-governor-justification` is not bound to any drill-key row yet and cannot currently be emitted as an `error_reason`; only `wrong_irab_reasoning` is reachable today |
 
 Every other `kc_id` currently reachable as an `error_reason` (`kc-clitic-segmentation`,
-`kc-root-template-slot-classification`, `kc-masdar-template-not-uniform`) has NO legacy equivalent above; treat
-it as its own distinct error class, not a re-spelling of anything in the "Error Classes" list. Conversely, every
-legacy code not listed in the crosswalk table (`script_harakat`, `root_family_vibes`, `pp_attachment_unclear`,
-etc.) has no `kc_id` equivalent yet and stays a legacy-only code until a drill row binds it. The remaining KCs in
-`curriculum/kc-catalog.json` (e.g. `kc-attached-pronoun`, `kc-unvoweled-homograph`, `kc-preposition-host`,
-`kc-case-mood-context`, `kc-governor-justification`, `kc-dictionary-infinitive-leakage`, `kc-orthography`,
-`kc-hidden-proclitic`, `kc-passive-voice-hidden`, `kc-token-vs-phrase-hover`, `kc-source-address-scope`,
-`kc-canonical-address-crosswalk`, `kc-public-boundary-source-clean`) are not yet bound to any drill-key row and
-so cannot appear as an `error_reason` at all, even where they are listed as a "same symptom" pairing above.
+`kc-root-template-slot-classification`, `kc-masdar-template-not-uniform`, `kc-nawasikh-kana-laysa-government`,
+`kc-nawasikh-continuative-licensing`, `kc-nawasikh-inna-family-government`, `kc-nawasikh-qalb-verb-transitivity`,
+`kc-nawasikh-stacked-governor-scope`) has NO legacy equivalent above; treat it as its own distinct error class,
+not a re-spelling of anything in the "Error Classes" list. Conversely, every legacy code not listed in the
+crosswalk table (`script_harakat`, `root_family_vibes`, `pp_attachment_unclear`, etc.) has no `kc_id` equivalent
+yet and stays a legacy-only code until a drill row binds it. The remaining KCs in `curriculum/kc-catalog.json`
+(e.g. `kc-attached-pronoun`, `kc-unvoweled-homograph`, `kc-preposition-host`, `kc-case-mood-context`,
+`kc-governor-justification`, `kc-dictionary-infinitive-leakage`, `kc-orthography`, `kc-hidden-proclitic`,
+`kc-passive-voice-hidden`, `kc-token-vs-phrase-hover`, `kc-source-address-scope`, `kc-canonical-address-crosswalk`,
+`kc-public-boundary-source-clean`) are not yet bound to any drill-key row and so cannot appear as an
+`error_reason` at all, even where they are listed as a "same symptom" pairing above. The five `kc-nawasikh-*` KCs
+are bound to `curriculum/drills/keys/nawasikh-governor-families.keys.jsonl` (Train B/C L2.M2 batch); the sixth
+candidate family from the same batch, inna-family MODAL FORCE, has NO `kc_id` — it stays `documented_only` at
+the canonical-unit level (`cu-inna-modal-force`, `capability_family: instructional_only`) and its two practice
+rows in that key file carry no `kc_id` at all, never a substitute one.
 
 ## Review Standard
 
