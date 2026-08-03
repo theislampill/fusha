@@ -6,14 +6,12 @@ the history; it is to route a miss to the procedure and drill that prevents the 
 **Precedence when the same symptom appears in both tables below:** `progress.missed[].error_reason` (see
 `tools/fusha_tutor_runtime.py`) carries either a legacy `error class` string (the first table) or, for a
 Train-C-bound drill row, a `kc_id` (the second table) — never both for the same event. The two vocabularies were
-authored independently and are NOT interchangeable spellings of each other; where the same real-world symptom
-shows up under two different ids (five known cases: `finite_verb_dictionary_gloss`/`kc-dictionary-infinitive-leakage`,
-`suffix_omitted`/`kc-suffix-pronoun-missing`, `wrong_irab_reasoning`/`kc-governor-justification`,
-`particle_function_flattened`/`kc-particle-function`, and `hidden_derivative_plural_piece` split across
-`kc-number-suffix-hidden`/`kc-derivative-shape-hidden`), the table whose id vocabulary matches the actual
-`error_reason` value you are looking at is authoritative for that lookup — the other table's row is documentation
-of the same defect class under its own (older or newer) id, not a competing answer. The full crosswalk, including
-which `kc_id`s have no legacy equivalent, is maintained in
+authored independently and are NOT interchangeable spellings of each other. Where the same real-world symptom
+may appear under both vocabularies, treat the ids as equivalent only when the authoritative crosswalk explicitly
+pairs them. The legacy `hidden_derivative_plural_piece` row is broader than either
+`kc-number-suffix-hidden` or `kc-derivative-shape-hidden`; it is not an equivalence assertion for either KC. The
+table whose id vocabulary matches the actual `error_reason` value is authoritative for that lookup. The full
+crosswalk, including which `kc_id`s have no legacy equivalent, is maintained in
 [`../progress/missed-error-log.template.md`](../progress/missed-error-log.template.md#train-c-kc_id-crosswalk).
 
 | error class | learner symptom | drill | procedure |
@@ -43,22 +41,25 @@ which `kc_id`s have no legacy equivalent, is maintained in
 
 ## Train C — KC-bound learner symptoms
 
-These rows route a miss to the exact Knowledge Component in `curriculum/kc-catalog.json` that now owns it
-(`progress.missed[].error_reason` carries the `kc_id` directly; see `tools/fusha_tutor_runtime.py`).
+These rows document the Knowledge Component in `curriculum/kc-catalog.json` that owns each symptom. Only rows
+marked `emittable` are currently bound to a drill-key row and can appear in `progress.missed[].error_reason`.
+Rows marked `documented_only` provide an honest remediation route for manual review but cannot be emitted by the
+current tutor runtime. See `tools/fusha_tutor_runtime.py` and the authoritative reachability crosswalk linked
+above.
 
-| kc_id | learner symptom | drill | procedure |
-|---|---|---|---|
-| `kc-clitic-segmentation` | the whole token read as one stem instead of prefixed particle + host | `hover-composition-and-routing.md` | `../../sarf/procedures/clitic-and-host-morphology.md` |
-| `kc-hidden-proclitic` | a hover shows only the host and drops a prefixed particle (wāw/fāʾ/bāʾ/lām/kāf/al-) | `hover-composition-and-routing.md` | `../../sarf/procedures/clitic-and-host-morphology.md` |
-| `kc-attached-pronoun` | the ending folded into the stem instead of surfaced as an attached pronoun | `hover-composition-and-routing.md` | `../../sarf/procedures/suffix-pronoun-state.md` |
-| `kc-suffix-pronoun-missing` | an attached object/possessive pronoun dropped from the gloss | `hover-composition-and-routing.md` | `../../sarf/procedures/suffix-pronoun-state.md` |
-| `kc-number-suffix-hidden` | a dual/plural ending hidden behind a plain singular host or an English-only number | `parse-key-and-color-layer.md` | `../../sarf/procedures/noun-plural-gender.md` |
-| `kc-derivative-shape-hidden` | a participle/derived noun glossed as the verb, or its derivative shape hidden | `parse-key-and-color-layer.md` | `../../sarf/procedures/nominal-derivative-decision.md` |
-| `kc-masdar-template-not-uniform` | a Form-I verb's maṣdar (verbal noun) shape is assumed from one uniform template instead of checked per verb | `root-pattern-practice.md` | `../../sarf/procedures/masdar-participle.md` |
-| `kc-root-template-slot-classification` | a weak letter or template-added letter is called a root radical (or the reverse) by shape or position alone, or a root is named by counting the first three consonants before the word is matched to its template | `root-pattern-practice.md` | `../../sarf/procedures/homograph-risk.md` |
-| `kc-particle-function` | a multi-function particle (mā, wāw, ...) given one fixed gloss regardless of context | `quranic-function-words.md` | `../../nahw/procedures/particle-decision.md` |
-| `kc-case-mood-context` | a case/mood ending asserted with no visible ending and no governor named | `sentence-foundations.md` | `../../nahw/procedures/irab-case-mood.md` |
-| `kc-governor-justification` | a correct case ending given with an absent or unjustified governor (right answer, wrong reason) | `sentence-foundations.md` | `../../nahw/procedures/irab-case-mood.md` |
+| kc_id | runtime posture | learner symptom | drill | procedure |
+|---|---|---|---|---|
+| `kc-clitic-segmentation` | `emittable` | the whole token read as one stem instead of prefixed particle + host | `hover-composition-and-routing.md` | `../../sarf/procedures/clitic-and-host-morphology.md` |
+| `kc-hidden-proclitic` | `documented_only` | a hover shows only the host and drops a prefixed particle (wāw/fāʾ/bāʾ/lām/kāf/al-) | `hover-composition-and-routing.md` | `../../sarf/procedures/clitic-and-host-morphology.md` |
+| `kc-attached-pronoun` | `documented_only` | the ending folded into the stem instead of surfaced as an attached pronoun | `hover-composition-and-routing.md` | `../../sarf/procedures/suffix-pronoun-state.md` |
+| `kc-suffix-pronoun-missing` | `emittable` | an attached object/possessive pronoun dropped from the gloss | `hover-composition-and-routing.md` | `../../sarf/procedures/suffix-pronoun-state.md` |
+| `kc-number-suffix-hidden` | `emittable` | a dual/plural ending hidden behind a plain singular host or an English-only number | `parse-key-and-color-layer.md` | `../../sarf/procedures/noun-plural-gender.md` |
+| `kc-derivative-shape-hidden` | `emittable` | a participle/derived noun glossed as the verb, or its derivative shape hidden | `parse-key-and-color-layer.md` | `../../sarf/procedures/nominal-derivative-decision.md` |
+| `kc-masdar-template-not-uniform` | `emittable` | a Form-I verb's maṣdar (verbal noun) shape is assumed from one uniform template instead of checked per verb | `root-pattern-practice.md` | `../../sarf/procedures/masdar-participle.md` |
+| `kc-root-template-slot-classification` | `emittable` | a weak letter or template-added letter is called a root radical (or the reverse) by shape or position alone, or a root is named by counting the first three consonants before the word is matched to its template | `root-pattern-practice.md` | `../../sarf/procedures/homograph-risk.md` |
+| `kc-particle-function` | `emittable` | a multi-function particle (mā, wāw, ...) given one fixed gloss regardless of context | `quranic-function-words.md` | `../../nahw/procedures/particle-decision.md` |
+| `kc-case-mood-context` | `documented_only` | a case/mood ending asserted with no visible ending and no governor named | `sentence-foundations.md` | `../../nahw/procedures/irab-case-mood.md` |
+| `kc-governor-justification` | `documented_only` | a correct case ending given with an absent or unjustified governor (right answer, wrong reason) | `sentence-foundations.md` | `../../nahw/procedures/irab-case-mood.md` |
 
 Checkpoint rule: a remediated item is not cleared until the learner can name what the visible Arabic piece
 contributes and why the old hover failure was unsafe.

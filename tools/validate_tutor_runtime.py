@@ -38,6 +38,8 @@ from tools import leak_sot  # noqa: E402
 
 _PROG_SCHEMA = json.load(open(os.path.join(_REPO, "qamus", "schemas", "tutor-progress-state.schema.json"), encoding="utf-8"))
 _EVENT_SCHEMA = json.load(open(os.path.join(_REPO, "qamus", "schemas", "tutor-event.schema.json"), encoding="utf-8"))
+_REMEDIATION_INDEX = os.path.join(_REPO, "curriculum", "drills", "dogfood-error-remediation-index.md")
+_DRILL_KEYS = os.path.join(_REPO, "curriculum", "drills", "keys")
 
 # a payload read of a self-reported correctness flag — must NOT appear in grade()'s source
 _SELF_REPORT_READ = re.compile(r"""payload\s*(?:\.get\(|\[)\s*["'](?:passed|correct|is_correct|cleared|score|grade)["']""")
@@ -90,6 +92,53 @@ def _validate_obj(obj, schema, path="$"):
 def _g(passed, reasoning=True, two_vote="n/a", forbidden=False):
     return {"passed": passed, "reasoning_passed": reasoning, "two_vote_status": two_vote,
             "forbidden_hit": forbidden, "grade": "x"}
+
+
+def _reachable_kc_ids():
+    out = set()
+    for name in sorted(os.listdir(_DRILL_KEYS)):
+        if not name.endswith(".keys.jsonl"):
+            continue
+        with open(os.path.join(_DRILL_KEYS, name), encoding="utf-8") as fh:
+            for line in fh:
+                if not line.strip():
+                    continue
+                kc_id = json.loads(line).get("kc_id")
+                if kc_id:
+                    out.add(kc_id)
+    return out
+
+
+def _validate_remediation_index(text=None, reachable=None):
+    if text is None:
+        text = open(_REMEDIATION_INDEX, encoding="utf-8").read()
+    reachable = _reachable_kc_ids() if reachable is None else set(reachable)
+    errs, seen = [], {}
+    row_re = re.compile(r"^\|\s*`(kc-[^`]+)`\s*\|\s*`(emittable|documented_only)`\s*\|")
+    for line in text.splitlines():
+        if not line.startswith("| `kc-"):
+            continue
+        m = row_re.match(line)
+        if not m:
+            errs.append("Train C remediation row lacks a closed runtime posture: %s" % line)
+            continue
+        kc_id, posture = m.groups()
+        if kc_id in seen:
+            errs.append("duplicate Train C remediation kc_id %s" % kc_id)
+            continue
+        seen[kc_id] = posture
+        expected = "emittable" if kc_id in reachable else "documented_only"
+        if posture != expected:
+            errs.append("Train C remediation %s is %s but runtime reachability requires %s" %
+                        (kc_id, posture, expected))
+    if not seen:
+        errs.append("Train C remediation table has no posture-bearing KC rows")
+    normalized = " ".join(text.split())
+    if "treat the ids as equivalent only when the authoritative crosswalk explicitly pairs them" not in normalized:
+        errs.append("remediation precedence does not defer equivalence to the authoritative crosswalk")
+    if "it is not an equivalence assertion for either KC" not in normalized:
+        errs.append("hidden_derivative_plural_piece is not explicitly withheld from KC equivalence")
+    return errs
 
 
 def validate():
@@ -186,6 +235,7 @@ def validate():
     miss_no = next((m for m in prog_no["missed"] if m["item_id"] == "TC-no-kc-miss"), None)
     if not miss_no or miss_no["error_reason"] is not None:
         errs.append("a miss on a row without kc_id invented a non-null error_reason: %r" % miss_no)
+    errs += _validate_remediation_index()
     return errs
 
 
@@ -201,6 +251,15 @@ def _self_test():
                                         "forbidden_hit": False, "cleared": True}, "box_before": 0, "box_after": 1}
     if not _validate_obj(bad, _EVENT_SCHEMA):
         errs.append("META: schema checker accepted a bad outcome enum")
+    index_text = open(_REMEDIATION_INDEX, encoding="utf-8").read()
+    bad_posture = index_text.replace("| `kc-hidden-proclitic` | `documented_only` |",
+                                     "| `kc-hidden-proclitic` | `emittable` |", 1)
+    if not _validate_remediation_index(bad_posture):
+        errs.append("META: remediation index accepted an unreachable KC as emittable")
+    bad_equivalence = index_text.replace("it is not an equivalence assertion for either KC",
+                                         "it is an equivalence assertion for either KC", 1)
+    if not _validate_remediation_index(bad_equivalence):
+        errs.append("META: remediation index accepted a non-crosswalk KC equivalence")
     for e in errs:
         print("FAIL " + e)
     if not errs:
