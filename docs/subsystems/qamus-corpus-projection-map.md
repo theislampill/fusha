@@ -15,8 +15,9 @@ cannot be measured from that authority, rather than fabricating closure.
   occurrences (the appearance-vs-occurrence denominators are never collapsed).
 - `qamus/indexes/occurrence-appearances.jsonl` — reader/entry_example surface index;
   the closest committed proxy for live payload/revocation posture.
-- `qamus/lattice/particle-occurrence-matrix.jsonl` — candidate particle fact/function
-  lattice; the closest committed proxy for Nahw/colour/hover fact identity.
+- `qamus/lattice/particle-occurrence-matrix.jsonl` — candidate particle-function
+  relations only. Its matrix IDs are not occurrence-bound Naḥw, colour or hover
+  fact identities and never populate those planes.
 
 ## What it writes
 
@@ -24,8 +25,8 @@ cannot be measured from that authority, rather than fabricating closure.
   user-supplied `--output` path, normally under the gitignored `out/` tree. Never
   committed. Deterministic: same committed inputs -> byte-identical output.
 - `qamus/reports/corpus-projection-baseline.json` (committed): compact aggregate —
-  entry/universe count verification, per-disposition status counts, letter-ownership
-  and page-local-fork counts, the P009/P099 canary report, the colour/hover identity
+  entry/universe count verification, per-disposition status counts, orthographic
+  shape-recall and multi-entry fanout counts, the P009/P099 canary report, the colour/hover identity
   invariant check, and the full output's row count + sha256 (so downstream consumers
   can verify a locally rebuilt `out/` file without the large file being committed).
 - `qamus/examples/corpus-projection-manifest.sample.jsonl` +
@@ -39,11 +40,15 @@ Each row carries: entry/page/card/token identity, `canonical_loc` /
 `crosswalk`/`match_basis` alignment tier, `selected` vs context scope (never
 merged across entries — same surface/root/citation form never creates entry,
 sense, or occurrence identity), a `denominators` block preserving the distinct
-entry/canonical-occurrence counts, an eleven-part `dispositions` object
-(`exact_binding`, `surface`, `letter_ownership`, `sarf`, `nahw`, `colour`,
-`hover`, `reverse_trace`, `revocation_dependency`, `payload`, `next_action`),
-and a `page_local_fork` flag for canonical occurrences selected by more than one
-distinct entry.
+entry/canonical-occurrence counts, a `particle_function_candidate_refs` nonclaim
+list, and a 21-plane `dispositions` object: `appearance_identity`,
+`card_owner_binding`, `token_lexeme_binding`, `surface`, `surface_conflict`,
+`orthographic_shape_recall`, `morpheme_ownership`, `sarf`, `nahw`,
+`particle_function_candidates_at_loc`, `contextual_meaning`, `translation`,
+`colour`, `hover`, `cross_plane_conflict`, `reverse_trace`,
+`revocation_dependency`, `certification`, `payload`, `live_state`, and
+`pending_actions`. `multi_entry_transclusion_fanout` reports shared canonical
+locations without calling fanout a page-local factual fork.
 
 Every disposition sub-object always carries `status` + `reason`; there is no
 silent `null`/omission — absence of authority is itself an explicit reason
@@ -72,22 +77,23 @@ python tools/test_corpus_projection_manifest.py
   occurrence in `particle-occurrence-matrix.jsonl` currently carries the same
   undifferentiated homograph `function_candidates` list — occurrence-bound
   function/hover disambiguation is not yet provable from committed authority.
-- `sarf`/`nahw` dispositions are `authority_not_joined_in_closed_inputs` for the
-  large majority of rows: no committed per-token sarf/nahw fact source is joined
-  in this manifest's closed authority yet.
-- `colour`/`hover` are `not_available` or `candidate_available_uncertified` for
-  the large majority of rows — this is exactly the backlog this manifest hands
-  to the later rich-colour/rich-hover batches on this Train D branch. It always
-  cites the same `fact_id` for `colour` and `hover` (enforced by construction and
-  checked by `colour_hover_identity_invariant` in the baseline).
-- `page_local_fork` (105 canonical occurrences, 210 affected rows at last build):
-  canonical occurrences selected by more than one distinct entry, needing owner
-  adjudication rather than a silent merge.
+- `sarf` is `token_class_not_determined` for 105,062 context rows and
+  `authority_not_joined_in_closed_inputs` for 4,409 selected-token rows; `nahw`
+  is `occurrence_bound_nahw_not_joined_in_closed_inputs` for all 109,471 word
+  rows. The particle matrix remains a separate candidate plane.
+- `colour` and `hover` are both `not_available` for all 109,471 word rows. Their
+  fact IDs are null because no authoritative facts are joined; null/null is not
+  parity. The baseline therefore reports 0 `both_present_compared`, 41,739
+  `both_absent_not_compared`, 75,378 `candidate_only_not_compared`, and 0
+  violations rather than claiming that any word received a rich projection.
+- `multi_entry_transclusion_fanout` covers 105 canonical locations / 210 rows at
+  the current build. It reports `no_divergent_projection_identity_in_closed_inputs`;
+  it neither proves rich projection parity nor invents a page-local fork.
 
 ## Consumers
 
 Train A/B fact projectors and the Train D projector/compiler regenerate affected
-corpus batches from this manifest's `next_action` field and the baseline's
+corpus batches from this manifest's `pending_actions` list and the baseline's
 disposition-count deficits; they should re-run the generator against their own
 `--output` path and diff against the committed `full_output.sha256` /
 `sample_sha256` in the baseline/sample-meta to confirm they are working from the

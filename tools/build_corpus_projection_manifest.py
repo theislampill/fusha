@@ -10,15 +10,19 @@ pause marks), joined against:
   * ``qamus/data/current/entries.jsonl``                 (2,092 P/N/V entries)
   * ``qamus/lattice/example-ayah-universe.occurrences.jsonl`` (canonical grain)
   * ``qamus/indexes/occurrence-appearances.jsonl``        (reader/entry_example
-    surface index; the closest committed proxy for live payload posture)
+    surface index; the closest committed proxy for reader-payload posture)
   * ``qamus/lattice/particle-occurrence-matrix.jsonl``    (candidate particle
-    fact/function lattice; the closest committed proxy for Nahw/colour/hover
-    fact identity)
+    function lattice; NOT a colour, hover or Nahw fact source)
 
-The manifest never fabricates closure: every disposition is either grounded
-in one of the above committed authorities or reports an explicit reason it
-could not be measured.  No network, no live mutation.  Deterministic:
-same committed inputs -> byte-identical output.
+This is a coverage manifest, not a linguistic fact producer. Every disposition
+is either grounded in one of the above committed authorities or reports an
+explicit reason it could not be measured -- and a disposition that only ever
+recognises an orthographic *shape* signal (an article-looking prefix, a
+plural-looking suffix, a particle *candidate* relation) must say so, never
+claim the stronger fact it is not entitled to (letter/morpheme ownership,
+lexeme binding, certification, a colour/hover fact, occurrence-bound Nahw, or
+live state). No network, no live mutation. Deterministic: same committed
+inputs -> byte-identical output.
 """
 
 from __future__ import annotations
@@ -42,7 +46,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 SCHEMA = "qamus.corpus_projection_manifest.v1"
 BUILDER_ID = "build_corpus_projection_manifest"
-BUILDER_VERSION = "1.0.0"
+BUILDER_VERSION = "2.0.0"
 
 DEFAULT_ENTRIES = os.path.join(REPO_ROOT, "qamus", "data", "current", "entries.jsonl")
 DEFAULT_UNIVERSE = os.path.join(REPO_ROOT, "qamus", "lattice", "example-ayah-universe.jsonl")
@@ -60,10 +64,23 @@ DEFAULT_SAMPLE_META_OUTPUT = os.path.join(
     REPO_ROOT, "qamus", "examples", "corpus-projection-manifest.sample.meta.json")
 
 SECTION_PREFIX = {"particle": "p", "noun": "n", "verb": "v"}
-CERTIFIED_MATCH_TIERS = {"exact", "strict", "strict_word_unique"}
+
+# String-alignment tiers only. These are never a certification (governed by
+# docs/certification-authority.md) -- they describe how the displayed
+# fragment matches a canonical Quran location, nothing about a governed fact.
+ALIGNMENT_MATCH_TIER_STATUS = {
+    "exact": "alignment_tier_exact",
+    "strict": "alignment_tier_strict",
+    "strict_word_unique": "alignment_tier_strict_word_unique",
+}
 RECALL_ONLY_TIERS = {"loose", "loose_word_unique"}
+
 ARTICLE_RE = re.compile(r"^(?P<conj>[وف])?(?P<article>ال)")
+KBL_PROCLITIC_RE = re.compile(r"^[كبل](?=ال)")
+ARABIC_LETTER_RE = re.compile(r"[؀-ۿ]")
 PLURAL_SUFFIXES = ("ات", "ون", "ين")  # ات, ون, ين
+DEFINITE_ARTICLE_CANDIDATE = "definite article al-"
+NAHW_UNCOVERED_SUBFACTS = ["case_ending", "governor_relation", "syntactic_role", "agreement"]
 CANARY_SOURCE_KEYS = ("p009", "p099")
 SAMPLE_SIZE_DEFAULT = 480
 
@@ -181,17 +198,46 @@ def load_particle_matrix(path):
 
 
 # ---------------------------------------------------------------------------
-# Letter ownership (surface-pattern heuristic; general, not hand-authored)
+# Orthographic shape recall (surface-pattern heuristic; general, not
+# hand-authored). This is NOT letter or morpheme ownership: it is a shape
+# recall signal over the bare orthographic form only, and must never claim to
+# be "measured" ownership.
 # ---------------------------------------------------------------------------
 
 def analyze_letter_ownership(displayed_surface):
     b = bare(displayed_surface or "")
+    if not b or not ARABIC_LETTER_RE.search(b):
+        return {
+            "article": {"present": False, "leading_conjunction": None, "stem_after_article": None},
+            "plural": {"suffix": None, "stem_before_suffix": None},
+            "segmentation_consistent": True,
+            "status": "not_measured",
+            "reason": "displayed_surface bare() form is empty or contains no Arabic letters",
+            "not_a_morpheme_ownership_claim": True,
+        }
+
     match = ARTICLE_RE.match(b)
+    plural_source = b
     if match:
         article = {
             "present": True,
             "leading_conjunction": match.group("conj"),
             "stem_after_article": b[match.end():],
+        }
+        # Analyze the plural suffix on the post-article remainder only, so the
+        # same leading letters are never assigned to both the article and the
+        # plural stem.
+        plural_source = article["stem_after_article"]
+    elif KBL_PROCLITIC_RE.match(b):
+        # ك/ب/ل immediately followed by 'ال' -- could be a jarr/kaf-comparative
+        # proclitic swallowing the article, or could be a lexeme-initial
+        # ك/ب/ل before an unrelated 'ال'. This shape signal cannot resolve the
+        # boundary, so it is reported as undetermined rather than as a false
+        # negative (article absent) or a false positive (article present).
+        article = {
+            "present": "undetermined_proclitic_present",
+            "leading_conjunction": None,
+            "stem_after_article": None,
         }
     else:
         article = {"present": False, "leading_conjunction": None, "stem_after_article": None}
@@ -199,16 +245,27 @@ def analyze_letter_ownership(displayed_surface):
     plural_suffix = None
     stem_before = None
     for suffix in PLURAL_SUFFIXES:
-        if b.endswith(suffix) and len(b) > len(suffix):
+        if plural_source.endswith(suffix) and len(plural_source) > len(suffix):
             plural_suffix = suffix
-            stem_before = b[: -len(suffix)]
+            stem_before = plural_source[: -len(suffix)]
             break
     plural = {"suffix": plural_suffix, "stem_before_suffix": stem_before}
+
+    both_signals_fire = bool(article["present"]) and plural_suffix is not None
+    segmentation_consistent = not both_signals_fire
+
     reason = (
-        f"article={'present' if article['present'] else 'absent'}"
-        f"; plural_suffix={plural_suffix or 'none'}"
+        f"article={article['present']!r}; plural_suffix={plural_suffix or 'none'}; "
+        "orthographic shape recall only, not a morpheme-ownership measurement"
     )
-    return {"article": article, "plural": plural, "status": "measured", "reason": reason}
+    return {
+        "article": article,
+        "plural": plural,
+        "segmentation_consistent": segmentation_consistent,
+        "status": "shape_recall_only",
+        "reason": reason,
+        "not_a_morpheme_ownership_claim": True,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -221,24 +278,53 @@ def _disp(status, reason, **extra):
     return out
 
 
-def compute_exact_binding(row, entries_by_id):
+def _not_joined_plane(row, status, reason, pause_reason):
+    if row.get("word_class") == "pause_mark":
+        return _disp("not_applicable", pause_reason)
+    return _disp(status, reason)
+
+
+def compute_card_owner_binding(row, entries_by_id):
+    """The card-owner entry's own binding -- proves nothing about the
+    displayed token's lexeme (see compute_token_lexeme_binding)."""
     if row.get("word_class") == "pause_mark":
         return _disp("not_applicable", "pause_mark_token_has_no_entry_binding")
     entry_id = str(row.get("entry_id") or "").strip()
     if not entry_id:
-        return _disp("unresolved", "displayed word appearance carries no entry_id")
+        return _disp("owner_entry_unresolved", "displayed word appearance carries no entry_id")
     entry = entries_by_id.get(entry_id)
     if entry is None:
-        return _disp("unresolved", f"entry_id {entry_id!r} not found in entries.jsonl")
+        return _disp("owner_entry_unresolved", f"entry_id {entry_id!r} not found in entries.jsonl")
     expected_prefix = SECTION_PREFIX.get(entry["section"])
     row_type = row.get("entry_type")
     if expected_prefix is not None and row_type != expected_prefix:
         return _disp(
-            "class_trust_violation",
+            "owner_class_trust_violation",
             f"universe entry_type={row_type!r} but entries.jsonl section="
             f"{entry['section']!r} (expected entry_type={expected_prefix!r})",
         )
-    return _disp("bound", f"entry_id resolved to entries.jsonl section={entry['section']!r}")
+    return _disp(
+        "owner_entry_resolved",
+        f"card-owner entry_id resolved to entries.jsonl section={entry['section']!r}",
+    )
+
+
+def compute_token_lexeme_binding(row):
+    """The displayed TOKEN's own lexeme/entry/sense identity -- distinct from
+    the card-owner entry, which describes only the card the token appears on."""
+    if row.get("word_class") == "pause_mark":
+        return _disp("not_applicable", "pause_mark_token_has_no_lexeme")
+    if row.get("selected"):
+        return _disp(
+            "bound_selected_token",
+            "this appearance is the card-owner entry's own selected word; the card owner's "
+            "lexeme/entry/sense is this token's lexeme/entry/sense",
+        )
+    return _disp(
+        "token_lexeme_not_determined",
+        "this appearance is a context token; its own lexeme/entry/sense is not determined by "
+        "this manifest (card_owner_binding describes the card owner, never this displayed token)",
+    )
 
 
 def compute_surface(row):
@@ -247,8 +333,13 @@ def compute_surface(row):
         return _disp("not_applicable", "quranic pause annotation is not a displayed word")
     if not str(row.get("displayed_surface") or "").strip():
         return _disp("missing_surface", "empty displayed_surface field on a word row")
-    if match_basis in CERTIFIED_MATCH_TIERS:
-        return _disp("certified_tier", f"match_basis={match_basis} is a certification-eligible tier")
+    if match_basis in ALIGNMENT_MATCH_TIER_STATUS:
+        status = ALIGNMENT_MATCH_TIER_STATUS[match_basis]
+        return _disp(
+            status,
+            f"match_basis={match_basis} is a string-alignment tier; not a certification "
+            "(certification is governed by docs/certification-authority.md)",
+        )
     if match_basis in RECALL_ONLY_TIERS:
         return _disp(
             "recall_tier_only",
@@ -277,86 +368,151 @@ def _particle_attachments(row, particle_by_key, particle_by_appearance):
     return attachments
 
 
-def compute_nahw(row, attachments):
+def compute_particle_candidate_refs(attachments):
+    """A particle-occurrence-matrix candidate relation, carried honestly as a
+    non-projection reference -- never a colour fact, a hover fact, an
+    occurrence-bound Nahw fact, nor evidence that any of those exist."""
+    refs = []
+    for kind, matrix_row in attachments:
+        matrix_id = matrix_row.get("matrix_id")
+        if not matrix_id:
+            continue
+        refs.append({
+            "matrix_id": matrix_id,
+            "attachment_kind": kind,
+            "function_candidates": list(matrix_row.get("function_candidates") or []),
+            "certified": matrix_row.get("certified"),
+            "not_a_colour_fact": True,
+            "not_a_hover_fact": True,
+            "not_an_occurrence_bound_nahw_fact": True,
+            "not_evidence_that_any_of_those_facts_exist": True,
+        })
+    return refs
+
+
+def compute_particle_function_candidates_at_loc(row, attachments, refs):
+    """Renamed from the old (misnamed) 'nahw' plane: partial particle
+    function-candidate evidence at this location only -- never occurrence
+    bound, never a certified fact (all committed particle-matrix rows carry
+    certified='none')."""
     if row.get("word_class") == "pause_mark":
-        return _disp("not_applicable", "pause_mark_token_has_no_syntax", fact_id=None,
-                     function_candidates=None)
+        return _disp(
+            "not_applicable", "pause_mark_token_has_no_particle_candidate_relation",
+            fact_id=None, function_candidates=None,
+        )
     if not attachments:
         return _disp(
             "authority_not_joined_in_closed_inputs",
-            "no committed per-token Nahw fact/candidate source is joined for this "
-            "appearance (particle-occurrence-matrix has no matching row)",
+            "no committed particle-occurrence-matrix row attaches to this appearance",
             fact_id=None, function_candidates=None,
         )
-    fact_ids = sorted({r.get("matrix_id") for _, r in attachments if r.get("matrix_id")})
-    function_sets = sorted({tuple(r.get("function_candidates") or []) for _, r in attachments})
-    certified_values = sorted({r.get("certified") for _, r in attachments})
-    all_certified = certified_values and all(v not in (None, "none") for v in certified_values)
-    status = "certified" if all_certified else "candidate_uncertified"
-    reason = (
-        f"{len(attachments)} particle-matrix attachment(s); certified={certified_values}; "
-        f"{len(function_sets)} distinct function_candidate set(s)"
+    fact_ids = sorted({r["matrix_id"] for r in refs})
+    function_sets = sorted({tuple(r["function_candidates"]) for r in refs})
+    return _disp(
+        "candidate_only_partial_function_evidence",
+        f"{len(attachments)} particle-matrix attachment(s); {len(function_sets)} distinct "
+        "function_candidate set(s); partial function-candidate evidence only, not an "
+        "occurrence-bound Nahw fact and not a colour/hover fact",
+        fact_id=(fact_ids[0] if len(fact_ids) == 1 else fact_ids) if fact_ids else None,
+        function_candidates=[list(s) for s in function_sets],
     )
-    return _disp(status, reason, fact_id=fact_ids, function_candidates=[list(s) for s in function_sets])
 
 
-def compute_sarf(row, entries_by_id):
+def compute_nahw(row):
+    """The real occurrence-bound Nahw plane (case ending, governor relation,
+    syntactic role, agreement). No committed source in closed authority joins
+    any of these; see particle_function_candidates_at_loc for the partial
+    candidate evidence that does exist."""
+    if row.get("word_class") == "pause_mark":
+        return _disp(
+            "not_applicable", "pause_mark_token_has_no_syntax",
+            uncovered_subfacts=None,
+        )
+    return _disp(
+        "occurrence_bound_nahw_not_joined_in_closed_inputs",
+        "no committed occurrence-bound Nahw fact source (case ending, governor relation, "
+        "syntactic role, agreement) is joined in this manifest's closed authority; the "
+        "particle-occurrence-matrix supplies function candidates only",
+        uncovered_subfacts=list(NAHW_UNCOVERED_SUBFACTS),
+    )
+
+
+def compute_sarf(row):
+    """Branches on the TOKEN's own determined class, never on the card
+    owner's section. The token's own class is determined only when this
+    appearance IS the card-owner entry's own selected word."""
     if row.get("word_class") == "pause_mark":
         return _disp("not_applicable", "pause_mark_token_has_no_morphology", fact_id=None)
-    entry_id = str(row.get("entry_id") or "").strip()
-    entry = entries_by_id.get(entry_id)
-    section = entry["section"] if entry else None
-    if section != "verb":
+    if not row.get("selected"):
         return _disp(
-            "not_applicable_non_verb_class",
-            f"sarf verbal-morphology facts are scoped to verb-class entries "
-            f"(owning entry section={section!r})",
+            "token_class_not_determined",
+            "this appearance is a context token; its own class (verb/noun/particle) is not "
+            "determined by this manifest, so no class-scoped morphology disposition can be "
+            "computed for it",
             fact_id=None,
         )
     return _disp(
         "authority_not_joined_in_closed_inputs",
-        "no committed per-token sarf segmentation source is joined in this manifest's "
-        "closed authority (the whitelist that carries sarf_facts is not a repo artifact); "
-        "deferred to the Train A/B sarf fact projector",
+        "no committed per-token sarf segmentation source is joined in this manifest's closed "
+        "authority for any token class; deferred to the Train A/B sarf fact projector",
         fact_id=None,
     )
 
 
-def compute_colour_and_hover(row, attachments, appearance_index_row):
+def compute_colour_and_hover(row):
+    """Colour and hover are independently, honestly empty: no colour fact and
+    no hover fact is joined anywhere in closed authority. A particle-matrix
+    candidate relation is never promoted into either plane (see
+    particle_function_candidate_refs / particle_function_candidates_at_loc for
+    that candidate evidence)."""
     if row.get("word_class") == "pause_mark":
         pause_disp = _disp("not_applicable", "pause_mark_token_has_no_display_payload", fact_id=None)
         return dict(pause_disp), dict(pause_disp)
-
-    fact_id = None
-    status = "not_available"
-    reason = (
-        "no committed colour/hover fact source is joined for this appearance in closed "
-        "authority; deferred to the rich-colour/rich-hover batches this manifest feeds"
-    )
-    if attachments:
-        fact_ids = sorted({r.get("matrix_id") for _, r in attachments if r.get("matrix_id")})
-        fact_id = fact_ids[0] if len(fact_ids) == 1 else fact_ids
-        certified_values = sorted({r.get("certified") for _, r in attachments})
-        if certified_values and all(v not in (None, "none") for v in certified_values):
-            status = "certified"
-            reason = "derived from a certified particle-occurrence-matrix candidate fact"
-        else:
-            status = "candidate_available_uncertified"
-            reason = (
-                f"derived from {len(attachments)} uncertified particle-occurrence-matrix "
-                f"candidate fact(s) (certified={certified_values}); not yet live payload"
-            )
-    elif appearance_index_row is not None:
-        reason = (
-            "occurrence is present in the reader occurrence-appearances index but carries "
-            "no colour/hover-bearing fact in this manifest's closed authority"
-        )
-
-    colour = _disp(status, reason, fact_id=fact_id)
-    hover = _disp(status, reason, fact_id=fact_id)
-    if colour["fact_id"] != hover["fact_id"]:  # pragma: no cover - structural invariant
-        raise AssertionError("colour/hover fact identity diverged by construction")
+    colour = _disp("not_available", "no_colour_fact_joined_in_closed_inputs", fact_id=None)
+    hover = _disp("not_available", "no_hover_fact_joined_in_closed_inputs", fact_id=None)
     return colour, hover
+
+
+def compute_cross_plane_conflict(row, orthographic_shape_recall, attachments):
+    """Report, never silently reconcile: orthographic shape recall and the
+    particle-matrix 'definite article al-' candidate are two independent
+    signals and sometimes disagree."""
+    if row.get("word_class") == "pause_mark":
+        return _disp("not_applicable", "pause_mark_token_has_no_article_or_candidate_signal")
+    shape_article = orthographic_shape_recall["article"]["present"] is True
+    candidate_article = any(
+        DEFINITE_ARTICLE_CANDIDATE in (matrix_row.get("function_candidates") or [])
+        for _kind, matrix_row in attachments
+    )
+    if shape_article != candidate_article:
+        return _disp(
+            "article_shape_vs_candidate_disagreement",
+            f"orthographic_shape_recall.article.present={shape_article} vs particle-matrix "
+            f"{DEFINITE_ARTICLE_CANDIDATE!r} candidate={candidate_article}; reported, never "
+            "silently reconciled",
+        )
+    return _disp(
+        "none",
+        "orthographic shape recall and the particle-matrix definite-article candidate agree "
+        "(both present or both absent) for this appearance",
+    )
+
+
+def compute_appearance_identity(row, occ_row):
+    if row.get("word_class") == "pause_mark":
+        return _disp("not_applicable", "pause_mark_token_has_no_canonical_appearance_identity")
+    canonical_loc = row.get("canonical_loc")
+    if canonical_loc and occ_row is not None:
+        return _disp(
+            "canonical_occurrence_identified",
+            f"appearance resolves to canonical_loc={canonical_loc!r} in "
+            "example-ayah-universe.occurrences.jsonl",
+        )
+    return _disp(
+        "canonical_occurrence_not_identified",
+        "this displayed word could not be aligned to a canonical Quran occurrence in closed "
+        "authority (see surface for the alignment disposition)",
+    )
 
 
 def compute_reverse_trace(row):
@@ -374,7 +530,7 @@ def compute_revocation_dependency(row, appearance_index_row):
         return _disp(
             "occurrence_absent_from_reader_index",
             "canonical_loc is not present in qamus/indexes/occurrence-appearances.jsonl; "
-            "no live revocation dependency is recorded there",
+            "no revocation dependency is recorded there",
         )
     entry_relationships = appearance_index_row.get("entry_relationships") or []
     if entry_id in entry_relationships:
@@ -391,40 +547,55 @@ def compute_revocation_dependency(row, appearance_index_row):
 
 def compute_payload(row, appearance_index_row):
     if row.get("word_class") == "pause_mark" or not row.get("canonical_loc"):
-        return _disp("not_applicable", "no canonical occurrence to carry a live payload (pause mark or unaligned word)")
+        return _disp("not_applicable", "no canonical occurrence to carry a payload record (pause mark or unaligned word)")
     if appearance_index_row is None:
         return _disp(
             "no_reader_index_record",
             "occurrence not present in qamus/indexes/occurrence-appearances.jsonl reader "
-            "surface; no live payload evidence is available in closed authority",
+            "surface; no payload evidence is available in closed authority",
         )
     surface_kinds = {a.get("surface_kind") for a in appearance_index_row.get("appearances") or []}
     if "reader" in surface_kinds:
-        return _disp("reader_surface_live", "reader index carries a reader-surface_kind appearance at this loc")
+        return _disp(
+            "reader_surface_recorded_in_committed_index",
+            "reader index carries a reader-surface_kind appearance at this loc; this is a "
+            "repository record of a past out-of-repo snapshot, not current live state "
+            "(LIVE_QAMUS_MUTATION: NOT_AUTHORIZED)",
+        )
     return _disp(
-        "entry_example_only_not_reader_live",
+        "entry_example_only_no_reader_surface_recorded",
         "reader index carries only entry_example surface_kind appearances at this loc",
     )
 
 
-def compute_next_action(word_class, exact_binding, surface, is_fork, payload, nahw, sarf, colour, hover):
+def compute_pending_actions(word_class, card_owner_binding, surface, transclusion, payload,
+                             sarf, nahw, colour, hover):
     if word_class == "pause_mark":
-        return "no_action_non_word_token"
-    if exact_binding["status"] != "bound":
-        return "repair_entry_binding"
+        return ["no_action_non_word_token"]
+    actions = []
+    if card_owner_binding["status"] != "owner_entry_resolved":
+        actions.append("repair_card_owner_binding")
     if surface["status"] in ("unaligned", "ambiguous_alignment", "reference_unparsed", "missing_surface"):
-        return "resolve_canonical_alignment"
-    if is_fork:
-        return "adjudicate_page_local_fork"
+        actions.append("resolve_canonical_alignment")
+    if transclusion["fork_status"] == "divergent_colour_fact_id_present":
+        actions.append("adjudicate_divergent_projection_identity")
     if payload["status"] == "no_reader_index_record":
-        return "attach_reader_surface_evidence"
-    pending_facts = {"authority_not_joined_in_closed_inputs"}
-    if nahw["status"] in pending_facts or sarf["status"] in pending_facts:
-        return "await_train_ab_fact_projection"
-    if colour["status"] in ("not_available", "candidate_available_uncertified") or \
-            hover["status"] in ("not_available", "candidate_available_uncertified"):
-        return "author_rich_colour_hover_batch"
-    return "ready_for_rich_projection"
+        actions.append("attach_reader_surface_evidence")
+    pending_fact_statuses = {"authority_not_joined_in_closed_inputs", "token_class_not_determined"}
+    if sarf["status"] in pending_fact_statuses or \
+            nahw["status"] == "occurrence_bound_nahw_not_joined_in_closed_inputs":
+        actions.append("await_train_ab_fact_projection")
+    if colour["status"] == "not_available" or hover["status"] == "not_available":
+        actions.append("author_rich_colour_hover_batch")
+    if not actions:
+        actions.append("ready_for_rich_projection")
+    return actions
+
+
+def _hashable_fact_id(fact_id):
+    if isinstance(fact_id, list):
+        return tuple(sorted(fact_id))
+    return fact_id
 
 
 # ---------------------------------------------------------------------------
@@ -439,7 +610,10 @@ def build_manifest(entries_path, universe_path, universe_occ_path, appearance_in
     appearance_by_loc = load_appearance_index(appearance_index_path)
     particle_by_key, particle_by_appearance = load_particle_matrix(particle_matrix_path)
 
-    # Selected-identity fork detection: same canonical_loc selected by >1 distinct entry.
+    # Multi-entry transclusion fanout detection: same canonical_loc selected
+    # by more than one distinct entry. This is transclusion fanout, not a
+    # fork, unless the entries' own projection identities (colour fact_id)
+    # actually diverge.
     selected_entries_by_loc = defaultdict(set)
     for row in universe_rows:
         if row.get("selected") and row.get("canonical_loc"):
@@ -450,6 +624,9 @@ def build_manifest(entries_path, universe_path, universe_occ_path, appearance_in
     stats = Counter()
     canary_rows_by_source_key = defaultdict(list)
     seen_appearance_ids = set()
+    fork_signal_by_loc = defaultdict(lambda: {"colour_fact_ids": set(), "bare_surfaces": set(),
+                                               "raw_surfaces": set()})
+    fanout_rows_by_loc = defaultdict(list)
 
     for index, row in enumerate(universe_rows):
         appearance_id = row.get("appearance_id")
@@ -463,26 +640,74 @@ def build_manifest(entries_path, universe_path, universe_occ_path, appearance_in
         occ_row = occ_by_loc.get(canonical_loc) if canonical_loc else None
         appearance_index_row = appearance_by_loc.get(canonical_loc) if canonical_loc else None
         attachments = _particle_attachments(row, particle_by_key, particle_by_appearance)
+        particle_refs = [] if word_class == "pause_mark" else compute_particle_candidate_refs(attachments)
 
-        exact_binding = compute_exact_binding(row, entries_by_id)
+        card_owner_binding = compute_card_owner_binding(row, entries_by_id)
+        token_lexeme_binding = compute_token_lexeme_binding(row)
         surface = compute_surface(row)
-        letter_ownership = (
+        orthographic_shape_recall = (
             analyze_letter_ownership(row.get("displayed_surface"))
             if word_class != "pause_mark"
             else {"article": {"present": None, "leading_conjunction": None, "stem_after_article": None},
                   "plural": {"suffix": None, "stem_before_suffix": None},
-                  "status": "not_applicable", "reason": "pause_mark_token_has_no_letters"}
+                  "segmentation_consistent": True,
+                  "status": "not_applicable", "reason": "pause_mark_token_has_no_letters",
+                  "not_a_morpheme_ownership_claim": True}
         )
-        nahw = compute_nahw(row, attachments)
-        sarf = compute_sarf(row, entries_by_id)
-        colour, hover = compute_colour_and_hover(row, attachments, appearance_index_row)
+        morpheme_ownership = _not_joined_plane(
+            row, "not_joined_in_closed_inputs",
+            "no committed morpheme-ownership fact source (distinct from orthographic shape "
+            "recall) is joined in this manifest's closed authority",
+            "pause_mark_token_has_no_morpheme_ownership",
+        )
+        sarf = compute_sarf(row)
+        nahw = compute_nahw(row)
+        particle_function_candidates_at_loc = compute_particle_function_candidates_at_loc(
+            row, attachments, particle_refs)
+        contextual_meaning = _not_joined_plane(
+            row, "not_joined_in_closed_inputs",
+            "no committed contextual-meaning fact source is joined in this manifest's closed authority",
+            "pause_mark_token_has_no_contextual_meaning",
+        )
+        translation = _not_joined_plane(
+            row, "not_joined_in_closed_inputs",
+            "no committed translation fact source is joined in this manifest's closed authority",
+            "pause_mark_token_has_no_translation",
+        )
+        colour, hover = compute_colour_and_hover(row)
+        cross_plane_conflict = compute_cross_plane_conflict(row, orthographic_shape_recall, attachments)
+        appearance_identity = compute_appearance_identity(row, occ_row)
         reverse_trace = compute_reverse_trace(row)
+        certification = _not_joined_plane(
+            row, "no_certification_record_joined",
+            "no governed_fact.certification record is joined in this manifest's closed "
+            "authority; certification is written only by the certification/revocation skill "
+            "per docs/certification-authority.md, never by this component",
+            "pause_mark_token_has_no_certification",
+        )
         revocation_dependency = compute_revocation_dependency(row, appearance_index_row)
         payload = compute_payload(row, appearance_index_row)
+        live_state = _disp(
+            "not_measured",
+            "no live query is authorized or performed by this component "
+            "(LIVE_QAMUS_MUTATION: NOT_AUTHORIZED)",
+        )
 
-        is_fork = bool(canonical_loc and canonical_loc in fork_locs and row.get("selected"))
-        next_action = compute_next_action(
-            word_class, exact_binding, surface, is_fork, payload, nahw, sarf, colour, hover,
+        is_fanout = bool(canonical_loc and canonical_loc in fork_locs and row.get("selected"))
+        transclusion = {
+            "is_transclusion_fanout": is_fanout,
+            "fork_status": "not_applicable",
+            "conflicting_entry_ids": fork_locs.get(canonical_loc, []) if is_fanout else [],
+        }
+        surface_conflict = _disp(
+            "not_applicable",
+            "surface_conflict is only measurable across multiple entries selecting the same "
+            "canonical occurrence; this appearance is not part of a multi-entry transclusion "
+            "fanout",
+        )
+
+        pending_actions = compute_pending_actions(
+            word_class, card_owner_binding, surface, transclusion, payload, sarf, nahw, colour, hover,
         )
 
         out_row = {
@@ -514,46 +739,118 @@ def build_manifest(entries_path, universe_path, universe_occ_path, appearance_in
                 "canonical_occurrence_entry_ids": sorted((occ_row or {}).get("entry_ids") or []),
             },
             "dispositions": {
-                "exact_binding": exact_binding,
+                "card_owner_binding": card_owner_binding,
+                "token_lexeme_binding": token_lexeme_binding,
                 "surface": surface,
-                "letter_ownership": letter_ownership,
+                "surface_conflict": surface_conflict,
+                "orthographic_shape_recall": orthographic_shape_recall,
+                "morpheme_ownership": morpheme_ownership,
                 "sarf": sarf,
                 "nahw": nahw,
+                "particle_function_candidates_at_loc": particle_function_candidates_at_loc,
+                "contextual_meaning": contextual_meaning,
+                "translation": translation,
                 "colour": colour,
                 "hover": hover,
+                "cross_plane_conflict": cross_plane_conflict,
+                "appearance_identity": appearance_identity,
                 "reverse_trace": reverse_trace,
+                "certification": certification,
                 "revocation_dependency": revocation_dependency,
                 "payload": payload,
-                "next_action": next_action,
+                "live_state": live_state,
+                "pending_actions": pending_actions,
             },
-            "page_local_fork": {
-                "is_fork": is_fork,
-                "conflicting_entry_ids": fork_locs.get(canonical_loc, []) if is_fork else [],
-            },
+            "particle_function_candidate_refs": particle_refs,
+            "multi_entry_transclusion_fanout": transclusion,
         }
         output_rows.append(out_row)
+        if is_fanout:
+            fork_signal_by_loc[canonical_loc]["colour_fact_ids"].add(_hashable_fact_id(colour["fact_id"]))
+            fork_signal_by_loc[canonical_loc]["bare_surfaces"].add(bare(row.get("displayed_surface") or ""))
+            fork_signal_by_loc[canonical_loc]["raw_surfaces"].add(row.get("displayed_surface") or "")
+            fanout_rows_by_loc[canonical_loc].append(out_row)
+
         stats["total_rows"] += 1
         stats[f"word_class:{out_row['word_class']}"] += 1
-        stats[f"exact_binding:{exact_binding['status']}"] += 1
+        stats[f"card_owner_binding:{card_owner_binding['status']}"] += 1
+        stats[f"token_lexeme_binding:{token_lexeme_binding['status']}"] += 1
         stats[f"surface:{surface['status']}"] += 1
-        stats[f"nahw:{nahw['status']}"] += 1
+        stats[f"orthographic_shape_recall:{orthographic_shape_recall['status']}"] += 1
+        stats[f"morpheme_ownership:{morpheme_ownership['status']}"] += 1
         stats[f"sarf:{sarf['status']}"] += 1
+        stats[f"nahw:{nahw['status']}"] += 1
+        stats[f"particle_function_candidates_at_loc:{particle_function_candidates_at_loc['status']}"] += 1
+        stats[f"contextual_meaning:{contextual_meaning['status']}"] += 1
+        stats[f"translation:{translation['status']}"] += 1
         stats[f"colour:{colour['status']}"] += 1
         stats[f"hover:{hover['status']}"] += 1
+        stats[f"cross_plane_conflict:{cross_plane_conflict['status']}"] += 1
+        stats[f"appearance_identity:{appearance_identity['status']}"] += 1
+        stats[f"certification:{certification['status']}"] += 1
         stats[f"payload:{payload['status']}"] += 1
+        stats[f"live_state:{live_state['status']}"] += 1
         stats[f"revocation_dependency:{revocation_dependency['status']}"] += 1
-        stats[f"next_action:{next_action}"] += 1
-        if letter_ownership["article"]["present"]:
-            stats["letter_ownership:article_present_rows"] += 1
-        if letter_ownership["plural"]["suffix"]:
-            stats["letter_ownership:plural_suffix_rows"] += 1
-        if is_fork:
-            stats["page_local_fork:affected_rows"] += 1
+        for action in pending_actions:
+            stats[f"pending_actions:{action}"] += 1
+        if orthographic_shape_recall["article"]["present"] is True:
+            stats["orthographic_shape_recall:article_present_rows"] += 1
+        if orthographic_shape_recall["article"]["present"] == "undetermined_proclitic_present":
+            stats["orthographic_shape_recall:article_undetermined_proclitic_rows"] += 1
+        if orthographic_shape_recall["plural"]["suffix"]:
+            stats["orthographic_shape_recall:plural_suffix_rows"] += 1
+        if is_fanout:
+            stats["multi_entry_transclusion_fanout:affected_rows"] += 1
         source_key = row.get("source_key")
         if source_key in CANARY_SOURCE_KEYS:
             canary_rows_by_source_key[source_key].append(out_row)
 
-    stats["page_local_fork:selected_multi_entry_locs"] = len(fork_locs)
+    # Second pass: resolve fork_status/surface_conflict for the multi-entry
+    # transclusion-fanout population now that every entry's own colour
+    # fact_id and displayed surface at each fork loc is known.
+    for loc, out_rows_at_loc in fanout_rows_by_loc.items():
+        signal = fork_signal_by_loc[loc]
+        colour_divergent = len(signal["colour_fact_ids"]) > 1
+        if len(signal["bare_surfaces"]) > 1:
+            surf_status = "divergent_bare_surface_at_same_loc"
+        elif len(signal["raw_surfaces"]) > 1:
+            surf_status = "divergent_marks_only"
+        else:
+            surf_status = "none"
+        fork_status = (
+            "divergent_colour_fact_id_present" if colour_divergent
+            else "no_divergent_projection_identity_in_closed_inputs"
+        )
+        for out_row in out_rows_at_loc:
+            out_row["multi_entry_transclusion_fanout"]["fork_status"] = fork_status
+            out_row["dispositions"]["surface_conflict"] = _disp(
+                surf_status,
+                "displayed-surface agreement across the entries selecting this canonical "
+                "occurrence" if surf_status == "none" else
+                "same canonical occurrence, divergent displayed surfaces across the entries "
+                "selecting it -- reported, never silently reconciled",
+            )
+            out_row["dispositions"]["pending_actions"] = compute_pending_actions(
+                out_row["word_class"], out_row["dispositions"]["card_owner_binding"],
+                out_row["dispositions"]["surface"], out_row["multi_entry_transclusion_fanout"],
+                out_row["dispositions"]["payload"], out_row["dispositions"]["sarf"],
+                out_row["dispositions"]["nahw"], out_row["dispositions"]["colour"],
+                out_row["dispositions"]["hover"],
+            )
+            stats[f"multi_entry_transclusion_fanout:fork_status:{fork_status}"] += 1
+            stats[f"surface_conflict:{surf_status}"] += 1
+
+    fork_status_locs = Counter()
+    surface_conflict_locs = Counter()
+    for loc, out_rows_at_loc in fanout_rows_by_loc.items():
+        fork_status_locs[out_rows_at_loc[0]["multi_entry_transclusion_fanout"]["fork_status"]] += 1
+        surface_conflict_locs[out_rows_at_loc[0]["dispositions"]["surface_conflict"]["status"]] += 1
+    for status, count in fork_status_locs.items():
+        stats[f"multi_entry_transclusion_fanout:fork_status_locs:{status}"] = count
+    for status, count in surface_conflict_locs.items():
+        stats[f"surface_conflict:locs:{status}"] = count
+
+    stats["multi_entry_transclusion_fanout:selected_multi_entry_locs"] = len(fork_locs)
     stats["entries:total"] = len(entries_by_id)
     for section, count in section_counts.items():
         stats[f"entries:section:{section}"] = count
@@ -607,40 +904,40 @@ def compute_canary_report(context):
                 "token_count (P009's own example-card context appearances).",
     }
 
-    # AL-DHAKAR / AL-UNTHA definite-article ownership: measured within P099's own
+    # AL-DHAKAR / AL-UNTHA definite-article shape recall: measured within P099's own
     # example fragments (92:3 "وما خلق الذكر والأنثى"), general article-detection rule.
     article_hits = [
         {"appearance_id": r["appearance_id"], "displayed_surface": r["displayed_surface"],
-         "article": r["dispositions"]["letter_ownership"]["article"]}
+         "article": r["dispositions"]["orthographic_shape_recall"]["article"]}
         for r in p099_rows
-        if r["dispositions"]["letter_ownership"]["article"]["present"]
-        and r["dispositions"]["letter_ownership"]["article"]["stem_after_article"] in ("ذكر", "أنثى")
+        if r["dispositions"]["orthographic_shape_recall"]["article"]["present"] is True
+        and r["dispositions"]["orthographic_shape_recall"]["article"]["stem_after_article"] in ("ذكر", "أنثى")
     ]
     report["al_dhakar_al_untha_article_ownership"] = {
         "matched_rows": article_hits,
         "status": "measured" if article_hits else "blocked",
         "reason": (
-            "definite-article prefix separately measured from stem for AL-DHAKAR/AL-UNTHA "
-            "tokens in P099's own 92:3 example"
+            "definite-article prefix separately recalled from stem for AL-DHAKAR/AL-UNTHA "
+            "tokens in P099's own 92:3 example (shape recall only, not a morpheme-ownership claim)"
             if article_hits else
             "no AL-DHAKAR/AL-UNTHA token found among P099's displayed tokens"
         ),
     }
 
-    # AL-SAMAWAT plural/inflection ownership: measured within P099's own 2:284 example.
+    # AL-SAMAWAT plural/inflection shape recall: measured within P099's own 2:284 example.
     plural_hits = [
         {"appearance_id": r["appearance_id"], "displayed_surface": r["displayed_surface"],
-         "plural": r["dispositions"]["letter_ownership"]["plural"]}
+         "plural": r["dispositions"]["orthographic_shape_recall"]["plural"]}
         for r in p099_rows
-        if r["dispositions"]["letter_ownership"]["plural"]["suffix"] == "ات"
-        and r["dispositions"]["letter_ownership"]["article"]["present"]
+        if r["dispositions"]["orthographic_shape_recall"]["plural"]["suffix"] == "ات"
+        and r["dispositions"]["orthographic_shape_recall"]["article"]["present"] is True
     ]
     report["al_samawat_plural_ownership"] = {
         "matched_rows": plural_hits,
         "status": "measured" if plural_hits else "blocked",
         "reason": (
-            "plural suffix separately measured from stem for AL-SAMAWAT in P099's own "
-            "2:284 example"
+            "plural suffix separately recalled from stem for AL-SAMAWAT in P099's own "
+            "2:284 example (shape recall only, not a morpheme-ownership claim)"
             if plural_hits else
             "no AL-SAMAWAT-shaped token found among P099's displayed tokens"
         ),
@@ -668,13 +965,32 @@ def compute_canary_report(context):
 
 
 def verify_colour_hover_identity(rows):
+    """Report what was actually compared. Equality of two null fact_ids is
+    NOT a comparison and must not be counted as checked; a candidate
+    reference is not a colour/hover fact and must not be counted as
+    checked either."""
+    both_present_compared = 0
+    both_absent_not_compared = 0
+    candidate_only_not_compared = 0
     violations = 0
     for row in rows:
         colour = row["dispositions"]["colour"]
         hover = row["dispositions"]["hover"]
-        if colour["fact_id"] != hover["fact_id"] or colour["status"] != hover["status"]:
+        if colour["status"] != hover["status"] or colour["fact_id"] != hover["fact_id"]:
             violations += 1
-    return {"checked_rows": len(rows), "violations": violations}
+            continue
+        if colour["fact_id"] is not None and hover["fact_id"] is not None:
+            both_present_compared += 1
+        elif row.get("particle_function_candidate_refs"):
+            candidate_only_not_compared += 1
+        else:
+            both_absent_not_compared += 1
+    return {
+        "both_present_compared": both_present_compared,
+        "both_absent_not_compared": both_absent_not_compared,
+        "candidate_only_not_compared": candidate_only_not_compared,
+        "violations": violations,
+    }
 
 
 def build_baseline(rows, stats, context, inputs, output_hash):
@@ -683,6 +999,13 @@ def build_baseline(rows, stats, context, inputs, output_hash):
     universe_row_count = stats["total_rows"]
     word_rows = stats.get("word_class:word", 0)
     pause_rows = stats.get("word_class:pause_mark", 0)
+
+    aligned_word_rows = (
+        stats.get("surface:alignment_tier_exact", 0)
+        + stats.get("surface:alignment_tier_strict", 0)
+        + stats.get("surface:alignment_tier_strict_word_unique", 0)
+        + stats.get("surface:recall_tier_only", 0)
+    )
 
     baseline = {
         "generator": {"id": BUILDER_ID, "version": BUILDER_VERSION, "schema": SCHEMA},
@@ -697,8 +1020,7 @@ def build_baseline(rows, stats, context, inputs, output_hash):
             "total_rows": universe_row_count,
             "word_rows": word_rows,
             "pause_mark_rows": pause_rows,
-            "aligned_word_rows": stats.get("surface:certified_tier", 0)
-            + stats.get("surface:recall_tier_only", 0),
+            "aligned_word_rows": aligned_word_rows,
             "unaligned_word_rows": stats.get("surface:unaligned", 0)
             + stats.get("surface:reference_unparsed", 0)
             + stats.get("surface:ambiguous_alignment", 0),
@@ -706,17 +1028,24 @@ def build_baseline(rows, stats, context, inputs, output_hash):
         "disposition_counts": {
             key: value for key, value in sorted(stats.items())
             if ":" in key and key.split(":", 1)[0] in (
-                "exact_binding", "surface", "nahw", "sarf", "colour", "hover",
-                "payload", "revocation_dependency", "next_action",
+                "card_owner_binding", "token_lexeme_binding", "surface", "surface_conflict",
+                "orthographic_shape_recall", "morpheme_ownership", "sarf", "nahw",
+                "particle_function_candidates_at_loc", "contextual_meaning", "translation",
+                "colour", "hover", "cross_plane_conflict", "appearance_identity", "certification",
+                "revocation_dependency", "payload", "live_state", "pending_actions",
+                "multi_entry_transclusion_fanout",
             )
         },
-        "letter_ownership": {
-            "article_present_rows": stats.get("letter_ownership:article_present_rows", 0),
-            "plural_suffix_rows": stats.get("letter_ownership:plural_suffix_rows", 0),
+        "orthographic_shape_recall_counts": {
+            "article_present_rows": stats.get("orthographic_shape_recall:article_present_rows", 0),
+            "article_undetermined_proclitic_rows":
+                stats.get("orthographic_shape_recall:article_undetermined_proclitic_rows", 0),
+            "plural_suffix_rows": stats.get("orthographic_shape_recall:plural_suffix_rows", 0),
         },
-        "page_local_fork": {
-            "selected_multi_entry_locs": stats.get("page_local_fork:selected_multi_entry_locs", 0),
-            "affected_rows": stats.get("page_local_fork:affected_rows", 0),
+        "multi_entry_transclusion_fanout": {
+            "selected_multi_entry_locs":
+                stats.get("multi_entry_transclusion_fanout:selected_multi_entry_locs", 0),
+            "affected_rows": stats.get("multi_entry_transclusion_fanout:affected_rows", 0),
         },
         "canaries": compute_canary_report(context),
         "colour_hover_identity_invariant": verify_colour_hover_identity(rows),
@@ -764,7 +1093,7 @@ def select_sample(rows, context, sample_size):
     canary_rows = [r for r in rows if r.get("source_key") in CANARY_SOURCE_KEYS]
     take(canary_rows)
 
-    fork_rows = [r for r in rows if r["page_local_fork"]["is_fork"]]
+    fork_rows = [r for r in rows if r["multi_entry_transclusion_fanout"]["is_transclusion_fanout"]]
     take(sorted(fork_rows, key=lambda r: r["appearance_id"])[:60])
 
     unaligned_rows = [r for r in rows if r["dispositions"]["surface"]["status"] == "unaligned"]
@@ -793,9 +1122,10 @@ def select_sample(rows, context, sample_size):
 SAMPLE_SELECTION_RULE = (
     "Deterministic, bounded, order-preserving selection over the full manifest (source order "
     "from example-ayah-universe.jsonl): (1) every P009/P099 canary appearance; (2) up to 60 "
-    "page-local-fork appearances (lowest appearance_id first); (3) up to 20 unaligned-word "
-    "appearances; (4) up to 20 pause-mark appearances; (5) a fixed-stride fill of remaining "
-    "rows across the full manifest until the target sample size is reached. No random sampling."
+    "multi-entry-transclusion-fanout appearances (lowest appearance_id first); (3) up to 20 "
+    "unaligned-word appearances; (4) up to 20 pause-mark appearances; (5) a fixed-stride fill of "
+    "remaining rows across the full manifest until the target sample size is reached. No random "
+    "sampling."
 )
 
 

@@ -21,7 +21,7 @@
           "displayed_surface": "والأنثى"
         }
       ],
-      "reason": "definite-article prefix separately measured from stem for AL-DHAKAR/AL-UNTHA tokens in P099's own 92:3 example",
+      "reason": "definite-article prefix separately recalled from stem for AL-DHAKAR/AL-UNTHA tokens in P099's own 92:3 example (shape recall only, not a morpheme-ownership claim)",
       "status": "measured"
     },
     "al_samawat_plural_ownership": {
@@ -30,12 +30,12 @@
           "appearance_id": "b8e480aebafe:u0:x0:w3",
           "displayed_surface": "السماوات",
           "plural": {
-            "stem_before_suffix": "السماو",
+            "stem_before_suffix": "سماو",
             "suffix": "ات"
           }
         }
       ],
-      "reason": "plural suffix separately measured from stem for AL-SAMAWAT in P099's own 2:284 example",
+      "reason": "plural suffix separately recalled from stem for AL-SAMAWAT in P099's own 2:284 example (shape recall only, not a morpheme-ownership claim)",
       "status": "measured"
     },
     "ma_function_disambiguation_deficit": {
@@ -69,43 +69,80 @@
     }
   },
   "colour_hover_identity_invariant": {
-    "checked_rows": 117117,
+    "both_absent_not_compared": 41739,
+    "both_present_compared": 0,
+    "candidate_only_not_compared": 75378,
     "violations": 0
   },
   "disposition_counts": {
-    "colour:candidate_available_uncertified": 75378,
+    "appearance_identity:canonical_occurrence_identified": 109018,
+    "appearance_identity:canonical_occurrence_not_identified": 453,
+    "appearance_identity:not_applicable": 7646,
+    "card_owner_binding:not_applicable": 7646,
+    "card_owner_binding:owner_entry_resolved": 109471,
+    "certification:no_certification_record_joined": 109471,
+    "certification:not_applicable": 7646,
     "colour:not_applicable": 7646,
-    "colour:not_available": 34093,
-    "exact_binding:bound": 109471,
-    "exact_binding:not_applicable": 7646,
-    "hover:candidate_available_uncertified": 75378,
+    "colour:not_available": 109471,
+    "contextual_meaning:not_applicable": 7646,
+    "contextual_meaning:not_joined_in_closed_inputs": 109471,
+    "cross_plane_conflict:article_shape_vs_candidate_disagreement": 2453,
+    "cross_plane_conflict:none": 107018,
+    "cross_plane_conflict:not_applicable": 7646,
     "hover:not_applicable": 7646,
-    "hover:not_available": 34093,
-    "nahw:authority_not_joined_in_closed_inputs": 34093,
-    "nahw:candidate_uncertified": 75378,
+    "hover:not_available": 109471,
+    "live_state:not_measured": 117117,
+    "morpheme_ownership:not_applicable": 7646,
+    "morpheme_ownership:not_joined_in_closed_inputs": 109471,
+    "multi_entry_transclusion_fanout:affected_rows": 210,
+    "multi_entry_transclusion_fanout:fork_status:no_divergent_projection_identity_in_closed_inputs": 210,
+    "multi_entry_transclusion_fanout:fork_status_locs:no_divergent_projection_identity_in_closed_inputs": 105,
+    "multi_entry_transclusion_fanout:selected_multi_entry_locs": 105,
     "nahw:not_applicable": 7646,
-    "next_action:adjudicate_page_local_fork": 210,
-    "next_action:attach_reader_surface_evidence": 23325,
-    "next_action:author_rich_colour_hover_batch": 8095,
-    "next_action:await_train_ab_fact_projection": 77388,
-    "next_action:no_action_non_word_token": 7646,
-    "next_action:resolve_canonical_alignment": 453,
+    "nahw:occurrence_bound_nahw_not_joined_in_closed_inputs": 109471,
+    "orthographic_shape_recall:article_present_rows": 16981,
+    "orthographic_shape_recall:article_undetermined_proclitic_rows": 944,
+    "orthographic_shape_recall:not_applicable": 7646,
+    "orthographic_shape_recall:not_measured": 3,
+    "orthographic_shape_recall:plural_suffix_rows": 8025,
+    "orthographic_shape_recall:shape_recall_only": 109468,
+    "particle_function_candidates_at_loc:authority_not_joined_in_closed_inputs": 34093,
+    "particle_function_candidates_at_loc:candidate_only_partial_function_evidence": 75378,
+    "particle_function_candidates_at_loc:not_applicable": 7646,
     "payload:no_reader_index_record": 23341,
     "payload:not_applicable": 8099,
-    "payload:reader_surface_live": 85677,
+    "payload:reader_surface_recorded_in_committed_index": 85677,
+    "pending_actions:attach_reader_surface_evidence": 23341,
+    "pending_actions:author_rich_colour_hover_batch": 109471,
+    "pending_actions:await_train_ab_fact_projection": 109471,
+    "pending_actions:no_action_non_word_token": 7646,
+    "pending_actions:resolve_canonical_alignment": 453,
     "revocation_dependency:linked_to_reader_index": 20464,
     "revocation_dependency:not_applicable": 8099,
     "revocation_dependency:occurrence_absent_from_reader_index": 23341,
     "revocation_dependency:occurrence_present_no_entry_link": 65213,
-    "sarf:authority_not_joined_in_closed_inputs": 94522,
+    "sarf:authority_not_joined_in_closed_inputs": 4409,
     "sarf:not_applicable": 7646,
-    "sarf:not_applicable_non_verb_class": 14949,
+    "sarf:token_class_not_determined": 105062,
+    "surface:alignment_tier_exact": 95416,
+    "surface:alignment_tier_strict": 12795,
+    "surface:alignment_tier_strict_word_unique": 630,
     "surface:ambiguous_alignment": 82,
-    "surface:certified_tier": 108841,
     "surface:not_applicable": 7646,
     "surface:recall_tier_only": 177,
     "surface:reference_unparsed": 139,
-    "surface:unaligned": 232
+    "surface:unaligned": 232,
+    "surface_conflict:divergent_bare_surface_at_same_loc": 22,
+    "surface_conflict:divergent_marks_only": 74,
+    "surface_conflict:locs:divergent_bare_surface_at_same_loc": 11,
+    "surface_conflict:locs:divergent_marks_only": 37,
+    "surface_conflict:locs:none": 57,
+    "surface_conflict:none": 114,
+    "token_lexeme_binding:bound_selected_token": 4409,
+    "token_lexeme_binding:not_applicable": 7646,
+    "token_lexeme_binding:token_lexeme_not_determined": 105062,
+    "translation:not_applicable": 7646,
+    "translation:not_joined_in_closed_inputs": 109471
   },
   "entry_totals": {
     "noun": 1045,
@@ -115,12 +152,12 @@
   },
   "full_output": {
     "row_count": 117117,
-    "sha256": "1ea95a46ba4138273d4cc8f9e6c9360505e69965cd65531a4adee2ebd4606486"
+    "sha256": "04a440ca219775eb754a337984cc2d32a7578adac372a7d7afd55e68e3435338"
   },
   "generator": {
     "id": "build_corpus_projection_manifest",
     "schema": "qamus.corpus_projection_manifest.v1",
-    "version": "1.0.0"
+    "version": "2.0.0"
   },
   "inputs": {
     "appearance_index": "df0a5ab0e9381d717570fffbe6866e92f3f9f9afc4a2cf0169e84a276eb3df8f",
@@ -129,10 +166,6 @@
     "universe": "3d24985ef635ef2fd8be06187158233def0a612a01aabe5fd8cc3c186734f1f2",
     "universe_occurrences": "2b0cc14bbd36efdf6687cb4ae4ef4f2065b29a4c9f55845bc9056873bbea5884"
   },
-  "letter_ownership": {
-    "article_present_rows": 16981,
-    "plural_suffix_rows": 8025
-  },
   "manifest_totals": {
     "aligned_word_rows": 109018,
     "pause_mark_rows": 7646,
@@ -140,9 +173,14 @@
     "unaligned_word_rows": 453,
     "word_rows": 109471
   },
-  "page_local_fork": {
+  "multi_entry_transclusion_fanout": {
     "affected_rows": 210,
     "selected_multi_entry_locs": 105
+  },
+  "orthographic_shape_recall_counts": {
+    "article_present_rows": 16981,
+    "article_undetermined_proclitic_rows": 944,
+    "plural_suffix_rows": 8025
   },
   "verification": {
     "entries_set_equality": true,
