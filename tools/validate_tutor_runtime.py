@@ -39,6 +39,7 @@ from tools import leak_sot  # noqa: E402
 _PROG_SCHEMA = json.load(open(os.path.join(_REPO, "qamus", "schemas", "tutor-progress-state.schema.json"), encoding="utf-8"))
 _EVENT_SCHEMA = json.load(open(os.path.join(_REPO, "qamus", "schemas", "tutor-event.schema.json"), encoding="utf-8"))
 _REMEDIATION_INDEX = os.path.join(_REPO, "curriculum", "drills", "dogfood-error-remediation-index.md")
+_MISSED_ERROR_TEMPLATE = os.path.join(_REPO, "curriculum", "progress", "missed-error-log.template.md")
 _DRILL_KEYS = os.path.join(_REPO, "curriculum", "drills", "keys")
 
 # a payload read of a self-reported correctness flag — must NOT appear in grade()'s source
@@ -109,9 +110,11 @@ def _reachable_kc_ids():
     return out
 
 
-def _validate_remediation_index(text=None, reachable=None):
+def _validate_remediation_index(text=None, reachable=None, crosswalk_text=None):
     if text is None:
         text = open(_REMEDIATION_INDEX, encoding="utf-8").read()
+    if crosswalk_text is None:
+        crosswalk_text = open(_MISSED_ERROR_TEMPLATE, encoding="utf-8").read()
     reachable = _reachable_kc_ids() if reachable is None else set(reachable)
     errs, seen = [], {}
     row_re = re.compile(r"^\|\s*`(kc-[^`]+)`\s*\|\s*`(emittable|documented_only)`\s*\|")
@@ -138,6 +141,11 @@ def _validate_remediation_index(text=None, reachable=None):
         errs.append("remediation precedence does not defer equivalence to the authoritative crosswalk")
     if "it is not an equivalence assertion for either KC" not in normalized:
         errs.append("hidden_derivative_plural_piece is not explicitly withheld from KC equivalence")
+    if "The first table is a manual-log and historical dogfood vocabulary" not in normalized:
+        errs.append("remediation index does not mark legacy error classes as manual-log-only")
+    crosswalk_normalized = " ".join(crosswalk_text.split())
+    if "Legacy error classes from the list above remain a manual-log vocabulary; the runtime does not emit them" not in crosswalk_normalized:
+        errs.append("missed-error template overclaims runtime emission of legacy error classes")
     return errs
 
 
@@ -260,6 +268,16 @@ def _self_test():
                                          "it is an equivalence assertion for either KC", 1)
     if not _validate_remediation_index(bad_equivalence):
         errs.append("META: remediation index accepted a non-crosswalk KC equivalence")
+    bad_legacy_index = index_text.replace("The first table is a manual-log and historical dogfood vocabulary",
+                                          "The first table is a runtime-emitted vocabulary", 1)
+    if not _validate_remediation_index(bad_legacy_index):
+        errs.append("META: remediation index accepted legacy classes as runtime-emitted")
+    crosswalk_text = open(_MISSED_ERROR_TEMPLATE, encoding="utf-8").read()
+    bad_legacy_crosswalk = crosswalk_text.replace(
+        "the list above remain a manual-log vocabulary; the runtime does not emit them",
+        "the list above are emitted by the runtime", 1)
+    if not _validate_remediation_index(index_text, crosswalk_text=bad_legacy_crosswalk):
+        errs.append("META: missed-error template accepted legacy classes as runtime-emitted")
     for e in errs:
         print("FAIL " + e)
     if not errs:

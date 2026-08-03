@@ -3,10 +3,11 @@
 Use this index when a learner or agent makes a mistake already seen in Qamus dogfood. The goal is not to memorize
 the history; it is to route a miss to the procedure and drill that prevents the same hover defect from returning.
 
-**Precedence when the same symptom appears in both tables below:** `progress.missed[].error_reason` (see
-`tools/fusha_tutor_runtime.py`) carries either a legacy `error class` string (the first table) or, for a
-Train-C-bound drill row, a `kc_id` (the second table) — never both for the same event. The two vocabularies were
-authored independently and are NOT interchangeable spellings of each other. Where the same real-world symptom
+**Precedence when the same symptom appears in both tables below:** the runtime field
+`progress.missed[].error_reason` (see `tools/fusha_tutor_runtime.py`) carries a bound `kc_id` or null. It does not
+emit legacy error-class strings. The first table is a manual-log and historical dogfood vocabulary; the second
+table records the current KC routing posture. The two vocabularies were authored independently and are NOT
+interchangeable spellings of each other. Where the same real-world symptom
 may appear under both vocabularies, treat the ids as equivalent only when the authoritative crosswalk explicitly
 pairs them. The legacy `hidden_derivative_plural_piece` row is broader than either
 `kc-number-suffix-hidden` or `kc-derivative-shape-hidden`; it is not an equivalence assertion for either KC. The

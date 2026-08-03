@@ -42,10 +42,10 @@ Copy this file outside the repo for a real learner. The repo keeps the template 
 
 ## Train C `kc_id` Crosswalk
 
-`tools/fusha_tutor_runtime.py` writes `progress.missed[].error_reason` as EITHER a legacy error class from the
-list above OR, for a Train-C-bound drill row (`curriculum/drills/keys/*.keys.jsonl` rows carrying `kc_id`), a
-`kc_id` from `curriculum/kc-catalog.json` — never both for the same event. The two vocabularies were authored at
-different times, for different populations of items, and do not lexically match even where they describe the
+`tools/fusha_tutor_runtime.py` writes `progress.missed[].error_reason` as a `kc_id` from
+`curriculum/kc-catalog.json` when the drill-key row carries one, and null otherwise. Legacy error classes from
+the list above remain a manual-log vocabulary; the runtime does not emit them. The two vocabularies were authored
+at different times, for different populations of items, and do not lexically match even where they describe the
 same real-world symptom; a downstream consumer of `progress.missed` must not assume a `kc-*` code and a legacy
 code are distinct errors just because their spelling differs. Known semantic overlaps are listed below; treat a
 pairing as equivalent ONLY if it appears on this list.
