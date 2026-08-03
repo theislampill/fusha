@@ -231,9 +231,10 @@ Two rules constrain how the above is computed, not what class fires:
 > honest, class-neutral replacement — `qg-affix-undetermined` or
 > `qg-clitic-undetermined` (`CLASS_PRESUPPOSING_QG_CLASSES`,
 > `NEUTRAL_AFFIX_QG_CLASS`, `NEUTRAL_CLITIC_QG_CLASS` in
-> `tools/fusha_standalone_parse.py`). `future_particle`'s class (`qg-particle`)
-> was already honest — a particle is a particle regardless of which entry the
-> disputed stem resolves to — so it is unchanged. `validate_record` now checks
+> `tools/fusha_standalone_parse.py`). A `future_particle` affected by a
+> `stem_identity` collision is also degraded to `affix_undetermined` with
+> `qg-affix-undetermined`; `qg-particle` remains allowed only where the role is
+> independently licensed outside that degraded branch. `validate_record` now checks
 > retained segment `class` against `CLASS_PRESUPPOSING_QG_CLASSES`
 > independently of the `role` check, so a future rename that forgets to also
 > neutralize `class` still fails closed. The two new classes were added to
