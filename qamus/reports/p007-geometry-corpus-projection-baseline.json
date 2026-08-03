@@ -1,0 +1,93 @@
+{
+  "certification_boundary": "partial_certified_geometry_only",
+  "certification_store": {
+    "effective_status_counts": {
+      "certified": 1362
+    },
+    "event_count": 4086,
+    "fact_type_counts": {
+      "attachment_geometry": 454,
+      "surface_reconstruction_nfc": 454,
+      "token_host_boundary": 454
+    },
+    "hash_chain_valid": true,
+    "registered_fact_count": 1362
+  },
+  "delivery_boundary": {
+    "live_mutation_allowed": false,
+    "live_outputs_generated": 0,
+    "public_materialization_allowed": false,
+    "website_payloads_generated": 0
+  },
+  "downstream_dispositions": {
+    "appearances": {
+      "appearance_surface_variant_mapping_required": 165,
+      "geometry_projection_ready": 820
+    },
+    "occurrence_wide_surface_gate": true,
+    "occurrences": {
+      "appearance_surface_variant_mapping_required": 69,
+      "geometry_projection_ready": 385
+    },
+    "partial_mixed_occurrence_projection_allowed": false
+  },
+  "full_output": {
+    "row_count": 985,
+    "sha256": "8ef10265d8ab4455becb2fd2bed373917b18afb4ae6e1019d9b44030ed632f68"
+  },
+  "generator": {
+    "id": "build_corpus_fact_projection_batch",
+    "version": "1.0.0"
+  },
+  "inputs": {
+    "certification_events_sha256": "6c0c37f6c2948d5ff4fd812c0ee3bc88713aad9e57d9c0619a6d235e7907a2eb",
+    "corpus_projection_manifest_sha256": "04a440ca219775eb754a337984cc2d32a7578adac372a7d7afd55e68e3435338",
+    "p007_reverse_universe_sha256": "54fea0f3e3a214c978eb065d5d0b7e2a2532fa1f6d02682c6bfc2a95041a85e1",
+    "typed_facts_sha256": "6e428baab29da63c2a452d304dac60f3a4d4c4c5fe7908c28830303db26af2fa"
+  },
+  "population": {
+    "appearance_hash": "b3ee61976dcb711c5bb03babc3cf23412e7c1b574fb5b72125ba3b496ce45dc6",
+    "appearance_id_sha256": "b3ee61976dcb711c5bb03babc3cf23412e7c1b574fb5b72125ba3b496ce45dc6",
+    "appearance_surface_posture_counts": {
+      "exact_all_appearances": 820,
+      "mixed_surface": 50,
+      "variant_only": 115
+    },
+    "appearances": 985,
+    "certification_events": 4086,
+    "certified_facts": 1362,
+    "location_hash": "49ef4431360d87a22a8e7def89076cfcfb2df129fa381e05dbee96c764f3529b",
+    "occurrence_id_sha256": "49ef4431360d87a22a8e7def89076cfcfb2df129fa381e05dbee96c764f3529b",
+    "occurrence_surface_posture_counts": {
+      "exact_all_appearances": 385,
+      "mixed_surface": 15,
+      "variant_only": 54
+    },
+    "occurrences": 454,
+    "source_corpus_manifest_rows": 117117
+  },
+  "schema": "qamus.corpus_fact_projection_baseline.v1",
+  "selection": {
+    "appearance_policy": "include every corpus-manifest appearance at each selected location",
+    "join_key": "exact canonical_loc",
+    "partition": "deterministic-attachment-geometry"
+  },
+  "semantic_boundaries": {
+    "colour": "boundary_available_no_semantic_colour",
+    "hover": "not_available_missing_full_token_facts",
+    "hover_gains": 0,
+    "semantic_rich_colour_gains": 0,
+    "token_identity_function_sense_meaning_root_nahw_gains": 0
+  },
+  "verification": {
+    "appearance_sets_match_reverse_universe": true,
+    "closed_input_counts_and_hashes_match": true,
+    "component_and_token_spans_distinct": true,
+    "event_trail_latest_state_certified": true,
+    "exact_three_fact_types_per_occurrence": true,
+    "nfc_reconstruction_valid": true,
+    "occurrence_wide_surface_gate_enforced": true,
+    "one_projection_hash_per_occurrence": true,
+    "website_and_live_output_zero": true
+  }
+}
