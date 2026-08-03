@@ -83,7 +83,7 @@ DECISION_CONSUMERS = (
     "tools/fusha_text_check.py:check_text",
     "tools/fusha_morphology_lattice.py:build_morphology_lattice",
     "tools/corpus_to_qamus_candidates.py:classify",
-    "tools/run_sarf_evals.py:decide_letter_ownership",
+    "tools/curriculum_unit_consumer.py:analyze_ownership_carve",
 )
 # Contract-declared callable -> the Consumers slot that holds it. run_adapter() wraps these slots in counting
 # proxies, so the observed per-row call count is measured INDEPENDENTLY of whatever an adapter chooses to report.
@@ -92,7 +92,7 @@ CONSUMER_SLOTS = {
     "tools/fusha_text_check.py:check_text": "check_text",
     "tools/fusha_morphology_lattice.py:build_morphology_lattice": "build_lattice",
     "tools/corpus_to_qamus_candidates.py:classify": "classify",
-    "tools/run_sarf_evals.py:decide_letter_ownership": "letter_ownership_decide",
+    "tools/curriculum_unit_consumer.py:analyze_ownership_carve": "letter_ownership_decide",
 }
 # The banks whose behavioural coverage is specifically justified. A future change may not quietly relabel all
 # banks fixture_only to make the gate green: tools/test_run_sarf_evals.py asserts these stay behavioural.
@@ -150,7 +150,7 @@ _SEG = "tools/fusha_text_check.py:segment_candidates"
 _CHK = "tools/fusha_text_check.py:check_text"
 _LAT = "tools/fusha_morphology_lattice.py:build_morphology_lattice"
 _NORM = "structural:tools/normalize_ar.py"
-_OWN = "tools/run_sarf_evals.py:decide_letter_ownership"
+_OWN = "tools/curriculum_unit_consumer.py:analyze_ownership_carve"
 
 _LOC_RE = re.compile(r"^\d{1,3}:\d{1,3}:\d{1,3}$")
 _HARAKAT = range(0x064B, 0x0653)
@@ -180,6 +180,7 @@ class Consumers(object):
         ml = consumers_module("fusha_morphology_lattice")
         na = consumers_module("normalize_ar")
         cq = consumers_module("corpus_to_qamus_candidates")
+        cu = consumers_module("curriculum_unit_consumer")
         self = cls()
         self.segment_candidates = tc.segment_candidates
         self.check_text = tc.check_text
@@ -193,7 +194,11 @@ class Consumers(object):
         self.shadda_on = na.shadda_on
         self.haraka_on = na.haraka_on
         self.ends_tanwin_alef = na.ends_tanwin_alef
-        self.letter_ownership_decide = decide_letter_ownership
+        # the DECLARED behavioural consumer for the letter-ownership-carve bank is the EXTERNAL
+        # curriculum_unit_consumer module's own function, bound directly (never a local wrapper),
+        # so a mutation of that module's attribute (tools/test_run_sarf_evals.py) is what the
+        # adapter actually calls -- proving genuine cross-module invocation, not an echo.
+        self.letter_ownership_decide = cu.analyze_ownership_carve
         return self
 
 
@@ -792,133 +797,37 @@ def adapter_corpus_classifier(rows, spec, ctx, root):
 # ---------------------------------------------------------------------------
 # letter ownership carve — curriculum/l1l6/increments/inc-ownership (u-s01/u-s09 own-r1..r5),
 # cu-nisba-attribution-suffix's affix layer, and the p007 clitic/host carve.
+#
+# The DECISION itself lives in tools/curriculum_unit_consumer.py:analyze_ownership_carve (the
+# EXTERNAL, DECLARED behavioural consumer for this bank — see DECISION_CONSUMERS/CONSUMER_SLOTS
+# above and Consumers.real()). This module only ADAPTS the bank rows to it; the closed
+# owner-class and abstention vocabularies below mirror that module's own closed sets (the same
+# pattern EVIDENCE_CLASSES/CLASSIFIER_CLASSES already use for the other adapters in this file) so
+# the adapter can validate a row's `expected_owners`/`expected_reason` without importing another
+# module's private constants.
 # ---------------------------------------------------------------------------
-# The closed clitic inventory and imperfect-prefix set are the machine pack's own vocabulary
-# (curriculum/l1l6/increments/inc-ownership/unit-v2.json); nothing here mints a new clitic or prefix.
-_OWNERSHIP_CLITIC_INVENTORY = {"ال": "definite_article", "ب": "preposition",
-                               "س": "future_marker", "ف": "conjunction", "ك": "preposition",
-                               "ل": "preposition", "و": "conjunction"}
-_OWNERSHIP_CLITIC_SINGLE = tuple(k for k in _OWNERSHIP_CLITIC_INVENTORY if len(k) == 1)
-_OWNERSHIP_INFLECTION_PREFIXES = {"أ": "imperfect_1sg", "ت": "imperfect_2_or_3f",
-                                  "ن": "imperfect_1pl", "ي": "imperfect_3"}
 _OWNERSHIP_CLASSES = ("root", "pattern_augment", "clitic", "inflection", "affix", "host")
-_OWNERSHIP_ABSTAIN_REASONS = ("pending_letter_ownership", "false_stem_risk", "no_root_evidence")
-_OWNERSHIP_RECORD_KEYS = frozenset(("decision", "owners", "reason", "hidden_radicals"))
-
-
-def _own_abstain(reason):
-    return {"decision": "abstain", "reason": reason, "owners": []}
-
-
-def _own_nisba_override(claims, letters, peel_len, suffix_kind):
-    """cu-nisba-attribution-suffix: a DECLARED nisba suffix's final geminated yaa plus its preceding kasra-bearing
-    letter belong to the affix layer and are never eligible for a root claim, even when root_evidence's own radical
-    sequence would otherwise reach them. A surface merely ENDING in yaa with no declared suffix_kind gets no
-    override: shape alone never assigns ownership (guard og-2), here generalised past the root/pattern boundary."""
-    n = len(letters)
-    if suffix_kind == "nisba" and n >= peel_len + 2 and letters[-1] == "ي":
-        for i in (n - 1, n - 2):
-            claims[i] = {"affix"}
-
-
-def decide_letter_ownership(token):
-    """The production per-letter/per-span ownership decision for the exact-letter-ownership family.
-
-    mode=root_stem   — curriculum/l1l6/increments/inc-ownership own-r1..r5: peel a declared clitic layer, then
-                        walk every letter against `root_evidence.radicals`; an imperfect prefix is `inflection`
-                        only when declared verb_imperfect AND it is not the expected radical (own-r3); a declared
-                        nisba suffix's final span is `affix` (cu-nisba-attribution-suffix), never root.
-    mode=clitic_host — the p007 clitic-vs-host carve (`clitic_layers` names how many leading letters the evidence
-                        attests as clitic layers); used for the diptote proper-noun and fused-wasla-elision
-                        occurrence rows, where no root decomposition is claimed.
-
-    Both branches REQUIRE evidence (root_evidence.radicals, or clitic_layers) before assigning anything; shape
-    alone never decides (guard og-2). A letter left unowned, or claimed by more than one layer at once, forces
-    whole-token abstention (own-r4) — never a root conclusion. Every returned record is a CANDIDATE analysis: it
-    never certifies, and it never carries a lexeme/sense/meaning/translation key (guard g-own-1/og-6).
-    """
-    letters = list(token.get("letters") or [])
-    n = len(letters)
-    if n < 2:
-        return _own_abstain("false_stem_risk")
-    mode = token.get("mode")
-    token_kind = token.get("token_kind")
-    suffix_kind = token.get("suffix_kind")
-
-    if mode == "clitic_host":
-        clitic_layers = token.get("clitic_layers")
-        if clitic_layers is None:
-            return _own_abstain("no_root_evidence")
-        k = len(clitic_layers)
-        if n < k + 1:
-            return _own_abstain("false_stem_risk")
-        for j in range(k):
-            if letters[j] != clitic_layers[j] or letters[j] not in _OWNERSHIP_CLITIC_SINGLE:
-                return _own_abstain("pending_letter_ownership")
-        claims = [{"clitic"} for _ in range(k)] + [{"host"} for _ in range(n - k)]
-        _own_nisba_override(claims, letters, k, suffix_kind)
-        return {"decision": "candidate_pending", "owners": [next(iter(c)) for c in claims]}
-
-    # mode == root_stem (default): own-r1 peel, own-r2-v2/own-r3 root+inflection walk, own-r4 conflict check.
-    peel_len = 0
-    if token_kind != "particle":
-        if letters[:2] == ["ا", "ل"]:
-            if n - 2 < 2:
-                return _own_abstain("false_stem_risk")
-            peel_len = 2
-        elif letters[0] in _OWNERSHIP_CLITIC_SINGLE:
-            if n - 1 < 2:
-                return _own_abstain("false_stem_risk")
-            peel_len = 1
-
-    evidence = token.get("root_evidence")
-    radicals = evidence.get("radicals") if isinstance(evidence, dict) else None
-    if evidence is None or radicals is None:
-        return _own_abstain("no_root_evidence")
-    if not radicals:
-        return _own_abstain("pending_letter_ownership" if token_kind == "particle" else "no_root_evidence")
-
-    # Every letter (including any already peeled) is checked against the radical sequence, so a letter that is
-    # BOTH clitic-shaped AND named as the next expected radical is recorded as a genuine double claim (own-r4)
-    # rather than silently letting shape win (guard og-2).
-    claims = [set() for _ in range(n)]
-    for i in range(peel_len):
-        claims[i].add("clitic")
-    ri = 0
-    for i in range(n):
-        ch = letters[i]
-        is_next_radical = ri < len(radicals) and ch == radicals[ri]
-        if token_kind == "verb_imperfect" and i == peel_len and ch in _OWNERSHIP_INFLECTION_PREFIXES \
-                and not is_next_radical:
-            claims[i].add("inflection")
-            continue
-        if is_next_radical:
-            claims[i].add("root")
-            ri += 1
-        elif i >= peel_len:
-            claims[i].add("pattern_augment")
-    hidden_radicals = radicals[ri:]
-    _own_nisba_override(claims, letters, peel_len, suffix_kind)
-
-    if any(len(c) != 1 for c in claims):
-        return _own_abstain("pending_letter_ownership")
-    result = {"decision": "candidate_pending", "owners": [next(iter(c)) for c in claims]}
-    if hidden_radicals:
-        result["hidden_radicals"] = hidden_radicals
-    return result
+_OWNERSHIP_ABSTAIN_REASONS = ("pending_letter_ownership", "false_stem_risk", "no_root_evidence",
+                              "radical_accounting_incomplete")
+_OWNERSHIP_RECORD_KEYS = frozenset(("decision", "owners", "reason", "hidden_radicals", "mark_owners"))
 
 
 def adapter_letter_ownership_carve(rows, spec, ctx, root):
-    """sarf/evals/letter-ownership-carve-eval.jsonl -> decide_letter_ownership (this module's own production
-    decision function for the exact-letter-ownership family: curriculum/l1l6/increments/inc-ownership own-r1..r5,
-    cu-nisba-attribution-suffix's affix layer, and the p007 clitic/host carve for quran:2:34:5 / quran:12:31:24).
+    """sarf/evals/letter-ownership-carve-eval.jsonl ->
+    tools/curriculum_unit_consumer.py:analyze_ownership_carve (the exact-letter-ownership family's
+    production decision function: curriculum/l1l6/increments/inc-ownership own-r1..r5,
+    cu-nisba-attribution-suffix's affix layer, and the p007 clitic/host carve for
+    quran:2:34:5 / quran:12:31:24 / quran:24:35:44 / quran:2:187:63).
 
     Every row is DECIDED from its `letters` + evidence; nothing here echoes a row's own `expected_*` fields into
-    the verdict, and a same-surface group is re-decided per row (never copied from a sibling row's result).
+    the verdict, and a same-surface group is re-decided per row (never copied from a sibling row's result). Two
+    rows carrying EQUIVALENT evidence for the same surface must reach the SAME decision (sarf/SKILL.md's
+    same-surface fork prohibition runs this direction, never the inverse); a row whose own evidence is withheld
+    must abstain rather than borrow a sibling's verdict.
     """
     fails, decided = [], 0
     props = _Props()
-    decisions_by_id, surface_groups = {}, {}
+    decisions_by_id, rows_by_id, surface_groups = {}, {}, {}
     for i, row in enumerate(rows):
         rid = _rid(row, spec, i)
         fails.extend(_required_field_failures(row, spec, rid))
@@ -930,17 +839,19 @@ def adapter_letter_ownership_carve(rows, spec, ctx, root):
         decided += 1
         props.hit(rid, _OWN, "decision_behaviorally_computed", "no_semantic_identity_leak", "never_certified")
         decisions_by_id[rid] = rec.get("decision")
+        rows_by_id[rid] = row
         surface_groups.setdefault(row.get("surface") or "", []).append(rid)
 
         if rec.get("decision") not in ("candidate_pending", "abstain"):
             fails.append(_f(rid, "decision_behaviorally_computed",
-                            "decide_letter_ownership returned %r" % rec.get("decision")))
+                            "analyze_ownership_carve returned %r" % rec.get("decision")))
         extra_keys = set(rec) - _OWNERSHIP_RECORD_KEYS
         if extra_keys:
             fails.append(_f(rid, "no_semantic_identity_leak",
                             "ownership record carries key(s) %s outside {decision, owners, reason, "
-                            "hidden_radicals} — root-sharing/shape/citation-form must never imply a lexeme, "
-                            "sense, function, meaning, translation or occurrence identity" % sorted(extra_keys)))
+                            "hidden_radicals, mark_owners} — root-sharing/shape/citation-form must never imply a "
+                            "lexeme, sense, function, meaning, translation or occurrence identity"
+                            % sorted(extra_keys)))
         if "certified" in json.dumps(rec, ensure_ascii=False).lower():
             fails.append(_f(rid, "never_certified", "the decision record claims a certified state"))
 
@@ -978,10 +889,6 @@ def adapter_letter_ownership_carve(rows, spec, ctx, root):
                 if got_owners[:1] != ["root"]:
                     fails.append(_f(rid, "shape_only_augment_rejected",
                                     "an initial mim that IS radical_1 must never default to pattern_augment"))
-            if row["id"] == "own-double-01":
-                # already asserted via the generic reason/owners checks above; recorded separately so the
-                # doubly-owned-letter property is its own named, counted assertion (own-r4).
-                pass
             if row.get("suffix_kind") == "nisba" or row["id"] == "own-nisba-02":
                 props.hit(rid, _OWN, "nisba_affix_never_root")
 
@@ -992,18 +899,32 @@ def adapter_letter_ownership_carve(rows, spec, ctx, root):
                                 "a genuinely doubly-owned letter must force whole-token abstention with "
                                 "pending_letter_ownership"))
 
+    def _has_own_evidence(rid):
+        r = rows_by_id[rid]
+        return bool(r.get("clitic_layers")) or bool((r.get("root_evidence") or {}).get("radicals"))
+
     for surface, ids in surface_groups.items():
         if len(ids) < 2:
             continue
         props.hit(ids[0], None, "same_surface_independent_verification")
         for extra in ids[1:]:
             props.hit(extra, None, "same_surface_independent_verification")
-        decs = {decisions_by_id[j] for j in ids}
-        if len(decs) < 2:
-            fails.append("same_surface_independent_verification: surface %r: all %d row(s) sharing this "
-                        "surface collapsed to the identical decision %r — a later occurrence must supply and "
-                        "be judged on its OWN evidence, never inherit an identical surface's prior verdict"
-                        % (surface, len(ids), decs))
+        # sarf/SKILL.md's same-surface fork prohibition runs this direction, never the inverse: two rows sharing a
+        # surface and carrying EQUIVALENT evidence must reach the SAME decision (independent evaluation is not
+        # licence to disagree), while a row whose OWN evidence was withheld must abstain rather than borrow a
+        # sibling's identical-surface verdict. There is no requirement that a surface group disagree.
+        equipped = [j for j in ids if _has_own_evidence(j)]
+        withheld = [j for j in ids if not _has_own_evidence(j)]
+        equipped_decs = {decisions_by_id[j] for j in equipped}
+        if len(equipped_decs) > 1:
+            fails.append("same_surface_independent_verification: surface %r: rows %s supply equivalent evidence "
+                        "but reached different decisions %s — independently verified rows must agree when "
+                        "their own evidence agrees" % (surface, equipped, sorted(equipped_decs)))
+        for j in withheld:
+            if decisions_by_id[j] != "abstain":
+                fails.append("same_surface_independent_verification: surface %r: row %s withheld its own carve "
+                            "evidence yet decided %r — a later occurrence must never inherit an identical "
+                            "surface's prior verdict" % (surface, j, decisions_by_id[j]))
 
     abstain_rows = sum(1 for d in decisions_by_id.values() if d == "abstain")
     candidate_pending_rows = sum(1 for d in decisions_by_id.values() if d == "candidate_pending")
@@ -2056,6 +1977,21 @@ def self_test(root=_REPO):
         _mutate(ctx, classify=lambda tok, surf, roots: ("new_root", None)))
     red("tanwīn-alif guard disabled", "sarf/evals/false-clitic-split-eval.jsonl",
         _mutate(ctx, ends_tanwin_alef=lambda raw: False))
+    red("letter-ownership consumer stubbed always-root",
+        "sarf/evals/letter-ownership-carve-eval.jsonl",
+        _mutate(ctx, letter_ownership_decide=lambda token: {
+            "decision": "candidate_pending", "owners": ["root"] * len(token.get("letters") or [])}))
+    # the SAME mutation applied at the EXTERNAL module (not the injected ctx slot) must also bite: this is what
+    # separates "an external consumer is genuinely invoked" from "a local slot happens to be named after one".
+    _cu = consumers_module("curriculum_unit_consumer")
+    _real_carve = _cu.analyze_ownership_carve
+    _cu.analyze_ownership_carve = lambda token: {"decision": "candidate_pending",
+                                                 "owners": ["root"] * len(token.get("letters") or [])}
+    try:
+        red("letter-ownership EXTERNAL module stubbed (proves genuine cross-module invocation)",
+            "sarf/evals/letter-ownership-carve-eval.jsonl", Consumers.real())
+    finally:
+        _cu.analyze_ownership_carve = _real_carve
 
     real_check = ctx.check_text
 

@@ -1240,14 +1240,16 @@ _LOB = "sarf/evals/letter-ownership-carve-eval.jsonl"
 
 
 class LetterOwnershipCarve(unittest.TestCase):
-    """Red-first gates for the new letter-ownership bank: every row is DECIDED by
-    tools/run_sarf_evals.py:decide_letter_ownership, never echoed from its own `expected_*` fields."""
+    """Red-first gates for the letter-ownership bank: every row is DECIDED by the EXTERNAL
+    tools/curriculum_unit_consumer.py:analyze_ownership_carve, never echoed from its own
+    `expected_*` fields and never re-implemented locally in run_sarf_evals.py."""
 
     def test_bank_is_registered_implemented_and_consumed(self):
         contract = R.load_contract(_ROOT)
         spec = R.bank_spec(contract, _LOB)
         self.assertEqual(spec["disposition"], "implemented_and_consumed")
-        self.assertEqual(spec["behavioral_consumer"], "tools/run_sarf_evals.py:decide_letter_ownership")
+        self.assertEqual(spec["behavioral_consumer"],
+                         "tools/curriculum_unit_consumer.py:analyze_ownership_carve")
         self.assertIn(spec["behavioral_consumer"], R.DECISION_CONSUMERS)
         self.assertIn(_LOB, R.REQUIRED_BEHAVIORAL_BANKS)
         rows = _rows(_LOB)
@@ -1256,6 +1258,15 @@ class LetterOwnershipCarve(unittest.TestCase):
         self.assertEqual(failures, [], "letter-ownership bank failed: %s" % failures[:5])
         self.assertEqual(metrics["decided_rows"], len(rows))
         self.assertEqual(metrics["consumer_calls"][spec["behavioral_consumer"]], len(rows))
+
+    def test_no_local_reimplementation_survives_in_the_runner(self):
+        """I2: run_sarf_evals.py may not maintain a second divergent own-r1..r5 implementation."""
+        self.assertFalse(hasattr(R, "decide_letter_ownership"),
+                         "the ownership decision must live only in curriculum_unit_consumer.py")
+        ctx = _ctx()
+        from tools import curriculum_unit_consumer as CUC
+        self.assertIs(ctx.letter_ownership_decide, CUC.analyze_ownership_carve,
+                      "Consumers.real() must bind the EXTERNAL module's function directly")
 
     def test_single_row_expected_owner_mutation_names_bank_row_and_property(self):
         """RED-FIRST: mutating exactly one row's expected owners must fail naming that row and property."""
@@ -1268,12 +1279,28 @@ class LetterOwnershipCarve(unittest.TestCase):
         self.assertTrue(any("[owners_match]" in f for f in failures), failures[:3])
 
     def test_breaking_the_declared_consumer_turns_the_bank_red(self):
-        """MUTATION: replace decide_letter_ownership with an always-root stub; the bank must go red."""
+        """MUTATION: replace the injected ctx slot with an always-root stub; the bank must go red."""
         ctx = _ctx()
         ctx.letter_ownership_decide = lambda token: {"decision": "candidate_pending",
                                                      "owners": ["root"] * len(token.get("letters") or [])}
         failures, _m = _run(_LOB, ctx=ctx)
-        self.assertTrue(failures, "a stubbed decide_letter_ownership must fail the bank")
+        self.assertTrue(failures, "a stubbed letter-ownership consumer must fail the bank")
+
+    def test_external_consumer_module_is_genuinely_invoked(self):
+        """MUTATION at the EXTERNAL module (not the injected ctx slot): proves run_sarf_evals.py
+        really calls tools/curriculum_unit_consumer.py:analyze_ownership_carve, rather than a local
+        function that merely happens to be named after it."""
+        from tools import curriculum_unit_consumer as CUC
+        original = CUC.analyze_ownership_carve
+        CUC.analyze_ownership_carve = lambda token: {"decision": "candidate_pending",
+                                                      "owners": ["root"] * len(token.get("letters") or [])}
+        try:
+            ctx = R.Consumers.real()  # re-binds the slot to the now-patched module attribute
+            self.assertIsNot(ctx.letter_ownership_decide, original)
+            failures, _m = _run(_LOB, ctx=ctx)
+        finally:
+            CUC.analyze_ownership_carve = original
+        self.assertTrue(failures, "a broken EXTERNAL consumer module must turn the bank red")
 
     def test_doubly_owned_and_unownable_tokens_abstain_the_whole_token(self):
         rows = _rows(_LOB)
@@ -1281,7 +1308,8 @@ class LetterOwnershipCarve(unittest.TestCase):
         ctx = _ctx()
         for rid, reason in (("own-abs-01", "no_root_evidence"), ("own-abs-02", "pending_letter_ownership"),
                             ("own-fsr-01", "false_stem_risk"), ("own-double-01", "pending_letter_ownership"),
-                            ("own-carve-no-borrow", "no_root_evidence")):
+                            ("own-carve-no-borrow", "pending_letter_ownership"),
+                            ("own-sharedroot-01", "pending_letter_ownership")):
             rec = ctx.letter_ownership_decide(by_id[rid])
             self.assertEqual(rec["decision"], "abstain", "%s must abstain" % rid)
             self.assertEqual(rec["reason"], reason, "%s: wrong abstention reason" % rid)
@@ -1301,18 +1329,120 @@ class LetterOwnershipCarve(unittest.TestCase):
         failures, _m = _run(_LOB, [mutated])
         self.assertTrue(any("[owners_match]" in f for f in failures), failures[:3])
 
-    def test_nisba_final_geminated_ya_is_affix_never_root(self):
+    def test_unlicensed_internal_letter_forces_abstention_not_a_guessed_augment(self):
+        """I4: own-sharedroot-01 (مكتوب) has an internal waw that is not a radical and is not in the
+        licensed pattern_augment vocabulary (م ت ا ن س ء) — it must stay unowned and force whole-token
+        abstention, never be labelled pattern_augment by elimination."""
+        rows = _rows(_LOB)
+        row = next(r for r in rows if r["id"] == "own-sharedroot-01")
+        self.assertEqual(row["expected_decision"], "abstain")
+        ctx = _ctx()
+        rec = ctx.letter_ownership_decide(row)
+        self.assertEqual(rec["decision"], "abstain")
+        self.assertEqual(rec["reason"], "pending_letter_ownership")
+
+        for hostile_letter in ("ز", "ع", "٧", "X"):
+            token = {"mode": "root_stem", "letters": ["ك", hostile_letter, "ت", "ب"],
+                     "surface": "ك" + hostile_letter + "تب", "token_kind": "noun",
+                     "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ك", "ت", "ب"]}}
+            rec = ctx.letter_ownership_decide(token)
+            self.assertEqual(rec["decision"], "abstain",
+                             "an unlicensed non-radical letter %r must never buy pattern_augment "
+                             "by elimination" % hostile_letter)
+            self.assertEqual(rec["reason"], "pending_letter_ownership")
+
+    def test_nisba_mark_ownership_never_swallows_the_carrier_consonant(self):
+        """C1: the base-letter (consonant) ownership of the letter preceding a nisba yaa must stay
+        whatever the radical walk decided (here: root, radical_3) — only the yaa itself, and the
+        MARKS (kasra + shadda), are affix-owned. [root, root, affix, affix] must never ship again."""
         rows = _rows(_LOB)
         by_id = {r["id"]: r for r in rows}
         ctx = _ctx()
         pos = ctx.letter_ownership_decide(by_id["own-nisba-01"])
-        self.assertEqual(pos["owners"][-2:], ["affix", "affix"])
+        self.assertEqual(pos["decision"], "candidate_pending")
+        self.assertEqual(pos["owners"], ["root", "root", "root", "affix"],
+                         "the preceding consonant (radical_3) must stay root, not be swallowed into affix")
+        self.assertNotEqual(pos["owners"], ["root", "root", "affix", "affix"])
+        self.assertTrue(pos.get("mark_owners"),
+                        "a licensed nisba claim must record separate mark ownership")
+        marks = {(m["index"], m["mark"]): m["owner"] for m in pos["mark_owners"]}
+        self.assertEqual(marks.get((2, "kasra")), "affix")
+        self.assertEqual(marks.get((3, "shadda")), "affix")
+
         neg = ctx.letter_ownership_decide(by_id["own-nisba-02"])
         self.assertEqual(neg["owners"][-1], "root",
                         "a bare surface ending in ya without a declared suffix_kind must not default to affix")
+        self.assertNotIn("mark_owners", neg)
 
-    def test_same_surface_needs_its_own_host_verification(self):
-        """Identical surface carves identically only within one occurrence's OWN evidence."""
+        # an UNPOINTED surface buys nothing: the mark claim requires a VERIFIABLE shadda + kasra.
+        unpointed = copy.deepcopy(by_id["own-nisba-01"])
+        unpointed["surface"] = "مصري"
+        rec = ctx.letter_ownership_decide(unpointed)
+        self.assertEqual(rec["decision"], "abstain",
+                         "an unpointed surface cannot support the nisba mark claim; the position must "
+                         "stay unowned and force whole-token abstention")
+        self.assertEqual(rec["reason"], "pending_letter_ownership")
+
+    def test_radical_accounting_incomplete_is_ported_and_fail_closed(self):
+        """C1/minor: the own-r2-v2 radical_accounting_incomplete fail-closed check (from
+        analyze_ownership) is ported into analyze_ownership_carve and computed AFTER every other
+        ownership decision. A synthetic token with an unconsumed radical and no declared
+        hidden_positions must abstain rather than silently drop the leftover radical."""
+        # letters/surface use جلس (sit) deliberately: none of ج/ل/س at position 0 is clitic-shaped in a
+        # way that collides here (ل only collides as letters[0], which this token does not use), so the
+        # unconsumed 4th radical و is the ONLY thing that can trigger the accounting check.
+        ctx = _ctx()
+        token = {"mode": "root_stem", "letters": ["ج", "ل", "س"], "surface": "جلس", "token_kind": "noun",
+                 "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ج", "ل", "س", "و"]}}
+        rec = ctx.letter_ownership_decide(token)
+        self.assertEqual(rec["decision"], "abstain")
+        self.assertEqual(rec["reason"], "radical_accounting_incomplete")
+        # declaring the unconsumed radical as hidden licenses the same token.
+        licensed = copy.deepcopy(token)
+        licensed["root_evidence"]["hidden_positions"] = ["و"]
+        rec2 = ctx.letter_ownership_decide(licensed)
+        self.assertEqual(rec2["decision"], "candidate_pending")
+        self.assertEqual(rec2.get("hidden_radicals"), ["و"])
+
+    def test_malformed_or_contradictory_input_never_yields_a_claim(self):
+        """I3: a closed mode, single-base-letter `letters` that reconstruct the supplied surface, a
+        closed suffix_kind/token_kind, and a recognised root_evidence.basis are all REQUIRED before
+        any letter is walked; every violation abstains rather than deciding."""
+        ctx = _ctx()
+        base = {"mode": "root_stem", "letters": ["ج", "ل", "س"], "surface": "جلس", "token_kind": "noun",
+                "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ج", "ل", "س"]}}
+        self.assertEqual(ctx.letter_ownership_decide(base)["decision"], "candidate_pending")
+
+        hostile = [
+            dict(base, mode="unknown_mode"),
+            dict(base, mode=None),
+            {k: v for k, v in base.items() if k != "mode"},
+            dict(base, letters=["جل", "س"]),          # multi-char "letter"
+            dict(base, letters=[]),                    # empty letters
+            dict(base, letters="جلس"),                 # not a list
+            dict(base, surface="مختلف"),               # letters/surface contradiction
+            dict(base, suffix_kind="diminutive"),       # unrecognised suffix_kind
+            dict(base, token_kind="verb_perfect"),      # unrecognised token_kind
+            dict(base, root_evidence={"basis": "eyeballed", "radicals": ["ج", "ل", "س"]}),
+            dict(base, root_evidence={"radicals": ["ج", "ل", "س"]}),  # basis missing
+            dict(base, root_evidence={"basis": "qamus_entry_ladder", "radicals": "جلس"}),  # not a list
+            dict(base, root_evidence={"basis": "qamus_entry_ladder", "radicals": [1, 2, 3]}),
+            {"mode": "clitic_host", "letters": ["ل", "ب", "ت"], "surface": "لبت",
+             "clitic_layers": "ل"},                     # clitic_layers not a list
+        ]
+        for i, token in enumerate(hostile):
+            rec = ctx.letter_ownership_decide(token)
+            self.assertEqual(rec["decision"], "abstain",
+                             "hostile case %d must abstain, got %r: %r" % (i, rec.get("decision"), token))
+            self.assertFalse(rec.get("owners"), "hostile case %d must never carry owners" % i)
+            self.assertIn(rec["reason"], ("pending_letter_ownership", "false_stem_risk"),
+                         "hostile case %d: unexpected reason %r" % (i, rec.get("reason")))
+
+    def test_same_surface_agrees_when_evidence_agrees_and_abstains_when_withheld(self):
+        """I1: sarf/SKILL.md's same-surface fork prohibition runs ONE direction. Rows sharing a
+        surface and carrying EQUIVALENT evidence must reach the SAME decision (never a required
+        fork); a row whose own evidence is withheld must abstain rather than borrow a sibling's
+        identical-surface verdict. There is no requirement that a surface group disagree."""
         rows = _rows(_LOB)
         by_id = {r["id"]: r for r in rows}
         surfaces = {by_id[i]["surface"] for i in ("own-carve-24-35-44", "own-carve-2-187-63", "own-carve-no-borrow")}
@@ -1323,28 +1453,83 @@ class LetterOwnershipCarve(unittest.TestCase):
         c = ctx.letter_ownership_decide(by_id["own-carve-no-borrow"])
         self.assertEqual(a["decision"], "candidate_pending")
         self.assertEqual(b["decision"], "candidate_pending")
-        self.assertEqual(a["owners"], b["owners"])
+        self.assertEqual(a["owners"], b["owners"],
+                         "rows carrying equivalent (identical clitic_layers) evidence must agree")
         self.assertEqual(c["decision"], "abstain",
                          "withheld evidence on an identical surface must never borrow a sibling row's carve")
+        # the real bank passes with all equivalent-evidence rows AGREEING; the aggregate must not require
+        # a surface group to contain at least two different decisions (the inverted round-1 gate).
+        failures, _m = _run(_LOB, rows)
+        self.assertEqual(failures, [])
 
-    def test_occurrence_dogfood_matches_p007_repository_evidence(self):
-        """quran:2:34:5 and quran:12:31:24 are grounded in qamus/examples/p007-li-pilot/*.jsonl (read-only locator)."""
+        # ADVERSARIAL: two rows sharing a surface with EQUIVALENT (identical clitic_layers) evidence
+        # that reach DIFFERENT decisions must be caught -- an equivalent-evidence disagreement is
+        # never acceptable, whichever way it goes.
+        real = R.consumers_module("curriculum_unit_consumer").analyze_ownership_carve
+
+        def _one_wrong(token):
+            if token.get("occurrence_id") == "quran:2:187:63":
+                return {"decision": "abstain", "reason": "pending_letter_ownership", "owners": []}
+            return real(token)
+        ctx2 = _ctx()
+        ctx2.letter_ownership_decide = _one_wrong
+        failures2, _m2 = _run(_LOB, rows, ctx2)
+        self.assertTrue(any("same_surface_independent_verification" in f for f in failures2), failures2[:3])
+
+    def test_all_quran_occurrence_rows_match_p007_repository_evidence(self):
+        """I5/C2: EVERY bank row whose occurrence_id begins `quran:` is checked against the byte-exact
+        repository surface (qamus/examples/p007-li-pilot/locations.json) and the applicable
+        typed-facts.jsonl carve evidence -- not only the first lam of one row. Verifies exact surface,
+        base-letter reconstruction, carve roles/spans, and the resulting owners. Scripture is never
+        altered to make a fixture green; the synthetic withheld-evidence row is excluded because its
+        occurrence_id is NOT a quran: address."""
+        with open(os.path.join(_ROOT, "qamus", "examples", "p007-li-pilot", "locations.json"),
+                  encoding="utf-8") as fh:
+            locations = json.load(fh)
+        occ_by_id = {o["occurrence_id"]: o for o in locations["occurrences"]}
         with open(os.path.join(_ROOT, "qamus", "examples", "p007-li-pilot", "typed-facts.jsonl"),
                   encoding="utf-8") as fh:
             facts = [json.loads(l) for l in fh if l.strip()]
-        seg_2_34_5 = next(f for f in facts if f["fact_id"] == "fact:p00slice:2_34_5:seg")
-        seg_12_31_24 = next(f for f in facts if f["fact_id"] == "fact:p00slice:12_31_24:seg")
+        seg_by_loc = {f["fact_id"].split(":")[2]: f for f in facts if f["fact_id"].endswith(":seg")
+                     and f["fact_id"].startswith("fact:p00slice:")}
+        # role -> owner class this letter-ownership carve licenses for a p007 clitic_host carve.
+        role_owner = {"jarr_clitic_lam": "clitic", "definite_article_assimilated": "clitic",
+                     "proper_name_majrur": "host", "noun_host_majrur": "host"}
+
         rows = _rows(_LOB)
-        by_id = {r["id"]: r for r in rows}
-        row_2_34_5 = by_id["own-carve-2-34-5"]
-        row_12_31_24 = by_id["own-carve-12-31-24"]
-        self.assertEqual(row_2_34_5["occurrence_id"], "quran:2:34:5")
-        self.assertEqual(row_12_31_24["occurrence_id"], "quran:12:31:24")
-        self.assertEqual("".join(row_2_34_5["letters"][:1]), seg_2_34_5["fact_value"]["clitic"][:1])
-        self.assertEqual("".join(row_12_31_24["letters"][:1]), seg_12_31_24["fact_value"]["clitic"][:1])
+        quran_rows = [r for r in rows if str(r.get("occurrence_id") or "").startswith("quran:")]
+        self.assertEqual(len(quran_rows), 4, "expected exactly the 4 grounded quran occurrence rows")
         ctx = _ctx()
-        self.assertEqual(ctx.letter_ownership_decide(row_2_34_5)["owners"], row_2_34_5["expected_owners"])
-        self.assertEqual(ctx.letter_ownership_decide(row_12_31_24)["owners"], row_12_31_24["expected_owners"])
+        import unicodedata
+        for row in quran_rows:
+            occ = occ_by_id[row["occurrence_id"]]
+            # 1. exact byte-exact (NFC) surface -- never the altered/spurious shadda+fatha surface.
+            self.assertEqual(unicodedata.normalize("NFC", row["surface"]),
+                             unicodedata.normalize("NFC", occ["surface"]),
+                             "%s: bank surface must be byte-exact against locations.json, never altered "
+                             "to make the fixture green" % row["id"])
+            # 2. base-letter reconstruction under the repo's own cluster contract.
+            from tools.fusha_text_check import _clusters
+            self.assertEqual(row["letters"], [c[0] for c in _clusters(occ["surface"])],
+                             "%s: letters must reconstruct the repository surface" % row["id"])
+            # 3. carve roles/spans from typed-facts.jsonl agree with the row's clitic_layers + owners.
+            loc_key = row["occurrence_id"].split(":", 1)[1].replace(":", "_")
+            seg = seg_by_loc[loc_key]
+            expected_owners = []
+            for piece, role in zip(seg["fact_value"]["carve"], seg["fact_value"]["roles"]):
+                expected_owners.extend([role_owner[role]] * len(_clusters(piece)))
+            self.assertEqual(row["expected_owners"], expected_owners,
+                             "%s: bank expected_owners must match typed-facts.jsonl carve roles" % row["id"])
+            # 4. the resulting owners, decided fresh from this row's OWN evidence, agree with both.
+            rec = ctx.letter_ownership_decide(row)
+            self.assertEqual(rec["decision"], "candidate_pending")
+            self.assertEqual(rec["owners"], row["expected_owners"])
+            self.assertEqual(rec["owners"], expected_owners)
+
+        # the synthetic withheld-evidence row stays CLEARLY synthetic and is never used as occurrence evidence.
+        synthetic = next(r for r in rows if r["id"] == "own-carve-no-borrow")
+        self.assertNotIn(synthetic["occurrence_id"], occ_by_id)
+        self.assertFalse(synthetic["occurrence_id"].startswith("quran:"))
 
     def test_analyses_stay_candidate_and_never_certify(self):
         rows = _rows(_LOB)
@@ -1353,7 +1538,7 @@ class LetterOwnershipCarve(unittest.TestCase):
             rec = ctx.letter_ownership_decide(row)
             self.assertIn(rec["decision"], ("candidate_pending", "abstain"))
             self.assertNotIn("certified", json.dumps(rec, ensure_ascii=False).lower())
-            self.assertTrue(set(rec) <= {"decision", "owners", "reason", "hidden_radicals"},
+            self.assertTrue(set(rec) <= {"decision", "owners", "reason", "hidden_radicals", "mark_owners"},
                             "%s: ownership record must never carry a lexeme/sense/meaning key: %r"
                             % (row["id"], sorted(rec)))
         spec = R.bank_spec(R.load_contract(_ROOT), _LOB)
