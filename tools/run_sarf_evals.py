@@ -83,6 +83,7 @@ DECISION_CONSUMERS = (
     "tools/fusha_text_check.py:check_text",
     "tools/fusha_morphology_lattice.py:build_morphology_lattice",
     "tools/corpus_to_qamus_candidates.py:classify",
+    "tools/curriculum_unit_consumer.py:analyze_ownership_carve",
 )
 # Contract-declared callable -> the Consumers slot that holds it. run_adapter() wraps these slots in counting
 # proxies, so the observed per-row call count is measured INDEPENDENTLY of whatever an adapter chooses to report.
@@ -91,6 +92,7 @@ CONSUMER_SLOTS = {
     "tools/fusha_text_check.py:check_text": "check_text",
     "tools/fusha_morphology_lattice.py:build_morphology_lattice": "build_lattice",
     "tools/corpus_to_qamus_candidates.py:classify": "classify",
+    "tools/curriculum_unit_consumer.py:analyze_ownership_carve": "letter_ownership_decide",
 }
 # The banks whose behavioural coverage is specifically justified. A future change may not quietly relabel all
 # banks fixture_only to make the gate green: tools/test_run_sarf_evals.py asserts these stay behavioural.
@@ -98,6 +100,7 @@ REQUIRED_BEHAVIORAL_BANKS = (
     "sarf/evals/combining-mark-byte-exact-eval.jsonl",
     "sarf/evals/false-clitic-split-eval.jsonl",
     "sarf/evals/largelexicon-collision-safety.jsonl",
+    "sarf/evals/letter-ownership-carve-eval.jsonl",
     "sarf/evals/morphology-candidate-lattice.jsonl",
 )
 # How a Store A rule file is (or is not) used by production code.
@@ -147,6 +150,7 @@ _SEG = "tools/fusha_text_check.py:segment_candidates"
 _CHK = "tools/fusha_text_check.py:check_text"
 _LAT = "tools/fusha_morphology_lattice.py:build_morphology_lattice"
 _NORM = "structural:tools/normalize_ar.py"
+_OWN = "tools/curriculum_unit_consumer.py:analyze_ownership_carve"
 
 _LOC_RE = re.compile(r"^\d{1,3}:\d{1,3}:\d{1,3}$")
 _HARAKAT = range(0x064B, 0x0653)
@@ -167,7 +171,8 @@ class Consumers(object):
     """The real production functions each adapter consumes. Attributes are rebindable on purpose."""
 
     __slots__ = ("segment_candidates", "build_lattice", "check_text", "clusters", "classify", "load_index",
-                 "norm", "norm_strict", "bare", "shadda_on", "haraka_on", "ends_tanwin_alef")
+                 "norm", "norm_strict", "bare", "shadda_on", "haraka_on", "ends_tanwin_alef",
+                 "letter_ownership_decide")
 
     @classmethod
     def real(cls):
@@ -175,6 +180,7 @@ class Consumers(object):
         ml = consumers_module("fusha_morphology_lattice")
         na = consumers_module("normalize_ar")
         cq = consumers_module("corpus_to_qamus_candidates")
+        cu = consumers_module("curriculum_unit_consumer")
         self = cls()
         self.segment_candidates = tc.segment_candidates
         self.check_text = tc.check_text
@@ -188,6 +194,11 @@ class Consumers(object):
         self.shadda_on = na.shadda_on
         self.haraka_on = na.haraka_on
         self.ends_tanwin_alef = na.ends_tanwin_alef
+        # the DECLARED behavioural consumer for the letter-ownership-carve bank is the EXTERNAL
+        # curriculum_unit_consumer module's own function, bound directly (never a local wrapper),
+        # so a mutation of that module's attribute (tools/test_run_sarf_evals.py) is what the
+        # adapter actually calls -- proving genuine cross-module invocation, not an echo.
+        self.letter_ownership_decide = cu.analyze_ownership_carve
         return self
 
 
@@ -783,6 +794,161 @@ def adapter_corpus_classifier(rows, spec, ctx, root):
                    "new_surface_licences": licences}
 
 
+# ---------------------------------------------------------------------------
+# letter ownership carve — curriculum/l1l6/increments/inc-ownership (u-s01/u-s09 own-r1..r5),
+# cu-nisba-attribution-suffix's affix layer, and the p007 clitic/host carve.
+#
+# The DECISION itself lives in tools/curriculum_unit_consumer.py:analyze_ownership_carve (the
+# EXTERNAL, DECLARED behavioural consumer for this bank — see DECISION_CONSUMERS/CONSUMER_SLOTS
+# above and Consumers.real()). This module only ADAPTS the bank rows to it; the closed
+# owner-class and abstention vocabularies below mirror that module's own closed sets (the same
+# pattern EVIDENCE_CLASSES/CLASSIFIER_CLASSES already use for the other adapters in this file) so
+# the adapter can validate a row's `expected_owners`/`expected_reason` without importing another
+# module's private constants.
+# ---------------------------------------------------------------------------
+_OWNERSHIP_CLASSES = ("root", "pattern_augment", "clitic", "inflection", "affix", "host")
+_OWNERSHIP_ABSTAIN_REASONS = ("pending_letter_ownership", "false_stem_risk", "no_root_evidence",
+                              "radical_accounting_incomplete")
+_OWNERSHIP_RECORD_KEYS = frozenset(("decision", "owners", "reason", "hidden_radicals", "mark_owners"))
+# The ALLOWLISTED projection of a bank row into genuine analysis inputs: every field
+# analyze_ownership_carve actually reads to DECIDE a token (curriculum_unit_consumer.py's own
+# _own_validate/analyze_ownership_carve). Every other row field -- expected_decision,
+# expected_owners, expected_reason, teaches, id, occurrence_id, loc, class, evidence_note -- is
+# answer-key, identity or prose metadata that must NEVER reach the consumer: an external consumer
+# that is handed the whole row could echo the answer key back and pass with zero analysis (I-1).
+_OWN_CONSUMER_INPUT_FIELDS = ("mode", "letters", "surface", "token_kind", "suffix_kind",
+                              "root_evidence", "clitic_layers")
+
+
+def _own_consumer_input(row):
+    """Project one bank row down to `_OWN_CONSUMER_INPUT_FIELDS` before it reaches the external
+    consumer. This is the ONLY thing analyze_ownership_carve is ever called with for this bank."""
+    return {k: row[k] for k in _OWN_CONSUMER_INPUT_FIELDS if k in row}
+
+
+def adapter_letter_ownership_carve(rows, spec, ctx, root):
+    """sarf/evals/letter-ownership-carve-eval.jsonl ->
+    tools/curriculum_unit_consumer.py:analyze_ownership_carve (the exact-letter-ownership family's
+    production decision function: curriculum/l1l6/increments/inc-ownership own-r1..r5,
+    cu-nisba-attribution-suffix's affix layer, and the p007 clitic/host carve for
+    quran:2:34:5 / quran:12:31:24 / quran:24:35:44 / quran:2:187:63).
+
+    Every row is DECIDED from its `letters` + evidence; the row is projected through
+    `_own_consumer_input` (mode/letters/surface/token_kind/suffix_kind/root_evidence/clitic_layers ONLY) before it
+    ever reaches the consumer, so nothing here -- and no consumer, honest or hostile -- can echo a row's own
+    `expected_decision`/`expected_owners`/`expected_reason`/`teaches`/`id`/`occurrence_id`/`loc`/`class`/
+    `evidence_note` into the verdict (I-1). A same-surface group is re-decided per row (never copied from a
+    sibling row's result). Two rows carrying EQUIVALENT evidence for the same surface must reach the SAME decision
+    (sarf/SKILL.md's same-surface fork prohibition runs this direction, never the inverse); a row whose own
+    evidence is withheld must abstain rather than borrow a sibling's verdict.
+    """
+    fails, decided = [], 0
+    props = _Props()
+    decisions_by_id, rows_by_id, surface_groups = {}, {}, {}
+    for i, row in enumerate(rows):
+        rid = _rid(row, spec, i)
+        fails.extend(_required_field_failures(row, spec, rid))
+        letters = row.get("letters") or []
+        if not letters:
+            fails.append("%s: empty letters" % rid)
+            continue
+        rec = ctx.letter_ownership_decide(_own_consumer_input(row))
+        decided += 1
+        props.hit(rid, _OWN, "decision_behaviorally_computed", "no_semantic_identity_leak", "never_certified")
+        decisions_by_id[rid] = rec.get("decision")
+        rows_by_id[rid] = row
+        surface_groups.setdefault(row.get("surface") or "", []).append(rid)
+
+        if rec.get("decision") not in ("candidate_pending", "abstain"):
+            fails.append(_f(rid, "decision_behaviorally_computed",
+                            "analyze_ownership_carve returned %r" % rec.get("decision")))
+        extra_keys = set(rec) - _OWNERSHIP_RECORD_KEYS
+        if extra_keys:
+            fails.append(_f(rid, "no_semantic_identity_leak",
+                            "ownership record carries key(s) %s outside {decision, owners, reason, "
+                            "hidden_radicals, mark_owners} — root-sharing/shape/citation-form must never imply a "
+                            "lexeme, sense, function, meaning, translation or occurrence identity"
+                            % sorted(extra_keys)))
+        if "certified" in json.dumps(rec, ensure_ascii=False).lower():
+            fails.append(_f(rid, "never_certified", "the decision record claims a certified state"))
+
+        expected_decision = row.get("expected_decision")
+        if rec.get("decision") != expected_decision:
+            fails.append(_f(rid, "decision_behaviorally_computed",
+                            "decided %r, bank expects %r" % (rec.get("decision"), expected_decision)))
+
+        if expected_decision == "abstain":
+            props.hit(rid, _OWN, "abstains_never_claim_root")
+            want_reason = row.get("expected_reason")
+            if want_reason not in _OWNERSHIP_ABSTAIN_REASONS:
+                fails.append(_f(rid, "reason_matches",
+                                "bank's expected_reason %r outside the closed abstention vocabulary"
+                                % want_reason))
+            if rec.get("reason") != want_reason:
+                fails.append(_f(rid, "reason_matches",
+                                "decided reason %r, bank expects %r" % (rec.get("reason"), want_reason)))
+            if rec.get("owners"):
+                fails.append(_f(rid, "abstains_never_claim_root",
+                                "an abstaining row must never carry an owners list"))
+        else:
+            props.hit(rid, _OWN, "owner_classes_closed_set")
+            want_owners = row.get("expected_owners") or []
+            got_owners = rec.get("owners") or []
+            if got_owners != want_owners:
+                fails.append(_f(rid, "owners_match",
+                                "decided owners %r, bank expects %r" % (got_owners, want_owners)))
+            for o in got_owners:
+                if o not in _OWNERSHIP_CLASSES:
+                    fails.append(_f(rid, "owner_classes_closed_set",
+                                    "owner class %r outside the closed set" % o))
+            if row.get("id") == "own-adv-01":
+                props.hit(rid, _OWN, "shape_only_augment_rejected")
+                if got_owners[:1] != ["root"]:
+                    fails.append(_f(rid, "shape_only_augment_rejected",
+                                    "an initial mim that IS radical_1 must never default to pattern_augment"))
+            if row.get("suffix_kind") == "nisba" or row.get("id") == "own-nisba-02":
+                props.hit(rid, _OWN, "nisba_affix_never_root")
+
+        if row.get("id") == "own-double-01":
+            props.hit(rid, _OWN, "double_claim_forces_abstention")
+            if rec.get("decision") != "abstain" or rec.get("reason") != "pending_letter_ownership":
+                fails.append(_f(rid, "double_claim_forces_abstention",
+                                "a genuinely doubly-owned letter must force whole-token abstention with "
+                                "pending_letter_ownership"))
+
+    def _has_own_evidence(rid):
+        r = rows_by_id[rid]
+        return bool(r.get("clitic_layers")) or bool((r.get("root_evidence") or {}).get("radicals"))
+
+    for surface, ids in surface_groups.items():
+        if len(ids) < 2:
+            continue
+        props.hit(ids[0], None, "same_surface_independent_verification")
+        for extra in ids[1:]:
+            props.hit(extra, None, "same_surface_independent_verification")
+        # sarf/SKILL.md's same-surface fork prohibition runs this direction, never the inverse: two rows sharing a
+        # surface and carrying EQUIVALENT evidence must reach the SAME decision (independent evaluation is not
+        # licence to disagree), while a row whose OWN evidence was withheld must abstain rather than borrow a
+        # sibling's identical-surface verdict. There is no requirement that a surface group disagree.
+        equipped = [j for j in ids if _has_own_evidence(j)]
+        withheld = [j for j in ids if not _has_own_evidence(j)]
+        equipped_decs = {decisions_by_id[j] for j in equipped}
+        if len(equipped_decs) > 1:
+            fails.append("same_surface_independent_verification: surface %r: rows %s supply equivalent evidence "
+                        "but reached different decisions %s — independently verified rows must agree when "
+                        "their own evidence agrees" % (surface, equipped, sorted(equipped_decs)))
+        for j in withheld:
+            if decisions_by_id[j] != "abstain":
+                fails.append("same_surface_independent_verification: surface %r: row %s withheld its own carve "
+                            "evidence yet decided %r — a later occurrence must never inherit an identical "
+                            "surface's prior verdict" % (surface, j, decisions_by_id[j]))
+
+    abstain_rows = sum(1 for d in decisions_by_id.values() if d == "abstain")
+    candidate_pending_rows = sum(1 for d in decisions_by_id.values() if d == "candidate_pending")
+    return fails, {"rows": len(rows), "decided_rows": decided, "abstain_rows": abstain_rows,
+                   "candidate_pending_rows": candidate_pending_rows, "property_hits": props.as_metric()}
+
+
 def adapter_structural(rows, spec, ctx, root):
     """Structure/vocabulary gate for a bank with no behavioural consumer (fixture_only / candidate_no_consumer).
 
@@ -817,6 +983,7 @@ ADAPTERS = {
     "hidden_state_evidence": adapter_hidden_state_evidence,
     "key_collapse_pending": adapter_key_collapse_pending,
     "corpus_classifier": adapter_corpus_classifier,
+    "letter_ownership_carve": adapter_letter_ownership_carve,
     "structural": adapter_structural,
 }
 
@@ -1827,6 +1994,21 @@ def self_test(root=_REPO):
         _mutate(ctx, classify=lambda tok, surf, roots: ("new_root", None)))
     red("tanwīn-alif guard disabled", "sarf/evals/false-clitic-split-eval.jsonl",
         _mutate(ctx, ends_tanwin_alef=lambda raw: False))
+    red("letter-ownership consumer stubbed always-root",
+        "sarf/evals/letter-ownership-carve-eval.jsonl",
+        _mutate(ctx, letter_ownership_decide=lambda token: {
+            "decision": "candidate_pending", "owners": ["root"] * len(token.get("letters") or [])}))
+    # the SAME mutation applied at the EXTERNAL module (not the injected ctx slot) must also bite: this is what
+    # separates "an external consumer is genuinely invoked" from "a local slot happens to be named after one".
+    _cu = consumers_module("curriculum_unit_consumer")
+    _real_carve = _cu.analyze_ownership_carve
+    _cu.analyze_ownership_carve = lambda token: {"decision": "candidate_pending",
+                                                 "owners": ["root"] * len(token.get("letters") or [])}
+    try:
+        red("letter-ownership EXTERNAL module stubbed (proves genuine cross-module invocation)",
+            "sarf/evals/letter-ownership-carve-eval.jsonl", Consumers.real())
+    finally:
+        _cu.analyze_ownership_carve = _real_carve
 
     real_check = ctx.check_text
 

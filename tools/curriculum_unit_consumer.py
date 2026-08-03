@@ -45,6 +45,7 @@ from __future__ import annotations
 
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -52,6 +53,8 @@ if hasattr(sys.stdout, "reconfigure"):
 
 ROOT = Path(__file__).resolve().parents[1]
 INC_BASE = ROOT / "curriculum" / "l1l6" / "increments"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))  # so `python tools/curriculum_unit_consumer.py` can `from tools.X import Y`
 
 
 def discover_increments():
@@ -145,6 +148,259 @@ def analyze_ownership(inp, unit):
             return {"decision": "abstain",
                     "reason": "radical_accounting_incomplete"}
     return {"decision": "candidate_pending", "authority": "none_fixture_harness", "owners": owners}
+
+
+# ---------------------------------------------------- letter-ownership carve
+# The eval-bank-facing OPERATIONALIZATION of the `letter_ownership` capability:
+# curriculum/l1l6/increments/inc-ownership own-r1..r5 (procedure.md/reference.md,
+# unit-v2.json's own closed vocabulary), cu-nisba-attribution-suffix's affix layer
+# (curriculum/l1l6/canonical/canonical-units.jsonl), and the p007 clitic/host carve
+# for scripture occurrences (qamus/examples/p007-li-pilot). `analyze_ownership`
+# above stays the PACK-DRIVEN fixture-harness path (unit-v1/v2.json + fixtures.jsonl,
+# own-r1/own-r2 only). This function is the SAME capability family's wider
+# production entry point -- mode dispatch (root_stem / the p007 clitic_host carve),
+# the nisba mark override, and closed-vocabulary/hostile-input validation -- invoked
+# directly by tools/run_sarf_evals.py's letter-ownership-carve bank adapter as its
+# DECLARED behavioural consumer. It shares the pack's own owner-class and
+# abstention vocabulary (unit-v2.json's `abstention_reasons`) so the two paths never
+# diverge on what a shared rule means.
+_OWN_CLITIC_INVENTORY = {"ال": "definite_article", "ب": "preposition", "س": "future_marker",
+                         "ف": "conjunction", "ك": "preposition", "ل": "preposition", "و": "conjunction"}
+_OWN_CLITIC_SINGLE = tuple(k for k in _OWN_CLITIC_INVENTORY if len(k) == 1)
+_OWN_INFLECTION_PREFIXES = {"أ": "imperfect_1sg", "ت": "imperfect_2_or_3f",
+                            "ن": "imperfect_1pl", "ي": "imperfect_3"}
+# procedure.md step 3's closed template-letter vocabulary: "non-match template letter
+# (م، ت، ا، ن، س، همزة وصل) -> pattern_augment". This is the ONLY set a non-radical letter
+# may ever be licensed pattern_augment from. Every other non-radical, non-clitic,
+# non-inflection letter is UNLICENSED and forces whole-token abstention -- never a guess.
+# همزة وصل is the seated letter U+0671 (ٱ), not a bare hamza (ء): a bare hamza seat is a
+# radical/root letter in its own right and is never licensed here by shape alone.
+_OWN_PATTERN_AUGMENT_LETTERS = frozenset("متانسٱ")
+_OWN_MODES = ("root_stem", "clitic_host")
+_OWN_SUFFIX_KINDS = ("nisba",)
+_OWN_TOKEN_KINDS = ("noun", "particle", "verb_imperfect")
+# The candidate lane's closed evidence-basis vocabulary (sarf/README.md's evidence-ladder rung 1,
+# "Qamus entry", and the rootless-particle special case): not new authority, just the two bases
+# this lane's rows may cite for a radicals claim.
+_OWN_EVIDENCE_BASES = ("qamus_entry_ladder", "rootless_particle_entry")
+
+
+def _own_abstain(reason):
+    return {"decision": "abstain", "reason": reason, "owners": []}
+
+
+def _own_letters_reconstruct(letters, surface):
+    """True iff `letters` is exactly the base-letter sequence of `surface` under the
+    repository's own display-cluster contract (tools/fusha_text_check.py:_clusters -- one
+    BASE letter plus its trailing combining marks per cluster), so this module and the
+    segmenter never disagree on what a base letter is."""
+    from tools.fusha_text_check import _clusters
+    return letters == [c[0] for c in _clusters(surface)]
+
+
+def _own_validate(token):
+    """Closed-vocabulary / shape validation (malformed or contradictory evidence must never
+    reach a claim). Every violation is rejected here, before a single letter is walked, so a
+    hostile/garbage token can never surface as a root/pattern conclusion."""
+    if token.get("mode") not in _OWN_MODES:
+        return False
+    letters = token.get("letters")
+    if not (isinstance(letters, list) and letters
+            and all(isinstance(ch, str) and len(ch) == 1 for ch in letters)):
+        return False
+    # surface is a REQUIRED bank field (exact reconstruction is an invariant, not an optional
+    # extra): a missing/None/empty surface must abstain rather than be silently skipped.
+    surface = token.get("surface")
+    if (not isinstance(surface, str) or not surface
+            or not _own_letters_reconstruct(letters, surface)):
+        return False
+    suffix_kind = token.get("suffix_kind")
+    if suffix_kind is not None and suffix_kind not in _OWN_SUFFIX_KINDS:
+        return False
+    token_kind = token.get("token_kind")
+    if token_kind is not None and token_kind not in _OWN_TOKEN_KINDS:
+        return False
+    evidence = token.get("root_evidence")
+    if evidence is not None:
+        if not isinstance(evidence, dict):
+            return False
+        radicals = evidence.get("radicals")
+        if radicals is not None and not (isinstance(radicals, list)
+                                         and all(isinstance(r, str) for r in radicals)):
+            return False
+        if evidence.get("basis") not in _OWN_EVIDENCE_BASES:
+            return False
+        hidden = evidence.get("hidden_positions")
+        if hidden is not None and not (isinstance(hidden, list)
+                                       and all(isinstance(h, str) for h in hidden)):
+            return False
+    layers = token.get("clitic_layers")
+    if layers is not None and not (isinstance(layers, list)
+                                   and all(isinstance(c, str) for c in layers)):
+        return False
+    return True
+
+
+def _own_nisba_mark_claim(letters, peel_len, suffix_kind, surface):
+    """cu-nisba-attribution-suffix: a DECLARED nisba suffix's final geminated yaa is
+    affix-eligible at its OWN letter position only -- the preceding consonant's base-letter
+    ownership (whatever the radical walk already decided) is never touched, because the
+    canonical unit's claim is about the preceding KASRA MARK, not the consonant that carries
+    it. The claim requires the mark evidence (a shadda on the final yaa, a kasra on the base
+    letter immediately before it) to be VERIFIABLE on the supplied surface; an unpointed
+    surface, or a declared suffix_kind the surface does not support, buys nothing (guard og-2,
+    generalised past the root/pattern boundary). Returns (letter_index, mark_owner_records) or
+    (None, None) when the claim is not licensed -- the caller ADDS the claim to that position's
+    existing claim set (never replaces it), so a genuine double claim still surfaces (own-r4)."""
+    n = len(letters)
+    if suffix_kind != "nisba" or n < peel_len + 2 or letters[-1] != "ي" or not surface:
+        return None, None
+    from tools.normalize_ar import KASRA, haraka_on, shadda_on
+    if not shadda_on(surface, "ي") or haraka_on(surface, letters[-2]) != KASRA:
+        return None, None
+    marks = [{"index": n - 2, "mark": "kasra", "owner": "affix"},
+             {"index": n - 1, "mark": "shadda", "owner": "affix"}]
+    return n - 1, marks
+
+
+def analyze_ownership_carve(token):
+    """The production per-letter/per-span ownership decision for the exact-letter-ownership
+    family: curriculum/l1l6/increments/inc-ownership own-r1..r5, cu-nisba-attribution-suffix's
+    affix layer, and the p007 clitic/host carve. This is the DECLARED behavioural consumer
+    `tools/curriculum_unit_consumer.py:analyze_ownership_carve` that
+    tools/run_sarf_evals.py:adapter_letter_ownership_carve invokes once per bank row; wrong
+    behaviour here turns that bank RED (proven by tools/test_run_sarf_evals.py's consumer
+    mutations).
+
+    mode=root_stem   — peel a declared clitic layer, then walk every letter against
+                        `root_evidence.radicals`: a match is `root`; a LICENSED template letter
+                        (م ت ا ن س ٱ) that is not the expected radical is `pattern_augment`;
+                        every other non-radical letter is UNLICENSED and stays unowned (forcing
+                        whole-token abstention, never a guessed augment class); an imperfect
+                        prefix is `inflection` only when declared verb_imperfect AND it is not
+                        the expected radical (own-r3); a declared nisba suffix's final yaa is
+                        `affix` only when the surface itself carries the shadda + preceding
+                        kasra the claim depends on (cu-nisba-attribution-suffix) -- the
+                        preceding consonant's own base-letter ownership is never altered by
+                        that claim.
+    mode=clitic_host — the p007 clitic-vs-host carve (`clitic_layers` names how many leading
+                        letters THIS occurrence's OWN supplied evidence attests as clitic
+                        layers; nothing is ever borrowed from a sibling row sharing the same
+                        surface text).
+
+    Both branches REQUIRE evidence before assigning anything; shape alone never decides (guard
+    og-2). A letter left unowned, or claimed by more than one layer at once, forces whole-token
+    abstention `pending_letter_ownership` (own-r4) -- never a root conclusion. An unconsumed
+    radical with no declared `root_evidence.hidden_positions` fails closed as
+    `radical_accounting_incomplete`, computed only AFTER every other ownership decision
+    (including the nisba override) has been made. Malformed/contradictory input -- an
+    unrecognised mode, `letters` that are not single base-letter strings reconstructing the
+    supplied surface, an unrecognised suffix_kind/token_kind, or a root_evidence shape/basis
+    outside the closed evidence-ladder vocabulary -- is rejected the same way, before any letter
+    is walked. Every returned record is a CANDIDATE analysis: it never certifies, and it never
+    carries a lexeme/sense/meaning/translation key.
+    """
+    if not _own_validate(token):
+        return _own_abstain("pending_letter_ownership")
+    letters = list(token["letters"])
+    n = len(letters)
+    if n < 2:
+        return _own_abstain("false_stem_risk")
+    mode = token.get("mode")
+    token_kind = token.get("token_kind")
+    suffix_kind = token.get("suffix_kind")
+    surface = token.get("surface")
+
+    if mode == "clitic_host":
+        clitic_layers = token.get("clitic_layers")
+        if not clitic_layers:
+            return _own_abstain("pending_letter_ownership")
+        k = len(clitic_layers)
+        if n < k + 1:
+            return _own_abstain("false_stem_risk")
+        for j in range(k):
+            if letters[j] != clitic_layers[j] or letters[j] not in _OWN_CLITIC_SINGLE:
+                return _own_abstain("pending_letter_ownership")
+        claims = [{"clitic"} for _ in range(k)] + [{"host"} for _ in range(n - k)]
+        claim_idx, marks = _own_nisba_mark_claim(letters, k, suffix_kind, surface)
+        if claim_idx is not None:
+            claims[claim_idx].add("affix")
+        if any(len(c) != 1 for c in claims):
+            return _own_abstain("pending_letter_ownership")
+        result = {"decision": "candidate_pending", "owners": [next(iter(c)) for c in claims]}
+        if marks:
+            result["mark_owners"] = marks
+        return result
+
+    # mode == root_stem: own-r1 peel, own-r2-v2/own-r3 root+inflection walk, own-r4 conflict
+    # check, own-r5 hidden-radical accounting.
+    peel_len = 0
+    if token_kind != "particle":
+        if letters[:2] == ["ا", "ل"]:
+            if n - 2 < 2:
+                return _own_abstain("false_stem_risk")
+            peel_len = 2
+        elif letters[0] in _OWN_CLITIC_SINGLE:
+            if n - 1 < 2:
+                return _own_abstain("false_stem_risk")
+            peel_len = 1
+
+    evidence = token.get("root_evidence")
+    radicals = evidence.get("radicals") if isinstance(evidence, dict) else None
+    if evidence is None or radicals is None:
+        return _own_abstain("no_root_evidence")
+    if not radicals:
+        return _own_abstain("pending_letter_ownership" if token_kind == "particle" else "no_root_evidence")
+
+    # Every letter (including any already peeled) is checked against the radical sequence, so a
+    # letter that is BOTH clitic-shaped AND named as the next expected radical is recorded as a
+    # genuine double claim (own-r4) rather than silently letting shape win (guard og-2).
+    claims = [set() for _ in range(n)]
+    for i in range(peel_len):
+        claims[i].add("clitic")
+    ri = 0
+    for i in range(n):
+        ch = letters[i]
+        is_next_radical = ri < len(radicals) and ch == radicals[ri]
+        if token_kind == "verb_imperfect" and i == peel_len and ch in _OWN_INFLECTION_PREFIXES \
+                and not is_next_radical:
+            claims[i].add("inflection")
+            continue
+        if is_next_radical:
+            claims[i].add("root")
+            ri += 1
+        elif i >= peel_len and ch in _OWN_PATTERN_AUGMENT_LETTERS:
+            claims[i].add("pattern_augment")
+
+    # The nisba mark claim is ADDED, never substituted, so a position the walk already owned
+    # (a genuine double claim) still surfaces via the len(c) != 1 check below; it never silently
+    # overwrites -- and never touches -- the preceding consonant's own base-letter ownership.
+    claim_idx, marks = _own_nisba_mark_claim(letters, peel_len, suffix_kind, surface)
+    if claim_idx is not None:
+        claims[claim_idx].add("affix")
+
+    if any(len(c) != 1 for c in claims):
+        return _own_abstain("pending_letter_ownership")
+
+    # own-r5, computed AFTER every ownership decision above (including the nisba override):
+    # an unconsumed radical with no declared hidden/weak-root position fails closed rather than
+    # silently dropping it from the record. `hidden_positions` must name the EXACT multiset of
+    # unconsumed radicals -- not merely the right COUNT of them -- so a contradictory declaration
+    # (wrong letter, junk, a foreign letter, a duplicate, an empty string, or the right count with
+    # the wrong identity) can never manufacture a licensed candidate for a radical it does not
+    # actually account for. Counter (not set) so a genuine duplicate radical is never masked.
+    hidden_radicals = radicals[ri:]
+    if hidden_radicals:
+        declared_hidden = evidence.get("hidden_positions") or []
+        if Counter(declared_hidden) != Counter(hidden_radicals):
+            return _own_abstain("radical_accounting_incomplete")
+
+    result = {"decision": "candidate_pending", "owners": [next(iter(c)) for c in claims]}
+    if hidden_radicals:
+        result["hidden_radicals"] = hidden_radicals
+    if marks:
+        result["mark_owners"] = marks
+    return result
 
 
 # ----------------------------------------------------------- inc-derivatives
@@ -641,15 +897,71 @@ def self_test():
         failures.append("no capability is shared by two increments — declarative "
                         "reuse unproven (add an increment reusing a capability)")
 
+    # 9. analyze_ownership_carve (the eval-bank-facing production entry point, distinct from the
+    # pack-driven analyze_ownership above): bounded red/green + mutation probes proving the
+    # nisba mark override, the licensed pattern_augment set, and the own-r4 double-claim guard
+    # are genuinely computed here, not merely echoed.
+    _own_pos = {"mode": "root_stem", "letters": ["م", "ك", "ت", "ب"], "surface": "مكتب",
+               "token_kind": "noun",
+               "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ك", "ت", "ب"]}}
+    if analyze_ownership_carve(_own_pos) != {"decision": "candidate_pending",
+                                             "owners": ["pattern_augment", "root", "root", "root"]}:
+        failures.append("analyze_ownership_carve: positive mim/root case regressed")
+    _own_unlicensed = {"mode": "root_stem", "letters": ["م", "ك", "ت", "و", "ب"], "surface": "مكتوب",
+                       "token_kind": "noun",
+                       "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ك", "ت", "ب"]}}
+    if analyze_ownership_carve(_own_unlicensed) != {"decision": "abstain",
+                                                     "reason": "pending_letter_ownership", "owners": []}:
+        failures.append("analyze_ownership_carve: an unlicensed internal letter (waw) must abstain, "
+                        "never be guessed pattern_augment")
+    _own_nisba = {"mode": "root_stem", "letters": ["م", "ص", "ر", "ي"], "surface": "مصرِيّ",
+                 "token_kind": "noun", "suffix_kind": "nisba",
+                 "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["م", "ص", "ر"]}}
+    _own_nisba_rec = analyze_ownership_carve(_own_nisba)
+    if _own_nisba_rec.get("owners") != ["root", "root", "root", "affix"]:
+        failures.append("analyze_ownership_carve: nisba override must never swallow the preceding "
+                        "consonant's own base-letter (root) ownership")
+    if not _own_nisba_rec.get("mark_owners"):
+        failures.append("analyze_ownership_carve: a licensed nisba claim must record separate mark "
+                        "ownership (the kasra/shadda are mark-owned, not consonant-owned)")
+    _own_nisba_bare = dict(_own_nisba, surface="مصري")  # no marks: the claim buys nothing unpointed
+    if analyze_ownership_carve(_own_nisba_bare).get("decision") != "abstain":
+        failures.append("analyze_ownership_carve: an unpointed surface must not buy an unverifiable "
+                        "nisba mark claim (the position must stay unowned and the token abstain)")
+    if analyze_ownership_carve({"mode": "bogus_mode", "letters": ["ب", "ت"]}) \
+            .get("decision") != "abstain":
+        failures.append("analyze_ownership_carve: an unrecognised mode must abstain, not decide")
+    if analyze_ownership_carve({"mode": "root_stem", "letters": ["بت", "ك"], "token_kind": "noun",
+                               "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ب", "ك"]}}) \
+            .get("decision") != "abstain":
+        failures.append("analyze_ownership_carve: a multi-character 'letter' must abstain (malformed "
+                        "shape), never decide")
+    from tools import curriculum_unit_consumer as _self_mod
+    _orig_carve = _self_mod.analyze_ownership_carve
+    _self_mod.analyze_ownership_carve = lambda token: {"decision": "candidate_pending",
+                                                        "owners": ["root"] * len(token.get("letters") or [])}
+    try:
+        if _self_mod.analyze_ownership_carve(_own_unlicensed)["owners"] == ["pattern_augment", "root",
+                                                                            "root", "pattern_augment",
+                                                                            "root"]:
+            failures.append("analyze_ownership_carve: module-level rebind did not take effect "
+                            "(self-test cannot prove genuine invocation)")
+    finally:
+        _self_mod.analyze_ownership_carve = _orig_carve
+
     if failures:
         print("SELF-TEST FAIL:")
         for f in failures:
             print("  - " + f)
         return 1
-    print("SELF-TEST PASS (10 probes: ownership v2 + derivatives v4 green, "
+    print("SELF-TEST PASS (probes 1-8: ownership v2 + derivatives v4 green, "
           "ownership-v1 / derivatives-v3 / derivatives-v2 defect sets pinned "
           "red, 4 pack mutations flip decisions, discovery + "
-          "shared-capability dispatch, all latest packs green)")
+          "shared-capability dispatch, all latest packs green; "
+          "probe 9, analyze_ownership_carve: licensed-augment/unlicensed-abstain, the nisba mark "
+          "override never swallowing the carrier consonant, an unpointed surface buying "
+          "no mark claim, malformed-mode/malformed-letter abstention, and a module-level "
+          "rebind proof)")
     return 0
 
 
