@@ -38,26 +38,58 @@ HIGH_RISK_BARE_MATCH_SURFACES = set(_COLLISION_REGISTRY.get("high_risk_bare_matc
 _CLASS_BY_ID = {c["class_id"]: c for c in _COLLISION_REGISTRY.get("classes") or []}
 
 
-def _registry_vote(class_id, default_cap="lexical_collision_requires_context", default_order=3):
+class RegistryAuthorityError(RuntimeError):
+    """A fired collision class's gate cap/route/filter_order must come from
+    fusha/parser/collision-classes.json; there is no hardcoded historical
+    fallback (Train E finding 2). A missing entry, or one missing a required
+    field, for a class that just fired is a registry/code drift bug and must
+    fail closed -- never silently recreate a shadow authority by reusing a
+    superseded literal."""
+
+
+def _registry_entry_or_raise(class_id):
+    entry = _CLASS_BY_ID.get(class_id)
+    if entry is None:
+        raise RegistryAuthorityError(
+            "collision class %r fired but has no entry in fusha/parser/collision-classes.json; "
+            "the registry is the sole authority for gate cap/route/order, there is no fallback" % class_id
+        )
+    return entry
+
+
+def _registry_vote(class_id):
     """(gate_rank, cap, filter_order) for a fired class, sourced from the registry.
 
-    Falls back to `default_cap`/`default_order` only if a class_id is somehow not
-    registered (never true for the classes this module fires; a missing entry
-    would be a registry/code drift bug, not a normal path), so a registry lookup
-    failure degrades to the historical literal rather than crashing token parse.
+    Fail closed: a missing registry entry, a missing/invalid
+    `gate_effect.cap`, or a missing/non-int `filter_order` raises
+    `RegistryAuthorityError` rather than silently substituting a hardcoded
+    historical default.
     """
-    entry = _CLASS_BY_ID.get(class_id)
-    cap = (entry.get("gate_effect") or {}).get("cap") if entry else None
-    cap = cap or default_cap
-    order = entry.get("filter_order") if entry else None
-    order = order if isinstance(order, int) else default_order
+    entry = _registry_entry_or_raise(class_id)
+    cap = (entry.get("gate_effect") or {}).get("cap")
+    if cap not in GATE_RANK:
+        raise RegistryAuthorityError(
+            "collision class %r has no valid gate_effect.cap registered (got %r)" % (class_id, cap)
+        )
+    order = entry.get("filter_order")
+    if not isinstance(order, int):
+        raise RegistryAuthorityError(
+            "collision class %r has no valid filter_order registered (got %r)" % (class_id, order)
+        )
     return GATE_RANK[cap], cap, order
 
 
-def _registry_route(class_id, default_route):
-    entry = _CLASS_BY_ID.get(class_id)
-    route = entry.get("route") if entry else None
-    return list(route) if route else list(default_route)
+def _registry_route(class_id):
+    """Route for a fired class, sourced from the registry. Fail closed: a
+    missing registry entry, or a route that is not a registered list, raises
+    `RegistryAuthorityError` rather than substituting a hardcoded default."""
+    entry = _registry_entry_or_raise(class_id)
+    route = entry.get("route")
+    if not isinstance(route, list):
+        raise RegistryAuthorityError(
+            "collision class %r has no valid route registered (got %r)" % (class_id, route)
+        )
+    return list(route)
 
 
 def _registry_canonical_unit_ids(class_id):
@@ -175,22 +207,23 @@ def _selected(seg_cands, morph_cands):
 def _candidate_collision(surface, seg_cands, morph_cands, morph):
     """Top-score ties across `morph_cands`: an unsafe bare match, or `competing_segmentation`.
 
-    I9 (resolved): `competing_segmentation` fires when the tied top-scored
-    candidates disagree on identity (pos/lemma/root) AND that disagreement spans
-    >= 2 distinct `segment_candidate_ref` values -- i.e. the tie is between rival
-    SEGMENTATIONS, not just rival lexicon rows sharing one segmentation (that is
-    R4/R5's job via `collision.competitors`, computed only over the selected
-    stem's own competitors per R6). A prior revision exempted every tie where all
-    tied candidates were `function_inventory` particles regardless of ref, which
-    let `لما` (`ل + ما` vs whole-token `لَمَّا`) and `وما` (`و + ما` vs whole-token
-    `وما`) silently commit to the `ل/و + ما` split with a full function-word
-    gloss and no acknowledgement of the tied whole-token rival. The exemption is
-    now scoped to same-ref ties only (e.g. a genuine same-segmentation function
-    tie, if one exists) so it can never mask a real cross-segmentation tie; a
-    tie sharing lemma/pos/root across DIFFERENT refs (e.g. `بالله`'s bā'+Allah
-    split vs. a whole-token largelexicon row that resolves to the same identity)
-    still correctly reports no collision, because the identity check itself
-    finds no disagreement.
+    Finding 1 (Train E repair): `competing_segmentation` fires whenever the
+    tied top-scored candidates span >= 2 distinct `segment_candidate_ref`
+    values, full stop -- i.e. the tie is between rival written SEGMENTATIONS
+    (rival letter-ownership decompositions of the surface), never a same-
+    segmentation identity question. A prior revision additionally required
+    the tied candidates to disagree on identity (pos/lemma/root) before
+    firing, which let `بالله` (a bā'+Allah split, ref 0, tied at top score
+    against a whole-token largelexicon match, ref 1) silently commit to one
+    segmentation whenever both rivals happened to resolve to the same
+    lemma/pos/root. Same identity does not authorize choosing one
+    segmentation over another -- the letters are still contested between two
+    structurally different splits regardless of what either one resolves to.
+    A same-ref tie (all tied candidates share one `segment_candidate_ref`,
+    i.e. rival lexicon rows for the SAME segmentation, such as a same-ref
+    `function_inventory` particle cluster tie) is not this filter's concern
+    at all: that is R4/R5's job via `collision.competitors`, computed only
+    over the selected stem's own competitors per R6.
     """
     if not morph:
         return None
@@ -199,7 +232,7 @@ def _candidate_collision(surface, seg_cands, morph_cands, morph):
         return {
             "kind": "unsafe_bare_match",
             "surface": surface,
-            "route": _registry_route("unsafe_bare_match", ["sarf", "nahw"]),
+            "route": _registry_route("unsafe_bare_match"),
             "basis": features.get("match_basis"),
             "decided_by": "unsafe_bare_match",
             "reason": "bare-match largelexicon evidence is useful internally but not a public hover selection for this high-risk surface",
@@ -211,26 +244,21 @@ def _candidate_collision(surface, seg_cands, morph_cands, morph):
     if len(tops) < 2:
         return None
     refs = {c.get("segment_candidate_ref") for c in tops}
-    if len(refs) <= 1 and all(
-        c.get("evidence_class") == "function_inventory" and c.get("pos") == "particle" for c in tops
-    ):
+    if len(refs) <= 1:
         return None
     pos_values = {c.get("pos") for c in tops}
     lemmas = {c.get("lemma") for c in tops}
-    roots = {c.get("root") for c in tops}
-    if len(pos_values) > 1 or len(lemmas) > 1 or len(roots) > 1:
-        return {
-            "kind": "competing_segmentation",
-            "surface": surface,
-            "candidate_count_at_top_score": len(tops),
-            "candidate_refs": sorted(int(ref) for ref in refs if ref is not None),
-            "pos_values": sorted(str(v) for v in pos_values),
-            "lemma_values": sorted(str(v) for v in lemmas if v is not None),
-            "route": _registry_route("competing_segmentation", ["sarf", "nahw"]),
-            "canonical_unit_ids": _registry_canonical_unit_ids("competing_segmentation"),
-            "decided_by": "competing_segmentation",
-        }
-    return None
+    return {
+        "kind": "competing_segmentation",
+        "surface": surface,
+        "candidate_count_at_top_score": len(tops),
+        "candidate_refs": sorted(int(ref) for ref in refs if ref is not None),
+        "pos_values": sorted(str(v) for v in pos_values),
+        "lemma_values": sorted(str(v) for v in lemmas if v is not None),
+        "route": _registry_route("competing_segmentation"),
+        "canonical_unit_ids": _registry_canonical_unit_ids("competing_segmentation"),
+        "decided_by": "competing_segmentation",
+    }
 
 
 def _skeleton_collision(surface, seg_cands, morph, selected_seg=None, morph_cands=None):
@@ -299,7 +327,7 @@ def _skeleton_collision(surface, seg_cands, morph, selected_seg=None, morph_cand
         "kind": kind,
         "scope": scope,
         "surface": surface,
-        "route": _registry_route(kind, ["sarf_collision_review", "nahw_function_review"]),
+        "route": _registry_route(kind),
         "competing_entry_ids": collision_source.get("competing_entry_ids") or [],
         "canonical_unit_ids": _registry_canonical_unit_ids(kind),
         "decided_by": kind,
@@ -429,18 +457,18 @@ def _gate(surface, seg_cands, morph, context, morph_cands=None, selected_seg=Non
             "filter": SOURCE_RISK_CAP_FILTER,
             "evidence_keys": ["features.source_risk_flags"],
         }
-        rank, cap, order = _registry_vote(SOURCE_RISK_CAP_FILTER, default_cap="pending_context", default_order=1)
+        rank, cap, order = _registry_vote(SOURCE_RISK_CAP_FILTER)
         votes.append((rank, cap, None, order))
 
     # skeleton_collision (R4/R5), scoped to the selected stem (R6/R7).
     skeleton = _skeleton_collision(surface, seg_cands, morph, selected_seg=selected_seg, morph_cands=morph_cands)
     if skeleton:
-        rank, cap, order = _registry_vote(skeleton.get("kind"), default_order=3)
+        rank, cap, order = _registry_vote(skeleton.get("kind"))
         votes.append((rank, cap, skeleton, order))
 
     collision = _candidate_collision(surface, seg_cands, morph_cands or [], morph)
     if collision:
-        rank, cap, order = _registry_vote(collision.get("kind"), default_order=4)
+        rank, cap, order = _registry_vote(collision.get("kind"))
         votes.append((rank, cap, collision, order))
 
     if _function_needs_context(surface, morph) or bare in {"ما", "وما", "لما", "انما", "إنما"}:

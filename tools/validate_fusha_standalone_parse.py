@@ -266,7 +266,10 @@ def _self_test():
     joined = parser.parse_text(" ".join(FIXTURES))
     if len(joined.get("tokens") or []) < len(FIXTURES):
         failures.append("joined fixtures should emit at least one token per fixture phrase")
-    for surface in ("فسيكفيكهم", "فأهلكناهم", "يسألك", "بالكتاب", "مستغفرين"):
+    # فسيكفيكهم/فأهلكناهم/مستغفرين have a unique top-scored segmentation in the
+    # smoke lexicon; يسألك and بالكتاب do NOT (see below) and were removed from
+    # this list under Train E finding 1.
+    for surface in ("فسيكفيكهم", "فأهلكناهم", "مستغفرين"):
         rec = parser.parse_text(surface)
         tok = (rec.get("tokens") or [{}])[0]
         if not tok.get("qg_segments"):
@@ -276,9 +279,7 @@ def _self_test():
     role_expect = {
         "فسيكفيكهم": {"prefix_resumption_fa", "future_particle", "verb_prefix", "verb_stem", "object_pronoun"},
         "فأهلكناهم": {"prefix_resumption_fa", "verb_stem", "subject_pronoun", "object_pronoun"},
-        "يسألك": {"verb_prefix", "verb_stem", "object_pronoun"},
         "مستغفرين": {"derivative_prefix", "adjective_stem", "plural_suffix"},
-        "بالكتاب": {"prefix_preposition", "definite_article", "stem"},
     }
     for surface, expected in role_expect.items():
         rec = parser.parse_text(surface)
@@ -287,6 +288,27 @@ def _self_test():
         missing = expected - roles
         if missing:
             failures.append("%s qg roles missing %s; got %s" % (surface, sorted(missing), sorted(roles)))
+
+    # Train E finding 1: يسألك ("ي+سأل+ك" split) and بالكتاب ("ب+ال+كتاب" split)
+    # each also match their smoke seed_lexicon entry's own listed whole-token
+    # form at an equally-tied top score (سأل lists يسألك directly; كِتَاب lists
+    # بالكتاب directly). This is the same same-identity/different-ref shape as
+    # بالله, so they now correctly abstain instead of exposing the prefix/
+    # object-pronoun or preposition/article/stem roles those entries used to
+    # demonstrate -- verb_prefix/verb_stem/object_pronoun coverage remains via
+    # فسيكفيكهم above.
+    for tied_surface in ("يسألك", "بالكتاب"):
+        tied_rec = parser.parse_text(tied_surface)
+        tied_tok = (tied_rec.get("tokens") or [{}])[0]
+        tied_collision = tied_tok.get("collision") or {}
+        if tied_collision.get("kind") != "competing_segmentation":
+            failures.append(
+                "finding1: %r must reach collision.kind=competing_segmentation, got %r"
+                % (tied_surface, tied_collision.get("kind"))
+            )
+        if tied_tok.get("qg_segments"):
+            failures.append("finding1: %r must clear qg_segments under competing_segmentation, got %r"
+                             % (tied_surface, tied_tok.get("qg_segments")))
     # I9 (red-first): a tied top-scored function-inventory pair spanning >= 2
     # distinct segment_candidate_ref values (لما as ل+ما vs whole-token لَمَّا;
     # وما as و+ما vs whole-token وما) must abstain as competing_segmentation
@@ -328,17 +350,41 @@ def _self_test():
     if i9_control_tok.get("collision") is not None:
         failures.append("I9 control: إنما must not gain a collision, got %r" % i9_control_tok.get("collision"))
 
-    # I9 negative control: بالله ties two DIFFERENT segment_candidate_ref values
-    # at top score (a bā'+Allah split vs. a whole-token largelexicon match) but
-    # both resolve to the SAME identity (lemma/pos/root agree), so this must
-    # stay uncollided -- ref multiplicity alone is never sufficient, only a
-    # genuine identity disagreement across segmentations is (real clitics stay
-    # visible when the morphology identity is stable).
+    # I9 hostile fixture (red-first, Train E finding 1): بالله ties two
+    # DIFFERENT segment_candidate_ref values at top score (a bā'+Allah split
+    # vs. a whole-token largelexicon match). A prior revision exempted this
+    # because both rivals happen to resolve to the SAME identity
+    # (lemma/pos/root agree) -- but same identity does not authorize choosing
+    # one SEGMENTATION over another; the letters could still be owned either
+    # way (bā' + Allah, or a single whole-token match with no bā' prefix at
+    # all). This must reach collision/abstention exactly like لما/وما: both
+    # rival refs preserved, no selected preview, no qg claim, and no
+    # identity/function/meaning/gloss/certification output.
     ball_rec = parser.parse_text("بالله", db="largelexicon")
     ball_tok = (ball_rec.get("tokens") or [{}])[0]
-    if ball_tok.get("collision") is not None:
-        failures.append("I9 negative control: بالله must not gain a collision from ref multiplicity alone, got %r"
-                         % ball_tok.get("collision"))
+    ball_collision = ball_tok.get("collision") or {}
+    if ball_collision.get("kind") != "competing_segmentation":
+        failures.append(
+            "finding1: بالله must reach collision.kind=competing_segmentation "
+            "even though its tied rivals share one identity, got %r" % ball_collision.get("kind")
+        )
+    if ball_tok.get("confidence_gate") != "lexical_collision_requires_context":
+        failures.append("finding1: بالله must reach the lexical_collision_requires_context gate, got %r"
+                         % ball_tok.get("confidence_gate"))
+    if ball_tok.get("qg_segments"):
+        failures.append("finding1: بالله must clear qg_segments under competing_segmentation, got %r"
+                         % ball_tok.get("qg_segments"))
+    if ball_tok.get("selected_preview") is not None:
+        failures.append("finding1: بالله must clear selected_preview under competing_segmentation")
+    if len(ball_collision.get("candidate_refs") or []) < 2:
+        failures.append("finding1: بالله must preserve >= 2 rival segment_candidate_ref values, got %r"
+                         % ball_collision.get("candidate_refs"))
+    ball_top = (ball_tok.get("morphology_candidates") or [{}])[0]
+    if ball_top.get("lemma") is not None or ball_top.get("pos") is not None or ball_top.get("root") is not None:
+        failures.append("finding1: بالله selected candidate must have lemma/pos/root withheld, got lemma=%r pos=%r root=%r"
+                         % (ball_top.get("lemma"), ball_top.get("pos"), ball_top.get("root")))
+    if (ball_tok.get("hover_preview") or {}).get("token_contribution_gloss") is not None:
+        failures.append("finding1: بالله must not carry a public token_contribution_gloss")
 
     # rival-order mutation (red-first): reordering the tied morph_cands list
     # must not change the collision kind or the set of rival identities.
@@ -377,7 +423,7 @@ def _self_test():
                 "registry mutation: _candidate_collision route did not follow the mutated registry entry, got %r"
                 % (mutated_collision or {}).get("route")
             )
-        mutated_rank, mutated_cap, mutated_order = parser._registry_vote("competing_segmentation", default_order=4)
+        mutated_rank, mutated_cap, mutated_order = parser._registry_vote("competing_segmentation")
         if mutated_cap != "pending_context" or mutated_order != 99:
             failures.append(
                 "registry mutation: _registry_vote did not follow the mutated cap/filter_order, got cap=%r order=%r"
@@ -387,9 +433,73 @@ def _self_test():
         _registry_entry["route"] = _saved_route
         _registry_entry["gate_effect"] = {"cap": _saved_cap}
         _registry_entry["filter_order"] = _saved_order
-    restored_rank, restored_cap, restored_order = parser._registry_vote("competing_segmentation", default_order=4)
+    restored_rank, restored_cap, restored_order = parser._registry_vote("competing_segmentation")
     if restored_cap != _saved_cap or restored_order != _saved_order:
         failures.append("registry mutation: restoring the registry did not restore _registry_vote's output")
+
+    # registry authority fail-closed (red-first, Train E finding 2): a fired
+    # class missing from the registry, or missing its required cap/route/
+    # filter_order, must raise a deterministic RegistryAuthorityError -- never
+    # silently recreate a shadow authority via a hardcoded historical default.
+    def _expect_registry_authority_error(label, fn):
+        try:
+            fn()
+        except parser.RegistryAuthorityError:
+            return
+        failures.append("registry fail-closed: %s did not raise RegistryAuthorityError" % label)
+
+    _removed_entry = parser._CLASS_BY_ID.pop("competing_segmentation")
+    try:
+        _expect_registry_authority_error(
+            "_registry_vote with no registry entry for the fired class",
+            lambda: parser._registry_vote("competing_segmentation"),
+        )
+        _expect_registry_authority_error(
+            "_registry_route with no registry entry for the fired class",
+            lambda: parser._registry_route("competing_segmentation"),
+        )
+        _expect_registry_authority_error(
+            "_candidate_collision with no registry entry for the fired class",
+            lambda: parser._candidate_collision("xy", [], [ro_a, ro_b], ro_a),
+        )
+    finally:
+        parser._CLASS_BY_ID["competing_segmentation"] = _removed_entry
+
+    _entry = parser._CLASS_BY_ID["competing_segmentation"]
+    _saved_gate_effect = _entry["gate_effect"]
+    _entry["gate_effect"] = {"cap": None}
+    try:
+        _expect_registry_authority_error(
+            "_registry_vote with gate_effect.cap missing",
+            lambda: parser._registry_vote("competing_segmentation"),
+        )
+    finally:
+        _entry["gate_effect"] = _saved_gate_effect
+
+    _saved_route_value = _entry["route"]
+    _entry["route"] = None
+    try:
+        _expect_registry_authority_error(
+            "_registry_route with route missing",
+            lambda: parser._registry_route("competing_segmentation"),
+        )
+    finally:
+        _entry["route"] = _saved_route_value
+
+    _saved_order_value = _entry["filter_order"]
+    _entry["filter_order"] = None
+    try:
+        _expect_registry_authority_error(
+            "_registry_vote with filter_order missing",
+            lambda: parser._registry_vote("competing_segmentation"),
+        )
+    finally:
+        _entry["filter_order"] = _saved_order_value
+
+    # sanity: the registry is restored and back to normal (behind, once the
+    # fix lands, no exception should be raised here at all).
+    parser._registry_vote("competing_segmentation")
+    parser._registry_route("competing_segmentation")
 
     segs = [{"rank": 1, "segments": [{"role": "stem", "surface": "كتاب"}]}]
     morphs = [{"rank": 1, "pos": "noun", "evidence_class": "seed_lexicon", "segment_candidate_ref": 99}]

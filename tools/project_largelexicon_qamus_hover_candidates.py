@@ -113,9 +113,14 @@ def _self_test() -> list[str]:
     surface, and never a leftover null when real partial coverage exists."""
     failures: list[str] = []
 
-    complete = _project(_row("بالله"))
-    if complete.get("segment_coverage") != "complete" or complete.get("segment_surface") != "بالله":
-        failures.append("complete: بالله must be segment_coverage=complete, segment_surface=بالله, got %r/%r"
+    # Train E finding 1: بالله now correctly ties two different
+    # segment_candidate_ref values (a bā'+Allah split vs. a whole-token
+    # largelexicon match) and collides even though both resolve to the same
+    # identity, so it no longer serves as a "complete" example here; قَالَ has
+    # no rival segmentation and stays the clean positive control.
+    complete = _project(_row("قَالَ"))
+    if complete.get("segment_coverage") != "complete" or complete.get("segment_surface") != "قَالَ":
+        failures.append("complete: قَالَ must be segment_coverage=complete, segment_surface=قَالَ, got %r/%r"
                          % (complete.get("segment_coverage"), complete.get("segment_surface")))
 
     partial_prep = _project(_row("بِهِمُ"))
