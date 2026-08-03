@@ -74,8 +74,17 @@ candidate, but it does not make that candidate safe for a public hover.
 - Real clitics remain visible when the token has a single top-scored
   segmentation. A stable morphology identity across rival segmentations is
   NOT sufficient on its own (Train E finding 1, below): `بالله` (bā' + Allah)
-  and `بالنيات` (bā' + article + host) both tie a rival whole-token/fused-
-  article segmentation at top score and correctly abstain instead.
+  ties a rival whole-token segmentation at top score and correctly abstains
+  with `qg_segments` fully withheld, since its two rivals share no identical
+  span to agree on. `بالنيات` (bā' + article + host) also ties, but its two
+  rivals (splitting `ال` off as its own morpheme vs. leaving it fused with the
+  stem) DO independently agree on the exact same leading `بِ` preposition
+  span -- a genuine `competing_segmentation` tie only ever withholds the
+  disputed stem and any host-class-presupposing material; an exact-span,
+  exact-ownership class-neutral prefix/article every tied rival agrees on is
+  not actually contested and now survives (Train E finding 2, below), same as
+  the ordinary `stem_identity` scope already does for a single selected
+  candidate's own affixes.
 
 ## Skeleton-collision and source-provenance abstention (Train E)
 
@@ -340,6 +349,113 @@ positive control it always was.
 > `segment_coverage=none`/`collision.kind=competing_segmentation` instead of
 > `complete`.
 
+> **Train E ambiguity-envelope repair (this round).** An independent Opus
+> review of the assembled I9/finding-1 packet (verdict `TRAIN_E_REVIEW_BLOCK`)
+> found four further reproduced defects in `_candidate_collision` and its
+> consumers, all fixed together:
+>
+> **Finding 1 (evidence floor).** `tools/fusha_pattern_engine.py` emits one
+> no-evidence fallback candidate per segmentation
+> (`evidence_class=surface_candidate`, constant `score=1.0`) whenever nothing
+> in the lexicon/pinned-pattern/function-inventory tables matched. The
+> `18 rows` the previous round moved to `competing_segmentation` (`قَبْلِكُمْ`,
+> `وَأَكْثَرَ`, `فَٱسْتَمْتَعُوا۟`, and others) turned out to be exactly this: EVERY
+> tied top-scored candidate was a `surface_candidate` fallback, so the tie
+> proved an absence of evidence for either segmentation, not a real lexical
+> collision -- firing here falsely wiped the token's own class-neutral prefix
+> clitic via the (then-unconditional) empty-`qg_segments` branch and diverted
+> an ordinary ambiguous token into the collision queue. `_candidate_collision`
+> now requires at least one tied-top candidate to carry real evidence
+> (`evidence_class != "surface_candidate"`) before firing; an all-fallback tie
+> returns `None` and keeps the pre-existing `ambiguous` (or, independently,
+> `pending_context` via the unrelated `jar_majrur` context rule for a
+> preposition-prefixed host) posture instead. `LLX-COLL-028`/`LLX-COLL-029`
+> (`وفرتش`/`بفرتش`, synthetic no-evidence hostile probes) cover this at the
+> parser layer.
+>
+> **Finding 2 (shared-span scoping).** A genuine tie (>= 1 tied-top candidate
+> carries real evidence) still must not blanket-delete a class-neutral
+> prefix/article that EVERY tied rival segmentation places at the exact same
+> character span with the exact same role and surface -- that piece is not
+> actually contested; only the letters after it are. `_candidate_collision`
+> now calls `_shared_class_neutral_segments(seg_cands, candidate_refs)`, which
+> intersects each rival's own `{(start, end): segment}` span map (offsets are
+> the cumulative surface length within that rival's own segmentation, valid
+> because `split_clitics` guarantees each candidate's segments concatenate
+> exactly to the token surface) and keeps only spans where role, surface, AND
+> membership in `CLASS_NEUTRAL_QG_ROLES` all agree across every rival -- the
+> disputed stem, and any host-class-presupposing affix/clitic, can never
+> survive this intersection because those roles are never members of that
+> set. When the intersection is non-empty, the collision gains
+> `scope="shared_class_neutral_prefix"` and a `shared_segments` list;
+> `parse_text` projects exactly that list as `qg_segments` (see finding 4 for
+> how the projector may report it). `بالله`, `يسألك`, and `بالكتاب` keep their
+> prior fail-closed (empty `qg_segments`) behavior unchanged -- their tied
+> rivals do not share an identical span (a whole-token match has no prefix
+> segment to agree with; `لما`/`وما`'s whole-token rival likewise has none) --
+> while a real corpus example, `وَمِيثَٰقَهُ` (`وَ` prefix_conjunction shared by
+> both rivals) and `فَـَٔازَرَهُۥ` (`فَـَٔ` prefix_resumption_fa shared by both
+> rivals), now correctly retain that shared prefix instead of emptying
+> `qg_segments`. `LLX-COLL-030` covers `وَمِيثَٰقَهُ` at the parser layer.
+>
+> **Finding 3 (rival identity withholding).** Collision MEMBERSHIP in
+> `_candidate_collision` is tie membership -- every candidate at the equal top
+> score across >= 2 `segment_candidate_ref` values is a disputed rival, not
+> only whichever one happens to sort to rank 1. `parse_text` used to strip
+> `lemma`/`root`/`pos`/`gloss_hint` and mark `selection_status=candidate_only`
+> on rank 1 alone, leaving every OTHER co-tied rival (rank 2+, same top score)
+> still exposing its own identity in `morphology_candidates` -- a public leak
+> of one of the contested readings even though the token's `hover_preview`
+> and `selected_preview` were correctly withheld. For a `competing_segmentation`
+> collision, `parse_text` now recomputes the tied top score directly from
+> `tok["morphology_candidates"]` and strips/marks every candidate matching it
+> (not only rank 1); every rival record is preserved (none removed), and a
+> non-tied lower-score rival keeps its own identity untouched. This is scoped
+> to `competing_segmentation` specifically -- `_candidate_collision`'s tied-
+> top-score-across-refs mechanism is the only place "collision membership" and
+> "rank 1" can actually diverge; R4/R5's skeleton collision reads a single
+> selected candidate's own `collision.competitors` metadata, not separate
+> tied `morphology_candidates` records, so it is unaffected.
+>
+> **Finding 4 (exact partial-span contract).** A `stem_identity` or
+> `shared_class_neutral_prefix` collision can retain more than one
+> `qg_segments` piece with the disputed stem withheld between them -- a real
+> prefix+gap+suffix shape (e.g. a class-neutral prefix plus a degraded
+> `clitic_undetermined` suffix). `tools/project_largelexicon_qamus_hover_candidates.py`
+> used to concatenate ALL retained segment surfaces unconditionally
+> (`"".join(...)`), which for a non-contiguous retained set would splice two
+> spans that are not actually adjacent in the visible surface into an Arabic
+> form that was never written. `_contiguous_projected_surface(segments,
+> surface)` now walks each retained piece through the surface left-to-right
+> and returns the literal contiguous slice `surface[start:end]` only when
+> every piece sits immediately adjacent to the previous one (no gap, no
+> reorder, no overlap); otherwise it returns `None` and the projector
+> withholds `segment_surface` entirely (`segment_coverage` stays `"partial"`
+> -- the individual retained segments in `segments` still stand on their own,
+> just not spliced into a joined string). `tools/validate_largelexicon_qg_projection.py`
+> independently re-derives the same contiguity check (never trusting the
+> producer) and now accepts `collision.scope in {stem_identity,
+> shared_class_neutral_prefix}` for `segment_coverage=partial`, requiring
+> `segment_surface` to equal the exact contiguous slice when one exists and to
+> be `null` when it does not.
+>
+> `qamus/examples/largelexicon/hover-candidates.sample.jsonl` was regenerated
+> through `project_largelexicon_qamus_hover_candidates.py` against the real
+> corpus: 17 rows changed. Fifteen of those (e.g. `وَأَكْثَرَ`, `فَٱسْتَمْتَعُوا۟`,
+> `وَٱذْكُرُوا۟`) were finding 1's false positives -- they revert from
+> `segment_coverage=none`/`collision.kind=competing_segmentation` back to
+> `segment_coverage=complete` with no collision at all, because every one of
+> their tied top candidates was in fact a no-evidence `surface_candidate`
+> fallback. The remaining two (`فَـَٔازَرَهُۥ`, `وَمِيثَٰقَهُ`) are finding 2's
+> positive case: they move from `segment_coverage=none` to
+> `segment_coverage=partial`/`collision.scope=shared_class_neutral_prefix`,
+> retaining only their shared prefix span. No row in the regenerated sample
+> exhibits a non-contiguous (finding 4 gap) retention -- that case is covered
+> by a direct hostile unit test of `_contiguous_projected_surface` (a
+> synthetic prefix+gap+suffix construction) since none of the current 160
+> sample rows happen to retain a prefix AND a suffix simultaneously around a
+> withheld stem.
+
 ## Registry-authoritative gate metadata (I8, partially resolved)
 
 `fusha/parser/collision-classes.json` names every registered class's gate
@@ -422,22 +538,19 @@ eventually license, alongside the pronoun-role and nisba-suffix units already
 there.
 
 `tools/project_largelexicon_qamus_hover_candidates.py` reconciles with this:
-any token carrying a `collision` (fully or partially withheld stem) is
-projected with `segment_surface=null`, `token_contribution=null`,
+any token carrying a `collision` is projected with `token_contribution=null`,
 `status=parser_packet`, `route=executor_parser_or_sarf_nahw_packet_ready`,
-and the collision descriptor. **This is honestly incomplete** for
-`scope=stem_identity` rows whose `segments` array is non-empty (see I3 under
-"Deferred spec decisions" below): `segment_surface=null` is set for every
-collision row alike, even one that retains real affix segments and could
-report a partial, ordered affix concatenation instead. `token_contribution`
-does stay `null` either way, so no identity/gloss claim survives; the gap is
-in the (unused for now) partial-coverage typing, not in the abstention.
-`tools/validate_largelexicon_qg_projection.py` enforces the
-`segment_surface == visible_surface` concatenation invariant only when
-`segment_surface` is non-null, and requires `token_contribution` to be
-null whenever `segments` is empty; because the projector always nulls
-`segment_surface` under any collision, that invariant is currently vacuous
-for partially-withheld rows too. Neither file is in this repair's edit scope.
+and the collision descriptor. `segment_surface` is `null` for a fully
+withheld token (`whole_token` scope, or no `scope` key at all -- an unshared
+`competing_segmentation`/`unsafe_bare_match`), and for a `stem_identity` or
+`shared_class_neutral_prefix` scope whose retained segments turn out not to
+be a single contiguous slice of `visible_surface` (Train E finding 4, above);
+otherwise it is the literal contiguous substring those retained segments
+cover. `tools/validate_largelexicon_qg_projection.py` independently
+re-derives that same contiguity from `segments`/`visible_surface` (never
+trusting the projector's decision) and enforces
+`segment_surface == that contiguous slice` whenever one exists, and
+`segment_surface == null` whenever it does not.
 
 `tools/validate_fusha_standalone_parse.py::validate_record` (the Mode C
 parse-record validator, distinct from the projection validator above) is
@@ -559,6 +672,15 @@ They cover:
   and neither may be silently selected -- `require_candidate_refs_min: 2`
   asserts both rival refs survive, and `forbid_selected_preview` asserts no
   preview is emitted for either rival.
+- `LLX-COLL-028`/`LLX-COLL-029` cover the finding 1 evidence-floor guard:
+  `وفرتش`/`بفرتش` tie two `surface_candidate` no-evidence fallbacks at top
+  score and must never reach `lexical_collision_requires_context`, only the
+  pre-existing `ambiguous`/`pending_context` posture, with the class-neutral
+  prefix clitic surviving. `LLX-COLL-030` covers the finding 2 shared-span
+  positive: `وَمِيثَٰقَهُ`'s two tied rival segmentations agree on the same
+  leading `وَ` prefix_conjunction span, so `collision.scope` must be
+  `shared_class_neutral_prefix` and that span must survive while the disputed
+  stem never does.
 
 > **Open verification item.** No fixture currently pairs
 > `require_source_risk_flags` with `require_collision_kind` (Train E review

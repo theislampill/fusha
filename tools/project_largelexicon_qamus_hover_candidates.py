@@ -17,6 +17,40 @@ DEFAULT_IN = ROOT / "qamus" / "examples" / "mode_a_all_qword" / "largelexicon-qa
 DEFAULT_OUT = ROOT / "qamus" / "examples" / "largelexicon" / "hover-candidates.sample.jsonl"
 
 
+def _contiguous_projected_surface(segments: list[dict], surface: str) -> str | None:
+    """Train E finding 4: a projected partial `segment_surface` may only ever
+    be the literal, contiguous substring the retained segments cover -- never
+    a splice of non-adjacent spans. A `shared_class_neutral_prefix` or
+    `stem_identity` collision can retain a class-neutral prefix/article
+    alongside a degraded suffix clitic with the withheld stem sitting between
+    them (a real prefix+gap+suffix shape); concatenating those pieces would
+    fabricate Arabic letters that were never actually written adjacent to
+    each other. Walks each segment's surface through `surface` left-to-right;
+    returns the exact contiguous slice `surface[start:end]` only when every
+    retained piece sits immediately adjacent to the previous one (no gap, no
+    reorder, no overlap). Returns `None` (fail closed -- withhold
+    `segment_surface` entirely; the individual segment surfaces in `segments`
+    still stand on their own) when a gap exists or a piece cannot be found.
+    """
+    pos: int | None = None
+    start: int | None = None
+    for seg in segments:
+        piece = seg.get("surface") or ""
+        if not piece:
+            continue
+        idx = surface.find(piece, pos if pos is not None else 0)
+        if idx == -1:
+            return None
+        if pos is not None and idx != pos:
+            return None
+        if start is None:
+            start = idx
+        pos = idx + len(piece)
+    if start is None:
+        return None
+    return surface[start:pos]
+
+
 def _project(row: dict) -> dict:
     parsed = parse_text(row["visible_surface"], document_id=row["row_id"], db="largelexicon")
     token = (parsed.get("tokens") or [{}])[0]
@@ -30,13 +64,19 @@ def _project(row: dict) -> dict:
         # full visible_surface and never carries a gloss, but a `stem_identity`
         # collision already retains only an ordered, non-overlapping, already-
         # safe (class-neutralized) SUBSET of qg_segments (parser R7 /
-        # _scope_collision_segments) -- the projector no longer discards that
-        # real, already-abstained partial coverage. Any other scope (whole_token,
-        # or no scope key at all, e.g. competing_segmentation/unsafe_bare_match)
-        # empties qg_segments upstream, so there is nothing safe to concatenate.
+        # _scope_collision_segments), and a `shared_class_neutral_prefix`
+        # collision (Train E finding 2) retains the exact-span class-neutral
+        # prefix every tied rival segmentation agreed on -- the projector no
+        # longer discards that real, already-abstained partial coverage. Any
+        # other scope (whole_token, or no scope key at all, e.g. an
+        # unshared competing_segmentation/unsafe_bare_match) empties
+        # qg_segments upstream, so there is nothing safe to concatenate.
         token_contribution = None
-        if collision.get("scope") == "stem_identity" and segments:
-            segment_surface = "".join(seg.get("surface", "") for seg in segments)
+        if collision.get("scope") in {"stem_identity", "shared_class_neutral_prefix"} and segments:
+            # Train E finding 4: never splice non-adjacent retained spans into
+            # an unwritten Arabic form -- only project segment_surface when
+            # the retained segments are a single contiguous slice.
+            segment_surface = _contiguous_projected_surface(segments, row["visible_surface"])
             segment_coverage = "partial"
         else:
             segment_surface = None
@@ -139,6 +179,55 @@ def _self_test() -> list[str]:
     if none_cov.get("segment_coverage") != "none" or none_cov.get("segment_surface") is not None:
         failures.append("none: لما (competing_segmentation, no retained segments) must be coverage=none, surface=null, got %r/%r"
                          % (none_cov.get("segment_coverage"), none_cov.get("segment_surface")))
+
+    # Train E finding 2 (red-first): بالنيات ties splitting ال off as its own
+    # morpheme against leaving it fused with the stem, but BOTH tied
+    # segmentations agree on the exact same leading بِ preposition span, so it
+    # must now type partial/بِ instead of the old fail-closed none/null.
+    shared_prefix_cov = _project(_row("بالنيات"))
+    if shared_prefix_cov.get("segment_coverage") != "partial" or shared_prefix_cov.get("segment_surface") != "ب":
+        failures.append(
+            "finding2: بالنيات must retain only the exact shared preposition span "
+            "(segment_coverage=partial, segment_surface=ب), got coverage=%r surface=%r"
+            % (shared_prefix_cov.get("segment_coverage"), shared_prefix_cov.get("segment_surface"))
+        )
+    if shared_prefix_cov.get("token_contribution") is not None:
+        failures.append("finding2: بالنيات must keep token_contribution null under collision")
+
+    # Train E finding 4 (red-first): a partial segment_surface may never
+    # splice together spans that are not adjacent in the surface -- that
+    # fabricates an Arabic form that was never written. A prefix retained
+    # alongside a degraded suffix clitic, with the withheld stem sitting
+    # between them (a real prefix+gap+suffix shape), must withhold
+    # segment_surface entirely rather than join the two spans.
+    gap_segments = [
+        {"role": "prefix_preposition", "surface": "ب", "class": "qg-preposition"},
+        {"role": "clitic_undetermined", "surface": "هم", "class": "qg-clitic-undetermined"},
+    ]
+    gap_joined = _contiguous_projected_surface(gap_segments, "بXXXهم")
+    if gap_joined is not None:
+        failures.append(
+            "finding4: prefix+gap+suffix must withhold segment_surface (got %r) instead of "
+            "splicing non-adjacent spans into an unwritten form" % gap_joined
+        )
+
+    # finding4 positive control: the same two segments with no gap between
+    # them must still join to the exact literal contiguous substring.
+    adjacent_joined = _contiguous_projected_surface(gap_segments, "بهم")
+    if adjacent_joined != "بهم":
+        failures.append(
+            "finding4: adjacent retained spans must still join to the literal contiguous "
+            "substring, got %r" % adjacent_joined
+        )
+
+    # finding4 hostile: a retained piece that cannot be found in the surface
+    # at all (never even an ordered subset) must also withhold, not just a
+    # true positional gap.
+    unfound_joined = _contiguous_projected_surface(
+        [{"role": "prefix_preposition", "surface": "ز", "class": "qg-preposition"}], "بهم",
+    )
+    if unfound_joined is not None:
+        failures.append("finding4: a retained piece absent from the surface must withhold segment_surface")
 
     # unknown-role mutation (red-first): an untriaged qg role must be withheld
     # by the parser's own _scope_collision_segments (fail-closed), and the

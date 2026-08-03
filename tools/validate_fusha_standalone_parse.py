@@ -209,8 +209,27 @@ def validate_record(rec):
                             "be withheld or replaced with a class-neutral value"
                             % (surf, sorted(leaked_classes))
                         )
+            elif collision.get("scope") == "shared_class_neutral_prefix":
+                # Train E finding 2: a genuine competing_segmentation tie may
+                # retain ONLY the exact-span, exact-ownership class-neutral
+                # prefix/article every tied rival agreed on -- never the
+                # disputed stem or any host-class-presupposing segment, even
+                # though this scope is not a single-candidate stem_identity
+                # withholding.
+                if not qg:
+                    errors.append("%s: shared_class_neutral_prefix scope must retain its shared segment(s)" % surf)
+                elif not _retained_segments_ordered_subset(qg, surf):
+                    errors.append("%s: shared_class_neutral_prefix retained segments are not an ordered subset of the surface" % surf)
+                else:
+                    non_neutral = {seg.get("role") for seg in qg} - parser.CLASS_NEUTRAL_QG_ROLES
+                    if non_neutral:
+                        errors.append(
+                            "%s: shared_class_neutral_prefix scope retained non-class-neutral role(s) %s; "
+                            "only the exact shared class-neutral span may survive a competing_segmentation tie"
+                            % (surf, sorted(non_neutral))
+                        )
             elif qg:
-                errors.append("%s: collision withholding outside stem_identity scope must project no qg_segments" % surf)
+                errors.append("%s: collision withholding outside stem_identity/shared_class_neutral_prefix scope must project no qg_segments" % surf)
             hover_gloss = (tok.get("hover_preview") or {}).get("token_contribution_gloss")
             if hover_gloss is not None:
                 errors.append("%s: collision-withheld token must not carry a public token_contribution_gloss, got %r" % (surf, hover_gloss))
@@ -385,6 +404,169 @@ def _self_test():
                          % (ball_top.get("lemma"), ball_top.get("pos"), ball_top.get("root")))
     if (ball_tok.get("hover_preview") or {}).get("token_contribution_gloss") is not None:
         failures.append("finding1: بالله must not carry a public token_contribution_gloss")
+
+    # Train E finding 1, evidence floor (red-first): every tied top-scored
+    # candidate being the engine's own no-evidence fallback
+    # (evidence_class=surface_candidate, tools/fusha_pattern_engine.py, score
+    # constant 1.0) proves an ABSENCE of evidence for either segmentation, not
+    # a lexical collision. Firing competing_segmentation here used to strip
+    # the token's own class-neutral prefix clitic and divert it into the
+    # collision queue; it must instead keep the pre-existing `ambiguous`
+    # posture with its ordinary (uncollided) qg_segments intact.
+    for evidence_floor_surface in ("بفرتش", "وفرتش", "لفرتش", "كفرتش"):
+        ef_rec = parser.parse_text(evidence_floor_surface, db="largelexicon")
+        ef_tok = (ef_rec.get("tokens") or [{}])[0]
+        ef_cands = ef_tok.get("morphology_candidates") or []
+        if not ef_cands or any(c.get("evidence_class") != "surface_candidate" for c in ef_cands):
+            failures.append(
+                "evidence floor setup: %r must have only surface_candidate fallback morphology "
+                "candidates to exercise this check, got %r"
+                % (evidence_floor_surface, [c.get("evidence_class") for c in ef_cands])
+            )
+        if ef_tok.get("collision") is not None:
+            failures.append(
+                "evidence floor: %r (all tied candidates are no-evidence fallbacks) must not fire "
+                "any collision, got %r" % (evidence_floor_surface, ef_tok.get("collision"))
+            )
+        # A prepositional prefix (ب/ل/ك) independently triggers the unrelated
+        # jar_majrur pending_context vote regardless of collision status; only
+        # وفرتش (a conjunction prefix, no jar_majrur vote) reaches ambiguous.
+        # Either is the pre-existing (non-collision) posture this finding
+        # must preserve -- the point is `lexical_collision_requires_context`
+        # (and the qg-wiping that goes with it) must never fire here.
+        if ef_tok.get("confidence_gate") not in {"ambiguous", "pending_context"}:
+            failures.append(
+                "evidence floor: %r must keep a pre-existing non-collision posture, got "
+                "confidence_gate=%r" % (evidence_floor_surface, ef_tok.get("confidence_gate"))
+            )
+        ef_roles = {seg.get("role") for seg in ef_tok.get("qg_segments") or []}
+        if "prefix_preposition" not in ef_roles and "prefix_conjunction" not in ef_roles:
+            failures.append(
+                "evidence floor: %r must not have its class-neutral prefix clitic wiped, got "
+                "qg_segments roles %r" % (evidence_floor_surface, ef_roles)
+            )
+
+    # Train E finding 2 (red-first): a genuine competing_segmentation tie must
+    # not blanket-delete a class-neutral prefix/article every tied rival
+    # places at the EXACT same span with the EXACT same role and surface --
+    # only the letters after it are actually contested. `_candidate_collision`
+    # must attach an explicit scope and retain only that exact shared span,
+    # never the disputed stem.
+    shared_seg_cands = [
+        {"segments": [
+            {"role": "prefix_preposition", "surface": "ب", "class": "qg-preposition", "label": "P", "gloss_contribution": "by/with/in"},
+            {"role": "stem", "surface": "فرس", "class": "qg-noun-stem", "label": "N", "gloss_contribution": None},
+        ]},
+        {"segments": [
+            {"role": "prefix_preposition", "surface": "ب", "class": "qg-preposition", "label": "P", "gloss_contribution": "by/with/in"},
+            {"role": "stem", "surface": "قرة", "class": "qg-noun-stem", "label": "N", "gloss_contribution": None},
+        ]},
+    ]
+    shared_a = {"rank": 1, "pos": "noun", "lemma": "X", "root": None, "evidence_class": "largelexicon_full",
+                "score": 6.0, "segment_candidate_ref": 0, "features": {}}
+    shared_b = {"rank": 2, "pos": "noun", "lemma": "Y", "root": None, "evidence_class": "largelexicon_full",
+                "score": 6.0, "segment_candidate_ref": 1, "features": {}}
+    shared_collision = parser._candidate_collision("xy", shared_seg_cands, [shared_a, shared_b], shared_a)
+    if not shared_collision or shared_collision.get("kind") != "competing_segmentation":
+        failures.append("finding2: a shared class-neutral prefix tie must still fire competing_segmentation")
+    if (shared_collision or {}).get("scope") != "shared_class_neutral_prefix":
+        failures.append(
+            "finding2: a prefix shared at the exact same span/role/surface by every tied rival "
+            "must set collision.scope=shared_class_neutral_prefix, got %r"
+            % (shared_collision or {}).get("scope")
+        )
+    shared_out = (shared_collision or {}).get("shared_segments") or []
+    if {seg.get("role") for seg in shared_out} != {"prefix_preposition"}:
+        failures.append("finding2: only the shared prefix_preposition span may be retained, got %r" % shared_out)
+    if {seg.get("surface") for seg in shared_out} != {"ب"}:
+        failures.append("finding2: shared segment surface must be the exact shared span 'ب', got %r" % shared_out)
+    if any(seg.get("role") == "stem" for seg in shared_out):
+        failures.append("finding2: the disputed stem must never be retained under a shared-prefix scope")
+
+    # finding2 hostile (red-first): a class-neutral segment present in only
+    # ONE rival (absent from the other) must never be retained.
+    absent_seg_cands = [
+        {"segments": [
+            {"role": "prefix_preposition", "surface": "ب", "class": "qg-preposition"},
+            {"role": "stem", "surface": "فرس", "class": "qg-noun-stem"},
+        ]},
+        {"segments": [
+            {"role": "stem", "surface": "بفرس", "class": "qg-noun-stem"},
+        ]},
+    ]
+    absent_a = {"rank": 1, "pos": "noun", "lemma": "X", "root": None, "evidence_class": "largelexicon_full",
+                "score": 6.0, "segment_candidate_ref": 0, "features": {}}
+    absent_b = {"rank": 2, "pos": "noun", "lemma": "Y", "root": None, "evidence_class": "largelexicon_full",
+                "score": 6.0, "segment_candidate_ref": 1, "features": {}}
+    absent_collision = parser._candidate_collision("xy", absent_seg_cands, [absent_a, absent_b], absent_a)
+    if (absent_collision or {}).get("scope") is not None:
+        failures.append(
+            "finding2: a class-neutral segment absent from one rival must never be retained "
+            "(scope must stay unset), got scope=%r" % (absent_collision or {}).get("scope")
+        )
+    if (absent_collision or {}).get("shared_segments"):
+        failures.append("finding2: no shared_segments may be recorded when a rival lacks the span")
+
+    # finding2 hostile (red-first): same span, but a DIFFERENT role/surface in
+    # each rival (a genuinely contested prefix, not an agreed one) must also
+    # never be retained.
+    mismatched_seg_cands = [
+        {"segments": [
+            {"role": "prefix_preposition", "surface": "ب", "class": "qg-preposition"},
+            {"role": "stem", "surface": "فرس", "class": "qg-noun-stem"},
+        ]},
+        {"segments": [
+            {"role": "prefix_conjunction", "surface": "و", "class": "qg-conjunction"},
+            {"role": "stem", "surface": "فرس", "class": "qg-noun-stem"},
+        ]},
+    ]
+    mismatched_a = {"rank": 1, "pos": "noun", "lemma": "X", "root": None, "evidence_class": "largelexicon_full",
+                    "score": 6.0, "segment_candidate_ref": 0, "features": {}}
+    mismatched_b = {"rank": 2, "pos": "noun", "lemma": "Y", "root": None, "evidence_class": "largelexicon_full",
+                    "score": 6.0, "segment_candidate_ref": 1, "features": {}}
+    mismatched_collision = parser._candidate_collision("xy", mismatched_seg_cands, [mismatched_a, mismatched_b], mismatched_a)
+    if (mismatched_collision or {}).get("scope") is not None:
+        failures.append(
+            "finding2: two rivals disagreeing on role/surface at the same span must never be "
+            "retained, got scope=%r" % (mismatched_collision or {}).get("scope")
+        )
+
+    # Train E finding 3 (red-first): collision MEMBERSHIP is tie membership --
+    # every morphology candidate tied at the top score is a disputed rival,
+    # not just rank 1. Every co-tied rival must have lemma/root/pos/gloss_hint
+    # withheld and be marked candidate-only/blocked; every rival record must
+    # be preserved (none collapsed), and a non-tied lower-score rival must
+    # keep its own identity untouched.
+    for f3_surface in ("لما", "وما", "بالله"):
+        f3_rec = parser.parse_text(f3_surface, db="largelexicon")
+        f3_tok = (f3_rec.get("tokens") or [{}])[0]
+        f3_cands = f3_tok.get("morphology_candidates") or []
+        f3_top_score = max((float(c.get("score") or 0.0) for c in f3_cands), default=None)
+        f3_tied = [c for c in f3_cands if float(c.get("score") or 0.0) == f3_top_score]
+        if len(f3_tied) < 2:
+            failures.append("finding3: %r must have >= 2 tied top-scored rivals to exercise this check" % f3_surface)
+        for c in f3_tied:
+            if c.get("lemma") is not None or c.get("pos") is not None or c.get("root") is not None or c.get("gloss_hint") is not None:
+                failures.append(
+                    "finding3: %r rank-%r co-tied rival must have lemma/pos/root/gloss_hint withheld, "
+                    "got lemma=%r pos=%r root=%r gloss_hint=%r"
+                    % (f3_surface, c.get("rank"), c.get("lemma"), c.get("pos"), c.get("root"), c.get("gloss_hint"))
+                )
+            if c.get("selection_status") != "candidate_only":
+                failures.append(
+                    "finding3: %r rank-%r co-tied rival must be marked candidate_only, got %r"
+                    % (f3_surface, c.get("rank"), c.get("selection_status"))
+                )
+        f3_untied = [c for c in f3_cands if float(c.get("score") or 0.0) != f3_top_score]
+        if not f3_untied:
+            failures.append("finding3: %r must have a non-tied lower-score rival to exercise this check" % f3_surface)
+        elif all(c.get("lemma") is None for c in f3_untied):
+            failures.append(
+                "finding3: %r non-tied lower-score rivals must keep their own identity, not be stripped"
+                % f3_surface
+            )
+        if len(f3_cands) < len(f3_tied):
+            failures.append("finding3: %r must preserve every rival record, not collapse them" % f3_surface)
 
     # rival-order mutation (red-first): reordering the tied morph_cands list
     # must not change the collision kind or the set of rival identities.

@@ -30,6 +30,30 @@ def _ordered_subset(pieces: list[str], surface: str) -> bool:
     return True
 
 
+def _contiguous_slice(segments: list[dict], surface: str) -> str | None:
+    """Train E finding 4 (independent re-derivation, not trust of the
+    producer): the literal contiguous substring covered by `segments` when
+    every retained piece sits immediately adjacent to the previous one in
+    `surface`, else `None` (a gap or an unfound piece). A validator must not
+    trust that the producer withheld `segment_surface` correctly -- it
+    recomputes contiguity itself from `segments`/`visible_surface`."""
+    pos: int | None = None
+    start: int | None = None
+    for seg in segments:
+        piece = seg.get("surface") or ""
+        if not piece:
+            continue
+        idx = surface.find(piece, pos if pos is not None else 0)
+        if idx == -1:
+            return None
+        if pos is not None and idx != pos:
+            return None
+        if start is None:
+            start = idx
+        pos = idx + len(piece)
+    return surface[start:pos] if start is not None else None
+
+
 def validate(path: Path = DEFAULT_SAMPLE) -> list[str]:
     errors: list[str] = []
     if not path.exists():
@@ -73,12 +97,36 @@ def validate(path: Path = DEFAULT_SAMPLE) -> list[str]:
             if coverage == "complete":
                 errors.append(f"{label}: a collision row can never claim segment_coverage=complete")
             if coverage == "partial":
-                if collision.get("scope") != "stem_identity":
-                    errors.append(f"{label}: segment_coverage=partial requires collision.scope=stem_identity, got {collision.get('scope')!r}")
-                if not segments or segment_surface is None:
-                    errors.append(f"{label}: segment_coverage=partial requires non-null segment_surface from retained segments")
-                elif not _ordered_subset([seg.get("surface", "") for seg in segments], row.get("visible_surface") or ""):
-                    errors.append(f"{label}: segment_coverage=partial segment_surface is not an ordered subset of visible_surface")
+                if collision.get("scope") not in {"stem_identity", "shared_class_neutral_prefix"}:
+                    errors.append(
+                        f"{label}: segment_coverage=partial requires collision.scope in "
+                        f"{{stem_identity, shared_class_neutral_prefix}}, got {collision.get('scope')!r}"
+                    )
+                if not segments:
+                    errors.append(f"{label}: segment_coverage=partial requires non-empty retained segments")
+                else:
+                    visible = row.get("visible_surface") or ""
+                    pieces = [seg.get("surface", "") for seg in segments]
+                    if not _ordered_subset(pieces, visible):
+                        errors.append(f"{label}: segment_coverage=partial segments are not an ordered subset of visible_surface")
+                    # Train E finding 4: a joined segment_surface may only ever
+                    # be the literal, contiguous substring the retained
+                    # segments cover -- never a splice of non-adjacent spans
+                    # (a prefix + a withheld-stem gap + a suffix, for
+                    # example). Non-contiguous retention must withhold
+                    # segment_surface entirely.
+                    contiguous = _contiguous_slice(segments, visible)
+                    if contiguous is not None:
+                        if segment_surface != contiguous:
+                            errors.append(
+                                f"{label}: segment_coverage=partial segment_surface must equal the "
+                                f"contiguous slice {contiguous!r}, got {segment_surface!r}"
+                            )
+                    elif segment_surface is not None:
+                        errors.append(
+                            f"{label}: segment_coverage=partial retained segments are not contiguous; "
+                            f"segment_surface must be withheld (null), got {segment_surface!r}"
+                        )
                 if row.get("token_contribution") is not None:
                     errors.append(f"{label}: segment_coverage=partial must keep token_contribution null")
             if coverage == "none" and (segments or segment_surface is not None):
@@ -90,6 +138,12 @@ def validate(path: Path = DEFAULT_SAMPLE) -> list[str]:
         errors.append("sample should contain source_crosswalk_packet rows to prove non-live routing")
     if not any((row.get("collision") or {}).get("scope") == "stem_identity" for row in rows):
         errors.append("sample should contain a stem_identity collision row to prove partial coverage typing")
+    # Train E finding 2: the sample must contain a real corpus example of a
+    # genuine competing_segmentation tie whose rivals agree on an exact
+    # shared class-neutral prefix span, proving the shared-span scoping fires
+    # against real data, not just synthetic fixtures.
+    if not any((row.get("collision") or {}).get("scope") == "shared_class_neutral_prefix" for row in rows):
+        errors.append("sample should contain a shared_class_neutral_prefix collision row to prove shared-span retention")
     return errors
 
 
