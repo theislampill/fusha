@@ -43,66 +43,66 @@ machine-checkable governor claim.
 
 ## Items (name the family, then the case pattern, before answering)
 
+These items are graded objectively against
+[`keys/nawasikh-governor-families.keys.jsonl`](keys/nawasikh-governor-families.keys.jsonl) and each names a
+Knowledge Component in `curriculum/kc-catalog.json` (items 16–17 are the modal-force exception noted above —
+instructional only, no bound KC). A miss routes back to this drill and is held pending (`two_vote_required`); a
+learner-declared second check never clears it. The task column poses the question; it does not give the answer.
+
 ### 1–6, 24. Kāna & laysa government
-1. **`NGF-01`** — لَيْسَ is defective: no imperfective stem, no past-time reading; it only inflects for
-   person/number/gender and always carries present-time negation of a nominal predicate.
-2. **`NGF-02`** — كَانَ pushes its khabar into the accusative; leaving it nominative erases the governor's
-   only visible trace.
-3. **`NGF-03`** — the accusative under a kāna-family verb belongs to the khabar ONLY; marking the ism
-   accusative instead imports inna-family's (the rival particle family's) pattern.
-4. **`NGF-04`** — لَيْسَ negates a nominal predicate, never a finite verb directly; use لَا to negate a verb.
-5. **`NGF-05`** — لَيْسَ carries present-time force only; past-time negation of a verb routes through لَمْ +
-   jussive.
-6. **`NGF-06`** — بَاتَ (a kāna-sister verb) is unrelated to the noun بَيْت; the mix-up is a category (POS)
-   error, not a case error.
-24. **`NGF-24`** — كَانَ (a VERB) and إِنَّ (a PARTICLE) are exact mirror images; swapping their signatures
-   produces a well-formed-looking sentence with both exponents wrong.
+
+| item id | stimulus | task |
+|---|---|---|
+| `NGF-01` | لَيْسَ conjugated like an ordinary verb as `يَلِيسُ` | Explain why this imperfective form is impossible and state what لَيْسَ actually inflects for. |
+| `NGF-02` | `كَانَ الطَّالِبُ مُجْتَهِدٌ` (خبر left nominative) | Name the governor, the error, and the corrected sentence. |
+| `NGF-03` | `أَصْبَحَ الجَوُّ بَارِدًا` (ism marked accusative instead) | Explain which slot actually takes the accusative and why the learner's marking produces the WRONG family's pattern. |
+| `NGF-04` | `لَيْسَ يَكْتُبُ الطَّالِبُ` (لَيْسَ stacked before a finite verb) | Explain why this is wrong and give the correct way to negate a verbal sentence. |
+| `NGF-05` | `لَيْسَ الطَّالِبُ كَتَبَ الدَّرْسَ` (لَيْسَ used for past-time negation) | Explain why لَيْسَ cannot carry this meaning and state the correct construction. |
+| `NGF-06` | `بَاتَ الطِّفْلُ نَائِمًا`, with بَاتَ glossed as the noun بَيْت | Explain the category error and identify بَاتَ correctly. |
+| `NGF-24` | `كَانَ الجَوُّ حَارًّا`, with كَانَ's ism/khabar signature swapped for inna-family's | Explain the swap and give the corrected sentence. |
 
 ### 7–9. Continuative licensing
-7. **`NGF-07`** — a two-token continuative governor (مَا زَالَ) governs its khabar into the accusative exactly
-   like a one-word kāna-sister; being spelled with two words does not weaken it.
-8. **`NGF-08`** — dropping the licensing مَا reverses the meaning: bare زَالَ asserts cessation, not
-   continuation. The licenser is part of the governor, not optional.
-9. **`NGF-09`** — مَا دَامَ's مَا is the durative "as long as," not plain negation, and the construction needs
-   a consequent (jawāb) clause to be complete.
+
+| item id | stimulus | task |
+|---|---|---|
+| `NGF-07` | `مَا زَالَ الطَّقْسُ مُعْتَدِلٌ` (خبر left nominative) | Explain why the two-token continuative governor governs exactly like a single-token kāna-sister, and give the corrected sentence. |
+| `NGF-08` | `زَالَ المَطَرُ نَازِلًا` (licensing مَا dropped) | Explain the reversal and give the corrected sentence. |
+| `NGF-09` | `مَا دَامَ المَطَرُ نَازِلًا` read as an ordinary negated sentence | Explain the correct reading and what is missing. |
 
 ### 10–15. Inna-family government
-10. **`NGF-10`** — إِنَّ heads an independent, emphatic clause; أَنَّ is the subordinating member, selected
-    after a verb (e.g. عَلِمْتُ) that takes a clausal object.
-11. **`NGF-11`** — إِنَّ pushes its ism into the accusative; leaving it nominative erases the governor's
-    effect.
-12. **`NGF-12`** — inna-family's khabar stays NOMINATIVE (the mirror of kāna's); marking it accusative
-    imports kāna's pattern.
-13. **`NGF-13`** — the heavy (geminate) لَٰكِنَّ needs a nominal complement and cannot precede a finite verb;
-    the light لَٰكِنْ is the non-governing member used there.
-14. **`NGF-14`** — كَأَنَّ is a member of inna's family; membership (not the particular member) decides the
-    ism-accusative pattern.
-15. **`NGF-15`** — inna-family's accusative is exhausted by the ism slot; the khabar of لَيْتَ stays
-    nominative, never accusative.
+
+| item id | stimulus | task |
+|---|---|---|
+| `NGF-10` | `عَلِمْتُ إِنَّ الخَبَرَ صَحِيحٌ` (إِنَّ used where a subordinator is required) | Explain the selection rule and give the corrected sentence. |
+| `NGF-11` | `إِنَّ السَّمَاءُ صَافِيَةٌ` (ism left nominative) | Name the governor, the error, and the corrected sentence. |
+| `NGF-12` | `إِنَّ السَّمَاءَ صَافِيَةً` (khabar marked accusative) | Explain the error and the corrected sentence. |
+| `NGF-13` | `جَاءَ زَيْدٌ لَٰكِنَّ ذَهَبَ عَمْرٌو` (geminate لَٰكِنَّ before a finite verb) | Explain why this fails and give the corrected sentence. |
+| `NGF-14` | `كَأَنَّ القَمَرُ مِصْبَاحٌ` (ism left nominative) | Explain the error using the same family signature as إِنَّ and give the corrected sentence. |
+| `NGF-15` | `لَيْتَ الشَّبَابَ عَائِدًا` (khabar marked accusative) | Explain the error and the corrected sentence. |
 
 ### 16–17. Inna-sister modal force (no bound KC — instructional only)
-16. **`NGF-16`** — كَأَنَّ carries figurative/resemblance force ("as if"); using it for a plain, neutral
-    comparison overstates the sentence.
-17. **`NGF-17`** — لَيْتَ presupposes an unlikely/unattainable wish; an outcome that is actually likely calls
-    for لَعَلَّ instead.
+
+| item id | stimulus | task |
+|---|---|---|
+| `NGF-16` | `كَأَنَّ هَـذَا الكِتَابَ أَكْبَرُ مِنْ ذَٰلِكَ` (neutral size comparison) | Explain why كَأَنَّ is the wrong choice here. |
+| `NGF-17` | `لَيْتَ الطَّبيبَ يَصِلُ قَريبًا` (an outcome that is actually likely) | Explain why لَيْتَ misrepresents this and name the correct member. |
 
 ### 18–22, 25. Qalb-verb transitivity (complement count by sense)
-18. **`NGF-18`** — ظَنَّ (a qalb-verb) governs BOTH complements accusative; it does not follow inna-family's
-    split (one-accusative, one-nominative) assignment.
-19. **`NGF-19`** — رَأَى in its literal-perception sense takes ONE object; the two-accusative expectation
-    belongs to its separate judgemental sense only.
-20. **`NGF-20`** — a judgemental qalb-verb (حَسِبَ) governs BOTH members of its absorbed predication
-    accusative — expect two accusative exponents, not one.
-21. **`NGF-21`** — ظَنَّ signals doubt/supposition; عَلِمَ signals certainty. The roster is selected by
-    epistemic stance, not used interchangeably.
-22. **`NGF-22`** — وَجَدَ's complement count depends on its sense: literal-location takes one object, the
-    judgemental sense takes two; the sense is settled before counting.
-25. **`NGF-25`** — a judgemental qalb-verb sentence has THREE nominals: the nominative agent (who thinks/
-    supposes) plus two accusative complements; the agent is never one of the accusatives.
+
+| item id | stimulus | task |
+|---|---|---|
+| `NGF-18` | `ظَنَنْتُ الجَوَّ بَارِدٌ` (inna-family's split assignment applied to ظَنَّ) | Explain the error and the corrected sentence. |
+| `NGF-19` | `رَأَيْتُ الهِلَالَ طَالِعًا`, with طَالِعًا insisted to be a forced second object | Explain the sense-dependent gate and the correct role of طَالِعًا. |
+| `NGF-20` | `حَسِبْتُ الأَمْرَ سَهْلٌ` (only the first complement of حَسِبَ marked accusative) | Explain the defining property of this family and give the corrected sentence. |
+| `NGF-21` | ظَنَّ used interchangeably with عَلِمَ to claim certain knowledge | Explain the epistemic-stance distinction. |
+| `NGF-22` | `وَجَدْتُ المِفْتَاحَ تَحْتَ الطَّاوِلَةِ حَاضِرًا` (an unneeded second accusative added) | Explain why the sense must be settled before counting complements. |
+| `NGF-25` | `حَسِبَ الطَّالِبُ الدَّرْسَ سَهْلًا`, with الطَّالِبُ marked as a third accusative complement | Explain why the agent is not part of the absorbed predication. |
 
 ### 23. Stacked-governor scope
-23. **`NGF-23`** — when two governors (e.g. إِنَّ ... كَانَ ...) are stacked in one span, each governs only its
-    own pair; one family's signature is never applied across the whole span.
+
+| item id | stimulus | task |
+|---|---|---|
+| `NGF-23` | `إِنَّ الطَّالِبَ كَانَ مُجْتَهِدًا`, with inna's signature applied across the whole span | Explain why each governor keeps its own separate scope. |
 
 ---
 

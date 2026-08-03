@@ -49,12 +49,29 @@ def issue_route_kc_coverage(by_class):
     return covered, uncovered
 
 
+_GENERIC_GOVERNOR_KC_ID = "kc-governor-justification"
+
+
 def load_kc_catalog(path=KC_CATALOG_PATH):
-    kcs = json.load(open(path, encoding="utf-8"))
+    with open(path, encoding="utf-8") as fh:
+        kcs = json.load(fh)
     by_class = {}
     for kc in kcs:
         for cls in kc.get("diagnostic_classes", []):
             by_class.setdefault(cls, kc)
+    # PIN (fail-closed): `possible_governor_unresolved` is the ARBITRARY-TEXT checker's generic issue class.
+    # It is deliberately shared by kc-governor-justification AND the five nawasikh family KCs (each family's
+    # own KC resolves it separately via NAWASIKH_FAMILY_KC / nawasikh_family_events, which never reads
+    # `by_class`). The plain `setdefault` loop above is catalog-FILE-ORDER dependent — a reordered or extended
+    # catalog could let a family KC "steal" the generic arbitrary-text mapping merely by appearing earlier in
+    # the file. Pin the generic mapping explicitly here so catalog order can never change it; fail closed
+    # (raise) if the generic KC is ever missing from the catalog, rather than silently falling through to
+    # whichever KC file order happened to pick.
+    generic_kc = next((kc for kc in kcs if kc.get("kc_id") == _GENERIC_GOVERNOR_KC_ID), None)
+    if generic_kc is None:
+        raise ValueError("%s missing from %s; possible_governor_unresolved cannot resolve"
+                         % (_GENERIC_GOVERNOR_KC_ID, path))
+    by_class["possible_governor_unresolved"] = generic_kc
     return kcs, by_class
 
 

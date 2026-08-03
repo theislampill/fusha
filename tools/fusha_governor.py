@@ -571,14 +571,24 @@ def _h_nawasikh(nxt, dep_ref, f):
                          governing_regime="zanna_family",
                          regime_evidence="supplied: first_object_marking=%s, second_object_marking=%s, sense=%s"
                                         % (first, second, sense))]
-    if f.get("bracketing") == "ambiguous":
+    # The stacked-governor family is only justified when at least TWO abrogators are actually evidenced;
+    # `bracketing=ambiguous` alone (no supplied count, or a count of one) must not invent a stacked-scope
+    # reading — it falls through to ordinary single-governor handling below instead.
+    abrogator_count = f.get("abrogator_count")
+    if f.get("bracketing") == "ambiguous" and isinstance(abrogator_count, int) and abrogator_count >= 2:
         return [_mk_edge(nxt(), dep_ref, "none", "تعدد النواسخ المتراكبة",
                          "More than one abrogator is stacked and the clause bracketing is not supplied; no "
                          "scope is assigned.",
                          "regime_undetermined_abstention", governor_type="none", assigned_case_mood=None,
                          confidence="low", evidence_class="heuristic", decision_status="pending",
                          triggers=["ambiguous_grammar"], abstention_reason="bracketing_ambiguous")]
-    if f.get("polarity_licenser") == "absent":
+    # Continuative (polarity-licensed) government is a KĀNA-SISTER-ONLY regime (مَا زَالَ / مَا دَامَ). A regime
+    # that is not a kāna-sister regime (e.g. inna_family) must never receive this explanation just because a
+    # `polarity_licenser` feature happens to be present/absent on it — that would be inventing a licenser
+    # story for a family that has no such licenser at all. Fall through to ordinary regime handling below.
+    regime_str = regime or ""
+    if f.get("polarity_licenser") == "absent" and (regime_str == "kana_family"
+                                                     or regime_str.startswith("kana_family_")):
         return [_mk_edge(nxt(), dep_ref, "none", "ناسخ مقيّد بقرينة سلبية",
                          "This kāna-sister requires a supplied negative-polarity licenser; none is supplied, so "
                          "the family expectation is not applied.",

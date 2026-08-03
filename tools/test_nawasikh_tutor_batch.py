@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 import unittest
@@ -193,6 +194,56 @@ class RuntimeGraderRoundTrip(unittest.TestCase):
                 missed = {m["item_id"]: m for m in progress["missed"]}
                 self.assertIn(row["id"], missed, row["id"])
                 self.assertEqual(missed[row["id"]]["remediation_route"], row["remediation_route"])
+
+
+def _case_swap(text):
+    """Generate a hostile REVERSE-DIRECTION rewrite: swap every occurrence of 'nominative' <-> 'accusative'
+    in place, leaving every other word (ism/khabar/agent/complements/etc.) exactly where it was. This is
+    mechanically the exact case swap a direction-sensitive row teaches against (kana/inna mirror-image,
+    ism-vs-khabar, agent-vs-complement) -- same bag of words, same order of every non-case-word token, only
+    the case LABELS at each slot are reversed."""
+    placeholder = "\x00NOMINATIVE\x00"
+    swapped = re.sub(r"nominative", placeholder, text, flags=re.I)
+    swapped = re.sub(r"accusative", "nominative", swapped, flags=re.I)
+    return swapped.replace(placeholder, "accusative")
+
+
+class DirectionSensitiveCaseSwapIsRejected(unittest.TestCase):
+    """RED-first (Opus finding 1): a direction-sensitive row must never mastery-clear the exact case-swapped
+    rewrite of its own expected_answer -- swapping nominative<->accusative in place is the precise mirror-image
+    mistake the row exists to catch (kana/inna ism-khabar mirror, single-slot kana/inna correction, qalb-verb
+    split-vs-both, agent-vs-complement). `ordered_slots` is the row-authored marker of "this row's answer
+    matching is direction-sensitive"; every row that carries it must reject its own case-swapped rewrite."""
+
+    def test_ordered_slots_rows_reject_their_own_case_swapped_rewrite(self):
+        direction_sensitive = [row for row in _load_runtime_rows() if row.get("ordered_slots")]
+        # sanity: this is not a vacuous test -- the batch actually authored ordered_slots-bearing rows.
+        self.assertGreaterEqual(len(direction_sensitive), 8,
+                                "expected several direction-sensitive (ordered_slots-bearing) rows in the batch")
+        for row in direction_sensitive:
+            with self.subTest(id=row["id"]):
+                swapped = _case_swap(row["expected_answer"])
+                self.assertNotEqual(swapped, row["expected_answer"],
+                                    "%s: case swap must actually change the answer text" % row["id"])
+                payload = {"answer": swapped, "reasoning": list(row["required_reasoning"])}
+                r = RT.step(row, None, payload, now_day=0)
+                g = r["grade"]
+                self.assertFalse(g["content_mastered"],
+                                 "%s: the case-swapped (reverse-direction) rewrite must NOT be mastered" % row["id"])
+                self.assertFalse(g["cleared"], row["id"])
+
+    def test_ordered_slots_rows_still_accept_every_authored_correct_form(self):
+        # the fix must not weaken token/reason grading: every authored expected_answer/accepted_variant for a
+        # direction-sensitive row must still round-trip to content_mastered=True.
+        direction_sensitive = [row for row in _load_runtime_rows() if row.get("ordered_slots")]
+        for row in direction_sensitive:
+            forms = [row["expected_answer"]] + list(row.get("accepted_variants") or [])
+            for form in forms:
+                with self.subTest(id=row["id"], form=form[:40]):
+                    payload = {"answer": form, "reasoning": list(row["required_reasoning"])}
+                    r = RT.step(row, None, payload, now_day=0)
+                    self.assertTrue(r["grade"]["content_mastered"],
+                                    "%s: authored correct form must still be mastered: %r" % (row["id"], form))
 
 
 class ProvenanceBoundary(unittest.TestCase):

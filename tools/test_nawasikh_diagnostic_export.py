@@ -31,6 +31,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import tempfile
 import unittest
 
 _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
@@ -180,6 +181,103 @@ class NawasikhAdapterHostileCases(unittest.TestCase):
         self.assertTrue(diags)
         self.assertEqual(diags[0]["family"], "stacked_governor_scope")
         self.assertEqual(diags[0]["abstention_reason"], "bracketing_ambiguous")
+
+    def test_ambiguous_bracketing_with_fewer_than_two_abrogators_never_invents_a_stacked_family(self):
+        # bracketing=ambiguous alone (no abrogator_count, or a count of one) is not evidence of a SECOND
+        # governor -- it must fall through to ordinary single-governor handling, never fabricate the
+        # stacked-governor family. Route A: no count supplied at all, no regime either -> honest abstention,
+        # no diagnostic (nothing to classify into any of the five families).
+        no_count = _constructed({"bracketing": "ambiguous"})
+        self.assertFalse(any(d["family"] == "stacked_governor_scope"
+                             for d in GOV.nawasikh_pending_diagnostics(no_count)),
+                         "bracketing=ambiguous with no abrogator_count must not invent stacked_governor_scope")
+        # Route B: an explicit count of exactly one -- still not "stacked"; falls through to the SUPPLIED
+        # regime's ordinary single-governor handling instead of the fabricated stacked family.
+        one_abrogator = _constructed({"bracketing": "ambiguous", "abrogator_count": 1,
+                                      "ism_marking": "raf3", "khabar_marking": "nasb", "regime": "kana_family"})
+        diags = GOV.nawasikh_pending_diagnostics(one_abrogator)
+        self.assertTrue(diags, "a supplied regime must still classify once the stacked route is declined")
+        self.assertEqual(diags[0]["family"], "kana_laysa_government")
+        self.assertNotEqual(diags[0].get("abstention_reason"), "bracketing_ambiguous")
+
+    def test_continuative_licensing_is_restricted_to_a_kana_sister_regime(self):
+        # `polarity_licenser: absent` must only ever be read as a kāna-sister continuative-licensing
+        # explanation. An inna-family unit is never a kāna-sister and must NOT receive that explanation just
+        # because a polarity_licenser feature happens to be attached to it -- it falls through to inna-family's
+        # OWN ordinary (correct, mirror-image) government instead.
+        inna_with_licenser_feature = _constructed({"polarity_licenser": "absent", "regime": "inna_family",
+                                                    "ism_marking": "nasb", "khabar_marking": "raf3"})
+        diags = GOV.nawasikh_pending_diagnostics(inna_with_licenser_feature)
+        self.assertTrue(diags, "inna_family must still classify once the false continuative route is declined")
+        self.assertEqual(diags[0]["family"], "inna_family_government")
+        self.assertNotEqual(diags[0].get("abstention_reason"), "licenser_absent")
+        # the genuine kāna-sister continuative route is unaffected by this restriction.
+        real_continuative = _constructed({"polarity_licenser": "absent", "regime": "kana_family_polarity_licensed"})
+        diags2 = GOV.nawasikh_pending_diagnostics(real_continuative)
+        self.assertTrue(diags2)
+        self.assertEqual(diags2[0]["family"], "continuative_licensing")
+        self.assertEqual(diags2[0]["abstention_reason"], "licenser_absent")
+
+
+class GenericGovernorKcMappingIsPinned(unittest.TestCase):
+    """Finding 7: `possible_governor_unresolved`'s GENERIC (arbitrary-text-checker) mapping must always resolve
+    to kc-governor-justification, regardless of curriculum/kc-catalog.json's file order -- a reordered or
+    extended catalog must never let one of the five nawasikh family KCs (which share the same
+    diagnostic_classes value) "steal" the generic mapping by appearing earlier in the file."""
+
+    def test_generic_mapping_survives_catalog_reorder_and_extension(self):
+        with open(_KC_CATALOG_PATH, encoding="utf-8") as fh:
+            kcs = json.load(fh)
+        generic = next(kc for kc in kcs if kc["kc_id"] == "kc-governor-justification")
+        family_kc = next(kc for kc in kcs if kc["kc_id"] == "kc-nawasikh-kana-laysa-government")
+        # (a) REORDER: put a family KC (which shares diagnostic_classes=["possible_governor_unresolved"])
+        # BEFORE the generic KC in file order -- a naive setdefault-by-file-order loader would resolve to the
+        # family KC instead.
+        reordered = [family_kc, generic] + [kc for kc in kcs if kc["kc_id"] not in
+                                             ("kc-governor-justification", "kc-nawasikh-kana-laysa-government")]
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as fh:
+            json.dump(reordered, fh, ensure_ascii=False)
+            reordered_path = fh.name
+        try:
+            _, by_class = LF.load_kc_catalog(path=reordered_path)
+            self.assertEqual(by_class["possible_governor_unresolved"]["kc_id"], "kc-governor-justification")
+        finally:
+            os.remove(reordered_path)
+        # (b) EXTENSION: append a brand-new KC that also claims possible_governor_unresolved, inserted BEFORE
+        # the generic KC -- the pin must still win.
+        extra_kc = dict(family_kc)
+        extra_kc["kc_id"] = "kc-nawasikh-some-future-family"
+        extended = [extra_kc] + kcs
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as fh:
+            json.dump(extended, fh, ensure_ascii=False)
+            extended_path = fh.name
+        try:
+            _, by_class = LF.load_kc_catalog(path=extended_path)
+            self.assertEqual(by_class["possible_governor_unresolved"]["kc_id"], "kc-governor-justification")
+        finally:
+            os.remove(extended_path)
+
+    def test_family_specific_adapter_routing_is_unaffected_by_the_pin(self):
+        # the pin lives in load_kc_catalog/by_class only; nawasikh_family_events never reads by_class, so the
+        # five-family routing (FC.NAWASIKH_FAMILY_KC) must be untouched by this fix.
+        for family, unit in FAMILY_FIXTURES.items():
+            events = LF.nawasikh_family_events(unit)
+            self.assertTrue(events)
+            for ev in events:
+                self.assertEqual(ev["knowledge_component"], FC.NAWASIKH_FAMILY_KC[family])
+
+    def test_fail_closed_when_generic_kc_missing_from_catalog(self):
+        with open(_KC_CATALOG_PATH, encoding="utf-8") as fh:
+            kcs = json.load(fh)
+        without_generic = [kc for kc in kcs if kc["kc_id"] != "kc-governor-justification"]
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False, encoding="utf-8") as fh:
+            json.dump(without_generic, fh, ensure_ascii=False)
+            path = fh.name
+        try:
+            with self.assertRaises(ValueError):
+                LF.load_kc_catalog(path=path)
+        finally:
+            os.remove(path)
 
 
 class NawasikhAdapterProvenanceBoundary(unittest.TestCase):
