@@ -14,12 +14,13 @@ Outputs (curriculum/l1l6/reports/):
 
 State ladder (closed): metadata_only < structurally_parsed <
 semantically_qualified < unitized < skill_mapped < fixture_mapped <
-occurrence_grounded < consumer_exercised < backpropagated;
+occurrence_grounded < candidate_fixture_harness_exercised < backpropagated;
 plus review_blocked / not_applicable_with_reason.
 
 Honesty rules: a lesson advances ONLY on explicit evidence (a claim citing
-it, a unit listing it, an increment consumer that actually ran, a precise
-occurrence link). Domain association alone never advances state — it is
+it, a unit listing it, a candidate fixture harness covering its increment,
+a precise occurrence link). Ordinary tutor behavior is recorded separately
+and never promotes lesson knowledge. Domain association alone never advances state — it is
 recorded separately. backpropagated is 0 today (no promotion accepted).
 Deterministic; stdlib only.
 """
@@ -42,7 +43,8 @@ NAHW_DOMAINS = {"case_mood", "particles", "governance", "syntactic_relations",
 
 STATE_ORDER = ["metadata_only", "structurally_parsed", "semantically_qualified",
                "unitized", "skill_mapped", "fixture_mapped",
-               "occurrence_grounded", "consumer_exercised", "backpropagated"]
+               "occurrence_grounded", "candidate_fixture_harness_exercised",
+               "backpropagated"]
 
 NEXT_ACTION_BY_STATE = {
     "structurally_parsed": "author qualified claims for this lesson's propositions (queue q-lesson-qualification)",
@@ -51,7 +53,7 @@ NEXT_ACTION_BY_STATE = {
     "skill_mapped": "derive fixtures into the unit's increment (queue q-error-fixtures / q-paradigm-consumer)",
     "fixture_mapped": "ground the unit on exact occurrences (queue q-pvn-grounding)",
     "occurrence_grounded": "exercise the population through the candidate consumer (flywheel runner)",
-    "consumer_exercised": "emit/refresh the promotion bundle for Sol review (queue q-scholar-owner-review)",
+    "candidate_fixture_harness_exercised": "emit/refresh the promotion bundle for Sol review (queue q-scholar-owner-review)",
     "backpropagated": "complete",
 }
 
@@ -81,14 +83,103 @@ def load():
         "plinks": _jsonl(BASE / "links" / "pvn-precise-links.jsonl"),
         "flinks": _jsonl(BASE / "links" / "pvn-candidate-links.jsonl"),
         "manifest": _jsonl(BASE / "custody" / "source-manifest.jsonl"),
+        "misconceptions": _jsonl(
+            BASE / "misconceptions" / "misconception-registry.jsonl"),
     }
     return ctx
 
 
-def consumer_ran_increments():
-    """Increments proven consumer-exercised = those with a committed loop run
-    or covered by the consumer's --all latest-pack gate (all discovered
-    increments; the gate is in CI). We count only increments that EXIST."""
+def ordinary_tutor_runtime_truth(ctx):
+    """Derive the ordinary runtime's bounded L1-L6 evidence.
+
+    A drill-key row with a kc_id is behaviorally consumed by the ordinary
+    tutor. The KC catalog's explicit curriculum_misconception_ids provide an
+    indirect path to lesson manifestations. related_units are deliberately
+    ignored: they are candidate routing context, not runtime unit bindings.
+    """
+    key_rows = []
+    for path in sorted((ROOT / "curriculum" / "drills" / "keys").glob("*.jsonl")):
+        key_rows.extend(r for r in _jsonl(path) if r.get("kc_id"))
+    kc_catalog = json.loads(
+        (ROOT / "curriculum" / "kc-catalog.json").read_text(encoding="utf-8")
+    )
+    kc_by_id = {r["kc_id"]: r for r in kc_catalog}
+    emittable_kcs = sorted({r["kc_id"] for r in key_rows})
+    missing_kcs = sorted(set(emittable_kcs) - set(kc_by_id))
+    if missing_kcs:
+        raise ValueError("runtime drill rows cite missing KCs: %s" % missing_kcs)
+
+    misconception_by_id = {
+        r["misconception_id"]: r for r in ctx["misconceptions"]
+    }
+    lesson_kcs = {}
+    for kc_id in emittable_kcs:
+        for misconception_id in kc_by_id[kc_id].get(
+                "curriculum_misconception_ids", []):
+            misconception = misconception_by_id.get(misconception_id)
+            if misconception is None:
+                raise ValueError(
+                    "KC %s cites missing misconception %s"
+                    % (kc_id, misconception_id)
+                )
+            for manifestation in misconception.get("manifestations", []):
+                lesson_kcs.setdefault(manifestation["lesson_id"], set()).add(kc_id)
+
+    explicit_lesson_bindings = {
+        lesson_id
+        for row in key_rows
+        for lesson_id in row.get("lesson_ids", [])
+    }
+    explicit_unit_bindings = {
+        unit_id
+        for row in key_rows
+        for unit_id in row.get("unit_ids", [])
+    }
+    return {
+        "drill_key_rows": len(key_rows),
+        "emittable_kc_ids": emittable_kcs,
+        "emittable_knowledge_components": len(emittable_kcs),
+        "indirect_lesson_kcs": {
+            lesson_id: sorted(kc_ids)
+            for lesson_id, kc_ids in sorted(lesson_kcs.items())
+        },
+        "indirectly_linked_lessons": len(lesson_kcs),
+        "explicit_lesson_ids": sorted(explicit_lesson_bindings),
+        "explicit_lesson_bindings": len(explicit_lesson_bindings),
+        "explicit_unit_ids": sorted(explicit_unit_bindings),
+        "explicit_canonical_unit_bindings": len(explicit_unit_bindings),
+        "lesson_content_operationalized": False,
+        "binding_note": (
+            "runtime behavior is proven only for the committed drill-key rows; "
+            "lesson linkage is indirect via KC curriculum_misconception_ids and "
+            "misconception manifestations; related_units do not establish a "
+            "runtime canonical-unit binding"
+        ),
+    }
+
+
+def explicit_other_train_linkage(train_id):
+    """Count only closed-form explicit Train D/E binding rows in links/."""
+    lesson_ids, unit_ids = set(), set()
+    for path in sorted((BASE / "links").glob("*.jsonl")):
+        for row in _jsonl(path):
+            if (row.get("consumer_train") != train_id
+                    or row.get("binding_status") != "explicit"):
+                continue
+            lesson_ids.update(row.get("lesson_ids", []))
+            unit_ids.update(row.get("unit_ids", []))
+    return {
+        "explicit_lesson_bindings": len(lesson_ids),
+        "explicit_unit_bindings": len(unit_ids),
+        "binding_basis": (
+            "closed-form rows under curriculum/l1l6/links with matching "
+            "consumer_train and binding_status=explicit"
+        ),
+    }
+
+
+def fixture_harnessed_increments():
+    """Candidate increments covered by the non-authoritative fixture harness."""
     inc_dir = BASE / "increments"
     return sorted(p.name for p in inc_dir.iterdir() if p.is_dir())
 
@@ -144,6 +235,8 @@ def _campaign_numbers(ctx, ledger, section_rows, completeness):
 
 
 def build(ctx):
+    runtime_truth = ordinary_tutor_runtime_truth(ctx)
+    runtime_lesson_kcs = runtime_truth["indirect_lesson_kcs"]
     concepts_by_lesson = {}
     for c in ctx["concepts"]:
         concepts_by_lesson.setdefault(c["lesson_id"], []).append(c)
@@ -166,7 +259,7 @@ def build(ctx):
         units_by_domain.setdefault(u["concept_node_query"]["domain"], []).append(u["unit_id"])
     unit_index = {u["unit_id"]: u for u in ctx["units"]}
 
-    ran = set(consumer_ran_increments())
+    ran = set(fixture_harnessed_increments())
     unit_occ_links = {}
     for r in ctx["plinks"]:
         if r.get("occurrence_id"):
@@ -208,7 +301,7 @@ def build(ctx):
                 if occs:
                     state = "occurrence_grounded"
                 if set(incs) & ran:
-                    state = "consumer_exercised"
+                    state = "candidate_fixture_harness_exercised"
 
         sarf_dest = sorted({unit_index[u]["skill_surface"] for u in assoc_units
                             if u.startswith("u-s")})
@@ -253,10 +346,22 @@ def build(ctx):
             "candidate_increments": incs,
             "sarf_destinations": sarf_dest,
             "nahw_destinations": nahw_dest,
+            "runtime_tutor_evidence": {
+                "indirect_lesson_link": lid in runtime_lesson_kcs,
+                "emittable_kc_ids": runtime_lesson_kcs.get(lid, []),
+                "binding_basis": (
+                    "KC curriculum_misconception_ids -> misconception manifestations"
+                    if lid in runtime_lesson_kcs else None
+                ),
+                "lesson_content_operationalized": False,
+            },
             "tutor_drill_destinations": (
-                ["tools/fusha_learner_feedback.py (KC records via TP-CURR-MISTAKES-TO-FIXTURES)"]
+                ["ordinary tutor runtime via emittable KC drill-key rows"]
+                if lid in runtime_lesson_kcs else []),
+            "candidate_tutor_drill_destinations": (
+                ["candidate drill packets derived from learner-error material"]
                 if counts["common_mistakes_sections"] else []) + [
-                "curriculum/tutor-runtime-routing.md (via TP-CURR-TUTOR-METHOD-ROUTING)"],
+                "curriculum/tutor-runtime-routing.md (candidate method routing)"],
             "pvn_opportunity": pvn,
             "exact_occurrences": occs,
             "unresolved_qualification_work": (
@@ -513,7 +618,7 @@ def build(ctx):
                           "claim carries reviewed attribution record",
                           ["dependent unit/fixture refinements"]))
             i += 1
-    for inc in sorted(consumer_ran_increments()):
+    for inc in sorted(fixture_harnessed_increments()):
         q.append(qrow("q-scholar-owner-review", i, "increment:%s" % inc,
                       "candidate increment awaits promotion review",
                       ["promotion bundle", "Sol review", "owner adjudication"],
@@ -531,6 +636,15 @@ def build(ctx):
     st = {}
     for r in ledger:
         st[r["absorption_state"]] = st.get(r["absorption_state"], 0) + 1
+    level_denominators = {}
+    for row in ledger:
+        level_denominators[row["level_id"]] = (
+            level_denominators.get(row["level_id"], 0) + 1
+        )
+    drill_meta = json.loads(
+        (BASE / "drills-candidates" / "drill-candidates.meta.json")
+        .read_text(encoding="utf-8")
+    )
     readiness = {
         "schema": "curriculum.l1l6_full_readiness.v1",
         "source_lessons": len(ledger),
@@ -546,8 +660,35 @@ def build(ctx):
                                           and r["semantic_units_domain_associated"])},
         "lessons_mapped_to_sarf": sum(1 for r in ledger if r["sarf_destinations"]),
         "lessons_mapped_to_nahw": sum(1 for r in ledger if r["nahw_destinations"]),
-        "lessons_mapped_to_tutor_drills": sum(1 for r in ledger
-                                              if r["tutor_drill_destinations"]),
+        "lesson_denominators_by_level": dict(sorted(level_denominators.items())),
+        "lessons_mapped_to_tutor_drills": runtime_truth[
+            "explicit_lesson_bindings"],
+        "lessons_indirectly_linked_to_runtime_tutor_drills": runtime_truth[
+            "indirectly_linked_lessons"],
+        "ordinary_tutor_runtime": {
+            "drill_key_rows": runtime_truth["drill_key_rows"],
+            "emittable_knowledge_components": runtime_truth[
+                "emittable_knowledge_components"],
+            "emittable_kc_ids": runtime_truth["emittable_kc_ids"],
+            "indirectly_linked_lessons": runtime_truth[
+                "indirectly_linked_lessons"],
+            "explicit_lesson_bindings": runtime_truth[
+                "explicit_lesson_bindings"],
+            "explicit_canonical_unit_bindings": runtime_truth[
+                "explicit_canonical_unit_bindings"],
+            "lesson_content_operationalized": runtime_truth[
+                "lesson_content_operationalized"],
+            "binding_note": runtime_truth["binding_note"],
+        },
+        "candidate_drill_packets": {
+            "rows": drill_meta["rows"],
+            "runtime_integrated": drill_meta["runtime_integrated"],
+            "status": "candidate_not_runtime_integrated",
+        },
+        "other_train_l1l6_linkage": {
+            "train_d": explicit_other_train_linkage("train_d"),
+            "train_e": explicit_other_train_linkage("train_e"),
+        },
         "lessons_with_exact_pvn_links": sum(1 for r in ledger
                                             if r["pvn_opportunity"] == "exact_occurrences"),
         "lessons_with_entry_level_links": sum(1 for r in ledger
@@ -559,7 +700,20 @@ def build(ctx):
         "state_histogram": st,
         "campaign_13": _campaign_numbers(ctx, ledger, section_rows, completeness),
         "queues": {k: len(v) for k, v in sorted(queues.items())},
-        "separation_note": "lesson METADATA coverage is 226/226; semantic KNOWLEDGE coverage is the claims+units numbers; CAPABILITY coverage is the increments; CONSUMER coverage is the exercised increments; OCCURRENCE coverage is the exact-link lessons — these are different denominators and are never merged",
+        "separation_note": (
+            "lesson METADATA coverage is %d/%d; semantic KNOWLEDGE coverage "
+            "is the claims+units numbers; CAPABILITY fixture-harness coverage "
+            "is candidate evidence; ordinary tutor CONSUMER coverage is %d "
+            "runtime key rows across %d emittable KCs with %d indirect lesson "
+            "links and %d explicit canonical-unit bindings; the %d candidate "
+            "drill packets remain runtime_integrated=%d; OCCURRENCE coverage "
+            "is the exact-link lessons — these denominators are never merged"
+            % (len(ledger), len(ledger), runtime_truth["drill_key_rows"],
+               runtime_truth["emittable_knowledge_components"],
+               runtime_truth["indirectly_linked_lessons"],
+               runtime_truth["explicit_canonical_unit_bindings"],
+               drill_meta["rows"], drill_meta["runtime_integrated"])
+        ),
     }
     return ledger, section_rows, completeness, queues, readiness
 

@@ -173,7 +173,8 @@ def build():
             s: sum(1 for r in rows if s in r["states"])
             for s in STRONGEST_ORDER},
         "generic_unresolved_remainders": 0,
-        "note": "every state is computed from committed evidence; machine states require a discovered pack (invented consumer claims are structurally impossible); blockers carry exact causes",
+        "explicit_runtime_unit_bindings": 0,
+        "note": "every state is computed from committed evidence; runtime key rows contain no authoritative canonical-unit ids; machine states require a discovered pack; blockers carry exact causes",
     }
     return rows, meta
 

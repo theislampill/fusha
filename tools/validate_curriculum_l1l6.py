@@ -322,6 +322,18 @@ def check_crosswalk_evidence(ctx, errors):
         bp = r.get("backprop_packet")
         if bp and not any((d / (bp + ".json")).exists() for d in packet_dirs):
             errors.append("crosswalk_evidence: %s cites missing packet %s" % (rid, bp))
+        if rid == "xs-04":
+            derivation_rows = len(_jsonl(
+                ROOT / "sarf" / "evals" / "derivational-template-carve-eval.jsonl"
+            ))
+            recorded = (r.get("consumer_evidence_counts") or {}).get(
+                "derivational_template_carve_rows"
+            )
+            if recorded != derivation_rows:
+                errors.append(
+                    "crosswalk_evidence: xs-04 derivational row count %r != %d"
+                    % (recorded, derivation_rows)
+                )
 
 
 def check_ledger_qualification(ctx, errors):
@@ -993,8 +1005,50 @@ def check_precise_links(ctx, errors):
 ABSORPTION_STATES = frozenset({
     "metadata_only", "structurally_parsed", "semantically_qualified",
     "unitized", "skill_mapped", "fixture_mapped", "occurrence_grounded",
-    "consumer_exercised", "backpropagated", "review_blocked",
+    "candidate_fixture_harness_exercised", "backpropagated", "review_blocked",
     "not_applicable_with_reason"})
+
+
+def check_runtime_truth_consistency(readiness, derived_runtime, drill_meta,
+                                    errors):
+    """Validate generated consumer counts against their committed sources."""
+    runtime = readiness.get("ordinary_tutor_runtime") or {}
+    for key in (
+            "drill_key_rows", "emittable_knowledge_components",
+            "emittable_kc_ids", "indirectly_linked_lessons",
+            "explicit_lesson_bindings", "explicit_canonical_unit_bindings"):
+        if runtime.get(key) != derived_runtime.get(key):
+            errors.append(
+                "absorption: ordinary runtime %s %r != derived %r"
+                % (key, runtime.get(key), derived_runtime.get(key))
+            )
+    if readiness.get("lessons_mapped_to_tutor_drills") != derived_runtime.get(
+            "explicit_lesson_bindings"):
+        errors.append(
+            "absorption: explicit tutor lesson count %r != derived %r"
+            % (readiness.get("lessons_mapped_to_tutor_drills"),
+               derived_runtime.get("explicit_lesson_bindings"))
+        )
+    if readiness.get(
+            "lessons_indirectly_linked_to_runtime_tutor_drills"
+            ) != derived_runtime.get("indirectly_linked_lessons"):
+        errors.append(
+            "absorption: indirect tutor lesson count %r != derived %r"
+            % (readiness.get(
+                "lessons_indirectly_linked_to_runtime_tutor_drills"),
+               derived_runtime.get("indirectly_linked_lessons"))
+        )
+    candidate = readiness.get("candidate_drill_packets") or {}
+    for key in ("rows", "runtime_integrated"):
+        if candidate.get(key) != drill_meta.get(key):
+            errors.append(
+                "absorption: candidate drill %s %r != derived %r"
+                % (key, candidate.get(key), drill_meta.get(key))
+            )
+    if candidate.get("runtime_integrated") != 0:
+        errors.append(
+            "absorption: candidate drill packets must remain runtime_integrated=0"
+        )
 
 
 def check_absorption(ctx, errors):
@@ -1004,7 +1058,13 @@ def check_absorption(ctx, errors):
     try:
         sys.path.insert(0, str(ROOT / "tools"))
         import build_curriculum_absorption as ab
-        files = ab.serialize(*ab.build(ab.load()))
+        ab_ctx = ab.load()
+        derived_runtime = ab.ordinary_tutor_runtime_truth(ab_ctx)
+        files = ab.serialize(*ab.build(ab_ctx))
+        drill_meta = json.loads(
+            (BASE / "drills-candidates" / "drill-candidates.meta.json")
+            .read_text(encoding="utf-8")
+        )
     except Exception as exc:  # noqa: BLE001
         errors.append("absorption: recompute failed (%s)" % exc)
         return
@@ -1037,6 +1097,12 @@ def check_absorption(ctx, errors):
         if not r.get("next_action") and r.get("absorption_state") not in (
                 "backpropagated", "not_applicable_with_reason"):
             errors.append("absorption: %s empty next_action" % r["lesson_id"])
+    ready_p = BASE / "reports" / "full-curriculum-readiness.json"
+    if ready_p.exists():
+        ready = json.loads(ready_p.read_text(encoding="utf-8"))
+        check_runtime_truth_consistency(
+            ready, derived_runtime, drill_meta, errors
+        )
     comp_p = BASE / "reports" / "section-completeness.json"
     if comp_p.exists():
         comp = json.loads(comp_p.read_text(encoding="utf-8"))
