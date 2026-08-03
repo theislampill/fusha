@@ -1827,6 +1827,40 @@ class DerivationalTemplateCarve(unittest.TestCase):
             R._dtc_pack = original
         self.assertTrue(any(f.startswith("dtc-qad-adv-01 ") for f in failures), failures[:5])
 
+    def test_pack_loader_mutation_dropping_masdar_mimi_collapses_the_ambiguous_rows(self):
+        """der-r10: mutate the in-memory pack loader to drop masdar_mimi from inc-derivatives:
+        the three ambiguous-fatha rows (dtc-der-adv-02/03/04) must go RED, since the consumer
+        collapses back to the der-r9-only single mafal_place resolution -- proving the
+        alternatives-preservation genuinely depends on the PACK declaring the rival template, not
+        a hard-coded consumer rule."""
+        original = R._dtc_pack
+
+        def _dropped(increment, root=_ROOT):
+            pack = original(increment, root)
+            if increment == "inc-derivatives":
+                import copy as _c
+                pack = _c.deepcopy(pack)
+                pack["templates"] = [t for t in pack["templates"] if t["id"] != "masdar_mimi"]
+            return pack
+        R._dtc_pack = _dropped
+        try:
+            failures, _m = _run(_DTC)
+        finally:
+            R._dtc_pack = original
+        failing_ids = {f.split(" ", 1)[0] for f in failures}
+        self.assertTrue({"dtc-der-adv-02", "dtc-der-adv-03", "dtc-der-adv-04"} <= failing_ids,
+                        failures[:5])
+
+    def test_ambiguous_fatha_row_alternatives_mismatch_fails_closed(self):
+        """ADVERSARIAL: a row declaring the wrong (or a single) expected_alternatives list must
+        fail rather than being waved through."""
+        rows = copy.deepcopy(_rows(_DTC))
+        row = next(r for r in rows if r["id"] == "dtc-der-adv-02")
+        row["expected_alternatives"] = ["mafal_place"]
+        failures, _m = _run(_DTC, rows)
+        self.assertTrue(any(f.startswith("dtc-der-adv-02 ") and "[reason_matches]" in f
+                            for f in failures), failures[:5])
+
     def test_shared_expected_class_injection_fails_closed(self):
         """(d) inject a row whose expected_class starts with 'shared_': the run must fail."""
         rows = copy.deepcopy(_rows(_DTC))
@@ -2067,6 +2101,29 @@ class NominalClassDiscrimination(unittest.TestCase):
             R._NCD_CONSUMER_INPUT_FIELDS = original_fields
         self.assertTrue(any("ncd-hostile-echo" in f and "no_occurrence_resolution_leak" in f for f in failures),
                         failures[:5])
+
+    def test_mim_pack_curriculum_fixtures_carry_unique_ids(self):
+        """The repaired collision row and the pre-existing derived-source row both used to carry
+        fixture_id 'mim-adv-02'; the derived-source row is now 'mim-adv-03'. Loading the pack must
+        not raise (no duplicate survives) and both ids must be present exactly once."""
+        import tools.curriculum_unit_consumer as CUC
+        _unit, fixtures = CUC.load("inc-mim-initial-noun-discriminator")
+        ids = [f["fixture_id"] for f in fixtures]
+        self.assertEqual(len(ids), len(set(ids)), "duplicate fixture_id(s) in the mim pack: %r" % ids)
+        self.assertIn("mim-adv-02", ids)
+        self.assertIn("mim-adv-03", ids)
+
+    def test_duplicate_fixture_id_fails_closed(self):
+        """A synthetic duplicate fixture_id must raise, not silently run both rows under one
+        ambiguous identity."""
+        import tools.curriculum_unit_consumer as CUC
+        with self.assertRaises(ValueError):
+            CUC._require_unique_fixture_ids(
+                "synthetic-increment",
+                [{"fixture_id": "dup-01"}, {"fixture_id": "dup-02"}, {"fixture_id": "dup-01"}])
+        # a genuinely unique set never raises
+        CUC._require_unique_fixture_ids(
+            "synthetic-increment", [{"fixture_id": "a"}, {"fixture_id": "b"}])
 
 
 # ---------------------------------------------------------------------------

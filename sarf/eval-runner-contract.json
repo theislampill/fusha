@@ -446,10 +446,11 @@
         "the row is projected through an ALLOWLISTED consumer-input set (mode, letters, surface, token_kind, root_evidence, penult_vowel, penult_vowel_evidence) before the consumer is invoked, so an external consumer -- honest or hostile -- can never read expected_decision/expected_class/expected_template/expected_reason/teaches/id/increment and echo them back as its own analysis (I-1)",
         "no row's expected_class begins with shared_: the routing label a shared_-classed template survivor carries is never pinned as a bank row's own resolved class",
         "every emitted decision record stays candidate_pending or abstain, never a certified state, and carries no lexeme/sense/meaning/translation/occurrence key -- a template match is a form-level proposal only",
-        "abstention dominates: the three declared quality-adjective/intensive-agent/broken-plural homograph collisions, the weak-realization refusals (the recorded قوال/قويل/مقاول false passes at 525ddc6), the radical-arity refusal (a four-radical root routed through the three-slot مُـ-participle template), the shared-row refusal, the waṣl-as-radical refusal, the shadda-skeleton refusal and the initial-مـ evidence refusals (der-r9)",
+        "abstention dominates: the three declared quality-adjective/intensive-agent/broken-plural homograph collisions, the weak-realization refusals (the recorded قوال/قويل/مقاول false passes at 525ddc6), the radical-arity refusal (a four-radical root routed through the three-slot مُـ-participle template), the shared-row refusal, the waṣl-as-radical refusal, the shadda-skeleton refusal, the initial-مـ evidence refusals (der-r9) and the mafal_place/masdar_mimi ambiguous-fatha refusal (der-r10)",
         "hamzat al-waṣl (the seated استفعال-opening alif) is never accepted as a radical: over-supplying it as an extra radical over-fills the template's R-slots and the whole match fails closed to no_template",
         "a shadda is never transparent to the skeleton: writing a geminated radical as two base letters does not reconstruct the written surface and fails closed to surface_letter_mismatch before any template is walked",
-        "der-r9: the mafal_place/mu_participle collision (co-surviving whenever the radicals stand literally after the initial مـ) is decided by the WRITTEN initial-مـ vowel -- damma licenses the مُـ-participle reading, fatha licenses the place/time noun -- never by the penult vowel alone; missing or neither-damma-nor-fatha written evidence abstains rather than silently dropping the co-surviving mafal_place template (repair of the recorded 2026-08-03 false positives on مجلس/منزل/مكتب)",
+        "der-r9: the mafal_place/mu_participle collision (co-surviving whenever the radicals stand literally after the initial مـ) is decided by the WRITTEN initial-مـ vowel -- damma licenses the مُـ-participle reading; missing or neither-damma-nor-fatha written evidence abstains rather than silently dropping the co-surviving mafal_place template (repair of the recorded 2026-08-03 false positives on مجلس/منزل/مكتب)",
+        "der-r10: a written FATHA on the initial مـ rules the مُـ-participle OUT but does not by itself license place_time_noun: masdar_mimi is a declared rival template sharing mafal_place's exact bare-triliteral shape, so the fatha branch preserves BOTH mafal_place and masdar_mimi as alternatives (ambiguous_template) rather than resolving place_time_noun alone -- mirrors mim-r6 in inc-mim-initial-noun-discriminator (repair of the recorded 2026-08-03 masdar_mimi collapse on مجلس/منزل/مكتب, the SAME evidence the der-r9-only repair had resolved to a single class)",
         "every inc-broken-plural-template-inventory row is additionally cross-checked against the REAL tools/rm40_gate_stack.py:plural_gate; when the pack abstains a row for a weak-radical reason, plural_gate must independently abstain the SAME root too, or the bank fails",
         "no row carries an occurrence_id, loc, entry_id, lexeme, sense, gloss or translation field; every row declares no_occurrence_dogfood_evidence: true"
       ],
@@ -461,7 +462,7 @@
       "nonempty_list_fields": [
         "letters"
       ],
-      "note": "Behavioural through the EXTERNAL tools/curriculum_unit_consumer.py:analyze_derivative, the SAME production template-classification function G1 (sarf: gate template packs on weak realization and radical arity) repaired: inc-derivatives/unit-v4.json (u-s03/u-s04/u-s05) and the three G1-repaired sibling packs inc-quality-adjective-templates/inc-intensive-agent-templates/inc-broken-plural-template-inventory unit-v2.json. This bank gives the derivational template layer its first behaviourally covered eval bank and pins the fail-closed behaviour G1 established. sarf@2.1-@2.4 stay CANDIDATE; nothing here certifies or promotes any of them. A written nominal template never authorizes a class, a lexeme or a root: every candidate_pending row means only 'these letters are consistent with this named template under this named candidate pack, given independently supplied radicals'. 2026-08-03 repair (der-r9, in-place in unit-v4.json, no template/shape edit): the mafal_place/mu_participle collision was being decided from the penult vowel alone, silently dropping the co-surviving mafal_place template and producing false positives (مجلس/منزل falsely active_participle, مكتب falsely passive_participle); the consumer now requires the WRITTEN initial-مـ vowel first.",
+      "note": "Behavioural through the EXTERNAL tools/curriculum_unit_consumer.py:analyze_derivative, the SAME production template-classification function G1 (sarf: gate template packs on weak realization and radical arity) repaired: inc-derivatives/unit-v4.json (u-s03/u-s04/u-s05) and the three G1-repaired sibling packs inc-quality-adjective-templates/inc-intensive-agent-templates/inc-broken-plural-template-inventory unit-v2.json. This bank gives the derivational template layer its first behaviourally covered eval bank and pins the fail-closed behaviour G1 established. sarf@2.1-@2.4 stay CANDIDATE; nothing here certifies or promotes any of them. A written nominal template never authorizes a class, a lexeme or a root: every candidate_pending row means only 'these letters are consistent with this named template under this named candidate pack, given independently supplied radicals'. 2026-08-03 repair (der-r9, in-place in unit-v4.json, no template/shape edit): the mafal_place/mu_participle collision was being decided from the penult vowel alone, silently dropping the co-surviving mafal_place template and producing false positives (مجلس/منزل falsely active_participle, مكتب falsely passive_participle); the consumer now requires the WRITTEN initial-مـ vowel first. Same-day follow-up repair (der-r10, in-place in unit-v4.json, no consumer edit beyond generalizing the collision-id membership check): the der-r9 fatha branch was itself resolving place_time_noun alone from evidence the sibling inc-mim-initial-noun-discriminator pack (mim-r6) had just declared unresolvable -- masdar_mimi is now declared as a rival template sharing mafal_place's exact shape, so مجلس/منزل/مكتب (dtc-der-adv-02/03/04) now abstain ambiguous_template preserving both readings instead of resolving a single class.",
       "not_enforced_properties": [
         "the adjective-class discriminator (cu-adjective-class-discriminator) is not enforced: this bank only proves the shared_ routing label is refused as a class, it never resolves WHICH of the two sibling classes actually applies",
         "the quadriliteral template inventory (cu-quadriliteral-templates) is not enforced: this bank only proves the non-triliteral radical-arity REFUSAL, it never authors a four-radical template",
@@ -471,8 +472,8 @@
       ],
       "path": "sarf/evals/derivational-template-carve-eval.jsonl",
       "pinned_metrics": {
-        "abstain_rows": 20,
-        "candidate_pending_rows": 11,
+        "abstain_rows": 23,
+        "candidate_pending_rows": 8,
         "decided_rows": 31,
         "rows": 31
       },
@@ -496,18 +497,25 @@
           "property": "never_certified"
         },
         {
-          "applicable_rows": 20,
+          "applicable_rows": 23,
           "covered": true,
           "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
-          "note": "the 20 abstaining rows only",
+          "note": "the 23 abstaining rows only",
           "property": "abstains_never_claim_class"
         },
         {
           "applicable_rows": 6,
           "covered": true,
           "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
-          "note": "dtc-der-pos-04, dtc-der-adv-02/03/04, dtc-der-abs-05/06 -- der-r9's mafal_place/mu_participle collision resolved by the WRITTEN initial مـ vowel rather than the penult vowel alone (the reproduced 2026-08-03 active_participle/passive_participle false positives on مجلس/منزل/مكتب, a genuine مُدَرِّس participle left undisturbed, and missing/unlicensed initial-مـ evidence abstaining)",
+          "note": "dtc-der-pos-04, dtc-der-adv-02/03/04, dtc-der-abs-05/06 -- der-r9's mafal_place/mu_participle collision resolved by the WRITTEN initial مـ vowel rather than the penult vowel alone (a genuine مُدَرِّس participle left undisturbed, and missing/unlicensed initial-مـ evidence abstaining); der-r10: a written fatha rules the participle OUT but مجلس/منزل/مكتب now preserve mafal_place/masdar_mimi as alternatives rather than resolving place_time_noun alone",
           "property": "initial_mim_vowel_discriminates_collision"
+        },
+        {
+          "applicable_rows": 3,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "note": "dtc-der-adv-02/03/04 only: der-r10's mafal_place/masdar_mimi ambiguous-fatha refusal, mirroring mim-r6 in inc-mim-initial-noun-discriminator",
+          "property": "mafal_masdar_mimi_alternatives_preserved"
         },
         {
           "applicable_rows": 7,

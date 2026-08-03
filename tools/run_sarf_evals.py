@@ -1028,6 +1028,7 @@ _DTC_ABSTAIN_REASONS = (
 _DTC_RECORD_KEYS = frozenset((
     "decision", "authority", "class", "template", "reason", "declared", "radicals", "declared_arity",
     "supplied_radicals", "unbound_slot", "unlicensed_slot", "weak_radical", "note", "shared_with",
+    "alternatives",
 ))
 # a citation PLACEHOLDER for `plural_gate`'s emit-path `_cite(PLURAL_GATE, template_id)` call only: the
 # cross-check this adapter performs depends solely on `rm40_gate_stack.has_weak_or_hamza(root)`, never on which
@@ -1094,9 +1095,12 @@ def adapter_derivational_template_carve(rows, spec, ctx, root):
         if row.get("id") in ("dtc-der-pos-04", "dtc-der-adv-02", "dtc-der-adv-03", "dtc-der-adv-04",
                              "dtc-der-abs-05", "dtc-der-abs-06"):
             # der-r9: the mafal_place/mu_participle collision resolved by the WRITTEN initial مـ
-            # vowel rather than the penult vowel alone (the reproduced active_participle/
-            # passive_participle false positives on مجلس/منزل/مكتب, a genuine مُدَرِّس participle
-            # left undisturbed, and missing/unlicensed initial-مـ evidence abstaining).
+            # vowel rather than the penult vowel alone (a genuine مُدَرِّس participle left
+            # undisturbed, and missing/unlicensed initial-مـ evidence abstaining). der-r10: a
+            # written fatha only rules the participle OUT -- it does NOT by itself resolve
+            # place_time_noun, since masdar_mimi is a declared rival sharing mafal_place's exact
+            # shape, so مجلس/منزل/مكتب preserve BOTH as alternatives (ambiguous_template) rather
+            # than the single place_time_noun resolution the der-r9-only repair produced.
             props.hit(rid, _DER, "initial_mim_vowel_discriminates_collision")
         got_decision = rec.get("decision")
         if got_decision not in _DTC_DECISIONS:
@@ -1135,6 +1139,20 @@ def adapter_derivational_template_carve(rows, spec, ctx, root):
                 props.hit(rid, _DER, "radical_arity_gated")
             if want_reason == "shared_row_class_undecided":
                 props.hit(rid, _DER, "shared_row_never_resolved")
+            if row.get("expected_alternatives") is not None:
+                # der-r10: masdar_mimi is a declared rival sharing mafal_place's exact fatha-
+                # initial bare-triliteral shape, so this row's ambiguous_template abstention must
+                # preserve BOTH readings as alternatives rather than voting for one.
+                props.hit(rid, _DER, "mafal_masdar_mimi_alternatives_preserved")
+                want_alts = row.get("expected_alternatives")
+                if rec.get("alternatives") != want_alts:
+                    fails.append(_f(rid, "reason_matches",
+                                    "decided alternatives %r, bank expects %r"
+                                    % (rec.get("alternatives"), want_alts)))
+                if not want_alts or len(want_alts) < 2:
+                    fails.append(_f(rid, "reason_matches",
+                                    "an alternatives-preserving row must declare at least two "
+                                    "alternatives"))
             if row.get("class") == "declared_collision":
                 props.hit(rid, _DER, "declared_collision_abstains")
             if row.get("class") == "negative_wasl":
