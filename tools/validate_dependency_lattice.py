@@ -25,6 +25,12 @@ conditions (parserplans/general-fusha-grammar-checker-p2/{002,008}). A lattice F
   14. (--verify-occurrence-identity only) a source_addressed lattice's token (loc, surface) does not match
       qamus/indexes/quran-loc-surface/index.jsonl byte-exactly after NFC, or tools/fusha_check.resolve_address
       does not return in_scope_source_addressed for that token's word-level address.
+  15. mabni=True with a non-null assigned_case_mood (a built form has no declensional exponent).
+  16. fi_mahall_case_mood set while mabni is not true (a positional slot claimed for a declined form).
+  17. a hidden_element whose licensing_construction is absent from the enumerated inventory
+      (tools/fusha_governor.HIDDEN_ELEMENT_LICENSING_INVENTORY); reject_reconstruction is the default.
+  18. an edge naming governor kind 'preposition' (justification_rule=preposition_governs_genitive) whose head
+      token is an annexation (ẓarf) head (tools/fusha_governor.ZARF_IDAFA_HEADS) — the ʿāmil-kind condition.
 
 CLI:
   python3 tools/validate_dependency_lattice.py <lattices.jsonl>
@@ -46,6 +52,8 @@ _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _REPO)
 from tools.validate_linguistic_decisions import validate_schema, _GATE_RANK  # noqa: E402
 from tools import leak_sot  # noqa: E402
+from tools import normalize_ar as N  # noqa: E402
+from tools import fusha_governor as G  # noqa: E402
 
 SCHEMA_PATH = os.path.join(_REPO, "qamus", "schemas", "dependency-candidate-lattice.schema.json")
 _SCHEMA = json.load(open(SCHEMA_PATH, encoding="utf-8"))
@@ -75,6 +83,13 @@ def _load_loc_surface_index():
                     row = json.loads(line)
                     _LOC_SURFACE[row["loc"]] = row["surface"]
     return _LOC_SURFACE
+
+
+def _token_by_ref(lat, ref):
+    for tok in lat.get("tokens") or []:
+        if tok.get("ref") == ref:
+            return tok
+    return None
 
 
 def validate_lattice(lat):
@@ -154,6 +169,23 @@ def validate_lattice(lat):
             errors.append(("13", "%s frame_kind=constructed on a lattice whose source_unit.address is occurrence-shaped (%s)" % (tag, address)))
         if frame_kind == "address_bearing" and not address_shaped:
             errors.append(("13", "%s frame_kind=address_bearing on a lattice with no resolvable (quran:/wbw:) address" % tag))
+        # FAIL 15: a built (mabni) form has no declensional exponent.
+        if edge.get("mabni") is True and cm is not None:
+            errors.append(("15", "%s mabni=True but assigned_case_mood=%r (a built form has no declensional exponent)" % (tag, cm)))
+        # FAIL 16: a positional (maḥall) slot may only be claimed for a mabni form.
+        if edge.get("fi_mahall_case_mood") is not None and edge.get("mabni") is not True:
+            errors.append(("16", "%s fi_mahall_case_mood set without mabni=True (a positional slot claimed for a declined form)" % tag))
+        # FAIL 17: a hidden_element's licensing_construction must be in the closed, positively enumerated inventory.
+        hidden = edge.get("hidden_element")
+        if hidden is not None and hidden.get("licensing_construction") not in G.HIDDEN_ELEMENT_LICENSING_INVENTORY:
+            errors.append(("17", "%s hidden_element.licensing_construction %r is not in the enumerated inventory" %
+                           (tag, hidden.get("licensing_construction"))))
+        # FAIL 18 (ʿāmil-kind): governor kind 'preposition' may never be named on an annexation (ẓarf) head.
+        if edge.get("justification_rule") == "preposition_governs_genitive":
+            head_tok = _token_by_ref(lat, edge.get("candidate_head"))
+            if head_tok is not None and N.bare(head_tok.get("surface", "")) in G.ZARF_IDAFA_HEADS:
+                errors.append(("18", "%s names governor kind preposition, but its head %r is an annexation (ẓarf) head" %
+                               (tag, edge.get("candidate_head"))))
 
     # FAIL 7 (boundary): heuristic never overrides source
     sb = lat.get("source_boundary") or {}
@@ -296,6 +328,29 @@ def _bad_lattices():
     b["source_unit"] = {"address": "", "scope": "arbitrary"}
     b["edges"][0]["frame_kind"] = "address_bearing"
     out.append(("13", b))
+
+    # FAIL 15: mabni=True with a non-null assigned_case_mood.
+    b = json.loads(json.dumps(good)); b["edges"][0]["mabni"] = True
+    out.append(("15", b))
+    # FAIL 16: fi_mahall_case_mood set without mabni=True.
+    b = json.loads(json.dumps(good)); b["edges"][0]["fi_mahall_case_mood"] = "accusative"
+    out.append(("16", b))
+    # FAIL 17: a hidden_element naming a construction outside the enumerated inventory.
+    b = json.loads(json.dumps(good))
+    b["edges"][0]["hidden_element"] = {"type": "x", "licensing_construction": "not_a_real_construction",
+                                       "obligatory": True}
+    out.append(("17", b))
+    # FAIL 18 (regression guard): a hypothetical future producer regression naming governor kind 'preposition'
+    # on an annexation (ẓarf) head must still be caught even though the CURRENT builder no longer emits it.
+    b = G.build_dependency_lattice({"input_mode": "source_addressed",
+                                    "source_unit": {"address": "q", "scope": "in_scope_source_addressed"},
+                                    "tokens": [{"ref": "t1", "surface": "عِندَ", "pos": "preposition"},
+                                              {"ref": "t2", "surface": "زَيْدٍ", "pos": "noun",
+                                               "case_visible": "genitive"}]})
+    for e in b["edges"]:
+        if e.get("rel_label") == "idafa_dependent":
+            e["justification_rule"] = "preposition_governs_genitive"
+    out.append(("18", b))
     return out
 
 
@@ -314,7 +369,8 @@ def _self_test():
     for f in failures:
         print("FAIL " + f)
     if not failures:
-        print("ok   validate_dependency_lattice self-test: governor lattices clean; all 13 FAIL conditions reject")
+        print("ok   validate_dependency_lattice self-test: governor lattices clean; "
+              "24 hostile lattices across 18 condition labels reject")
     return 0 if not failures else 1
 
 

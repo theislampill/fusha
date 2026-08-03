@@ -3288,6 +3288,13 @@ except Exception as _e:
 for _art in ("tools/leak_sot.py", "tools/validate_source_boundary.py",
              "qamus/schemas/dependency-candidate-lattice.schema.json", "tools/fusha_governor.py",
              "tools/validate_dependency_lattice.py", "qamus/examples/dependency_lattice.sample.jsonl",
+             "tools/test_nahw_governor_families.py",
+             "nahw/evals/nawasikh-government-eval.jsonl",
+             "nahw/evals/coordination-case-following-eval.jsonl",
+             "nahw/evals/hidden-structure-mahall-eval.jsonl",
+             "nahw/procedures/nawasikh-government.md",
+             "nahw/procedures/coordination-case-following.md",
+             "nahw/procedures/hidden-structure-and-taqdir.md",
              "qamus/schemas/cross-builder-conflict.schema.json", "tools/fusha_conflicts.py",
              "tools/validate_cross_builder_conflict.py", "qamus/examples/cross_builder_conflict.sample.jsonl"):
     check("p2 artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
@@ -3299,7 +3306,17 @@ try:
     _p2c = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_governor.py"), "--self-test"])
     check("p2 governor/dependency lattice self-test (layer-1-safe; PP unresolved; right-answer-wrong-reason; never auto_safe)", _p2c.returncode == 0)
     _p2d = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_dependency_lattice.py"), "--self-test"])
-    check("p2 dependency-lattice validator self-test (9 FAIL conditions reject)", _p2d.returncode == 0)
+    check("p2 dependency-lattice validator self-test (24 hostile lattices / 18 condition labels reject)",
+          _p2d.returncode == 0)
+    for _bank in ("nawasikh-government-eval.jsonl", "coordination-case-following-eval.jsonl",
+                  "hidden-structure-mahall-eval.jsonl"):
+        _bank_run = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_governor.py"),
+                              "--run-bank", os.path.join(ROOT, "nahw", "evals", _bank)])
+        check("p2 Train B governor family bank runs through ordinary consumer: %s" % _bank,
+              _bank_run.returncode == 0)
+    _p2_family_tests = run_text([sys.executable, "-m", "unittest", "tools.test_nahw_governor_families"])
+    check("p2 Train B governor family semantics + occurrence identity (64 tests)",
+          _p2_family_tests.returncode == 0)
     _p2e = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_dependency_lattice.py"),
                      os.path.join(ROOT, "qamus", "examples", "dependency_lattice.sample.jsonl")])
     check("p2 dependency-lattice fixture validates (6 lattices, 0 violations)", _p2e.returncode == 0)

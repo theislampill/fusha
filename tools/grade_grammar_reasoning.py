@@ -58,6 +58,17 @@ REASON_TUPLES = {
         "conclusion": "negation", "case_mood": None, "governor_type": None,
         "fact_type": "particle_function",
         "cites": "reason-key-registry#ma-nafiya-non-operative (la 'amal laha: assigns no case and no mood)"},
+    # TRAIN-B-NAHW-GOVERNOR-REASON-PLANE (G5): a conjunct's case is NOT one fixed case per key — it equals the
+    # case of the element it is joined to, whatever that is. The sentinel values below ('$follows_head' /
+    # '$head_governor') mark this key as CASE-FOLLOWING rather than case-fixed; derive_reasoning() detects them
+    # and dispatches to _derive_coordination_following() instead of the normal fixed-tuple comparison. See
+    # reason_key_design_constraint: this key never adjudicates which element governs (connector vs the head's
+    # own ʿāmil) — that question is analysis-dependent and is recorded as attribution, never resolved here.
+    "atf-tabaiyya-follows-matuf-alayh": {
+        "conclusion": "coordination", "case_mood": "$follows_head", "governor_type": "$head_governor",
+        "fact_type": "case_assignment",
+        "cites": "reason-key-registry#atf-tabaiyya-follows-matuf-alayh (the conjunct's case follows the "
+                "element it is joined to; this key does not adjudicate which element governs)"},
 }
 # justification_rule (dependency-candidate-lattice enum) -> governor_type. Anything unmapped stays pending.
 JUSTIFICATION_RULE_GOVERNOR_TYPE = {
@@ -66,6 +77,9 @@ JUSTIFICATION_RULE_GOVERNOR_TYPE = {
     "verb_governs_subject_nominative": "verb_subject",
     "verb_governs_object_accusative": "verb_object",
     "mubtada_governs_khabar_nominative": "mubtada_khabar",
+    # G6: the ẓarf ʿāmil-kind correction — an annexation head licenses genitive as idafa, never as preposition,
+    # so the licensing check can separate the two governor kinds that happen to license the same case (D7).
+    "zarf_idafa_governs_genitive": "idafa",
 }
 
 # ---------------------------------------------------------------------------
@@ -677,6 +691,37 @@ def two_vote_evidence_defect(claim):
     return None
 
 
+def _derive_coordination_following(claim):
+    """The coordination sentinel tuple (reason_key_design_constraint): the conjunct's case FOLLOWS its head,
+    whatever that head's case is. This never adjudicates which element governs (the connector or the head's
+    original ʿāmil) — it only checks that the claimed case equals the head's case, and that the claimed
+    governor tuple IS the head's governor tuple (the conjunct's ʿāmil is the head's ʿāmil, not a new one).
+
+    Returns (ok, defect). defect includes the new named defect `reason_tuple_head_unavailable` when head_case
+    or head_governor_type is absent, unknown, or does not license itself.
+    """
+    if claim.get("conclusion") != "coordination":
+        return False, "reason_tuple_conclusion_mismatch"
+    head_case = normalize_case_mood(claim.get("head_case"))
+    head_governor_type = claim.get("head_governor_type")
+    if not head_case or not head_governor_type:
+        return False, "reason_tuple_head_unavailable"
+    licensed = GOVERNOR_TYPE_LICENSED_CASES.get(head_governor_type)
+    if licensed is None or head_case not in licensed:
+        return False, "reason_tuple_head_unavailable"
+    if normalize_case_mood(claim.get("case_mood")) != head_case:
+        return False, "reason_tuple_case_mismatch"
+    raw_governor = claim.get("governor")
+    if raw_governor is not None and not isinstance(raw_governor, dict):
+        return False, "governor_not_a_record"
+    claimed_gov_type = (raw_governor or {}).get("governor_type")
+    if governor_mirror_defect(claimed_gov_type) == "not_a_string":
+        return False, "governor_type_not_a_string"
+    if claimed_gov_type != head_governor_type:
+        return False, "reason_tuple_governor_mismatch"
+    return True, None
+
+
 def derive_reasoning(case, claim):
     """Derive the reasoning verdict from structured evidence alone.
 
@@ -721,6 +766,8 @@ def derive_reasoning(case, claim):
         return False, "fact_type_not_applicable"
     if fact_type != tuple_["fact_type"]:
         return False, "fact_type_not_applicable"
+    if tuple_.get("case_mood") == "$follows_head":
+        return _derive_coordination_following(claim)
     if claim.get("conclusion") != tuple_["conclusion"]:
         return False, "reason_tuple_conclusion_mismatch"
     if normalize_case_mood(claim.get("case_mood")) != normalize_case_mood(tuple_["case_mood"]):

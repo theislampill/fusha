@@ -193,5 +193,407 @@ class G2ValidatorConditions(unittest.TestCase):
         self.assertEqual(verify_occurrence_identity(lat), [])
 
 
+NAHW_EVALS = os.path.join(REPO, "nahw", "evals")
+
+
+def _load_bank(name):
+    rows = {}
+    with open(os.path.join(NAHW_EVALS, name), encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            row = json.loads(line)
+            rows[row["id"]] = row
+    return rows
+
+
+def _lattice_for(row):
+    from tools import fusha_governor as G
+    return G.build_dependency_lattice(row)
+
+
+class G3SurfaceKeyIntegrity(unittest.TestCase):
+    """G3: proclitic stripping, gemination parity, maddah folding, la discrimination, roster fixes."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.naw = _load_bank("nawasikh-government-eval.jsonl")
+        cls.hid = _load_bank("hidden-structure-mahall-eval.jsonl")
+
+    def test_f2_f3_heavy_lakin_discriminated_regime(self):
+        for fid in ("F2", "F3"):
+            lat = _lattice_for(self.naw[fid])
+            self.assertTrue(any(e.get("trigger_family") == "inna_family" for e in lat["edges"]), (fid, lat["edges"]))
+
+    def test_n1_light_lakin_never_inna_family(self):
+        # N1/N2 are the LIGHT (non-geminate) lakin member. an_family_weight() reads the shadda/sukun on the
+        # nun (parity requirement); a liaison kasra before a following hamzat-wasl word (as in N1) is neither
+        # signal, so the honest outcome is regime_undetermined rather than a forced light/heavy call -- either
+        # way it must NEVER be inna_family (D2's false-family-label defect).
+        lat = _lattice_for(self.naw["N1"])
+        self.assertFalse(any(e.get("trigger_family") == "inna_family" for e in lat["edges"]))
+        self.assertTrue(any(e.get("trigger_family") in ("nongoverning_preverbal", "regime_undetermined")
+                            for e in lat["edges"]))
+
+    def test_f8_not_la_jins(self):
+        lat = _lattice_for(self.naw["F8"])
+        self.assertFalse(any(e.get("trigger_family") == "la_jins" for e in lat["edges"]))
+        self.assertTrue(any(e.get("trigger_family") == "la_nafiya" for e in lat["edges"]))
+
+    def test_f6_vs_f8_separated_by_following_token_evidence(self):
+        f6 = _lattice_for(self.hid["F6"])
+        f8 = _lattice_for(self.naw["F8"])
+        self.assertTrue(any(e.get("trigger_family") == "la_jins" for e in f6["edges"]))
+        self.assertFalse(any(e.get("trigger_family") == "la_jins" for e in f8["edges"]))
+
+    def test_f7_maddah_recognised(self):
+        lat = _lattice_for(self.hid["F7"])
+        self.assertTrue(any(e.get("trigger_family") == "la_jins" for e in lat["edges"]))
+
+    def test_f4_kana_suppression_fires_no_false_idafa(self):
+        lat = _lattice_for(self.naw["F4"])
+        self.assertTrue(any(e.get("trigger_family") == "kana_family" for e in lat["edges"]))
+        self.assertFalse(any(e["rel_label"] == "idafa_dependent" for e in lat["edges"]))
+
+    def test_c24_nongoverning_inventory_is_positive_evidence(self):
+        bank = self.naw
+        lat = _lattice_for(bank["C24"])
+        self.assertTrue(any(e.get("abstention_reason") == "non_governing_use" for e in lat["edges"]))
+
+    def test_c13_preserve_alternatives_nafiya_nahiya(self):
+        edge = _lattice_for(self.naw["C13"])["edges"][0]
+        readings = {a.get("reading") for a in edge["unresolved_alternatives"]}
+        self.assertEqual(readings, {"nafiya_statement", "nahiya_prohibitive"})
+        self.assertNotEqual(edge["decision_status"], "resolved")
+
+    def test_c14_abstain_insufficient_features(self):
+        edge = _lattice_for(self.naw["C14"])["edges"][0]
+        self.assertEqual(edge.get("abstention_reason"), "insufficient_features")
+
+
+class G4NawasikhRegimeDiscrimination(unittest.TestCase):
+    """G4: regime discrimination precedes case expectation; licensing/sense/bracketing gates; contradictions."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.naw = _load_bank("nawasikh-government-eval.jsonl")
+
+    def test_c1_c3_violation_candidate(self):
+        for fid in ("C1", "C3"):
+            lat = _lattice_for(self.naw[fid])
+            edge = lat["edges"][0]
+            self.assertTrue(edge["contradiction_marker"], fid)
+            self.assertEqual(edge["decision_status"], "pending", fid)
+            self.assertIsNone(edge["assigned_case_mood"], fid)
+
+    def test_c2_abstain_marking_unknown(self):
+        edge = _lattice_for(self.naw["C2"])["edges"][0]
+        self.assertEqual(edge.get("abstention_reason"), "marking_unknown")
+        self.assertIsNone(edge["assigned_case_mood"])
+
+    def test_c4_abstain_sense_dependent_gate(self):
+        edge = _lattice_for(self.naw["C4"])["edges"][0]
+        self.assertEqual(edge.get("abstention_reason"), "sense_dependent_gate")
+
+    def test_c5_abstain_licenser_absent(self):
+        edge = _lattice_for(self.naw["C5"])["edges"][0]
+        self.assertEqual(edge.get("abstention_reason"), "licenser_absent")
+
+    def test_c6_abstain_bracketing_ambiguous(self):
+        edge = _lattice_for(self.naw["C6"])["edges"][0]
+        self.assertEqual(edge.get("abstention_reason"), "bracketing_ambiguous")
+        self.assertIsNone(edge["assigned_case_mood"])
+
+    def test_f1_inna_family_ism_nasb_gate_two_vote_pending(self):
+        from tools.validate_linguistic_decisions import _GATE_RANK
+        lat = _lattice_for(self.naw["F1"])
+        ism_edges = [e for e in lat["edges"] if e["rel_label"] == "ism_nasikh"]
+        self.assertTrue(ism_edges)
+        for e in ism_edges:
+            self.assertEqual(e["decision_status"], "pending")
+            self.assertGreaterEqual(_GATE_RANK[e["gate"]], _GATE_RANK["two_vote_required"])
+
+    def test_f3_marking_unknown_syncretic_exponent_never_resolved(self):
+        lat = _lattice_for(self.naw["F3"])
+        ism_edge = next(e for e in lat["edges"] if e["rel_label"] == "ism_nasikh")
+        self.assertEqual(ism_edge.get("abstention_reason"), "marking_unknown")
+        self.assertIsNone(ism_edge["assigned_case_mood"])
+
+    def test_no_abrogator_edge_is_auto_safe(self):
+        for fid, row in self.naw.items():
+            lat = _lattice_for(row)
+            for e in lat["edges"]:
+                self.assertNotEqual(e["gate"], "auto_safe", (fid, e["edge_id"]))
+
+
+class G5CoordinationCaseFollowing(unittest.TestCase):
+    """G5: coordination case-following, wāw sense gating, apposition rivals, the coordination reason key."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.co = _load_bank("coordination-case-following-eval.jsonl")
+
+    def test_bare_waw_resolving_is_a_fail(self):
+        from tools import fusha_governor as G
+        unit = next(u for u in G.regression_units() if u["name"] == "coordination-headless")
+        lat = G.build_dependency_lattice(unit)
+        self.assertFalse(any(e["decision_status"] == "resolved" for e in lat["edges"]))
+        self.assertTrue(any(e["headless"] for e in lat["edges"]))
+
+    def test_f9_no_idafa_assigns_genitive_to_a_conjunct(self):
+        lat = _lattice_for(self.co["F9"])
+        self.assertFalse(any(e["rel_label"] == "idafa_dependent" for e in lat["edges"]))
+        self.assertTrue(any(e.get("abstention_reason") == "cross_token_layer_boundary" for e in lat["edges"]))
+        # token 15 (ٱلْـَٔاخِرِ) is explicitly POS-adjective and follows the noun token 14 in the same genitive
+        # case; it must surface as an unresolved sifa/badal edge, never an idafa_dependent guess.
+        sifa_edge = next(e for e in lat["edges"] if e["dependent"] == "2:177:15")
+        self.assertEqual(sifa_edge["rel_label"], "sifa")
+        self.assertNotEqual(sifa_edge["decision_status"], "resolved")
+        self.assertIsNone(sifa_edge["assigned_case_mood"])
+
+    def test_adjective_pos_blocks_idafa_but_genuine_noun_noun_idafa_still_candidate(self):
+        from tools import fusha_governor as G
+        # hostile positive: a noun followed by an explicitly-typed adjective must never be swept into the
+        # noun+noun iḍāfa-candidate branch merely because "adjective" is also a member of the noun POS set.
+        adj_lat = G.build_dependency_lattice({
+            "input_mode": "arbitrary_typing",
+            "tokens": [{"ref": "tok:0", "surface": "كتاب", "pos": "noun"},
+                       {"ref": "tok:1", "surface": "الجميل", "pos": "adjective"}],
+        })
+        self.assertFalse(any(e["rel_label"] == "idafa_dependent" for e in adj_lat["edges"]))
+        sifa_edges = [e for e in adj_lat["edges"] if e["rel_label"] == "sifa"]
+        self.assertTrue(sifa_edges)
+        readings = {a.get("reading") for a in sifa_edges[0]["unresolved_alternatives"]}
+        self.assertTrue(any(r.startswith("ṣifa") for r in readings))
+        self.assertTrue(any(r.startswith("badal") for r in readings))
+        # hostile negative control: a genuine noun+noun pair (no adjective POS involved) must still keep the
+        # ambiguous iḍāfa candidate reading — this repair must not regress the general iḍāfa branch.
+        idafa_unit = next(u for u in G.regression_units() if u["name"] == "idafa-candidate")
+        idafa_lat = G.build_dependency_lattice(idafa_unit)
+        self.assertTrue(any(e["rel_label"] == "idafa_dependent" for e in idafa_lat["edges"]))
+
+    def test_f10_identical_case_no_connector_not_coordination(self):
+        lat = _lattice_for(self.co["F10"])
+        self.assertFalse(any(e["rel_label"] == "coordination" for e in lat["edges"]))
+
+    def test_c7_abstain_marking_unknown_never_copies_head_case(self):
+        edge = _lattice_for(self.co["C7"])["edges"][0]
+        self.assertEqual(edge.get("abstention_reason"), "marking_unknown")
+        self.assertIsNone(edge["assigned_case_mood"])
+        self.assertEqual(edge.get("head_case"), "nominative")
+
+    def test_c8_not_coordination(self):
+        edge = _lattice_for(self.co["C8"])["edges"][0]
+        self.assertEqual(edge.get("abstention_reason"), "not_coordination")
+
+    def test_c9_abstain_non_governing_use(self):
+        edge = _lattice_for(self.co["C9"])["edges"][0]
+        self.assertEqual(edge.get("abstention_reason"), "non_governing_use")
+
+    def test_c10_attributed_no_decision_both_readings(self):
+        edge = _lattice_for(self.co["C10"])["edges"][0]
+        attribution = edge.get("analysis_attribution")
+        self.assertIsNotNone(attribution)
+        self.assertEqual(attribution["status"], "analysis_dependent")
+        self.assertGreaterEqual(len(attribution["alternatives"]), 2)
+        self.assertNotIn("selected", attribution)
+
+    def test_c11_abstain_insufficient_features(self):
+        edge = _lattice_for(self.co["C11"])["edges"][0]
+        self.assertEqual(edge.get("abstention_reason"), "insufficient_features")
+
+    def test_c12_preserve_alternatives_coordination_maiyya(self):
+        edge = _lattice_for(self.co["C12"])["edges"][0]
+        readings = {a.get("reading") for a in edge["unresolved_alternatives"]}
+        self.assertEqual(readings, {"coordination", "maiyya"})
+        self.assertNotEqual(edge["decision_status"], "resolved")
+
+    def test_c20_both_licensed_two_alternatives_no_selection(self):
+        edge = _lattice_for(self.co["C20"])["edges"][0]
+        attribution = edge["analysis_attribution"]
+        self.assertEqual(attribution["status"], "both_licensed")
+        self.assertEqual(sorted(attribution["alternatives"]), ["atf_bayan", "badal"])
+        self.assertNotIn("selected", attribution)
+
+    def test_c21_one_edge_two_attributed_assignments(self):
+        lat = _lattice_for(self.co["C21"])
+        self.assertEqual(len(lat["edges"]), 1)
+        edge = lat["edges"][0]
+        self.assertEqual(len(edge["unresolved_alternatives"]), 2)
+        self.assertEqual(edge["analysis_attribution"]["status"], "both_licensed")
+        self.assertNotEqual(edge["decision_status"], "resolved")
+
+    def test_grader_head_case_absent_routes_pending(self):
+        from tools.grade_grammar_reasoning import derive_reasoning
+        case = {"expected_reason_keys": ["atf-tabaiyya-follows-matuf-alayh"], "expected_conclusion": "coordination"}
+        claim = {"reason_key": "atf-tabaiyya-follows-matuf-alayh", "conclusion": "coordination",
+                 "case_mood": "genitive", "fact_type": "case_assignment", "source_address": "quran:2:7:4",
+                 "governor": {"governor_type": "idafa"}}
+        ok, defect = derive_reasoning(case, claim)
+        self.assertFalse(ok)
+        self.assertEqual(defect, "reason_tuple_head_unavailable")
+
+    def test_grader_head_governor_type_not_licensing_refused(self):
+        from tools.grade_grammar_reasoning import derive_reasoning
+        case = {"expected_reason_keys": ["atf-tabaiyya-follows-matuf-alayh"], "expected_conclusion": "coordination"}
+        claim = {"reason_key": "atf-tabaiyya-follows-matuf-alayh", "conclusion": "coordination",
+                 "case_mood": "genitive", "fact_type": "case_assignment", "source_address": "quran:2:7:4",
+                 "head_case": "genitive", "head_governor_type": "verb_subject",
+                 "governor": {"governor_type": "verb_subject"}}
+        ok, defect = derive_reasoning(case, claim)
+        self.assertFalse(ok)
+        self.assertEqual(defect, "reason_tuple_head_unavailable")
+
+    def test_grader_valid_coordination_claim_passes(self):
+        from tools.grade_grammar_reasoning import derive_reasoning
+        case = {"expected_reason_keys": ["atf-tabaiyya-follows-matuf-alayh"], "expected_conclusion": "coordination"}
+        claim = {"reason_key": "atf-tabaiyya-follows-matuf-alayh", "conclusion": "coordination",
+                 "case_mood": "genitive", "fact_type": "case_assignment", "source_address": "quran:2:7:4",
+                 "head_case": "genitive", "head_governor_type": "preposition",
+                 "governor": {"governor_type": "preposition"}}
+        ok, defect = derive_reasoning(case, claim)
+        self.assertTrue(ok, defect)
+
+    def test_grader_registry_example_is_not_evidence_for_another_occurrence(self):
+        from tools.grade_grammar_reasoning import source_address_defect
+        # a registry `examples` citation names an ayah RANGE, not a single word-level occurrence; it can never
+        # satisfy the evidence rung for a different claim.
+        claim = {"source_address": "quran:2:177:13-14"}
+        self.assertIsNotNone(source_address_defect(claim))
+
+
+class G6HiddenStructureMahall(unittest.TestCase):
+    """G6: hidden structure, maḥall, and the ẓarf ʿāmil-kind correction."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.hid = _load_bank("hidden-structure-mahall-eval.jsonl")
+
+    def test_mabni_with_assigned_case_mood_is_fail15(self):
+        from tools.validate_dependency_lattice import validate_lattice
+        from tools import fusha_governor as G
+        lat = _lattice_for(next(u for u in G.regression_units() if u["name"] == "prep-majrur-known"))
+        lat["edges"][0]["mabni"] = True
+        conds = {c for c, _ in validate_lattice(lat)}
+        self.assertIn("15", conds)
+
+    def test_fi_mahall_without_mabni_is_fail16(self):
+        from tools.validate_dependency_lattice import validate_lattice
+        from tools import fusha_governor as G
+        lat = _lattice_for(next(u for u in G.regression_units() if u["name"] == "prep-majrur-known"))
+        lat["edges"][0]["fi_mahall_case_mood"] = "accusative"
+        conds = {c for c, _ in validate_lattice(lat)}
+        self.assertIn("16", conds)
+
+    def test_c15_c16_reject_reconstruction(self):
+        for fid in ("C15", "C16"):
+            edge = _lattice_for(self.hid[fid])["edges"][0]
+            self.assertEqual(edge.get("abstention_reason"), "reject_reconstruction")
+            self.assertNotIn("hidden_element", edge)
+
+    def test_c17_obligatory_licence(self):
+        edge = _lattice_for(self.hid["C17"])["edges"][0]
+        self.assertTrue(edge["hidden_element"]["obligatory"])
+        self.assertEqual(edge["decision_status"], "pending")
+
+    def test_c18_non_obligatory_licence_flip_turns_red(self):
+        edge = _lattice_for(self.hid["C18"])["edges"][0]
+        self.assertFalse(edge["hidden_element"]["obligatory"])
+        flipped = dict(edge, hidden_element=dict(edge["hidden_element"], obligatory=True))
+        self.assertNotEqual(flipped["hidden_element"]["obligatory"], edge["hidden_element"]["obligatory"])
+
+    def test_c19_analysis_dependent_attribution(self):
+        edge = _lattice_for(self.hid["C19"])["edges"][0]
+        self.assertEqual(edge["decision_status"], "pending")
+        self.assertEqual(edge["analysis_attribution"]["status"], "analysis_dependent")
+
+    def test_f5_hidden_kana_ism_obligatory_khabar_no_nasb_exponent(self):
+        lat = _lattice_for(_load_bank("nawasikh-government-eval.jsonl")["F5"])
+        ism_edge = next(e for e in lat["edges"] if e.get("hidden_element"))
+        self.assertTrue(ism_edge["hidden_element"]["obligatory"])
+        khabar_edge = next(e for e in lat["edges"] if e["rel_label"] == "khabar_nasikh")
+        self.assertIsNone(khabar_edge["assigned_case_mood"])
+        self.assertTrue(khabar_edge["mabni"])
+        self.assertEqual(khabar_edge["fi_mahall_case_mood"], "accusative")
+
+    def test_f6_f7_mabni_mahall_no_assigned_case(self):
+        for fid in ("F6", "F7"):
+            lat = _lattice_for(self.hid[fid])
+            ism_edge = next(e for e in lat["edges"] if e["rel_label"] == "ism_nasikh")
+            self.assertTrue(ism_edge["mabni"])
+            self.assertEqual(ism_edge["mabni_on"], "fatha")
+            self.assertEqual(ism_edge["fi_mahall_case_mood"], "accusative")
+            self.assertIsNone(ism_edge["assigned_case_mood"])
+
+    def test_f11_f12_annexation_governor_kind_idafa(self):
+        for fid in ("F11", "F12"):
+            lat = _lattice_for(self.hid[fid])
+            dep_edge = next(e for e in lat["edges"] if e["rel_label"] == "idafa_dependent")
+            self.assertEqual(dep_edge["justification_rule"], "zarf_idafa_governs_genitive")
+            self.assertEqual(dep_edge["governor_type"], "noun")
+            self.assertNotEqual(dep_edge["justification_rule"], "preposition_governs_genitive")
+            self.assertTrue(any(e["rel_label"] == "zarf_idafa_head" for e in lat["edges"]))
+
+    def test_f13_unchanged_still_resolved_preposition(self):
+        lat = _lattice_for(self.hid["F13"])
+        edge = next(e for e in lat["edges"] if e["rel_label"] == "jar_majrur")
+        self.assertEqual(edge["justification_rule"], "preposition_governs_genitive")
+        self.assertEqual(edge["decision_status"], "resolved")
+
+    def test_c22_c23_zarf_construction(self):
+        c22 = _lattice_for(self.hid["C22"])["edges"][0]
+        self.assertEqual(c22["justification_rule"], "zarf_idafa_governs_genitive")
+        self.assertEqual(c22["assigned_case_mood"], "genitive")
+        c23 = _lattice_for(self.hid["C23"])["edges"][0]
+        self.assertEqual(c23["rel_label"], "zarf_idafa_head")
+        self.assertIsNone(c23["assigned_case_mood"])
+
+    def test_reason_claim_preposition_on_annexation_head_is_refused(self):
+        from tools.validate_dependency_lattice import validate_lattice
+        from tools import fusha_governor as G
+        lat = G.build_dependency_lattice(
+            {"input_mode": "source_addressed", "source_unit": {"address": "q", "scope": "in_scope_source_addressed"},
+             "tokens": [{"ref": "t1", "surface": "عِندَ", "pos": "preposition"},
+                       {"ref": "t2", "surface": "زَيْدٍ", "pos": "noun", "case_visible": "genitive"}]})
+        for e in lat["edges"]:
+            if e.get("rel_label") == "idafa_dependent":
+                e["justification_rule"] = "preposition_governs_genitive"
+        conds = {c for c, _ in validate_lattice(lat)}
+        self.assertIn("18", conds)
+
+
+class G3ToG6OccurrenceIdentity(unittest.TestCase):
+    """The three new banks: address-bearing rows must clear FAIL 14; refusal controls must NOT."""
+
+    def test_positive_frames_clear_occurrence_identity(self):
+        from tools.validate_dependency_lattice import verify_occurrence_identity
+        positive_ids = {
+            "nawasikh-government-eval.jsonl": ("F1", "F2", "F3", "F4", "F5", "F8"),
+            "coordination-case-following-eval.jsonl": ("F9", "F10"),
+            "hidden-structure-mahall-eval.jsonl": ("F6", "F7", "F11", "F12", "F13"),
+        }
+        for bank_name, ids in positive_ids.items():
+            bank = _load_bank(bank_name)
+            for fid in ids:
+                lat = _lattice_for(bank[fid])
+                errs = verify_occurrence_identity(lat)
+                self.assertEqual(errs, [], (bank_name, fid, errs))
+
+    def test_negative_controls_are_refused(self):
+        from tools.validate_dependency_lattice import verify_occurrence_identity
+        negative_ids = {
+            "nawasikh-government-eval.jsonl": ("N1", "N2"),
+            "coordination-case-following-eval.jsonl": ("N3",),
+            "hidden-structure-mahall-eval.jsonl": ("N4",),
+        }
+        for bank_name, ids in negative_ids.items():
+            bank = _load_bank(bank_name)
+            for fid in ids:
+                lat = _lattice_for(bank[fid])
+                errs = verify_occurrence_identity(lat)
+                self.assertTrue(errs, (bank_name, fid))
+
+
 if __name__ == "__main__":
     unittest.main()
