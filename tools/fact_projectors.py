@@ -638,6 +638,37 @@ def noun_plural_lexeme_link_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
     return None
 
 
+def _attested_pair_status(surface: str, attested: List[str]) -> tuple[bool, Optional[str]]:
+    """Decide attested-pair status for ONE occurrence surface against the entry's
+    attested plurals.
+
+    Exact attestation requires NFC byte-exact equality — never a norm_strict
+    match, which drops harakāt/shadda and would accept a deliberately wrong
+    vocalization or a bare (unvocalized) surface as if it were the documented
+    form. ``norm_strict`` is used only as RECALL, to find near-miss candidates;
+    any near-miss must then survive the SAME homograph/harakah defeaters a
+    documented-form lookup uses (``homograph_norm_key_collision``,
+    ``harakah_blind_sole_candidate``). A near-miss that trips one of those
+    defeaters is reported (not silently dropped to the generic
+    ``no_attested_lexeme_pair``), so a caller can see exactly why a
+    shape-plausible pairing was refused.
+
+    Returns ``(attested_pair, near_miss_defeater_detail)``.
+    """
+    exact = {unicodedata.normalize("NFC", p) for p in attested}
+    if unicodedata.normalize("NFC", surface) in exact:
+        return True, None
+    occ = {"surface": surface}
+    for p in attested:
+        if normalize_ar.norm_strict(p) != normalize_ar.norm_strict(surface):
+            continue
+        form = {"surface": p}
+        detail = homograph_norm_key_collision(occ, form) or harakah_blind_sole_candidate(occ, form)
+        if detail:
+            return False, detail
+    return False, None
+
+
 def project_noun_plural_lexeme_link(
     *,
     contract: Dict[str, Any],
@@ -645,18 +676,19 @@ def project_noun_plural_lexeme_link(
     root: Optional[str] = None,
     template_id: Optional[str] = None,
     attested_plurals: Iterable[str] = (),
-    rare_license_ok: bool = True,
-    plural_of_plural_base_attested: bool = True,
+    lexeme_id: Optional[str] = None,
+    plural_of_plural_base_attested: bool = False,
 ) -> Dict[str, Any]:
     """Classify ONE observed broken-plural occurrence as a lexeme-link candidate, or abstain.
 
     A candidate requires ALL of: the occurrence surface-matching the canonical
     loc-surface authority, an explicit ``template_id`` (never defaulted), a
     ``taksir`` (never sound-plural) pattern, supplied root evidence, an exact
-    attested-plural pairing, and — where the pattern demands it — a closed
-    rare/second-order license or an attested plural-of-plural base. Multiple
-    attested plurals for the SAME lemma are preserved as unranked competing
-    alternatives; nothing here is ever certified.
+    (NFC byte-exact) attested-plural pairing, and — where the pattern demands
+    it — the caller's exact ``lexeme_id`` present on that pattern's closed
+    ``licensed_lexemes`` (lexeme_id, root) list, or an attested plural-of-plural
+    base. Multiple attested plurals for the SAME lemma are preserved as
+    unranked competing alternatives; nothing here is ever certified.
     """
     from tools import rm40_gate_stack as gates
 
@@ -669,12 +701,20 @@ def project_noun_plural_lexeme_link(
         )
     attested = list(attested_plurals)
     surface = occurrence.get("surface", "")
-    attested_keys = {normalize_ar.norm_strict(p) for p in attested}
-    attested_pair = normalize_ar.norm_strict(surface) in attested_keys
+    attested_pair, near_miss_detail = _attested_pair_status(surface, attested)
+    if near_miss_detail:
+        return _noun_result(
+            contract, "abstained", "attested_pair_vocalization_mismatch", None,
+            _noun_abstention(
+                occurrence, "attested_pair_vocalization_mismatch",
+                "a norm_strict-only match was refused: " + near_miss_detail,
+                [gates.PLURAL_GATE + "#attested-pair-required"],
+            ),
+        )
     decision = gates.broken_plural_lexeme_link_gate(
         root, template_id,
         attested_pair=attested_pair,
-        rare_license_ok=rare_license_ok,
+        lexeme_id=lexeme_id,
         plural_of_plural_base_attested=plural_of_plural_base_attested,
     )
     if decision["decision"] != "emit":
@@ -693,7 +733,7 @@ def project_noun_plural_lexeme_link(
         "plural_template_id": template_id,
         "attested_plurals": sorted(set(attested)),
         "competing_alternatives": distinct_others,
-        "semantic_tie": len(set(attested)) > 1,
+        "semantic_tie": len(distinct_others) > 0,
         "evidence_mode": "entry_backed_attested_pair",
         "rule_chain": decision["gates"],
     }
@@ -1367,7 +1407,14 @@ NOUN_PLURAL_LEXEME_LINK_CONTRACT = {
         "unlicensed rare/second-order templates, and unattested plural-of-plural bases all abstain"
     ),
     "defeater_checks": ["noun_plural_lexeme_link_evidence_guard"],
-    "gate_tier": "two_vote_required",
+    # never_auto_resolve, matching the A3 largelexicon bridge precedent: an
+    # entry-backed lexeme identity link is candidate evidence about a written
+    # surface, never a certification of lexical identity, so review_and_
+    # materialize must have NO path to certify or materialize it regardless of
+    # vote count (round-6 repair: this sat at two_vote_required despite the
+    # projector's own certification_allowed:false, letting two votes silently
+    # certify/materialize a fact this contract itself declares uncertifiable).
+    "gate_tier": "never_auto_resolve",
     "version": "1.0.0",
     "resolution_method": "entry_backed_attested_pair_lexeme_link",
 }
@@ -1386,7 +1433,9 @@ NOUN_LEXICAL_GENDER_CONTRACT = {
         "for the registry fact and a missing registry entry abstains"
     ),
     "defeater_checks": ["noun_lexical_gender_evidence_guard"],
-    "gate_tier": "two_vote_required",
+    # never_auto_resolve — see NOUN_PLURAL_LEXEME_LINK_CONTRACT's comment above;
+    # the SAME fail-closed precedent applies to a registry-fact gender read.
+    "gate_tier": "never_auto_resolve",
     "version": "1.0.0",
     "resolution_method": "entry_backed_gender_registry_fact",
 }

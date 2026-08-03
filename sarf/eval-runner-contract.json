@@ -756,6 +756,99 @@
       ]
     },
     {
+      "adapter": "plural_gender_operationalization",
+      "behavioral_consumer": "tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate",
+      "consumers": [
+        "tools/rm40_gate_stack.py",
+        "tools/fact_projectors.py"
+      ],
+      "disposition": "implemented_and_consumed",
+      "enforced_properties": [
+        "every gate==plural_lexeme_link/consumer==gate row is decided by the REAL tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate, called directly with the row's own root/template_id/attested_pair/lexeme_id/plural_of_plural_base_attested evidence",
+        "every gate==plural_lexeme_link/consumer==projector row is decided by the REAL tools/fact_projectors.py:project_noun_plural_lexeme_link, which itself surface-matches the canonical loc-surface authority, applies NFC byte-exact attested-pair matching (norm_strict used only as recall, defeated by the SAME homograph/harakah checks a documented-form lookup uses), and then calls the SAME gate internally for every row that survives those pre-checks",
+        "every gate==lexical_gender row is decided by the REAL tools/fact_projectors.py:project_noun_lexical_gender",
+        "a rare or second_order template licenses a candidate ONLY for the exact (lexeme_id, root) pair on its own closed licensed_lexemes list -- never a caller boolean, never the lexeme_id or root alone (hostile no-kwarg/wrong-root/wrong-lexeme rows all abstain rare_plural_unlicensed)",
+        "plural_of_plural_base_attested defaults False and fails closed when omitted",
+        "a norm_strict-only (non-byte-exact) attested-plural match that trips the homograph or harakah-blind defeater abstains attested_pair_vocalization_mismatch rather than silently certifying a wrong vocalization",
+        "an unknown plural_template_id abstains unknown_plural_template_id rather than raising",
+        "semantic_tie is true if and only if competing_alternatives is non-empty (one canonical key decides both)",
+        "the occurrence loc-surface authority check runs BEFORE any gate/rare-license logic, so a mislocated or near-miss-vocalized occurrence never reaches the gate at all"
+      ],
+      "followup_packet": null,
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {},
+      "nonempty_list_fields": [],
+      "not_enforced_properties": [
+        "certification or materialization of any plural-lexeme-link or lexical-gender fact: gate_tier is never_auto_resolve for both output fact types (round-6 repair), so review_and_materialize has no path to certify or materialize a row this bank produces, and this runner never exercises review_and_materialize itself",
+        "root-to-surface derivational plausibility (whether a supplied root could actually generate the observed surface via the named template) is out of scope for both the gate and the projector; only entry-documented attestation and rarity/base licensing are checked"
+      ],
+      "note": "Behavioural through the REAL tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate (10 direct gate-consumer rows, whose no_occurrence_dogfood_evidence design is honest: the second_order jam'-al-jam' template has NO corpus occurrence at all) and the REAL tools/fact_projectors.py:project_noun_plural_lexeme_link / project_noun_lexical_gender occurrence projectors (11 + 4 rows). The gate's own per-row-consumption count (primary_applicable_rows) is reported by the adapter rather than assumed as len(rows): the projector calls the SAME gate internally for 9 of its 11 rows, but those internal calls bypass this adapter's counting proxy (fact_projectors.py imports rm40_gate_stack directly), and the projector's own 2 pre-gate defeaters (loc-surface mismatch, vocalization near-miss) correctly keep the OTHER 2 rows from ever reaching the gate -- exactly the preserved 'loc-surface gate runs first' property, not a coverage gap.",
+      "path": "sarf/evals/plural-gender-operationalization-eval.jsonl",
+      "pinned_metrics": {
+        "abstain_rows": 16,
+        "candidate_rows": 9,
+        "decided_rows": 25,
+        "primary_applicable_rows": 10,
+        "rows": 25
+      },
+      "property_coverage": [
+        {
+          "applicable_rows": 10,
+          "covered": true,
+          "decided_by": "tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate",
+          "property": "gate_rows_decided_directly"
+        },
+        {
+          "applicable_rows": 11,
+          "covered": true,
+          "decided_by": "tools/fact_projectors.py:project_noun_plural_lexeme_link",
+          "property": "plural_projector_rows_decided"
+        },
+        {
+          "applicable_rows": 4,
+          "covered": true,
+          "decided_by": "tools/fact_projectors.py:project_noun_lexical_gender",
+          "property": "gender_projector_rows_decided"
+        },
+        {
+          "applicable_rows": 1,
+          "covered": true,
+          "decided_by": "tools/fact_projectors.py:project_noun_plural_lexeme_link",
+          "note": "plg-eval-07 only: the two classically-attested عبد plurals stay unranked competing_alternatives with semantic_tie true",
+          "property": "semantic_tie_matches_competing_alternatives"
+        },
+        {
+          "applicable_rows": 2,
+          "covered": true,
+          "decided_by": "tools/fact_projectors.py:project_noun_plural_lexeme_link",
+          "note": "plg-eval-19 (loc mismatch) and plg-eval-20 (vocalization near-miss) only -- both abstain BEFORE the gate is ever called",
+          "property": "loc_and_vocalization_prechecks_precede_gate"
+        }
+      ],
+      "required_fields": [
+        "id",
+        "gate",
+        "consumer",
+        "expected_status",
+        "teaches"
+      ],
+      "row_key": null,
+      "secondary_consumers": [
+        {
+          "applies_to": "the 11 gate==plural_lexeme_link/consumer==projector rows",
+          "callable": "tools/fact_projectors.py:project_noun_plural_lexeme_link",
+          "expected_calls": 11
+        },
+        {
+          "applies_to": "the 4 gate==lexical_gender rows",
+          "callable": "tools/fact_projectors.py:project_noun_lexical_gender",
+          "expected_calls": 4
+        }
+      ]
+    },
+    {
       "adapter": "lattice_ambiguity",
       "behavioral_consumer": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
       "consumers": [

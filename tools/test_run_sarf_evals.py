@@ -198,7 +198,14 @@ class PassThroughAndTargetedMutation(unittest.TestCase):
         return calls
 
     def test_pass_through_counts_the_contract_declared_callable_exactly(self):
-        """Round-2 defect 2: count the EXACT callable the contract declares, not a convenient neighbour."""
+        """Round-2 defect 2: count the EXACT callable the contract declares, not a convenient neighbour.
+
+        Most required-behavioural banks call their declared primary once per row (expected == len(rows)). One bank
+        (plural_gender_operationalization) honestly reports a NARROWER `primary_applicable_rows`: its plural
+        projector calls the SAME gate internally for most of its own rows, but those internal calls bypass this
+        counting proxy entirely (fact_projectors.py imports rm40_gate_stack directly, never through Consumers), so
+        the proxy can only ever see this bank's DIRECT gate-consumer rows — see
+        adapter_plural_gender_operationalization's own docstring."""
         contract = R.load_contract(_ROOT)
         for bank in R.REQUIRED_BEHAVIORAL_BANKS:
             spec = R.bank_spec(contract, bank)
@@ -209,12 +216,13 @@ class PassThroughAndTargetedMutation(unittest.TestCase):
             rows = _rows(bank)
             failures, metrics = _run(bank, rows, ctx)
             self.assertEqual(failures, [], "%s: a pass-through wrapper must stay green (%s)" % (bank, failures[:2]))
-            self.assertEqual(len(calls), len(rows),
-                             "%s: declared consumer %s ran %d times for %d rows"
-                             % (bank, declared, len(calls), len(rows)))
+            expected = metrics.get("primary_applicable_rows", len(rows))
+            self.assertEqual(len(calls), expected,
+                             "%s: declared consumer %s ran %d times for %d claimed applicable row(s)"
+                             % (bank, declared, len(calls), expected))
             self.assertEqual(metrics["decided_rows"], len(rows))
             # and the runner's own independent proxy must agree with the test-owned counter
-            self.assertEqual(metrics["consumer_calls"][declared], len(rows))
+            self.assertEqual(metrics["consumer_calls"][declared], expected)
 
     def test_conditional_consumer_applicability_is_declared_and_counted(self):
         """A checker invoked only on a subset may not be sold as the per-row consumer."""
@@ -2397,6 +2405,182 @@ class WeakRootAndVoice(unittest.TestCase):
                             "%s: must declare no_occurrence_dogfood_evidence" % row["id"])
         spec = R.bank_spec(R.load_contract(_ROOT), _WRV)
         self.assertIsNone(spec["followup_packet"])
+
+
+# ---------------------------------------------------------------------------
+# plural_gender_operationalization bank (u-s08 Train A review-repair): the u-s08 noun plural-lexeme-link /
+# lexical-gender contract, decided by the REAL tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate (direct
+# gate-consumer rows) and the REAL tools/fact_projectors.py:project_noun_plural_lexeme_link /
+# project_noun_lexical_gender occurrence projectors.
+# ---------------------------------------------------------------------------
+_PLG = "sarf/evals/plural-gender-operationalization-eval.jsonl"
+
+
+class PluralGenderOperationalization(unittest.TestCase):
+
+    def test_bank_is_registered_implemented_and_consumed(self):
+        contract = R.load_contract(_ROOT)
+        spec = R.bank_spec(contract, _PLG)
+        self.assertEqual(spec["disposition"], "implemented_and_consumed")
+        self.assertEqual(spec["behavioral_consumer"], "tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate")
+        self.assertIn(spec["behavioral_consumer"], R.DECISION_CONSUMERS)
+        self.assertIn(_PLG, R.REQUIRED_BEHAVIORAL_BANKS)
+        rows = _rows(_PLG)
+        self.assertEqual(len(rows), 25)
+        failures, metrics = _run(_PLG, rows)
+        self.assertEqual(failures, [], "plural-gender-operationalization bank failed: %s" % failures[:5])
+        self.assertEqual(metrics["decided_rows"], len(rows))
+        # the primary is genuinely narrower than len(rows) -- see the adapter's own docstring -- and the runner's
+        # own validate_contract()/run_all() path must accept that narrower, adapter-REPORTED claim, never assume
+        # len(rows) blindly.
+        self.assertEqual(metrics["primary_applicable_rows"], 10)
+        self.assertEqual(metrics["consumer_calls"][spec["behavioral_consumer"]], 10)
+        self.assertEqual(metrics["consumer_calls"]["tools/fact_projectors.py:project_noun_plural_lexeme_link"], 11)
+        self.assertEqual(metrics["consumer_calls"]["tools/fact_projectors.py:project_noun_lexical_gender"], 4)
+        rep = R.run_all(_ROOT, only=_PLG)
+        self.assertEqual(rep["exit_code"], 0, rep["failures"])
+
+    def test_no_local_reimplementation_of_the_real_gate(self):
+        ctx = _ctx()
+        from tools import rm40_gate_stack as gs
+        self.assertIs(ctx.plural_lexeme_gate, gs.broken_plural_lexeme_link_gate)
+
+    def test_gate_mutation_breaks_the_direct_gate_rows(self):
+        """Mutating the REAL gate must turn every DIRECT gate-consumer row red -- proving the bank genuinely
+        depends on tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate, never a re-derived boolean."""
+        import tools.rm40_gate_stack as gs
+        original = gs.broken_plural_lexeme_link_gate
+        gs.broken_plural_lexeme_link_gate = lambda *a, **kw: {
+            "decision": "emit", "defeater": None, "detail": "stub", "gates": [],
+        }
+        try:
+            failures, _m = _run(_PLG, ctx=R.Consumers.real())
+        finally:
+            gs.broken_plural_lexeme_link_gate = original
+        # stubbing the gate to ALWAYS emit only breaks rows that genuinely expect an ABSTENTION from it; a row
+        # that already expects candidate/emit (plg-eval-10) stays correctly green and must not be required to
+        # "break" -- forcing it to would be asserting the stub changes nothing, the opposite of the proof.
+        gate_row_ids = {r["id"] for r in _rows(_PLG) if r.get("consumer") == "gate"
+                        and r["expected_status"] == "abstained"}
+        broken = {f.split(" [", 1)[0] for f in failures}
+        self.assertTrue(gate_row_ids <= broken, "not every direct gate-consumer row broke: %s"
+                        % (gate_row_ids - broken))
+
+    def test_plural_projector_mutation_breaks_the_projector_rows(self):
+        """Mutating the REAL plural projector must turn every plural_lexeme_link/consumer==projector row red."""
+        import tools.fact_projectors as fp
+        original = fp.project_noun_plural_lexeme_link
+
+        def stub(*, contract, occurrence, **_kw):
+            return {
+                "projector_id": contract["projector_id"], "status": "abstained", "route": "stub",
+                "candidate": None,
+                "abstention": {"subject_identity": occurrence.get("identity", {}), "reason": "stub_forced",
+                               "detail": "stub", "dependencies": []},
+                "certification_allowed": False, "materialization_allowed": False,
+            }
+        fp.project_noun_plural_lexeme_link = stub
+        try:
+            failures, _m = _run(_PLG, ctx=R.Consumers.real())
+        finally:
+            fp.project_noun_plural_lexeme_link = original
+        proj_row_ids = {r["id"] for r in _rows(_PLG)
+                        if r.get("gate") == "plural_lexeme_link" and r.get("consumer") == "projector"}
+        broken = {f.split(" [", 1)[0] for f in failures}
+        self.assertTrue(proj_row_ids <= broken, "not every plural-projector row broke: %s"
+                        % (proj_row_ids - broken))
+
+    def test_gender_projector_mutation_breaks_the_gender_rows(self):
+        """Mutating the REAL gender projector must turn every lexical_gender row red."""
+        import tools.fact_projectors as fp
+        original = fp.project_noun_lexical_gender
+
+        def stub(*, contract, occurrence, **_kw):
+            return {
+                "projector_id": contract["projector_id"], "status": "abstained", "route": "stub",
+                "candidate": None,
+                "abstention": {"subject_identity": occurrence.get("identity", {}), "reason": "stub_forced",
+                               "detail": "stub", "dependencies": []},
+                "certification_allowed": False, "materialization_allowed": False,
+            }
+        fp.project_noun_lexical_gender = stub
+        try:
+            failures, _m = _run(_PLG, ctx=R.Consumers.real())
+        finally:
+            fp.project_noun_lexical_gender = original
+        gender_row_ids = {r["id"] for r in _rows(_PLG) if r.get("gate") == "lexical_gender"}
+        broken = {f.split(" [", 1)[0] for f in failures}
+        self.assertTrue(gender_row_ids <= broken, "not every gender row broke: %s" % (gender_row_ids - broken))
+
+    def test_hostile_rare_license_rows_are_present_and_pass(self):
+        rows = {r["id"]: r for r in _rows(_PLG)}
+        for rid in (
+            "plg-eval-09b-nisa-rare-no-lexeme-id-abstains",
+            "plg-eval-09c-nisa-rare-wrong-root-abstains",
+            "plg-eval-09d-nisa-rare-wrong-lexeme-abstains",
+        ):
+            row = rows[rid]
+            self.assertEqual(row["expected_status"], "abstained")
+            self.assertEqual(row["expected_reason"], "rare_plural_unlicensed")
+        failures, _m = _run(_PLG, [rows[rid] for rid in (
+            "plg-eval-09b-nisa-rare-no-lexeme-id-abstains",
+            "plg-eval-09c-nisa-rare-wrong-root-abstains",
+            "plg-eval-09d-nisa-rare-wrong-lexeme-abstains",
+        )])
+        self.assertEqual(failures, [], failures[:5])
+
+    def test_negative_fixtures_reject_norm_strict_only_vocalization_matches(self):
+        rows = {r["id"]: r for r in _rows(_PLG)}
+        wrong_vocalization = rows["plg-eval-20-wrong-vocalization-abstains"]
+        self.assertEqual(wrong_vocalization["expected_reason"], "attested_pair_vocalization_mismatch")
+        bare_entry = rows["plg-eval-21-bare-attested-entry-abstains"]
+        self.assertEqual(bare_entry["expected_reason"], "no_attested_lexeme_pair")
+        failures, _m = _run(_PLG, [wrong_vocalization, bare_entry])
+        self.assertEqual(failures, [], failures[:5])
+
+    def test_unknown_template_id_row_abstains_typed(self):
+        rows = {r["id"]: r for r in _rows(_PLG)}
+        row = rows["plg-eval-22-unknown-template-id-abstains"]
+        self.assertEqual(row["expected_reason"], "unknown_plural_template_id")
+        failures, _m = _run(_PLG, [row])
+        self.assertEqual(failures, [], failures[:5])
+
+    def test_semantic_tie_key_mutation_is_caught(self):
+        """A bank row whose expected_semantic_tie disagrees with its own expected_competing_alternatives (a tie
+        claimed true with zero declared rivals) must be rejected by the adapter itself."""
+        rows = copy.deepcopy(_rows(_PLG))
+        row = next(r for r in rows if r["id"] == "plg-eval-07-fiaal-servants-multiple-plurals")
+        row["expected_competing_alternatives"] = []  # semantic_tie stays true -- now inconsistent
+        failures, _m = _run(_PLG, rows)
+        self.assertTrue(any("plg-eval-07" in f and "zero rivals" in f for f in failures), failures[:5])
+
+    def test_loc_surface_gate_runs_before_the_plural_gate(self):
+        """The two pre-gate-defeater rows (mislocated occurrence, wrong-vocalization near-miss) must never reach
+        the raw gate at all -- proven by mutating the gate to ALWAYS emit and confirming those two rows still
+        correctly abstain (their outcome is decided upstream of the gate)."""
+        import tools.rm40_gate_stack as gs
+        original = gs.broken_plural_lexeme_link_gate
+        gs.broken_plural_lexeme_link_gate = lambda *a, **kw: {
+            "decision": "emit", "defeater": None, "detail": "stub-always-emit", "gates": [],
+        }
+        try:
+            rows = {r["id"]: r for r in _rows(_PLG)}
+            targets = [rows["plg-eval-19-loc-surface-mismatch-abstains"], rows["plg-eval-20-wrong-vocalization-abstains"]]
+            failures, _m = _run(_PLG, targets, ctx=R.Consumers.real())
+        finally:
+            gs.broken_plural_lexeme_link_gate = original
+        self.assertEqual(failures, [], failures[:5])
+
+    def test_never_certify_or_materialize(self):
+        for row in _rows(_PLG):
+            self.assertIn(row["expected_status"], ("candidate", "abstained"))
+        spec = R.bank_spec(R.load_contract(_ROOT), _PLG)
+        self.assertIsNone(spec["followup_packet"])
+
+    def test_gate_tier_never_auto_resolve_for_both_output_fact_types(self):
+        from tools import fact_projectors as fp
+        self.assertEqual(fp.NOUN_PLURAL_LEXEME_LINK_CONTRACT["gate_tier"], "never_auto_resolve")
+        self.assertEqual(fp.NOUN_LEXICAL_GENDER_CONTRACT["gate_tier"], "never_auto_resolve")
 
 
 if __name__ == "__main__":
