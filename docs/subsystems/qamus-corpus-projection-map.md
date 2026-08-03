@@ -98,3 +98,58 @@ disposition-count deficits; they should re-run the generator against their own
 `--output` path and diff against the committed `full_output.sha256` /
 `sample_sha256` in the baseline/sample-meta to confirm they are working from the
 same population spine.
+
+## Train D component 2 — certified P007 geometry disposition batch
+
+`tools/build_corpus_fact_projection_batch.py` is the first real certified-fact
+consumer of this manifest. It selects only the 454
+`deterministic-attachment-geometry` rows in
+`qamus/lattice/p007-reverse-universe.jsonl`, validates the latest effective state
+of all 1,362 facts through the 4,086-event hash-chained certification trail, and
+joins the selected locations to the component-1 manifest by exact
+`canonical_loc`. The join is appearance-complete: 985 manifest appearances must
+equal the reverse-universe appearance sets exactly.
+
+The component projects only three fact types:
+`attachment_geometry`, `surface_reconstruction_nfc`, and
+`token_host_boundary`. Its certification boundary is
+`partial_certified_geometry_only`. The component/token span is represented
+separately from the whole token and the NFC component + host reconstruction is
+rechecked before any row is emitted.
+
+Surface readiness is occurrence-wide, never appearance-local:
+
+- 385 occurrences / 820 appearances are `geometry_projection_ready` because
+  every appearance is NFC-identical to the certified reference surface.
+- 69 occurrences / 165 appearances are
+  `appearance_surface_variant_mapping_required`: 15/50 are mixed-surface and
+  54/115 are variant-only. An exact-looking appearance from a mixed occurrence
+  remains held with every other appearance of that occurrence.
+
+Every appearance of one occurrence carries one identical geometry projection
+hash. The batch does not promote corpus candidate refs into Naḥw, and a card
+owner is never treated as the displayed token's lexeme. Its explicit output
+boundaries are `boundary_available_no_semantic_colour`,
+`not_available_missing_full_token_facts`, zero website payloads, and zero live
+outputs. Semantic rich-colour and hover gains therefore remain zero.
+
+Artifacts and commands:
+
+```
+# Generate the committed baseline/sample and an ignored full batch.
+python tools/build_corpus_fact_projection_batch.py \
+  --output out/p007-geometry-corpus-projection.jsonl
+
+# Verify the committed baseline/sample are fresh (and the full batch too when
+# --output is supplied).
+python tools/build_corpus_fact_projection_batch.py --check
+
+# Focused tests.
+python tools/test_corpus_fact_projection_batch.py
+```
+
+Committed review surfaces:
+`qamus/reports/p007-geometry-corpus-projection-baseline.json`,
+`qamus/examples/p007-geometry-corpus-projection.sample.jsonl` + `.meta.json`,
+and `qamus/schemas/corpus-fact-projection-disposition.schema.json`. The full
+985-row batch is regenerable and belongs under ignored `out/`.

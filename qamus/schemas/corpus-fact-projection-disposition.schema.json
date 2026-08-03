@@ -1,0 +1,346 @@
+{
+  "$id": "https://github.com/theIslampill/fusha/qamus/schemas/corpus-fact-projection-disposition.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "One appearance-complete downstream disposition for certified P007 attachment geometry. This contract carries sub-token geometry only and authorizes no semantic or live materialization.",
+  "properties": {
+    "appearance_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "appearance_surface_posture": {
+      "enum": [
+        "exact_nfc",
+        "surface_variant"
+      ],
+      "type": "string"
+    },
+    "canonical_loc": {
+      "pattern": "^[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$",
+      "type": "string"
+    },
+    "certified_reference_surface_nfc": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "cohort": {
+      "const": "deterministic-attachment-geometry"
+    },
+    "corpus_context": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_refs_are_not_nahw_or_semantic_authority": {
+          "const": true
+        },
+        "card_owner_entry_id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "card_owner_is_not_token_lexeme": {
+          "const": true
+        },
+        "card_ref": {
+          "pattern": "^[0-9]{1,3}:[0-9]{1,3}$",
+          "type": "string"
+        },
+        "particle_function_candidate_ref_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "selected": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "card_owner_entry_id",
+        "card_ref",
+        "selected",
+        "card_owner_is_not_token_lexeme",
+        "particle_function_candidate_ref_count",
+        "candidate_refs_are_not_nahw_or_semantic_authority"
+      ],
+      "type": "object"
+    },
+    "delivery": {
+      "additionalProperties": false,
+      "properties": {
+        "live_mutation_allowed": {
+          "const": false
+        },
+        "live_output": {
+          "const": "not_generated"
+        },
+        "public_materialization_allowed": {
+          "const": false
+        },
+        "website_payload": {
+          "const": "not_generated"
+        }
+      },
+      "required": [
+        "website_payload",
+        "live_output",
+        "public_materialization_allowed",
+        "live_mutation_allowed"
+      ],
+      "type": "object"
+    },
+    "displayed_surface": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "disposition_reason": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "downstream_disposition": {
+      "enum": [
+        "geometry_projection_ready",
+        "appearance_surface_variant_mapping_required"
+      ],
+      "type": "string"
+    },
+    "geometry_projection": {
+      "additionalProperties": false,
+      "properties": {
+        "certification": {
+          "const": "partial_certified_geometry_only"
+        },
+        "certified_facts": {
+          "additionalProperties": false,
+          "properties": {
+            "attachment_geometry": {
+              "type": "object"
+            },
+            "surface_reconstruction_nfc": {
+              "type": "object"
+            },
+            "token_host_boundary": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "attachment_geometry",
+            "surface_reconstruction_nfc",
+            "token_host_boundary"
+          ],
+          "type": "object"
+        },
+        "fact_ids": {
+          "additionalProperties": false,
+          "properties": {
+            "attachment_geometry": {
+              "pattern": "^fact:p007geo:[0-9_]+:geom$",
+              "type": "string"
+            },
+            "surface_reconstruction_nfc": {
+              "pattern": "^fact:p007geo:[0-9_]+:recon$",
+              "type": "string"
+            },
+            "token_host_boundary": {
+              "pattern": "^fact:p007geo:[0-9_]+:bound$",
+              "type": "string"
+            }
+          },
+          "required": [
+            "attachment_geometry",
+            "surface_reconstruction_nfc",
+            "token_host_boundary"
+          ],
+          "type": "object"
+        },
+        "occurrence_id": {
+          "pattern": "^quran:[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$",
+          "type": "string"
+        },
+        "reverse_trace": {
+          "additionalProperties": false,
+          "properties": {
+            "certification_store": {
+              "const": "qamus/certification/p007-geometry-wave/events.jsonl"
+            },
+            "cohort_row": {
+              "pattern": "^qamus/lattice/p007-reverse-universe\\.jsonl#p007:[0-9]+:[0-9]+:[0-9]+$",
+              "type": "string"
+            },
+            "typed_fact_ids": {
+              "items": {
+                "pattern": "^fact:p007geo:[0-9_]+:(geom|recon|bound)$",
+                "type": "string"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array",
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "cohort_row",
+            "certification_store",
+            "typed_fact_ids"
+          ],
+          "type": "object"
+        },
+        "schema": {
+          "const": "qamus.certified_geometry_projection.v1"
+        },
+        "span_geometry": {
+          "additionalProperties": false,
+          "properties": {
+            "component_base_letter_span": {
+              "$ref": "#/$defs/span"
+            },
+            "component_char_span": {
+              "$ref": "#/$defs/span"
+            },
+            "component_is_subtoken": {
+              "const": true
+            },
+            "component_surface": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "host_char_span": {
+              "$ref": "#/$defs/span"
+            },
+            "host_surface": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "token_char_span": {
+              "$ref": "#/$defs/span"
+            },
+            "token_surface_nfc": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "token_surface_nfc",
+            "token_char_span",
+            "component_surface",
+            "component_char_span",
+            "component_base_letter_span",
+            "host_surface",
+            "host_char_span",
+            "component_is_subtoken"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "schema",
+        "occurrence_id",
+        "certification",
+        "certified_facts",
+        "fact_ids",
+        "span_geometry",
+        "reverse_trace"
+      ],
+      "type": "object"
+    },
+    "geometry_projection_hash": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "occurrence_id": {
+      "pattern": "^quran:[0-9]{1,3}:[0-9]{1,3}:[0-9]{1,3}$",
+      "type": "string"
+    },
+    "occurrence_surface_posture": {
+      "enum": [
+        "exact_all_appearances",
+        "mixed_surface",
+        "variant_only"
+      ],
+      "type": "string"
+    },
+    "schema": {
+      "const": "qamus.corpus_fact_projection_disposition.v1"
+    },
+    "semantic_boundaries": {
+      "additionalProperties": false,
+      "properties": {
+        "colour": {
+          "const": "boundary_available_no_semantic_colour"
+        },
+        "hover": {
+          "const": "not_available_missing_full_token_facts"
+        },
+        "meaning": {
+          "const": "not_projected_geometry_only"
+        },
+        "nahw": {
+          "const": "not_available_candidate_refs_are_not_nahw"
+        },
+        "particle_entry_identity": {
+          "const": "not_projected_geometry_only"
+        },
+        "particle_function": {
+          "const": "not_projected_geometry_only"
+        },
+        "particle_sense": {
+          "const": "not_projected_geometry_only"
+        },
+        "root": {
+          "const": "not_projected_geometry_only"
+        },
+        "token_lexeme": {
+          "const": "not_projected_geometry_only"
+        }
+      },
+      "required": [
+        "token_lexeme",
+        "particle_entry_identity",
+        "particle_sense",
+        "particle_function",
+        "meaning",
+        "root",
+        "nahw",
+        "colour",
+        "hover"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "cohort",
+    "canonical_loc",
+    "occurrence_id",
+    "appearance_id",
+    "occurrence_surface_posture",
+    "appearance_surface_posture",
+    "certified_reference_surface_nfc",
+    "displayed_surface",
+    "downstream_disposition",
+    "disposition_reason",
+    "geometry_projection_hash",
+    "geometry_projection",
+    "corpus_context",
+    "semantic_boundaries",
+    "delivery"
+  ],
+  "title": "Corpus fact projection disposition",
+  "type": "object",
+  "$defs": {
+    "span": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "start": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "type": "object"
+    }
+  }
+}

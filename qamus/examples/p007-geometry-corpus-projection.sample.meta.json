@@ -1,0 +1,12 @@
+{
+  "builder": {
+    "id": "build_corpus_fact_projection_batch",
+    "version": "1.0.0"
+  },
+  "sample_row_count": 50,
+  "sample_selection_rule": "Occurrence-complete deterministic sample in source order: take whole occurrence groups, prioritizing mixed_surface, then variant_only, then exact_all_appearances, and continue round-robin until at least sample_size rows are present. A mixed occurrence is never partially sampled.",
+  "sample_sha256": "bf2fd7c2d81cf618e0f65bb42eadfee7908974f71a3547ce7ddf4e1d818c730c",
+  "schema": "qamus.corpus_fact_projection_disposition.v1",
+  "source_full_output_row_count": 985,
+  "source_full_output_sha256": "8ef10265d8ab4455becb2fd2bed373917b18afb4ae6e1019d9b44030ed632f68"
+}
