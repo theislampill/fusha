@@ -126,13 +126,16 @@
                    "preposition_phrase", "pp_attachment", "pp_attached_to_verb", "pp_attached_to_nominal",
                    "pp_attached_to_hidden_hal", "pp_attached_to_hidden_sifa", "oath_preposition", "idafa_head",
                    "idafa_dependent", "sifa", "badal", "tamyiz", "coordination", "condition", "relative_clause",
-                   "subordinate_clause", "abstained_unmodeled_construction", "none", "null"]
+                   "subordinate_clause", "abstained_unmodeled_construction", "ism_nasikh", "khabar_nasikh",
+                   "matuf", "matuf_alayh", "atf_bayan", "zarf_idafa_head", "none", "null"]
         },
         "claim_id": { "type": ["string", "null"], "description": "Claim identifier when this edge lints a submitted i'rab claim." },
         "trigger_particle": { "type": ["string", "null"], "description": "Token ref of a recognized trigger whose construction is deliberately not modeled." },
         "trigger_family": {
           "type": ["string", "null"],
-          "enum": ["jussive", "inna_family", "la_jins", "istithna", "hal", "vocative", "kana_family", null]
+          "enum": ["jussive", "inna_family", "la_jins", "istithna", "hal", "vocative", "kana_family",
+                   "zanna_family", "la_nafiya", "la_nahiya", "la_jins_candidate", "conditional", "atf_candidate",
+                   "nongoverning_preverbal", "regime_undetermined", null]
         },
         "abstention_reason": { "type": ["string", "null"], "description": "Explicit reason the governor lattice abstained instead of returning a silent empty parse." },
         "suppressed_rule": { "type": ["string", "null"], "description": "Heuristic suppressed because a recognized construction makes it unsafe (for example, false iḍāfa inside a kāna frame)." },
@@ -142,6 +145,47 @@
           "type": ["string", "null"],
           "description": "Syntactic case/mood slot occupied by a mabni form; distinct from its fixed surface mark.",
           "enum": ["nominative", "accusative", "genitive", "jussive", "subjunctive", "indicative", "none", "unknown", null]
+        },
+        "governing_regime": {
+          "type": ["string", "null"],
+          "description": "The discriminated regime this edge's case expectation is a consequence of. Discrimination must precede any case expectation: a case expectation alongside regime_undetermined is a hard failure (validator FAIL 10).",
+          "enum": ["inna_family", "kana_family", "zanna_family", "la_jins", "la_nafiya", "la_nahiya",
+                   "coordination", "idafa", "preposition", "zarf_idafa", "hidden_structure", "nongoverning",
+                   "regime_undetermined", null]
+        },
+        "regime_evidence": { "type": ["string", "null"], "description": "Authored, source-clean statement of the SUPPLIED evidence the regime discrimination rests on (never inferred silently)." },
+        "hidden_element": {
+          "type": ["object", "null"],
+          "description": "A closed, positively enumerated licence for a hidden/elided element. reject_reconstruction is the default; this object appears only when a licensing construction is named.",
+          "additionalProperties": false,
+          "required": ["type", "licensing_construction", "obligatory"],
+          "properties": {
+            "type": { "type": "string", "minLength": 1 },
+            "licensing_construction": { "type": "string", "minLength": 1 },
+            "obligatory": { "type": "boolean" }
+          }
+        },
+        "analysis_attribution": {
+          "type": ["object", "null"],
+          "description": "A rival-analysis attribution. `selected` is deliberately NOT a declared property: an attribution that picks a winner is not an attribution (validator FAIL 11).",
+          "additionalProperties": false,
+          "required": ["status", "alternatives"],
+          "properties": {
+            "status": { "type": "string", "enum": ["school_dependent", "analysis_dependent", "both_licensed"] },
+            "alternatives": { "type": "array", "items": { "type": ["string", "object"] } },
+            "party_source_ref": { "type": ["string", "null"] }
+          }
+        },
+        "head_case": {
+          "type": ["string", "null"],
+          "description": "The case the coordination head bears; the conjunct's case is a consequence of this, never a fixed rule of the connector.",
+          "enum": ["nominative", "accusative", "genitive", "jussive", "subjunctive", "indicative", "none", "unknown", null]
+        },
+        "head_governor_type": { "type": ["string", "null"], "description": "The governor_type that licenses head_case, so the reason plane can check the conjunct's ʿāmil is the head's ʿāmil, not a new one." },
+        "frame_kind": {
+          "type": ["string", "null"],
+          "description": "constructed = a synthetic feature-driven pattern fixture (no occurrence address); address_bearing = a real Qur'anic occurrence. A construction-typed fixture may never wear an occurrence address, and an address-bearing row may never carry invented features (validator FAIL 13).",
+          "enum": ["constructed", "address_bearing", null]
         },
         "rel_label_ar": { "type": "string", "description": "traditional Arabic-grammar nomenclature (fāʿil/mafʿūl bihi/muḍāf ilayh/majrūr bi-ḥarf/...). Authored, source-clean." },
         "assigned_case_mood": {
@@ -155,7 +199,11 @@
           "enum": ["preposition_governs_genitive", "idafa_governs_genitive", "verb_governs_subject_nominative",
                    "verb_governs_object_accusative", "mubtada_governs_khabar_nominative", "operating_particle_governs_mood",
                    "coordination_no_governor", "pp_attachment_unresolved", "unmodeled_construction_abstention",
-                   "governor_not_justified", "not_determinable", "none"]
+                   "governor_not_justified", "not_determinable", "none",
+                   "nasikh_governs_ism_nasb", "nasikh_governs_khabar_raf3", "kana_governs_ism_raf3",
+                   "kana_governs_khabar_nasb", "la_jins_governs_ism_mabni_fath", "zarf_idafa_governs_genitive",
+                   "coordination_follows_matuf_alayh_case", "hidden_element_licensed", "mahall_positional_case",
+                   "non_governing_use_abstention", "regime_undetermined_abstention"]
         },
         "justification_confidence": { "type": "string", "enum": ["low", "medium", "high"] },
         "evidence_class": { "type": "string", "enum": ["source_addressed", "heuristic", "unknown"], "description": "source_addressed = confirmed against the graph/voweled text; heuristic = surface rule only (arbitrary)." },
