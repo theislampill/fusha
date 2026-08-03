@@ -101,6 +101,20 @@ def _segments_concat(token, key):
     return True
 
 
+# Train E gap 3: roles a stem_identity collision must never retain because
+# their role/label/gloss presupposes the disputed noun/verb/adjective class
+# (the disputed stem itself, or an affix whose reading commits to a verb- or
+# noun-shaped analysis). Production withholds/reclassifies these
+# (tools/fusha_standalone_parse.py `_scope_collision_segments`); this asserts
+# the restriction directly instead of trusting that surviving segments merely
+# concatenating back to an ordered subset of the surface proves it.
+CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES = {
+    "stem", "verb_stem", "adjective_stem",
+    "object_pronoun", "subject_pronoun",
+    "verb_prefix", "future_particle", "derivative_prefix", "plural_suffix",
+}
+
+
 def _retained_segments_ordered_subset(qg, surface):
     """True when each qg segment's surface appears in `surface` in left-to-right,
     non-overlapping order (Train E I2). A stem_identity collision withholds the
@@ -163,6 +177,15 @@ def validate_record(rec):
                     errors.append("%s: stem_identity collision withholding dropped all affix/clitic coverage" % surf)
                 elif not _retained_segments_ordered_subset(qg, surf):
                     errors.append("%s: stem_identity collision retained segments are not an ordered subset of the surface" % surf)
+                else:
+                    leaked_roles = {seg.get("role") for seg in qg} & CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES
+                    if leaked_roles:
+                        errors.append(
+                            "%s: stem_identity collision retained class-presupposing role(s) %s; "
+                            "the disputed stem and any host-class-presupposing affix must be withheld "
+                            "or reclassified, not merely form an ordered subset of the surface"
+                            % (surf, sorted(leaked_roles))
+                        )
             elif qg:
                 errors.append("%s: collision withholding outside stem_identity scope must project no qg_segments" % surf)
             hover_gloss = (tok.get("hover_preview") or {}).get("token_contribution_gloss")
@@ -386,6 +409,143 @@ def _self_test():
     gloss_leak["tokens"][0]["hover_preview"]["token_contribution_gloss"] = "some gloss"
     if not validate_record(gloss_leak):
         failures.append("I2: a collision-withheld token carrying a public token_contribution_gloss must be flagged")
+
+    # Train E gap 1 (red-first): a function_inventory candidate that OUTSCORES a
+    # sibling lexicon candidate for the same segment_candidate_ref must not let a
+    # real corpus pos_trichotomy_conflict evade detection just because scoring
+    # picked the function-word reading. _skeleton_collision must reach the
+    # sibling's collision.competitors even though the winning/selected morph
+    # itself carries none.
+    g1_seg_cands = [{"rank": 1, "segments": [{"role": "stem", "surface": "من"}]}]
+    g1_function_cand = {
+        "rank": 1,
+        "pos": "particle",
+        "lemma": "من",
+        "root": None,
+        "gloss_hint": "from/who/whom/conditional by voweling and context",
+        "pattern": None,
+        "evidence_class": "function_inventory",
+        "score": 6.5,
+        "segment_candidate_ref": 0,
+        "features": {},
+    }
+    g1_lexicon_cand = {
+        "rank": 2,
+        "pos": "verb",
+        "lemma": "مَنَّ",
+        "root": "م ن ن",
+        "gloss_hint": "to do someone a favour",
+        "pattern": None,
+        "evidence_class": "largelexicon_full",
+        "score": 5.5,
+        "segment_candidate_ref": 0,
+        "features": {},
+        "collision": {
+            "competing_entry_ids": ["e1", "e2"],
+            "competitors": [
+                {"entry_id": "e1", "pos": "verb", "root": "م ن ن", "lemma": "مَنَّ"},
+                {"entry_id": "e2", "pos": "particle", "root": None, "lemma": "مِنْ"},
+            ],
+        },
+    }
+    g1_morphs = [g1_function_cand, g1_lexicon_cand]
+    g1_selected, g1_selected_morph = parser._selected(g1_seg_cands, g1_morphs)
+    g1_gate, g1_collision = parser._gate(
+        "من", g1_seg_cands, g1_selected_morph, [], g1_morphs, selected_seg=g1_selected,
+    )
+    if g1_gate != "lexical_collision_requires_context":
+        failures.append(
+            "gap1: a function_inventory candidate that outscores a sibling carrying a real "
+            "pos_trichotomy_conflict must not bypass the collision gate; got gate=%r" % g1_gate
+        )
+    if not g1_collision or g1_collision.get("kind") != "pos_trichotomy_conflict":
+        failures.append("gap1: the winning gate must expose the sibling's pos_trichotomy_conflict")
+
+    g1_end_to_end = parser.parse_text("من", db="largelexicon")
+    g1_tok = (g1_end_to_end.get("tokens") or [{}])[0]
+    if g1_tok.get("confidence_gate") != "lexical_collision_requires_context":
+        failures.append(
+            "gap1 end-to-end: bare 'من' has a real corpus pos_trichotomy_conflict "
+            "(verb مَنَّ vs particle مِنْ/مَنْ) and must not settle for gate=%r"
+            % g1_tok.get("confidence_gate")
+        )
+    if (g1_tok.get("hover_preview") or {}).get("token_contribution_gloss") is not None:
+        failures.append("gap1 end-to-end: bare 'من' must not project a gloss-bearing function-word hover")
+
+    # Train E gap 2 (red-first): _scope_collision_segments must withhold or
+    # honestly reclassify affix roles whose label/gloss presupposes the disputed
+    # host class (verb_prefix, future_particle, derivative_prefix, plural_suffix),
+    # not just subject/object pronoun roles.
+    g2_qg = [
+        {"role": "future_particle", "surface": "س", "class": "qg-particle", "label": "FUT", "gloss_contribution": "will"},
+        {"role": "verb_prefix", "surface": "ي", "class": "qg-verb-prefix", "label": "PFX", "gloss_contribution": "imperfect marker"},
+        {"role": "verb_stem", "surface": "كفي", "class": "qg-verb-stem", "label": "STEM", "gloss_contribution": "suffice"},
+        {"role": "object_pronoun", "surface": "كهم", "class": "qg-object-pronoun", "label": "OBJ", "gloss_contribution": "you all"},
+    ]
+    g2_out = parser._scope_collision_segments(g2_qg)
+    g2_by_surface = {seg.get("surface"): seg for seg in g2_out}
+    for leaked_surface, original_role in (("س", "future_particle"), ("ي", "verb_prefix")):
+        seg = g2_by_surface.get(leaked_surface)
+        if seg is None:
+            failures.append("gap2: expected surface %r to survive (withheld or reclassified), but it vanished" % leaked_surface)
+        elif seg.get("role") == original_role or seg.get("gloss_contribution"):
+            failures.append(
+                "gap2: surface %r kept its class-presupposing role/gloss (role=%r gloss=%r)"
+                % (leaked_surface, seg.get("role"), seg.get("gloss_contribution"))
+            )
+    if "كفي" in g2_by_surface:
+        failures.append("gap2: the disputed stem itself must still be withheld, not just re-labeled")
+
+    # Train E gap 3 (red-first): validate_record must assert the semantic role
+    # restriction directly -- surviving segments merely being an ordered subset
+    # of the surface is not enough; a class-presupposing affix role surviving
+    # under a stem_identity collision must be flagged even though it still
+    # concatenates in order.
+    def _leak_record(surface, qg_segments, collision):
+        return {
+            "schema": SCHEMA,
+            "public_boundary": dict(PUBLIC_BOUNDARY),
+            "source_boundary": {"original_preserved": True, "external_text_copied": False, "quran_text_altered": False},
+            "input_mode": "arbitrary_typing",
+            "raw_input": surface,
+            "summary": {"live_writes": 0},
+            "tokens": [{
+                "surface": surface,
+                "loc": None,
+                "confidence_gate": "lexical_collision_requires_context",
+                "segment_candidates": [],
+                "morphology_candidates": [],
+                "collision": collision,
+                "qg_segments": qg_segments,
+                "hover_preview": {"token_contribution_gloss": None},
+            }],
+        }
+
+    class_presupposing_leak = _leak_record(
+        "سيفعل",
+        [
+            {"role": "future_particle", "surface": "س", "class": "qg-particle"},
+            {"role": "verb_prefix", "surface": "ي", "class": "qg-verb-prefix"},
+        ],
+        {"kind": "pos_trichotomy_conflict", "scope": "stem_identity"},
+    )
+    if not validate_record(class_presupposing_leak):
+        failures.append(
+            "gap3: a stem_identity collision retaining a class-presupposing role "
+            "(future_particle/verb_prefix) must be flagged even though the segments "
+            "still form an ordered subset of the surface"
+        )
+
+    reclassified_ok = _leak_record(
+        "سيفعل",
+        [
+            {"role": "affix_undetermined", "surface": "س", "class": "qg-particle", "gloss_contribution": None},
+            {"role": "affix_undetermined", "surface": "ي", "class": "qg-verb-prefix", "gloss_contribution": None},
+        ],
+        {"kind": "pos_trichotomy_conflict", "scope": "stem_identity"},
+    )
+    if validate_record(reclassified_ok):
+        failures.append("gap3: honestly reclassified affix_undetermined segments must not be flagged")
 
     for f in failures:
         print("FAIL " + f)

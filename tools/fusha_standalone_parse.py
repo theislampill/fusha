@@ -52,6 +52,13 @@ STEM_QG_ROLES = {"stem", "verb_stem", "adjective_stem"}
 # cu-clitic-pronoun-role-discriminator: the clitic span survives but its role,
 # which presupposes the disputed host category, degrades to undetermined.
 PRONOUN_CLITIC_QG_ROLES = {"object_pronoun", "subject_pronoun"}
+# R7 extension (Train E gap 2): these qg roles are affix labels/glosses that
+# themselves assert the disputed host is a verb (verb_prefix, future_particle,
+# derivative_prefix) or a noun/adjective carrying number morphology
+# (plural_suffix). Their surface span survives (it is still visibly attached),
+# but the role/label/gloss that would presuppose the disputed class degrades
+# to undetermined, exactly like the pronoun-role discriminator above.
+CLASS_PRESUPPOSING_QG_ROLES = {"verb_prefix", "future_particle", "derivative_prefix", "plural_suffix"}
 
 
 def _selected(seg_cands, morph_cands):
@@ -133,13 +140,25 @@ def _candidate_collision(surface, seg_cands, morph_cands, morph):
     return None
 
 
-def _skeleton_collision(surface, seg_cands, morph, selected_seg=None):
+def _skeleton_collision(surface, seg_cands, morph, selected_seg=None, morph_cands=None):
     """R4/R5: classify the SELECTED candidate's own competitor set.
 
     Competitors come from morph["collision"]["competitors"], which
     fusha_pattern_engine.py scopes to the one stem this candidate was matched
     against (R6): never a union over other segmentation hypotheses, so a
     rejected split can never manufacture a competitor here.
+
+    R4 extension (Train E gap 1): a `function_inventory` candidate carries no
+    `collision` field of its own (it is not built via `_candidate_from_row`),
+    so if it OUTSCORES a sibling lexicon candidate for the same stem, `morph`
+    here (the selected/winning candidate) can be the function-word reading
+    while the real corpus `pos_trichotomy_conflict`/`root_conflict` data sits
+    on the outscored sibling. Which candidate wins scoring must never decide
+    whether a corpus-defined collision gets reported, so when the selected
+    candidate itself carries fewer than 2 competitors, this falls back to any
+    sibling in `morph_cands` sharing the same `segment_candidate_ref` (the
+    same stem, per R6 -- never a different segmentation hypothesis) that does
+    carry >= 2 competitors.
 
     R7 scope is derived from `selected_seg` (the segment candidate `_selected`
     actually returned), not from `morph["segment_candidate_ref"]`: `_selected`
@@ -151,7 +170,19 @@ def _skeleton_collision(surface, seg_cands, morph, selected_seg=None):
     """
     if not morph:
         return None
-    competitors = ((morph.get("collision") or {}).get("competitors")) or []
+    collision_source = morph.get("collision") or {}
+    competitors = collision_source.get("competitors") or []
+    if len(competitors) < 2 and morph_cands:
+        ref = morph.get("segment_candidate_ref")
+        for cand in morph_cands:
+            if cand is morph or cand.get("segment_candidate_ref") != ref:
+                continue
+            sibling_collision = cand.get("collision") or {}
+            sibling_competitors = sibling_collision.get("competitors") or []
+            if len(sibling_competitors) >= 2:
+                collision_source = sibling_collision
+                competitors = sibling_competitors
+                break
     if len(competitors) < 2:
         return None
     classes = {POS_TRICHOTOMY.get(c.get("pos")) for c in competitors}
@@ -176,13 +207,26 @@ def _skeleton_collision(surface, seg_cands, morph, selected_seg=None):
         "scope": scope,
         "surface": surface,
         "route": ["sarf_collision_review", "nahw_function_review"],
-        "competing_entry_ids": (morph.get("collision") or {}).get("competing_entry_ids") or [],
+        "competing_entry_ids": collision_source.get("competing_entry_ids") or [],
         "decided_by": kind,
     }
 
 
 def _scope_collision_segments(qg_segments):
-    """R7: under stem_identity scope, withhold the stem, keep the rest."""
+    """R7: under stem_identity scope, withhold the stem, keep the rest.
+
+    R7 extension (Train E gap 2): a pronoun-role clitic degrades to
+    `clitic_undetermined` because its span is genuinely still there, only its
+    ROLE presupposes the disputed host class. The same reasoning applies to
+    `CLASS_PRESUPPOSING_QG_ROLES` (verb_prefix/future_particle/
+    derivative_prefix/plural_suffix): the letters are real surface material,
+    but their role/label/gloss assert a specific verb- or noun-shaped analysis
+    of the disputed stem, so they degrade to `affix_undetermined` rather than
+    keeping a label that presupposes the class the collision leaves open.
+    Genuinely class-neutral material (an independently licensed preposition,
+    conjunction, article, or the pronoun/affix undetermined roles themselves)
+    is preserved unchanged.
+    """
     out = []
     for seg in qg_segments:
         role = seg.get("role")
@@ -191,6 +235,12 @@ def _scope_collision_segments(qg_segments):
         if role in PRONOUN_CLITIC_QG_ROLES:
             seg = dict(seg)
             seg["role"] = "clitic_undetermined"
+            seg["label"] = "UNDET"
+            seg["gloss_contribution"] = None
+            out.append(seg)
+        elif role in CLASS_PRESUPPOSING_QG_ROLES:
+            seg = dict(seg)
+            seg["role"] = "affix_undetermined"
             seg["label"] = "UNDET"
             seg["gloss_contribution"] = None
             out.append(seg)
@@ -263,7 +313,7 @@ def _gate(surface, seg_cands, morph, context, morph_cands=None, selected_seg=Non
         votes.append((GATE_RANK["pending_context"], "pending_context", None, 0))
 
     # skeleton_collision (R4/R5), scoped to the selected stem (R6/R7).
-    skeleton = _skeleton_collision(surface, seg_cands, morph, selected_seg=selected_seg)
+    skeleton = _skeleton_collision(surface, seg_cands, morph, selected_seg=selected_seg, morph_cands=morph_cands)
     if skeleton:
         votes.append((GATE_RANK["lexical_collision_requires_context"], "lexical_collision_requires_context", skeleton, 0))
 

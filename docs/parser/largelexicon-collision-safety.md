@@ -23,6 +23,44 @@ candidate, but it does not make that candidate safe for a public hover.
 > are unresolved because their fix sites are outside this repair's edit scope
 > (`fusha_pattern_engine.py`, `check_regressions.py`, fixture data).
 
+> **Train E follow-up repair.** A second targeted Opus review of the R1-R8
+> packet found three IMPORTANT interaction gaps that survived the first
+> repair, all confirmed against the real corpus, not just synthetic fixtures.
+> **(1)** `_skeleton_collision` read `collision.competitors` off the SELECTED
+> (highest-scoring) morphology candidate only. A `function_inventory`
+> candidate is built directly and never carries a `collision` field of its
+> own, so when its fixed score (6.5) outscored a sibling lexicon candidate for
+> the same bare surface, a real corpus `pos_trichotomy_conflict` sitting on
+> the outscored sibling was invisible to the gate -- bare `من`, `لا`, and
+> `إلا` (real corpus rows: verb `مَنَّ` vs particle `مِنْ`/`مَنْ`; particle
+> `لَا` vs its noun/verb competitors; particle `إِلَّا` vs noun `إِلًّا`) all
+> reached `pending_context` with a full function-word gloss instead of
+> abstaining. `_skeleton_collision` now falls back to any sibling in
+> `morph_cands` sharing the same `segment_candidate_ref` (never a different
+> segmentation hypothesis, preserving R6) that carries its own >= 2
+> competitors, and `tools/validate_largelexicon_parser.py` gained a dedicated
+> corpus-vs-production agreement check
+> (`_validate_function_inventory_corpus_agreement`) so this class of gap
+> fails closed automatically instead of needing a fixture per surface.
+> **(2)** `_scope_collision_segments` degraded pronoun-role clitics
+> (`object_pronoun`/`subject_pronoun`) to `clitic_undetermined` but left
+> `verb_prefix`, `future_particle`, `derivative_prefix`, and `plural_suffix`
+> untouched, even though their role/label/gloss (`"imperfect marker"`,
+> `"will"`, `"Form X seeker/doer shape"`, `"masculine plural/oblique
+> ending"`) each presuppose the very noun/verb/adjective class the collision
+> leaves open. These now degrade to `affix_undetermined` the same way,
+> keeping the surface span visible but withholding the class-committing
+> label/gloss. **(3)** The Mode C validator's ordered-subset check
+> (`_retained_segments_ordered_subset`) only proved that surviving segments
+> land in order somewhere in the surface; it never asserted that the
+> withheld stem or a class-presupposing affix was actually absent from
+> `qg_segments`, so a regression reintroducing one of the roles from (2)
+> would still pass as long as the leftover pieces happened to be in order.
+> `validate_record` now checks `qg` roles against
+> `CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES` directly for every
+> `scope == "stem_identity"` collision row. All three are repaired below;
+> none required touching `fusha_pattern_engine.py` or the registry.
+
 ## Required behavior
 
 - Candidate enumeration remains broad.
@@ -121,6 +159,25 @@ also keeps its own `decided_by` (the collision `kind`).
    review I4). `_skeleton_collision` accepts the resolved `selected_seg` as
    its scope source, falling back to the ref-based lookup only for callers
    that have not resolved one.
+
+   **Sibling fallback (Train E follow-up gap 1).** The SELECTED candidate is
+   whichever morphology candidate scored highest, and a `function_inventory`
+   candidate (fixed score 6.5, built directly rather than via
+   `_candidate_from_row`) routinely outscores a lexicon-matched sibling for
+   the same bare surface. That sibling's `collision.competitors` is where a
+   real corpus `pos_trichotomy_conflict`/`root_conflict` lives, so when the
+   selected candidate itself carries fewer than 2 competitors,
+   `_skeleton_collision` now also checks `morph_cands` for a sibling sharing
+   the SAME `segment_candidate_ref` (the same stem attempt, per R6 — never a
+   different segmentation hypothesis) that does carry >= 2 competitors, and
+   uses that sibling's competitor set (and `competing_entry_ids`) instead.
+   Which candidate wins scoring must never decide whether a corpus-defined
+   collision is reported. This is scoped to same-`segment_candidate_ref`
+   siblings only: a surface with a genuine competing SEGMENTATION (e.g. bare
+   `لما` also splitting as `ل + ما`, tied at top score with the whole-token
+   `لما` reading) is a distinct, deliberately unresolved ambiguity question
+   (see "Deferred spec decisions"), not this gap, and R6 forbids importing a
+   different, unselected split's data into the selected reading.
 4. **existing gate ladder** — unchanged: function-token context routing,
    `_candidate_collision` (bare high-risk-match and cross-segmentation
    collisions), then the internal-pattern/ambiguous fallback. Each of these
@@ -144,6 +201,21 @@ Two rules constrain how the above is computed, not what class fires:
   role that presupposes the disputed host class. Under `whole_token`,
   `qg_segments` is emptied as before. Unconditionally emptying `qg_segments`
   breaks `LLX-COLL-002`'s `required_roles=[prefix_preposition]`.
+
+  **Class-presupposing affixes (Train E follow-up gap 2).** The same
+  reasoning that degrades a pronoun role applies to any OTHER affix whose
+  role/label/gloss presupposes the disputed class: `verb_prefix` ("imperfect
+  marker"), `future_particle` ("will"), `derivative_prefix` ("Form X
+  seeker/doer shape" / "derived-form prefix"), and `plural_suffix`
+  ("masculine plural/oblique ending") each assert a specific verb- or
+  noun/adjective-shaped analysis of the disputed stem. These now degrade to
+  `affix_undetermined` (surface preserved, role/label/gloss withheld)
+  exactly like the pronoun-role discriminator, rather than surviving
+  unchanged while only the stem and pronoun roles were withheld. Genuinely
+  class-neutral material — an independently licensed preposition,
+  conjunction, or article, or the pronoun/affix undetermined roles
+  themselves — is preserved unchanged; only material whose role or gloss
+  presupposes the disputed trichotomy class degrades.
 
 The seven implemented collision/provenance classes (`source_requires_nahw_function`,
 `compound_headword_bundle`, `root_identity_unresolved`, `pos_trichotomy_conflict`,
@@ -180,6 +252,20 @@ than requiring full concatenation); a token carrying `collision` with any
 other scope (`whole_token`, or a `_candidate_collision` result with no
 `scope` key at all) must project no `qg_segments`; and any token carrying
 `collision` must have `hover_preview.token_contribution_gloss == null`.
+
+**Semantic role assertion (Train E follow-up gap 3).** The ordered-subset
+check alone only proves the surviving segments land in order somewhere in
+the surface — it does not prove the disputed stem or a class-presupposing
+affix was actually withheld, so a regression reintroducing `stem`/
+`verb_stem`/`adjective_stem`, an un-degraded `object_pronoun`/
+`subject_pronoun`, or an un-degraded `verb_prefix`/`future_particle`/
+`derivative_prefix`/`plural_suffix` into a `stem_identity` row would still
+pass the ordered-subset check as long as the leftover pieces happened to be
+in the right order. `validate_record` now additionally checks every
+`scope == "stem_identity"` token's `qg` roles against
+`CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES` (the same role set gap 2 withholds
+or degrades) and flags any that leaked through undegraded.
+
 Ordinary, non-collision tokens keep the original unweakened
 full-concatenation check. Before this repair, the validator applied the
 ordinary full-concatenation and preposition/pronoun-headline checks
@@ -233,6 +319,20 @@ of their fix sites are in this repair's edit scope
   source of truth (code reads caps/routes/order from it), or stay documentary
   (and if so, what closes the drift gap)? This is an architecture decision,
   not a bug in either the registry or the code as they stand today.
+- **I9 — competing-segmentation ambiguity is not a same-stem collision.**
+  Gap 1's sibling fallback is deliberately scoped to siblings sharing the
+  selected candidate's `segment_candidate_ref` (same stem attempt). Bare
+  `لما` also splits as `ل + ما`, tied for top score against the whole-token
+  `لما` function candidate (per `_candidate_collision`'s existing
+  function-cluster tie exemption, the same path `إنما`/`انما` rely on); the
+  real corpus `pos_trichotomy_conflict` (`لَمَّا` particle vs a `ل م م` noun
+  entry) sits on the whole-token hypothesis, which R6 forbids importing into
+  a different, selected split hypothesis. Whether a surface with a genuine
+  competing SEGMENTATION (not just competing entries for one stem) should
+  also fail closed — and if so, whether that is a widening of R6's boundary
+  or a new class alongside it — is an open spec decision, not solved here.
+  Composed forms where the disputed stem is unambiguously one segment (e.g.
+  `وَلَمَّا`) are unaffected and already fail closed via gap 1's fix.
 
 ## Regression bank
 

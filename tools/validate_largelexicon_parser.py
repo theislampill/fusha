@@ -7,7 +7,9 @@ import argparse
 import json
 from pathlib import Path
 
+from fusha_clitic_splitter import split_clitics
 from fusha_largelexicon_cli import _token_safety
+from fusha_pattern_engine import FUNCTION_WORDS
 from fusha_standalone_parse import parse_text
 from largelexicon_common import LEXICON_DIR, read_jsonl
 
@@ -232,6 +234,117 @@ def _validate_trichotomy_conflict_corpus_invariant(errors: list[str]) -> None:
     errors.extend(_check_trichotomy_invariant_rows(read_jsonl(FORM_TABLE), parse_fn))
 
 
+def _check_function_inventory_corpus_agreement_rows(rows: list[dict], parse_fn, max_checked: int = 40) -> list[str]:
+    """Train E gap 1: a `function_inventory` candidate is manufactured directly
+    (never via `_candidate_from_row`), so it carries no `collision` field of its
+    own. When its fixed score (6.5) outscores a sibling lexicon candidate for
+    the same bare key, the production parse path must still surface a real
+    corpus `pos_trichotomy_conflict` for that key -- which candidate wins
+    scoring must never decide whether a corpus-defined collision is reported.
+    For every corpus-defined multi-trichotomy surface whose deterministic
+    `surface_norm_strict` key ALSO names a `FUNCTION_WORDS` entry, this parses
+    the exact bare key text (what a learner types, not the diacritized corpus
+    form) and requires `pos_trichotomy_conflict` there too; under-firing is a
+    reported failure, never a skipped row.
+
+    Scoped (like R6) to keys with exactly ONE clitic-split segmentation
+    hypothesis: a key such as `لما` also has a real `ل + ما` split candidate
+    tied for top score, which is a distinct, legitimate segmentation-ambiguity
+    question (already exempted by `_candidate_collision`'s function-cluster
+    tie handling, e.g. `إنما`/`انما`) -- not the same-stem, same-segmentation
+    scoring conflict gap 1 targets. Widening this check across segmentation
+    hypotheses would re-introduce exactly what R6 forbids (importing a
+    different, unselected split's competitor data into the selected reading).
+    """
+    errors: list[str] = []
+    checked = 0
+    for key, surface in _trichotomy_conflict_candidates(rows):
+        if key not in FUNCTION_WORDS:
+            continue
+        if len(split_clitics(key)) != 1:
+            continue
+        if checked >= max_checked:
+            break
+        checked += 1
+        parsed = parse_fn(key)
+        tokens = parsed.get("tokens") or []
+        if len(tokens) != 1:
+            errors.append(
+                f"function-inventory corpus agreement: {key!r} (corpus form {surface!r}) did not "
+                f"parse to exactly one token (got {len(tokens)})"
+            )
+            continue
+        collision = tokens[0].get("collision") or {}
+        if collision.get("kind") != "pos_trichotomy_conflict":
+            errors.append(
+                f"function-inventory corpus agreement: bare {key!r} shares a real corpus "
+                f"pos_trichotomy_conflict with {surface!r} but the production parse path did not "
+                f"expose it (got collision.kind={collision.get('kind')!r}, "
+                f"confidence_gate={tokens[0].get('confidence_gate')!r}) -- the function_inventory "
+                f"reading must not win scoring and hide a corpus-defined trichotomy collision"
+            )
+    return errors
+
+
+def _validate_function_inventory_corpus_agreement(errors: list[str]) -> None:
+    """The production parse path and the corpus trichotomy invariant must agree
+    fail-closed: a corpus-defined noun/verb/particle collision must not become
+    a gloss-bearing function-word result merely because that candidate wins
+    scoring (Train E gap 1)."""
+    if not FORM_TABLE.exists():
+        return
+
+    def parse_fn(key: str) -> dict:
+        return parse_text(key, document_id=f"function-inventory-corpus-agreement:{key}", db="largelexicon")
+
+    errors.extend(_check_function_inventory_corpus_agreement_rows(read_jsonl(FORM_TABLE), parse_fn))
+
+
+def _self_test_function_inventory_corpus_agreement_fails_closed() -> list[str]:
+    """Red-first (Train E gap 1): the agreement checker must FAIL when the
+    production parse path under-fires on a corpus-defined multi-trichotomy
+    surface whose key is also a function word, and must not flag a
+    correctly-abstained one."""
+    failures: list[str] = []
+    rows = [
+        {"surface": "مَنَّ", "surface_norm_strict": "من", "entry_id": "self-test-1", "pos": "verb"},
+        {"surface": "مِنْ", "surface_norm_strict": "من", "entry_id": "self-test-2", "pos": "particle"},
+    ]
+
+    def under_firing_parse_fn(key: str) -> dict:
+        return {
+            "tokens": [
+                {
+                    "morphology_candidates": [{"lemma": "من", "root": None, "pos": "particle"}],
+                    "collision": {},
+                    "confidence_gate": "pending_context",
+                }
+            ]
+        }
+
+    if not _check_function_inventory_corpus_agreement_rows(rows, under_firing_parse_fn):
+        failures.append(
+            "function-inventory corpus agreement checker must report an error when the "
+            "production parse path under-fires pos_trichotomy_conflict for a bare function-word "
+            "key that shares a real corpus trichotomy conflict, not skip it silently"
+        )
+
+    def firing_parse_fn(key: str) -> dict:
+        return {
+            "tokens": [
+                {
+                    "morphology_candidates": [{"lemma": None, "root": None, "pos": None}],
+                    "collision": {"kind": "pos_trichotomy_conflict"},
+                    "confidence_gate": "lexical_collision_requires_context",
+                }
+            ]
+        }
+
+    if _check_function_inventory_corpus_agreement_rows(rows, firing_parse_fn):
+        failures.append("function-inventory corpus agreement checker must not flag a correctly-abstained key")
+    return failures
+
+
 def _self_test_trichotomy_invariant_fails_closed() -> list[str]:
     """Red-first (Train E B2): the invariant checker must FAIL when the parser
     under-fires on a corpus-defined multi-entry multi-trichotomy surface, and must
@@ -318,6 +431,8 @@ def validate() -> list[str]:
     _validate_match_basis_never_norm(errors)
     _validate_trichotomy_conflict_corpus_invariant(errors)
     errors.extend(_self_test_trichotomy_invariant_fails_closed())
+    _validate_function_inventory_corpus_agreement(errors)
+    errors.extend(_self_test_function_inventory_corpus_agreement_fails_closed())
     return errors
 
 
