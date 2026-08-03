@@ -15,6 +15,21 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SAMPLE = ROOT / "qamus" / "examples" / "largelexicon" / "hover-candidates.sample.jsonl"
 
 
+SEGMENT_COVERAGE_VALUES = {"complete", "partial", "none"}
+
+
+def _ordered_subset(pieces: list[str], surface: str) -> bool:
+    pos = 0
+    for piece in pieces:
+        if not piece:
+            continue
+        idx = surface.find(piece, pos)
+        if idx == -1:
+            return False
+        pos = idx + len(piece)
+    return True
+
+
 def validate(path: Path = DEFAULT_SAMPLE) -> list[str]:
     errors: list[str] = []
     if not path.exists():
@@ -30,10 +45,11 @@ def validate(path: Path = DEFAULT_SAMPLE) -> list[str]:
             errors.append(f"{label}: live_mutation_allowed must be false")
         segment_surface = row.get("segment_surface")
         segments = row.get("segments") or []
+        collision = row.get("collision") or {}
         # R8: a withheld stem (collision, or a fully empty qg_segments row) is
         # not required to reconstruct visible_surface; every OTHER row still
         # must, so the concatenation invariant is not relaxed for them.
-        if segment_surface is not None and segment_surface != row.get("visible_surface"):
+        if segment_surface is not None and not collision and segment_surface != row.get("visible_surface"):
             errors.append(f"{label}: segment_surface does not equal visible_surface")
         if not segments and row.get("token_contribution") is not None:
             errors.append(f"{label}: token_contribution must be null when segments is empty")
@@ -47,9 +63,33 @@ def validate(path: Path = DEFAULT_SAMPLE) -> list[str]:
             "parser_packet",
         }:
             errors.append(f"{label}: unsupported status {row.get('status')!r}")
+        # I3 (resolved): segment_coverage is typed and must agree with the
+        # collision/segments state it was derived from, never a stale or
+        # unexamined value.
+        coverage = row.get("segment_coverage")
+        if coverage not in SEGMENT_COVERAGE_VALUES:
+            errors.append(f"{label}: segment_coverage must be one of {sorted(SEGMENT_COVERAGE_VALUES)}, got {coverage!r}")
+        elif collision:
+            if coverage == "complete":
+                errors.append(f"{label}: a collision row can never claim segment_coverage=complete")
+            if coverage == "partial":
+                if collision.get("scope") != "stem_identity":
+                    errors.append(f"{label}: segment_coverage=partial requires collision.scope=stem_identity, got {collision.get('scope')!r}")
+                if not segments or segment_surface is None:
+                    errors.append(f"{label}: segment_coverage=partial requires non-null segment_surface from retained segments")
+                elif not _ordered_subset([seg.get("surface", "") for seg in segments], row.get("visible_surface") or ""):
+                    errors.append(f"{label}: segment_coverage=partial segment_surface is not an ordered subset of visible_surface")
+                if row.get("token_contribution") is not None:
+                    errors.append(f"{label}: segment_coverage=partial must keep token_contribution null")
+            if coverage == "none" and (segments or segment_surface is not None):
+                errors.append(f"{label}: segment_coverage=none must carry no segments and a null segment_surface")
+        elif coverage != "complete":
+            errors.append(f"{label}: a non-collision row must be segment_coverage=complete, got {coverage!r}")
         errors.extend(public_boundary_errors(row, label))
     if "source_crosswalk_packet" not in statuses:
         errors.append("sample should contain source_crosswalk_packet rows to prove non-live routing")
+    if not any((row.get("collision") or {}).get("scope") == "stem_identity" for row in rows):
+        errors.append("sample should contain a stem_identity collision row to prove partial coverage typing")
     return errors
 
 

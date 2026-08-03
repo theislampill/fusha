@@ -89,7 +89,9 @@
     {
       "canonical_unit_ids": [
         "cu-nisba-attribution-suffix",
-        "cu-clitic-pronoun-role-discriminator"
+        "cu-clitic-pronoun-role-discriminator",
+        "cu-orthographic-connectivity-classes",
+        "cu-definite-article-assimilation"
       ],
       "class_id": "scoped_collision",
       "filter_order": 3,
@@ -119,6 +121,23 @@
       "trigger_keys": [
         "match_basis",
         "high_risk_bare_match_surfaces"
+      ]
+    },
+    {
+      "canonical_unit_ids": [],
+      "class_id": "competing_segmentation",
+      "filter_order": 4,
+      "gate_effect": {
+        "cap": "lexical_collision_requires_context"
+      },
+      "route": [
+        "sarf",
+        "nahw"
+      ],
+      "rule_id": "R9",
+      "trigger_keys": [
+        "morphology_candidates",
+        "segment_candidate_ref"
       ]
     }
   ],

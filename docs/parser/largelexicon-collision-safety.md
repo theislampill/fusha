@@ -266,12 +266,108 @@ Two rules constrain how the above is computed, not what class fires:
 > instead of silently validating. Neither defect required touching
 > `fusha_pattern_engine.py` or `fusha_clitic_splitter.py`.
 
-The seven implemented collision/provenance classes (`source_requires_nahw_function`,
+## Competing segmentation is not a same-stem collision (I9, resolved)
+
+A prior revision's `_candidate_collision` exempted every top-score tie where
+all tied candidates were `function_inventory` particles, regardless of which
+`segment_candidate_ref` each one matched. That let bare `لما` (a `ل + ما`
+split, ref 0, tied at top score against the whole-token `لَمَّا` particle
+reading, ref 1) and `وما` (`و + ما` vs whole-token `وما`) silently commit to
+the prefix+`ما` split -- a full function-word gloss, a `P+PART`/`CONJ+PART`
+`selected_preview`, and no acknowledgement that a tied, structurally different
+whole-token rival existed. This is exactly the gap the "Deferred spec
+decisions" section below used to record as I9: the sibling-fallback repair
+(gap 1, above) is deliberately scoped to siblings sharing one
+`segment_candidate_ref` (one stem attempt, per R6); a genuine tie ACROSS
+different `segment_candidate_ref` values is a different question -- rival
+segmentations of the surface itself, not rival entries for one already-chosen
+segmentation.
+
+`_candidate_collision`'s exemption is now scoped to same-ref ties only, so it
+can never mask a real cross-segmentation tie. A new registered class,
+`competing_segmentation` (`R9`), fires when the tied top-scored
+`morphology_candidates` disagree on pos/lemma/root (the same disagreement
+check `pos_trichotomy_conflict`/`root_conflict` use, just applied across the
+whole tied set rather than one stem's `collision.competitors`) AND that
+disagreement spans >= 2 distinct `segment_candidate_ref` values. Ref
+multiplicity alone is never sufficient: `بالله` also ties two different refs
+at top score (a bā'+Allah split vs. a whole-token largelexicon row) but both
+resolve to the identical entry (same lemma/pos/root), so it correctly stays
+uncollided -- "real clitics remain visible when the morphology identity is
+stable" is unaffected. When `competing_segmentation` fires: every rival
+`segment_candidate_ref` is preserved in `collision.candidate_refs`
+(`lemma_values`/`pos_values` name the disagreement itself), the gate is
+`lexical_collision_requires_context`, `selected_preview` is cleared,
+`qg_segments` is emptied (there is no `scope` key -- see R7's "no scope key at
+all" case, so no partial affix retention is attempted across two structurally
+different segmentations), and the selected candidate's `lemma`/`root`/`pos`/
+`pattern`/`gloss_hint` are stripped exactly like R4/R5's identity withholding,
+just with `evidence_keys` naming `morphology_candidates`/`segment_candidate_ref`
+instead of `collision.competitors` (there is no single stem's competitor list
+to point at -- the tie is across segmentations). `إنما` (one top-scored
+segmentation, the pinned particle cluster) is unaffected and remains the
+positive control it always was.
+
+## Registry-authoritative gate metadata (I8, partially resolved)
+
+`fusha/parser/collision-classes.json` names every registered class's gate
+cap, route, and `filter_order`. Those used to be duplicated as literals at
+each call site in `tools/fusha_standalone_parse.py` (`_gate`,
+`_skeleton_collision`, `_candidate_collision`), with no consistency check, so
+the registry could drift from the implementation silently (I8's original
+framing). The registry is now the source of truth for a FIRED class's cap,
+route, and lattice tie-break order: `_registry_vote(class_id)` looks up
+`gate_effect.cap` and `filter_order` from `_CLASS_BY_ID` (built once from the
+loaded registry) and returns the matching `GATE_RANK` entry; `_registry_route`
+and `_registry_canonical_unit_ids` do the same for `route` and
+`canonical_unit_ids`. `_gate`'s votes for `source_requires_nahw_function`, the
+skeleton-collision classes, and the `_candidate_collision` classes
+(`unsafe_bare_match`/`competing_segmentation`) all read through these helpers
+instead of hardcoding `"lexical_collision_requires_context"` or a tie-break
+integer. WHETHER a class fires is unchanged -- the trigger predicates
+(`_skeleton_collision`'s competitor-class check, `_candidate_collision`'s
+tied-top-score/identity-disagreement check) remain reviewed Python, per this
+repair's scope; only the cap/route/order VALUES a fired class emits are now
+registry-driven. This is a scoped, behavior-preserving resolution of I8's
+"drift gap" question for cap/route/order specifically; I8's larger
+architecture question (should trigger predicates themselves move into the
+registry) remains open.
+
+## Partial-coverage projection typing (I3, resolved)
+
+`tools/project_largelexicon_qamus_hover_candidates.py` now types every row's
+`segment_coverage` as `"complete"` (no collision; the ordinary full
+concatenation), `"partial"` (a `scope=stem_identity` collision whose retained,
+already-safe `qg_segments` are non-empty -- `segment_surface` becomes their
+ordered concatenation, e.g. `بِهِمُ` types `partial`/`بِ`, retaining only the
+preposition span, and `أَعْمَٰلَهُمْ` types `partial`/`هُمْ`, retaining only the
+`clitic_undetermined` suffix), or `"none"` (a `whole_token` collision, a
+`competing_segmentation`/`unsafe_bare_match` collision with no `scope` key at
+all, or a `stem_identity` collision whose retained segments happen to be
+empty). `token_contribution` stays `null` under every collision regardless of
+coverage, so no gloss claim survives partial typing. `segment_surface` is
+never asked to reconstruct the full `visible_surface` under any collision --
+only the already-scoped, already-class-neutralized affix/clitic material the
+parser itself decided was safe to retain. `tools/validate_largelexicon_qg_projection.py`
+enforces `segment_coverage in {complete, partial, none}` and its agreement
+with `collision`/`segments`/`segment_surface`, closing the "vacuous under
+partial-withheld rows" gap this document used to record here.
+
+The eight implemented collision/provenance classes (`source_requires_nahw_function`,
 `compound_headword_bundle`, `root_identity_unresolved`, `pos_trichotomy_conflict`,
-`root_conflict`, `scoped_collision`, and the legacy `unsafe_bare_match` guard)
-are registered machine-readably in `fusha/parser/collision-classes.json`
-(schema at `fusha/parser/schemas/collision-class-registry.schema.json`), each
-with its trigger keys, gate effect, route, and licensing canonical unit ids.
+`root_conflict`, `scoped_collision`, the legacy `unsafe_bare_match` guard, and
+`competing_segmentation`) are registered machine-readably in
+`fusha/parser/collision-classes.json` (schema at
+`fusha/parser/schemas/collision-class-registry.schema.json`), each with its
+trigger keys, gate effect, route, and licensing canonical unit ids.
+`scoped_collision`'s canonical unit ids also name
+`cu-orthographic-connectivity-classes` and `cu-definite-article-assimilation`
+as scoped-collision provenance ONLY -- this repair does not execute either
+unit's own unresolved linguistic decisions (letter-connectivity classing, laam
+assimilation); it only records that R7's scoping (preserving affix/clitic
+segments while withholding a disputed stem) is provenance those units may
+eventually license, alongside the pronoun-role and nisba-suffix units already
+there.
 
 `tools/project_largelexicon_qamus_hover_candidates.py` reconciles with this:
 any token carrying a `collision` (fully or partially withheld stem) is
@@ -336,19 +432,15 @@ edges, `morphology_candidates[0]` is still never a deploy signal, and
 
 ## Deferred spec decisions (recorded, not solved)
 
-An assembled Opus review of the R1-R8 packet raised four IMPORTANT findings
-that each need a spec decision before a patch, not a patch first. They are
-recorded here so they are not lost; none are solved by this repair, and none
-of their fix sites are in this repair's edit scope
-(`tools/fusha_pattern_engine.py`, `tools/project_largelexicon_qamus_hover_candidates.py`,
-`tools/validate_largelexicon_qg_projection.py`, `fusha/parser/collision-classes.json`).
+An assembled Opus review of the R1-R8 packet raised several IMPORTANT findings
+that each needed a spec decision before a patch, not a patch first. **I3, I8
+(partially), and I9 are now resolved** -- see "Partial-coverage projection
+typing (I3, resolved)", "Registry-authoritative gate metadata (I8, partially
+resolved)", and "Competing segmentation is not a same-stem collision (I9,
+resolved)" above. I5 and I7 remain open and are recorded here so they are not
+lost; neither is solved by this repair, and their fix sites
+(`tools/fusha_pattern_engine.py`) remain outside this repair's edit scope.
 
-- **I3 — partial-coverage typing.** Should a `scope=stem_identity` collision
-  row emit a typed `segment_coverage: "partial"` plus the retained affix
-  concatenation (required to be a contiguous ordered subsequence of
-  `visible_surface`), instead of `segment_surface=null` unconditionally? This
-  needs a decision on the projected schema shape, not a patch to
-  `project_largelexicon_qamus_hover_candidates.py`.
 - **I5 — whether `pos` is withheld under R2/R3.** `_candidate_from_row` keeps
   `pos` when only `lemma`/`root`/gloss are withheld (compound-headword /
   unresolved-root), and that `pos` still selects a qg class and renders into
@@ -365,28 +457,11 @@ of their fix sites are in this repair's edit scope
   not identity" framing this document opens with also require a floor on
   single-entry gloss projection? Needs a decision on acceptable false-positive
   rate for the un-collided majority, not a widening of R4/R5's trigger.
-- **I8 — registry-as-source-of-truth.** `fusha/parser/collision-classes.json`
-  records every class's `gate_effect.cap`/`route`/`filter_order`, but
-  `_gate`/`_skeleton_collision`/`_candidate_collision` duplicate those as
-  code literals with no consistency check, so the registry can drift from
-  the implementation silently. Should the registry become the executable
-  source of truth (code reads caps/routes/order from it), or stay documentary
-  (and if so, what closes the drift gap)? This is an architecture decision,
-  not a bug in either the registry or the code as they stand today.
-- **I9 — competing-segmentation ambiguity is not a same-stem collision.**
-  Gap 1's sibling fallback is deliberately scoped to siblings sharing the
-  selected candidate's `segment_candidate_ref` (same stem attempt). Bare
-  `لما` also splits as `ل + ما`, tied for top score against the whole-token
-  `لما` function candidate (per `_candidate_collision`'s existing
-  function-cluster tie exemption, the same path `إنما`/`انما` rely on); the
-  real corpus `pos_trichotomy_conflict` (`لَمَّا` particle vs a `ل م م` noun
-  entry) sits on the whole-token hypothesis, which R6 forbids importing into
-  a different, selected split hypothesis. Whether a surface with a genuine
-  competing SEGMENTATION (not just competing entries for one stem) should
-  also fail closed — and if so, whether that is a widening of R6's boundary
-  or a new class alongside it — is an open spec decision, not solved here.
-  Composed forms where the disputed stem is unambiguously one segment (e.g.
-  `وَلَمَّا`) are unaffected and already fail closed via gap 1's fix.
+
+(I8's remaining open question -- whether trigger predicates themselves, not
+just the cap/route/order values a fired class emits, should move into the
+registry -- is an architecture decision beyond this repair's scope; see
+"Registry-authoritative gate metadata (I8, partially resolved)" above.)
 
 ## Regression bank
 
@@ -412,6 +487,17 @@ They cover:
   `root_conflict`, `plural_template_not_identity`, three negative controls
   (same-lemma same-class, ordinary harakah-only risk, rm12 gate stability),
   and mim-initial/afal-shape/participle-voice/shared-root hostile probes.
+- `LLX-COLL-023`/`LLX-COLL-024` cover `competing_segmentation` (I9, resolved):
+  `لما` and `وما` each tie a prefix+`ما` split against a whole-token particle
+  reading across two different `segment_candidate_ref` values, and neither
+  rival may be silently selected. `LLX-COLL-025` is the paired positive
+  control (`إنما` has exactly one top-scored segmentation and must stay
+  unaffected). `LLX-COLL-026`/`LLX-COLL-027` cover the I3 partial-coverage
+  typing consumer surfaces (`بِهِمُ` retains only the preposition span;
+  `أَعْمَٰلَهُمْ` retains only the `clitic_undetermined` suffix) at the parser
+  layer; `tools/project_largelexicon_qamus_hover_candidates.py --self-test`
+  covers the same two surfaces' `segment_coverage`/`segment_surface` typing at
+  the projection layer.
 
 > **Open verification item.** No fixture currently pairs
 > `require_source_risk_flags` with `require_collision_kind` (Train E review
@@ -431,6 +517,15 @@ $env:PYTHONIOENCODING='utf-8'
 python tools\validate_largelexicon_parser.py --self-test
 python tools\validate_largelexicon_cli_contract.py --self-test
 python tools\validate_fusha_standalone_parse.py --self-test
+python tools\project_largelexicon_qamus_hover_candidates.py --self-test
+python tools\validate_largelexicon_qg_projection.py
+```
+
+Regenerating the committed projection sample after a parser/projector change
+(byte-fresh, from the generator, never hand-edited):
+
+```powershell
+python tools\project_largelexicon_qamus_hover_candidates.py
 ```
 
 ## Executor consumption

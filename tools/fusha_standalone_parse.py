@@ -31,6 +31,38 @@ _COLLISION_REGISTRY_PATH = os.path.join(_REPO, "fusha", "parser", "collision-cla
 with open(_COLLISION_REGISTRY_PATH, encoding="utf-8") as _cr_fh:
     _COLLISION_REGISTRY = json.load(_cr_fh)
 HIGH_RISK_BARE_MATCH_SURFACES = set(_COLLISION_REGISTRY.get("high_risk_bare_match_surfaces") or [])
+# I8 (partial): the registry is authoritative for a fired class's gate cap, route,
+# and lattice tie-break order; the code below still decides WHETHER a class fires
+# (trigger predicates stay reviewed code), it just stops hand-duplicating the
+# literals the registry already names. `class_id` is the lookup key throughout.
+_CLASS_BY_ID = {c["class_id"]: c for c in _COLLISION_REGISTRY.get("classes") or []}
+
+
+def _registry_vote(class_id, default_cap="lexical_collision_requires_context", default_order=3):
+    """(gate_rank, cap, filter_order) for a fired class, sourced from the registry.
+
+    Falls back to `default_cap`/`default_order` only if a class_id is somehow not
+    registered (never true for the classes this module fires; a missing entry
+    would be a registry/code drift bug, not a normal path), so a registry lookup
+    failure degrades to the historical literal rather than crashing token parse.
+    """
+    entry = _CLASS_BY_ID.get(class_id)
+    cap = (entry.get("gate_effect") or {}).get("cap") if entry else None
+    cap = cap or default_cap
+    order = entry.get("filter_order") if entry else None
+    order = order if isinstance(order, int) else default_order
+    return GATE_RANK[cap], cap, order
+
+
+def _registry_route(class_id, default_route):
+    entry = _CLASS_BY_ID.get(class_id)
+    route = entry.get("route") if entry else None
+    return list(route) if route else list(default_route)
+
+
+def _registry_canonical_unit_ids(class_id):
+    entry = _CLASS_BY_ID.get(class_id)
+    return list(entry.get("canonical_unit_ids") or []) if entry else []
 
 # R4: noun|proper_noun -> ism, verb -> fil, particle -> harf.
 POS_TRICHOTOMY = {"noun": "ism", "proper_noun": "ism", "verb": "fil", "particle": "harf"}
@@ -141,6 +173,25 @@ def _selected(seg_cands, morph_cands):
 
 
 def _candidate_collision(surface, seg_cands, morph_cands, morph):
+    """Top-score ties across `morph_cands`: an unsafe bare match, or `competing_segmentation`.
+
+    I9 (resolved): `competing_segmentation` fires when the tied top-scored
+    candidates disagree on identity (pos/lemma/root) AND that disagreement spans
+    >= 2 distinct `segment_candidate_ref` values -- i.e. the tie is between rival
+    SEGMENTATIONS, not just rival lexicon rows sharing one segmentation (that is
+    R4/R5's job via `collision.competitors`, computed only over the selected
+    stem's own competitors per R6). A prior revision exempted every tie where all
+    tied candidates were `function_inventory` particles regardless of ref, which
+    let `لما` (`ل + ما` vs whole-token `لَمَّا`) and `وما` (`و + ما` vs whole-token
+    `وما`) silently commit to the `ل/و + ما` split with a full function-word
+    gloss and no acknowledgement of the tied whole-token rival. The exemption is
+    now scoped to same-ref ties only (e.g. a genuine same-segmentation function
+    tie, if one exists) so it can never mask a real cross-segmentation tie; a
+    tie sharing lemma/pos/root across DIFFERENT refs (e.g. `بالله`'s bā'+Allah
+    split vs. a whole-token largelexicon row that resolves to the same identity)
+    still correctly reports no collision, because the identity check itself
+    finds no disagreement.
+    """
     if not morph:
         return None
     features = morph.get("features") or {}
@@ -148,7 +199,7 @@ def _candidate_collision(surface, seg_cands, morph_cands, morph):
         return {
             "kind": "unsafe_bare_match",
             "surface": surface,
-            "route": ["sarf", "nahw"],
+            "route": _registry_route("unsafe_bare_match", ["sarf", "nahw"]),
             "basis": features.get("match_basis"),
             "decided_by": "unsafe_bare_match",
             "reason": "bare-match largelexicon evidence is useful internally but not a public hover selection for this high-risk surface",
@@ -159,21 +210,25 @@ def _candidate_collision(surface, seg_cands, morph_cands, morph):
         tops = [c for c in morph_cands if float(c.get("score") or 0.0) == best]
     if len(tops) < 2:
         return None
-    if all(c.get("evidence_class") == "function_inventory" and c.get("pos") == "particle" for c in tops):
+    refs = {c.get("segment_candidate_ref") for c in tops}
+    if len(refs) <= 1 and all(
+        c.get("evidence_class") == "function_inventory" and c.get("pos") == "particle" for c in tops
+    ):
         return None
     pos_values = {c.get("pos") for c in tops}
     lemmas = {c.get("lemma") for c in tops}
     roots = {c.get("root") for c in tops}
-    refs = {c.get("segment_candidate_ref") for c in tops}
     if len(pos_values) > 1 or len(lemmas) > 1 or len(roots) > 1:
         return {
-            "kind": "segmentation_or_pos_collision",
+            "kind": "competing_segmentation",
             "surface": surface,
             "candidate_count_at_top_score": len(tops),
             "candidate_refs": sorted(int(ref) for ref in refs if ref is not None),
             "pos_values": sorted(str(v) for v in pos_values),
-            "route": ["sarf", "nahw"],
-            "decided_by": "segmentation_or_pos_collision",
+            "lemma_values": sorted(str(v) for v in lemmas if v is not None),
+            "route": _registry_route("competing_segmentation", ["sarf", "nahw"]),
+            "canonical_unit_ids": _registry_canonical_unit_ids("competing_segmentation"),
+            "decided_by": "competing_segmentation",
         }
     return None
 
@@ -244,8 +299,9 @@ def _skeleton_collision(surface, seg_cands, morph, selected_seg=None, morph_cand
         "kind": kind,
         "scope": scope,
         "surface": surface,
-        "route": ["sarf_collision_review", "nahw_function_review"],
+        "route": _registry_route(kind, ["sarf_collision_review", "nahw_function_review"]),
         "competing_entry_ids": collision_source.get("competing_entry_ids") or [],
+        "canonical_unit_ids": _registry_canonical_unit_ids(kind),
         "decided_by": kind,
     }
 
@@ -304,8 +360,15 @@ def _scope_collision_segments(qg_segments):
     return out
 
 
-def _strip_collision_identity(cand, decided_by=None):
-    """R4/R5 effect: no lemma/root/pos/voice/number/gloss for the withheld stem."""
+def _strip_collision_identity(cand, decided_by=None, evidence_keys=None):
+    """No lemma/root/pos/voice/number/gloss for a withheld/rival-tied candidate.
+
+    `evidence_keys` names where the deciding evidence lives: R4/R5 (skeleton
+    collision) decide from `collision.competitors`; `competing_segmentation`
+    decides from the tied `morphology_candidates` set itself (there is no
+    single stem's `collision.competitors` to point at -- the tie is across
+    segmentations, not entries for one segmentation).
+    """
     cand["lemma"] = None
     cand["root"] = None
     cand["pos"] = None
@@ -318,7 +381,7 @@ def _strip_collision_identity(cand, decided_by=None):
         if decided_by:
             feats["identity_withheld_decided_by"] = {
                 "filter": decided_by,
-                "evidence_keys": ["collision.competitors"],
+                "evidence_keys": list(evidence_keys or ["collision.competitors"]),
             }
 
 
@@ -357,7 +420,8 @@ def _gate(surface, seg_cands, morph, context, morph_cands=None, selected_seg=Non
 
     # source_provenance (R1): a CAP, not a mask. Typed decided_by evidence is
     # recorded on the candidate whenever the flag is present, independent of
-    # whether this vote ends up winning the lattice.
+    # whether this vote ends up winning the lattice. I8 (partial): cap and
+    # tie-break order come from the registry, not a hardcoded literal.
     risk_flags = set((morph.get("features") or {}).get("source_risk_flags") or [])
     if "requires_nahw_function" in risk_flags:
         feats = morph.setdefault("features", {})
@@ -365,16 +429,19 @@ def _gate(surface, seg_cands, morph, context, morph_cands=None, selected_seg=Non
             "filter": SOURCE_RISK_CAP_FILTER,
             "evidence_keys": ["features.source_risk_flags"],
         }
-        votes.append((GATE_RANK["pending_context"], "pending_context", None, 0))
+        rank, cap, order = _registry_vote(SOURCE_RISK_CAP_FILTER, default_cap="pending_context", default_order=1)
+        votes.append((rank, cap, None, order))
 
     # skeleton_collision (R4/R5), scoped to the selected stem (R6/R7).
     skeleton = _skeleton_collision(surface, seg_cands, morph, selected_seg=selected_seg, morph_cands=morph_cands)
     if skeleton:
-        votes.append((GATE_RANK["lexical_collision_requires_context"], "lexical_collision_requires_context", skeleton, 0))
+        rank, cap, order = _registry_vote(skeleton.get("kind"), default_order=3)
+        votes.append((rank, cap, skeleton, order))
 
     collision = _candidate_collision(surface, seg_cands, morph_cands or [], morph)
     if collision:
-        votes.append((GATE_RANK["lexical_collision_requires_context"], "lexical_collision_requires_context", collision, 1))
+        rank, cap, order = _registry_vote(collision.get("kind"), default_order=4)
+        votes.append((rank, cap, collision, order))
 
     if _function_needs_context(surface, morph) or bare in {"ما", "وما", "لما", "انما", "إنما"}:
         votes.append((GATE_RANK["pending_context"], "pending_context", None, 1))
@@ -494,6 +561,13 @@ def parse_text(text, document_id=None, db="smoke"):
                     cand["selection_blocker"] = gate
                     if collision.get("kind") in {"pos_trichotomy_conflict", "root_conflict"}:
                         _strip_collision_identity(cand, decided_by=collision.get("kind"))
+                    elif collision.get("kind") == "competing_segmentation":
+                        # I9: none of the tied rival segmentations may be
+                        # emitted as "the" selected function/POS/entry.
+                        _strip_collision_identity(
+                            cand, decided_by=collision.get("kind"),
+                            evidence_keys=["morphology_candidates", "segment_candidate_ref"],
+                        )
             if collision.get("scope") == "stem_identity":
                 tok["qg_segments"] = _scope_collision_segments(tok.get("qg_segments") or [])
             else:

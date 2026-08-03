@@ -222,7 +222,16 @@ def validate_record(rec):
         if tok.get("selected_preview") and not qg:
             errors.append("%s: selected_preview without qg_segments" % surf)
         if N.bare(surf) in {"وما", "ما", "لما", "انما"}:
-            if tok.get("confidence_gate") not in {"pending_context", "ambiguous", "likely_from_internal_pattern"}:
+            # I9: وما/لما can tie a prefix+ما split against a whole-token particle
+            # reading, which now correctly abstains one tier stronger
+            # (lexical_collision_requires_context, competing_segmentation) instead
+            # of silently picking the split. That is still context-gated, not a
+            # certified pick, so it belongs in the allowed set alongside the
+            # single-segmentation pending/ambiguous/likely outcomes.
+            if tok.get("confidence_gate") not in {
+                "pending_context", "ambiguous", "likely_from_internal_pattern",
+                "lexical_collision_requires_context",
+            }:
                 errors.append("%s: function particle not context-gated" % surf)
         if N.bare(surf).startswith("ب") and len(N.bare(surf)) > 2:
             if qg and not any(seg.get("class") == "qg-preposition" for seg in qg):
@@ -257,7 +266,7 @@ def _self_test():
     joined = parser.parse_text(" ".join(FIXTURES))
     if len(joined.get("tokens") or []) < len(FIXTURES):
         failures.append("joined fixtures should emit at least one token per fixture phrase")
-    for surface in ("فسيكفيكهم", "فأهلكناهم", "يسألك", "بالكتاب", "وما", "مستغفرين"):
+    for surface in ("فسيكفيكهم", "فأهلكناهم", "يسألك", "بالكتاب", "مستغفرين"):
         rec = parser.parse_text(surface)
         tok = (rec.get("tokens") or [{}])[0]
         if not tok.get("qg_segments"):
@@ -270,7 +279,6 @@ def _self_test():
         "يسألك": {"verb_prefix", "verb_stem", "object_pronoun"},
         "مستغفرين": {"derivative_prefix", "adjective_stem", "plural_suffix"},
         "بالكتاب": {"prefix_preposition", "definite_article", "stem"},
-        "وما": {"prefix_conjunction", "stem"},
     }
     for surface, expected in role_expect.items():
         rec = parser.parse_text(surface)
@@ -279,6 +287,110 @@ def _self_test():
         missing = expected - roles
         if missing:
             failures.append("%s qg roles missing %s; got %s" % (surface, sorted(missing), sorted(roles)))
+    # I9 (red-first): a tied top-scored function-inventory pair spanning >= 2
+    # distinct segment_candidate_ref values (لما as ل+ما vs whole-token لَمَّا;
+    # وما as و+ما vs whole-token وما) must abstain as competing_segmentation
+    # instead of silently committing to the split reading. Every rival is
+    # preserved (candidate_refs names both), the gate is the stronger
+    # lexical_collision_requires_context tier, and no selected function/POS/
+    # gloss survives.
+    for i9_surface in ("لما", "وما"):
+        i9_rec = parser.parse_text(i9_surface, db="largelexicon")
+        i9_tok = (i9_rec.get("tokens") or [{}])[0]
+        i9_collision = i9_tok.get("collision") or {}
+        if i9_collision.get("kind") != "competing_segmentation":
+            failures.append(
+                "I9: %r must reach collision.kind=competing_segmentation, got %r"
+                % (i9_surface, i9_collision.get("kind"))
+            )
+        if i9_tok.get("confidence_gate") != "lexical_collision_requires_context":
+            failures.append("I9: %r must reach the lexical_collision_requires_context gate, got %r"
+                             % (i9_surface, i9_tok.get("confidence_gate")))
+        if i9_tok.get("qg_segments"):
+            failures.append("I9: %r must clear qg_segments under competing_segmentation, got %r"
+                             % (i9_surface, i9_tok.get("qg_segments")))
+        if i9_tok.get("selected_preview") is not None:
+            failures.append("I9: %r must clear selected_preview under competing_segmentation" % i9_surface)
+        if len(i9_collision.get("candidate_refs") or []) < 2:
+            failures.append("I9: %r must preserve >= 2 rival segment_candidate_ref values, got %r"
+                             % (i9_surface, i9_collision.get("candidate_refs")))
+        i9_top = (i9_tok.get("morphology_candidates") or [{}])[0]
+        if i9_top.get("lemma") is not None or i9_top.get("pos") is not None or i9_top.get("root") is not None:
+            failures.append("I9: %r selected candidate must have lemma/pos/root withheld, got lemma=%r pos=%r root=%r"
+                             % (i9_surface, i9_top.get("lemma"), i9_top.get("pos"), i9_top.get("root")))
+        if (i9_tok.get("hover_preview") or {}).get("token_contribution_gloss") is not None:
+            failures.append("I9: %r must not carry a public token_contribution_gloss" % i9_surface)
+
+    # I9 positive control: إنما has exactly one top-scored segmentation (the
+    # pinned particle cluster) and must be completely unaffected.
+    i9_control = parser.parse_text("إنما", db="largelexicon")
+    i9_control_tok = (i9_control.get("tokens") or [{}])[0]
+    if i9_control_tok.get("collision") is not None:
+        failures.append("I9 control: إنما must not gain a collision, got %r" % i9_control_tok.get("collision"))
+
+    # I9 negative control: بالله ties two DIFFERENT segment_candidate_ref values
+    # at top score (a bā'+Allah split vs. a whole-token largelexicon match) but
+    # both resolve to the SAME identity (lemma/pos/root agree), so this must
+    # stay uncollided -- ref multiplicity alone is never sufficient, only a
+    # genuine identity disagreement across segmentations is (real clitics stay
+    # visible when the morphology identity is stable).
+    ball_rec = parser.parse_text("بالله", db="largelexicon")
+    ball_tok = (ball_rec.get("tokens") or [{}])[0]
+    if ball_tok.get("collision") is not None:
+        failures.append("I9 negative control: بالله must not gain a collision from ref multiplicity alone, got %r"
+                         % ball_tok.get("collision"))
+
+    # rival-order mutation (red-first): reordering the tied morph_cands list
+    # must not change the collision kind or the set of rival identities.
+    ro_a = {"rank": 1, "pos": "particle", "lemma": "X", "root": None, "evidence_class": "largelexicon_full",
+            "score": 6.5, "segment_candidate_ref": 0, "features": {}}
+    ro_b = {"rank": 2, "pos": "particle", "lemma": "Y", "root": None, "evidence_class": "largelexicon_full",
+            "score": 6.5, "segment_candidate_ref": 1, "features": {}}
+    ro_forward = parser._candidate_collision("xy", [], [ro_a, ro_b], ro_a)
+    ro_reversed = parser._candidate_collision("xy", [], [ro_b, ro_a], ro_a)
+    if not ro_forward or not ro_reversed:
+        failures.append("rival-order mutation: expected competing_segmentation to fire in both orders")
+    elif (
+        ro_forward.get("kind") != ro_reversed.get("kind")
+        or ro_forward.get("candidate_refs") != ro_reversed.get("candidate_refs")
+        or ro_forward.get("pos_values") != ro_reversed.get("pos_values")
+        or set(ro_forward.get("lemma_values") or []) != set(ro_reversed.get("lemma_values") or [])
+    ):
+        failures.append("rival-order mutation: candidate ordering changed collision kind or rival identities: %r vs %r"
+                         % (ro_forward, ro_reversed))
+
+    # registry mutation (red-first): cap/route/order for a fired class must be
+    # read from fusha/parser/collision-classes.json, not hand-duplicated. Mutate
+    # the loaded registry in place and require the parser's own output to move
+    # with it; restore afterwards so later assertions see the real registry.
+    _registry_entry = parser._CLASS_BY_ID["competing_segmentation"]
+    _saved_route = list(_registry_entry["route"])
+    _saved_cap = _registry_entry["gate_effect"]["cap"]
+    _saved_order = _registry_entry["filter_order"]
+    try:
+        _registry_entry["route"] = ["mutated_route_sentinel"]
+        _registry_entry["gate_effect"] = {"cap": "pending_context"}
+        _registry_entry["filter_order"] = 99
+        mutated_collision = parser._candidate_collision("xy", [], [ro_a, ro_b], ro_a)
+        if not mutated_collision or mutated_collision.get("route") != ["mutated_route_sentinel"]:
+            failures.append(
+                "registry mutation: _candidate_collision route did not follow the mutated registry entry, got %r"
+                % (mutated_collision or {}).get("route")
+            )
+        mutated_rank, mutated_cap, mutated_order = parser._registry_vote("competing_segmentation", default_order=4)
+        if mutated_cap != "pending_context" or mutated_order != 99:
+            failures.append(
+                "registry mutation: _registry_vote did not follow the mutated cap/filter_order, got cap=%r order=%r"
+                % (mutated_cap, mutated_order)
+            )
+    finally:
+        _registry_entry["route"] = _saved_route
+        _registry_entry["gate_effect"] = {"cap": _saved_cap}
+        _registry_entry["filter_order"] = _saved_order
+    restored_rank, restored_cap, restored_order = parser._registry_vote("competing_segmentation", default_order=4)
+    if restored_cap != _saved_cap or restored_order != _saved_order:
+        failures.append("registry mutation: restoring the registry did not restore _registry_vote's output")
+
     segs = [{"rank": 1, "segments": [{"role": "stem", "surface": "كتاب"}]}]
     morphs = [{"rank": 1, "pos": "noun", "evidence_class": "seed_lexicon", "segment_candidate_ref": 99}]
     selected, morph = parser._selected(segs, morphs)
