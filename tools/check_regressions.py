@@ -3288,6 +3288,13 @@ except Exception as _e:
 for _art in ("tools/leak_sot.py", "tools/validate_source_boundary.py",
              "qamus/schemas/dependency-candidate-lattice.schema.json", "tools/fusha_governor.py",
              "tools/validate_dependency_lattice.py", "qamus/examples/dependency_lattice.sample.jsonl",
+             "tools/test_nahw_governor_families.py",
+             "nahw/evals/nawasikh-government-eval.jsonl",
+             "nahw/evals/coordination-case-following-eval.jsonl",
+             "nahw/evals/hidden-structure-mahall-eval.jsonl",
+             "nahw/procedures/nawasikh-government.md",
+             "nahw/procedures/coordination-case-following.md",
+             "nahw/procedures/hidden-structure-and-taqdir.md",
              "qamus/schemas/cross-builder-conflict.schema.json", "tools/fusha_conflicts.py",
              "tools/validate_cross_builder_conflict.py", "qamus/examples/cross_builder_conflict.sample.jsonl"):
     check("p2 artifact exists: %s" % _art, os.path.exists(os.path.join(ROOT, _art)))
@@ -3299,7 +3306,47 @@ try:
     _p2c = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_governor.py"), "--self-test"])
     check("p2 governor/dependency lattice self-test (layer-1-safe; PP unresolved; right-answer-wrong-reason; never auto_safe)", _p2c.returncode == 0)
     _p2d = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_dependency_lattice.py"), "--self-test"])
-    check("p2 dependency-lattice validator self-test (9 FAIL conditions reject)", _p2d.returncode == 0)
+    check("p2 dependency-lattice validator self-test (24 hostile lattices / 18 condition labels reject)",
+          _p2d.returncode == 0)
+    # I6: --run-bank alone only catches exceptions/hard asserts (fusha_governor.py:run_bank); the built
+    # lattices must also clear the ordinary VALIDATOR (FAIL 1-18) with occurrence-identity verification, not
+    # just the committed 6-row sample below — otherwise a regression introduced by a bank ROW lands silently.
+    # The deliberate refusal-control rows (N1/N2/N3/N4) are EXCLUDED from this pass: their whole point is to
+    # fail occurrence identity (verified directly by tools.test_nahw_governor_families below, which check_regr
+    # already runs as a subprocess); mixing them in here would make every run "fail" for the expected reason
+    # and mask a real regression on the address-bearing/constructed rows this pass exists to catch.
+    _p2_bank_negative_ids = {
+        "nawasikh-government-eval.jsonl": {"N1", "N2"},
+        "coordination-case-following-eval.jsonl": {"N3"},
+        "hidden-structure-mahall-eval.jsonl": {"N4"},
+    }
+    for _bank in ("nawasikh-government-eval.jsonl", "coordination-case-following-eval.jsonl",
+                  "hidden-structure-mahall-eval.jsonl"):
+        with io.open(os.path.join(ROOT, "nahw", "evals", _bank), encoding="utf-8") as _bank_fh:
+            _bank_rows = [ln for ln in _bank_fh if ln.strip()
+                         and json.loads(ln).get("id") not in _p2_bank_negative_ids[_bank]]
+        with tempfile.NamedTemporaryFile("w", suffix=".jsonl", delete=False, encoding="utf-8") as _bank_in_tmp:
+            _bank_in_tmp.writelines(_bank_rows)
+            _bank_in_path = _bank_in_tmp.name
+        with tempfile.NamedTemporaryFile("w", suffix=".jsonl", delete=False) as _bank_out_tmp:
+            _bank_lat_path = _bank_out_tmp.name
+        try:
+            _bank_run = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_governor.py"),
+                                  "--run-bank", _bank_in_path, "--run-bank-out", _bank_lat_path])
+            check("p2 Train B governor family bank runs through ordinary consumer: %s" % _bank,
+                  _bank_run.returncode == 0)
+            _bank_validate = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_dependency_lattice.py"),
+                                       "--verify-occurrence-identity", _bank_lat_path])
+            check("p2 Train B governor family bank lattices validate with occurrence identity "
+                  "(positive/constructed rows, negative controls excluded): %s" % _bank,
+                  _bank_validate.returncode == 0)
+        finally:
+            for _p in (_bank_in_path, _bank_lat_path):
+                if os.path.exists(_p):
+                    os.remove(_p)
+    _p2_family_tests = run_text([sys.executable, "-m", "unittest", "tools.test_nahw_governor_families"])
+    check("p2 Train B governor family semantics + occurrence identity (68 tests)",
+          _p2_family_tests.returncode == 0)
     _p2e = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_dependency_lattice.py"),
                      os.path.join(ROOT, "qamus", "examples", "dependency_lattice.sample.jsonl")])
     check("p2 dependency-lattice fixture validates (6 lattices, 0 violations)", _p2e.returncode == 0)
@@ -3526,10 +3573,16 @@ try:
           _a2stat("llx-collision", "routed") == 3 and _a2stat("public-boundary", "leaks") == 6
           and _a2stat("public-boundary", "clean") == 4
           and _a2stat("function-polysemy", "pf_homograph_checked") == 6)
-    check("A2 six banks / 314 rows measured",
+    check("A2 measured consumer decisions: ma-function-occurrence decided 6 (4 candidates + 2 pending), "
+          "24 occurrence-replay probes",
+          _a2stat("ma-function-occurrence", "decided") == 6
+          and _a2stat("ma-function-occurrence", "candidates") == 4
+          and _a2stat("ma-function-occurrence", "pending") == 2
+          and _a2stat("ma-function-occurrence", "replay_checks") == 24)
+    check("A2 seven banks / 320 rows measured",
           sum(v for s in _a2s.values() for k, v in s.items()
-              if (k == "cases" or k.endswith("_cases")) and isinstance(v, int)) == 314
-          and len(_a2s) == 6)
+              if (k == "cases" or k.endswith("_cases")) and isinstance(v, int)) == 320
+          and len(_a2s) == 7)
     # EXACT quarantine totals: a quarantine that grows silently is a regression, not coverage
     check("A2 quarantine totals exactly 9 state-machine + 12 hover-context (21 rows, excluded from closure)",
           _a2stat("state-machine", "quarantined") == 9 and _a2stat("hover-context", "quarantined") == 12)
@@ -3558,14 +3611,15 @@ try:
                  and all(b["disposition"] == _a2exp[b["bank"]]["disposition"] for b in _a2res["banks"])
                  and all(b["behavioral_consumer"] == _a2exp[b["bank"]]["consumer"]
                          for b in _a2res["banks"]))
-        check("A2 runner result carries the exact 7 A2 artifacts with unique items, the exact disposition map "
+        check("A2 runner result carries the exact 8 A2 artifacts with unique items, the exact disposition map "
               "and the exact consumer ownership", _a2ok)
         _a2rows = {b["bank"]: b["rows"] for b in _a2res["banks"]}
-        check("A2 runner row denominators are the independently counted rows (314 across 7 artifacts)",
-              sum(_a2rows.values()) == 314
+        check("A2 runner row denominators are the independently counted rows (320 across 8 artifacts)",
+              sum(_a2rows.values()) == 320
               and _a2rows["nahw/evals/public-boundary-scanner-eval.jsonl"] == 10
               and _a2rows["nahw/evals/hover-context-eval.json"] == 20
               and _a2rows["nahw/evals/nahw-state-machine-eval.json"] == 24
+              and _a2rows["nahw/evals/ma-function-occurrence-eval.jsonl"] == 6
               and all(r == _A2R._bank_rows(ROOT, k) for k, r in _a2rows.items()))
         # observed consumer calls are counted at the allow-listed callable, never copied from `checked`
         _pb = next(b for b in _a2res["banks"] if b["bank"].endswith("public-boundary-scanner-eval.jsonl"))
@@ -3573,9 +3627,15 @@ try:
               "LEAK_RE.search calls over 10 rows)",
               (_pb["metrics"]["consumer_calls"] or {}).get("tools/leak_sot.py:LEAK_RE.search") == 10
               and _pb["checked"] == 10)
-        check("A2 behavioural row credit is limited to the 2 fully consumed artifacts (13 rows); the "
+        _ma = next(b for b in _a2res["banks"] if b["bank"].endswith("ma-function-occurrence-eval.jsonl"))
+        check("A2 consumer calls are OBSERVED at the allow-listed callable (ma-function-occurrence: >=6 real "
+              "maa_context_frame calls over 6 rows, decided == rows)",
+              (_ma["metrics"]["consumer_calls"] or {}).get(
+                  "tools/fusha_nahw_particle_rules.py:maa_context_frame") >= 6
+              and _ma["checked"] == 6 and _ma["rows"] == 6)
+        check("A2 behavioural row credit is limited to the 3 fully consumed artifacts (19 rows); the "
               "fixture-only, quarantined and unowned artifacts get none",
-              _a2res["behavioral_rows"] == 13 and _a2res["quarantined_rows"] == 21)
+              _a2res["behavioral_rows"] == 19 and _a2res["quarantined_rows"] == 21)
     except Exception:
         check("A2 runner contract-result assertions (error)", False)
 
@@ -3679,7 +3739,7 @@ try:
         check("A2 a counter-only runner (rows decided, consumer never invoked) receives NO coverage",
               not any(_A2C8.behavioral_coverage(_v, bank=_b, repo_root=ROOT)
                       for _b, _v in _a2c8_res2.items() if _b in _A2C8.A2_OWNERSHIP))
-        check("A2 the coverage reporter carries its OWN ownership allowlist of exactly the 7 A2 artifacts",
+        check("A2 the coverage reporter carries its OWN ownership allowlist of exactly the 8 A2 artifacts",
               set(_A2C8.A2_OWNERSHIP) == set(_A2R.A2_ARTIFACT_OWNERSHIP)
               and all(_A2C8.A2_OWNERSHIP[_k] == (_v["consumer"], _v["disposition"])
                       for _k, _v in _A2R.A2_ARTIFACT_OWNERSHIP.items()))
@@ -3744,12 +3804,13 @@ try:
         _a2cov_ok = (
             _a2items["nahw/evals/public-boundary-scanner-eval.jsonl"]["has_behavioral_runner"]
             and _a2items["nahw/evals/largelexicon-function-collision-safety.jsonl"]["has_behavioral_runner"]
+            and _a2items["nahw/evals/ma-function-occurrence-eval.jsonl"]["has_behavioral_runner"]
             and not _a2items["nahw/evals/hover-context-eval.json"]["has_behavioral_runner"]
             and not _a2items["nahw/evals/nahw-state-machine-eval.json"]["has_behavioral_runner"]
             and not _a2items["nahw/evals/grammar-wrong-reasoning-cases.jsonl"]["has_behavioral_runner"]
             and _a2items["nahw/evals/hover-context-eval.json"]["quarantined_rows"] == 12
             and _a2items["nahw/evals/nahw-state-machine-eval.json"]["quarantined_rows"] == 9)
-        check("A2 eval coverage registers only INVOKED-runner behaviour (2 banks behavioural; the 2 fixture-only "
+        check("A2 eval coverage registers only INVOKED-runner behaviour (3 banks behavioural; the 2 fixture-only "
               "banks and all 21 quarantined rows stay visibly uncovered)", _a2cov_ok)
     except Exception:
         check("A2 eval coverage integration (error)", False)

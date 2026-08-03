@@ -192,8 +192,16 @@ def typed_observation(evidence, vocabulary=None, bind=None, surface=None, at=Non
 
 
 def mint_fixture_observation(observation, *, source_address, quran_loc, word, surface, target_kind,
-                             target_value, producer="nahw-a2-fixture-observer", observation_id=None):
-    """Build a well-formed FIXTURE observation artifact (tests/fixtures only; never a production producer)."""
+                             target_value, producer="nahw-a2-fixture-observer", observation_id=None,
+                             synthetic_probe=False):
+    """Build a well-formed FIXTURE observation artifact (tests/fixtures only; never a production producer).
+
+    `synthetic_probe`: set True when `source_address`/`occurrence` are a deliberately fake, out-of-corpus
+    coordinate minted purely to exercise a mechanism (e.g. table-integrity fail-closed behaviour) rather than
+    to claim anything about a real Qur'anic occurrence. The marker is hashed into `integrity`, so it cannot be
+    silently stripped without also invalidating the artifact, and it keeps such a probe byte-DISTINGUISHABLE
+    from genuine corpus-addressed evidence in any log or diff.
+    """
     art = {"observation_id": observation_id or ("obs:%s" % hashlib.sha256(
                ("%s|%s|%s|%s" % (source_address, surface, target_value, observation)).encode("utf-8")
            ).hexdigest()[:16]),
@@ -202,6 +210,8 @@ def mint_fixture_observation(observation, *, source_address, quran_loc, word, su
            "occurrence": {"quran_loc": quran_loc, "word": word, "surface": surface},
            "target": {"kind": target_kind, "value": target_value},
            "observation": observation}
+    if synthetic_probe:
+        art["synthetic_probe"] = True
     art["integrity"] = observation_integrity(art)
     return art
 
@@ -536,6 +546,126 @@ def resolve_particle_homograph(surface, rules=None):
 
 
 # ---------------------------------------------------------------------------
+# particle-context-rules.json#maa_relative_vs_negation — occurrence-specific CONTEXTUAL FRAME discrimination
+# ---------------------------------------------------------------------------
+# مَا carries no content-letter diacritic that separates relative from negation (unlike every family in
+# DISCRIMINATORS above), so the caller cannot supply a haraka-based signal here, and it must NOT supply the
+# CONCLUSION itself ("relative"/"negation") as if that were evidence — that is exactly the caller-label problem
+# typed_observation() already refuses everywhere else. Instead the evidence is a typed, source-addressed
+# CONTEXTUAL FRAME observation — the SYNTACTIC shape around this exact occurrence — and this rule's own
+# `frame_table` (grounded in tools/skill_fixtures/skill_rules.py:_ma_neg_rel_corrected, the repository's
+# existing مَا relative-vs-negation fixture logic) says which function(s) that frame licenses. A frame the
+# table does not bind to EXACTLY one function is never guessed at: both rivals stay pending, exactly like an
+# absent observation.
+MAA_CONTEXT_RULE_ID = "maa_relative_vs_negation"
+MAA_CONTEXT_AXIS = "maa_relative_vs_negation"
+
+
+def _maa_context_rule(rules=None):
+    rules = rules or load_particle_rules()
+    for rule in rules.get("rules", []):
+        if rule.get("id") == MAA_CONTEXT_RULE_ID:
+            return rule
+    return None
+
+
+def maa_context_frame(surface, evidence=None, at=None, rules=None):
+    """Discriminate مَا relative-vs-negation from a typed, source-addressed CONTEXTUAL FRAME observation.
+
+    Returns {rule_id, surface, at, decision, function_candidate, observed_frame, evidence_id, source_address,
+    unresolved_alternatives[], ...}. `decision` is `candidate` only when the observed frame is bound by the
+    rule's own `frame_table` to EXACTLY one function; any other outcome (absent/invalid evidence, an
+    off-vocabulary value, a frame the table declares non-unique, a RECOGNIZED-BUT-UNMAPPED frame, or a
+    duplicate-keyed table) stays `pending` with BOTH rival functions preserved unresolved — this never selects
+    a winner from an ambiguous frame, and every branch carries an `evidence_defect` a caller can act on.
+    """
+    rule = _maa_context_rule(rules)
+    if rule is None:
+        return {"rule_id": MAA_CONTEXT_RULE_ID, "surface": surface, "at": at, "decision": "pending",
+                "pending_reason": "no_rule", "status": "out_of_domain"}
+    table = rule.get("frame_table") or []
+    # B1: this rule's frame_table only ever examines the relative-vs-negation AXIS — `axis_functions` is that
+    # closed 2-member set. `out_of_axis_functions` (the rule's own declared `functions_not_discriminated`,
+    # e.g. interrogative/maṣdariyya/temporal/preventive_kaffa/laysa_like) are attested مَا functions this table
+    # never bound any frame to; `all_functions` is their UNION so every consumer sees the complete, honestly
+    # labelled rival set — never an axis-selected candidate silently "rejecting" a function outside its scope.
+    axis_functions = sorted({f for row in table
+                             for f in (row.get("functions") or ([row["function"]] if row.get("function") else []))})
+    out_of_axis_functions = sorted(rule.get("functions_not_discriminated") or [])
+    all_functions = sorted(set(axis_functions) | set(out_of_axis_functions))
+    out_of_axis_set = set(out_of_axis_functions)
+    # ROBUSTNESS: a duplicate frame key would let `next()` silently pick the FIRST row and shadow the second —
+    # a table integrity defect must fail closed regardless of what evidence the caller supplies, so this is
+    # checked before evidence is even validated.
+    frame_keys = [row.get("frame") for row in table if row.get("frame")]
+    duplicate_frames = sorted({k for k in frame_keys if frame_keys.count(k) > 1})
+    if duplicate_frames:
+        return {"rule_id": rule["id"], "surface": surface, "at": at, "decision": "pending",
+                "pending_reason": "frame_table_duplicate_key", "evidence_defect": "frame_table_duplicate_key",
+                "duplicate_frames": duplicate_frames, "status": "table_integrity_defect",
+                "axis": rule.get("axis"), "functions_not_discriminated": out_of_axis_functions,
+                "unresolved_alternatives": rival_analyses(all_functions, selected=None, gate=NEGATION_GATE,
+                                                           evidence_id=None, axis=MAA_CONTEXT_AXIS,
+                                                           out_of_axis=out_of_axis_set)}
+    # RECOGNIZED-BUT-UNMAPPED frames: closed-vocabulary values the source mechanism can genuinely report but
+    # this rule's own table has deliberately not bound to a function (see the rule's own
+    # `recognized_unmapped_frames`, e.g. object_of_verb_then_other). These are valid observations — not a
+    # caller error — so they are IN vocabulary, but they have no frame_table row, which is what makes
+    # `frame_row_missing` below a REAL, reachable outcome rather than dead code.
+    recognized_unmapped = {row["frame"] for row in (rule.get("recognized_unmapped_frames") or [])
+                           if row.get("frame")}
+    vocabulary = {row["frame"] for row in table if row.get("frame")} | recognized_unmapped
+    value, defect, art = typed_observation(evidence, vocabulary,
+                                           bind={"kind": "token", "value": rule["id"]},
+                                           surface=surface, at=at)
+    base = {"rule_id": rule["id"], "surface": surface, "at": at, "frame_vocabulary": sorted(vocabulary),
+            "status": "consumed", "axis": rule.get("axis"),
+            "functions_not_discriminated": out_of_axis_functions}
+    if defect:
+        base.update({"decision": "pending",
+                     "pending_reason": (rule.get("pending_fallback") or {}).get(
+                         "pending_reason", "maa_category_unresolved"),
+                     "evidence_defect": defect, "evidence_id": None, "source_address": None,
+                     "unresolved_alternatives": rival_analyses(all_functions, selected=None, gate=NEGATION_GATE,
+                                                                evidence_id=None, axis=MAA_CONTEXT_AXIS,
+                                                                out_of_axis=out_of_axis_set)})
+        return base
+    base.update({"evidence_id": art["evidence_id"], "source_address": art["source_address"],
+                 "producer": art["producer"], "producer_trust": art["producer_trust"]})
+    row = next((r for r in table if r.get("frame") == value), None)
+    if row is None:
+        base.update({"decision": "pending", "pending_reason": "frame_row_missing",
+                     "evidence_defect": "frame_row_missing", "observed_frame": value,
+                     "unresolved_alternatives": rival_analyses(all_functions, selected=None, gate=NEGATION_GATE,
+                                                                evidence_id=art["evidence_id"],
+                                                                axis=MAA_CONTEXT_AXIS,
+                                                                out_of_axis=out_of_axis_set)})
+        return base
+    functions = row.get("functions") or ([row["function"]] if row.get("function") else [])
+    base.update({"observed_frame": value, "reason": row.get("reason")})
+    if not row.get("unique_within_axis") or len(functions) != 1:
+        base.update({"decision": "pending", "pending_reason": "maa_category_unresolved",
+                     "evidence_defect": "maa_category_unresolved",
+                     "unresolved_alternatives": rival_analyses(sorted(set(functions) | set(all_functions)),
+                                                                selected=None, gate=NEGATION_GATE,
+                                                                evidence_id=art["evidence_id"],
+                                                                axis=MAA_CONTEXT_AXIS,
+                                                                out_of_axis=out_of_axis_set)})
+        return base
+    winner = functions[0]
+    # B1: `winner` is selected ONLY within the axis — rival_analyses' out_of_axis set keeps every function this
+    # table never examines permanently `unresolved` (defeater=not_examined_by_this_axis), so an axis-derived
+    # candidate rejects at most its in-axis sibling, never a function outside this frame_table's own scope.
+    base.update({"decision": "candidate", "gate": NEGATION_GATE, "function_candidate": winner,
+                 "unresolved_alternatives": rival_analyses(all_functions, selected=winner, gate=NEGATION_GATE,
+                                                            evidence_id=art["evidence_id"],
+                                                            axis=MAA_CONTEXT_AXIS,
+                                                            out_of_axis=out_of_axis_set),
+                 "route": "nahw/procedures/ma-function-decision.md"})
+    return base
+
+
+# ---------------------------------------------------------------------------
 # negation-rules.json - the governing negative sets the gloss, after the homograph
 # ---------------------------------------------------------------------------
 # decision "resolved_with_context_else_pending" needs a syntactic OBSERVATION, and the observation vocabulary
@@ -605,14 +735,46 @@ def negation_effect(surface, context=None, at=None, rules=None, particle_rules=N
         bind = {"kind": "token", "value": row["id"]}
         value, defect, art = typed_observation(context.get(name), vocabulary, bind=bind,
                                                surface=surface, at=at)
+        # BUILD ON the existing typed maa_function path, never duplicate or weaken it: مَا carries no diacritic
+        # separating relative from negation, so a caller with no direct maa_function claim may instead supply
+        # an occurrence-specific CONTEXTUAL FRAME observation (maa_context_frame). This only ever SUPPLIES a
+        # `value` for the SAME validation this block already runs. When the frame does NOT reach a unique
+        # candidate, the TOP-LEVEL `defect` is replaced with the frame's own real reason (its evidence_defect —
+        # e.g. occurrence_not_current, observation_off_vocabulary — or, when the evidence was valid but the
+        # frame itself was ambiguous/unmapped, its pending_reason) so the returned evidence_defect is never
+        # left at the stale `absent` the outer typed_observation(None, ...) call produced.
+        context_frame = None
+        if defect and row["id"] == "maa_negation" and context.get(name) is None \
+                and context.get("maa_context_frame") is not None:
+            context_frame = maa_context_frame(surface, evidence=context.get("maa_context_frame"), at=at)
+            if context_frame.get("decision") == "candidate" and context_frame.get("function_candidate"):
+                value, defect = context_frame["function_candidate"], None
+                art = {"evidence_id": context_frame["evidence_id"],
+                       "source_address": context_frame["source_address"],
+                       "producer": context_frame["producer"], "producer_trust": context_frame["producer_trust"]}
+            else:
+                defect = (context_frame.get("evidence_defect") or context_frame.get("pending_reason")
+                          or defect)
+        # B1: when `value` came from the 2-way relative-vs-negation frame axis (context_frame is not None), the
+        # rival set must say so — the frame's own `functions_not_discriminated` (interrogative/maṣdariyya/
+        # temporal/preventive_kaffa/laysa_like) stay `unresolved` with `not_examined_by_this_axis`, never
+        # `rejected_rival`, even though this row's own vocabulary is the full 7-way maa_function set. A direct
+        # maa_function claim (context_frame is None) is unaffected: that path already carries real 7-way
+        # evidence, so the ordinary axis="maa_function" rival computation is unchanged.
+        rival_axis = MAA_CONTEXT_AXIS if context_frame is not None else "maa_function"
+        rival_out_of_axis = (set(context_frame.get("functions_not_discriminated") or [])
+                             if context_frame is not None else None)
         base = {"rule_id": row["id"], "governs": row.get("governs"), "effect": row.get("effect"),
                 "reason": row.get("guard"), "required_observation": name,
                 "observation_vocabulary": sorted(vocabulary),
-                "unresolved_alternatives": rival_analyses(vocabulary, selected=value,
+                "unresolved_alternatives": rival_analyses(vocabulary, selected=(value if not defect else None),
                                                           gate=NEGATION_GATE, evidence_id=(art or {})
-                                                          .get("evidence_id"), axis="maa_function"),
+                                                          .get("evidence_id"), axis=rival_axis,
+                                                          out_of_axis=rival_out_of_axis),
                 "evidence": pr.get("evidence", []), "status": "consumed", "surface": surface,
                 "at": at}
+        if context_frame is not None:
+            base["context_frame"] = context_frame
         if defect:
             base.update({"decision": "pending",
                          "pending_reason": row.get("pending_reason_when_unknown", "negation_scope"),
@@ -621,7 +783,12 @@ def negation_effect(surface, context=None, at=None, rules=None, particle_rules=N
         base.update({"evidence_id": art["evidence_id"], "source_address": art["source_address"],
                      "producer": art["producer"], "producer_trust": art["producer_trust"]})
         if required_value is not None and value != required_value:
-            # e.g. relative maa routed into the negation path: it is NOT negation here.
+            # e.g. relative maa routed into the negation path: it is NOT negation here. The rival set computed
+            # above selected `value` (it was valid evidence) — recompute with selected=None: the negation row
+            # does not select a winner for a function outside its own scope.
+            base["unresolved_alternatives"] = rival_analyses(vocabulary, selected=None, gate=NEGATION_GATE,
+                                                              evidence_id=art.get("evidence_id"),
+                                                              axis=rival_axis, out_of_axis=rival_out_of_axis)
             base.update({"decision": "pending", "pending_reason": "maa_category_unresolved",
                          "observed": value, "out_of_scope_for_negation": True,
                          "route": "nahw/procedures/ma-function-decision.md"})
@@ -669,15 +836,28 @@ TRANSITION_TRIGGERS = {
 }
 
 
-def rival_analyses(vocabulary, *, selected, gate, evidence_id, axis):
+def rival_analyses(vocabulary, *, selected, gate, evidence_id, axis, out_of_axis=None):
     """Structured rival objects for the dependency-candidate-lattice `unresolved_alternatives[]` contract.
 
     Every rival keeps its own decision_status, gate, reason key slot and the evidence id that selected (or
     failed to select) it. A prose string is not a rival: dropping the selected role must still leave the rival
     set intact, which is what the removed-role mutation probe checks.
+
+    `out_of_axis` names members a two-way (or otherwise partial) discriminator never examines at all — e.g.
+    مَا's relative-vs-negation frame table says nothing about interrogative/maṣdariyya/etc. Those members ALWAYS
+    stay `unresolved` with `defeater=not_examined_by_this_axis`, even when `selected` is not None: a candidate
+    this axis picked never counts as having defeated a function outside its own examination scope (B1).
     """
+    out_of_axis = set(out_of_axis or ())
     out = []
     for member in sorted(vocabulary):
+        if member in out_of_axis:
+            out.append({
+                "axis": axis, "role": member, "decision_status": "unresolved", "selected": False,
+                "reason_key": None, "gate": gate, "evidence_id": evidence_id,
+                "defeater": "not_examined_by_this_axis",
+            })
+            continue
         out.append({
             "axis": axis, "role": member,
             "decision_status": "unresolved" if selected is None else (
@@ -1020,7 +1200,8 @@ def rule_status():
            "nahw/rules/state-transition-rules.json": {}}
     for rule in load_particle_rules().get("rules", []):
         out["nahw/rules/particle-context-rules.json"][rule["id"]] = _file_status(
-            "nahw/rules/particle-context-rules.json", rule["id"] in DISCRIMINATORS)
+            "nahw/rules/particle-context-rules.json",
+            rule["id"] in DISCRIMINATORS or rule["id"] == MAA_CONTEXT_RULE_ID)
     for row in load_negation_rules().get("rules", []):
         out["nahw/rules/negation-rules.json"][row["id"]] = _file_status(
             "nahw/rules/negation-rules.json")
@@ -1167,6 +1348,103 @@ def _self_test():
                   surface="ذَٰلِكَ")["evidence_defect"], "evidence_class_not_source_addressed")
     eq("forbidden مِن/whoever", bool(forbidden_gloss_violations("مِنَ", "and whoever")), True)
     eq("licit مِن/from", forbidden_gloss_violations("مِنَ", "from / among"), [])
+    # occurrence-specific contextual مَا discrimination (maa_relative_vs_negation)
+    eq("featureless مَا context frame stays pending", maa_context_frame("مَا")["decision"], "pending")
+    REL_EV = mint_fixture_observation("object_of_verb_then_prep", source_address="quran:2:284:10",
+                                      quran_loc="2:284", word=10, surface="مَا", target_kind="token",
+                                      target_value="maa_relative_vs_negation")
+    NEG_EV = mint_fixture_observation("not_object_before_verb", source_address="quran:93:3:1",
+                                      quran_loc="93:3", word=1, surface="مَا", target_kind="token",
+                                      target_value="maa_relative_vs_negation")
+    eq("2:284:10 frame -> relative candidate",
+       maa_context_frame("مَا", evidence=REL_EV, at="quran:2:284:10")["function_candidate"], "relative")
+    eq("93:3:1 frame -> negation candidate",
+       maa_context_frame("مَا", evidence=NEG_EV, at="quran:93:3:1")["function_candidate"], "negation")
+    eq("a conclusion label is not a valid frame",
+       maa_context_frame("مَا", evidence=mint_fixture_observation(
+           "relative", source_address="quran:2:284:10", quran_loc="2:284", word=10, surface="مَا",
+           target_kind="token", target_value="maa_relative_vs_negation"),
+                         at="quran:2:284:10")["evidence_defect"], "observation_off_vocabulary")
+    AMB_EV = mint_fixture_observation("not_object_before_other", source_address="quran:2:284:2",
+                                      quran_loc="2:284", word=2, surface="مَا", target_kind="token",
+                                      target_value="maa_relative_vs_negation")
+    _amb = maa_context_frame("مَا", evidence=AMB_EV, at="quran:2:284:2")
+    eq("an ambiguous frame never selects a winner", _amb["decision"], "pending")
+    eq("an ambiguous frame preserves both rivals",
+       {"negation", "relative"} <= {x["role"] for x in _amb["unresolved_alternatives"]
+                                    if x["decision_status"] == "unresolved"}, True)
+    eq("frame evidence replayed at another occurrence is rejected",
+       maa_context_frame("مَا", evidence=REL_EV, at="quran:93:3:1")["evidence_defect"],
+       "occurrence_not_current")
+    _n = negation_effect("مَا", {"maa_context_frame": NEG_EV}, at="quran:93:3:1")
+    eq("negation_effect derives a candidate from a unique contextual frame alone", _n["decision"], "candidate")
+    eq("negation_effect direct maa_function path is unaffected by the new axis",
+       negation_effect("مَا", {"maa_function": mint_fixture_observation(
+           "negation", source_address="quran:93:3:1", quran_loc="93:3", word=1, surface="مَا",
+           target_kind="token", target_value="maa_negation")},
+                       at="quran:93:3:1").get("context_frame"), None)
+
+    # ROUND: top-level evidence_defect must never be stale on a contextual-frame rejection. The FRAME's real
+    # reason must reach negation_effect's own returned `evidence_defect`, not the outer typed_observation(None)
+    # call's generic `absent`.
+    eq("ambiguous frame: maa_context_frame itself carries a real evidence_defect",
+       _amb.get("evidence_defect"), "maa_category_unresolved")
+    eq("negation_effect propagates an ambiguous frame's real defect, not a stale 'absent'",
+       negation_effect("مَا", {"maa_context_frame": AMB_EV}, at="quran:2:284:2")["evidence_defect"],
+       "maa_category_unresolved")
+    eq("negation_effect propagates a replayed frame's occurrence_not_current, not a stale 'absent'",
+       negation_effect("مَا", {"maa_context_frame": REL_EV}, at="quran:93:3:1")["evidence_defect"],
+       "occurrence_not_current")
+    _BAD_LABEL_EV = mint_fixture_observation(
+        "relative", source_address="quran:2:284:10", quran_loc="2:284", word=10, surface="مَا",
+        target_kind="token", target_value="maa_relative_vs_negation")
+    eq("negation_effect propagates a conclusion-label frame's observation_off_vocabulary, not a stale 'absent'",
+       negation_effect("مَا", {"maa_context_frame": _BAD_LABEL_EV}, at="quran:2:284:10")["evidence_defect"],
+       "observation_off_vocabulary")
+
+    # ROUND: a relative-function frame routed through negation_effect is out of scope, and its RECOMPUTED
+    # rivals must select nobody — the earlier (pre-out-of-scope) rival computation must not leak a
+    # candidate_selected role into a result that ultimately never selects that function.
+    _oos = negation_effect("مَا", {"maa_context_frame": REL_EV}, at="quran:2:284:10")
+    eq("a relative frame is out of scope for the negation row", _oos.get("out_of_scope_for_negation"), True)
+    eq("an out-of-scope frame's recomputed rivals select nobody",
+       any(x.get("selected") for x in (_oos.get("unresolved_alternatives") or [])), False)
+
+    # ROUND: table-integrity failure closed. A duplicate frame key must never let the FIRST matching row
+    # silently shadow the second, regardless of the (here deliberately fake, out-of-corpus, EXPLICITLY marked)
+    # evidence supplied. quran:2:284:99 is word 99 of an ayah with 28 tokens — it can never be genuine corpus
+    # evidence — but the marker is required here anyway so a synthetic probe is never byte-indistinguishable
+    # from a real citation in a log or diff.
+    _dup_ev = mint_fixture_observation("object_of_verb_then_prep", source_address="quran:2:284:99",
+                                       quran_loc="2:284", word=99, surface="مَا", target_kind="token",
+                                       target_value="maa_relative_vs_negation", synthetic_probe=True)
+    if not _dup_ev.get("synthetic_probe"):
+        bad.append("duplicate-key probe: synthetic_probe marker missing from the fixture artifact")
+    _dup_rules = json.loads(json.dumps(load_particle_rules()))
+    _dup_rule = next(r for r in _dup_rules["rules"] if r["id"] == "maa_relative_vs_negation")
+    _dup_rule["frame_table"].append(dict(_dup_rule["frame_table"][0]))
+    _dup = maa_context_frame("مَا", evidence=_dup_ev, at="quran:2:284:99", rules=_dup_rules)
+    eq("a duplicate frame_table key fails closed rather than silently shadowing",
+       _dup.get("decision"), "pending")
+    eq("a duplicate frame_table key reports the exact table-integrity defect",
+       _dup.get("evidence_defect"), "frame_table_duplicate_key")
+
+    # ROUND: the source mechanism can report a transitive-object frame followed by an unrecognized POS
+    # (object_of_verb_then_other), which this rule's table deliberately leaves UNMAPPED rather than
+    # generalising from the other object_of_verb_then_* rows. This must be a REAL, reachable outcome
+    # (frame_row_missing) — not dead code — and must never invent a function for it.
+    _unmapped_ev = mint_fixture_observation("object_of_verb_then_other", source_address="quran:93:3:1",
+                                            quran_loc="93:3", word=1, surface="مَا", target_kind="token",
+                                            target_value="maa_relative_vs_negation")
+    _unmapped = maa_context_frame("مَا", evidence=_unmapped_ev, at="quran:93:3:1")
+    eq("a recognized-but-unmapped frame stays pending, never a candidate", _unmapped.get("decision"), "pending")
+    eq("a recognized-but-unmapped frame reports frame_row_missing, not observation_off_vocabulary",
+       _unmapped.get("evidence_defect"), "frame_row_missing")
+    _unmapped_rivals = {x["role"] for x in (_unmapped.get("unresolved_alternatives") or [])
+                        if x.get("decision_status") == "unresolved"}
+    eq("a recognized-but-unmapped frame still preserves both rivals",
+       {"negation", "relative"} <= _unmapped_rivals, True)
+
     # every rule in every consumed file must have a truthful status
     for path, rows in rule_status().items():
         for rid, st in rows.items():
@@ -1178,7 +1456,8 @@ def _self_test():
             print("  -", b)
         return 1
     print("PASS — particle/negation/state-transition consumer self-test "
-          "(7 homograph rules consumed, 5 negation rules, 10 transitions, 5 forbidden bindings)")
+          "(7 homograph rules consumed, 5 negation rules, 10 transitions, 5 forbidden bindings, "
+          "1 occurrence-specific contextual مَا relative-vs-negation frame rule)")
     return 0
 
 

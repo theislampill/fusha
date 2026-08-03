@@ -191,6 +191,8 @@ A2_OWNERSHIP = {
     "nahw/evals/particle-function-eval.jsonl":
         ("tools/fusha_nahw_particle_rules.py:resolve_particle_homograph", "fixture_only"),
     "nahw/evals/irab-polysemy-eval.jsonl": (None, "fixture_only"),
+    "nahw/evals/ma-function-occurrence-eval.jsonl":
+        ("tools/fusha_nahw_particle_rules.py:maa_context_frame", "implemented_and_consumed"),
 }
 # consumer id -> (module file that must exist under the reviewed root, attribute that must exist)
 #
@@ -210,6 +212,8 @@ A2_CONSUMER_MODULES = {
         ("tools/fusha_context_parser.py", "collision_status"),
     "tools/fusha_nahw_particle_rules.py:resolve_particle_homograph":
         ("tools/fusha_nahw_particle_rules.py", "resolve_particle_homograph"),
+    "tools/fusha_nahw_particle_rules.py:maa_context_frame":
+        ("tools/fusha_nahw_particle_rules.py", "maa_context_frame"),
 }
 
 

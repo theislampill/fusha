@@ -1799,6 +1799,219 @@ def test_r18_unorderable_governor_keys_are_total():
                   "%s: %s" % (type(exc).__name__, exc))
 
 
+# ---------------------------------------------------------------------------
+# R20 — occurrence-specific CONTEXTUAL MA discrimination (maa_relative_vs_negation)
+# ---------------------------------------------------------------------------
+def test_r20_maa_context_frame():
+    """مَا carries no diacritic that separates relative from negation, so the new axis reads a typed
+    CONTEXTUAL FRAME observation instead of a caller label. Every claim here is mechanism-only: the exact
+    addresses used are the ones this repository's own crosswalk already binds to a candidate function
+    (tools/build_curriculum_pvn_links.py: 2:284:10 relative, 93:3:1 negation) or to a control probe; nothing
+    here certifies a reading.
+    """
+    REL_ADDR, REL_LOC, REL_WORD = "quran:2:284:10", "2:284", 10
+    NEG_ADDR, NEG_LOC, NEG_WORD = "quran:93:3:1", "93:3", 1
+    AMB_ADDR, AMB_LOC, AMB_WORD = "quran:2:284:2", "2:284", 2
+
+    def frame_ev(frame, addr, loc, word, surface="مَا"):
+        return mint_fixture_observation(frame, source_address=addr, quran_loc=loc, word=word,
+                                        surface=surface, target_kind="token",
+                                        target_value="maa_relative_vs_negation")
+
+    # featureless MA never defaults; both axis members stay live rivals
+    r = PR.maa_context_frame("مَا")
+    check("R20 featureless مَا stays pending maa_category_unresolved",
+          r.get("decision") == "pending" and r.get("pending_reason") == "maa_category_unresolved",
+          json.dumps(r, ensure_ascii=False))
+    rivals = {x["role"] for x in (r.get("unresolved_alternatives") or [])}
+    check("R20 featureless مَا still preserves negation and relative as rivals",
+          {"negation", "relative"} <= rivals, sorted(rivals))
+    check("R20 featureless مَا never selects a rival",
+          all(not x["selected"] for x in (r.get("unresolved_alternatives") or [])), r)
+
+    # a caller label (the CONCLUSION itself) is not a frame: off-vocabulary, never resolves
+    for label in ("relative", "negation"):
+        bad = frame_ev(label, REL_ADDR, REL_LOC, REL_WORD)
+        r = PR.maa_context_frame("مَا", evidence=bad, at=REL_ADDR)
+        check("R20 the conclusion label %r is not a valid frame (wrong reason must fail)" % label,
+              r.get("decision") == "pending" and r.get("evidence_defect") == "observation_off_vocabulary",
+              json.dumps(r, ensure_ascii=False))
+
+    # a unique frame reaches CANDIDATE only, never resolved/certified
+    rel_ev = frame_ev("object_of_verb_then_prep", REL_ADDR, REL_LOC, REL_WORD)
+    r = PR.maa_context_frame("مَا", evidence=rel_ev, at=REL_ADDR)
+    check("R20 2:284:10 object-then-prep frame reaches relative candidate",
+          r.get("decision") == "candidate" and r.get("function_candidate") == "relative",
+          json.dumps(r, ensure_ascii=False))
+    check("R20 candidate posture only, never resolved", r.get("decision") != "resolved")
+    check("R20 candidate carries the evidence id and exact source address",
+          r.get("evidence_id") == rel_ev["observation_id"] and r.get("source_address") == REL_ADDR)
+
+    neg_ev = frame_ev("not_object_before_verb", NEG_ADDR, NEG_LOC, NEG_WORD)
+    r = PR.maa_context_frame("مَا", evidence=neg_ev, at=NEG_ADDR)
+    check("R20 93:3:1 not-object-before-verb frame reaches negation candidate",
+          r.get("decision") == "candidate" and r.get("function_candidate") == "negation",
+          json.dumps(r, ensure_ascii=False))
+
+    # same surface, same skeleton, opposite functions at two exact addresses: same surface never authorises reuse
+    check("R20 2:284:10 and 93:3:1 (same surface مَا) disagree on function",
+          PR.maa_context_frame("مَا", evidence=rel_ev, at=REL_ADDR)["function_candidate"]
+          != PR.maa_context_frame("مَا", evidence=neg_ev, at=NEG_ADDR)["function_candidate"])
+
+    # an ambiguous frame preserves BOTH rivals and selects neither
+    amb_ev = frame_ev("not_object_before_other", AMB_ADDR, AMB_LOC, AMB_WORD)
+    r = PR.maa_context_frame("مَا", evidence=amb_ev, at=AMB_ADDR)
+    check("R20 an ambiguous frame stays pending, never a candidate",
+          r.get("decision") == "pending" and r.get("pending_reason") == "maa_category_unresolved",
+          json.dumps(r, ensure_ascii=False))
+    alts = r.get("unresolved_alternatives") or []
+    unresolved_roles = {x["role"] for x in alts if x.get("decision_status") == "unresolved"}
+    check("R20 the ambiguous frame preserves BOTH relative and negation as unresolved rivals",
+          {"negation", "relative"} <= unresolved_roles, sorted(unresolved_roles))
+    check("R20 the ambiguous frame selects no winner",
+          not any(x.get("selected") for x in alts), alts)
+
+    # exact-address binding: evidence minted for ONE occurrence must fail closed when replayed at another
+    r = PR.maa_context_frame("مَا", evidence=rel_ev, at=NEG_ADDR)
+    check("R20 2:284:10 evidence replayed at 93:3:1 is rejected (occurrence_not_current)",
+          r.get("evidence_defect") == "occurrence_not_current", json.dumps(r, ensure_ascii=False))
+    r = PR.maa_context_frame("مَا", evidence=neg_ev, at=REL_ADDR)
+    check("R20 93:3:1 evidence replayed at 2:284:10 is rejected (occurrence_not_current)",
+          r.get("evidence_defect") == "occurrence_not_current", json.dumps(r, ensure_ascii=False))
+
+    # data-drivenness: mutating the rule's own frame_table must flip the verdict (a hard-coded consumer
+    # would be immune to this)
+    mutated = copy.deepcopy(PR.load_particle_rules())
+    rule = next(r for r in mutated["rules"] if r["id"] == "maa_relative_vs_negation")
+    row = next(f for f in rule["frame_table"] if f["frame"] == "object_of_verb_then_prep")
+    row["function"] = "negation"
+    r = PR.maa_context_frame("مَا", evidence=rel_ev, at=REL_ADDR, rules=mutated)
+    check("R20 a mutated frame_table row flips the verdict (data-driven, not hard-coded)",
+          r.get("function_candidate") == "negation", json.dumps(r, ensure_ascii=False))
+
+    # negation_effect() BUILDS ON the existing typed maa_function path: unaffected when maa_function is given
+    n = PR.negation_effect("مَا", {"maa_function": frame_ev("negation", NEG_ADDR, NEG_LOC, NEG_WORD)},
+                           at=NEG_ADDR)
+    check("R20 negation_effect with a direct maa_function observation is unaffected by the new axis",
+          n.get("context_frame") is None, json.dumps(n, ensure_ascii=False))
+
+    # negation_effect() with ONLY a contextual-frame observation: unique frame -> candidate, still never resolved
+    n = PR.negation_effect("مَا", {"maa_context_frame": neg_ev}, at=NEG_ADDR)
+    check("R20 negation_effect derives a candidate from a unique contextual frame alone",
+          n.get("decision") == "candidate" and n.get("observed") == "negation",
+          json.dumps(n, ensure_ascii=False))
+    check("R20 negation_effect exposes the context_frame evidence it derived the candidate from",
+          isinstance(n.get("context_frame"), dict)
+          and n["context_frame"].get("decision") == "candidate", json.dumps(n, ensure_ascii=False))
+
+    # negation_effect() with an AMBIGUOUS contextual-frame observation: pending, both rivals visible
+    n = PR.negation_effect("مَا", {"maa_context_frame": amb_ev}, at=AMB_ADDR)
+    check("R20 negation_effect never picks a winner from an ambiguous contextual frame",
+          n.get("decision") == "pending" and n.get("pending_reason") == "maa_category_unresolved",
+          json.dumps(n, ensure_ascii=False))
+    cf = n.get("context_frame") or {}
+    cf_unresolved = {x["role"] for x in (cf.get("unresolved_alternatives") or [])
+                     if x.get("decision_status") == "unresolved"}
+    check("R20 negation_effect's context_frame carries both preserved rivals",
+          {"negation", "relative"} <= cf_unresolved, sorted(cf_unresolved))
+
+    # relative-function frame must NOT satisfy the negation row's required_value: routed out of scope, exactly
+    # like a direct maa_function="relative" claim already is
+    n = PR.negation_effect("مَا", {"maa_context_frame": rel_ev}, at=REL_ADDR)
+    check("R20 a relative-function frame is routed out of scope for negation, never candidate-as-negation",
+          n.get("decision") == "pending" and n.get("out_of_scope_for_negation") is True,
+          json.dumps(n, ensure_ascii=False))
+    # the out-of-scope result's RECOMPUTED rivals must select nobody — the frame reached a real candidate
+    # ("relative") before the required_value check rejected it, so the naive rival computation from that step
+    # would still show it candidate_selected; the final, returned rivals must not leak that stale selection.
+    n_alts = n.get("unresolved_alternatives") or []
+    check("R20 an out-of-scope frame's recomputed rivals select nobody (no candidate_selected leaks through)",
+          bool(n_alts) and not any(x.get("selected") for x in n_alts), json.dumps(n_alts, ensure_ascii=False))
+    check("R20 an out-of-scope frame's rivals all report decision_status unresolved, not candidate_selected",
+          all(x.get("decision_status") == "unresolved" for x in n_alts), json.dumps(n_alts, ensure_ascii=False))
+
+
+def test_r20_ma_function_occurrence_bank():
+    """The ma-function-occurrence bank must exist, run through the REAL consumer, and its mutation coverage
+    must be honest: a wrong expected-function in the bank's own data must be caught."""
+    import tools.run_nahw_evals as RUN
+
+    check("R20 the ma-function-occurrence bank is registered", "ma-function-occurrence" in RUN.BANKS)
+    errs, stats = [], {}
+    RUN.BANKS["ma-function-occurrence"](errs, stats)
+    check("R20 the committed ma-function-occurrence bank is green", not errs, json.dumps(errs[:5]))
+    bank_stats = stats.get("ma-function-occurrence") or {}
+    check("R20 the bank reports both candidate and pending rows",
+          bank_stats.get("candidates", 0) >= 1 and bank_stats.get("pending", 0) >= 1, bank_stats)
+    check("R20 the bank reports real consumer-call metrics", bank_stats.get("consumer_calls", 0) >= 1,
+          bank_stats)
+
+    # mutation: a corrupted expected_function in the bank's own row must be caught, not silently accepted
+    rows = RUN._jsonl(os.path.join(RUN.EVAL_DIR, "ma-function-occurrence-eval.jsonl"))
+    target = next(r for r in rows if r.get("expected_decision") == "candidate")
+    target["expected_function"] = "WRONG-%s" % target.get("expected_function")
+    original_jsonl = RUN._jsonl
+    try:
+        RUN._jsonl = lambda path: rows if "ma-function-occurrence" in path else original_jsonl(path)
+        errs2, _stats2 = [], {}
+        RUN.BANKS["ma-function-occurrence"](errs2, _stats2)
+        check("R20 a corrupted expected_function is caught by the runner", bool(errs2), errs2)
+    finally:
+        RUN._jsonl = original_jsonl
+
+    # I1 hostile (reviewer counterexample): word 34 of 5:116 is فِى, not مَا. A row claiming
+    # quran:5:116:34 IS مَا must be caught by the loc-surface check even though its own frame/address shape is
+    # otherwise well-formed — surface presence in the ROW's own claim is not occurrence authority.
+    rows3 = RUN._jsonl(os.path.join(RUN.EVAL_DIR, "ma-function-occurrence-eval.jsonl"))
+    bad_row = dict(rows3[0], id="ma-occ-hostile-i1", quran_loc="5:116", word=34,
+                   source_address="quran:5:116:34", frame="object_of_verb_then_prep",
+                   expected_decision="candidate", expected_function="relative")
+    rows3 = rows3 + [bad_row]
+    try:
+        RUN._jsonl = lambda path: rows3 if "ma-function-occurrence" in path else original_jsonl(path)
+        errs3, _stats3 = [], {}
+        RUN.BANKS["ma-function-occurrence"](errs3, _stats3)
+        check("R20 I1: a row claiming quran:5:116:34 is مَا (it is فِى) is caught by the loc-surface check",
+              any("loc-surface" in e or "quran-loc-surface" in e for e in errs3), errs3)
+    finally:
+        RUN._jsonl = original_jsonl
+
+    # B1: an axis-derived candidate rejects at most its in-axis sibling. 93:3:1's not_object_before_verb frame
+    # selects `negation` within the relative-vs-negation axis; every OTHER attested مَا function
+    # (interrogative, maṣdariyya, temporal, preventive_kaffa, laysa_like) must stay unresolved with
+    # `not_examined_by_this_axis`, never `rejected_rival`, merely because this 2-way frame picked a winner.
+    neg_ev_b1 = PR.mint_fixture_observation("not_object_before_verb", source_address="quran:93:3:1",
+                                            quran_loc="93:3", word=1, surface="مَا", target_kind="token",
+                                            target_value="maa_relative_vs_negation")
+    r_b1 = PR.maa_context_frame("مَا", evidence=neg_ev_b1, at="quran:93:3:1")
+    check("R20 B1 axis-derived candidate reaches negation", r_b1.get("function_candidate") == "negation", r_b1)
+    alts_b1 = r_b1.get("unresolved_alternatives") or []
+    rejected_b1 = {x["role"] for x in alts_b1 if x.get("decision_status") == "rejected_rival"}
+    out_of_axis_b1 = set(r_b1.get("functions_not_discriminated") or [])
+    check("R20 B1 the axis-derived candidate rejects at most its in-axis sibling (relative), never an "
+          "out-of-axis function", rejected_b1 == {"relative"}, sorted(rejected_b1))
+    out_of_axis_status_b1 = {x["role"]: x for x in alts_b1 if x["role"] in out_of_axis_b1}
+    check("R20 B1 every out-of-axis function stays unresolved with not_examined_by_this_axis",
+          out_of_axis_b1 and all(v.get("decision_status") == "unresolved"
+                                 and v.get("defeater") == "not_examined_by_this_axis"
+                                 for v in out_of_axis_status_b1.values()),
+          out_of_axis_status_b1)
+
+    # `--bank ma-function-occurrence --json` must execute the real consumer honestly
+    import subprocess
+    proc = subprocess.run([sys.executable, os.path.join(_REPO, "tools", "run_nahw_evals.py"),
+                           "--bank", "ma-function-occurrence", "--json"], capture_output=True, cwd=_REPO)
+    try:
+        payload = json.loads(proc.stdout.decode("utf-8", errors="replace"))
+    except ValueError:
+        payload = None
+    check("R20 --bank ma-function-occurrence --json runs and is exit 0",
+          payload is not None and proc.returncode == 0, repr(proc.stdout[:200]))
+    if payload:
+        check("R20 --bank ma-function-occurrence --json carries the real stats",
+              payload.get("stats", {}).get("ma-function-occurrence", {}).get("cases", 0) >= 5, payload)
+
+
 def main():
     for fn in (test_m1_wrong_conclusion, test_m2_wrong_reason, test_m3_absent_governor,
                test_m4_lost_rival, test_m5_unsafe_auto_resolution, test_two_vote_agreement,
@@ -1810,7 +2023,8 @@ def main():
                test_r14_marks_and_learner_error, test_r15_case_safe_kull_and_gate_inputs,
                test_r15_governor_mirrors_are_bound, test_r16_total_hover_and_absent_governor,
                test_r17_typed_governor_mirrors_and_total_grading,
-               test_r18_unorderable_governor_keys_are_total):
+               test_r18_unorderable_governor_keys_are_total,
+               test_r20_maa_context_frame, test_r20_ma_function_occurrence_bank):
         fn()
     if FAILS:
         print("FAIL — %d behavioural gate(s) broke:" % len(FAILS))
@@ -1828,7 +2042,8 @@ def main():
           "error never hidden by the fact gate, case-safe كُلّ, bound governor mirrors, total gate-input "
           "validation, total topic_hover, governor mirrors bound with no canonical tuple, typed governor "
           "mirrors with a total grading path, unorderable governor-record keys, tuple keys of every "
-          "arity)")
+          "arity, occurrence-specific contextual مَا relative-vs-negation frame discrimination, ma-function-"
+          "occurrence bank mutation coverage)")
 
 
 if __name__ == "__main__":

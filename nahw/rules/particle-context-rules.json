@@ -200,6 +200,76 @@
         "pending_reason": "homograph_haraka",
         "note": "nūn harakah decides praise-verb vs 'yes'; undiacritized input stays pending"
       }
+    },
+    {
+      "id": "maa_relative_vs_negation",
+      "$surface_note": "'مَا' below is a documentary EXAMPLE surface for this rule's prose, not a matching key: unlike surface_norm/members on the haraka rules above, no code path looks this field up, and it must never be read as 'every occurrence of the surface مَا is decided by this rule alone' — the frame_table below governs by OCCURRENCE-SPECIFIC contextual frame, never by surface identity.",
+      "example_surface": "مَا",
+      "distinguish_by": {
+        "signal": "occurrence-specific CONTEXTUAL FRAME, not a diacritic — مَا carries no content-letter mark that separates relative from negation, so the DISCRIMINATORS haraka registry does not apply to this rule",
+        "frame_fields": ["object_of_transitive_verb", "followed_by_pos"],
+        "grounded_in": "tools/skill_fixtures/skill_rules.py:_ma_neg_rel_corrected (fixtures test_ma_family_relative_not_negation / ma-negation-control-before-verb)",
+        "also": "a frame this table does not bind to EXACTLY one function is never guessed at; both rivals stay pending, exactly like an absent observation"
+      },
+      "axis": ["negation", "relative"],
+      "axis_note": "This rule discriminates ONLY relative-vs-negation — the two-way axis its own frame_table can actually examine. It is a faithful restatement of the fixture's 2-way rule (tools/skill_fixtures/skill_rules.py:_ma_neg_rel_corrected), never a complete مَا function classifier. A frame this table selects a candidate FOR settles nothing about the five OTHER attested مَا functions below; they are never rejected merely because this axis picked an in-axis winner — they stay unresolved, out of this axis's examination scope entirely (`not_examined_by_this_axis`), exactly like an absent observation.",
+      "functions_not_discriminated": ["interrogative", "masdariyya", "temporal", "preventive_kaffa", "laysa_like"],
+      "author_circularity_disclosure": "This frame_table's `frame` values and their bound `function`/`functions` are authored by the same party, from no mechanical extraction source; the bank rows built against it (nahw/evals/ma-function-occurrence-eval.jsonl) supply the frame observation and check the table's own verdict, so the bank cannot fail unless the table itself or its consumer breaks. Candidate-only, fixture-producer posture — see the bank file's own header note.",
+      "frame_table": [
+        {
+          "frame": "object_of_verb_then_prep",
+          "function": "relative",
+          "unique_within_axis": true,
+          "reason": "مَا is the mafʿūl of a preceding transitive verb and the clause continues with a preposition, e.g. تَعْلَمُ مَا فِى نَفْسِى"
+        },
+        {
+          "frame": "object_of_verb_then_noun",
+          "function": "relative",
+          "unique_within_axis": true,
+          "reason": "مَا is the mafʿūl of a preceding transitive verb and the clause continues with a noun"
+        },
+        {
+          "frame": "object_of_verb_then_verb",
+          "function": "relative",
+          "unique_within_axis": true,
+          "reason": "مَا is the mafʿūl of a preceding transitive verb; object status marks it relative even when a verb follows, e.g. أَقُولَ مَا لَيْسَ لِى بِحَقٍّ"
+        },
+        {
+          "frame": "not_object_before_prep",
+          "function": "relative",
+          "unique_within_axis": true,
+          "reason": "مَا is not the object of a preceding transitive verb, but the clause it heads continues with a preposition, e.g. لِلَّهِ مَا فِى السَّمَاوَاتِ"
+        },
+        {
+          "frame": "not_object_before_noun",
+          "function": "relative",
+          "unique_within_axis": true,
+          "reason": "مَا is not the object of a preceding transitive verb, but the clause it heads continues with a noun"
+        },
+        {
+          "frame": "not_object_before_verb",
+          "function": "negation",
+          "unique_within_axis": true,
+          "reason": "مَا is not the object of a preceding transitive verb and directly precedes a verb, negating it, e.g. مَا يَكُونُ لِى / مَا وَدَّعَكَ رَبُّكَ"
+        },
+        {
+          "frame": "not_object_before_other",
+          "functions": ["negation", "relative"],
+          "unique_within_axis": false,
+          "reason": "مَا is not the object of a preceding transitive verb and the following token's class is not established as a preposition, noun or verb; the fixture rule's own fallback (unresolved_needs_subfunction) leaves both readings open rather than defaulting to either"
+        }
+      ],
+      "recognized_unmapped_frames": [
+        {
+          "frame": "object_of_verb_then_other",
+          "reason": "the source mechanism can report مَا as the mafʿūl of a preceding transitive verb whose following token's class is not established as a preposition, noun or verb — the positive-side mirror of not_object_before_other. Unlike that negative-side catch-all, this combination has NOT been reviewed against corpus data, so it is recognized as a real closed-vocabulary frame (an observer may legitimately report it) but is deliberately left UNMAPPED rather than generalised from the other object_of_verb_then_* rows. A recognized-but-unmapped frame stays pending with pending_reason=frame_row_missing — distinct from an off-vocabulary caller error — and never defaults to a function."
+        }
+      ],
+      "pending_fallback": {
+        "decision": "pending",
+        "pending_reason": "maa_category_unresolved",
+        "note": "no frame observation, or a frame value outside this table AND outside recognized_unmapped_frames, stays pending; a frame is never inferred from the caller's own conclusion label"
+      }
     }
   ]
 }

@@ -319,6 +319,50 @@ else:
             errs.append(f"load-bearing probe {_pid}: mutating {_pr['file']} also silenced {_leaked} - the "
                         f"probes are not distinct")
 
+    # ---------------------------------------------------------------------------------------------------
+    # DISTINCT callable-level, data-driven on/off probe: occurrence-specific contextual مَا relative-vs-negation
+    # (particle-context-rules.json#maa_relative_vs_negation). The file already claims `consumed` above through
+    # the UNRELATED haraka_reading probe (bound to lam_vs_lima); this proves the NEW rule is independently
+    # data-driven at the fusha_nahw_particle_rules.maa_context_frame() CALLABLE. I7: this is NOT a production
+    # record-validation path — maa_context_frame()'s only callers are tools/run_nahw_evals.py, this validator
+    # and tools/test_nahw_behavioural_gates.py, exactly the standard under which negation-rules.json is held
+    # `fixture_gated` rather than `consumed` (see RULES_CONSUMPTION below); no production caller wires it into
+    # an ordinary record-validation path yet. It does not relabel any fixture-gated rule.
+    # ---------------------------------------------------------------------------------------------------
+    _MAA_REL_EV = _PR.mint_fixture_observation("object_of_verb_then_prep", source_address="quran:2:284:10",
+                                               quran_loc="2:284", word=10, surface="مَا", target_kind="token",
+                                               target_value="maa_relative_vs_negation")
+    _maa_on = _PR.maa_context_frame("مَا", evidence=_MAA_REL_EV, at="quran:2:284:10")
+    if _maa_on.get("decision") != "candidate" or _maa_on.get("function_candidate") != "relative":
+        errs.append("maa_relative_vs_negation probe: the production path did not fire on a unique frame "
+                    "('object_of_verb_then_prep' -> relative) - the new rule is NOT consumed")
+    else:
+        _maa_key = _PR.PARTICLE_RULES_PATH
+        _maa_saved = _PR._CACHE.get(_maa_key)
+        _maa_data = json.loads(json.dumps(_PR._load(_maa_key)))
+        _maa_rule = next((r for r in _maa_data.get("rules", []) if r.get("id") == "maa_relative_vs_negation"),
+                         None)
+        if _maa_rule is None:
+            errs.append("maa_relative_vs_negation probe: the rule is missing from particle-context-rules.json")
+        else:
+            _maa_rule["frame_table"] = []
+        _PR._CACHE[_maa_key] = _maa_data
+        try:
+            _maa_off = _PR.maa_context_frame("مَا", evidence=_MAA_REL_EV, at="quran:2:284:10")
+            # ISOLATION: removing THIS rule's own data must not silence the unrelated haraka_reading probe
+            _maa_isolated = _fires("haraka_reading")
+        finally:
+            if _maa_saved is None:
+                _PR._CACHE.pop(_maa_key, None)
+            else:
+                _PR._CACHE[_maa_key] = _maa_saved
+        if _maa_off.get("decision") == "candidate":
+            errs.append("maa_relative_vs_negation probe: the candidate survived removing the rule's own "
+                        "frame_table data - the production path is hard-coded, not consuming the rule file")
+        if not _maa_isolated:
+            errs.append("maa_relative_vs_negation probe: mutating the new rule's data also silenced the "
+                        "unrelated haraka_reading probe - the probes are not distinct")
+
     # the helper inventories must AGREE EXACTLY with this authoritative file-level inventory
     for _mod in (_PR, _CTX, _GATE):
         for _path, _status in getattr(_mod, "FILE_CONSUMPTION", {}).items():

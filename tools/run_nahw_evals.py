@@ -33,12 +33,22 @@ non-quarantined row must carry an exact binding — a missing binding is a failu
                     Replays each gloss through tools/leak_sot.LEAK_RE (the single leak SoT) and asserts the
                     word-boundary behaviour: 'hypocrites' must not trip on 'ocr', 'see OCR scan' must.
 
+  ma-function-occurrence   nahw/evals/ma-function-occurrence-eval.jsonl
+                    Occurrence-specific contextual مَا relative-vs-negation discrimination. Each row supplies a
+                    typed, source-addressed CONTEXTUAL FRAME (never the conclusion label) for one exact مَا
+                    occurrence; tools.fusha_nahw_particle_rules.maa_context_frame() reads the frame_table on
+                    particle-context-rules.json#maa_relative_vs_negation to decide candidate-or-pending. A
+                    frame the table does not bind to exactly one function stays pending with both rivals
+                    preserved. Every row is also replayed at every OTHER row's exact address to prove the
+                    evidence cannot be reused across occurrences. Registered in BANKS, the default `--bank all`
+                    route, `--self-test` AND A2_ARTIFACT_OWNERSHIP (implemented_and_consumed).
+
 Rows whose contract defect is NOT mechanically repairable carry `contract_status` + `packet`; the runner keeps
 them visible, excludes them from the gates they cannot satisfy, and fails if such a row lacks its packet
 reference. Exit 0 = every bank green.
 
 CLI:  python tools/run_nahw_evals.py [--bank all|state-machine|hover-context|wrong-reasoning|llx-collision|
-                                      public-boundary] [--json]
+                                      public-boundary|ma-function-occurrence] [--json]
 """
 import argparse
 import json
@@ -62,6 +72,28 @@ from tools.leak_sot import LEAK_RE  # noqa: E402
 
 EVAL_DIR = os.path.join(_REPO, "nahw", "evals")
 PACKET_DIR = os.path.join(_REPO, "qamus", "task-packets")
+LOC_SURFACE_INDEX_PATH = os.path.join(_REPO, "qamus", "indexes", "quran-loc-surface", "index.jsonl")
+_LOC_SURFACE_INDEX = None
+
+
+def _loc_surface_index():
+    """I1: the SAME occurrence-identity authority the Train B governor banks use
+    (tools/validate_dependency_lattice.py verify_occurrence_identity) — loc -> surface, byte-exact after NFC.
+    Surface presence in a row's OWN claim is not occurrence authority; every address-bearing row must be
+    checked against this committed index, not against itself."""
+    global _LOC_SURFACE_INDEX
+    if _LOC_SURFACE_INDEX is None:
+        _LOC_SURFACE_INDEX = {}
+        if os.path.exists(LOC_SURFACE_INDEX_PATH):
+            with open(LOC_SURFACE_INDEX_PATH, encoding="utf-8") as fh:
+                for line in fh:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    row = json.loads(line)
+                    if row.get("loc"):
+                        _LOC_SURFACE_INDEX[row["loc"]] = row.get("surface", "")
+    return _LOC_SURFACE_INDEX
 
 
 def _jsonl(path):
@@ -958,6 +990,120 @@ def run_function_polysemy(errors, stats):
     return bank
 
 
+# ---------------------------------------------------------------------------
+# bank 7 — ma-function-occurrence-eval.jsonl (occurrence-specific contextual مَا discrimination)
+# ---------------------------------------------------------------------------
+# Every row supplies a typed, source-addressed CONTEXTUAL FRAME observation (never the conclusion label) for
+# one exact مَا occurrence, and PR.maa_context_frame() — reading nahw/rules/particle-context-rules.json's own
+# `maa_relative_vs_negation#frame_table` — says which function(s) that frame licenses. A unique frame must
+# reach `candidate` with exactly the bank's expected function; a non-unique frame must stay `pending` with
+# BOTH declared rival functions still unresolved. Every row's evidence is additionally replayed at every OTHER
+# row's exact address to prove it cannot be reused across occurrences (same surface never authorises reuse).
+#
+# REGISTRATION: this bank is invoked (registered in BANKS, exercised by `--bank ma-function-occurrence`,
+# the DEFAULT `--bank all` / no-flag route, and `--self-test`) and IS registered in A2_ARTIFACT_OWNERSHIP below,
+# with a matching entry in tools/fusha_eval_coverage.py's own independent allowlist. Every row is decided by
+# the real consumer (PR.maa_context_frame): each row's function candidate — or its exact pending/rival/defect
+# outcome for a non-unique frame — is checked, so `decided` counts every row, never only the candidate-reaching
+# ones.
+#
+# M5 (author-circularity disclosure): each row's `frame` and the rule's own `frame_table` binding it to a
+# function are authored by the SAME party, from no mechanical extraction source (see
+# nahw/rules/particle-context-rules.json#maa_relative_vs_negation's own `author_circularity_disclosure`); this
+# bank therefore cannot fail unless the frame_table or this consumer itself breaks — it is candidate-only,
+# fixture-producer trust, exactly like every other typed observation this file mints.
+def run_ma_function_occurrence(errors, stats):
+    bank = "ma-function-occurrence"
+    rows = _jsonl(os.path.join(EVAL_DIR, "ma-function-occurrence-eval.jsonl"))
+    stats[bank] = {"cases": len(rows), "candidates": 0, "pending": 0, "decided": 0, "consumer_calls": 0,
+                   "replay_checks": 0}
+    addresses = [r["source_address"] for r in rows if r.get("source_address")]
+    maa_rule = next((r for r in (PR.load_particle_rules().get("rules") or [])
+                     if r.get("id") == "maa_relative_vs_negation"), None) or {}
+    for r in rows:
+        rid = r.get("id")
+        for key in ("surface", "quran_loc", "word", "source_address", "frame", "expected_decision"):
+            if key not in r:
+                errors.append("%s:%s missing required field %s" % (bank, rid, key))
+        surface, at = r.get("surface"), r.get("source_address")
+        # I1: verify this row's own claimed (loc, surface) against the committed loc-surface index — the same
+        # authority contract the governor banks use — BEFORE trusting the row's evidence at all. A missing or
+        # mismatching index entry is a failure regardless of what the frame/decision fields say: surface
+        # presence in the row's own data was never occurrence authority (e.g. a mutated row claiming word 34 of
+        # 5:116 is مَا, when the index shows فِى, must fail here even though the frame vocabulary is well-formed).
+        loc = "%s:%s" % (r.get("quran_loc"), r.get("word")) if r.get("quran_loc") is not None \
+            and r.get("word") is not None else None
+        indexed_surface = _loc_surface_index().get(loc) if loc else None
+        if indexed_surface is None:
+            errors.append("%s:%s loc %r has no qamus/indexes/quran-loc-surface/index.jsonl entry" % (bank, rid, loc))
+        elif unicodedata.normalize("NFC", indexed_surface) != unicodedata.normalize("NFC", surface or ""):
+            errors.append("%s:%s surface %r does not match qamus/indexes/quran-loc-surface/index.jsonl at "
+                          "loc=%r (%r)" % (bank, rid, surface, loc, indexed_surface))
+        evidence = PR.mint_fixture_observation(r.get("frame"), source_address=at, quran_loc=r.get("quran_loc"),
+                                               word=r.get("word"), surface=surface, target_kind="token",
+                                               target_value="maa_relative_vs_negation")
+        res = PR.maa_context_frame(surface, evidence=evidence, at=at)
+        stats[bank]["consumer_calls"] += 1
+        stats[bank]["decided"] += 1
+        if res.get("decision") == "candidate":
+            stats[bank]["candidates"] += 1
+        elif res.get("decision") == "pending":
+            stats[bank]["pending"] += 1
+        if res.get("decision") != r.get("expected_decision"):
+            errors.append("%s:%s decision %r != expected %r"
+                          % (bank, rid, res.get("decision"), r.get("expected_decision")))
+        if res.get("decision") == "resolved":
+            errors.append("%s:%s reached resolved from typed evidence; candidate posture only" % (bank, rid))
+        if r.get("expected_decision") == "candidate":
+            if res.get("function_candidate") != r.get("expected_function"):
+                errors.append("%s:%s function_candidate %r != expected %r"
+                              % (bank, rid, res.get("function_candidate"), r.get("expected_function")))
+        else:
+            expected_rivals = set(r.get("expected_rivals") or [])
+            got_unresolved = {x["role"] for x in (res.get("unresolved_alternatives") or [])
+                              if x.get("decision_status") == "unresolved"}
+            if expected_rivals:
+                if not expected_rivals <= got_unresolved:
+                    errors.append("%s:%s expected rivals %s not all preserved unresolved (got %s)"
+                                  % (bank, rid, sorted(expected_rivals), sorted(got_unresolved)))
+                # INDEPENDENT of the eval row's own (possibly incomplete) expected_rivals fixture: cross-check
+                # against the RULE ARTIFACT's own declared functions for the observed frame, so an under-listed
+                # fixture can never mask a production regression that silently drops a real rival.
+                observed_frame = res.get("observed_frame")
+                frame_row = next((fr for fr in (maa_rule.get("frame_table") or [])
+                                  if fr.get("frame") == observed_frame), None)
+                artifact_rivals = set((frame_row or {}).get("functions")
+                                      or ([frame_row["function"]] if (frame_row or {}).get("function") else []))
+                if not artifact_rivals <= got_unresolved:
+                    errors.append("%s:%s rule-artifact rivals %s not all preserved unresolved (got %s) — an "
+                                  "eval-row fixture must never mask a dropped real rival"
+                                  % (bank, rid, sorted(artifact_rivals), sorted(got_unresolved)))
+                if any(x.get("selected") for x in (res.get("unresolved_alternatives") or [])):
+                    errors.append("%s:%s an ambiguous frame must select no winner" % (bank, rid))
+            if r.get("expected_defect") and res.get("evidence_defect") != r.get("expected_defect"):
+                errors.append("%s:%s evidence_defect %r != expected %r"
+                              % (bank, rid, res.get("evidence_defect"), r.get("expected_defect")))
+        # exact-address binding: an otherwise-VALID row's evidence replayed at every OTHER row's address must
+        # fail closed. Gated on the row's OWN evidence having actually validated at its own address
+        # (res["evidence_id"] is not None) — NOT on the mere presence of `expected_defect`, since a row can
+        # carry valid evidence that is only ambiguous at the FRAME level (e.g. ma-occ-005, expected_defect=
+        # maa_category_unresolved) and such a row's replay-rejection is still real and must still be checked.
+        # An already-invalid row (e.g. off-vocabulary — evidence_id is None) is skipped: its own address
+        # already fails for a different, unrelated reason, so the replay defect would never surface there.
+        if res.get("evidence_id") is not None:
+            for other in addresses:
+                if other == at:
+                    continue
+                replay = PR.maa_context_frame(surface, evidence=evidence, at=other)
+                stats[bank]["replay_checks"] += 1
+                if replay.get("evidence_defect") != "occurrence_not_current":
+                    errors.append("%s:%s evidence replayed at %s was not rejected as occurrence_not_current "
+                                  "(%r)" % (bank, rid, other, replay.get("evidence_defect")))
+    if stats[bank]["candidates"] < 1 or stats[bank]["pending"] < 1:
+        errors.append("%s: the bank must carry both a candidate-reaching row and a pending row" % bank)
+    return bank
+
+
 BANKS = {
     "function-polysemy": run_function_polysemy,
     "state-machine": run_state_machine,
@@ -965,6 +1111,7 @@ BANKS = {
     "wrong-reasoning": run_wrong_reasoning,
     "llx-collision": run_llx_collision,
     "public-boundary": run_public_boundary,
+    "ma-function-occurrence": run_ma_function_occurrence,
 }
 
 
@@ -981,7 +1128,8 @@ NAHW_RUNNER_SCHEMA = "qamus.nahw_eval_runner_contract.v1"
 # EXACT artifact -> (execution group, allowed consumer, declared disposition). This is the ownership map: a
 # result item for any other artifact, or naming any other consumer or disposition, is rejected by the reporter.
 # `decided_stat` names the stat holding the rows the consumer actually decided; `quarantine_stat` the rows a
-# typed quarantine excused. Six execution GROUPS decide seven physical artifacts (function-polysemy covers two).
+# typed quarantine excused. Seven execution GROUPS decide eight physical artifacts (function-polysemy covers
+# two).
 A2_ARTIFACT_OWNERSHIP = {
     "nahw/evals/public-boundary-scanner-eval.jsonl": {
         "group": "public-boundary", "consumer": "tools/leak_sot.py:LEAK_RE.search",
@@ -1012,6 +1160,13 @@ A2_ARTIFACT_OWNERSHIP = {
     "nahw/evals/irab-polysemy-eval.jsonl": {
         "group": "function-polysemy", "consumer": None, "disposition": "fixture_only",
         "decided_stat": (), "quarantine_stat": None},
+    "nahw/evals/ma-function-occurrence-eval.jsonl": {
+        # every row's exact outcome (candidate function, or the exact pending/rival/defect for a non-unique or
+        # invalid-evidence frame) is decided and checked against the real consumer; no row is quarantined and
+        # no axis of this bank's own claim is unowned.
+        "group": "ma-function-occurrence",
+        "consumer": "tools/fusha_nahw_particle_rules.py:maa_context_frame",
+        "disposition": "implemented_and_consumed", "decided_stat": ("decided",), "quarantine_stat": None},
 }
 # Axes this lane does NOT own. Reported, never counted as coverage.
 UNOWNED_AXES = {
@@ -1029,6 +1184,8 @@ CONSUMER_SLOTS = {
     "tools/fusha_nahw_particle_rules.py:resolve_particle_homograph": ("tools.fusha_nahw_particle_rules",
                                                                       "resolve_particle_homograph",
                                                                       "function"),
+    "tools/fusha_nahw_particle_rules.py:maa_context_frame": ("tools.fusha_nahw_particle_rules",
+                                                             "maa_context_frame", "function"),
 }
 
 
@@ -1241,19 +1398,20 @@ def main():
         return 1
     total = sum(v for s in stats.values() for k, v in s.items() if k == "cases" or k.endswith("_cases"))
     # ROUND-7: this aggregate is NOT "real consumer decisions" — it mixes distinct denominators (identity
-    # comparisons, ablation mutations, harakat-stripping mutations, routing events, leak-scanner decisions and
-    # homograph cross-checks) and it omits the hover base comparisons. It is reported under a precise name and
-    # its exact formula is asserted in tools/check_regressions.py. Row-level coverage lives in run_all().
+    # comparisons, ablation mutations, harakat-stripping mutations, routing events, leak-scanner decisions,
+    # homograph cross-checks, occurrence-frame decisions and occurrence-replay probes) and it omits the hover
+    # base comparisons. It is reported under a precise name and its exact formula is asserted in
+    # tools/check_regressions.py. Row-level coverage lives in run_all().
     consumer_events = sum(v for s in stats.values() for k, v in s.items()
                           if k in ("identity_compared", "ablated", "mutated", "routed", "leaks", "clean",
-                                   "pf_homograph_checked"))
+                                   "pf_homograph_checked", "decided", "replay_checks"))
     fixture_only = sorted(n for n in names if stats.get(n, {}).get("classification") == "fixture_only"
                           or stats.get(n, {}).get("state_comparison") == "fixture_only")
     quarantined = sum(s.get("quarantined", 0) for s in stats.values())
     print("PASS — %d naḥw eval row(s) across %d bank(s). "
           "Consumer-invocation events (mixed denominators: identity+ablation+mutation+routing+scanner+"
-          "homograph): %d. Quarantined rows (excluded from any closure claim): %d. "
-          "Banks whose semantic comparison is FIXTURE-ONLY pending a typed consumer/bank: %s. "
+          "homograph+occurrence-decision+occurrence-replay): %d. Quarantined rows (excluded from any closure "
+          "claim): %d. Banks whose semantic comparison is FIXTURE-ONLY pending a typed consumer/bank: %s. "
           "Structural row checks are NOT behavioural closure."
           % (total, len(names), consumer_events, quarantined, ", ".join(fixture_only) or "none"))
     return 0
