@@ -4484,6 +4484,74 @@ except Exception as _e:
     check("T3B-2 RM-12 fixture gates (harness error)", False)
     print("  ", _e)
 
+# --- T3B-2 LLX collision bank (Train E: skeleton-collision + source-provenance
+# abstention). Runs the extended 22-row largelexicon collision bank and
+# asserts the committed hover-candidate sample is regeneration-stable. ---
+try:
+    from tools.fusha_largelexicon_cli import _token_safety as _llx_token_safety
+    from tools.fusha_standalone_parse import parse_text as _llx_parse_text
+
+    _llx_path = os.path.join(ROOT, "fusha", "parser", "eval", "largelexicon-collision-regressions.jsonl")
+    with io.open(_llx_path, encoding="utf-8") as _llx_handle:
+        _llx_rows = [json.loads(_line) for _line in _llx_handle if _line.strip()]
+    for _llx_row in _llx_rows:
+        _llx_parsed = _llx_parse_text(_llx_row["text"], db="largelexicon")
+        _llx_tokens = _llx_parsed.get("tokens") or []
+        _llx_idx = int(_llx_row["target_token_index"])
+        _llx_ok = _llx_idx < len(_llx_tokens)
+        if _llx_ok:
+            _llx_tok = _llx_tokens[_llx_idx]
+            _llx_req = _llx_row.get("required_behavior") or {}
+            _llx_gate = _llx_tok.get("confidence_gate")
+            _llx_top = (_llx_tok.get("morphology_candidates") or [{}])[0]
+            _llx_feat = _llx_top.get("features") or {}
+            _llx_collision = _llx_tok.get("collision") or {}
+            _llx_hover = (_llx_tok.get("hover_preview") or {}).get("token_contribution_gloss")
+            if "or_gate" in _llx_req:
+                _llx_ok = _llx_ok and _llx_gate in set(_llx_req["or_gate"])
+            if _llx_req.get("forbid_confidence_gate"):
+                _llx_ok = _llx_ok and _llx_gate not in set(_llx_req["forbid_confidence_gate"])
+            if _llx_req.get("forbid_hover_gloss"):
+                _llx_ok = _llx_ok and not _llx_hover
+            if "require_collision_kind" in _llx_req:
+                _llx_ok = _llx_ok and _llx_collision.get("kind") == _llx_req["require_collision_kind"]
+            if "require_collision_scope" in _llx_req:
+                _llx_ok = _llx_ok and _llx_collision.get("scope") == _llx_req["require_collision_scope"]
+            if "require_competitor_entry_ids_min" in _llx_req:
+                _llx_ok = _llx_ok and len(_llx_collision.get("competing_entry_ids") or []) >= _llx_req["require_competitor_entry_ids_min"]
+            for _llx_key, _llx_val in (_llx_req.get("require_features") or {}).items():
+                _llx_ok = _llx_ok and _llx_feat.get(_llx_key) == _llx_val
+            for _llx_key in _llx_req.get("forbid_features") or []:
+                _llx_ok = _llx_ok and not _llx_feat.get(_llx_key)
+            for _llx_key, _llx_val in (_llx_req.get("require_top") or {}).items():
+                _llx_ok = _llx_ok and _llx_top.get(_llx_key) == _llx_val
+            if "require_source_risk_flags" in _llx_req:
+                _llx_ok = _llx_ok and set(_llx_req["require_source_risk_flags"]).issubset(
+                    set(_llx_feat.get("source_risk_flags") or [])
+                )
+            if "require_risk" in _llx_req:
+                _llx_ok = _llx_ok and _llx_feat.get("match_risk") == _llx_req["require_risk"]
+            if "require_route" in _llx_req:
+                _llx_ok = _llx_ok and _llx_req["require_route"] in (_llx_token_safety(_llx_parsed).get("routes") or [])
+        check("T3B-2 LLX collision bank: %s" % _llx_row["id"], _llx_ok)
+except Exception as _e:
+    check("T3B-2 LLX collision bank (harness error)", False)
+    print("  ", _e)
+
+try:
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    from tools.largelexicon_common import read_jsonl as _llxr_read_jsonl
+    from project_largelexicon_qamus_hover_candidates import DEFAULT_IN as _llxr_in
+    from project_largelexicon_qamus_hover_candidates import DEFAULT_OUT as _llxr_out
+    from project_largelexicon_qamus_hover_candidates import _project as _llxr_project
+
+    _llxr_committed = _llxr_read_jsonl(_llxr_out)
+    _llxr_regenerated = [_llxr_project(_r) for _r in _llxr_read_jsonl(_llxr_in)]
+    check("T3B-2 LLX hover-candidate sample is regeneration-stable", _llxr_committed == _llxr_regenerated)
+except Exception as _e:
+    check("T3B-2 LLX hover-candidate sample regeneration (harness error)", False)
+    print("  ", _e)
+
 try:
     from tools.fusha_text_check import check_text as _t3b2_check_text
 
