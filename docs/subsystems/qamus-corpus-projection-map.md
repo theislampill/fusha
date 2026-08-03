@@ -110,6 +110,12 @@ joins the selected locations to the component-1 manifest by exact
 `canonical_loc`. The join is appearance-complete: 985 manifest appearances must
 equal the reverse-universe appearance sets exactly.
 
+Certification validity and effective state are owned exclusively by
+`TypedFactCertificationStore`: the batch calls its `validate_trail()`, `state()`,
+and `status_by_id()` APIs. The batch separately checks register-event payload/set
+equality against committed `typed-facts.jsonl`; it does not carry a second
+transition vocabulary or certification state machine.
+
 The component projects only three fact types:
 `attachment_geometry`, `surface_reconstruction_nfc`, and
 `token_host_boundary`. Its certification boundary is

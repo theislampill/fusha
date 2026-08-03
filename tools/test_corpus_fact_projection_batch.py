@@ -5,9 +5,11 @@
 from __future__ import annotations
 
 import collections
+import hashlib
 import importlib.util
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -23,6 +25,8 @@ SPEC = importlib.util.spec_from_file_location("build_corpus_fact_projection_batc
 batch = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
 SPEC.loader.exec_module(batch)
+
+from tools.certify_typed_fact import TypedFactCertificationStore  # noqa: E402
 
 
 class CorpusFactProjectionBatchTest(unittest.TestCase):
@@ -47,6 +51,48 @@ class CorpusFactProjectionBatchTest(unittest.TestCase):
                 "token_host_boundary": 454,
             },
         )
+
+    def test_canonical_certifier_rejection_is_builder_rejection(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            events_path = os.path.join(temp_dir, "events.jsonl")
+            shutil.copyfile(batch.DEFAULT_EVENTS, events_path)
+            with open(events_path, encoding="utf-8") as handle:
+                events = [json.loads(line) for line in handle if line.strip()]
+
+            # The local shadow fold formerly checked only sequence, status and
+            # hashes. Remove a canonical required field and then rebuild every
+            # hash link: that shadow fold accepts this, while the authoritative
+            # certifier must reject it as a malformed event.
+            events[0]["actor"] = ""
+            previous = None
+            for event in events:
+                event["prev_event_sha256"] = (
+                    "genesis"
+                    if previous is None
+                    else "sha256:" + hashlib.sha256(
+                        json.dumps(
+                            previous,
+                            ensure_ascii=False,
+                            sort_keys=True,
+                            separators=(",", ":"),
+                        ).encode("utf-8")
+                    ).hexdigest()
+                )
+                previous = event
+            with open(events_path, "w", encoding="utf-8", newline="\n") as handle:
+                for event in events:
+                    handle.write(json.dumps(
+                        event, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+                    handle.write("\n")
+
+            canonical_errors = TypedFactCertificationStore(temp_dir).validate_trail()
+            self.assertTrue(
+                any("missing actor" in error for error in canonical_errors),
+                canonical_errors,
+            )
+            with self.assertRaisesRegex(
+                    batch.ProjectionBuildError, "canonical certification trail validation failed"):
+                batch.build_batch(events_path=events_path)
 
     def test_exact_cohort_counts_and_hashes(self):
         population = self.baseline["population"]

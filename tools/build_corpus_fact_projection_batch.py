@@ -29,6 +29,7 @@ if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
 from tools import build_corpus_projection_manifest as corpus_manifest  # noqa: E402
+from tools.certify_typed_fact import TypedFactCertificationStore  # noqa: E402
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -238,74 +239,67 @@ def validate_geometry_fact_scope(fact):
     _require(not bad_keys, f"{fact_id}: geometry fact carries forbidden semantic keys {bad_keys}")
 
 
-def _fold_certification_events(events, typed_by_id):
-    """Validate the canonical chain and return latest effective fact state."""
+def _validate_certification_store(events, typed_by_id, events_path):
+    """Delegate trail validity/state folding to the canonical certifier API."""
 
     _require(
         len(events) == EXPECTED_EVENTS,
         f"certification event-count drift: found {len(events)}, expected {EXPECTED_EVENTS}",
     )
-    state = {}
-    register_facts = {}
-    previous_event = None
-    allowed = {
-        "candidate": {"review_required", "blocked", "rejected"},
-        "review_required": {"certified", "blocked", "rejected"},
-        "certified": {"review_required"},
-        "blocked": {"review_required", "rejected"},
-        "rejected": set(),
-    }
-    for number, event in enumerate(events, 1):
-        prefix = f"event {number}"
-        _require(event.get("seq") == number, f"{prefix}: sequence drift")
-        expected_prev = (
-            "genesis" if previous_event is None else _sha256_prefixed(previous_event)
-        )
-        _require(
-            event.get("prev_event_sha256") == expected_prev,
-            f"{prefix}: hash chain broken",
-        )
-        fact_id = event.get("fact_id")
-        _require(fact_id, f"{prefix}: missing fact_id")
-        event_type = event.get("event_type")
-        if event_type == "register":
-            _require(fact_id not in state, f"{prefix}: duplicate register for {fact_id}")
-            _require(event.get("from_status") is None, f"{prefix}: register has from_status")
-            _require(event.get("to_status") == "candidate", f"{prefix}: register not candidate")
-            fact = event.get("fact")
-            _require(isinstance(fact, dict), f"{prefix}: register has no fact payload")
-            _require(fact_id in typed_by_id, f"{prefix}: fact absent from typed-facts.jsonl")
-            _require(
-                _canonical(fact) == _canonical(typed_by_id[fact_id]),
-                f"{prefix}: registered fact differs from typed-facts.jsonl",
-            )
-            state[fact_id] = "candidate"
-            register_facts[fact_id] = fact
-        elif event_type == "dependency_rebind":
-            _require(fact_id in state, f"{prefix}: dependency rebind before register")
-            _require(event.get("from_status") == state[fact_id], f"{prefix}: stale from_status")
-            _require(event.get("to_status") == state[fact_id], f"{prefix}: rebind changes status")
-        else:
-            _require(fact_id in state, f"{prefix}: transition before register")
-            from_status = event.get("from_status")
-            to_status = event.get("to_status")
-            _require(from_status == state[fact_id], f"{prefix}: stale from_status")
-            _require(to_status in allowed.get(from_status, set()),
-                     f"{prefix}: illegal transition {from_status!r} -> {to_status!r}")
-            state[fact_id] = to_status
-        previous_event = event
+
+    absolute_events_path = os.path.abspath(events_path)
+    store = TypedFactCertificationStore(os.path.dirname(absolute_events_path))
     _require(
-        set(register_facts) == set(typed_by_id),
+        os.path.abspath(store.events_path) == absolute_events_path,
+        "certification events input must be the canonical events.jsonl store filename",
+    )
+    trail_errors = store.validate_trail()
+    _require(
+        not trail_errors,
+        "canonical certification trail validation failed: " + "; ".join(trail_errors[:8]),
+    )
+
+    # The certifier owns event validity and state-machine semantics. Both APIs
+    # are read explicitly: state() supplies the effective records, while
+    # status_by_id() is the canonical status projection consumed below.
+    canonical_state = store.state()
+    status_by_id = store.status_by_id()
+    _require(set(canonical_state) == set(status_by_id),
+             "canonical certification state/status projections disagree")
+    _require(
+        all(canonical_state[fact_id].get("status") == status
+            for fact_id, status in status_by_id.items()),
+        "canonical certification state/status values disagree",
+    )
+
+    # Payload equality is a separate input-closure check, not a second state
+    # machine: register events must carry exactly the committed typed facts.
+    register_events = [event for event in events if event.get("event_type") == "register"]
+    registered_by_id = {}
+    for event in register_events:
+        fact_id = event.get("fact_id")
+        _require(fact_id and fact_id not in registered_by_id,
+                 f"duplicate or empty registered fact_id: {fact_id!r}")
+        fact = event.get("fact")
+        _require(isinstance(fact, dict), f"registered fact {fact_id} has no payload")
+        registered_by_id[fact_id] = fact
+    _require(
+        set(registered_by_id) == set(typed_by_id),
         "certification register set differs from typed-facts.jsonl",
     )
+    for fact_id, typed_fact in typed_by_id.items():
+        _require(
+            _canonical(registered_by_id[fact_id]) == _canonical(typed_fact),
+            f"registered fact {fact_id} differs from typed-facts.jsonl",
+        )
     _require(
-        collections.Counter(state.values()) == {"certified": EXPECTED_FACTS},
+        collections.Counter(status_by_id.values()) == {"certified": EXPECTED_FACTS},
         f"latest effective certification state is not exactly {EXPECTED_FACTS} certified facts",
     )
-    return state
+    return status_by_id
 
 
-def _facts_by_location(typed_facts, events, cohort_rows):
+def _facts_by_location(typed_facts, events, cohort_rows, events_path):
     _require(
         len(typed_facts) == EXPECTED_FACTS,
         f"typed-fact count drift: found {len(typed_facts)}, expected {EXPECTED_FACTS}",
@@ -324,7 +318,7 @@ def _facts_by_location(typed_facts, events, cohort_rows):
         typed_by_id[fact_id] = fact
         by_loc[loc][fact_type] = fact
 
-    state = _fold_certification_events(events, typed_by_id)
+    state = _validate_certification_store(events, typed_by_id, events_path)
     cohort_by_loc = {row["canonical_loc"]: row for row in cohort_rows}
     _require(set(by_loc) == set(cohort_by_loc), "geometry fact locations differ from cohort locations")
     expected_types = set(FACT_TYPES)
@@ -415,7 +409,8 @@ def build_batch(
     cohort_rows, occurrence_hash = _load_geometry_cohort(reverse_universe_path)
     typed_facts = _read_jsonl(typed_facts_path)
     events = _read_jsonl(events_path)
-    facts_by_loc, effective_state = _facts_by_location(typed_facts, events, cohort_rows)
+    facts_by_loc, effective_state = _facts_by_location(
+        typed_facts, events, cohort_rows, events_path)
 
     cohort_by_loc = {row["canonical_loc"]: row for row in cohort_rows}
     corpus_by_loc = collections.defaultdict(list)
