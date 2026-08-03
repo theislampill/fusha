@@ -17,12 +17,19 @@ between coordination and maʿiyya (accompaniment), both readings are preserved
 
 **Case-following, not a fixed rule.** A conjunct's case is not a property of the connector; it is a CONSEQUENCE
 of the case of the element it is joined to (the maʿṭūf ʿalayh), whatever that case is:
-- The joined-to element (the head) must be SUPPLIED (guard g-atf-3). `head_not_supplied` is an abstention, not a
-  guess.
+- The joined-to element (the head) must be SUPPLIED (guard g-atf-3): with no matching feature shape at all,
+  `_h_coordination` (`tools/fusha_governor.py`) returns no edge and the general trigger dispatch falls back to
+  `abstained_unmodeled_construction` (`abstention_reason: "recognized trigger particle with no licensed
+  construction rule"`) — a real, distinct-named `head_not_supplied` abstention is NOT yet implemented as its
+  own vocabulary member; do not cite it as a produced value.
 - If the head's case is known but the conjunct's OWN marking is not confirmed, the head's case is NEVER copied
-  onto the conjunct — abstain `marking_unknown` (C7). "Unknown" includes a head that itself bears only a
-  positional maḥall case (`head_bears_mahall`) and an exponent that is case/mood-syncretic
-  (`exponent_syncretic`), not only an outright absent exponent.
+  onto the conjunct — abstain `marking_unknown` (C7, `connector_reading=coordination` + `conjunct_marking=
+  unknown`). M3: the doctrine that "unknown" INCLUDES a head bearing only a positional maḥall case or a
+  case/mood-syncretic exponent is correct prose, but `_h_coordination` implements exactly ONE abstention
+  value (`marking_unknown`) for all of these — there is no separate `head_bears_mahall` or coordination-scoped
+  `exponent_syncretic` abstention_reason; do not cite them as distinct produced values here (the syncretic-
+  exponent value the nawāsikh family DOES emit under that same name is a different construction, see
+  `nahw/procedures/nawasikh-government.md`).
 - A clause-level connector (joining two CLAUSES, not two nominals sharing one case slot) has no head case to
   follow at all — `abstain(non_governing_use)`.
 - An iḍāfa edge must never ASSIGN genitive to a conjunct whose real connector/governor is TOKEN-INTERNAL (fused

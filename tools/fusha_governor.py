@@ -288,6 +288,20 @@ def _claim_governor_type(claim):
     return None
 
 
+def _preceding_token(toks, ref):
+    """I2: the token immediately BEFORE the one named `ref`, or None (no predecessor / ref not found).
+
+    The claim-lint plane above only reads the claim's own TEXT to name a governor kind; it never checks the
+    actual head. A claim naming "preposition" as the governor kind is head-blind to the real preceding token,
+    so a genuine ẓarf/iḍāfa-annexation head (ZARF_IDAFA_HEADS, e.g. عِندَ) can hide behind a text-only
+    "preposition" claim and pass the ordinary licensed-case check (genitive is licensed by BOTH kinds).
+    """
+    for i, t in enumerate(toks):
+        if t.get("ref") == ref:
+            return toks[i - 1] if i > 0 else None
+    return None
+
+
 # ---------------------------------------------------------------------------
 # G4: nawāsikh regime discrimination (address-bearing path — real, supplied token evidence)
 # ---------------------------------------------------------------------------
@@ -334,10 +348,12 @@ def _nasikh_case_edge(nxt, dep_ref, trigger_ref, family, role, case_visible, exp
 def _nasikh_hidden_ism_edges(nxt, trigger_ref, family, khabar_head_tok):
     spec = _NASIKH_REGIME[family]
     gtype = "verb" if family == "kana_family" else "particle"
+    # I6 discovery: headless=True with a non-null candidate_head is a self-contradiction (FAIL 4) — the hidden
+    # ism has no written head of its own to point at; that is exactly what "hidden" and "headless" both mean.
     ism_edge = _mk_edge(nxt(), trigger_ref, "hidden_subject", "الاسم مستتر",
                         "The %s ism is not written; it is a hidden (mustatir) pronoun, obligatorily licensed by "
                         "this construction." % family,
-                        "hidden_element_licensed", candidate_head=trigger_ref, headless=True, governor_type=gtype,
+                        "hidden_element_licensed", candidate_head=None, headless=True, governor_type=gtype,
                         assigned_case_mood=None, confidence="medium", evidence_class="source_addressed",
                         decision_status="pending", triggers=["irab", "case_or_mood"], trigger_family=family,
                         governing_regime=family,
@@ -376,8 +392,30 @@ def _nasikh_address_edges(nxt, toks, i, family):
     idx = i + 2
     while idx < len(toks) and (toks[idx].get("pos") or "").lower() in _NOUN_POS:
         khabar_tok = toks[idx]
+        khabar_case = khabar_tok.get("case_visible")
+        # I4: a genitive dependent here is structurally an iḍāfa muḍāf ilayh (or ṣifa/badal) boundary of the
+        # PRECEDING noun in this chain, never a legitimate khabar reading — neither regime ever licenses a
+        # genitive khabar (inna_family=nominative, kana_family=accusative). Stop the sweep and abstain honestly
+        # (khabar_boundary_undetermined) instead of fabricating a consistency-violation contradiction against a
+        # role this token was never actually filling (e.g. 7:56-shaped إِنَّ رَحْمَتَ ٱللَّهِ, where ٱللَّهِ is
+        # the muḍāf ilayh of رَحْمَتَ, not a second inna-khabar).
+        if khabar_case == "genitive":
+            edges.append(_mk_edge(
+                nxt(), khabar_tok.get("ref"), "none", "حدّ الإضافة/الصفة غير محدد",
+                "The visible genitive ending marks this token as a muḍāf ilayh (or ṣifa/badal) boundary of the "
+                "preceding noun, not a %s khabar — neither regime ever licenses a genitive khabar; the sweep "
+                "stops here instead of asserting a false consistency violation." % family,
+                "unmodeled_construction_abstention", candidate_head=trigger_ref, governor_type="none",
+                assigned_case_mood=None, confidence="medium", evidence_class="source_addressed",
+                decision_status="pending", triggers=["ambiguous_grammar"], trigger_family=family,
+                governing_regime=family,
+                regime_evidence="supplied: genitive ending after the %s ism marks an iḍāfa/ṣifa boundary, not "
+                                "a khabar" % family,
+                abstention_reason="khabar_boundary_undetermined"))
+            consumed.append(idx)
+            break
         edges.append(_nasikh_case_edge(nxt, khabar_tok.get("ref"), trigger_ref, family, "khabar",
-                                       khabar_tok.get("case_visible"), khabar_tok.get("exponent_syncretic")))
+                                       khabar_case, khabar_tok.get("exponent_syncretic")))
         consumed.append(idx)
         idx += 1
     return edges, consumed
@@ -509,6 +547,8 @@ def _h_nawasikh(nxt, dep_ref, f):
     if regime == "zanna_family":
         sense = f.get("sense")
         if sense != "judgemental":
+            # I6 discovery: the REGIME (zanna_family) is known here — only the SENSE (judgemental vs
+            # literal-perception) is gated; an abrogator-family trigger edge with no governing_regime is FAIL 10.
             return [_mk_edge(nxt(), dep_ref, "none", "فعل ظنّ (حس أم قلب؟)",
                              "ẓanna-family verbs also carry a literal-perception sense taking a single object; "
                              "the two-accusative expectation is not asserted without a supplied judgemental "
@@ -516,6 +556,7 @@ def _h_nawasikh(nxt, dep_ref, f):
                              "regime_undetermined_abstention", governor_type="none", assigned_case_mood=None,
                              confidence="low", evidence_class="heuristic", decision_status="pending",
                              triggers=["ambiguous_grammar"], trigger_family="zanna_family",
+                             governing_regime="zanna_family",
                              abstention_reason="sense_dependent_gate")]
         first, second = _norm_case(f.get("first_object_marking")), _norm_case(f.get("second_object_marking"))
         contradiction = second != "accusative"
@@ -911,11 +952,38 @@ def build_dependency_lattice(unit):
                                       unresolved=[{"reading": "ṣifa (adjective, agrees in case with its mawṣūf)", "rel_label": "sifa"},
                                                   {"reading": "badal (apposition, agrees in case with its mubdal minhu)", "rel_label": "badal"}],
                                       decision_status="pending", triggers=["ambiguous_grammar"]))
-            # (3) iḍāfa CANDIDATE: noun + noun (not a prep+noun already handled, and not an adjective — see (2.5))
-            # -> muḍāf ilayh, but kept ambiguous
+            # (2.75) I5: a noun immediately preceded by a verb, itself followed by another noun, is that verb's
+            # fāʿil with the next noun as its mafʿūl bihi — SEPARATE arguments of the preceding verb, never a
+            # muḍāf/muḍāf-ilayh pair. This must be checked BEFORE the general noun+noun iḍāfa branch below, or
+            # branch (3) sweeps a fāʿil/mafʿūl pair into a fabricated iḍāfa candidate (2:286 ٱللَّهُ/نَفْسًا).
             elif (_is_noun(t) and i + 1 < len(toks) and _is_noun(toks[i + 1])
                   and (toks[i + 1].get("pos") or "").lower() != "adjective" and not _is_prep(t)
-                  and (i, i + 1) not in nasikh_suppressed_pairs):
+                  and (i, i + 1) not in nasikh_suppressed_pairs
+                  and i > 0 and (toks[i - 1].get("pos") or "").lower() == "verb"):
+                dep = toks[i + 1]
+                dep_ref = dep.get("ref", "tok:%d" % (i + 1))
+                edges.append(_mk_edge(nxt(), dep_ref, "none", "متعلَّقا فعل سابق (فاعل ومفعول به منفصلان)",
+                                      "“%s” immediately follows the verb “%s” (its fāʿil), and “%s” follows it in "
+                                      "turn (its mafʿūl bihi); these are SEPARATE arguments of that verb, not a "
+                                      "muḍāf/muḍāf-ilayh pair, so no iḍāfa candidate is emitted here." %
+                                      (t.get("surface", ""), toks[i - 1].get("surface", ""), dep.get("surface", "")),
+                                      "not_determinable", candidate_head=None, headless=True, governor_type="none",
+                                      assigned_case_mood=None, confidence="low",
+                                      evidence_class=("source_addressed" if source_addressed else "heuristic"),
+                                      unresolved=[{"reading": "separate arguments of the preceding verb "
+                                                              "(fāʿil + mafʿūl bihi)", "rel_label": "none"},
+                                                  {"reading": "iḍāfa: muḍāf ilayh (genitive)",
+                                                   "rel_label": "idafa_dependent"},
+                                                  {"reading": "ṣifa (adjective, agrees in case)", "rel_label": "sifa"},
+                                                  {"reading": "badal (apposition, agrees in case)",
+                                                   "rel_label": "badal"}],
+                                      decision_status="pending", triggers=["ambiguous_grammar"]))
+            # (3) iḍāfa CANDIDATE: noun + noun (not a prep+noun already handled, and not an adjective — see (2.5),
+            # and not a fāʿil/mafʿūl pair — see (2.75)) -> muḍāf ilayh, but kept ambiguous
+            elif (_is_noun(t) and i + 1 < len(toks) and _is_noun(toks[i + 1])
+                  and (toks[i + 1].get("pos") or "").lower() != "adjective" and not _is_prep(t)
+                  and (i, i + 1) not in nasikh_suppressed_pairs
+                  and not (i > 0 and (toks[i - 1].get("pos") or "").lower() == "verb")):
                 dep = toks[i + 1]
                 dep_ref = dep.get("ref", "tok:%d" % (i + 1))
                 # A bare noun+noun is genuinely AMBIGUOUS: iḍāfa (2nd genitive) OR a nominal sentence mubtadaʾ+khabar
@@ -959,6 +1027,24 @@ def build_dependency_lattice(unit):
             ev = "source_addressed" if source_addressed else "heuristic"
             governor_type = _claim_governor_type(c)
             licensed = GOVERNOR_TYPE_LICENSED_CASES.get(governor_type, set())
+            # I2: head-aware ʿāmil-kind check. genitive is licensed by BOTH "preposition" and "idafa", so a
+            # claim naming "preposition" over a genuine ẓarf/iḍāfa-annexation head passes the licensed-case
+            # check above unnoticed — right answer (genitive), wrong reason (a ḥarf jarr that is not one). The
+            # actual preceding token, not the claim's own text, is the authority for what the head really is.
+            head_tok = _preceding_token(toks, c.get("target"))
+            if governor_type == "preposition" and head_tok is not None \
+                    and N.bare(head_tok.get("surface", "")) in ZARF_IDAFA_HEADS:
+                edges.append(_mk_edge(nxt(), c.get("target", "tok:0"), "none", "ʿāmil مخالف: رأس ظرف/إضافة لا حرف جر",
+                                      "The claim names a ḥarf jarr (preposition) governor, but the actual "
+                                      "preceding head “%s” is a ẓarf/iḍāfa-annexation noun, not a genuine "
+                                      "preposition; the case value is right but the governor kind is wrong." %
+                                      head_tok.get("surface", ""),
+                                      "governor_not_justified", candidate_head=head_tok.get("ref"),
+                                      governor_type="none", assigned_case_mood=cv, confidence="high",
+                                      evidence_class=ev, raww=True, decision_status="pending",
+                                      triggers=["irab", "case_or_mood"], claim_id=c.get("claim_id"),
+                                      head_governor_type="idafa"))
+                continue
             if governor_type and cv not in licensed and cv not in ("none", None):
                 edges.append(_mk_edge(nxt(), c.get("target", "tok:0"), "none", "ʿāmil mukhālif li-l-iʿrāb",
                                       "The named governor type “%s” does not license %s; it licenses %s." %
@@ -1133,12 +1219,16 @@ def emit_fixture(path):
     return 0
 
 
-def run_bank(path):
+def run_bank(path, out_path=None):
     """Run every row of a bank JSONL through the ordinary consumer (build_dependency_lattice), reporting only
-    crashes/hard-invariant breaks. Behavioural expectations are asserted by tools/test_nahw_governor_families.py
-    and (for occurrence identity) tools/validate_dependency_lattice.py --verify-occurrence-identity; a row that
-    merely runs without raising is NOT proof of correctness on its own."""
+    crashes/hard-invariant breaks. Behavioural expectations are asserted by tools/test_nahw_governor_families.py.
+
+    I6: this alone never catches a regression a bank ROW introduces (only exceptions/hard asserts); the built
+    lattices must also be passed through tools/validate_dependency_lattice.py --verify-occurrence-identity, not
+    just the committed 6-row sample. `out_path`, when given, writes every successfully built lattice so the
+    caller (tools/check_regressions.py) can run that validator over them in the same harness block."""
     n, fails = 0, 0
+    built = []
     with open(path, encoding="utf-8") as fh:
         for line in fh:
             line = line.strip()
@@ -1147,10 +1237,14 @@ def run_bank(path):
             row = json.loads(line)
             n += 1
             try:
-                build_dependency_lattice(row)
+                built.append(build_dependency_lattice(row))
             except Exception as exc:  # noqa: BLE001
                 fails += 1
                 print("FAIL %s: %s" % (row.get("id", "?"), exc))
+    if out_path:
+        with open(out_path, "w", encoding="utf-8") as fh:
+            for lat in built:
+                fh.write(json.dumps(lat, ensure_ascii=False, sort_keys=True) + "\n")
     print("ran %d bank row(s) from %s, %d failure(s)" % (n, path, fails))
     return 0 if not fails else 1
 
@@ -1162,13 +1256,15 @@ def main():
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--emit-fixture", dest="emit")
     ap.add_argument("--run-bank", dest="bank")
+    ap.add_argument("--run-bank-out", dest="bank_out",
+                    help="with --run-bank: also write every built lattice here (I6)")
     a = ap.parse_args()
     if a.self_test:
         return _self_test()
     if a.emit:
         return emit_fixture(a.emit)
     if a.bank:
-        return run_bank(a.bank)
+        return run_bank(a.bank, out_path=a.bank_out)
     if not a.infile:
         ap.error("need --in, --self-test, --run-bank, or --emit-fixture")
     rows = []

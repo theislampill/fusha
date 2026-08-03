@@ -37,10 +37,13 @@ sense, the two-accusative expectation is not asserted (`abstain(sense_dependent_
   a syncretic exponent such as the sound-masculine-plural oblique ـينَ, which is shared by naṣb and jarr and
   therefore never confirms either — F3, F12).
 - `sense_dependent_gate` — a ẓanna-family trigger with no supplied judgemental sense.
-- `licenser_absent` / `licenser_unknown` — a polarity-licensed kāna-sister (ما زال type) with no supplied
-  negative-polarity licenser, or one whose value is not itself determinate. These licensers are SUPPLIED
-  features; they are never added to the unconditional kāna roster (that would silently license the family
-  without evidence).
+- `licenser_absent` — a polarity-licensed kāna-sister (ما زال type) with no supplied negative-polarity licenser
+  (`polarity_licenser=absent`). These licensers are SUPPLIED features; they are never added to the
+  unconditional kāna roster (that would silently license the family without evidence). M3: `licenser_unknown`
+  is NOT a currently produced value — `_h_nawasikh` (`tools/fusha_governor.py`) matches only the literal
+  `absent` value; any OTHER supplied `polarity_licenser` value that is not itself a recognized regime name
+  falls through to the generic `regime_undetermined` abstention below, not a dedicated "unknown licenser"
+  reason. Do not cite `licenser_unknown` as a produced value until a real branch exists for it.
 - `bracketing_ambiguous` — more than one abrogator is stacked and the clause bracketing (which one takes scope
   over what) is a SUPPLIED input that was not given. No case is assigned to either.
 - `regime_undetermined` — the trigger is recognized but its own weight/shape does not confirm a governing

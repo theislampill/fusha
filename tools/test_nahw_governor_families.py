@@ -241,6 +241,17 @@ class G3SurfaceKeyIntegrity(unittest.TestCase):
         self.assertFalse(any(e.get("trigger_family") == "la_jins" for e in lat["edges"]))
         self.assertTrue(any(e.get("trigger_family") == "la_nafiya" for e in lat["edges"]))
 
+    def test_f8_no_fabricated_idafa_over_fail_and_object(self):
+        """I5: ٱللَّهُ (fāʿil of يُكَلِّفُ) / نَفْسًا (its mafʿūl) at 2:286 are SEPARATE verb arguments, never a
+        muḍāf/muḍāf-ilayh pair — the bare noun+noun fallback must not fabricate an idafa_dependent edge here."""
+        lat = _lattice_for(self.naw["F8"])
+        self.assertFalse(any(e["rel_label"] == "idafa_dependent" for e in lat["edges"]))
+        dep_edge = next(e for e in lat["edges"] if e["dependent"] == "2:286:4")
+        self.assertFalse(dep_edge["contradiction_marker"])
+        self.assertIsNone(dep_edge["candidate_head"])
+        readings = {a.get("reading") for a in dep_edge["unresolved_alternatives"]}
+        self.assertIn("separate arguments of the preceding verb (fāʿil + mafʿūl bihi)", readings)
+
     def test_f6_vs_f8_separated_by_following_token_evidence(self):
         f6 = _lattice_for(self.hid["F6"])
         f8 = _lattice_for(self.naw["F8"])
@@ -295,6 +306,17 @@ class G4NawasikhRegimeDiscrimination(unittest.TestCase):
     def test_c4_abstain_sense_dependent_gate(self):
         edge = _lattice_for(self.naw["C4"])["edges"][0]
         self.assertEqual(edge.get("abstention_reason"), "sense_dependent_gate")
+        # I6 discovery: the regime (zanna_family) IS known here — only the sense is gated — so this
+        # abrogator-family trigger edge must still carry governing_regime (FAIL 10 otherwise).
+        self.assertEqual(edge.get("governing_regime"), "zanna_family")
+
+    def test_f5_hidden_ism_edge_headless_carries_no_candidate_head(self):
+        """I6 discovery: headless=True with a non-null candidate_head is a self-contradiction (FAIL 4) —
+        the hidden ism has no written head of its own to point at."""
+        lat = _lattice_for(self.naw["F5"])
+        ism_edge = next(e for e in lat["edges"] if e["rel_label"] == "hidden_subject")
+        self.assertTrue(ism_edge["headless"])
+        self.assertIsNone(ism_edge["candidate_head"])
 
     def test_c5_abstain_licenser_absent(self):
         edge = _lattice_for(self.naw["C5"])["edges"][0]
@@ -325,6 +347,22 @@ class G4NawasikhRegimeDiscrimination(unittest.TestCase):
             lat = _lattice_for(row)
             for e in lat["edges"]:
                 self.assertNotEqual(e["gate"], "auto_safe", (fid, e["edge_id"]))
+
+    def test_f14_khabar_sweep_stops_at_idafa_boundary_no_fabricated_contradiction(self):
+        """I4: 7:56-shaped إِنَّ رَحْمَتَ ٱللَّهِ — ٱللَّهِ is the muḍāf ilayh of رَحْمَتَ, not a second
+        inna-khabar. The sweep must stop and abstain(khabar_boundary_undetermined), never contradiction_marker."""
+        lat = _lattice_for(self.naw["F14"])
+        ism_edge = next(e for e in lat["edges"] if e["rel_label"] == "ism_nasikh")
+        self.assertEqual(ism_edge["assigned_case_mood"], "accusative")
+        self.assertFalse(ism_edge["contradiction_marker"])
+        boundary_edges = [e for e in lat["edges"] if e.get("abstention_reason") == "khabar_boundary_undetermined"]
+        self.assertEqual(len(boundary_edges), 1)
+        boundary_edge = boundary_edges[0]
+        self.assertEqual(boundary_edge["dependent"], "7:56:12")
+        self.assertFalse(boundary_edge["contradiction_marker"])
+        self.assertIsNone(boundary_edge["assigned_case_mood"])
+        self.assertNotEqual(boundary_edge["rel_label"], "khabar_nasikh")
+        self.assertFalse(any(e["rel_label"] == "khabar_nasikh" for e in lat["edges"]))
 
 
 class G5CoordinationCaseFollowing(unittest.TestCase):
@@ -455,6 +493,20 @@ class G5CoordinationCaseFollowing(unittest.TestCase):
         ok, defect = derive_reasoning(case, claim)
         self.assertTrue(ok, defect)
 
+    def test_grader_coordination_sentinel_refuses_candidate_mood_basis_tajarrud(self):
+        """I3: the coordination sentinel must not bypass the released mood_basis gate — candidate basis
+        tajarrud stays refused here exactly as it is for fixed tuples (the exact hostile claim from the
+        review)."""
+        from tools.grade_grammar_reasoning import derive_reasoning
+        case = {"expected_reason_keys": ["atf-tabaiyya-follows-matuf-alayh"], "expected_conclusion": "coordination"}
+        claim = {"reason_key": "atf-tabaiyya-follows-matuf-alayh", "conclusion": "coordination",
+                 "case_mood": "nominative", "head_case": "nominative", "head_governor_type": "mubtada_khabar",
+                 "governor": {"governor_type": "mubtada_khabar"}, "mood_basis": "tajarrud",
+                 "fact_type": "case_assignment", "source_address": "quran:2:7:4"}
+        ok, defect = derive_reasoning(case, claim)
+        self.assertFalse(ok)
+        self.assertEqual(defect, "governor_not_justified")
+
     def test_grader_registry_example_is_not_evidence_for_another_occurrence(self):
         from tools.grade_grammar_reasoning import source_address_defect
         # a registry `examples` citation names an ayah RANGE, not a single word-level occurrence; it can never
@@ -549,6 +601,16 @@ class G6HiddenStructureMahall(unittest.TestCase):
         self.assertEqual(c23["rel_label"], "zarf_idafa_head")
         self.assertIsNone(c23["assigned_case_mood"])
 
+    def test_f11_claim_governor_preposition_on_zarf_head_flagged_ordinary_path(self):
+        """I2: F11 now carries a real claims[] entry naming "the preposition عِندَ" as the genitive governor.
+        Unlike test_reason_claim_preposition_on_annexation_head_is_refused below (a HAND-MUTATED lattice), this
+        exercises the ordinary claim-lint path build_dependency_lattice() already runs on every claim."""
+        lat = _lattice_for(self.hid["F11"])
+        claim_edge = next(e for e in lat["edges"] if e.get("claim_id") == "f11-c1")
+        self.assertTrue(claim_edge["right_answer_wrong_reason_marker"])
+        self.assertEqual(claim_edge["assigned_case_mood"], "genitive")
+        self.assertEqual(claim_edge["head_governor_type"], "idafa")
+
     def test_reason_claim_preposition_on_annexation_head_is_refused(self):
         from tools.validate_dependency_lattice import validate_lattice
         from tools import fusha_governor as G
@@ -569,7 +631,7 @@ class G3ToG6OccurrenceIdentity(unittest.TestCase):
     def test_positive_frames_clear_occurrence_identity(self):
         from tools.validate_dependency_lattice import verify_occurrence_identity
         positive_ids = {
-            "nawasikh-government-eval.jsonl": ("F1", "F2", "F3", "F4", "F5", "F8"),
+            "nawasikh-government-eval.jsonl": ("F1", "F2", "F3", "F4", "F5", "F8", "F14"),
             "coordination-case-following-eval.jsonl": ("F9", "F10"),
             "hidden-structure-mahall-eval.jsonl": ("F6", "F7", "F11", "F12", "F13"),
         }
@@ -590,9 +652,20 @@ class G3ToG6OccurrenceIdentity(unittest.TestCase):
         for bank_name, ids in negative_ids.items():
             bank = _load_bank(bank_name)
             for fid in ids:
-                lat = _lattice_for(bank[fid])
+                row = bank[fid]
+                lat = _lattice_for(row)
                 errs = verify_occurrence_identity(lat)
                 self.assertTrue(errs, (bank_name, fid))
+                # M2: the refusal must be for the row's OWN declared mechanism (resolve_address's exact detail
+                # string), not merely "some error" — N1/N2/N4 are refusal controls only because their ayahs are
+                # currently absent from the spine (a coverage accident), unlike N3's genuinely semantic
+                # word-index-overrun control; asserting the exact reason means a future spine change that makes
+                # one of these ayahs resolvable turns this test red for the RIGHT reason instead of silently
+                # keeping a stale, no-longer-true control green.
+                detail = row.get("resolver_detail") or ""
+                joined = " ".join(msg for _, msg in errs)
+                for fragment in detail.split(" / "):
+                    self.assertIn(fragment, joined, (bank_name, fid, fragment, joined))
 
 
 if __name__ == "__main__":

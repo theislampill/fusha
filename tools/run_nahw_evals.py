@@ -72,6 +72,28 @@ from tools.leak_sot import LEAK_RE  # noqa: E402
 
 EVAL_DIR = os.path.join(_REPO, "nahw", "evals")
 PACKET_DIR = os.path.join(_REPO, "qamus", "task-packets")
+LOC_SURFACE_INDEX_PATH = os.path.join(_REPO, "qamus", "indexes", "quran-loc-surface", "index.jsonl")
+_LOC_SURFACE_INDEX = None
+
+
+def _loc_surface_index():
+    """I1: the SAME occurrence-identity authority the Train B governor banks use
+    (tools/validate_dependency_lattice.py verify_occurrence_identity) — loc -> surface, byte-exact after NFC.
+    Surface presence in a row's OWN claim is not occurrence authority; every address-bearing row must be
+    checked against this committed index, not against itself."""
+    global _LOC_SURFACE_INDEX
+    if _LOC_SURFACE_INDEX is None:
+        _LOC_SURFACE_INDEX = {}
+        if os.path.exists(LOC_SURFACE_INDEX_PATH):
+            with open(LOC_SURFACE_INDEX_PATH, encoding="utf-8") as fh:
+                for line in fh:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    row = json.loads(line)
+                    if row.get("loc"):
+                        _LOC_SURFACE_INDEX[row["loc"]] = row.get("surface", "")
+    return _LOC_SURFACE_INDEX
 
 
 def _jsonl(path):
@@ -984,6 +1006,12 @@ def run_function_polysemy(errors, stats):
 # the real consumer (PR.maa_context_frame): each row's function candidate — or its exact pending/rival/defect
 # outcome for a non-unique frame — is checked, so `decided` counts every row, never only the candidate-reaching
 # ones.
+#
+# M5 (author-circularity disclosure): each row's `frame` and the rule's own `frame_table` binding it to a
+# function are authored by the SAME party, from no mechanical extraction source (see
+# nahw/rules/particle-context-rules.json#maa_relative_vs_negation's own `author_circularity_disclosure`); this
+# bank therefore cannot fail unless the frame_table or this consumer itself breaks — it is candidate-only,
+# fixture-producer trust, exactly like every other typed observation this file mints.
 def run_ma_function_occurrence(errors, stats):
     bank = "ma-function-occurrence"
     rows = _jsonl(os.path.join(EVAL_DIR, "ma-function-occurrence-eval.jsonl"))
@@ -998,6 +1026,19 @@ def run_ma_function_occurrence(errors, stats):
             if key not in r:
                 errors.append("%s:%s missing required field %s" % (bank, rid, key))
         surface, at = r.get("surface"), r.get("source_address")
+        # I1: verify this row's own claimed (loc, surface) against the committed loc-surface index — the same
+        # authority contract the governor banks use — BEFORE trusting the row's evidence at all. A missing or
+        # mismatching index entry is a failure regardless of what the frame/decision fields say: surface
+        # presence in the row's own data was never occurrence authority (e.g. a mutated row claiming word 34 of
+        # 5:116 is مَا, when the index shows فِى, must fail here even though the frame vocabulary is well-formed).
+        loc = "%s:%s" % (r.get("quran_loc"), r.get("word")) if r.get("quran_loc") is not None \
+            and r.get("word") is not None else None
+        indexed_surface = _loc_surface_index().get(loc) if loc else None
+        if indexed_surface is None:
+            errors.append("%s:%s loc %r has no qamus/indexes/quran-loc-surface/index.jsonl entry" % (bank, rid, loc))
+        elif unicodedata.normalize("NFC", indexed_surface) != unicodedata.normalize("NFC", surface or ""):
+            errors.append("%s:%s surface %r does not match qamus/indexes/quran-loc-surface/index.jsonl at "
+                          "loc=%r (%r)" % (bank, rid, surface, loc, indexed_surface))
         evidence = PR.mint_fixture_observation(r.get("frame"), source_address=at, quran_loc=r.get("quran_loc"),
                                                word=r.get("word"), surface=surface, target_kind="token",
                                                target_value="maa_relative_vs_negation")

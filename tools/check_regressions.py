@@ -3308,14 +3308,44 @@ try:
     _p2d = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_dependency_lattice.py"), "--self-test"])
     check("p2 dependency-lattice validator self-test (24 hostile lattices / 18 condition labels reject)",
           _p2d.returncode == 0)
+    # I6: --run-bank alone only catches exceptions/hard asserts (fusha_governor.py:run_bank); the built
+    # lattices must also clear the ordinary VALIDATOR (FAIL 1-18) with occurrence-identity verification, not
+    # just the committed 6-row sample below — otherwise a regression introduced by a bank ROW lands silently.
+    # The deliberate refusal-control rows (N1/N2/N3/N4) are EXCLUDED from this pass: their whole point is to
+    # fail occurrence identity (verified directly by tools.test_nahw_governor_families below, which check_regr
+    # already runs as a subprocess); mixing them in here would make every run "fail" for the expected reason
+    # and mask a real regression on the address-bearing/constructed rows this pass exists to catch.
+    _p2_bank_negative_ids = {
+        "nawasikh-government-eval.jsonl": {"N1", "N2"},
+        "coordination-case-following-eval.jsonl": {"N3"},
+        "hidden-structure-mahall-eval.jsonl": {"N4"},
+    }
     for _bank in ("nawasikh-government-eval.jsonl", "coordination-case-following-eval.jsonl",
                   "hidden-structure-mahall-eval.jsonl"):
-        _bank_run = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_governor.py"),
-                              "--run-bank", os.path.join(ROOT, "nahw", "evals", _bank)])
-        check("p2 Train B governor family bank runs through ordinary consumer: %s" % _bank,
-              _bank_run.returncode == 0)
+        with io.open(os.path.join(ROOT, "nahw", "evals", _bank), encoding="utf-8") as _bank_fh:
+            _bank_rows = [ln for ln in _bank_fh if ln.strip()
+                         and json.loads(ln).get("id") not in _p2_bank_negative_ids[_bank]]
+        with tempfile.NamedTemporaryFile("w", suffix=".jsonl", delete=False, encoding="utf-8") as _bank_in_tmp:
+            _bank_in_tmp.writelines(_bank_rows)
+            _bank_in_path = _bank_in_tmp.name
+        with tempfile.NamedTemporaryFile("w", suffix=".jsonl", delete=False) as _bank_out_tmp:
+            _bank_lat_path = _bank_out_tmp.name
+        try:
+            _bank_run = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_governor.py"),
+                                  "--run-bank", _bank_in_path, "--run-bank-out", _bank_lat_path])
+            check("p2 Train B governor family bank runs through ordinary consumer: %s" % _bank,
+                  _bank_run.returncode == 0)
+            _bank_validate = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_dependency_lattice.py"),
+                                       "--verify-occurrence-identity", _bank_lat_path])
+            check("p2 Train B governor family bank lattices validate with occurrence identity "
+                  "(positive/constructed rows, negative controls excluded): %s" % _bank,
+                  _bank_validate.returncode == 0)
+        finally:
+            for _p in (_bank_in_path, _bank_lat_path):
+                if os.path.exists(_p):
+                    os.remove(_p)
     _p2_family_tests = run_text([sys.executable, "-m", "unittest", "tools.test_nahw_governor_families"])
-    check("p2 Train B governor family semantics + occurrence identity (64 tests)",
+    check("p2 Train B governor family semantics + occurrence identity (68 tests)",
           _p2_family_tests.returncode == 0)
     _p2e = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_dependency_lattice.py"),
                      os.path.join(ROOT, "qamus", "examples", "dependency_lattice.sample.jsonl")])

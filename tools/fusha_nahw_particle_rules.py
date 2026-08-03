@@ -584,8 +584,16 @@ def maa_context_frame(surface, evidence=None, at=None, rules=None):
         return {"rule_id": MAA_CONTEXT_RULE_ID, "surface": surface, "at": at, "decision": "pending",
                 "pending_reason": "no_rule", "status": "out_of_domain"}
     table = rule.get("frame_table") or []
-    all_functions = sorted({f for row in table
-                            for f in (row.get("functions") or ([row["function"]] if row.get("function") else []))})
+    # B1: this rule's frame_table only ever examines the relative-vs-negation AXIS — `axis_functions` is that
+    # closed 2-member set. `out_of_axis_functions` (the rule's own declared `functions_not_discriminated`,
+    # e.g. interrogative/maṣdariyya/temporal/preventive_kaffa/laysa_like) are attested مَا functions this table
+    # never bound any frame to; `all_functions` is their UNION so every consumer sees the complete, honestly
+    # labelled rival set — never an axis-selected candidate silently "rejecting" a function outside its scope.
+    axis_functions = sorted({f for row in table
+                             for f in (row.get("functions") or ([row["function"]] if row.get("function") else []))})
+    out_of_axis_functions = sorted(rule.get("functions_not_discriminated") or [])
+    all_functions = sorted(set(axis_functions) | set(out_of_axis_functions))
+    out_of_axis_set = set(out_of_axis_functions)
     # ROBUSTNESS: a duplicate frame key would let `next()` silently pick the FIRST row and shadow the second —
     # a table integrity defect must fail closed regardless of what evidence the caller supplies, so this is
     # checked before evidence is even validated.
@@ -595,8 +603,10 @@ def maa_context_frame(surface, evidence=None, at=None, rules=None):
         return {"rule_id": rule["id"], "surface": surface, "at": at, "decision": "pending",
                 "pending_reason": "frame_table_duplicate_key", "evidence_defect": "frame_table_duplicate_key",
                 "duplicate_frames": duplicate_frames, "status": "table_integrity_defect",
+                "axis": rule.get("axis"), "functions_not_discriminated": out_of_axis_functions,
                 "unresolved_alternatives": rival_analyses(all_functions, selected=None, gate=NEGATION_GATE,
-                                                           evidence_id=None, axis=MAA_CONTEXT_AXIS)}
+                                                           evidence_id=None, axis=MAA_CONTEXT_AXIS,
+                                                           out_of_axis=out_of_axis_set)}
     # RECOGNIZED-BUT-UNMAPPED frames: closed-vocabulary values the source mechanism can genuinely report but
     # this rule's own table has deliberately not bound to a function (see the rule's own
     # `recognized_unmapped_frames`, e.g. object_of_verb_then_other). These are valid observations — not a
@@ -609,14 +619,16 @@ def maa_context_frame(surface, evidence=None, at=None, rules=None):
                                            bind={"kind": "token", "value": rule["id"]},
                                            surface=surface, at=at)
     base = {"rule_id": rule["id"], "surface": surface, "at": at, "frame_vocabulary": sorted(vocabulary),
-            "status": "consumed"}
+            "status": "consumed", "axis": rule.get("axis"),
+            "functions_not_discriminated": out_of_axis_functions}
     if defect:
         base.update({"decision": "pending",
                      "pending_reason": (rule.get("pending_fallback") or {}).get(
                          "pending_reason", "maa_category_unresolved"),
                      "evidence_defect": defect, "evidence_id": None, "source_address": None,
                      "unresolved_alternatives": rival_analyses(all_functions, selected=None, gate=NEGATION_GATE,
-                                                                evidence_id=None, axis=MAA_CONTEXT_AXIS)})
+                                                                evidence_id=None, axis=MAA_CONTEXT_AXIS,
+                                                                out_of_axis=out_of_axis_set)})
         return base
     base.update({"evidence_id": art["evidence_id"], "source_address": art["source_address"],
                  "producer": art["producer"], "producer_trust": art["producer_trust"]})
@@ -626,23 +638,29 @@ def maa_context_frame(surface, evidence=None, at=None, rules=None):
                      "evidence_defect": "frame_row_missing", "observed_frame": value,
                      "unresolved_alternatives": rival_analyses(all_functions, selected=None, gate=NEGATION_GATE,
                                                                 evidence_id=art["evidence_id"],
-                                                                axis=MAA_CONTEXT_AXIS)})
+                                                                axis=MAA_CONTEXT_AXIS,
+                                                                out_of_axis=out_of_axis_set)})
         return base
     functions = row.get("functions") or ([row["function"]] if row.get("function") else [])
     base.update({"observed_frame": value, "reason": row.get("reason")})
-    if not row.get("unique") or len(functions) != 1:
+    if not row.get("unique_within_axis") or len(functions) != 1:
         base.update({"decision": "pending", "pending_reason": "maa_category_unresolved",
                      "evidence_defect": "maa_category_unresolved",
                      "unresolved_alternatives": rival_analyses(sorted(set(functions) | set(all_functions)),
                                                                 selected=None, gate=NEGATION_GATE,
                                                                 evidence_id=art["evidence_id"],
-                                                                axis=MAA_CONTEXT_AXIS)})
+                                                                axis=MAA_CONTEXT_AXIS,
+                                                                out_of_axis=out_of_axis_set)})
         return base
     winner = functions[0]
+    # B1: `winner` is selected ONLY within the axis — rival_analyses' out_of_axis set keeps every function this
+    # table never examines permanently `unresolved` (defeater=not_examined_by_this_axis), so an axis-derived
+    # candidate rejects at most its in-axis sibling, never a function outside this frame_table's own scope.
     base.update({"decision": "candidate", "gate": NEGATION_GATE, "function_candidate": winner,
                  "unresolved_alternatives": rival_analyses(all_functions, selected=winner, gate=NEGATION_GATE,
                                                             evidence_id=art["evidence_id"],
-                                                            axis=MAA_CONTEXT_AXIS),
+                                                            axis=MAA_CONTEXT_AXIS,
+                                                            out_of_axis=out_of_axis_set),
                  "route": "nahw/procedures/ma-function-decision.md"})
     return base
 
@@ -737,12 +755,22 @@ def negation_effect(surface, context=None, at=None, rules=None, particle_rules=N
             else:
                 defect = (context_frame.get("evidence_defect") or context_frame.get("pending_reason")
                           or defect)
+        # B1: when `value` came from the 2-way relative-vs-negation frame axis (context_frame is not None), the
+        # rival set must say so — the frame's own `functions_not_discriminated` (interrogative/maṣdariyya/
+        # temporal/preventive_kaffa/laysa_like) stay `unresolved` with `not_examined_by_this_axis`, never
+        # `rejected_rival`, even though this row's own vocabulary is the full 7-way maa_function set. A direct
+        # maa_function claim (context_frame is None) is unaffected: that path already carries real 7-way
+        # evidence, so the ordinary axis="maa_function" rival computation is unchanged.
+        rival_axis = MAA_CONTEXT_AXIS if context_frame is not None else "maa_function"
+        rival_out_of_axis = (set(context_frame.get("functions_not_discriminated") or [])
+                             if context_frame is not None else None)
         base = {"rule_id": row["id"], "governs": row.get("governs"), "effect": row.get("effect"),
                 "reason": row.get("guard"), "required_observation": name,
                 "observation_vocabulary": sorted(vocabulary),
                 "unresolved_alternatives": rival_analyses(vocabulary, selected=(value if not defect else None),
                                                           gate=NEGATION_GATE, evidence_id=(art or {})
-                                                          .get("evidence_id"), axis="maa_function"),
+                                                          .get("evidence_id"), axis=rival_axis,
+                                                          out_of_axis=rival_out_of_axis),
                 "evidence": pr.get("evidence", []), "status": "consumed", "surface": surface,
                 "at": at}
         if context_frame is not None:
@@ -760,7 +788,7 @@ def negation_effect(surface, context=None, at=None, rules=None, particle_rules=N
             # does not select a winner for a function outside its own scope.
             base["unresolved_alternatives"] = rival_analyses(vocabulary, selected=None, gate=NEGATION_GATE,
                                                               evidence_id=art.get("evidence_id"),
-                                                              axis="maa_function")
+                                                              axis=rival_axis, out_of_axis=rival_out_of_axis)
             base.update({"decision": "pending", "pending_reason": "maa_category_unresolved",
                          "observed": value, "out_of_scope_for_negation": True,
                          "route": "nahw/procedures/ma-function-decision.md"})
@@ -808,15 +836,28 @@ TRANSITION_TRIGGERS = {
 }
 
 
-def rival_analyses(vocabulary, *, selected, gate, evidence_id, axis):
+def rival_analyses(vocabulary, *, selected, gate, evidence_id, axis, out_of_axis=None):
     """Structured rival objects for the dependency-candidate-lattice `unresolved_alternatives[]` contract.
 
     Every rival keeps its own decision_status, gate, reason key slot and the evidence id that selected (or
     failed to select) it. A prose string is not a rival: dropping the selected role must still leave the rival
     set intact, which is what the removed-role mutation probe checks.
+
+    `out_of_axis` names members a two-way (or otherwise partial) discriminator never examines at all — e.g.
+    مَا's relative-vs-negation frame table says nothing about interrogative/maṣdariyya/etc. Those members ALWAYS
+    stay `unresolved` with `defeater=not_examined_by_this_axis`, even when `selected` is not None: a candidate
+    this axis picked never counts as having defeated a function outside its own examination scope (B1).
     """
+    out_of_axis = set(out_of_axis or ())
     out = []
     for member in sorted(vocabulary):
+        if member in out_of_axis:
+            out.append({
+                "axis": axis, "role": member, "decision_status": "unresolved", "selected": False,
+                "reason_key": None, "gate": gate, "evidence_id": evidence_id,
+                "defeater": "not_examined_by_this_axis",
+            })
+            continue
         out.append({
             "axis": axis, "role": member,
             "decision_status": "unresolved" if selected is None else (

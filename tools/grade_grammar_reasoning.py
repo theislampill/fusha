@@ -719,6 +719,15 @@ def _derive_coordination_following(claim):
         return False, "governor_type_not_a_string"
     if claimed_gov_type != head_governor_type:
         return False, "reason_tuple_governor_mismatch"
+    # I3: the coordination sentinel must not bypass the released mood_basis gate. nahw@2.4 tajarrud is
+    # CANDIDATE, never released — a fixed-tuple claim carrying it is refused (derive_reasoning below); this
+    # case-following sentinel must be refused identically, not exempted merely because its tuple is derived
+    # from a head rather than fixed.
+    basis = (claim.get("mood_basis") or "").strip().lower() or None
+    if basis in CANDIDATE_MOOD_BASIS:
+        return False, "governor_not_justified"
+    if basis and basis != "governed":
+        return False, "mood_basis_not_licensed"
     return True, None
 
 

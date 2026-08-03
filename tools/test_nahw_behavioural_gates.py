@@ -1959,6 +1959,44 @@ def test_r20_ma_function_occurrence_bank():
     finally:
         RUN._jsonl = original_jsonl
 
+    # I1 hostile (reviewer counterexample): word 34 of 5:116 is فِى, not مَا. A row claiming
+    # quran:5:116:34 IS مَا must be caught by the loc-surface check even though its own frame/address shape is
+    # otherwise well-formed — surface presence in the ROW's own claim is not occurrence authority.
+    rows3 = RUN._jsonl(os.path.join(RUN.EVAL_DIR, "ma-function-occurrence-eval.jsonl"))
+    bad_row = dict(rows3[0], id="ma-occ-hostile-i1", quran_loc="5:116", word=34,
+                   source_address="quran:5:116:34", frame="object_of_verb_then_prep",
+                   expected_decision="candidate", expected_function="relative")
+    rows3 = rows3 + [bad_row]
+    try:
+        RUN._jsonl = lambda path: rows3 if "ma-function-occurrence" in path else original_jsonl(path)
+        errs3, _stats3 = [], {}
+        RUN.BANKS["ma-function-occurrence"](errs3, _stats3)
+        check("R20 I1: a row claiming quran:5:116:34 is مَا (it is فِى) is caught by the loc-surface check",
+              any("loc-surface" in e or "quran-loc-surface" in e for e in errs3), errs3)
+    finally:
+        RUN._jsonl = original_jsonl
+
+    # B1: an axis-derived candidate rejects at most its in-axis sibling. 93:3:1's not_object_before_verb frame
+    # selects `negation` within the relative-vs-negation axis; every OTHER attested مَا function
+    # (interrogative, maṣdariyya, temporal, preventive_kaffa, laysa_like) must stay unresolved with
+    # `not_examined_by_this_axis`, never `rejected_rival`, merely because this 2-way frame picked a winner.
+    neg_ev_b1 = PR.mint_fixture_observation("not_object_before_verb", source_address="quran:93:3:1",
+                                            quran_loc="93:3", word=1, surface="مَا", target_kind="token",
+                                            target_value="maa_relative_vs_negation")
+    r_b1 = PR.maa_context_frame("مَا", evidence=neg_ev_b1, at="quran:93:3:1")
+    check("R20 B1 axis-derived candidate reaches negation", r_b1.get("function_candidate") == "negation", r_b1)
+    alts_b1 = r_b1.get("unresolved_alternatives") or []
+    rejected_b1 = {x["role"] for x in alts_b1 if x.get("decision_status") == "rejected_rival"}
+    out_of_axis_b1 = set(r_b1.get("functions_not_discriminated") or [])
+    check("R20 B1 the axis-derived candidate rejects at most its in-axis sibling (relative), never an "
+          "out-of-axis function", rejected_b1 == {"relative"}, sorted(rejected_b1))
+    out_of_axis_status_b1 = {x["role"]: x for x in alts_b1 if x["role"] in out_of_axis_b1}
+    check("R20 B1 every out-of-axis function stays unresolved with not_examined_by_this_axis",
+          out_of_axis_b1 and all(v.get("decision_status") == "unresolved"
+                                 and v.get("defeater") == "not_examined_by_this_axis"
+                                 for v in out_of_axis_status_b1.values()),
+          out_of_axis_status_b1)
+
     # `--bank ma-function-occurrence --json` must execute the real consumer honestly
     import subprocess
     proc = subprocess.run([sys.executable, os.path.join(_REPO, "tools", "run_nahw_evals.py"),
