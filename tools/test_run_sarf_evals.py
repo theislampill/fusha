@@ -1711,5 +1711,152 @@ class LetterOwnershipCarve(unittest.TestCase):
         self.assertIsNone(spec["followup_packet"])
 
 
+# ---------------------------------------------------------------------------
+# weak-root-and-voice — entry/paradigm-level weak-root and voice decision behaviour, decided through the REAL
+# tools/rm40_gate_stack.py:slot_gate (RM-40's own weak-root gate) and tools/fusha_paradigm_generate.py:generate_verb
+# (the REAL melody/template generator), layered with sarf/rules/weak-root-gates.json data this adapter reads
+# directly (hollow_pattern_vowels, lafif_compositions).
+# ---------------------------------------------------------------------------
+_WRV = "sarf/evals/weak-root-and-voice-eval.jsonl"
+
+
+class WeakRootAndVoice(unittest.TestCase):
+
+    def test_bank_is_registered_implemented_and_consumed(self):
+        contract = R.load_contract(_ROOT)
+        spec = R.bank_spec(contract, _WRV)
+        self.assertEqual(spec["disposition"], "implemented_and_consumed")
+        self.assertEqual(spec["behavioral_consumer"], "tools/rm40_gate_stack.py:slot_gate")
+        self.assertIn(spec["behavioral_consumer"], R.DECISION_CONSUMERS)
+        self.assertIn(_WRV, R.REQUIRED_BEHAVIORAL_BANKS)
+        rows = _rows(_WRV)
+        self.assertEqual(len(rows), 17)
+        failures, metrics = _run(_WRV, rows)
+        self.assertEqual(failures, [], "weak-root-and-voice bank failed: %s" % failures[:5])
+        self.assertEqual(metrics["decided_rows"], len(rows))
+        self.assertEqual(metrics["consumer_calls"][spec["behavioral_consumer"]], len(rows))
+        voice_rows = [r for r in rows if r["mode"] == "voice_determination"]
+        self.assertEqual(metrics["consumer_calls"]["tools/fusha_paradigm_generate.py:generate_verb"],
+                         2 * len(voice_rows))
+        self.assertEqual(metrics["abstain_rows"], 11)
+        self.assertEqual(metrics["candidate_pending_rows"], 6)
+
+    def test_store_a_weak_root_gates_stays_fixture_only_but_the_bank_reads_its_data(self):
+        """The Store-A disposition vocabulary stays scoped to production runtime consumers external to the eval
+        runner (verb-measures.json's own precedent), so weak-root-gates.json keeps its pre-existing
+        fixture_only/id_citation Store-A row; the eval-BANK-layer data consumption is proven separately by
+        test_weak_root_gate_data_mutation_disables_only_weak_root_rows below."""
+        contract = R.load_contract(_ROOT)
+        row = next(r for r in contract["store_a_rules"] if r["path"] == "sarf/rules/weak-root-gates.json")
+        self.assertEqual(row["disposition"], "fixture_only")
+        self.assertEqual(row["consumption_kind"], "id_citation")
+        failures, _counts = R.check_store_a(contract, _ROOT)
+        self.assertEqual(failures, [])
+
+    def test_no_local_reimplementation_of_the_weak_root_gate(self):
+        """The base weak/sound decision must come from the REAL tools/rm40_gate_stack.py:slot_gate, never a
+        re-derived boolean, and the melody comparison from the REAL paradigm generator."""
+        ctx = _ctx()
+        from tools import rm40_gate_stack as gs
+        from tools import fusha_paradigm_generate as pg
+        self.assertIs(ctx.slot_gate, gs.slot_gate)
+        self.assertIs(ctx.generate_verb, pg.generate_verb)
+
+    def test_unvocalized_voice_never_defaults_active(self):
+        ctx = _ctx()
+        rec = R._voice_decision(ctx, {"pos": "verb", "lemma": "كَتَبَ", "root": "ك ت ب", "measure": "I"},
+                                "past", "كتب")
+        self.assertEqual(rec["decision"], "abstain")
+        self.assertIsNone(rec["voice"])
+        self.assertEqual(rec["reason"], "voice_undetermined")
+
+    def test_vocalized_surface_commits_the_matching_voice(self):
+        ctx = _ctx()
+        active = R._voice_decision(ctx, {"pos": "verb", "lemma": "كَتَبَ", "root": "ك ت ب", "measure": "I"},
+                                   "past", "كَتَبَ")
+        self.assertEqual(active, {"decision": "candidate_pending", "voice": "active", "reason": None})
+        passive = R._voice_decision(ctx, {"pos": "verb", "lemma": "كَتَبَ", "root": "ك ت ب", "measure": "I"},
+                                    "past", "كُتِبَ")
+        self.assertEqual(passive, {"decision": "candidate_pending", "voice": "passive", "reason": None})
+
+    def test_hollow_unrecorded_pattern_vowel_abstains_with_sharper_reason(self):
+        gate_data = R._weak_root_gate_data(_ROOT)
+        self.assertEqual(R._hollow_reason("ط ي ر", gate_data), "hollow_root_c2_hidden")
+        self.assertEqual(R._hollow_reason("ق و ل", gate_data), "hollow_defective_assimilated")
+
+    def test_lafif_requires_ordered_composition(self):
+        gate_data = R._weak_root_gate_data(_ROOT)
+        self.assertIsNone(R._lafif_reason("mafruq", ["c1_recovery", "c3_recovery"], gate_data))
+        self.assertEqual(R._lafif_reason("mafruq", ["c1_recovery"], gate_data), "lafif_composition_incomplete")
+        self.assertEqual(R._lafif_reason("mafruq", ["c3_recovery", "c1_recovery"], gate_data),
+                         "lafif_composition_unordered")
+
+    def test_missing_row_id_is_a_structured_failure_not_a_keyerror(self):
+        rows = copy.deepcopy(_rows(_WRV))
+        del rows[0]["id"]
+        failures, _metrics = _run(_WRV, rows)
+        self.assertTrue(any("missing/empty required field 'id'" in f for f in failures), failures[:5])
+
+    def test_unknown_mode_fails_closed_without_exception(self):
+        rows = copy.deepcopy(_rows(_WRV))
+        rows[0]["mode"] = "not_a_real_mode"
+        try:
+            failures, _metrics = _run(_WRV, rows)
+        except Exception as e:  # noqa: BLE001
+            self.fail("adapter raised on an unknown mode instead of failing closed: %r" % e)
+        self.assertTrue(failures)
+
+    def test_missing_root_fails_closed_without_exception(self):
+        rows = copy.deepcopy(_rows(_WRV))
+        del rows[0]["root"]
+        try:
+            failures, _metrics = _run(_WRV, rows)
+        except Exception as e:  # noqa: BLE001
+            self.fail("adapter raised on a missing root instead of failing closed: %r" % e)
+        self.assertTrue(failures)
+
+    def test_passive_melody_mutation_breaks_the_voice_bank(self):
+        """A mutated PASSIVE wazn template must break the voice determination for the passive-recognition row,
+        proving the bank genuinely depends on the REAL melody templates in verb-measures.json via
+        tools/fusha_paradigm_generate.py, never a re-derived vocalism table."""
+        import tools.fusha_paradigm_generate as pg
+        original = pg._measures
+        payload = copy.deepcopy(original())
+        payload["I"]["past_passive"] = "فُوعِلَ"
+        pg._measures = lambda: payload
+        try:
+            failures, _m = _run(_WRV)
+        finally:
+            pg._measures = original
+        self.assertTrue(any("vd-passive-form1-recognized" in f for f in failures), failures[:5])
+
+    def test_weak_root_gate_data_mutation_disables_only_weak_root_rows(self):
+        """Stripping the new weak-root-gates.json data sections must break the hollow/lafif rows' reason
+        assertions while leaving the voice-mode rows (which never read this data) untouched."""
+        import tools.run_sarf_evals as run_module
+        original = run_module._weak_root_gate_data
+        real_data = original(_ROOT)
+        stripped = copy.deepcopy(real_data)
+        stripped["hollow_pattern_vowels"]["recorded_c2_vowels"] = {}
+        stripped["lafif_compositions"]["classes"] = {}
+        run_module._weak_root_gate_data = lambda root=_ROOT: stripped
+        try:
+            failures, _m = _run(_WRV)
+        finally:
+            run_module._weak_root_gate_data = original
+        self.assertTrue(any(f.startswith("wr-hollow-recorded") for f in failures), failures[:5])
+        self.assertTrue(any(f.startswith("lf-") for f in failures), failures[:5])
+        self.assertFalse(any(f.startswith("vd-") for f in failures), failures[:5])
+
+    def test_analyses_stay_candidate_and_never_certify(self):
+        rows = _rows(_WRV)
+        for row in rows:
+            self.assertIn(row["expected_decision"], ("candidate_pending", "abstain"))
+            self.assertTrue(row.get("no_occurrence_dogfood_evidence") is True,
+                            "%s: must declare no_occurrence_dogfood_evidence" % row["id"])
+        spec = R.bank_spec(R.load_contract(_ROOT), _WRV)
+        self.assertIsNone(spec["followup_packet"])
+
+
 if __name__ == "__main__":
     unittest.main()

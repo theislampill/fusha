@@ -64,6 +64,7 @@ if _REPO not in sys.path:
     sys.path.insert(0, _REPO)
 
 from tools import leak_sot  # noqa: E402
+from tools import rm40_gate_stack as gate_stack  # noqa: E402  (real RM-40 weak-letter classification, read-only)
 
 SCHEMA_ID = "qamus.sarf_eval_runner_contract.v1"
 CONTRACT_REL = "sarf/eval-runner-contract.json"
@@ -84,6 +85,8 @@ DECISION_CONSUMERS = (
     "tools/fusha_morphology_lattice.py:build_morphology_lattice",
     "tools/corpus_to_qamus_candidates.py:classify",
     "tools/curriculum_unit_consumer.py:analyze_ownership_carve",
+    "tools/rm40_gate_stack.py:slot_gate",
+    "tools/fusha_paradigm_generate.py:generate_verb",
 )
 # Contract-declared callable -> the Consumers slot that holds it. run_adapter() wraps these slots in counting
 # proxies, so the observed per-row call count is measured INDEPENDENTLY of whatever an adapter chooses to report.
@@ -93,6 +96,8 @@ CONSUMER_SLOTS = {
     "tools/fusha_morphology_lattice.py:build_morphology_lattice": "build_lattice",
     "tools/corpus_to_qamus_candidates.py:classify": "classify",
     "tools/curriculum_unit_consumer.py:analyze_ownership_carve": "letter_ownership_decide",
+    "tools/rm40_gate_stack.py:slot_gate": "slot_gate",
+    "tools/fusha_paradigm_generate.py:generate_verb": "generate_verb",
 }
 # The banks whose behavioural coverage is specifically justified. A future change may not quietly relabel all
 # banks fixture_only to make the gate green: tools/test_run_sarf_evals.py asserts these stay behavioural.
@@ -102,6 +107,7 @@ REQUIRED_BEHAVIORAL_BANKS = (
     "sarf/evals/largelexicon-collision-safety.jsonl",
     "sarf/evals/letter-ownership-carve-eval.jsonl",
     "sarf/evals/morphology-candidate-lattice.jsonl",
+    "sarf/evals/weak-root-and-voice-eval.jsonl",
 )
 # How a Store A rule file is (or is not) used by production code.
 #   data_driven   — rule CONTENT is loaded and changes/rejects a production decision; proven by a bounded mutation
@@ -151,6 +157,10 @@ _CHK = "tools/fusha_text_check.py:check_text"
 _LAT = "tools/fusha_morphology_lattice.py:build_morphology_lattice"
 _NORM = "structural:tools/normalize_ar.py"
 _OWN = "tools/curriculum_unit_consumer.py:analyze_ownership_carve"
+_SLOT_GATE = "tools/rm40_gate_stack.py:slot_gate"
+_GEN_VERB = "tools/fusha_paradigm_generate.py:generate_verb"
+
+WEAK_ROOT_GATES_PATH = "sarf/rules/weak-root-gates.json"
 
 _LOC_RE = re.compile(r"^\d{1,3}:\d{1,3}:\d{1,3}$")
 _HARAKAT = range(0x064B, 0x0653)
@@ -172,7 +182,7 @@ class Consumers(object):
 
     __slots__ = ("segment_candidates", "build_lattice", "check_text", "clusters", "classify", "load_index",
                  "norm", "norm_strict", "bare", "shadda_on", "haraka_on", "ends_tanwin_alef",
-                 "letter_ownership_decide")
+                 "letter_ownership_decide", "slot_gate", "generate_verb")
 
     @classmethod
     def real(cls):
@@ -181,6 +191,8 @@ class Consumers(object):
         na = consumers_module("normalize_ar")
         cq = consumers_module("corpus_to_qamus_candidates")
         cu = consumers_module("curriculum_unit_consumer")
+        gs = consumers_module("rm40_gate_stack")
+        pg = consumers_module("fusha_paradigm_generate")
         self = cls()
         self.segment_candidates = tc.segment_candidates
         self.check_text = tc.check_text
@@ -199,6 +211,12 @@ class Consumers(object):
         # so a mutation of that module's attribute (tools/test_run_sarf_evals.py) is what the
         # adapter actually calls -- proving genuine cross-module invocation, not an echo.
         self.letter_ownership_decide = cu.analyze_ownership_carve
+        # the DECLARED behavioural consumer for the weak-root-and-voice bank is the REAL RM-40 gate stack
+        # (tools/rm40_gate_stack.py:slot_gate, already used in production by tools/fusha_paradigm_generate.py) plus
+        # the REAL paradigm generator (tools/fusha_paradigm_generate.py:generate_verb) for voice/melody comparison;
+        # both bound directly, never a local wrapper.
+        self.slot_gate = gs.slot_gate
+        self.generate_verb = pg.generate_verb
         return self
 
 
@@ -949,6 +967,195 @@ def adapter_letter_ownership_carve(rows, spec, ctx, root):
                    "candidate_pending_rows": candidate_pending_rows, "property_hits": props.as_metric()}
 
 
+def _weak_root_gate_data(root=_REPO):
+    """Load `sarf/rules/weak-root-gates.json`.
+
+    A MODULE-LEVEL indirection on purpose (mirrors `fusha_paradigm_generate._measures()`): the adapter below always
+    calls this name, never a value captured at import time, so a bounded mutation prover can swap this exact
+    function in memory and prove the adapter's own decision genuinely depends on the file's CONTENT — the
+    `hollow_pattern_vowels`/`lafif_compositions` sections `tools/rm40_gate_stack.py` never reads (it only cites
+    stable rule ids there). Removing this data must disable ONLY the weak-root-and-voice bank's hollow/lafif rows;
+    every other bank never calls this loader."""
+    path = os.path.join(root, WEAK_ROOT_GATES_PATH.replace("/", os.sep))
+    with open(path, encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+_WRV_MODES = ("weak_reason_classification", "lafif_composition", "voice_determination")
+_WRV_ABSTAIN_REASONS = ("hollow_defective_assimilated", "hollow_root_c2_hidden", "defective_c3_alternation",
+                        "assimilated_c1_dropped", "hamza_seat", "lafif_composition_incomplete",
+                        "lafif_composition_unordered", "voice_undetermined")
+_WRV_WEAK_CLASSES = ("hollow", "assimilated", "defective", "lafif_mafruq", "lafif_maqrun")
+
+
+def _weak_class_from_root(root_str):
+    """Classify a root's weak_class from radical POSITION, using the REAL gate stack's own weak-letter set
+    (`tools.rm40_gate_stack.WEAK_LETTERS`) — never a re-derived vocabulary. Returns None for a sound or
+    hamza-only root (no weak VOWEL radical)."""
+    letters = gate_stack.radical_letters(root_str)
+    weak_positions = [i for i, l in enumerate(letters) if any(ch in gate_stack.WEAK_LETTERS for ch in l)]
+    if weak_positions == [1]:
+        return "hollow"
+    if weak_positions == [0]:
+        return "assimilated"
+    if weak_positions == [2]:
+        return "defective"
+    if set(weak_positions) == {0, 2}:
+        return "lafif_mafruq"
+    if set(weak_positions) == {1, 2}:
+        return "lafif_maqrun"
+    return None
+
+
+def _hollow_reason(root_str, gate_data):
+    """The hollow-specific abstention reason, DATA-DRIVEN from `weak-root-gates.json`'s
+    `hollow_pattern_vowels.recorded_c2_vowels` table: a recorded C2 pattern vowel keeps the standard weak-root
+    reason; an unrecorded one sharpens to `hollow_root_c2_hidden` (sarf/procedures/weak-root.md's own vocabulary).
+    Emptying/removing this table collapses every hollow root to the unrecorded reason."""
+    hp = gate_data.get("hollow_pattern_vowels") or {}
+    table = hp.get("recorded_c2_vowels") or {}
+    if root_str in table:
+        return hp.get("recorded_reason") or "hollow_defective_assimilated"
+    return hp.get("unrecorded_reason") or "hollow_root_c2_hidden"
+
+
+def _lafif_reason(lafif_class, attested_ops, gate_data):
+    """The لفيف ordered-composition check, DATA-DRIVEN from `weak-root-gates.json`'s
+    `lafif_compositions.classes[lafif_class].operations`. Returns None (no abstention — the composition is
+    complete and correctly ordered) or the exact abstention reason. Removing/emptying the `classes` table makes
+    every لفيف row fail closed as incomplete (an unknown class can never license a candidate)."""
+    lc = gate_data.get("lafif_compositions") or {}
+    classes = lc.get("classes") or {}
+    required = (classes.get(lafif_class) or {}).get("operations") or []
+    attested = list(attested_ops or [])
+    if not required:
+        return lc.get("incomplete_reason") or "lafif_composition_incomplete"
+    if attested == required:
+        return None
+    if sorted(attested) == sorted(required):
+        return lc.get("unordered_reason") or "lafif_composition_unordered"
+    return lc.get("incomplete_reason") or "lafif_composition_incomplete"
+
+
+def _voice_decision(ctx, lexeme, slot_family, surface):
+    """Compare `surface` against the REAL paradigm generator's active/passive candidates for the same
+    lexeme+slot_family (`tools.fusha_paradigm_generate.generate_verb`, unmodified). An unvocalized surface (no
+    harakah at all) never licenses a voice reading, and a surface matching neither/both real melody templates
+    abstains rather than guess. Never re-derives the vocalism table; the melody itself always comes from
+    verb-measures.json through the real generator."""
+    active_rows = ctx.generate_verb(lexeme, slots=[slot_family + "_active"])
+    passive_rows = ctx.generate_verb(lexeme, slots=[slot_family + "_passive"])
+    if not active_rows or not passive_rows or not _has_marks(surface):
+        return {"decision": "abstain", "voice": None, "reason": "voice_undetermined"}
+    active_surface = active_rows[0]["value"]["generated_surface"]
+    passive_surface = passive_rows[0]["value"]["generated_surface"]
+    is_active = surface == active_surface
+    is_passive = surface == passive_surface
+    if is_active and not is_passive:
+        return {"decision": "candidate_pending", "voice": "active", "reason": None}
+    if is_passive and not is_active:
+        return {"decision": "candidate_pending", "voice": "passive", "reason": None}
+    return {"decision": "abstain", "voice": None, "reason": "voice_undetermined"}
+
+
+def adapter_weak_root_and_voice(rows, spec, ctx, root):
+    """sarf/evals/weak-root-and-voice-eval.jsonl -> entry/paradigm-level weak-root and voice decisions.
+
+    Every row is anchored by exactly ONE call to the REAL `tools/rm40_gate_stack.py:slot_gate` — the same gate
+    `tools/fusha_paradigm_generate.py:generate_verb` uses in production — confirming the row's root is (or is not)
+    weak/hamza for RM-40 template generation. Three modes then refine the row's OWN candidate_pending/abstain
+    verdict:
+
+      * weak_reason_classification — a single hidden weak radical (hollow/defective/assimilated) or a hamza seat;
+        the SPECIFIC abstention reason is computed from the radical's POSITION and, for hollow roots, from the
+        `hollow_pattern_vowels` DATA this adapter reads directly out of `sarf/rules/weak-root-gates.json` (data the
+        id-citation-only gate stack never reads).
+      * lafif_composition — two weak radicals (مفروق/مقرون); candidate_pending only when the row's declared
+        `attested_operations` exactly match the ORDERED operation list in `lafif_compositions` data.
+      * voice_determination — `_voice_decision` compares the row's surface against the REAL generator's own
+        active/passive candidates; an unvocalized surface, or one matching neither/both melodies, abstains
+        `voice_undetermined` and never defaults active.
+
+    No occurrence-level dogfood evidence exists for this family (every row carries
+    `no_occurrence_dogfood_evidence: true`): candidate entry/paradigm grounding here is never an occurrence fact.
+    """
+    fails, decided = [], 0
+    props = _Props()
+    abstain_rows = candidate_pending_rows = 0
+    for i, row in enumerate(rows):
+        rid = _rid(row, spec, i)
+        fails.extend(_required_field_failures(row, spec, rid))
+        mode = row.get("mode")
+        root_str = row.get("root")
+        if not root_str or mode not in _WRV_MODES:
+            fails.append(_f(rid, "row_well_formed", "missing root or unknown mode %r" % mode))
+            continue
+        gate = ctx.slot_gate(root_str, row.get("measure"), row.get("slot"))
+        decided += 1
+        props.hit(rid, _SLOT_GATE, "real_gate_anchors_every_row")
+
+        expected_decision = row.get("expected_decision")
+        expected_reason = row.get("expected_reason")
+        got_decision = got_reason = got_voice = None
+
+        if mode == "weak_reason_classification":
+            props.hit(rid, _SLOT_GATE, "weak_reason_matches_procedure_vocabulary")
+            weak_class = _weak_class_from_root(root_str)
+            if gate["decision"] == "emit":
+                got_decision = "candidate_pending"
+            else:
+                got_decision = "abstain"
+                gate_data = _weak_root_gate_data(root)
+                if weak_class == "hollow":
+                    got_reason = _hollow_reason(root_str, gate_data)
+                elif weak_class == "assimilated":
+                    got_reason = "assimilated_c1_dropped"
+                elif weak_class == "defective":
+                    got_reason = "defective_c3_alternation"
+                else:
+                    got_reason = gate["defeater"]
+        elif mode == "lafif_composition":
+            props.hit(rid, _SLOT_GATE, "lafif_ordered_composition")
+            if gate["decision"] != "abstain":
+                fails.append(_f(rid, "lafif_ordered_composition",
+                                "a genuinely doubly-weak root must abstain the RM-40 generation gate"))
+            gate_data = _weak_root_gate_data(root)
+            reason = _lafif_reason(row.get("lafif_class"), row.get("attested_operations"), gate_data)
+            got_decision = "abstain" if reason else "candidate_pending"
+            got_reason = reason
+        else:  # voice_determination
+            lexeme = {"pos": "verb", "lemma": row.get("lemma"), "root": root_str, "measure": row.get("measure")}
+            rec = _voice_decision(ctx, lexeme, row.get("slot_family") or "", row.get("surface") or "")
+            props.hit(rid, _GEN_VERB, "voice_never_defaults_active")
+            got_decision, got_reason, got_voice = rec["decision"], rec["reason"], rec["voice"]
+            if not _has_marks(row.get("surface") or "") and got_decision != "abstain":
+                fails.append(_f(rid, "voice_never_defaults_active",
+                                "an unvocalized surface must never license a voice reading"))
+
+        if got_decision != expected_decision:
+            fails.append(_f(rid, "decision_matches",
+                            "decided %r, bank expects %r" % (got_decision, expected_decision)))
+        if got_decision == "abstain":
+            abstain_rows += 1
+            if expected_reason not in _WRV_ABSTAIN_REASONS:
+                fails.append(_f(rid, "reason_closed_set",
+                                "bank's expected_reason %r outside the closed abstention vocabulary"
+                                % expected_reason))
+            if got_reason != expected_reason:
+                fails.append(_f(rid, "reason_matches",
+                                "decided reason %r, bank expects %r" % (got_reason, expected_reason)))
+        else:
+            candidate_pending_rows += 1
+            if mode == "voice_determination":
+                want_voice = row.get("expected_voice")
+                if got_voice != want_voice:
+                    fails.append(_f(rid, "voice_matches",
+                                    "decided voice %r, bank expects %r" % (got_voice, want_voice)))
+
+    return fails, {"rows": len(rows), "decided_rows": decided, "abstain_rows": abstain_rows,
+                   "candidate_pending_rows": candidate_pending_rows, "property_hits": props.as_metric()}
+
+
 def adapter_structural(rows, spec, ctx, root):
     """Structure/vocabulary gate for a bank with no behavioural consumer (fixture_only / candidate_no_consumer).
 
@@ -984,6 +1191,7 @@ ADAPTERS = {
     "key_collapse_pending": adapter_key_collapse_pending,
     "corpus_classifier": adapter_corpus_classifier,
     "letter_ownership_carve": adapter_letter_ownership_carve,
+    "weak_root_and_voice": adapter_weak_root_and_voice,
     "structural": adapter_structural,
 }
 
@@ -2010,6 +2218,14 @@ def self_test(root=_REPO):
     finally:
         _cu.analyze_ownership_carve = _real_carve
 
+    red("weak-root-and-voice gate stack stubbed always-emit",
+        "sarf/evals/weak-root-and-voice-eval.jsonl",
+        _mutate(ctx, slot_gate=lambda *a, **kw: {"decision": "emit", "defeater": None, "detail": "stub",
+                                                 "gates": []}))
+    red("weak-root-and-voice paradigm generator stubbed empty (voice comparison loses its ground truth)",
+        "sarf/evals/weak-root-and-voice-eval.jsonl",
+        _mutate(ctx, generate_verb=lambda *a, **kw: []))
+
     real_check = ctx.check_text
 
     def _leaky(req):
@@ -2129,10 +2345,10 @@ def self_test(root=_REPO):
     if failures:
         return 1
     print("ok   run_sarf_evals self-test: contract valid; %d banks / %d rows green through real consumers; "
-          "13 Store A rows dispositioned; 30 mutation/negative gates all caught (incl. a stubbed declared "
+          "13 Store A rows dispositioned; 32 mutation/negative gates all caught (incl. a stubbed declared "
           "consumer, a property relabelled to a callable that never ran, a fictitious zero-row property, "
-          "schema execution, path containment with no I/O against a rejected target, and nested candidate "
-          "certified/public-boundary records); "
+          "schema execution, path containment with no I/O against a rejected target, nested candidate "
+          "certified/public-boundary records, and the weak-root-and-voice gate-stack/paradigm-generator stubs); "
           "@2.1-@2.4 not promoted"
           % (rep["total_banks"], rep["total_rows"]))
     print(TERMINAL_SELFTEST)
