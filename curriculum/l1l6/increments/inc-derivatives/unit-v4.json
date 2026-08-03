@@ -4,6 +4,8 @@
     "penult_vowel_evidence_unbound",
     "penult_mark_not_in_surface",
     "penult_mark_mismatch",
+    "initial_mim_mark_not_in_surface",
+    "initial_mim_vowel_unlicensed",
     "weak_declaration_unbound",
     "weak_declaration_contradicts_root",
     "weak_realization_unlicensed",
@@ -13,6 +15,10 @@
     "surface_letter_mismatch"
   ],
   "capability": "template_classification",
+  "in_place_repairs": [
+    "2026-08-03: the mafal_place/mu_participle collision (der-r9) was being decided from the penult vowel alone, which silently dropped the co-surviving mafal_place template on every sound/literal triliteral root and produced false positives (مجلس, منزل falsely active_participle; مكتب falsely passive_participle). The consumer now requires the WRITTEN initial-مـ vowel before any resolution of the collision; this is a consumer behaviour change with no template/shape edit in this pack.",
+    "2026-08-03 (second repair, same day): the der-r9 fatha branch was resolving place_time_noun alone from the same fatha-initial bare-triliteral evidence the sibling inc-mim-initial-noun-discriminator pack (mim-r6) had just declared unresolvable -- a written fatha rules OUT the مُـ-participle but does not by itself distinguish مَفْعَل from مصدر ميمي over identical literal radicals. masdar_mimi is now declared here as a DATA rival template (der-r10), sharing mafal_place's exact shape, so the fatha branch preserves BOTH as alternatives (ambiguous_template) instead of resolving place_time_noun alone; this closes the cross-pack contradiction without any consumer-level exception for this increment."
+  ],
   "increment": "inc-derivatives",
   "penult_mark_verification": true,
   "repair_of": "unit-v3.json (the weak gate covered only SUBSTITUTED realizations, so a hollow root whose weak radical stood LITERALLY in a Form-I template passed as if the root were sound — the uncontracted hollow shapes are non-words; and a weak declaration contradicting the supplied radicals was silently ignored — Sol round 3)",
@@ -49,6 +55,14 @@
     {
       "id": "der-r8",
       "text": "a weak declaration that the supplied radicals do not bear is contradictory evidence, not a harmless extra -> weak_declaration_contradicts_root"
+    },
+    {
+      "id": "der-r9",
+      "text": "مَفْعَل (place/time noun) and the مُـ participle are letter-identical whenever the radicals stand literally after the initial مـ; the discriminator is the WRITTEN vowel on THAT initial مـ -- damma licenses the participle reading, fatha RULES OUT the participle reading (it does not by itself license place_time_noun; see der-r10) -- never the penult vowel, which only ever decides voice WITHIN the participle reading -> missing (initial_mim_mark_not_in_surface) or neither-damma-nor-fatha (initial_mim_vowel_unlicensed) written evidence abstains rather than silently dropping the co-surviving mafal_place template (repair of the recorded 2026-08-03 false positives)"
+    },
+    {
+      "id": "der-r10",
+      "text": "a written fatha on the initial مـ over the same bare-triliteral literal-radical shape does not by itself distinguish مَفْعَل (place/time noun) from مصدر ميمي (مـ-initial verbal noun): masdar_mimi is declared here as a rival template sharing mafal_place's exact shape, so the fatha branch preserves BOTH mafal_place and masdar_mimi as alternatives (ambiguous_template) rather than resolving place_time_noun alone (mirrors mim-r6 in inc-mim-initial-noun-discriminator; repair of the recorded 2026-08-03 masdar_mimi collapse -- the mafal_place/mu_participle collision repair (der-r9) had performed, for this evidence set, exactly the single-resolution collapse the sibling pack's own repair had just ruled out)"
     }
   ],
   "schema": "curriculum.l1l6_machine_unit.v1",
@@ -140,6 +154,18 @@
       "class": "place_time_noun",
       "id": "mafal_place",
       "name": "مَفْعَل/مَفْعِل place-noun",
+      "requires": [],
+      "shape": [
+        "م",
+        "R1",
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "class": "masdar_mimi",
+      "id": "masdar_mimi",
+      "name": "مصدر ميمي (مـ-initial verbal noun)",
       "requires": [],
       "shape": [
         "م",

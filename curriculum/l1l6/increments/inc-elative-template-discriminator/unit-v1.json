@@ -14,6 +14,12 @@
           "adjectival_entry"
         ]
       },
+      "excluded_when": {
+        "definiteness_behaviour": [
+          "definite_article",
+          "heads_annexation"
+        ]
+      },
       "id": "elative_comparative",
       "name": "elative read as a two-term comparison"
     },
@@ -109,6 +115,10 @@
     {
       "id": "ela-r8",
       "text": "whether sequence and otherness items belong to the elative inventory is disputed in the tradition and is not decided by this table"
+    },
+    {
+      "id": "ela-r9",
+      "text": "ela-r4 is EXECUTED via elative_comparative's declared excluded_when clause: its own discriminators (comparison_complement, entry_evidence) may all match while the features ALSO carry definite-article or annexation-head definiteness evidence, and the function is disqualified regardless of that match -- a surface asserting both a comparison complement and superlative-signalling definiteness resolves neither reading here (repair of the recorded 2026-08-03 false pass, ncd-ela-adv-02)"
     }
   ],
   "schema": "curriculum.l1l6_machine_unit.v1",

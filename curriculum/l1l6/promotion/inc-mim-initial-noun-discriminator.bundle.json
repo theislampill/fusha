@@ -39,13 +39,13 @@
         }
       ],
       "negative_or_boundary_examples": [
-        "mim-adv-01",
         "mim-adv-02",
+        "mim-adv-01",
+        "mim-adv-03",
         "mim-abs-01"
       ],
       "positive_examples": [
         "mim-pos-01",
-        "mim-pos-02",
         "mim-pos-03",
         "mim-tr-01"
       ],
@@ -104,13 +104,13 @@
         }
       ],
       "negative_or_boundary_examples": [
-        "mim-adv-01",
         "mim-adv-02",
+        "mim-adv-01",
+        "mim-adv-03",
         "mim-abs-01"
       ],
       "positive_examples": [
         "mim-pos-01",
-        "mim-pos-02",
         "mim-pos-03",
         "mim-tr-01"
       ],
@@ -169,13 +169,13 @@
         }
       ],
       "negative_or_boundary_examples": [
-        "mim-adv-01",
         "mim-adv-02",
+        "mim-adv-01",
+        "mim-adv-03",
         "mim-abs-01"
       ],
       "positive_examples": [
         "mim-pos-01",
-        "mim-pos-02",
         "mim-pos-03",
         "mim-tr-01"
       ],
@@ -234,13 +234,13 @@
         }
       ],
       "negative_or_boundary_examples": [
-        "mim-adv-01",
         "mim-adv-02",
+        "mim-adv-01",
+        "mim-adv-03",
         "mim-abs-01"
       ],
       "positive_examples": [
         "mim-pos-01",
-        "mim-pos-02",
         "mim-pos-03",
         "mim-tr-01"
       ],
@@ -299,13 +299,13 @@
         }
       ],
       "negative_or_boundary_examples": [
-        "mim-adv-01",
         "mim-adv-02",
+        "mim-adv-01",
+        "mim-adv-03",
         "mim-abs-01"
       ],
       "positive_examples": [
         "mim-pos-01",
-        "mim-pos-02",
         "mim-pos-03",
         "mim-tr-01"
       ],
@@ -321,6 +321,71 @@
       },
       "skill": "nahw",
       "skill_rule_id": "curr-mim-initial-noun-discriminator-mim-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+        "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+        "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+        "the form class of the source verb is supplied evidence and is never inferred from the surface shape"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "9d724586c27f059acdb35ef978efa6fb41d5bc12dc4ae2ec0934d2c9d202609f",
+      "guards_payload": [
+        {
+          "guard": "an unpointed prefix is recorded as missing evidence; the more frequent class is never used as a default",
+          "id": "g-mim-voc"
+        },
+        {
+          "guard": "instrument templates are lexical: the pack classifies attested tokens and never predicts a template for a root",
+          "id": "g-mim-lex"
+        },
+        {
+          "guard": "the patient-noun and derived verbal-noun homography is preserved, never resolved inside this table",
+          "id": "g-mim-hom"
+        },
+        {
+          "guard": "the form class of the source verb is supplied evidence and is never inferred from the surface shape",
+          "id": "g-mim-src"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "mim-adv-02",
+        "mim-adv-01",
+        "mim-adv-03",
+        "mim-abs-01"
+      ],
+      "positive_examples": [
+        "mim-pos-01",
+        "mim-pos-03",
+        "mim-tr-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-mim-initial-noun-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "scope": {
+        "increment": "inc-mim-initial-noun-discriminator",
+        "statement": "the مصدر ميمي (مـ-initial verbal noun) is letter-identical to the place-or-time noun over a bare triliteral source with the SAME fatha prefix vowel and vocalization; the inventory previously omitted this rival, so a bare-triliteral fatha/present row resolved cleanly to place_or_time_noun alone -- both readings are now preserved as alternatives and the table votes for neither (repair of the recorded 2026-08-03 single-resolution defect)",
+        "unit_ref": "cu-mim-initial-noun-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-mim-initial-noun-discriminator-mim-r6",
       "skill_version": "@curriculum-candidate",
       "status": "candidate",
       "test_references": [
@@ -342,11 +407,11 @@
     ],
     "adversarial": [
       "mim-adv-01",
-      "mim-adv-02"
+      "mim-adv-02",
+      "mim-adv-03"
     ],
     "positive": [
       "mim-pos-01",
-      "mim-pos-02",
       "mim-pos-03"
     ],
     "transfer": [
@@ -432,6 +497,21 @@
       {
         "discriminators": {
           "prefix_vowel": [
+            "fatha"
+          ],
+          "source_form_class": [
+            "bare_triliteral"
+          ],
+          "vocalization": [
+            "present"
+          ]
+        },
+        "id": "masdar_mimi",
+        "name": "مصدر ميمي (مـ-initial verbal noun) on a bare triliteral source"
+      },
+      {
+        "discriminators": {
+          "prefix_vowel": [
             "kasra"
           ],
           "source_form_class": [
@@ -466,6 +546,10 @@
       {
         "id": "mim-r5",
         "text": "a place-or-time reading presupposes a bare triliteral source; the same prefix vowel over a derived source is outside the table's regime"
+      },
+      {
+        "id": "mim-r6",
+        "text": "the مصدر ميمي (مـ-initial verbal noun) is letter-identical to the place-or-time noun over a bare triliteral source with the SAME fatha prefix vowel and vocalization; the inventory previously omitted this rival, so a bare-triliteral fatha/present row resolved cleanly to place_or_time_noun alone -- both readings are now preserved as alternatives and the table votes for neither (repair of the recorded 2026-08-03 single-resolution defect)"
       }
     ],
     "schema": "curriculum.l1l6_machine_unit.v1",

@@ -74,12 +74,27 @@ def latest_unit(inc):
     return discover_increments()[inc]
 
 
+def _require_unique_fixture_ids(inc, fixtures):
+    """Every fixture identity must be unique: two different inputs sharing one
+    fixture_id can no longer be told apart by anything keyed on it (run()'s
+    results[], review bundles, a `next(f ... == id)` lookup) even though both
+    rows still run and grade independently -- fail loud rather than silently
+    ambiguous. A pure check (no file I/O) so it is directly testable."""
+    seen = set()
+    for fx in fixtures:
+        fid = fx.get("fixture_id")
+        if fid in seen:
+            raise ValueError("%s/fixtures.jsonl: duplicate fixture_id %r" % (inc, fid))
+        seen.add(fid)
+
+
 def load(inc, unit_file=None):
     unit = json.loads((INC_BASE / inc / (unit_file or latest_unit(inc)))
                       .read_text(encoding="utf-8"))
     fixtures = [json.loads(l) for l in
                 (INC_BASE / inc / "fixtures.jsonl").read_text(encoding="utf-8").splitlines()
                 if l.strip()]
+    _require_unique_fixture_ids(inc, fixtures)
     return unit, fixtures
 
 
@@ -408,11 +423,10 @@ _VOWEL_MARK_NAMES = {"َ": "fatha", "ِ": "kasra", "ُ": "damma"}
 _MARK_RE = None
 
 
-def _penult_surface_mark(surface):
-    """The short-vowel name actually WRITTEN on the penult base letter of
-    surface, or None when the surface carries no vowel mark there. This is
-    the only admissible source for a claimed penult surface mark: an
-    unpointed surface can never evidence a vowel (Sol fix-request 1)."""
+def _surface_mark_groups(surface):
+    """(base_letter, [attached marks]) per display cluster of surface -- the shared
+    grouping both `_penult_surface_mark` and `_initial_surface_mark` read from, so the
+    two never disagree on what a base letter or an attached mark is."""
     global _MARK_RE
     import re as _re
     if _MARK_RE is None:
@@ -424,12 +438,39 @@ def _penult_surface_mark(surface):
                 groups[-1][1].append(ch)
         else:
             groups.append((ch, []))
-    if len(groups) < 2:
+    return groups
+
+
+def _vowel_mark_at(groups, index):
+    if not groups or not (-len(groups) <= index < len(groups)):
         return None
-    for m in groups[-2][1]:
+    for m in groups[index][1]:
         if m in _VOWEL_MARK_NAMES:
             return _VOWEL_MARK_NAMES[m]
     return None
+
+
+def _penult_surface_mark(surface):
+    """The short-vowel name actually WRITTEN on the penult base letter of
+    surface, or None when the surface carries no vowel mark there. This is
+    the only admissible source for a claimed penult surface mark: an
+    unpointed surface can never evidence a vowel (Sol fix-request 1)."""
+    groups = _surface_mark_groups(surface)
+    if len(groups) < 2:
+        return None
+    return _vowel_mark_at(groups, -2)
+
+
+def _initial_surface_mark(surface):
+    """The short-vowel name actually WRITTEN on the FIRST base letter of surface, or
+    None when the surface carries no vowel mark there. This is the licensed
+    discriminator between the مُـ participle (damma) and everything else (fatha)
+    once mu_participle co-survives with mafal_place on the same literal-radical
+    letters (Sol repair: the penult vowel alone silently dropped the co-surviving
+    mafal_place template and decided the collision from the wrong evidence). A
+    written fatha only rules the participle OUT; it does not by itself resolve
+    WHICH non-participle reading applies -- see der-r10 / masdar_mimi."""
+    return _vowel_mark_at(_surface_mark_groups(surface), 0)
 
 
 def _match_template(shape, letters, radicals, subs):
@@ -528,6 +569,13 @@ def _weak_gate(unit, template_id, radicals, used_subs, ev):
     return None
 
 
+# the template ids that can co-survive in the mafal_place/mu_participle collision (der-r9):
+# masdar_mimi (der-r10) shares mafal_place's exact shape, so wherever mafal_place matches
+# literally, masdar_mimi matches too -- membership here is READ off whichever of these ids the
+# PACK actually declares as templates, never assumed present.
+_MAFAL_MU_COLLISION_IDS = frozenset(("mafal_place", "masdar_mimi", "mu_participle"))
+
+
 def analyze_derivative(inp, unit):
     ev = inp.get("root_evidence")
     if ev is None:
@@ -548,14 +596,23 @@ def analyze_derivative(inp, unit):
                         "reason": "weak_declaration_contradicts_root",
                         "declared": {"weak_position": wp, "weak_radical": wr},
                         "radicals": radicals}
+    radical_arity = unit.get("radical_arity", 3)
     survivors = []
     for t in unit["templates"]:
         if t["id"] == "mu_participle":
             # مُـ + a stem that is exactly the radicals (the derived-form
             # skeleton with gemination carried by harakat, not letters);
             # discriminated from مَفْعَل by the penult vowel (REQUIRED)
-            if (letters and letters[0] == "م" and len(letters) >= 4
-                    and letters[1:] == radicals):
+            if letters and letters[0] == "م" and letters[1:] == radicals:
+                if len(radicals) != radical_arity:
+                    # every current interface in this catalogue is written
+                    # against a `radical_arity`-slot root (default 3); a
+                    # non-matching radical count is refused here, not
+                    # silently routed through a three-slot template (L5.M4.06)
+                    return {"decision": "abstain",
+                            "reason": "radical_arity_unsupported",
+                            "declared_arity": radical_arity,
+                            "supplied_radicals": radicals}
                 survivors.append((t, []))
             continue
         used = _match_template(t["shape"], letters, radicals,
@@ -581,7 +638,7 @@ def analyze_derivative(inp, unit):
         return None
 
     ids = sorted(t["id"] for t, _u in survivors)
-    if ids == ["mafal_place", "mu_participle"] or ids == ["mu_participle"]:
+    if ids and set(ids) <= _MAFAL_MU_COLLISION_IDS and "mu_participle" in ids:
         pv = inp.get("penult_vowel")
         if pv is None:
             return {"decision": "abstain", "reason": "penult_vowel_unknown"}
@@ -602,6 +659,43 @@ def analyze_derivative(inp, unit):
             if written != pv:
                 return {"decision": "abstain",
                         "reason": "penult_mark_mismatch"}
+            if "mafal_place" in ids:
+                # مَفْعَل (place/time noun) and the derived-form مُـ participle are
+                # letter-identical whenever the radicals stand literally after the
+                # initial مـ; the WRITTEN vowel on THAT initial مـ -- damma licenses
+                # the participle, fatha RULES OUT the participle -- is the licensed
+                # discriminator between the participle reading and everything else
+                # (Sol repair: the previous code decided the collision from the
+                # penult vowel alone and silently dropped the co-surviving
+                # mafal_place template; the penult vowel only ever decides voice
+                # WITHIN the participle reading, never WHICH reading this token
+                # is). Missing, unbound or mismatching written evidence abstains
+                # rather than guessing either reading.
+                initial_mark = _initial_surface_mark(inp["surface"])
+                if initial_mark is None:
+                    return {"decision": "abstain",
+                            "reason": "initial_mim_mark_not_in_surface"}
+                if initial_mark == "fatha":
+                    # der-r10: a written fatha does not by itself distinguish
+                    # مَفْعَل from a مصدر ميمي reading of the SAME literal radicals
+                    # -- if the pack declares masdar_mimi as a rival (it shares
+                    # mafal_place's exact shape, so it always co-survives once
+                    # declared), both readings are preserved as alternatives
+                    # rather than resolving place_time_noun alone (mirrors mim-r6
+                    # in inc-mim-initial-noun-discriminator; the rival is READ off
+                    # the pack's own template list, never hard-coded here).
+                    fatha_survivors = [t for t, _u in survivors
+                                       if t["id"] in ("mafal_place", "masdar_mimi")]
+                    if len(fatha_survivors) > 1:
+                        return {"decision": "abstain", "reason": "ambiguous_template",
+                                "alternatives": sorted(t["id"] for t in fatha_survivors)}
+                    mafal_t = fatha_survivors[0]
+                    return {"decision": "candidate_pending",
+                            "authority": "none_fixture_harness",
+                            "class": mafal_t["class"], "template": mafal_t["id"]}
+                if initial_mark != "damma":
+                    return {"decision": "abstain",
+                            "reason": "initial_mim_vowel_unlicensed"}
         if unit.get("weak_realization_gate"):
             # voice over a weak root needs the declared realization licensed
             # for THIS template, not merely a bound declaration
@@ -626,6 +720,14 @@ def analyze_derivative(inp, unit):
     blocked = weak_check(t["id"], used)
     if blocked:
         return blocked
+    if str(t.get("class") or "").startswith("shared_"):
+        # a `shared_*` class is a ROUTING LABEL, not a resolved class (the row
+        # is letter-identical to a row in a sibling pack): the discriminating
+        # decision belongs to cu-adjective-class-discriminator, which this
+        # batch does not author. The label must never be reachable as an
+        # ordinary class -- it always abstains here instead.
+        return {"decision": "abstain", "reason": "shared_row_class_undecided",
+                "template": t["id"], "shared_with": t.get("shared_with") or []}
     return {"decision": "candidate_pending", "authority": "none_fixture_harness", "class": t["class"], "template": t["id"]}
 
 
@@ -639,6 +741,19 @@ def analyze_discriminator_table(inp, unit):
             if feats.get(key) not in allowed:
                 ok = False
                 break
+        if ok:
+            # a function's OWN discriminators may all match while a declared
+            # excluded_when companion value is ALSO present -- that function is
+            # disqualified regardless (Sol repair: ela-r4's "the two superlative
+            # constructions EXCLUDE the comparison complement" was stated but never
+            # executed, so a surface carrying a comparison complement AND
+            # definite-article evidence still resolved elative_comparative). This is
+            # a general per-function exclusion, not an elative-specific branch: any
+            # pack sharing this capability may declare it.
+            for key, excluded in (fn.get("excluded_when") or {}).items():
+                if feats.get(key) in excluded:
+                    ok = False
+                    break
         if ok:
             survivors.append(fn["id"])
     survivors.sort()
@@ -949,6 +1064,218 @@ def self_test():
     finally:
         _self_mod.analyze_ownership_carve = _orig_carve
 
+    # 10. radical-arity refusal (analyze_derivative's mu_participle branch): the recorded false
+    # pass at 525ddc6 routed a four-radical root (مُدَحْرِج، radicals د ح ر ج) through the
+    # three-slot mu_participle template as though it were a sound triliteral (L5.M4.06 — "every
+    # current interface in the catalogue is written against a three-slot root"). Reproduced here
+    # against the UNCHANGED inc-derivatives/unit-v4.json pack (proving the fix is a pure consumer
+    # change, not a pack edit): a 2-radical and a 5-radical root reach the SAME abstention.
+    _der_unit, _ = load("inc-derivatives", "unit-v4.json")
+    _mudahrij = {"letters": list("مدحرج"), "surface": "مُدَحْرِج", "penult_vowel": "kasra",
+                "penult_vowel_evidence": "surface_mark",
+                "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list("دحرج")}}
+    _mudahrij_rec = analyze_derivative(_mudahrij, _der_unit)
+    if _mudahrij_rec != {"decision": "abstain", "reason": "radical_arity_unsupported",
+                         "declared_arity": 3, "supplied_radicals": list("دحرج")}:
+        failures.append("analyze_derivative: the recorded four-radical mu_participle false pass "
+                        "(مُدَحْرِج) is no longer refused: %r" % (_mudahrij_rec,))
+    _two_rad = analyze_derivative({"letters": ["م", "ي", "د"],
+                                   "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ي", "د"]}},
+                                  _der_unit)
+    _five_rad = analyze_derivative({"letters": list("مخندرس"),
+                                    "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list("خندرس")}},
+                                   _der_unit)
+    if not (_two_rad.get("reason") == _five_rad.get("reason") == "radical_arity_unsupported"):
+        failures.append("analyze_derivative: a 2-radical and a 5-radical mu_participle-shaped root "
+                        "must reach the SAME radical_arity_unsupported abstention, got %r / %r"
+                        % (_two_rad, _five_rad))
+    _der_unit_arity4 = json.loads(json.dumps(_der_unit))
+    _der_unit_arity4["radical_arity"] = 4
+    if analyze_derivative(_mudahrij, _der_unit_arity4).get("decision") == "abstain":
+        failures.append("analyze_derivative: radical_arity is not genuinely PACK-declared "
+                        "(declaring radical_arity: 4 in the pack did not license the four-radical root)")
+
+    # 11. shared-row refusal: a template whose declared class begins with shared_ must never
+    # surface as a resolved class (cu-adjective-class-discriminator's abstention obligation).
+    _qad_unit, _qad_fixtures = load("inc-quality-adjective-templates")
+    _kabiir = {"letters": list("كبير"), "surface": "كبير",
+              "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list("كبر")}}
+    _kabiir_rec = analyze_derivative(_kabiir, _qad_unit)
+    if _kabiir_rec.get("decision") != "abstain" or _kabiir_rec.get("reason") != "shared_row_class_undecided":
+        failures.append("analyze_derivative: a shared_-classed template survivor must abstain "
+                        "shared_row_class_undecided, got %r" % (_kabiir_rec,))
+    _qad_unit_unshared = json.loads(json.dumps(_qad_unit))
+    for _t in _qad_unit_unshared["templates"]:
+        if _t["id"] == "faiil":
+            _t["class"] = "quality_adjective"  # PACK mutation: strip the shared_ prefix
+    if analyze_derivative(_kabiir, _qad_unit_unshared).get("decision") != "candidate_pending":
+        failures.append("analyze_derivative: the shared_row_class_undecided refusal is not "
+                        "genuinely PACK-declared (stripping the shared_ prefix from the PACK's own "
+                        "template class did not unblock the decision)")
+
+    # 12. the three repaired sibling packs (inc-quality-adjective-templates,
+    # inc-intensive-agent-templates, inc-broken-plural-template-inventory): the recorded false
+    # passes at 525ddc6 (قوال/قويل over ق و ل, a literal uncontracted weak radical) must never
+    # recur, and — because the shared_row refusal above is a consumer-level fix that applies
+    # regardless of pack version — قوال/قويل abstain under BOTH the unrepaired unit-v1.json packs
+    # (proving the consumer fix alone already closes the shared-row half of the defect) and the
+    # repaired unit-v2.json packs (which add the weak-realization-gate DATA closing the remaining,
+    # non-shared half: inc-intensive-agent-templates' OWN faaal row is not shared, so only the v2
+    # pack's weak_realization_gate — not the shared_ check — refuses it).
+    def _qawaal(radicals_letters=("ق", "و", "ل")):
+        return {"letters": list("قوال"), "surface": "قوال",
+                "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list(radicals_letters),
+                                  "weak_position": "R2", "weak_radical": "و"}}
+
+    def _qawiil(radicals_letters=("ق", "و", "ل")):
+        return {"letters": list("قويل"), "surface": "قويل",
+                "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list(radicals_letters),
+                                  "weak_position": "R2", "weak_radical": "و"}}
+
+    _int_unit_v1, _ = load("inc-intensive-agent-templates", "unit-v1.json")
+    _int_unit_v2, _ = load("inc-intensive-agent-templates", "unit-v2.json")
+    _qad_unit_v1, _ = load("inc-quality-adjective-templates", "unit-v1.json")
+    _qad_unit_v2, _ = load("inc-quality-adjective-templates", "unit-v2.json")
+    _bpl_unit_v1, _ = load("inc-broken-plural-template-inventory", "unit-v1.json")
+    _bpl_unit_v2, _ = load("inc-broken-plural-template-inventory", "unit-v2.json")
+
+    _int_v1_qawaal = analyze_derivative(_qawaal(), _int_unit_v1)
+    if _int_v1_qawaal.get("decision") != "candidate_pending":
+        failures.append("self-test drift: inc-intensive-agent-templates/unit-v1.json no longer "
+                        "reproduces the recorded قوال false pass (%r) — the v1 defect set must stay "
+                        "reproducible" % (_int_v1_qawaal,))
+    for _label, _unit in (("inc-intensive-agent-templates v2", _int_unit_v2),
+                          ("inc-quality-adjective-templates v1", _qad_unit_v1),
+                          ("inc-quality-adjective-templates v2", _qad_unit_v2)):
+        for _mk, _inp in (("قوال", _qawaal()), ("قويل", _qawiil())):
+            _rec = analyze_derivative(_inp, _unit)
+            if _rec.get("decision") != "abstain":
+                failures.append("%s / %s must abstain (recorded false pass), got %r"
+                                % (_label, _mk, _rec))
+    # inc-broken-plural-template-inventory: قوال is masked by the pack's OWN declared
+    # فعال/singular-homograph collision (ambiguous_template) regardless of the weak gate, so the
+    # weak-gate-specific defect/repair is proven on مقاول (مفاعل template) instead.
+    _muqaawil = {"letters": list("مقاول"), "surface": "مقاول",
+                "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list("قول"),
+                                  "weak_position": "R2", "weak_radical": "و"}}
+    _bpl_v1_rec = analyze_derivative(_muqaawil, _bpl_unit_v1)
+    if _bpl_v1_rec.get("decision") != "candidate_pending":
+        failures.append("self-test drift: inc-broken-plural-template-inventory/unit-v1.json no "
+                        "longer reproduces the literal-weak-radical false pass on مقاول (%r)"
+                        % (_bpl_v1_rec,))
+    _bpl_v2_rec = analyze_derivative(_muqaawil, _bpl_unit_v2)
+    if _bpl_v2_rec.get("decision") != "abstain":
+        failures.append("inc-broken-plural-template-inventory/unit-v2.json must abstain on مقاول "
+                        "(weak-realization gate), got %r" % (_bpl_v2_rec,))
+
+    # 13. the mafal_place/mu_participle collision: the WRITTEN initial مـ vowel decides the
+    # participle reading (damma) BEFORE the penult vowel is ever consulted for voice. A written
+    # fatha RULES OUT the participle but -- der-r10 -- does not by itself resolve WHICH
+    # non-participle reading applies: masdar_mimi is a declared rival sharing mafal_place's exact
+    # shape, so مجلس/منزل/مكتب now preserve BOTH mafal_place and masdar_mimi as alternatives
+    # (ambiguous_template) rather than the single place_time_noun resolution the earlier
+    # (der-r9-only) repair produced. Reproduced against the UNCHANGED
+    # inc-derivatives/unit-v4.json pack.
+    def _collision(letters_s, surface, radicals_letters, penult_vowel):
+        return {"letters": list(letters_s), "surface": surface, "penult_vowel": penult_vowel,
+                "penult_vowel_evidence": "surface_mark",
+                "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list(radicals_letters)}}
+
+    _majlis = _collision("مجلس", "مَجْلِس", "جلس", "kasra")
+    _majlis_rec = analyze_derivative(_majlis, _der_unit)
+    if _majlis_rec != {"decision": "abstain", "reason": "ambiguous_template",
+                       "alternatives": ["mafal_place", "masdar_mimi"]}:
+        failures.append("analyze_derivative: مجلس (fatha-initial, kasra penult) must preserve "
+                        "mafal_place/masdar_mimi as alternatives (der-r10), never resolve "
+                        "place_time_noun alone nor fall through to the penult-vowel-driven "
+                        "mu_participle false pass: got %r" % (_majlis_rec,))
+    _maktab = _collision("مكتب", "مَكْتَب", "كتب", "fatha")
+    _maktab_rec = analyze_derivative(_maktab, _der_unit)
+    if _maktab_rec != {"decision": "abstain", "reason": "ambiguous_template",
+                       "alternatives": ["mafal_place", "masdar_mimi"]}:
+        failures.append("analyze_derivative: مكتب (fatha-initial, fatha penult) must preserve "
+                        "mafal_place/masdar_mimi as alternatives (der-r10), not the recorded "
+                        "passive_participle false pass nor a single place_time_noun resolution: "
+                        "got %r" % (_maktab_rec,))
+    _mudarris = _collision("مدرس", "مُدَرِّس", "درس", "kasra")
+    _mudarris_rec = analyze_derivative(_mudarris, _der_unit)
+    if _mudarris_rec != {"decision": "candidate_pending", "authority": "none_fixture_harness",
+                         "class": "active_participle", "template": "mu_participle"}:
+        failures.append("analyze_derivative: مُدَرِّس (genuinely damma-initial) must still resolve "
+                        "the mu_participle reading -- the initial-مـ discriminator must never "
+                        "disturb a genuine participle: got %r" % (_mudarris_rec,))
+    _no_initial_mark = _collision("مكتب", "مكْتَب", "كتب", "fatha")
+    if analyze_derivative(_no_initial_mark, _der_unit) != {"decision": "abstain",
+                                                           "reason": "initial_mim_mark_not_in_surface"}:
+        failures.append("analyze_derivative: a verified penult mark with NO mark at all on the "
+                        "initial مـ must abstain initial_mim_mark_not_in_surface, never guess "
+                        "either co-surviving reading")
+    _unlicensed_initial = _collision("مكتب", "مِكْتَب", "كتب", "fatha")
+    if analyze_derivative(_unlicensed_initial, _der_unit) != {"decision": "abstain",
+                                                              "reason": "initial_mim_vowel_unlicensed"}:
+        failures.append("analyze_derivative: an initial-مـ vowel that is neither damma nor fatha "
+                        "must abstain initial_mim_vowel_unlicensed")
+
+    # 13b. masdar_mimi (der-r10) is genuinely a PACK-declared rival in inc-derivatives -- the
+    # SAME mechanism mim-r6 uses in the sibling pack (probe 14 below), not an increment-specific
+    # consumer exception: removing it from the in-memory pack must collapse مجلس back to the
+    # single mafal_place resolution the earlier (der-r9-only) repair produced.
+    _der_unit_no_masdar_mimi = json.loads(json.dumps(_der_unit))
+    _der_unit_no_masdar_mimi["templates"] = [t for t in _der_unit_no_masdar_mimi["templates"]
+                                             if t["id"] != "masdar_mimi"]
+    _majlis_rec_m = analyze_derivative(_majlis, _der_unit_no_masdar_mimi)
+    if _majlis_rec_m != {"decision": "candidate_pending", "authority": "none_fixture_harness",
+                         "class": "place_time_noun", "template": "mafal_place"}:
+        failures.append("analyze_derivative: removing masdar_mimi from the PACK did not collapse "
+                        "مجلس back to a clean place_time_noun resolution (masdar_mimi is not "
+                        "genuinely pack-declared in inc-derivatives): got %r" % (_majlis_rec_m,))
+
+    # 14. masdar_mimi is a genuinely PACK-declared rival in inc-mim-initial-noun-discriminator: a
+    # bare-triliteral fatha/present feature set now preserves BOTH place_or_time_noun and
+    # masdar_mimi (never a vote), and removing masdar_mimi from the in-memory pack collapses the
+    # row back to a single survivor -- proving the collision is pack content, not hard-coded.
+    _mim_unit, _ = load("inc-mim-initial-noun-discriminator")
+    _mim_feats = {"features": {"prefix_vowel": "fatha", "source_form_class": "bare_triliteral",
+                               "vocalization": "present"}}
+    _mim_rec = analyze_discriminator_table(_mim_feats, _mim_unit)
+    if _mim_rec.get("reason") != "preserve_alternatives" \
+            or sorted(_mim_rec.get("alternatives") or []) != ["masdar_mimi", "place_or_time_noun"]:
+        failures.append("analyze_discriminator_table: masdar_mimi is not preserved as a rival "
+                        "alongside place_or_time_noun over a bare-triliteral fatha/present row: "
+                        "got %r" % (_mim_rec,))
+    _mim_unit_m = json.loads(json.dumps(_mim_unit))
+    _mim_unit_m["functions"] = [f_ for f_ in _mim_unit_m["functions"] if f_["id"] != "masdar_mimi"]
+    _mim_rec_m = analyze_discriminator_table(_mim_feats, _mim_unit_m)
+    if _mim_rec_m.get("decision") != "candidate_pending" or _mim_rec_m.get("function") != "place_or_time_noun":
+        failures.append("analyze_discriminator_table: removing masdar_mimi from the PACK did not "
+                        "collapse the row back to a clean place_or_time_noun resolution "
+                        "(masdar_mimi is not genuinely pack-declared)")
+
+    # 15. ela-r4 in the fail-closed direction: a comparison complement combined with
+    # definite-article superlative evidence must never resolve elative_comparative, via a
+    # PACK-declared excluded_when clause -- removing that clause from the in-memory pack must
+    # flip the decision back to the (contradicting) false pass, proving the exclusion is data,
+    # not a hard-coded elative special case.
+    _ela_unit, _ = load("inc-elative-template-discriminator")
+    _ela_feats = {"features": {"comparison_complement": "min_phrase_present",
+                               "definiteness_behaviour": "definite_article",
+                               "entry_evidence": "adjectival_entry",
+                               "feminine_counterpart_template": "fula"}}
+    _ela_rec = analyze_discriminator_table(_ela_feats, _ela_unit)
+    if _ela_rec != {"decision": "abstain", "reason": "insufficient_features"}:
+        failures.append("analyze_discriminator_table: a comparison complement WITH definite-"
+                        "article evidence must abstain insufficient_features (ela-r4), never "
+                        "resolve elative_comparative: got %r" % (_ela_rec,))
+    _ela_unit_m = json.loads(json.dumps(_ela_unit))
+    for _f_ in _ela_unit_m["functions"]:
+        if _f_["id"] == "elative_comparative":
+            _f_.pop("excluded_when", None)
+    _ela_rec_m = analyze_discriminator_table(_ela_feats, _ela_unit_m)
+    if _ela_rec_m.get("function") != "elative_comparative":
+        failures.append("analyze_discriminator_table: removing excluded_when from the PACK did "
+                        "not restore the recorded false pass (the ela-r4 exclusion is not "
+                        "genuinely pack-declared)")
+
     if failures:
         print("SELF-TEST FAIL:")
         for f in failures:
@@ -961,7 +1288,23 @@ def self_test():
           "probe 9, analyze_ownership_carve: licensed-augment/unlicensed-abstain, the nisba mark "
           "override never swallowing the carrier consonant, an unpointed surface buying "
           "no mark claim, malformed-mode/malformed-letter abstention, and a module-level "
-          "rebind proof)")
+          "rebind proof; probe 10, radical_arity_unsupported: the recorded مُدَحْرِج false pass "
+          "refused against the UNCHANGED inc-derivatives/unit-v4.json pack, 2- and 5-radical "
+          "roots reaching the same abstention, and a pack-declared radical_arity mutation "
+          "licensing the four-radical root; probe 11, shared_row_class_undecided: a shared_-"
+          "classed survivor abstains and a pack mutation stripping the prefix unblocks it; "
+          "probe 12, the three repaired sibling packs (quality-adjective/intensive-agent/"
+          "broken-plural): the recorded قوال/قويل/مقاول false passes stay reproducible under "
+          "their unrepaired unit-v1.json packs and abstain under the repaired unit-v2.json packs; "
+          "probe 13, the mafal_place/mu_participle collision resolved by the WRITTEN initial مـ "
+          "vowel (a written fatha rules the participle OUT; مجلس/منزل/مكتب preserve mafal_place/"
+          "masdar_mimi as alternatives rather than resolving place_time_noun alone, der-r10; a "
+          "genuine مُدَرِّس participle undisturbed; missing/unlicensed initial-مـ evidence abstains; "
+          "probe 13b proves masdar_mimi is genuinely pack-declared in inc-derivatives); "
+          "probe 14, masdar_mimi as a genuinely pack-declared rival preserving alternatives over "
+          "place_or_time_noun in inc-mim-initial-noun-discriminator; "
+          "probe 15, ela-r4's excluded_when exclusion as genuinely pack-declared data, not a "
+          "hard-coded elative special case)")
     return 0
 
 

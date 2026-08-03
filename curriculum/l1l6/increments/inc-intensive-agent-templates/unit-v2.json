@@ -1,0 +1,185 @@
+{
+  "abstention_reasons": [
+    "no_root_evidence",
+    "no_template",
+    "ambiguous_template",
+    "weak_declaration_contradicts_root",
+    "weak_declaration_unbound",
+    "weak_realization_unlicensed",
+    "shared_row_class_undecided"
+  ],
+  "capability": "template_classification",
+  "degree_scale": [
+    "plain agent noun",
+    "doubled-radical intensive",
+    "absolute"
+  ],
+  "increment": "inc-intensive-agent-templates",
+  "inventory_status": "candidate; membership and count differ between traditions",
+  "repair_of": "unit-v1.json (no weak-realization gate: a literal, uncontracted weak radical in a hollow root false-passed the faaal row as though the root were sound — قوال over root ق و ل is a non-word, not an intensive-agent classification; Sol round-3-style repair, ported from inc-derivatives/unit-v4.json's weak_realization_gate)",
+  "require_weak_declaration": true,
+  "rules": [
+    {
+      "id": "int-r1",
+      "text": "a template matches only against SUPPLIED root radicals filling R1..R3 in order; no root is derived here"
+    },
+    {
+      "id": "int-r2",
+      "text": "a matched row names degree, not identity: the intensive reading asserts habitual, professional or excessive performance and is never claimed for a single-occasion act"
+    },
+    {
+      "id": "int-r3",
+      "text": "the closing taa of the فعالة row is declared intensifying, so this unit emits NO gender claim from it; gender is read from agreement elsewhere in the clause"
+    },
+    {
+      "id": "int-r4",
+      "text": "the فعيل and فعول rows are declared shared with the quality-adjective inventory; the transitivity test (can an underlying verb with an object be recovered?) is SUPPLIED evidence and is not run by the consumer"
+    },
+    {
+      "id": "int-r5",
+      "text": "the مفعال row is letter-identical to the instrument template and the فعلة row is letter-identical to a nominal template; both homographs are declared, so those skeletons abstain ambiguous_template"
+    },
+    {
+      "id": "int-r6",
+      "text": "an annexed noun following an intensive form corresponds to the source verb's object; this unit flags the annexation for review and never re-analyses the clause"
+    },
+    {
+      "id": "int-r7",
+      "text": "the six-row grouping is one of several competing traditions and the classical restriction to transitive triliteral verbs is recorded as unstated in the source; the inventory is candidate, not closed"
+    },
+    {
+      "id": "int-r8",
+      "text": "every realization of a weak radical (و، ي) is licensed per template, slot and radical by weak_realizations.by_template: an altered letter must appear in that entry's substituted list, and a weak radical may stand literally only where literal_licensed is true; nothing is licensed by default — an uncontracted hollow/weak shape is not a classification"
+    },
+    {
+      "id": "int-r9",
+      "text": "every weak radical of the matched template requires the exact bound declaration (weak_position + weak_radical) -> otherwise weak_declaration_unbound; an unlicensed realization -> weak_realization_unlicensed; a declared weak position/radical the supplied radicals do not bear -> weak_declaration_contradicts_root"
+    },
+    {
+      "id": "int-r10",
+      "text": "a matched row whose declared class begins with shared_ never resolves to that class here: the consumer abstains shared_row_class_undecided (the label is a routing hint, not a class the letters alone decide)"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "templates": [
+    {
+      "class": "intensive_agent",
+      "degree": "habitual or professional performance",
+      "id": "faaal",
+      "name": "فعال intensive template (doubled middle radical)",
+      "note": "most productive row of the class",
+      "shape": [
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "intensive_agent_intensifying_taa",
+      "degree": "reinforced habitual performance",
+      "id": "faaala_taa",
+      "name": "فعالة intensive template with the non-gender taa",
+      "note": "the closing taa intensifies and leaves the referent's gender open",
+      "shape": [
+        "R1",
+        "R2",
+        "ا",
+        "R3",
+        "ة"
+      ]
+    },
+    {
+      "class": "intensive_agent",
+      "degree": "excess",
+      "id": "mifaal",
+      "name": "مفعال intensive template",
+      "shape": [
+        "م",
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "instrument_noun_homograph",
+      "id": "mifaal_instrument_homograph",
+      "name": "مفعال homograph (the instrument template of the same skeleton)",
+      "note": "person-vs-tool cannot be read off the letters",
+      "shape": [
+        "م",
+        "R1",
+        "R2",
+        "ا",
+        "R3"
+      ]
+    },
+    {
+      "class": "shared_intensive_quality",
+      "degree": "absolute",
+      "id": "faul",
+      "name": "فعول absolute-degree template",
+      "shape": [
+        "R1",
+        "R2",
+        "و",
+        "R3"
+      ],
+      "shared_with": [
+        "cu-quality-adjective-templates"
+      ]
+    },
+    {
+      "class": "shared_intensive_quality",
+      "degree": "intensified",
+      "id": "faiil",
+      "name": "فعيل template",
+      "shape": [
+        "R1",
+        "R2",
+        "ي",
+        "R3"
+      ],
+      "shared_with": [
+        "cu-quality-adjective-templates"
+      ]
+    },
+    {
+      "class": "intensive_agent_rare",
+      "degree": "censured habit",
+      "id": "fuala",
+      "name": "فعلة rare censuring template",
+      "shape": [
+        "R1",
+        "R2",
+        "R3",
+        "ة"
+      ]
+    },
+    {
+      "class": "nominal_homograph",
+      "id": "fala_nominal_homograph",
+      "name": "فعلة homograph (the masdar / instance noun of the same skeleton)",
+      "note": "letter-identical to the rare row; only the vowels and the entry separate them",
+      "shape": [
+        "R1",
+        "R2",
+        "R3",
+        "ة"
+      ]
+    }
+  ],
+  "unit_ref": "cu-intensive-agent-templates",
+  "version": 2,
+  "weak_radicals": [
+    "و",
+    "ي"
+  ],
+  "weak_realization_gate": true,
+  "weak_realizations": {
+    "by_template": {},
+    "licensing_note": "DELIBERATELY MINIMAL. No realization of a weak radical is licensed for any template in this increment: no committed fixture in this pack evidences a licensed substitution or a licensed literal weak realization, so every weak radical of a matched template abstains (weak_declaration_unbound or weak_realization_unlicensed). Widening this table is a linguistic decision for the ṣarf authority (adp-sarf-nahw-authority), made in DATA — no consumer edit is required to license a further realization."
+  }
+}

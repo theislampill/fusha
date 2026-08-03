@@ -665,6 +665,89 @@
       "test_references": [
         "curriculum/l1l6/increments/inc-elative-template-discriminator/fixtures.jsonl"
       ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+        "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+        "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+        "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+        "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+        "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+        "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "35e5bce82b1b4a7fe05a72d1d2579b0bf6b5659dd3c18fda74a6a90131727bc6",
+      "guards_payload": [
+        {
+          "guard": "og-3: this skeleton has NO default reading; zero-evidence input must abstain",
+          "id": "g-ela-1"
+        },
+        {
+          "guard": "the rival readings differ in part of speech, so a wrong pick is a category error and not a shade of meaning",
+          "id": "g-ela-2"
+        },
+        {
+          "guard": "degree is never read off the form; it is read off the construction, and the constructions are mutually exclusive",
+          "id": "g-ela-3"
+        },
+        {
+          "guard": "multiple survivors are PRESERVED as attributed alternatives, never voted or defaulted",
+          "id": "g-ela-4"
+        },
+        {
+          "guard": "the classical restrictions on which bases admit an elative are not encoded; a resolved reading describes an occurrence and never licenses generating one",
+          "id": "g-ela-5"
+        },
+        {
+          "guard": "the disputed membership of sequence and otherness items is left open and is not decided by this table",
+          "id": "g-ela-6"
+        },
+        {
+          "guard": "method transfers, conclusions do not: one occurrence's resolved reading never projects to another occurrence of the same lexeme",
+          "id": "g-ela-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ela-adv-01",
+        "ela-adv-02",
+        "ela-adv-03",
+        "ela-adv-04",
+        "ela-abs-01",
+        "ela-abs-02"
+      ],
+      "positive_examples": [
+        "ela-pos-01",
+        "ela-pos-02",
+        "ela-pos-03",
+        "ela-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-elative-template-discriminator/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "scope": {
+        "increment": "inc-elative-template-discriminator",
+        "statement": "ela-r4 is EXECUTED via elative_comparative's declared excluded_when clause: its own discriminators (comparison_complement, entry_evidence) may all match while the features ALSO carry definite-article or annexation-head definiteness evidence, and the function is disqualified regardless of that match -- a surface asserting both a comparison complement and superlative-signalling definiteness resolves neither reading here (repair of the recorded 2026-08-03 false pass, ncd-ela-adv-02)",
+        "unit_ref": "cu-elative-template-discriminator"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-elative-template-discriminator-ela-r9",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-elative-template-discriminator/fixtures.jsonl"
+      ]
     }
   ],
   "capability": "discriminator_table",
@@ -712,6 +795,12 @@
           ],
           "entry_evidence": [
             "adjectival_entry"
+          ]
+        },
+        "excluded_when": {
+          "definiteness_behaviour": [
+            "definite_article",
+            "heads_annexation"
           ]
         },
         "id": "elative_comparative",
@@ -809,6 +898,10 @@
       {
         "id": "ela-r8",
         "text": "whether sequence and otherness items belong to the elative inventory is disputed in the tradition and is not decided by this table"
+      },
+      {
+        "id": "ela-r9",
+        "text": "ela-r4 is EXECUTED via elative_comparative's declared excluded_when clause: its own discriminators (comparison_complement, entry_evidence) may all match while the features ALSO carry definite-article or annexation-head definiteness evidence, and the function is disqualified regardless of that match -- a surface asserting both a comparison complement and superlative-signalling definiteness resolves neither reading here (repair of the recorded 2026-08-03 false pass, ncd-ela-adv-02)"
       }
     ],
     "schema": "curriculum.l1l6_machine_unit.v1",

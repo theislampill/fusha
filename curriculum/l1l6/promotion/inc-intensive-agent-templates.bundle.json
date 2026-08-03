@@ -3,7 +3,7 @@
   "candidate_reference": "curriculum/l1l6/increments/inc-intensive-agent-templates/reference.md",
   "candidate_registry_rows": [
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -13,15 +13,16 @@
         "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
         "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
         "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
-        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row"
+        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "3df4467fc24ade8a952888375b128e9fa3ec56e0190f077db7eed6f9b8d7bd84",
+      "guards_hash": "4b8361bcb0146ff33762ac2208ede99cbf160f7becdd9967e67be7514abef9f0",
       "guards_payload": [
         {
           "guard": "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
@@ -46,22 +47,28 @@
         {
           "guard": "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
           "id": "g-int-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-int-weak"
         }
       ],
       "negative_or_boundary_examples": [
+        "int-pos-03",
         "int-adv-01",
         "int-adv-02",
         "int-adv-03",
-        "int-abs-01"
+        "int-abs-01",
+        "int-trn-01",
+        "int-adv-04",
+        "int-adv-05"
       ],
       "positive_examples": [
         "int-pos-01",
         "int-pos-02",
-        "int-pos-03",
-        "int-trn-01",
         "int-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-intensive-agent-templates"
@@ -80,7 +87,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -90,15 +97,16 @@
         "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
         "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
         "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
-        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row"
+        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "3df4467fc24ade8a952888375b128e9fa3ec56e0190f077db7eed6f9b8d7bd84",
+      "guards_hash": "4b8361bcb0146ff33762ac2208ede99cbf160f7becdd9967e67be7514abef9f0",
       "guards_payload": [
         {
           "guard": "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
@@ -123,22 +131,28 @@
         {
           "guard": "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
           "id": "g-int-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-int-weak"
         }
       ],
       "negative_or_boundary_examples": [
+        "int-pos-03",
         "int-adv-01",
         "int-adv-02",
         "int-adv-03",
-        "int-abs-01"
+        "int-abs-01",
+        "int-trn-01",
+        "int-adv-04",
+        "int-adv-05"
       ],
       "positive_examples": [
         "int-pos-01",
         "int-pos-02",
-        "int-pos-03",
-        "int-trn-01",
         "int-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-intensive-agent-templates"
@@ -157,7 +171,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -167,15 +181,16 @@
         "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
         "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
         "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
-        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row"
+        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "3df4467fc24ade8a952888375b128e9fa3ec56e0190f077db7eed6f9b8d7bd84",
+      "guards_hash": "4b8361bcb0146ff33762ac2208ede99cbf160f7becdd9967e67be7514abef9f0",
       "guards_payload": [
         {
           "guard": "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
@@ -200,22 +215,28 @@
         {
           "guard": "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
           "id": "g-int-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-int-weak"
         }
       ],
       "negative_or_boundary_examples": [
+        "int-pos-03",
         "int-adv-01",
         "int-adv-02",
         "int-adv-03",
-        "int-abs-01"
+        "int-abs-01",
+        "int-trn-01",
+        "int-adv-04",
+        "int-adv-05"
       ],
       "positive_examples": [
         "int-pos-01",
         "int-pos-02",
-        "int-pos-03",
-        "int-trn-01",
         "int-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-intensive-agent-templates"
@@ -234,7 +255,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -244,15 +265,16 @@
         "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
         "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
         "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
-        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row"
+        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "3df4467fc24ade8a952888375b128e9fa3ec56e0190f077db7eed6f9b8d7bd84",
+      "guards_hash": "4b8361bcb0146ff33762ac2208ede99cbf160f7becdd9967e67be7514abef9f0",
       "guards_payload": [
         {
           "guard": "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
@@ -277,22 +299,28 @@
         {
           "guard": "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
           "id": "g-int-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-int-weak"
         }
       ],
       "negative_or_boundary_examples": [
+        "int-pos-03",
         "int-adv-01",
         "int-adv-02",
         "int-adv-03",
-        "int-abs-01"
+        "int-abs-01",
+        "int-trn-01",
+        "int-adv-04",
+        "int-adv-05"
       ],
       "positive_examples": [
         "int-pos-01",
         "int-pos-02",
-        "int-pos-03",
-        "int-trn-01",
         "int-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-intensive-agent-templates"
@@ -311,7 +339,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -321,15 +349,16 @@
         "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
         "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
         "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
-        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row"
+        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "3df4467fc24ade8a952888375b128e9fa3ec56e0190f077db7eed6f9b8d7bd84",
+      "guards_hash": "4b8361bcb0146ff33762ac2208ede99cbf160f7becdd9967e67be7514abef9f0",
       "guards_payload": [
         {
           "guard": "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
@@ -354,22 +383,28 @@
         {
           "guard": "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
           "id": "g-int-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-int-weak"
         }
       ],
       "negative_or_boundary_examples": [
+        "int-pos-03",
         "int-adv-01",
         "int-adv-02",
         "int-adv-03",
-        "int-abs-01"
+        "int-abs-01",
+        "int-trn-01",
+        "int-adv-04",
+        "int-adv-05"
       ],
       "positive_examples": [
         "int-pos-01",
         "int-pos-02",
-        "int-pos-03",
-        "int-trn-01",
         "int-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-intensive-agent-templates"
@@ -388,7 +423,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -398,15 +433,16 @@
         "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
         "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
         "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
-        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row"
+        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "3df4467fc24ade8a952888375b128e9fa3ec56e0190f077db7eed6f9b8d7bd84",
+      "guards_hash": "4b8361bcb0146ff33762ac2208ede99cbf160f7becdd9967e67be7514abef9f0",
       "guards_payload": [
         {
           "guard": "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
@@ -431,22 +467,28 @@
         {
           "guard": "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
           "id": "g-int-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-int-weak"
         }
       ],
       "negative_or_boundary_examples": [
+        "int-pos-03",
         "int-adv-01",
         "int-adv-02",
         "int-adv-03",
-        "int-abs-01"
+        "int-abs-01",
+        "int-trn-01",
+        "int-adv-04",
+        "int-adv-05"
       ],
       "positive_examples": [
         "int-pos-01",
         "int-pos-02",
-        "int-pos-03",
-        "int-trn-01",
         "int-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-intensive-agent-templates"
@@ -465,7 +507,7 @@
       ]
     },
     {
-      "abstention_condition": "no_root_evidence; no_template; ambiguous_template",
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
       "code_references": [
         "tools/curriculum_unit_consumer.py"
       ],
@@ -475,15 +517,16 @@
         "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
         "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
         "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
-        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row"
+        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
       ],
       "evidence_addresses": [
-        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
         "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
       ],
       "fact_family": "template_classification",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "3df4467fc24ade8a952888375b128e9fa3ec56e0190f077db7eed6f9b8d7bd84",
+      "guards_hash": "4b8361bcb0146ff33762ac2208ede99cbf160f7becdd9967e67be7514abef9f0",
       "guards_payload": [
         {
           "guard": "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
@@ -508,22 +551,28 @@
         {
           "guard": "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
           "id": "g-int-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-int-weak"
         }
       ],
       "negative_or_boundary_examples": [
+        "int-pos-03",
         "int-adv-01",
         "int-adv-02",
         "int-adv-03",
-        "int-abs-01"
+        "int-abs-01",
+        "int-trn-01",
+        "int-adv-04",
+        "int-adv-05"
       ],
       "positive_examples": [
         "int-pos-01",
         "int-pos-02",
-        "int-pos-03",
-        "int-trn-01",
         "int-trn-02"
       ],
-      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v1.json",
+      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
         "unit_ref": "cu-intensive-agent-templates"
@@ -535,6 +584,258 @@
       },
       "skill": "sarf",
       "skill_rule_id": "curr-intensive-agent-templates-int-r7",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
+        "the intensifying taa never licenses a gender claim; gender comes from agreement, not from the letter",
+        "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
+        "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
+        "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
+        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4b8361bcb0146ff33762ac2208ede99cbf160f7becdd9967e67be7514abef9f0",
+      "guards_payload": [
+        {
+          "guard": "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
+          "id": "g-int-1"
+        },
+        {
+          "guard": "the intensifying taa never licenses a gender claim; gender comes from agreement, not from the letter",
+          "id": "g-int-2"
+        },
+        {
+          "guard": "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
+          "id": "g-int-3"
+        },
+        {
+          "guard": "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
+          "id": "g-int-4"
+        },
+        {
+          "guard": "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
+          "id": "g-int-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+          "id": "g-int-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-int-weak"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "int-pos-03",
+        "int-adv-01",
+        "int-adv-02",
+        "int-adv-03",
+        "int-abs-01",
+        "int-trn-01",
+        "int-adv-04",
+        "int-adv-05"
+      ],
+      "positive_examples": [
+        "int-pos-01",
+        "int-pos-02",
+        "int-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-intensive-agent-templates"
+      },
+      "scope": {
+        "increment": "inc-intensive-agent-templates",
+        "statement": "every realization of a weak radical (و، ي) is licensed per template, slot and radical by weak_realizations.by_template: an altered letter must appear in that entry's substituted list, and a weak radical may stand literally only where literal_licensed is true; nothing is licensed by default — an uncontracted hollow/weak shape is not a classification",
+        "unit_ref": "cu-intensive-agent-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-intensive-agent-templates-int-r8",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
+        "the intensifying taa never licenses a gender claim; gender comes from agreement, not from the letter",
+        "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
+        "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
+        "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
+        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4b8361bcb0146ff33762ac2208ede99cbf160f7becdd9967e67be7514abef9f0",
+      "guards_payload": [
+        {
+          "guard": "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
+          "id": "g-int-1"
+        },
+        {
+          "guard": "the intensifying taa never licenses a gender claim; gender comes from agreement, not from the letter",
+          "id": "g-int-2"
+        },
+        {
+          "guard": "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
+          "id": "g-int-3"
+        },
+        {
+          "guard": "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
+          "id": "g-int-4"
+        },
+        {
+          "guard": "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
+          "id": "g-int-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+          "id": "g-int-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-int-weak"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "int-pos-03",
+        "int-adv-01",
+        "int-adv-02",
+        "int-adv-03",
+        "int-abs-01",
+        "int-trn-01",
+        "int-adv-04",
+        "int-adv-05"
+      ],
+      "positive_examples": [
+        "int-pos-01",
+        "int-pos-02",
+        "int-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-intensive-agent-templates"
+      },
+      "scope": {
+        "increment": "inc-intensive-agent-templates",
+        "statement": "every weak radical of the matched template requires the exact bound declaration (weak_position + weak_radical) -> otherwise weak_declaration_unbound; an unlicensed realization -> weak_realization_unlicensed; a declared weak position/radical the supplied radicals do not bear -> weak_declaration_contradicts_root",
+        "unit_ref": "cu-intensive-agent-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-intensive-agent-templates-int-r9",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; no_template; ambiguous_template; weak_declaration_contradicts_root; weak_declaration_unbound; weak_realization_unlicensed; shared_row_class_undecided",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
+        "the intensifying taa never licenses a gender claim; gender comes from agreement, not from the letter",
+        "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
+        "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
+        "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
+        "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+        "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4b8361bcb0146ff33762ac2208ede99cbf160f7becdd9967e67be7514abef9f0",
+      "guards_payload": [
+        {
+          "guard": "og-2: the مفعال and فعلة skeletons each carry a rival template; both are declared, so those skeletons abstain instead of defaulting to the intensive reading",
+          "id": "g-int-1"
+        },
+        {
+          "guard": "the intensifying taa never licenses a gender claim; gender comes from agreement, not from the letter",
+          "id": "g-int-2"
+        },
+        {
+          "guard": "og-4: the transitivity test is SUPPLIED evidence about the source verb; the consumer neither runs it nor infers it from the template",
+          "id": "g-int-3"
+        },
+        {
+          "guard": "an annexed complement is FLAGGED as corresponding to an underlying object; the clause is never re-analysed and no government fact is emitted",
+          "id": "g-int-4"
+        },
+        {
+          "guard": "the row grouping is school-dependent and the classical transitive-triliteral restriction is recorded as absent from the source; the inventory stays candidate",
+          "id": "g-int-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not: a row resolved for one lexeme never fixes the degree of another lexeme on the same row",
+          "id": "g-int-m"
+        },
+        {
+          "guard": "a weak radical STANDING LITERALLY is a realization like any other and needs its own licence: an uncontracted hollow shape (قوال over ق و ل) is a non-word, not a sound-root classification, so no template may treat an unaltered weak radical as regular by default",
+          "id": "g-int-weak"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "int-pos-03",
+        "int-adv-01",
+        "int-adv-02",
+        "int-adv-03",
+        "int-abs-01",
+        "int-trn-01",
+        "int-adv-04",
+        "int-adv-05"
+      ],
+      "positive_examples": [
+        "int-pos-01",
+        "int-pos-02",
+        "int-trn-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-intensive-agent-templates/unit-v2.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-intensive-agent-templates"
+      },
+      "scope": {
+        "increment": "inc-intensive-agent-templates",
+        "statement": "a matched row whose declared class begins with shared_ never resolves to that class here: the consumer abstains shared_row_class_undecided (the label is a routing hint, not a class the letters alone decide)",
+        "unit_ref": "cu-intensive-agent-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-intensive-agent-templates-int-r10",
       "skill_version": "@curriculum-candidate",
       "status": "candidate",
       "test_references": [
@@ -557,15 +858,17 @@
     "adversarial": [
       "int-adv-01",
       "int-adv-02",
-      "int-adv-03"
+      "int-adv-03",
+      "int-adv-04",
+      "int-adv-05",
+      "int-pos-03",
+      "int-trn-01"
     ],
     "positive": [
       "int-pos-01",
-      "int-pos-02",
-      "int-pos-03"
+      "int-pos-02"
     ],
     "transfer": [
-      "int-trn-01",
       "int-trn-02"
     ]
   },
@@ -576,7 +879,11 @@
     "abstention_reasons": [
       "no_root_evidence",
       "no_template",
-      "ambiguous_template"
+      "ambiguous_template",
+      "weak_declaration_contradicts_root",
+      "weak_declaration_unbound",
+      "weak_realization_unlicensed",
+      "shared_row_class_undecided"
     ],
     "capability": "template_classification",
     "degree_scale": [
@@ -586,6 +893,8 @@
     ],
     "increment": "inc-intensive-agent-templates",
     "inventory_status": "candidate; membership and count differ between traditions",
+    "repair_of": "unit-v1.json (no weak-realization gate: a literal, uncontracted weak radical in a hollow root false-passed the faaal row as though the root were sound — قوال over root ق و ل is a non-word, not an intensive-agent classification; Sol round-3-style repair, ported from inc-derivatives/unit-v4.json's weak_realization_gate)",
+    "require_weak_declaration": true,
     "rules": [
       {
         "id": "int-r1",
@@ -614,6 +923,18 @@
       {
         "id": "int-r7",
         "text": "the six-row grouping is one of several competing traditions and the classical restriction to transitive triliteral verbs is recorded as unstated in the source; the inventory is candidate, not closed"
+      },
+      {
+        "id": "int-r8",
+        "text": "every realization of a weak radical (و، ي) is licensed per template, slot and radical by weak_realizations.by_template: an altered letter must appear in that entry's substituted list, and a weak radical may stand literally only where literal_licensed is true; nothing is licensed by default — an uncontracted hollow/weak shape is not a classification"
+      },
+      {
+        "id": "int-r9",
+        "text": "every weak radical of the matched template requires the exact bound declaration (weak_position + weak_radical) -> otherwise weak_declaration_unbound; an unlicensed realization -> weak_realization_unlicensed; a declared weak position/radical the supplied radicals do not bear -> weak_declaration_contradicts_root"
+      },
+      {
+        "id": "int-r10",
+        "text": "a matched row whose declared class begins with shared_ never resolves to that class here: the consumer abstains shared_row_class_undecided (the label is a routing hint, not a class the letters alone decide)"
       }
     ],
     "schema": "curriculum.l1l6_machine_unit.v1",
@@ -728,7 +1049,16 @@
       }
     ],
     "unit_ref": "cu-intensive-agent-templates",
-    "version": 1
+    "version": 2,
+    "weak_radicals": [
+      "و",
+      "ي"
+    ],
+    "weak_realization_gate": true,
+    "weak_realizations": {
+      "by_template": {},
+      "licensing_note": "DELIBERATELY MINIMAL. No realization of a weak radical is licensed for any template in this increment: no committed fixture in this pack evidences a licensed substitution or a licensed literal weak realization, so every weak radical of a matched template abstains (weak_declaration_unbound or weak_realization_unlicensed). Widening this table is a linguistic decision for the ṣarf authority (adp-sarf-nahw-authority), made in DATA — no consumer edit is required to license a further realization."
+    }
   },
   "no_auto_promotion": true,
   "occurrence_applications": [],
@@ -751,7 +1081,7 @@
       "teaching": "marks a following annexed noun as the source verb's underlying object, as a reading to check rather than a case fact"
     }
   ],
-  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "rollback_condition": "revert to unit-v1.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
   "schema": "curriculum.l1l6_promotion_bundle.v1",
   "status": "candidate_awaiting_sol_review"
 }

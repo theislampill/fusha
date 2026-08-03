@@ -433,6 +433,242 @@
       "secondary_consumers": []
     },
     {
+      "adapter": "derivational_template_carve",
+      "behavioral_consumer": "tools/curriculum_unit_consumer.py:analyze_derivative",
+      "consumers": [
+        "tools/curriculum_unit_consumer.py",
+        "tools/rm40_gate_stack.py",
+        "tools/run_sarf_evals.py"
+      ],
+      "disposition": "implemented_and_consumed",
+      "enforced_properties": [
+        "every row is decided by the EXTERNAL tools/curriculum_unit_consumer.py:analyze_derivative from its letters + root_evidence against the pack its OWN increment field names (loaded via a module-level indirection, never a pack captured at import time), never echoed from the row's own expected_* fields and never re-implemented locally in run_sarf_evals.py",
+        "the row is projected through an ALLOWLISTED consumer-input set (mode, letters, surface, token_kind, root_evidence, penult_vowel, penult_vowel_evidence) before the consumer is invoked, so an external consumer -- honest or hostile -- can never read expected_decision/expected_class/expected_template/expected_reason/teaches/id/increment and echo them back as its own analysis (I-1)",
+        "no row's expected_class begins with shared_: the routing label a shared_-classed template survivor carries is never pinned as a bank row's own resolved class",
+        "every emitted decision record stays candidate_pending or abstain, never a certified state, and carries no lexeme/sense/meaning/translation/occurrence key -- a template match is a form-level proposal only",
+        "abstention dominates: the three declared quality-adjective/intensive-agent/broken-plural homograph collisions, the weak-realization refusals (the recorded قوال/قويل/مقاول false passes at 525ddc6), the radical-arity refusal (a four-radical root routed through the three-slot مُـ-participle template), the shared-row refusal, the waṣl-as-radical refusal, the shadda-skeleton refusal, the initial-مـ evidence refusals (der-r9) and the mafal_place/masdar_mimi ambiguous-fatha refusal (der-r10)",
+        "hamzat al-waṣl (the seated استفعال-opening alif) is never accepted as a radical: over-supplying it as an extra radical over-fills the template's R-slots and the whole match fails closed to no_template",
+        "a shadda is never transparent to the skeleton: writing a geminated radical as two base letters does not reconstruct the written surface and fails closed to surface_letter_mismatch before any template is walked",
+        "der-r9: the mafal_place/mu_participle collision (co-surviving whenever the radicals stand literally after the initial مـ) is decided by the WRITTEN initial-مـ vowel -- damma licenses the مُـ-participle reading; missing or neither-damma-nor-fatha written evidence abstains rather than silently dropping the co-surviving mafal_place template (repair of the recorded 2026-08-03 false positives on مجلس/منزل/مكتب)",
+        "der-r10: a written FATHA on the initial مـ rules the مُـ-participle OUT but does not by itself license place_time_noun: masdar_mimi is a declared rival template sharing mafal_place's exact bare-triliteral shape, so the fatha branch preserves BOTH mafal_place and masdar_mimi as alternatives (ambiguous_template) rather than resolving place_time_noun alone -- mirrors mim-r6 in inc-mim-initial-noun-discriminator (repair of the recorded 2026-08-03 masdar_mimi collapse on مجلس/منزل/مكتب, the SAME evidence the der-r9-only repair had resolved to a single class)",
+        "every inc-broken-plural-template-inventory row is additionally cross-checked against the REAL tools/rm40_gate_stack.py:plural_gate; when the pack abstains a row for a weak-radical reason, plural_gate must independently abstain the SAME root too, or the bank fails",
+        "no row carries an occurrence_id, loc, entry_id, lexeme, sense, gloss or translation field; every row declares no_occurrence_dogfood_evidence: true"
+      ],
+      "followup_packet": null,
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {},
+      "nonempty_list_fields": [
+        "letters"
+      ],
+      "note": "Behavioural through the EXTERNAL tools/curriculum_unit_consumer.py:analyze_derivative, the SAME production template-classification function G1 (sarf: gate template packs on weak realization and radical arity) repaired: inc-derivatives/unit-v4.json (u-s03/u-s04/u-s05) and the three G1-repaired sibling packs inc-quality-adjective-templates/inc-intensive-agent-templates/inc-broken-plural-template-inventory unit-v2.json. This bank gives the derivational template layer its first behaviourally covered eval bank and pins the fail-closed behaviour G1 established. sarf@2.1-@2.4 stay CANDIDATE; nothing here certifies or promotes any of them. A written nominal template never authorizes a class, a lexeme or a root: every candidate_pending row means only 'these letters are consistent with this named template under this named candidate pack, given independently supplied radicals'. 2026-08-03 repair (der-r9, in-place in unit-v4.json, no template/shape edit): the mafal_place/mu_participle collision was being decided from the penult vowel alone, silently dropping the co-surviving mafal_place template and producing false positives (مجلس/منزل falsely active_participle, مكتب falsely passive_participle); the consumer now requires the WRITTEN initial-مـ vowel first. Same-day follow-up repair (der-r10, in-place in unit-v4.json, no consumer edit beyond generalizing the collision-id membership check): the der-r9 fatha branch was itself resolving place_time_noun alone from evidence the sibling inc-mim-initial-noun-discriminator pack (mim-r6) had just declared unresolvable -- masdar_mimi is now declared as a rival template sharing mafal_place's exact shape, so مجلس/منزل/مكتب (dtc-der-adv-02/03/04) now abstain ambiguous_template preserving both readings instead of resolving a single class.",
+      "not_enforced_properties": [
+        "the adjective-class discriminator (cu-adjective-class-discriminator) is not enforced: this bank only proves the shared_ routing label is refused as a class, it never resolves WHICH of the two sibling classes actually applies",
+        "the quadriliteral template inventory (cu-quadriliteral-templates) is not enforced: this bank only proves the non-triliteral radical-arity REFUSAL, it never authors a four-radical template",
+        "the hamza carrier table (cu-initial-hamza-class / cu-hamza-carrier-licensing) is not enforced beyond the single negative row proving hamzat al-waṣl is never accepted as a radical; the licensing table itself stays unimplemented",
+        "the gemination licensing table (cu-gemination-licensing) is not enforced beyond the single negative row proving a shadda never inflates the base-letter count; no licensing table is authored",
+        "cu-derived-form-root-licensing's admissibility gate is not enforced: no row in this bank derives a root or licenses a form; every radicals list arrives as declared evidence"
+      ],
+      "path": "sarf/evals/derivational-template-carve-eval.jsonl",
+      "pinned_metrics": {
+        "abstain_rows": 23,
+        "candidate_pending_rows": 8,
+        "decided_rows": 31,
+        "rows": 31
+      },
+      "property_coverage": [
+        {
+          "applicable_rows": 31,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "property": "decision_behaviorally_computed"
+        },
+        {
+          "applicable_rows": 31,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "property": "no_semantic_identity_leak"
+        },
+        {
+          "applicable_rows": 31,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "property": "never_certified"
+        },
+        {
+          "applicable_rows": 23,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "note": "the 23 abstaining rows only",
+          "property": "abstains_never_claim_class"
+        },
+        {
+          "applicable_rows": 6,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "note": "dtc-der-pos-04, dtc-der-adv-02/03/04, dtc-der-abs-05/06 -- der-r9's mafal_place/mu_participle collision resolved by the WRITTEN initial مـ vowel rather than the penult vowel alone (a genuine مُدَرِّس participle left undisturbed, and missing/unlicensed initial-مـ evidence abstaining); der-r10: a written fatha rules the participle OUT but مجلس/منزل/مكتب now preserve mafal_place/masdar_mimi as alternatives rather than resolving place_time_noun alone",
+          "property": "initial_mim_vowel_discriminates_collision"
+        },
+        {
+          "applicable_rows": 3,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "note": "dtc-der-adv-02/03/04 only: der-r10's mafal_place/masdar_mimi ambiguous-fatha refusal, mirroring mim-r6 in inc-mim-initial-noun-discriminator",
+          "property": "mafal_masdar_mimi_alternatives_preserved"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "note": "the 7 declared homograph collisions: dtc-qad-adv-01/02, dtc-int-adv-01/02, dtc-bpl-adv-01/02/03",
+          "property": "declared_collision_abstains"
+        },
+        {
+          "applicable_rows": 5,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "note": "dtc-der-abs-03, dtc-qad-adv-04, dtc-qad-adv-05, dtc-int-adv-03, dtc-bpl-adv-04 -- the recorded قوال/قويل/مقاول/قاول false passes",
+          "property": "weak_realization_gated"
+        },
+        {
+          "applicable_rows": 1,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "note": "dtc-der-abs-02 only: the recorded مُدَحْرِج four-radical false pass",
+          "property": "radical_arity_gated"
+        },
+        {
+          "applicable_rows": 1,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "note": "dtc-qad-adv-03 only",
+          "property": "shared_row_never_resolved"
+        },
+        {
+          "applicable_rows": 1,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "note": "dtc-neg-wasl-01 only",
+          "property": "wasl_never_radical"
+        },
+        {
+          "applicable_rows": 1,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "note": "dtc-neg-gemination-01 only",
+          "property": "shadda_never_skeleton_decided"
+        },
+        {
+          "applicable_rows": 5,
+          "covered": true,
+          "decided_by": "tools/rm40_gate_stack.py:plural_gate",
+          "note": "the 5 inc-broken-plural-template-inventory rows",
+          "property": "plural_gate_agreement"
+        }
+      ],
+      "required_fields": [
+        "id",
+        "increment",
+        "letters",
+        "surface",
+        "class",
+        "expected_decision",
+        "teaches"
+      ],
+      "row_key": null,
+      "secondary_consumers": [
+        {
+          "applies_to": "the 5 inc-broken-plural-template-inventory rows (dtc-bpl-pos-01, dtc-bpl-adv-01, dtc-bpl-adv-02, dtc-bpl-adv-03, dtc-bpl-adv-04)",
+          "callable": "tools/rm40_gate_stack.py:plural_gate",
+          "expected_calls": 5
+        }
+      ]
+    },
+    {
+      "adapter": "nominal_class_discrimination",
+      "behavioral_consumer": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+      "consumers": [
+        "tools/curriculum_unit_consumer.py",
+        "tools/run_sarf_evals.py"
+      ],
+      "disposition": "implemented_and_consumed",
+      "enforced_properties": [
+        "every row is decided by the EXTERNAL tools/curriculum_unit_consumer.py:analyze_discriminator_table from its features against the pack its OWN increment field names (loaded via a module-level indirection, never a pack captured at import time), never echoed from the row's own expected_* fields and never re-implemented locally in run_sarf_evals.py",
+        "the row is projected through an ALLOWLISTED consumer-input set (features ONLY) before the consumer is invoked, so an external consumer -- honest or hostile -- can never read expected_decision/expected_function/expected_reason/expected_alternatives/teaches/id/increment and echo them back as its own analysis (I-1)",
+        "a zero-evidence row (features={}) abstains insufficient_features for every pack in this bank",
+        "where more than one function survives, ALL survivors are preserved as alternatives (never a vote, never the commoner class); a preserve_alternatives row must declare at least two alternatives and the decided list must match exactly",
+        "mim-r6: masdar_mimi is a declared rival sharing place_or_time_noun's exact discriminators, so a bare-triliteral fatha/present row preserves BOTH as alternatives rather than resolving place_or_time_noun alone",
+        "ela-r4/ela-r9: the two superlative constructions exclude the comparison complement, executed via elative_comparative's declared excluded_when clause -- a row supplying a comparison complement alongside definite-article or annexation-head definiteness evidence never resolves elative_comparative (or any other reading) on that contradiction",
+        "no row may supply an envelope: this bank has no occurrence-level dogfood evidence, and every candidate_pending row must carry the consumer's own none_generic_candidate occurrence_binding string, proving a template-level candidate is never mistaken for an occurrence resolution",
+        "every emitted decision record stays candidate_pending or abstain, never a certified state, and carries no lexeme/sense/meaning/translation/occurrence key",
+        "no row carries an occurrence_id, loc, entry_id, lexeme, sense, gloss or translation field; every row declares no_occurrence_dogfood_evidence: true"
+      ],
+      "followup_packet": null,
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {},
+      "nonempty_list_fields": [],
+      "note": "Behavioural through the EXTERNAL tools/curriculum_unit_consumer.py:analyze_discriminator_table, the SAME registered discriminator_table capability inc-ma already shares. Covers cu-mim-initial-noun-discriminator's 6-way mim-initial collision (masdar_mimi added 2026-08-03 as a declared rival, mim-r6) and cu-elative-template-discriminator's أفعل skeleton across three parts of speech (ela-r4's exclusion executed via elative_comparative's excluded_when clause, ela-r9, added the same date). Both repairs are DATA additions to the existing packs; analyze_discriminator_table gained one generic excluded_when mechanism (not an elative-specific branch) but no increment-specific code. sarf@2.1-@2.4 stay CANDIDATE; nothing here certifies or promotes any of them. A candidate_pending row means only 'this feature set is consistent with this named function under this named candidate pack' -- not a lexeme, not a sense, not an occurrence meaning.",
+      "not_enforced_properties": [
+        "the classical conditions restricting which bases admit an elative reading at all (ela-r7) are not encoded in the pack and are not enforced here",
+        "whether sequence and otherness items belong to the elative inventory (ela-r8) is disputed in the tradition and is not decided by this bank",
+        "instrument templates are lexical, not derivable (mim-r4): this bank classifies an attested token's supplied features, it never predicts which template a root takes",
+        "the school_dependent_attributed abstention reason is declared in the closed vocabulary but no row in this bank exercises it (no function in either pack carries a school_attribution)"
+      ],
+      "path": "sarf/evals/nominal-class-discrimination-eval.jsonl",
+      "pinned_metrics": {
+        "abstain_rows": 7,
+        "candidate_pending_rows": 7,
+        "decided_rows": 14,
+        "rows": 14
+      },
+      "property_coverage": [
+        {
+          "applicable_rows": 14,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "property": "decision_behaviorally_computed"
+        },
+        {
+          "applicable_rows": 14,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "property": "never_certified"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "note": "the 7 abstaining rows only (ncd-mim-adv-01, ncd-mim-adv-02, ncd-mim-abs-01, ncd-ela-adv-01, ncd-ela-adv-02, ncd-ela-abs-01, ncd-ela-abs-02)",
+          "property": "abstains_never_claim_function"
+        },
+        {
+          "applicable_rows": 3,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "note": "ncd-mim-adv-01, ncd-mim-adv-02, ncd-ela-adv-01",
+          "property": "preserve_alternatives_never_votes"
+        },
+        {
+          "applicable_rows": 7,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "note": "the 7 candidate_pending rows only",
+          "property": "candidate_pending_never_occurrence_bound"
+        }
+      ],
+      "required_fields": [
+        "id",
+        "increment",
+        "expected_decision",
+        "teaches"
+      ],
+      "row_key": null,
+      "secondary_consumers": []
+    },
+    {
       "adapter": "weak_root_and_voice",
       "behavioral_consumer": "tools/rm40_gate_stack.py:slot_gate",
       "consumers": [
