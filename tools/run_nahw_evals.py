@@ -40,8 +40,8 @@ non-quarantined row must carry an exact binding — a missing binding is a failu
                     particle-context-rules.json#maa_relative_vs_negation to decide candidate-or-pending. A
                     frame the table does not bind to exactly one function stays pending with both rivals
                     preserved. Every row is also replayed at every OTHER row's exact address to prove the
-                    evidence cannot be reused across occurrences. Registered in BANKS/--self-test but NOT in
-                    A2_ARTIFACT_OWNERSHIP (see the comment above run_ma_function_occurrence for why).
+                    evidence cannot be reused across occurrences. Registered in BANKS, the default `--bank all`
+                    route, `--self-test` AND A2_ARTIFACT_OWNERSHIP (implemented_and_consumed).
 
 Rows whose contract defect is NOT mechanically repairable carry `contract_status` + `packet`; the runner keeps
 them visible, excludes them from the gates they cannot satisfy, and fails if such a row lacks its packet
@@ -978,19 +978,20 @@ def run_function_polysemy(errors, stats):
 # BOTH declared rival functions still unresolved. Every row's evidence is additionally replayed at every OTHER
 # row's exact address to prove it cannot be reused across occurrences (same surface never authorises reuse).
 #
-# HONEST SCOPE NOTE: this bank is invoked (registered in BANKS, exercised by `--bank ma-function-occurrence`,
-# `--bank all` and `--self-test`) but is deliberately NOT added to A2_ARTIFACT_OWNERSHIP below.
-# tools/fusha_eval_coverage.py carries its OWN independent allowlist by design ("Importing the map from the
-# runner would defeat the point") and that file is outside this change's permitted edit set; adding an entry
-# here that reporter cannot corroborate would desynchronise the two and cost EVERY existing A2 artifact its
-# behavioural credit. The bank therefore reports its own honest row/call metrics under `--bank
-# ma-function-occurrence --json` without claiming A2 contract-result coverage it cannot prove there.
+# REGISTRATION: this bank is invoked (registered in BANKS, exercised by `--bank ma-function-occurrence`,
+# the DEFAULT `--bank all` / no-flag route, and `--self-test`) and IS registered in A2_ARTIFACT_OWNERSHIP below,
+# with a matching entry in tools/fusha_eval_coverage.py's own independent allowlist. Every row is decided by
+# the real consumer (PR.maa_context_frame): each row's function candidate — or its exact pending/rival/defect
+# outcome for a non-unique frame — is checked, so `decided` counts every row, never only the candidate-reaching
+# ones.
 def run_ma_function_occurrence(errors, stats):
     bank = "ma-function-occurrence"
     rows = _jsonl(os.path.join(EVAL_DIR, "ma-function-occurrence-eval.jsonl"))
-    stats[bank] = {"cases": len(rows), "candidates": 0, "pending": 0, "consumer_calls": 0,
+    stats[bank] = {"cases": len(rows), "candidates": 0, "pending": 0, "decided": 0, "consumer_calls": 0,
                    "replay_checks": 0}
     addresses = [r["source_address"] for r in rows if r.get("source_address")]
+    maa_rule = next((r for r in (PR.load_particle_rules().get("rules") or [])
+                     if r.get("id") == "maa_relative_vs_negation"), None) or {}
     for r in rows:
         rid = r.get("id")
         for key in ("surface", "quran_loc", "word", "source_address", "frame", "expected_decision"):
@@ -1002,6 +1003,7 @@ def run_ma_function_occurrence(errors, stats):
                                                target_value="maa_relative_vs_negation")
         res = PR.maa_context_frame(surface, evidence=evidence, at=at)
         stats[bank]["consumer_calls"] += 1
+        stats[bank]["decided"] += 1
         if res.get("decision") == "candidate":
             stats[bank]["candidates"] += 1
         elif res.get("decision") == "pending":
@@ -1017,21 +1019,37 @@ def run_ma_function_occurrence(errors, stats):
                               % (bank, rid, res.get("function_candidate"), r.get("expected_function")))
         else:
             expected_rivals = set(r.get("expected_rivals") or [])
+            got_unresolved = {x["role"] for x in (res.get("unresolved_alternatives") or [])
+                              if x.get("decision_status") == "unresolved"}
             if expected_rivals:
-                got_unresolved = {x["role"] for x in (res.get("unresolved_alternatives") or [])
-                                  if x.get("decision_status") == "unresolved"}
                 if not expected_rivals <= got_unresolved:
                     errors.append("%s:%s expected rivals %s not all preserved unresolved (got %s)"
                                   % (bank, rid, sorted(expected_rivals), sorted(got_unresolved)))
+                # INDEPENDENT of the eval row's own (possibly incomplete) expected_rivals fixture: cross-check
+                # against the RULE ARTIFACT's own declared functions for the observed frame, so an under-listed
+                # fixture can never mask a production regression that silently drops a real rival.
+                observed_frame = res.get("observed_frame")
+                frame_row = next((fr for fr in (maa_rule.get("frame_table") or [])
+                                  if fr.get("frame") == observed_frame), None)
+                artifact_rivals = set((frame_row or {}).get("functions")
+                                      or ([frame_row["function"]] if (frame_row or {}).get("function") else []))
+                if not artifact_rivals <= got_unresolved:
+                    errors.append("%s:%s rule-artifact rivals %s not all preserved unresolved (got %s) — an "
+                                  "eval-row fixture must never mask a dropped real rival"
+                                  % (bank, rid, sorted(artifact_rivals), sorted(got_unresolved)))
                 if any(x.get("selected") for x in (res.get("unresolved_alternatives") or [])):
                     errors.append("%s:%s an ambiguous frame must select no winner" % (bank, rid))
             if r.get("expected_defect") and res.get("evidence_defect") != r.get("expected_defect"):
                 errors.append("%s:%s evidence_defect %r != expected %r"
                               % (bank, rid, res.get("evidence_defect"), r.get("expected_defect")))
         # exact-address binding: an otherwise-VALID row's evidence replayed at every OTHER row's address must
-        # fail closed (an already-invalid, e.g. off-vocabulary, row is skipped: its own address already fails
-        # for a different, unrelated reason, so the replay defect would never surface there either)
-        if not r.get("expected_defect"):
+        # fail closed. Gated on the row's OWN evidence having actually validated at its own address
+        # (res["evidence_id"] is not None) — NOT on the mere presence of `expected_defect`, since a row can
+        # carry valid evidence that is only ambiguous at the FRAME level (e.g. ma-occ-005, expected_defect=
+        # maa_category_unresolved) and such a row's replay-rejection is still real and must still be checked.
+        # An already-invalid row (e.g. off-vocabulary — evidence_id is None) is skipped: its own address
+        # already fails for a different, unrelated reason, so the replay defect would never surface there.
+        if res.get("evidence_id") is not None:
             for other in addresses:
                 if other == at:
                     continue
@@ -1054,15 +1072,6 @@ BANKS = {
     "public-boundary": run_public_boundary,
     "ma-function-occurrence": run_ma_function_occurrence,
 }
-# The historical `--bank all` / no-flag aggregate is pinned to these six banks so its well-known row/call
-# totals stay stable for external consumers that assert an exact count (tools/check_regressions.py: "314 rows
-# across 7 artifacts" via the A2 contract path, and a SEPARATE hardcoded "6 banks / 314 rows" assertion against
-# THIS aggregate specifically). ma-function-occurrence is fully invoked and self-tested (BANKS, --self-test,
-# run_all()'s per-bank error sweep) but is reachable from the CLI only by naming it explicitly
-# (--bank ma-function-occurrence) — see the HONEST SCOPE NOTE above run_ma_function_occurrence for why it is
-# not folded into A2_ARTIFACT_OWNERSHIP either.
-DEFAULT_CLI_BANKS = ("function-polysemy", "state-machine", "hover-context", "wrong-reasoning",
-                     "llx-collision", "public-boundary")
 
 
 # ---------------------------------------------------------------------------
@@ -1078,7 +1087,8 @@ NAHW_RUNNER_SCHEMA = "qamus.nahw_eval_runner_contract.v1"
 # EXACT artifact -> (execution group, allowed consumer, declared disposition). This is the ownership map: a
 # result item for any other artifact, or naming any other consumer or disposition, is rejected by the reporter.
 # `decided_stat` names the stat holding the rows the consumer actually decided; `quarantine_stat` the rows a
-# typed quarantine excused. Six execution GROUPS decide seven physical artifacts (function-polysemy covers two).
+# typed quarantine excused. Seven execution GROUPS decide eight physical artifacts (function-polysemy covers
+# two).
 A2_ARTIFACT_OWNERSHIP = {
     "nahw/evals/public-boundary-scanner-eval.jsonl": {
         "group": "public-boundary", "consumer": "tools/leak_sot.py:LEAK_RE.search",
@@ -1109,6 +1119,13 @@ A2_ARTIFACT_OWNERSHIP = {
     "nahw/evals/irab-polysemy-eval.jsonl": {
         "group": "function-polysemy", "consumer": None, "disposition": "fixture_only",
         "decided_stat": (), "quarantine_stat": None},
+    "nahw/evals/ma-function-occurrence-eval.jsonl": {
+        # every row's exact outcome (candidate function, or the exact pending/rival/defect for a non-unique or
+        # invalid-evidence frame) is decided and checked against the real consumer; no row is quarantined and
+        # no axis of this bank's own claim is unowned.
+        "group": "ma-function-occurrence",
+        "consumer": "tools/fusha_nahw_particle_rules.py:maa_context_frame",
+        "disposition": "implemented_and_consumed", "decided_stat": ("decided",), "quarantine_stat": None},
 }
 # Axes this lane does NOT own. Reported, never counted as coverage.
 UNOWNED_AXES = {
@@ -1126,6 +1143,8 @@ CONSUMER_SLOTS = {
     "tools/fusha_nahw_particle_rules.py:resolve_particle_homograph": ("tools.fusha_nahw_particle_rules",
                                                                       "resolve_particle_homograph",
                                                                       "function"),
+    "tools/fusha_nahw_particle_rules.py:maa_context_frame": ("tools.fusha_nahw_particle_rules",
+                                                             "maa_context_frame", "function"),
 }
 
 
@@ -1319,7 +1338,7 @@ def main():
     a = ap.parse_args()
     if a.self_test:
         return _self_test()
-    names = sorted(DEFAULT_CLI_BANKS) if a.bank == "all" else [a.bank]
+    names = sorted(BANKS) if a.bank == "all" else [a.bank]
     errors, stats = [], {}
     for name in names:
         BANKS[name](errors, stats)
@@ -1338,19 +1357,20 @@ def main():
         return 1
     total = sum(v for s in stats.values() for k, v in s.items() if k == "cases" or k.endswith("_cases"))
     # ROUND-7: this aggregate is NOT "real consumer decisions" — it mixes distinct denominators (identity
-    # comparisons, ablation mutations, harakat-stripping mutations, routing events, leak-scanner decisions and
-    # homograph cross-checks) and it omits the hover base comparisons. It is reported under a precise name and
-    # its exact formula is asserted in tools/check_regressions.py. Row-level coverage lives in run_all().
+    # comparisons, ablation mutations, harakat-stripping mutations, routing events, leak-scanner decisions,
+    # homograph cross-checks, occurrence-frame decisions and occurrence-replay probes) and it omits the hover
+    # base comparisons. It is reported under a precise name and its exact formula is asserted in
+    # tools/check_regressions.py. Row-level coverage lives in run_all().
     consumer_events = sum(v for s in stats.values() for k, v in s.items()
                           if k in ("identity_compared", "ablated", "mutated", "routed", "leaks", "clean",
-                                   "pf_homograph_checked"))
+                                   "pf_homograph_checked", "decided", "replay_checks"))
     fixture_only = sorted(n for n in names if stats.get(n, {}).get("classification") == "fixture_only"
                           or stats.get(n, {}).get("state_comparison") == "fixture_only")
     quarantined = sum(s.get("quarantined", 0) for s in stats.values())
     print("PASS — %d naḥw eval row(s) across %d bank(s). "
           "Consumer-invocation events (mixed denominators: identity+ablation+mutation+routing+scanner+"
-          "homograph): %d. Quarantined rows (excluded from any closure claim): %d. "
-          "Banks whose semantic comparison is FIXTURE-ONLY pending a typed consumer/bank: %s. "
+          "homograph+occurrence-decision+occurrence-replay): %d. Quarantined rows (excluded from any closure "
+          "claim): %d. Banks whose semantic comparison is FIXTURE-ONLY pending a typed consumer/bank: %s. "
           "Structural row checks are NOT behavioural closure."
           % (total, len(names), consumer_events, quarantined, ", ".join(fixture_only) or "none"))
     return 0

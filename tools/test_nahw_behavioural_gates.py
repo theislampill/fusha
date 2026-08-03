@@ -1921,6 +1921,14 @@ def test_r20_maa_context_frame():
     check("R20 a relative-function frame is routed out of scope for negation, never candidate-as-negation",
           n.get("decision") == "pending" and n.get("out_of_scope_for_negation") is True,
           json.dumps(n, ensure_ascii=False))
+    # the out-of-scope result's RECOMPUTED rivals must select nobody — the frame reached a real candidate
+    # ("relative") before the required_value check rejected it, so the naive rival computation from that step
+    # would still show it candidate_selected; the final, returned rivals must not leak that stale selection.
+    n_alts = n.get("unresolved_alternatives") or []
+    check("R20 an out-of-scope frame's recomputed rivals select nobody (no candidate_selected leaks through)",
+          bool(n_alts) and not any(x.get("selected") for x in n_alts), json.dumps(n_alts, ensure_ascii=False))
+    check("R20 an out-of-scope frame's rivals all report decision_status unresolved, not candidate_selected",
+          all(x.get("decision_status") == "unresolved" for x in n_alts), json.dumps(n_alts, ensure_ascii=False))
 
 
 def test_r20_ma_function_occurrence_bank():

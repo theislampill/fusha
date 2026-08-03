@@ -203,7 +203,8 @@
     },
     {
       "id": "maa_relative_vs_negation",
-      "surface": "مَا",
+      "$surface_note": "'مَا' below is a documentary EXAMPLE surface for this rule's prose, not a matching key: unlike surface_norm/members on the haraka rules above, no code path looks this field up, and it must never be read as 'every occurrence of the surface مَا is decided by this rule alone' — the frame_table below governs by OCCURRENCE-SPECIFIC contextual frame, never by surface identity.",
+      "example_surface": "مَا",
       "distinguish_by": {
         "signal": "occurrence-specific CONTEXTUAL FRAME, not a diacritic — مَا carries no content-letter mark that separates relative from negation, so the DISCRIMINATORS haraka registry does not apply to this rule",
         "frame_fields": ["object_of_transitive_verb", "followed_by_pos"],
@@ -254,10 +255,16 @@
           "reason": "مَا is not the object of a preceding transitive verb and the following token's class is not established as a preposition, noun or verb; the fixture rule's own fallback (unresolved_needs_subfunction) leaves both readings open rather than defaulting to either"
         }
       ],
+      "recognized_unmapped_frames": [
+        {
+          "frame": "object_of_verb_then_other",
+          "reason": "the source mechanism can report مَا as the mafʿūl of a preceding transitive verb whose following token's class is not established as a preposition, noun or verb — the positive-side mirror of not_object_before_other. Unlike that negative-side catch-all, this combination has NOT been reviewed against corpus data, so it is recognized as a real closed-vocabulary frame (an observer may legitimately report it) but is deliberately left UNMAPPED rather than generalised from the other object_of_verb_then_* rows. A recognized-but-unmapped frame stays pending with pending_reason=frame_row_missing — distinct from an off-vocabulary caller error — and never defaults to a function."
+        }
+      ],
       "pending_fallback": {
         "decision": "pending",
         "pending_reason": "maa_category_unresolved",
-        "note": "no frame observation, or a frame value outside this table, stays pending; a frame is never inferred from the caller's own conclusion label"
+        "note": "no frame observation, or a frame value outside this table AND outside recognized_unmapped_frames, stays pending; a frame is never inferred from the caller's own conclusion label"
       }
     }
   ]

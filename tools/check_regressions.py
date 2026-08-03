@@ -3526,10 +3526,16 @@ try:
           _a2stat("llx-collision", "routed") == 3 and _a2stat("public-boundary", "leaks") == 6
           and _a2stat("public-boundary", "clean") == 4
           and _a2stat("function-polysemy", "pf_homograph_checked") == 6)
-    check("A2 six banks / 314 rows measured",
+    check("A2 measured consumer decisions: ma-function-occurrence decided 6 (4 candidates + 2 pending), "
+          "24 occurrence-replay probes",
+          _a2stat("ma-function-occurrence", "decided") == 6
+          and _a2stat("ma-function-occurrence", "candidates") == 4
+          and _a2stat("ma-function-occurrence", "pending") == 2
+          and _a2stat("ma-function-occurrence", "replay_checks") == 24)
+    check("A2 seven banks / 320 rows measured",
           sum(v for s in _a2s.values() for k, v in s.items()
-              if (k == "cases" or k.endswith("_cases")) and isinstance(v, int)) == 314
-          and len(_a2s) == 6)
+              if (k == "cases" or k.endswith("_cases")) and isinstance(v, int)) == 320
+          and len(_a2s) == 7)
     # EXACT quarantine totals: a quarantine that grows silently is a regression, not coverage
     check("A2 quarantine totals exactly 9 state-machine + 12 hover-context (21 rows, excluded from closure)",
           _a2stat("state-machine", "quarantined") == 9 and _a2stat("hover-context", "quarantined") == 12)
@@ -3558,14 +3564,15 @@ try:
                  and all(b["disposition"] == _a2exp[b["bank"]]["disposition"] for b in _a2res["banks"])
                  and all(b["behavioral_consumer"] == _a2exp[b["bank"]]["consumer"]
                          for b in _a2res["banks"]))
-        check("A2 runner result carries the exact 7 A2 artifacts with unique items, the exact disposition map "
+        check("A2 runner result carries the exact 8 A2 artifacts with unique items, the exact disposition map "
               "and the exact consumer ownership", _a2ok)
         _a2rows = {b["bank"]: b["rows"] for b in _a2res["banks"]}
-        check("A2 runner row denominators are the independently counted rows (314 across 7 artifacts)",
-              sum(_a2rows.values()) == 314
+        check("A2 runner row denominators are the independently counted rows (320 across 8 artifacts)",
+              sum(_a2rows.values()) == 320
               and _a2rows["nahw/evals/public-boundary-scanner-eval.jsonl"] == 10
               and _a2rows["nahw/evals/hover-context-eval.json"] == 20
               and _a2rows["nahw/evals/nahw-state-machine-eval.json"] == 24
+              and _a2rows["nahw/evals/ma-function-occurrence-eval.jsonl"] == 6
               and all(r == _A2R._bank_rows(ROOT, k) for k, r in _a2rows.items()))
         # observed consumer calls are counted at the allow-listed callable, never copied from `checked`
         _pb = next(b for b in _a2res["banks"] if b["bank"].endswith("public-boundary-scanner-eval.jsonl"))
@@ -3573,9 +3580,15 @@ try:
               "LEAK_RE.search calls over 10 rows)",
               (_pb["metrics"]["consumer_calls"] or {}).get("tools/leak_sot.py:LEAK_RE.search") == 10
               and _pb["checked"] == 10)
-        check("A2 behavioural row credit is limited to the 2 fully consumed artifacts (13 rows); the "
+        _ma = next(b for b in _a2res["banks"] if b["bank"].endswith("ma-function-occurrence-eval.jsonl"))
+        check("A2 consumer calls are OBSERVED at the allow-listed callable (ma-function-occurrence: >=6 real "
+              "maa_context_frame calls over 6 rows, decided == rows)",
+              (_ma["metrics"]["consumer_calls"] or {}).get(
+                  "tools/fusha_nahw_particle_rules.py:maa_context_frame") >= 6
+              and _ma["checked"] == 6 and _ma["rows"] == 6)
+        check("A2 behavioural row credit is limited to the 3 fully consumed artifacts (19 rows); the "
               "fixture-only, quarantined and unowned artifacts get none",
-              _a2res["behavioral_rows"] == 13 and _a2res["quarantined_rows"] == 21)
+              _a2res["behavioral_rows"] == 19 and _a2res["quarantined_rows"] == 21)
     except Exception:
         check("A2 runner contract-result assertions (error)", False)
 
@@ -3679,7 +3692,7 @@ try:
         check("A2 a counter-only runner (rows decided, consumer never invoked) receives NO coverage",
               not any(_A2C8.behavioral_coverage(_v, bank=_b, repo_root=ROOT)
                       for _b, _v in _a2c8_res2.items() if _b in _A2C8.A2_OWNERSHIP))
-        check("A2 the coverage reporter carries its OWN ownership allowlist of exactly the 7 A2 artifacts",
+        check("A2 the coverage reporter carries its OWN ownership allowlist of exactly the 8 A2 artifacts",
               set(_A2C8.A2_OWNERSHIP) == set(_A2R.A2_ARTIFACT_OWNERSHIP)
               and all(_A2C8.A2_OWNERSHIP[_k] == (_v["consumer"], _v["disposition"])
                       for _k, _v in _A2R.A2_ARTIFACT_OWNERSHIP.items()))
@@ -3744,12 +3757,13 @@ try:
         _a2cov_ok = (
             _a2items["nahw/evals/public-boundary-scanner-eval.jsonl"]["has_behavioral_runner"]
             and _a2items["nahw/evals/largelexicon-function-collision-safety.jsonl"]["has_behavioral_runner"]
+            and _a2items["nahw/evals/ma-function-occurrence-eval.jsonl"]["has_behavioral_runner"]
             and not _a2items["nahw/evals/hover-context-eval.json"]["has_behavioral_runner"]
             and not _a2items["nahw/evals/nahw-state-machine-eval.json"]["has_behavioral_runner"]
             and not _a2items["nahw/evals/grammar-wrong-reasoning-cases.jsonl"]["has_behavioral_runner"]
             and _a2items["nahw/evals/hover-context-eval.json"]["quarantined_rows"] == 12
             and _a2items["nahw/evals/nahw-state-machine-eval.json"]["quarantined_rows"] == 9)
-        check("A2 eval coverage registers only INVOKED-runner behaviour (2 banks behavioural; the 2 fixture-only "
+        check("A2 eval coverage registers only INVOKED-runner behaviour (3 banks behavioural; the 2 fixture-only "
               "banks and all 21 quarantined rows stay visibly uncovered)", _a2cov_ok)
     except Exception:
         check("A2 eval coverage integration (error)", False)
