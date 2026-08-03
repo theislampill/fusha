@@ -1712,6 +1712,209 @@ class LetterOwnershipCarve(unittest.TestCase):
 
 
 # ---------------------------------------------------------------------------
+# derivational-template-carve — the SAME production template-classification function G1 (sarf: gate template
+# packs on weak realization and radical arity) repaired: tools/curriculum_unit_consumer.py:analyze_derivative,
+# invoked against inc-derivatives/unit-v4.json and the three G1-repaired sibling packs' unit-v2.json. The
+# broken-plural rows are additionally cross-checked against the REAL tools/rm40_gate_stack.py:plural_gate.
+# ---------------------------------------------------------------------------
+_DTC = "sarf/evals/derivational-template-carve-eval.jsonl"
+
+
+class DerivationalTemplateCarve(unittest.TestCase):
+
+    def test_bank_is_registered_implemented_and_consumed(self):
+        contract = R.load_contract(_ROOT)
+        spec = R.bank_spec(contract, _DTC)
+        self.assertEqual(spec["disposition"], "implemented_and_consumed")
+        self.assertEqual(spec["behavioral_consumer"], "tools/curriculum_unit_consumer.py:analyze_derivative")
+        self.assertIn(spec["behavioral_consumer"], R.DECISION_CONSUMERS)
+        self.assertIn(_DTC, R.REQUIRED_BEHAVIORAL_BANKS)
+        rows = _rows(_DTC)
+        self.assertGreaterEqual(len(rows), 18)
+        self.assertLessEqual(len(rows), 26)
+        failures, metrics = _run(_DTC, rows)
+        self.assertEqual(failures, [], "derivational-template-carve bank failed: %s" % failures[:5])
+        self.assertEqual(metrics["decided_rows"], len(rows))
+        self.assertEqual(metrics["consumer_calls"][spec["behavioral_consumer"]], len(rows))
+        self.assertEqual(metrics["consumer_calls"]["tools/rm40_gate_stack.py:plural_gate"],
+                         sum(1 for r in rows if r["increment"] == "inc-broken-plural-template-inventory"))
+
+    def test_every_row_stays_candidate_or_abstain_never_certified(self):
+        for row in _rows(_DTC):
+            self.assertIn(row["expected_decision"], ("candidate_pending", "abstain"))
+            self.assertNotIn("occurrence_id", row)
+            self.assertNotIn("loc", row)
+            self.assertNotIn("entry_id", row)
+            self.assertNotIn("lexeme", row)
+            self.assertNotIn("sense", row)
+            self.assertNotIn("gloss", row)
+            self.assertNotIn("translation", row)
+            self.assertTrue(row.get("no_occurrence_dogfood_evidence") is True,
+                            "%s: must declare no_occurrence_dogfood_evidence" % row["id"])
+            self.assertFalse(str(row.get("expected_class") or "").startswith("shared_"),
+                             "%s: no row may pin a shared_ class as its own expected_class" % row["id"])
+        spec = R.bank_spec(R.load_contract(_ROOT), _DTC)
+        self.assertIsNone(spec["followup_packet"])
+
+    def test_no_local_reimplementation_survives_in_the_runner(self):
+        ctx = _ctx()
+        from tools import curriculum_unit_consumer as CUC
+        self.assertIs(ctx.derivative_decide, CUC.analyze_derivative,
+                      "Consumers.real() must bind the EXTERNAL module's function directly")
+        from tools import rm40_gate_stack as GS
+        self.assertIs(ctx.plural_gate, GS.plural_gate,
+                      "Consumers.real() must bind the EXTERNAL rm40_gate_stack.plural_gate directly")
+
+    def test_a_stubbed_consumer_turns_the_bank_red(self):
+        """(a) rebind the consumer to a constant-return stub: the bank must go RED."""
+        ctx = _ctx()
+        ctx.derivative_decide = lambda inp, unit: {"decision": "candidate_pending",
+                                                   "authority": "none_fixture_harness",
+                                                   "class": "active_participle", "template": "faail"}
+        failures, _m = _run(_DTC, ctx=ctx)
+        self.assertTrue(failures, "a stubbed analyze_derivative must fail the bank")
+
+    def test_external_consumer_module_is_genuinely_invoked(self):
+        """MUTATION at the EXTERNAL module (not the injected ctx slot): proves run_sarf_evals.py really calls
+        tools/curriculum_unit_consumer.py:analyze_derivative, never a local echo."""
+        import tools.curriculum_unit_consumer as CUC
+        original = CUC.analyze_derivative
+        CUC.analyze_derivative = lambda inp, unit: {"decision": "candidate_pending",
+                                                    "authority": "none_fixture_harness",
+                                                    "class": "active_participle", "template": "faail"}
+        try:
+            failures, _m = _run(_DTC, ctx=R.Consumers.real())
+        finally:
+            CUC.analyze_derivative = original
+        self.assertTrue(failures, "a stubbed EXTERNAL analyze_derivative must fail the bank")
+
+    def test_pack_loader_mutation_widening_weak_realizations_turns_the_weak_row_red(self):
+        """(b) mutate the in-memory pack loader to WIDEN weak_realizations (license the very literal realization
+        dtc-der-abs-03 depends on being UNLICENSED): the row must flip away from its expected abstention, proving
+        the decision genuinely depends on pack CONTENT, not a hard-coded consumer branch."""
+        original = R._dtc_pack
+
+        def _widened(increment, root=_ROOT):
+            pack = original(increment, root)
+            if increment == "inc-derivatives":
+                import copy as _c
+                pack = _c.deepcopy(pack)
+                pack["weak_realizations"]["by_template"]["faail"]["R2"]["و"]["literal_licensed"] = True
+            return pack
+        R._dtc_pack = _widened
+        try:
+            failures, _m = _run(_DTC)
+        finally:
+            R._dtc_pack = original
+        self.assertTrue(any(f.startswith("dtc-der-abs-03 ") for f in failures), failures[:5])
+
+    def test_pack_loader_mutation_dropping_a_declared_collision_turns_that_row_red(self):
+        """(c) mutate the in-memory pack loader to drop a declared collision row: the corresponding
+        ambiguous_template row must go RED, proving the abstention genuinely depends on the PACK declaring both
+        homograph rows, not a hard-coded consumer rule."""
+        original = R._dtc_pack
+
+        def _dropped(increment, root=_ROOT):
+            pack = original(increment, root)
+            if increment == "inc-quality-adjective-templates":
+                import copy as _c
+                pack = _c.deepcopy(pack)
+                pack["templates"] = [t for t in pack["templates"] if t["id"] != "fal"]
+            return pack
+        R._dtc_pack = _dropped
+        try:
+            failures, _m = _run(_DTC)
+        finally:
+            R._dtc_pack = original
+        self.assertTrue(any(f.startswith("dtc-qad-adv-01 ") for f in failures), failures[:5])
+
+    def test_shared_expected_class_injection_fails_closed(self):
+        """(d) inject a row whose expected_class starts with 'shared_': the run must fail."""
+        rows = copy.deepcopy(_rows(_DTC))
+        rows.append({"id": "dtc-hostile-shared", "increment": "inc-quality-adjective-templates",
+                    "class": "hostile_negative", "letters": ["ك", "ب", "ي", "ر"], "surface": "كبير",
+                    "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ك", "ب", "ر"]},
+                    "expected_decision": "candidate_pending", "expected_class": "shared_quality_intensive",
+                    "expected_template": "faiil", "no_occurrence_dogfood_evidence": True,
+                    "teaches": "hostile: a shared_ class must never be pinned as a bank row's own expectation"})
+        failures, _m = _run(_DTC, rows)
+        self.assertTrue(any("dtc-hostile-shared" in f and "shared_row_never_resolved" in f for f in failures),
+                        failures[:5])
+
+    def test_occurrence_id_injection_fails_closed(self):
+        """(e) inject a row carrying an occurrence_id: the run must fail."""
+        rows = copy.deepcopy(_rows(_DTC))
+        rows.append({"id": "dtc-hostile-occurrence", "increment": "inc-derivatives", "class": "hostile_negative",
+                    "letters": ["ك", "ا", "ت", "ب"], "surface": "كاتب",
+                    "root_evidence": {"basis": "qamus_entry_ladder", "radicals": ["ك", "ت", "ب"]},
+                    "occurrence_id": "quran:1:1:1", "expected_decision": "candidate_pending",
+                    "expected_class": "active_participle", "expected_template": "faail",
+                    "no_occurrence_dogfood_evidence": True,
+                    "teaches": "hostile: this bank is entry/template-typed only, never occurrence-bound"})
+        failures, _m = _run(_DTC, rows)
+        self.assertTrue(any("dtc-hostile-occurrence" in f and "no_semantic_identity_leak" in f for f in failures),
+                        failures[:5])
+
+    def test_projected_expected_key_leak_fails_closed(self):
+        """(f) mutate the projection allowlist itself so `expected_class` reaches the consumer, on a row where
+        the leaked answer key does NOT match what analyze_derivative genuinely decides: the adapter's own
+        projection guard (`leaked = [k for k in row if k.startswith("expected_") and k in proj]`) must fail the
+        run rather than silently letting an answer-key field ride along as though it were legitimate evidence."""
+        original_fields = R._DTC_CONSUMER_INPUT_FIELDS
+        R._DTC_CONSUMER_INPUT_FIELDS = original_fields + ("expected_class",)
+        try:
+            rows = copy.deepcopy(_rows(_DTC))
+            hostile = dict(next(r for r in rows if r["id"] == "dtc-der-pos-01"))
+            hostile["id"] = "dtc-hostile-echo"
+            hostile["expected_class"] = "not_the_real_class"  # wrong on purpose: proves it never decided the row
+            rows.append(hostile)
+            failures, _m = _run(_DTC, rows)
+        finally:
+            R._DTC_CONSUMER_INPUT_FIELDS = original_fields
+        self.assertTrue(any("dtc-hostile-echo" in f and "no_semantic_identity_leak" in f for f in failures),
+                        failures[:5])
+
+    def test_broken_plural_weak_row_disagreement_with_plural_gate_fails_closed(self):
+        """When the pack abstains a broken-plural row for a weak-radical reason but plural_gate disagrees
+        (stubbed to emit), the cross-consumer check must fail the bank."""
+        ctx = _ctx()
+        ctx.plural_gate = lambda *a, **kw: {"decision": "emit", "defeater": None, "detail": "stub", "gates": []}
+        failures, _m = _run(_DTC, ctx=ctx)
+        self.assertTrue(any("dtc-bpl-adv-04" in f and "plural_gate_agreement" in f for f in failures),
+                        failures[:5])
+
+    def test_radical_arity_row_reproduces_the_recorded_false_pass_under_the_unfixed_consumer(self):
+        """Red-first reproduction: calling the OLD (pre-G1) mu_participle branch logic against this row's own
+        input must reproduce the recorded candidate_pending false pass, so the fixed behaviour asserted above is
+        provably a repair and not a fixture that was always green."""
+        row = next(r for r in _rows(_DTC) if r["id"] == "dtc-der-abs-02")
+        letters, radicals = row["letters"], row["root_evidence"]["radicals"]
+        # the exact pre-G1 condition (tools/curriculum_unit_consumer.py:analyze_derivative before this train):
+        # `letters[0] == "م" and len(letters) >= 4 and letters[1:] == radicals`
+        self.assertTrue(letters[0] == "م" and len(letters) >= 4 and letters[1:] == radicals,
+                        "dtc-der-abs-02 must structurally match the OLD unguarded mu_participle branch")
+
+    def test_weak_realization_rows_reproduce_the_recorded_false_pass_under_the_v1_packs(self):
+        """Red-first reproduction: the قوال/قويل/مقاول weak-realization rows must still reproduce
+        candidate_pending under each pack's UNREPAIRED unit-v1.json (kept committed for exactly this proof)."""
+        from tools import curriculum_unit_consumer as CUC
+        cases = (("dtc-qad-adv-04", "inc-quality-adjective-templates", "unit-v1.json"),
+                ("dtc-int-adv-03", "inc-intensive-agent-templates", "unit-v1.json"))
+        for row_id, increment, unit_file in cases:
+            row = next(r for r in _rows(_DTC) if r["id"] == row_id)
+            unit, _fx = CUC.load(increment, unit_file)
+            proj = {k: row[k] for k in R._DTC_CONSUMER_INPUT_FIELDS if k in row}
+            rec = CUC.analyze_derivative(proj, unit)
+            if increment == "inc-quality-adjective-templates":
+                # قوال is ALSO shared_quality_intensive in the qad pack, so the G1 consumer-level shared_ check
+                # alone already refuses it even under the unrepaired v1 pack -- abstain either way.
+                self.assertEqual(rec.get("decision"), "abstain", (row_id, rec))
+            else:
+                self.assertEqual(rec, {"decision": "candidate_pending", "authority": "none_fixture_harness",
+                                       "class": "intensive_agent", "template": "faaal"}, (row_id, rec))
+
+
+# ---------------------------------------------------------------------------
 # weak-root-and-voice — entry/paradigm-level weak-root and voice decision behaviour, decided through the REAL
 # tools/rm40_gate_stack.py:slot_gate (RM-40's own weak-root gate) and tools/fusha_paradigm_generate.py:generate_verb
 # (the REAL melody/template generator), layered with sarf/rules/weak-root-gates.json data this adapter reads
