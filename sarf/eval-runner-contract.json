@@ -765,7 +765,7 @@
       "disposition": "implemented_and_consumed",
       "enforced_properties": [
         "every gate==plural_lexeme_link/consumer==gate row is decided by the REAL tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate, called directly with the row's own root/template_id/attested_pair/lexeme_id/plural_of_plural_base_attested evidence",
-        "every gate==plural_lexeme_link/consumer==projector row is decided by the REAL tools/fact_projectors.py:project_noun_plural_lexeme_link, which itself surface-matches the canonical loc-surface authority, applies NFC byte-exact attested-pair matching (norm_strict used only as recall, defeated by the SAME homograph/harakah checks a documented-form lookup uses), and then calls the SAME gate internally for every row that survives those pre-checks",
+        "every gate==plural_lexeme_link/consumer==projector row is decided by the REAL tools/fact_projectors.py:project_noun_plural_lexeme_link, which itself surface-matches the canonical loc-surface authority, requires literal byte-exact attested-pair matching (NFC and norm_strict are recall-only and normalization-only matches abstain), and then calls the SAME gate internally for every row that survives those pre-checks",
         "every gate==lexical_gender row is decided by the REAL tools/fact_projectors.py:project_noun_lexical_gender",
         "a rare or second_order template licenses a candidate ONLY for the exact (lexeme_id, root) pair on its own closed licensed_lexemes list -- never a caller boolean, never the lexeme_id or root alone (hostile no-kwarg/wrong-root/wrong-lexeme rows all abstain rare_plural_unlicensed)",
         "plural_of_plural_base_attested defaults False and fails closed when omitted",
