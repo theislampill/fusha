@@ -20,6 +20,7 @@ _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _REPO)
 
 from tools import normalize_ar as N  # noqa: E402
+from tools import fusha_standalone_parse as parser  # noqa: E402
 
 SCHEMA = "fusha/standalone-parse@1"
 
@@ -56,6 +57,11 @@ ALLOWED_QG_CLASSES = {
     "qg-exception",
     "qg-case",
     "qg-relation",
+    # Train E follow-up defect A: honest class-neutral replacements emitted by
+    # _scope_collision_segments when a class-presupposing affix/clitic role
+    # degrades under a stem_identity collision (see docstring there).
+    "qg-affix-undetermined",
+    "qg-clitic-undetermined",
 }
 
 LEAK_RE = re.compile(
@@ -108,11 +114,13 @@ def _segments_concat(token, key):
 # (tools/fusha_standalone_parse.py `_scope_collision_segments`); this asserts
 # the restriction directly instead of trusting that surviving segments merely
 # concatenating back to an ordered subset of the surface proves it.
-CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES = {
-    "stem", "verb_stem", "adjective_stem",
-    "object_pronoun", "subject_pronoun",
-    "verb_prefix", "future_particle", "derivative_prefix", "plural_suffix",
-}
+#
+# Train E follow-up defect B: this used to be a hand-typed duplicate of the
+# parser's STEM_QG_ROLES | PRONOUN_CLITIC_QG_ROLES | CLASS_PRESUPPOSING_QG_ROLES
+# union, which could silently drift from production. It is now a direct
+# reference to the parser's own authoritative object -- not a copy -- so a
+# future production change to that union propagates here automatically.
+CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES = parser.CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES
 
 
 def _retained_segments_ordered_subset(qg, surface):
@@ -186,6 +194,21 @@ def validate_record(rec):
                             "or reclassified, not merely form an ordered subset of the surface"
                             % (surf, sorted(leaked_roles))
                         )
+                    # Train E follow-up defect A: a role can be honestly
+                    # renamed (e.g. verb_prefix -> affix_undetermined) while
+                    # its `class` still asserts the same disputed host
+                    # category (qg-verb-prefix, qg-derivative-prefix,
+                    # qg-plural-suffix, qg-object-pronoun, qg-subject-pronoun).
+                    # Check `class` independently of `role` so a rename that
+                    # forgets to also neutralize `class` is still caught.
+                    leaked_classes = {seg.get("class") for seg in qg} & parser.CLASS_PRESUPPOSING_QG_CLASSES
+                    if leaked_classes:
+                        errors.append(
+                            "%s: stem_identity collision retained class-presupposing class(es) %s "
+                            "on a segment; renaming the role is not enough -- the class must also "
+                            "be withheld or replaced with a class-neutral value"
+                            % (surf, sorted(leaked_classes))
+                        )
             elif qg:
                 errors.append("%s: collision withholding outside stem_identity scope must project no qg_segments" % surf)
             hover_gloss = (tok.get("hover_preview") or {}).get("token_contribution_gloss")
@@ -225,8 +248,6 @@ def validate_record(rec):
 
 
 def _self_test():
-    from tools import fusha_standalone_parse as parser  # noqa: E402
-
     failures = []
     for text in FIXTURES:
         rec = parser.parse_text(text)
@@ -540,12 +561,124 @@ def _self_test():
         "سيفعل",
         [
             {"role": "affix_undetermined", "surface": "س", "class": "qg-particle", "gloss_contribution": None},
-            {"role": "affix_undetermined", "surface": "ي", "class": "qg-verb-prefix", "gloss_contribution": None},
+            {"role": "affix_undetermined", "surface": "ي", "class": parser.NEUTRAL_AFFIX_QG_CLASS, "gloss_contribution": None},
         ],
         {"kind": "pos_trichotomy_conflict", "scope": "stem_identity"},
     )
     if validate_record(reclassified_ok):
         failures.append("gap3: honestly reclassified affix_undetermined segments must not be flagged")
+
+    # Train E follow-up defect A (red-first): a role degraded to
+    # affix_undetermined/clitic_undetermined that still carries its ORIGINAL
+    # class-presupposing class (qg-verb-prefix, qg-derivative-prefix,
+    # qg-plural-suffix, qg-object-pronoun, qg-subject-pronoun) still asserts
+    # the disputed host category through `class` alone; validate_record must
+    # flag this even though `role` was honestly renamed.
+    residual_class_cases = [
+        ("qg-verb-prefix", "affix_undetermined"),
+        ("qg-derivative-prefix", "affix_undetermined"),
+        ("qg-plural-suffix", "affix_undetermined"),
+        ("qg-object-pronoun", "clitic_undetermined"),
+        ("qg-subject-pronoun", "clitic_undetermined"),
+    ]
+    for leaked_class, degraded_role in residual_class_cases:
+        residual_class_leak = _leak_record(
+            "سيفعل",
+            [{"role": degraded_role, "surface": "س", "class": leaked_class, "gloss_contribution": None}],
+            {"kind": "pos_trichotomy_conflict", "scope": "stem_identity"},
+        )
+        if not validate_record(residual_class_leak):
+            failures.append(
+                "defectA: a stem_identity collision segment renamed to role=%r but still "
+                "carrying class=%r must be flagged (class alone asserts the disputed host "
+                "category)" % (degraded_role, leaked_class)
+            )
+
+    # Train E follow-up defect A production check (red-first): the parser's
+    # own _scope_collision_segments must neutralize `class`, not just `role`,
+    # for every CLASS_PRESUPPOSING_QG_ROLES/PRONOUN_CLITIC_QG_ROLES segment.
+    defect_a_in = [
+        {"role": "verb_prefix", "surface": "ي", "class": "qg-verb-prefix", "label": "PFX", "gloss_contribution": "imperfect marker"},
+        {"role": "derivative_prefix", "surface": "مست", "class": "qg-derivative-prefix", "label": "DER", "gloss_contribution": "Form X seeker/doer shape"},
+        {"role": "plural_suffix", "surface": "ين", "class": "qg-plural-suffix", "label": "PL", "gloss_contribution": "masculine plural/oblique ending"},
+        {"role": "object_pronoun", "surface": "هم", "class": "qg-object-pronoun", "label": "OBJ", "gloss_contribution": "them"},
+        {"role": "subject_pronoun", "surface": "نا", "class": "qg-subject-pronoun", "label": "SUBJ", "gloss_contribution": "we"},
+    ]
+    defect_a_out = parser._scope_collision_segments(defect_a_in)
+    for seg in defect_a_out:
+        if seg.get("class") in parser.CLASS_PRESUPPOSING_QG_CLASSES:
+            failures.append(
+                "defectA production: _scope_collision_segments left a class-presupposing "
+                "class %r on role %r (surface %r); class must also be withheld/reclassified"
+                % (seg.get("class"), seg.get("role"), seg.get("surface"))
+            )
+
+    # Train E follow-up defect B (red-first): validate_fusha_standalone_parse.py
+    # must not hand-copy the production role union; it must be the SAME object
+    # production owns, so any future production change propagates automatically.
+    if CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES is not parser.CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES:
+        failures.append(
+            "defectB: validator's CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES must be the same "
+            "object as the parser's authoritative union, not a hand-copied duplicate"
+        )
+
+    # Train E follow-up defect B inventory guard (red-first): every role that
+    # the splitter/pattern-engine paths can actually emit into qg_segments
+    # (collected empirically by running production fixtures) must be
+    # classified as withheld, degraded, or explicitly class-neutral. An
+    # unclassified role must fail loudly rather than silently pass through.
+    known_roles = (
+        parser.CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES
+        | parser.CLASS_NEUTRAL_QG_ROLES
+        | {"affix_undetermined", "clitic_undetermined"}
+    )
+    observed_roles = set()
+    observed_classes = set()
+    inventory_fixtures = list(FIXTURES) + ["من", "بعض"]
+    for text in inventory_fixtures:
+        for db in ("smoke", "largelexicon"):
+            rec = parser.parse_text(text, db=db)
+            for tok in rec.get("tokens") or []:
+                for seg in tok.get("qg_segments") or []:
+                    if seg.get("role") is not None:
+                        observed_roles.add(seg.get("role"))
+                    if seg.get("class") is not None:
+                        observed_classes.add(seg.get("class"))
+    unclassified_roles = observed_roles - known_roles
+    if unclassified_roles:
+        failures.append(
+            "defectB inventory: production emitted role(s) %s not classified as withheld, "
+            "degraded, or explicitly class-neutral; do not silently accept unknown roles"
+            % sorted(unclassified_roles)
+        )
+    unallowed_classes = observed_classes - ALLOWED_QG_CLASSES
+    if unallowed_classes:
+        failures.append(
+            "defectB inventory: production emitted class(es) %s missing from the validator's "
+            "ALLOWED_QG_CLASSES" % sorted(unallowed_classes)
+        )
+    try:
+        from tools import fusha_mode_a as _mode_a
+        producer_unallowed = observed_classes - _mode_a.ALLOWED_QG_CLASSES
+        if producer_unallowed:
+            failures.append(
+                "defectB inventory: production emitted class(es) %s missing from the producer's "
+                "(fusha_mode_a) ALLOWED_QG_CLASSES; project_largelexicon_qamus_hover_candidates.py "
+                "would misclassify these rows" % sorted(producer_unallowed)
+            )
+    except ImportError:
+        failures.append("defectB inventory: could not import tools.fusha_mode_a to cross-check producer inventory")
+
+    # Train E follow-up defect B fail-closed production check (red-first): an
+    # untriaged role reaching _scope_collision_segments must be withheld, not
+    # silently passed through assuming it is class-neutral.
+    unknown_role_seg = [{"role": "totally_untriaged_future_role", "surface": "x", "class": "qg-noun"}]
+    unknown_role_out = parser._scope_collision_segments(unknown_role_seg)
+    if any(seg.get("surface") == "x" for seg in unknown_role_out):
+        failures.append(
+            "defectB production: _scope_collision_segments passed through an untriaged role "
+            "unchanged instead of withholding it (fail-closed default)"
+        )
 
     for f in failures:
         print("FAIL " + f)

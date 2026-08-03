@@ -59,6 +59,44 @@ PRONOUN_CLITIC_QG_ROLES = {"object_pronoun", "subject_pronoun"}
 # but the role/label/gloss that would presuppose the disputed class degrades
 # to undetermined, exactly like the pronoun-role discriminator above.
 CLASS_PRESUPPOSING_QG_ROLES = {"verb_prefix", "future_particle", "derivative_prefix", "plural_suffix"}
+# Train E follow-up defect A: the `class` values these degraded roles arrive
+# with also assert the disputed host category on their own -- "qg-verb-prefix"
+# names a VERB prefix, "qg-derivative-prefix"/"qg-plural-suffix" name
+# derivational/number morphology, and "qg-object-pronoun"/"qg-subject-pronoun"
+# name the pronoun as an argument OF A VERB. Renaming only `role` (leaving
+# `class` untouched) still leaks the disputed identity. `qg-particle`
+# (future_particle's class) is excluded: "س" is a particle regardless of
+# which lexicon entry the disputed STEM resolves to, so that class asserts
+# nothing about the disputed host.
+CLASS_PRESUPPOSING_QG_CLASSES = {
+    "qg-verb-prefix", "qg-derivative-prefix", "qg-plural-suffix",
+    "qg-object-pronoun", "qg-subject-pronoun",
+}
+# Honest, class-neutral replacements: they name the segment as an affix or a
+# clitic whose host is undetermined, without asserting verb/noun/adjective.
+NEUTRAL_AFFIX_QG_CLASS = "qg-affix-undetermined"
+NEUTRAL_CLITIC_QG_CLASS = "qg-clitic-undetermined"
+# Roles that are independently licensed -- their class never presupposes the
+# disputed stem_identity host category regardless of which lexicon entry
+# wins (a preposition, conjunction, article, or a pinned function-particle
+# cluster piece means the same thing either way) -- so they survive
+# stem_identity scoping unchanged. This, together with STEM_QG_ROLES,
+# PRONOUN_CLITIC_QG_ROLES, and CLASS_PRESUPPOSING_QG_ROLES above, is the
+# COMPLETE triage of every role the clitic splitter / pattern engine can
+# currently place into `qg_segments`. A role that lands in none of these
+# buckets is untriaged, not neutral, and `_scope_collision_segments` below
+# withholds it rather than assuming it is safe.
+CLASS_NEUTRAL_QG_ROLES = {
+    "prefix_conjunction", "prefix_resumption_fa", "prefix_preposition",
+    "definite_article", "particle_inna", "ma_particle",
+}
+# Train E follow-up defect B: the ONE authoritative union of roles whose
+# role/label/gloss/class presupposes the disputed stem_identity host
+# category. `tools/validate_fusha_standalone_parse.py` imports this directly
+# instead of hand-copying it, so the two can never silently drift apart.
+CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES = (
+    STEM_QG_ROLES | PRONOUN_CLITIC_QG_ROLES | CLASS_PRESUPPOSING_QG_ROLES
+)
 
 
 def _selected(seg_cands, morph_cands):
@@ -223,9 +261,22 @@ def _scope_collision_segments(qg_segments):
     but their role/label/gloss assert a specific verb- or noun-shaped analysis
     of the disputed stem, so they degrade to `affix_undetermined` rather than
     keeping a label that presupposes the class the collision leaves open.
+
+    Train E follow-up defect A: renaming `role` alone is not enough. `class`
+    values like `qg-verb-prefix`/`qg-derivative-prefix`/`qg-plural-suffix`/
+    `qg-object-pronoun`/`qg-subject-pronoun` (see `CLASS_PRESUPPOSING_QG_CLASSES`)
+    independently assert the same disputed host category, so both degraded
+    branches below also overwrite `class` with the honest, class-neutral
+    `NEUTRAL_AFFIX_QG_CLASS`/`NEUTRAL_CLITIC_QG_CLASS`.
+
     Genuinely class-neutral material (an independently licensed preposition,
-    conjunction, article, or the pronoun/affix undetermined roles themselves)
-    is preserved unchanged.
+    conjunction, article, or pinned function-particle-cluster piece --
+    `CLASS_NEUTRAL_QG_ROLES`) is preserved unchanged. Train E follow-up
+    defect B: a role that is in none of `STEM_QG_ROLES`,
+    `PRONOUN_CLITIC_QG_ROLES`, `CLASS_PRESUPPOSING_QG_ROLES`, or
+    `CLASS_NEUTRAL_QG_ROLES` is untriaged, not neutral -- it is withheld
+    (dropped) rather than assumed safe to pass through, matching this
+    module's "blank beats wrong" posture.
     """
     out = []
     for seg in qg_segments:
@@ -237,15 +288,19 @@ def _scope_collision_segments(qg_segments):
             seg["role"] = "clitic_undetermined"
             seg["label"] = "UNDET"
             seg["gloss_contribution"] = None
+            seg["class"] = NEUTRAL_CLITIC_QG_CLASS
             out.append(seg)
         elif role in CLASS_PRESUPPOSING_QG_ROLES:
             seg = dict(seg)
             seg["role"] = "affix_undetermined"
             seg["label"] = "UNDET"
             seg["gloss_contribution"] = None
+            seg["class"] = NEUTRAL_AFFIX_QG_CLASS
             out.append(seg)
-        else:
+        elif role in CLASS_NEUTRAL_QG_ROLES:
             out.append(dict(seg))
+        # else: an untriaged role is withheld outright (fail-closed) rather
+        # than assumed class-neutral (Train E follow-up defect B).
     return out
 
 

@@ -217,6 +217,54 @@ Two rules constrain how the above is computed, not what class fires:
   themselves — is preserved unchanged; only material whose role or gloss
   presupposes the disputed trichotomy class degrades.
 
+> **Train E follow-up repair, second pass.** A further targeted review of the
+> gap 2/gap 3 repair found two more IMPORTANT defects, both confirmed against
+> real `qamus/examples/largelexicon/hover-candidates.sample.jsonl` rows (six
+> of the sample's eight `stem_identity` collisions were affected), not just
+> synthetic fixtures. **Defect A (residual class assertion).**
+> `_scope_collision_segments` renamed `role` (to `affix_undetermined` or
+> `clitic_undetermined`) but left `class` untouched, so
+> `qg-verb-prefix`/`qg-derivative-prefix`/`qg-plural-suffix` (from the gap 2
+> affix roles) and `qg-object-pronoun`/`qg-subject-pronoun` (from the
+> pronoun-clitic roles) kept asserting the disputed verb/noun host category
+> by class alone. Both degraded branches now also overwrite `class` with an
+> honest, class-neutral replacement — `qg-affix-undetermined` or
+> `qg-clitic-undetermined` (`CLASS_PRESUPPOSING_QG_CLASSES`,
+> `NEUTRAL_AFFIX_QG_CLASS`, `NEUTRAL_CLITIC_QG_CLASS` in
+> `tools/fusha_standalone_parse.py`). `future_particle`'s class (`qg-particle`)
+> was already honest — a particle is a particle regardless of which entry the
+> disputed stem resolves to — so it is unchanged. `validate_record` now checks
+> retained segment `class` against `CLASS_PRESUPPOSING_QG_CLASSES`
+> independently of the `role` check, so a future rename that forgets to also
+> neutralize `class` still fails closed. The two new classes were added to
+> `tools/validate_fusha_standalone_parse.py::ALLOWED_QG_CLASSES` and to
+> `tools/fusha_mode_a.py::ALLOWED_QG_CLASSES` (the producer contract
+> `tools/project_largelexicon_qamus_hover_candidates.py` and
+> `tools/validate_largelexicon_qg_projection.py` both import), and the sample
+> was regenerated through `project_largelexicon_qamus_hover_candidates.py`
+> (six rows changed: `qg-object-pronoun` → `qg-clitic-undetermined`, same
+> surfaces/spans/ordering). **Defect B (vocabulary drift).**
+> `tools/validate_fusha_standalone_parse.py` hand-typed its own copy of the
+> parser's withheld/degraded role union
+> (`CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES`), which could silently drift from
+> production. The parser now owns this union plus a `CLASS_NEUTRAL_QG_ROLES`
+> set naming every independently-licensed role
+> (`prefix_conjunction`/`prefix_resumption_fa`/`prefix_preposition`/
+> `definite_article`/`particle_inna`/`ma_particle` — the complete triage of
+> every role the clitic splitter and pattern engine currently place into
+> `qg_segments`), and the validator imports
+> `CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES` directly (same object, not a copy).
+> `_scope_collision_segments`'s catch-all is fail-closed: a role that is in
+> none of the withheld/degraded/class-neutral sets is now WITHHELD rather
+> than assumed safe and passed through — self-tested with a synthetic
+> untriaged role. The validator's self-test also runs every fixture surface
+> through the real parser (both `db=smoke` and `db=largelexicon`) and asserts
+> every observed role and `class` is accounted for in the parser's own sets
+> and in both `ALLOWED_QG_CLASSES` copies (validator and producer), so a
+> future production role/class that nobody triaged fails the self-test
+> instead of silently validating. Neither defect required touching
+> `fusha_pattern_engine.py` or `fusha_clitic_splitter.py`.
+
 The seven implemented collision/provenance classes (`source_requires_nahw_function`,
 `compound_headword_bundle`, `root_identity_unresolved`, `pos_trichotomy_conflict`,
 `root_conflict`, `scoped_collision`, and the legacy `unsafe_bare_match` guard)
@@ -264,7 +312,12 @@ pass the ordered-subset check as long as the leftover pieces happened to be
 in the right order. `validate_record` now additionally checks every
 `scope == "stem_identity"` token's `qg` roles against
 `CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES` (the same role set gap 2 withholds
-or degrades) and flags any that leaked through undegraded.
+or degrades) and flags any that leaked through undegraded. `validate_record`
+also checks every retained segment's `class` against
+`CLASS_PRESUPPOSING_QG_CLASSES` independently of `role` (Train E follow-up
+defect A above): a role can be honestly renamed to `affix_undetermined`/
+`clitic_undetermined` while its `class` still asserts the disputed host
+category, and that leak is caught even when the role check alone would pass.
 
 Ordinary, non-collision tokens keep the original unweakened
 full-concatenation check. Before this repair, the validator applied the

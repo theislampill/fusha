@@ -36,6 +36,14 @@ FRESHNESS_KEYS = {
 
 ALLOWED_QG_CLASSES = {
     "qg-adjective",
+    # Train E follow-up defect A: fusha_standalone_parse._scope_collision_segments
+    # now emits these two honest, class-neutral replacements for a
+    # stem_identity-scoped affix/clitic whose original class asserted the
+    # disputed host category; project_largelexicon_qamus_hover_candidates.py
+    # (a real consumer of this contract) must accept them, not flag them as
+    # unsupported qg classes.
+    "qg-affix-undetermined",
+    "qg-clitic-undetermined",
     "qg-article",
     "qg-case",
     "qg-conjunction",
