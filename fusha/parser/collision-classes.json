@@ -1,0 +1,142 @@
+{
+  "classes": [
+    {
+      "canonical_unit_ids": [
+        "cu-rasm-disambiguation-pipeline"
+      ],
+      "class_id": "source_requires_nahw_function",
+      "filter_order": 1,
+      "gate_effect": {
+        "cap": "pending_context"
+      },
+      "route": [
+        "nahw_function_review"
+      ],
+      "rule_id": "R1",
+      "trigger_keys": [
+        "risk_flags"
+      ]
+    },
+    {
+      "canonical_unit_ids": [],
+      "class_id": "compound_headword_bundle",
+      "filter_order": 2,
+      "gate_effect": {
+        "cap": null
+      },
+      "route": [],
+      "rule_id": "R2",
+      "trigger_keys": [
+        "lemma"
+      ]
+    },
+    {
+      "canonical_unit_ids": [
+        "cu-quadriliteral-templates"
+      ],
+      "class_id": "root_identity_unresolved",
+      "filter_order": 1,
+      "gate_effect": {
+        "cap": null
+      },
+      "route": [],
+      "rule_id": "R3",
+      "trigger_keys": [
+        "root"
+      ]
+    },
+    {
+      "canonical_unit_ids": [
+        "cu-pos-trichotomy-assignment",
+        "cu-mim-initial-noun-discriminator",
+        "cu-elative-template-discriminator",
+        "cu-form-i-participle-voice-discriminator",
+        "cu-broken-plural-template-inventory",
+        "cu-derived-form-root-licensing"
+      ],
+      "class_id": "pos_trichotomy_conflict",
+      "filter_order": 3,
+      "gate_effect": {
+        "cap": "lexical_collision_requires_context"
+      },
+      "route": [
+        "sarf_collision_review",
+        "nahw_function_review"
+      ],
+      "rule_id": "R4",
+      "trigger_keys": [
+        "collision.competitors"
+      ]
+    },
+    {
+      "canonical_unit_ids": [
+        "cu-derived-form-root-licensing"
+      ],
+      "class_id": "root_conflict",
+      "filter_order": 3,
+      "gate_effect": {
+        "cap": "lexical_collision_requires_context"
+      },
+      "route": [
+        "sarf_collision_review",
+        "nahw_function_review"
+      ],
+      "rule_id": "R5",
+      "trigger_keys": [
+        "collision.competitors"
+      ]
+    },
+    {
+      "canonical_unit_ids": [
+        "cu-nisba-attribution-suffix",
+        "cu-clitic-pronoun-role-discriminator"
+      ],
+      "class_id": "scoped_collision",
+      "filter_order": 3,
+      "gate_effect": {
+        "cap": null
+      },
+      "route": [],
+      "rule_id": "R7",
+      "trigger_keys": [
+        "collision.kind"
+      ]
+    },
+    {
+      "canonical_unit_ids": [
+        "cu-frozen-formula-units"
+      ],
+      "class_id": "unsafe_bare_match",
+      "filter_order": 4,
+      "gate_effect": {
+        "cap": "lexical_collision_requires_context"
+      },
+      "route": [
+        "sarf",
+        "nahw"
+      ],
+      "rule_id": "legacy",
+      "trigger_keys": [
+        "match_basis",
+        "high_risk_bare_match_surfaces"
+      ]
+    }
+  ],
+  "generator": null,
+  "high_risk_bare_match_surfaces": [
+    "إله",
+    "اله"
+  ],
+  "not_a_registered_class": {
+    "reason": "R6 is a MUST_NOT constraint on how R4/R5 compute competitors (selected stem only, never unioned across rejected segmentation hypotheses); it has no independent trigger, gate effect, or route of its own, so it is not one of the seven registered classes.",
+    "rule_id": "R6"
+  },
+  "projection_reconciliation": {
+    "canonical_unit_ids": [],
+    "consumer": "tools/project_largelexicon_qamus_hover_candidates.py",
+    "effect": "segment_surface=null, token_contribution=null, status=parser_packet, route=executor_parser_or_sarf_nahw_packet_ready when qg_segments is empty",
+    "rule_id": "R8",
+    "validator": "tools/validate_largelexicon_qg_projection.py"
+  },
+  "schema": "fusha/parser/collision-class-registry@1"
+}

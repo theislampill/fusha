@@ -25,6 +25,7 @@
     "parser_full_table_consumption",
     "local_cli_contract",
     "mode_a_worklist",
-    "skill_curriculum_backfill"
+    "skill_curriculum_backfill",
+    "parser_collision_abstention"
   ]
 }

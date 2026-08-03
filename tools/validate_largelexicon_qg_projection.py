@@ -28,8 +28,15 @@ def validate(path: Path = DEFAULT_SAMPLE) -> list[str]:
         statuses.add(row.get("status") or "")
         if row.get("live_mutation_allowed") is not False:
             errors.append(f"{label}: live_mutation_allowed must be false")
-        if row.get("segment_surface") != row.get("visible_surface"):
+        segment_surface = row.get("segment_surface")
+        segments = row.get("segments") or []
+        # R8: a withheld stem (collision, or a fully empty qg_segments row) is
+        # not required to reconstruct visible_surface; every OTHER row still
+        # must, so the concatenation invariant is not relaxed for them.
+        if segment_surface is not None and segment_surface != row.get("visible_surface"):
             errors.append(f"{label}: segment_surface does not equal visible_surface")
+        if not segments and row.get("token_contribution") is not None:
+            errors.append(f"{label}: token_contribution must be null when segments is empty")
         bad = set(row.get("qg_classes") or []) - ALLOWED_QG_CLASSES
         if bad:
             errors.append(f"{label}: unsupported qg classes {sorted(bad)}")

@@ -80,6 +80,9 @@ def _load_lexicon(path=LEXICON_PATH, db="smoke"):
                         "qamus_entry_id": row.get("entry_id"),
                         "source_status": row.get("source_status"),
                         "evidence_class": evidence_class,
+                        "entry_id": row.get("entry_id"),
+                        "risk_flags": list(row.get("risk_flags") or []),
+                        "no_root_reason": row.get("no_root_reason"),
                     }
                 )
     return rows
@@ -131,23 +134,40 @@ def _visible_haraka_conflict(surface, form):
 
 
 def _lexicon_match(surface, lexicon):
+    """Match surface against the lexicon and expose the full competitor set.
+
+    Competitors are entries whose form-set shares the query's norm_strict key;
+    this is scoped to the ONE surface passed in (a single selected stem, or a
+    single whole-token retry) and never unioned across other segmentation
+    hypotheses, so a rejected split can never manufacture a competitor.
+    """
     order = {"surface_exact_match": 0, "norm_strict_match": 1, "bare_match": 2}
     matches = []
-    strict_key_rows = set()
+    strict_key_rows = {}
     surface_key = N.norm_strict(surface)
     for row_index, row in enumerate(lexicon):
         forms = set(row.get("forms") or [])
         forms.add(row.get("lemma", ""))
         for f in sorted(forms):
             if f and N.norm_strict(f) == surface_key:
-                strict_key_rows.add(row_index)
+                strict_key_rows[row_index] = row
             basis = _match_basis(surface, f)
             if basis:
                 matches.append((order[basis], row_index, row, basis, f))
     if not matches:
-        return None, None
+        return None, None, None, []
     _basis_order, _row_index, selected, basis, matched_form = min(matches, key=lambda item: (item[0], item[1]))
     harakah_conflict = _visible_haraka_conflict(surface, matched_form)
+    competitors = []
+    seen = set()
+    for row_index in sorted(strict_key_rows):
+        r = strict_key_rows[row_index]
+        eid = r.get("entry_id")
+        dedupe_key = eid if eid is not None else ("_row", row_index)
+        if dedupe_key in seen:
+            continue
+        seen.add(dedupe_key)
+        competitors.append({"entry_id": eid, "pos": r.get("pos"), "root": r.get("root"), "lemma": r.get("lemma")})
     shared_key = len(strict_key_rows) > 1
     if harakah_conflict or shared_key:
         selected = dict(selected)
@@ -157,14 +177,15 @@ def _lexicon_match(surface, lexicon):
             "shared_key_lemma_count": len(strict_key_rows),
             "matched_form": matched_form,
         }
-    return selected, basis
+    return selected, basis, matched_form, competitors
 
 
 def _stem_segments(seg_candidate):
     return [s for s in seg_candidate.get("segments") or [] if s.get("role") == "stem"]
 
 
-def _candidate_from_row(row, seg_ref, score=6.0, evidence=None, extra=None, match_basis=None):
+def _candidate_from_row(row, seg_ref, score=6.0, evidence=None, extra=None, match_basis=None,
+                         matched_form=None, competitors=None):
     feats = dict(row.get("features") or {})
     if match_basis:
         feats["match_basis"] = match_basis
@@ -173,21 +194,51 @@ def _candidate_from_row(row, seg_ref, score=6.0, evidence=None, extra=None, matc
         feats["match_risk"] = match_risk["kind"]
         feats["harakah_conflict"] = match_risk["harakah_conflict"]
         feats["shared_key_lemma_count"] = match_risk["shared_key_lemma_count"]
+    risk_flags = row.get("risk_flags") or []
+    if risk_flags:
+        feats["source_risk_flags"] = list(risk_flags)
+
+    lemma = row.get("lemma")
+    root = row.get("root")
+    gloss_hint = row.get("gloss_hint")
+    identity_withheld = False
+    # R2 compound_headword_bundle: a slash-joined lemma names more than one
+    # headword; project the matched form, not the bundle, and drop its gloss.
+    if lemma and "/" in lemma:
+        feats["entry_identity_status"] = "unresolved_bundle_member"
+        lemma = matched_form or lemma
+        identity_withheld = True
+    # R3 root_identity_unresolved: a slash-joined root is not one radical
+    # sequence; surface it as an unresolved set (root=null), never pick a member.
+    if root and "/" in root:
+        feats["root_identity_status"] = "unresolved_root_set"
+        root = None
+        identity_withheld = True
+    if identity_withheld:
+        gloss_hint = None
+
     if extra:
         feats.update(extra)
-    return {
-        "lemma": row.get("lemma"),
-        "root": row.get("root"),
+
+    cand = {
+        "lemma": lemma,
+        "root": root,
         "pos": row.get("pos"),
         "pattern": row.get("pattern"),
         "features": feats,
-        "gloss_hint": row.get("gloss_hint"),
+        "gloss_hint": gloss_hint,
         "evidence_class": "homograph_risk" if match_risk else (evidence or row.get("evidence_class") or "seed_lexicon"),
         "confidence": "medium",
         "score": score,
         "rank": 0,
         "segment_candidate_ref": seg_ref,
     }
+    if competitors and len(competitors) > 1:
+        cand["collision"] = {
+            "competing_entry_ids": [c.get("entry_id") for c in competitors if c.get("entry_id")],
+            "competitors": competitors,
+        }
+    return cand
 
 
 def _pinned_candidate(surface, seg_ref, extra=None):
@@ -292,12 +343,13 @@ def build_morphology(surface, segment_candidates, lexicon=None, db="smoke"):
         if f:
             cands.append(f)
             added = True
-        row, basis = _lexicon_match(stem_surface, lexicon)
+        row, basis, matched_form, competitors = _lexicon_match(stem_surface, lexicon)
         if row is None and whole_token_candidate:
-            row, basis = _lexicon_match(surface, lexicon)
+            row, basis, matched_form, competitors = _lexicon_match(surface, lexicon)
         extra = _suffix_extra(stem_surface)
         if row:
-            cands.append(_candidate_from_row(row, i, score=_row_score(row, basis), extra=extra, match_basis=basis))
+            cands.append(_candidate_from_row(row, i, score=_row_score(row, basis), extra=extra, match_basis=basis,
+                                              matched_form=matched_form, competitors=competitors))
             added = True
         pinned = _pinned_candidate(stem_surface, i, extra=extra)
         if pinned:
