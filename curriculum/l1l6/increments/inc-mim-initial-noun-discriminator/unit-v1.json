@@ -74,6 +74,21 @@
     {
       "discriminators": {
         "prefix_vowel": [
+          "fatha"
+        ],
+        "source_form_class": [
+          "bare_triliteral"
+        ],
+        "vocalization": [
+          "present"
+        ]
+      },
+      "id": "masdar_mimi",
+      "name": "مصدر ميمي (مـ-initial verbal noun) on a bare triliteral source"
+    },
+    {
+      "discriminators": {
+        "prefix_vowel": [
           "kasra"
         ],
         "source_form_class": [
@@ -108,6 +123,10 @@
     {
       "id": "mim-r5",
       "text": "a place-or-time reading presupposes a bare triliteral source; the same prefix vowel over a derived source is outside the table's regime"
+    },
+    {
+      "id": "mim-r6",
+      "text": "the مصدر ميمي (مـ-initial verbal noun) is letter-identical to the place-or-time noun over a bare triliteral source with the SAME fatha prefix vowel and vocalization; the inventory previously omitted this rival, so a bare-triliteral fatha/present row resolved cleanly to place_or_time_noun alone -- both readings are now preserved as alternatives and the table votes for neither (repair of the recorded 2026-08-03 single-resolution defect)"
     }
   ],
   "schema": "curriculum.l1l6_machine_unit.v1",

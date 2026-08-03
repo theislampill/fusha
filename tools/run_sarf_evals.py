@@ -1018,7 +1018,8 @@ _DTC_DECISIONS = ("candidate_pending", "abstain")
 _DTC_ABSTAIN_REASONS = (
     "no_root_evidence", "surface_letter_mismatch", "no_template", "ambiguous_template",
     "penult_vowel_unknown", "penult_vowel_evidence_unbound", "penult_mark_not_in_surface",
-    "penult_mark_mismatch", "weak_declaration_unbound", "weak_declaration_contradicts_root",
+    "penult_mark_mismatch", "initial_mim_mark_not_in_surface", "initial_mim_vowel_unlicensed",
+    "weak_declaration_unbound", "weak_declaration_contradicts_root",
     "weak_realization_unlicensed", "radical_arity_unsupported", "shared_row_class_undecided",
 )
 # Every key `analyze_derivative` can ever emit, across every branch: root-sharing/shape/citation-form must never
@@ -1090,6 +1091,13 @@ def adapter_derivational_template_carve(rows, spec, ctx, root):
         rec = ctx.derivative_decide(proj, pack)
         decided += 1
         props.hit(rid, _DER, "decision_behaviorally_computed", "no_semantic_identity_leak", "never_certified")
+        if row.get("id") in ("dtc-der-pos-04", "dtc-der-adv-02", "dtc-der-adv-03", "dtc-der-adv-04",
+                             "dtc-der-abs-05", "dtc-der-abs-06"):
+            # der-r9: the mafal_place/mu_participle collision resolved by the WRITTEN initial مـ
+            # vowel rather than the penult vowel alone (the reproduced active_participle/
+            # passive_participle false positives on مجلس/منزل/مكتب, a genuine مُدَرِّس participle
+            # left undisturbed, and missing/unlicensed initial-مـ evidence abstaining).
+            props.hit(rid, _DER, "initial_mim_vowel_discriminates_collision")
         got_decision = rec.get("decision")
         if got_decision not in _DTC_DECISIONS:
             fails.append(_f(rid, "decision_behaviorally_computed",

@@ -408,11 +408,10 @@ _VOWEL_MARK_NAMES = {"َ": "fatha", "ِ": "kasra", "ُ": "damma"}
 _MARK_RE = None
 
 
-def _penult_surface_mark(surface):
-    """The short-vowel name actually WRITTEN on the penult base letter of
-    surface, or None when the surface carries no vowel mark there. This is
-    the only admissible source for a claimed penult surface mark: an
-    unpointed surface can never evidence a vowel (Sol fix-request 1)."""
+def _surface_mark_groups(surface):
+    """(base_letter, [attached marks]) per display cluster of surface -- the shared
+    grouping both `_penult_surface_mark` and `_initial_surface_mark` read from, so the
+    two never disagree on what a base letter or an attached mark is."""
     global _MARK_RE
     import re as _re
     if _MARK_RE is None:
@@ -424,12 +423,37 @@ def _penult_surface_mark(surface):
                 groups[-1][1].append(ch)
         else:
             groups.append((ch, []))
-    if len(groups) < 2:
+    return groups
+
+
+def _vowel_mark_at(groups, index):
+    if not groups or not (-len(groups) <= index < len(groups)):
         return None
-    for m in groups[-2][1]:
+    for m in groups[index][1]:
         if m in _VOWEL_MARK_NAMES:
             return _VOWEL_MARK_NAMES[m]
     return None
+
+
+def _penult_surface_mark(surface):
+    """The short-vowel name actually WRITTEN on the penult base letter of
+    surface, or None when the surface carries no vowel mark there. This is
+    the only admissible source for a claimed penult surface mark: an
+    unpointed surface can never evidence a vowel (Sol fix-request 1)."""
+    groups = _surface_mark_groups(surface)
+    if len(groups) < 2:
+        return None
+    return _vowel_mark_at(groups, -2)
+
+
+def _initial_surface_mark(surface):
+    """The short-vowel name actually WRITTEN on the FIRST base letter of surface, or
+    None when the surface carries no vowel mark there. This is the licensed
+    discriminator between the مَفْعَل place/time noun (fatha) and the مُـ participle
+    (damma) once both templates co-survive on the same literal-radical letters (Sol
+    repair: the penult vowel alone silently dropped the co-surviving mafal_place
+    template and decided the collision from the wrong evidence)."""
+    return _vowel_mark_at(_surface_mark_groups(surface), 0)
 
 
 def _match_template(shape, letters, radicals, subs):
@@ -611,6 +635,30 @@ def analyze_derivative(inp, unit):
             if written != pv:
                 return {"decision": "abstain",
                         "reason": "penult_mark_mismatch"}
+            if "mafal_place" in ids:
+                # مَفْعَل (place/time noun) and the derived-form مُـ participle are
+                # letter-identical whenever the radicals stand literally after the
+                # initial مـ; the WRITTEN vowel on THAT initial مـ -- damma for the
+                # participle, fatha for the place-noun -- is the licensed
+                # discriminator between the two co-surviving readings (Sol repair:
+                # the previous code decided the collision from the penult vowel
+                # alone and silently dropped the co-surviving mafal_place
+                # template; the penult vowel only ever decides voice WITHIN the
+                # participle reading, never WHICH reading this token is). Missing,
+                # unbound or mismatching written evidence abstains rather than
+                # guessing either reading.
+                initial_mark = _initial_surface_mark(inp["surface"])
+                if initial_mark is None:
+                    return {"decision": "abstain",
+                            "reason": "initial_mim_mark_not_in_surface"}
+                if initial_mark == "fatha":
+                    mafal_t = next(t for t, _u in survivors if t["id"] == "mafal_place")
+                    return {"decision": "candidate_pending",
+                            "authority": "none_fixture_harness",
+                            "class": mafal_t["class"], "template": mafal_t["id"]}
+                if initial_mark != "damma":
+                    return {"decision": "abstain",
+                            "reason": "initial_mim_vowel_unlicensed"}
         if unit.get("weak_realization_gate"):
             # voice over a weak root needs the declared realization licensed
             # for THIS template, not merely a bound declaration
@@ -656,6 +704,19 @@ def analyze_discriminator_table(inp, unit):
             if feats.get(key) not in allowed:
                 ok = False
                 break
+        if ok:
+            # a function's OWN discriminators may all match while a declared
+            # excluded_when companion value is ALSO present -- that function is
+            # disqualified regardless (Sol repair: ela-r4's "the two superlative
+            # constructions EXCLUDE the comparison complement" was stated but never
+            # executed, so a surface carrying a comparison complement AND
+            # definite-article evidence still resolved elative_comparative). This is
+            # a general per-function exclusion, not an elative-specific branch: any
+            # pack sharing this capability may declare it.
+            for key, excluded in (fn.get("excluded_when") or {}).items():
+                if feats.get(key) in excluded:
+                    ok = False
+                    break
         if ok:
             survivors.append(fn["id"])
     survivors.sort()
@@ -1070,6 +1131,93 @@ def self_test():
         failures.append("inc-broken-plural-template-inventory/unit-v2.json must abstain on مقاول "
                         "(weak-realization gate), got %r" % (_bpl_v2_rec,))
 
+    # 13. the mafal_place/mu_participle collision: the WRITTEN initial مـ vowel decides
+    # place-noun (fatha) vs participle (damma) BEFORE the penult vowel is ever consulted for
+    # voice; the reproduced false positives (مجلس/منزل falsely active_participle, مكتب falsely
+    # passive_participle) are refused against the UNCHANGED inc-derivatives/unit-v4.json pack.
+    def _collision(letters_s, surface, radicals_letters, penult_vowel):
+        return {"letters": list(letters_s), "surface": surface, "penult_vowel": penult_vowel,
+                "penult_vowel_evidence": "surface_mark",
+                "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list(radicals_letters)}}
+
+    _majlis = _collision("مجلس", "مَجْلِس", "جلس", "kasra")
+    _majlis_rec = analyze_derivative(_majlis, _der_unit)
+    if _majlis_rec != {"decision": "candidate_pending", "authority": "none_fixture_harness",
+                       "class": "place_time_noun", "template": "mafal_place"}:
+        failures.append("analyze_derivative: مجلس (fatha-initial place-noun, kasra penult) must "
+                        "resolve place_time_noun via mafal_place, not the penult-vowel-driven "
+                        "mu_participle false pass: got %r" % (_majlis_rec,))
+    _maktab = _collision("مكتب", "مَكْتَب", "كتب", "fatha")
+    _maktab_rec = analyze_derivative(_maktab, _der_unit)
+    if _maktab_rec.get("class") != "place_time_noun" or _maktab_rec.get("template") != "mafal_place":
+        failures.append("analyze_derivative: مكتب (fatha-initial place-noun, fatha penult) must "
+                        "resolve place_time_noun, not the recorded passive_participle false pass: "
+                        "got %r" % (_maktab_rec,))
+    _mudarris = _collision("مدرس", "مُدَرِّس", "درس", "kasra")
+    _mudarris_rec = analyze_derivative(_mudarris, _der_unit)
+    if _mudarris_rec != {"decision": "candidate_pending", "authority": "none_fixture_harness",
+                         "class": "active_participle", "template": "mu_participle"}:
+        failures.append("analyze_derivative: مُدَرِّس (genuinely damma-initial) must still resolve "
+                        "the mu_participle reading -- the initial-مـ discriminator must never "
+                        "disturb a genuine participle: got %r" % (_mudarris_rec,))
+    _no_initial_mark = _collision("مكتب", "مكْتَب", "كتب", "fatha")
+    if analyze_derivative(_no_initial_mark, _der_unit) != {"decision": "abstain",
+                                                           "reason": "initial_mim_mark_not_in_surface"}:
+        failures.append("analyze_derivative: a verified penult mark with NO mark at all on the "
+                        "initial مـ must abstain initial_mim_mark_not_in_surface, never guess "
+                        "either co-surviving reading")
+    _unlicensed_initial = _collision("مكتب", "مِكْتَب", "كتب", "fatha")
+    if analyze_derivative(_unlicensed_initial, _der_unit) != {"decision": "abstain",
+                                                              "reason": "initial_mim_vowel_unlicensed"}:
+        failures.append("analyze_derivative: an initial-مـ vowel that is neither damma nor fatha "
+                        "must abstain initial_mim_vowel_unlicensed")
+
+    # 14. masdar_mimi is a genuinely PACK-declared rival in inc-mim-initial-noun-discriminator: a
+    # bare-triliteral fatha/present feature set now preserves BOTH place_or_time_noun and
+    # masdar_mimi (never a vote), and removing masdar_mimi from the in-memory pack collapses the
+    # row back to a single survivor -- proving the collision is pack content, not hard-coded.
+    _mim_unit, _ = load("inc-mim-initial-noun-discriminator")
+    _mim_feats = {"features": {"prefix_vowel": "fatha", "source_form_class": "bare_triliteral",
+                               "vocalization": "present"}}
+    _mim_rec = analyze_discriminator_table(_mim_feats, _mim_unit)
+    if _mim_rec.get("reason") != "preserve_alternatives" \
+            or sorted(_mim_rec.get("alternatives") or []) != ["masdar_mimi", "place_or_time_noun"]:
+        failures.append("analyze_discriminator_table: masdar_mimi is not preserved as a rival "
+                        "alongside place_or_time_noun over a bare-triliteral fatha/present row: "
+                        "got %r" % (_mim_rec,))
+    _mim_unit_m = json.loads(json.dumps(_mim_unit))
+    _mim_unit_m["functions"] = [f_ for f_ in _mim_unit_m["functions"] if f_["id"] != "masdar_mimi"]
+    _mim_rec_m = analyze_discriminator_table(_mim_feats, _mim_unit_m)
+    if _mim_rec_m.get("decision") != "candidate_pending" or _mim_rec_m.get("function") != "place_or_time_noun":
+        failures.append("analyze_discriminator_table: removing masdar_mimi from the PACK did not "
+                        "collapse the row back to a clean place_or_time_noun resolution "
+                        "(masdar_mimi is not genuinely pack-declared)")
+
+    # 15. ela-r4 in the fail-closed direction: a comparison complement combined with
+    # definite-article superlative evidence must never resolve elative_comparative, via a
+    # PACK-declared excluded_when clause -- removing that clause from the in-memory pack must
+    # flip the decision back to the (contradicting) false pass, proving the exclusion is data,
+    # not a hard-coded elative special case.
+    _ela_unit, _ = load("inc-elative-template-discriminator")
+    _ela_feats = {"features": {"comparison_complement": "min_phrase_present",
+                               "definiteness_behaviour": "definite_article",
+                               "entry_evidence": "adjectival_entry",
+                               "feminine_counterpart_template": "fula"}}
+    _ela_rec = analyze_discriminator_table(_ela_feats, _ela_unit)
+    if _ela_rec != {"decision": "abstain", "reason": "insufficient_features"}:
+        failures.append("analyze_discriminator_table: a comparison complement WITH definite-"
+                        "article evidence must abstain insufficient_features (ela-r4), never "
+                        "resolve elative_comparative: got %r" % (_ela_rec,))
+    _ela_unit_m = json.loads(json.dumps(_ela_unit))
+    for _f_ in _ela_unit_m["functions"]:
+        if _f_["id"] == "elative_comparative":
+            _f_.pop("excluded_when", None)
+    _ela_rec_m = analyze_discriminator_table(_ela_feats, _ela_unit_m)
+    if _ela_rec_m.get("function") != "elative_comparative":
+        failures.append("analyze_discriminator_table: removing excluded_when from the PACK did "
+                        "not restore the recorded false pass (the ela-r4 exclusion is not "
+                        "genuinely pack-declared)")
+
     if failures:
         print("SELF-TEST FAIL:")
         for f in failures:
@@ -1089,7 +1237,13 @@ def self_test():
           "classed survivor abstains and a pack mutation stripping the prefix unblocks it; "
           "probe 12, the three repaired sibling packs (quality-adjective/intensive-agent/"
           "broken-plural): the recorded قوال/قويل/مقاول false passes stay reproducible under "
-          "their unrepaired unit-v1.json packs and abstain under the repaired unit-v2.json packs)")
+          "their unrepaired unit-v1.json packs and abstain under the repaired unit-v2.json packs; "
+          "probe 13, the mafal_place/mu_participle collision resolved by the WRITTEN initial مـ "
+          "vowel (reproduced false positives مجلس/منزل/مكتب refused, a genuine مُدَرِّس participle "
+          "undisturbed, missing/unlicensed initial-مـ evidence abstains); probe 14, masdar_mimi as "
+          "a genuinely pack-declared rival preserving alternatives over place_or_time_noun; "
+          "probe 15, ela-r4's excluded_when exclusion as genuinely pack-declared data, not a "
+          "hard-coded elative special case)")
     return 0
 
 
