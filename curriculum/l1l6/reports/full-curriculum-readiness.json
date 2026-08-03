@@ -18,18 +18,62 @@
     "sections_linked_to_canonical_units": 1491,
     "sections_still_only_domain_classified": 0
   },
+  "candidate_drill_packets": {
+    "rows": 834,
+    "runtime_integrated": 0,
+    "status": "candidate_not_runtime_integrated"
+  },
+  "lesson_denominators_by_level": {
+    "L1": 39,
+    "L2": 32,
+    "L3": 37,
+    "L4": 40,
+    "L5": 40,
+    "L6": 38
+  },
   "lessons_covered_by_authored_units": {
     "domain_associated_only": 209,
     "explicit_lesson_refs": 16
   },
   "lessons_fully_accounted": 226,
+  "lessons_indirectly_linked_to_runtime_tutor_drills": 27,
   "lessons_mapped_to_nahw": 175,
   "lessons_mapped_to_sarf": 213,
-  "lessons_mapped_to_tutor_drills": 226,
+  "lessons_mapped_to_tutor_drills": 0,
   "lessons_with_entry_level_links": 147,
   "lessons_with_exact_pvn_links": 1,
   "lessons_with_family_only_links": 77,
   "lessons_with_no_corpus_bridge": 1,
+  "ordinary_tutor_runtime": {
+    "binding_note": "runtime behavior is proven only for the committed drill-key rows; lesson linkage is indirect via KC curriculum_misconception_ids and misconception manifestations; related_units do not establish a runtime canonical-unit binding",
+    "drill_key_rows": 14,
+    "emittable_kc_ids": [
+      "kc-clitic-segmentation",
+      "kc-derivative-shape-hidden",
+      "kc-masdar-template-not-uniform",
+      "kc-number-suffix-hidden",
+      "kc-particle-function",
+      "kc-root-template-slot-classification",
+      "kc-suffix-pronoun-missing"
+    ],
+    "emittable_knowledge_components": 7,
+    "explicit_canonical_unit_bindings": 0,
+    "explicit_lesson_bindings": 0,
+    "indirectly_linked_lessons": 27,
+    "lesson_content_operationalized": false
+  },
+  "other_train_l1l6_linkage": {
+    "train_d": {
+      "binding_basis": "closed-form rows under curriculum/l1l6/links with matching consumer_train and binding_status=explicit",
+      "explicit_lesson_bindings": 0,
+      "explicit_unit_bindings": 0
+    },
+    "train_e": {
+      "binding_basis": "closed-form rows under curriculum/l1l6/links with matching consumer_train and binding_status=explicit",
+      "explicit_lesson_bindings": 0,
+      "explicit_unit_bindings": 0
+    }
+  },
   "queues": {
     "q-error-fixtures": 205,
     "q-hover-pedagogy": 21,
@@ -44,10 +88,10 @@
   },
   "schema": "curriculum.l1l6_full_readiness.v1",
   "semantic_units_authored": 21,
-  "separation_note": "lesson METADATA coverage is 226/226; semantic KNOWLEDGE coverage is the claims+units numbers; CAPABILITY coverage is the increments; CONSUMER coverage is the exercised increments; OCCURRENCE coverage is the exact-link lessons — these are different denominators and are never merged",
+  "separation_note": "lesson METADATA coverage is 226/226; semantic KNOWLEDGE coverage is the claims+units numbers; CAPABILITY fixture-harness coverage is candidate evidence; ordinary tutor CONSUMER coverage is 14 runtime key rows across 7 emittable KCs with 27 indirect lesson links and 0 explicit canonical-unit bindings; the 834 candidate drill packets remain runtime_integrated=0; OCCURRENCE coverage is the exact-link lessons — these denominators are never merged",
   "source_lessons": 226,
   "state_histogram": {
-    "consumer_exercised": 8,
+    "candidate_fixture_harness_exercised": 8,
     "not_applicable_with_reason": 1,
     "skill_mapped": 193,
     "unitized": 24

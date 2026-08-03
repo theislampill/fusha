@@ -322,6 +322,18 @@ def check_crosswalk_evidence(ctx, errors):
         bp = r.get("backprop_packet")
         if bp and not any((d / (bp + ".json")).exists() for d in packet_dirs):
             errors.append("crosswalk_evidence: %s cites missing packet %s" % (rid, bp))
+        if rid == "xs-04":
+            derivation_rows = len(_jsonl(
+                ROOT / "sarf" / "evals" / "derivational-template-carve-eval.jsonl"
+            ))
+            recorded = (r.get("consumer_evidence_counts") or {}).get(
+                "derivational_template_carve_rows"
+            )
+            if recorded != derivation_rows:
+                errors.append(
+                    "crosswalk_evidence: xs-04 derivational row count %r != %d"
+                    % (recorded, derivation_rows)
+                )
 
 
 def check_ledger_qualification(ctx, errors):
@@ -993,7 +1005,7 @@ def check_precise_links(ctx, errors):
 ABSORPTION_STATES = frozenset({
     "metadata_only", "structurally_parsed", "semantically_qualified",
     "unitized", "skill_mapped", "fixture_mapped", "occurrence_grounded",
-    "consumer_exercised", "backpropagated", "review_blocked",
+    "candidate_fixture_harness_exercised", "backpropagated", "review_blocked",
     "not_applicable_with_reason"})
 
 
@@ -1037,6 +1049,29 @@ def check_absorption(ctx, errors):
         if not r.get("next_action") and r.get("absorption_state") not in (
                 "backpropagated", "not_applicable_with_reason"):
             errors.append("absorption: %s empty next_action" % r["lesson_id"])
+    ready_p = BASE / "reports" / "full-curriculum-readiness.json"
+    if ready_p.exists():
+        ready = json.loads(ready_p.read_text(encoding="utf-8"))
+        runtime = ready.get("ordinary_tutor_runtime") or {}
+        if ready.get("lessons_mapped_to_tutor_drills") != 0:
+            errors.append("absorption: runtime has no explicit lesson bindings")
+        expected_runtime = {
+            "drill_key_rows": 14,
+            "emittable_knowledge_components": 7,
+            "indirectly_linked_lessons": 27,
+            "explicit_canonical_unit_bindings": 0,
+        }
+        for key, expected in expected_runtime.items():
+            if runtime.get(key) != expected:
+                errors.append(
+                    "absorption: ordinary runtime %s %r != %d"
+                    % (key, runtime.get(key), expected)
+                )
+        candidate = ready.get("candidate_drill_packets") or {}
+        if candidate.get("runtime_integrated") != 0:
+            errors.append(
+                "absorption: candidate drill packets must remain runtime_integrated=0"
+            )
     comp_p = BASE / "reports" / "section-completeness.json"
     if comp_p.exists():
         comp = json.loads(comp_p.read_text(encoding="utf-8"))
@@ -1167,10 +1202,27 @@ def check_freeze_planes(ctx, errors):
                 errors.append("freeze_planes: %s claims a machine consumer "
                               "without a discovered pack (invented claim)"
                               % r["unit_id"])
+        if "candidate_runtime_behavioral_mapping" in r.get("states", []):
+            evidence = r.get("runtime_behavioral_evidence") or {}
+            if (evidence.get("mapping_state") != "candidate_unproven"
+                    or evidence.get("authoritative_unit_binding") is not False):
+                errors.append(
+                    "freeze_planes: %s promotes an unproven runtime unit mapping"
+                    % r["unit_id"]
+                )
         for b in r.get("blockers", []):
             if not b.get("cause"):
                 errors.append("freeze_planes: %s blocker without exact cause"
                               % r["unit_id"])
+    candidate_runtime_units = sum(
+        1 for r in disp
+        if "candidate_runtime_behavioral_mapping" in r.get("states", [])
+    )
+    if candidate_runtime_units != 8:
+        errors.append(
+            "freeze_planes: %d candidate runtime unit mappings != 8"
+            % candidate_runtime_units
+        )
     reg = _jsonl(BASE / "misconceptions" / "misconception-registry.jsonl")
     unroutable = sum(1 for c in reg if not c.get("unit_routable")
                      and not c.get("routing_note"))

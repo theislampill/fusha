@@ -1,13 +1,16 @@
 {
+  "candidate_runtime_unit_mappings": 8,
+  "explicit_runtime_unit_bindings": 0,
   "generator": "tools/build_unit_dispositions.py",
   "generic_unresolved_remainders": 0,
-  "note": "every state is computed from committed evidence; machine states require a discovered pack (invented consumer claims are structurally impossible); blockers carry exact causes",
+  "note": "every state is computed from committed evidence except the clearly labelled task-scoped candidate runtime mapping; runtime key rows contain no authoritative canonical-unit ids; machine states require a discovered pack; blockers carry exact causes",
   "schema": "curriculum.l1l6_unit_disposition.v1.meta",
   "state_participation": {
     "candidate_occurrence_witnesses": 12,
     "candidate_pack_harnessed": 35,
     "candidate_presentation_template": 166,
     "candidate_remediation_material": 18,
+    "candidate_runtime_behavioral_mapping": 8,
     "evidence_blocked": 29,
     "fixture_source_candidate": 35,
     "instructional_only_candidate_presentation": 25,
@@ -18,10 +21,11 @@
   },
   "strongest_state_histogram": {
     "candidate_occurrence_witnesses": 7,
-    "candidate_pack_harnessed": 35,
+    "candidate_pack_harnessed": 29,
     "candidate_presentation_template": 95,
     "candidate_remediation_material": 9,
-    "fixture_source_candidate": 20
+    "candidate_runtime_behavioral_mapping": 8,
+    "fixture_source_candidate": 18
   },
   "strongest_sums_to_units": true,
   "units": 166

@@ -12,6 +12,10 @@ candidate/readiness label awaiting Sol-owned integration):
   candidate_pack_harnessed     a discovered machine pack exists and the
                                NON-AUTHORITATIVE fixture harness decides its
                                fixtures (development evidence only)
+  candidate_runtime_behavioral_mapping  a task-scoped candidate mapping to
+                               real ordinary-runtime drill behavior; no
+                               authoritative unit binding or lesson
+                               operationalization is claimed
   candidate_occurrence_witnesses  canonical-surface-verified same-entry
                                selected witnesses, or committed occurrence
                                links (card_display_only never counts)
@@ -43,13 +47,28 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "curriculum" / "l1l6"
 
 STRONGEST_ORDER = [
-    "candidate_pack_harnessed", "candidate_occurrence_witnesses",
+    "candidate_runtime_behavioral_mapping", "candidate_pack_harnessed",
+    "candidate_occurrence_witnesses",
     "promotion_bundle_prepared", "fixture_source_candidate",
     "candidate_remediation_material", "candidate_presentation_template",
     "instructional_only_candidate_presentation",
     "sol_integration_blocked", "scholar_review_blocked",
     "owner_adjudication_blocked", "evidence_blocked",
 ]
+
+# The runtime key rows do not carry canonical unit ids. This task-scoped set
+# records the reviewed eight-unit semantic mapping only as a candidate note.
+# It must never be counted as an explicit runtime unit binding.
+CANDIDATE_RUNTIME_UNIT_IDS = frozenset({
+    "cu-definite-article-assimilation",
+    "u-n07",
+    "u-s01",
+    "u-s03",
+    "u-s04",
+    "u-s05",
+    "u-s08",
+    "u-s09",
+})
 
 
 def _jsonl(p):
@@ -58,6 +77,13 @@ def _jsonl(p):
 
 def build():
     units = _jsonl(BASE / "canonical" / "canonical-units.jsonl")
+    unit_ids = {u["unit_id"] for u in units}
+    missing_candidate_units = sorted(CANDIDATE_RUNTIME_UNIT_IDS - unit_ids)
+    if missing_candidate_units:
+        raise ValueError(
+            "candidate runtime unit mapping cites missing units: %s"
+            % missing_candidate_units
+        )
     projections = {r["unit_id"]: r for r in
                    _jsonl(BASE / "projections" / "unit-projections.jsonl")}
     grounding = {r["unit_id"]: r for r in
@@ -80,6 +106,8 @@ def build():
         grow = grounding.get(uid, {})
         mis = mis_by_unit.get(uid, [])
         states, blockers = [], []
+        if uid in CANDIDATE_RUNTIME_UNIT_IDS:
+            states.append("candidate_runtime_behavioral_mapping")
         if incs:
             states.append("candidate_pack_harnessed")
         if (grow.get("grounding_state") == "exact_vn_candidates"
@@ -146,6 +174,15 @@ def build():
                 "n": grow.get("n_candidates", 0),
                 "occurrence_links": uid in occ_units,
             },
+            **({"runtime_behavioral_evidence": {
+                "mapping_state": "candidate_unproven",
+                "authoritative_unit_binding": False,
+                "evidence_plane": "ordinary tutor drill-key behavior",
+                "boundary_note": (
+                    "candidate semantic mapping only; runtime key rows carry "
+                    "no canonical unit ids and do not operationalize lessons"
+                ),
+            }} if uid in CANDIDATE_RUNTIME_UNIT_IDS else {}),
             "states": states,
             "strongest_state": strongest,
             "blockers": blockers,
@@ -173,7 +210,9 @@ def build():
             s: sum(1 for r in rows if s in r["states"])
             for s in STRONGEST_ORDER},
         "generic_unresolved_remainders": 0,
-        "note": "every state is computed from committed evidence; machine states require a discovered pack (invented consumer claims are structurally impossible); blockers carry exact causes",
+        "explicit_runtime_unit_bindings": 0,
+        "candidate_runtime_unit_mappings": len(CANDIDATE_RUNTIME_UNIT_IDS),
+        "note": "every state is computed from committed evidence except the clearly labelled task-scoped candidate runtime mapping; runtime key rows contain no authoritative canonical-unit ids; machine states require a discovered pack; blockers carry exact causes",
     }
     return rows, meta
 
