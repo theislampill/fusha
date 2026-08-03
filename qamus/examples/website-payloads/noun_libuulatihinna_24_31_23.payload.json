@@ -1,166 +1,167 @@
 {
- "schema": "qamus.website_projection_payload.v1",
- "schema_version": "1.0.0",
- "payload_kind": "occurrence_projection",
- "occurrence_id": "quran:24:31:23",
- "artifact_id": "artifact:rh:24:31:23",
- "appearance": {
-  "appearance_id": "app:entry:n0231:card2",
-  "page_id": "entry:n0231",
-  "page_kind": "entry",
-  "page_local": {
-   "selected_highlight": true,
-   "entry_relationship": "own-entry-example",
-   "focus": "example-card",
-   "navigation": []
-  }
- },
- "projection": {
-  "occurrence_id": "quran:24:31:23",
-  "surface": "لِبُعُولَتِهِنَّ",
-  "normalization": "NFC",
-  "kind": "noun_word",
-  "segments": [
-   {
-    "segment_index": 0,
-    "surface": "لِ",
-    "char_start": 0,
-    "char_end": 2,
-    "semantic_class": "jarr_clitic_lam",
-    "renderer_class": "qg-particle-jarr-clitic",
-    "gloss": "for / to",
-    "sarf_note": "Sarf - a function proclitic with no lexical root, written joined to its host.",
-    "nahw_note": "Nahw - it links the noun into the sentence, pulling it into the jarr (genitive) state."
-   },
-   {
-    "segment_index": 1,
-    "surface": "بُعُولَتِ",
-    "char_start": 2,
-    "char_end": 11,
-    "semantic_class": "noun_stem",
-    "renderer_class": "qg-noun-stem",
-    "gloss": "husbands",
-    "sarf_note": "Sarf - the lexical host: a plural noun built from the root ب ع ل.",
-    "nahw_note": "Nahw - the content word of this token; the pronoun after it says whose."
-   },
-   {
-    "segment_index": 2,
-    "surface": "هِنَّ",
-    "char_start": 11,
-    "char_end": 16,
-    "semantic_class": "possessive_pronoun_3fp",
-    "renderer_class": "qg-possessive-pronoun",
-    "gloss": "their",
-    "sarf_note": "Sarf - the attached 'their' for a group of women, written onto the noun.",
-    "nahw_note": "Nahw - the possessor suffix: it tells whose husbands."
-   }
-  ],
-  "whole_word_gloss": "to their husbands",
-  "learner_explanation": "لِبُعُولَتِهِنَّ contributes 'to their husbands' here; the hover exposes the content host from root ب ع ل. The attached pronoun suffix is shown separately.",
-  "entry_links": [
-   {
-    "entry_id": "n0231",
-    "sense_id": null,
-    "relation_kind": "certified_entry",
-    "segment_index": 1
-   }
-  ],
-  "entry_link_state": "linked",
-  "morpheme_spans": [
-   {
-    "morpheme_occurrence_id": "morph:rh:24:31:23:li",
-    "segment_index": 0,
-    "char_start": 0,
-    "char_end": 2
-   },
-   {
-    "morpheme_occurrence_id": "morph:rh:24:31:23:stem",
-    "segment_index": 1,
-    "char_start": 2,
-    "char_end": 11
-   },
-   {
-    "morpheme_occurrence_id": "morph:rh:24:31:23:poss3fp",
-    "segment_index": 2,
-    "char_start": 11,
-    "char_end": 16
-   }
-  ],
-  "root": "ب ع ل",
-  "rootless_pedagogy": null,
-  "hover_cards": [
-   {
-    "component_surface": "لِبُعُولَتِهِنَّ",
-    "contextual_gloss": "to their husbands",
-    "particle_identity": null,
-    "contextual_function": "prepositional phrase in one written word: 'to' + 'husbands' + 'their'",
-    "sarf_note": "Sarf - a three-piece written word: the clitic lam, a plural noun from the root ب ع ل, and the attached 'their' (feminine plural).",
-    "nahw_note": "Nahw - the lam pulls the noun into the jarr (genitive) state; the suffix marks the possessor.",
-    "governor": null,
-    "governed_expression": "بعولتهن",
-    "scope": null,
-    "attachment": {
-     "host": "بُعُولَتِ",
-     "boundary": "clitic lam | noun stem | possessive pronoun"
-    },
-    "alternatives": [],
-    "reason": "deterministic nominal visible morphology (calibrated family: content root base with visible suffix)",
-    "unresolved": null,
-    "entry_link": "/qamus/entry/n0231"
-   }
-  ],
-  "unresolved": null,
-  "certification": {
-   "status": "candidate",
-   "plane": {
-    "segmentation": "candidate",
-    "root": "candidate"
-   }
-  },
-  "evidence_refs": [
-   "corpus:rh_live_01_beta_whitelist#loc=24:31:23",
-   "candidate-payload:8eddd91c835f5535"
-  ]
- },
- "projection_hash": "a9534d9c666aa3d8a944798f7620b6e0f7205fc89a0191bc1b192ebfdca7e0c8",
- "reverse_links": {
-  "occurrence_to_appearances": [
-   {
+  "appearance": {
     "appearance_id": "app:entry:n0231:card2",
     "page_id": "entry:n0231",
     "page_kind": "entry",
-    "projection_hash": "a9534d9c666aa3d8a944798f7620b6e0f7205fc89a0191bc1b192ebfdca7e0c8"
-   },
-   {
-    "appearance_id": "app:wbw:24:31:23",
-    "page_id": "wbw:24:31",
-    "page_kind": "wbw_hover",
-    "projection_hash": "a9534d9c666aa3d8a944798f7620b6e0f7205fc89a0191bc1b192ebfdca7e0c8"
-   }
-  ],
-  "entry_to_occurrences": [
-   {
-    "entry_id": "n0231",
-    "occurrences": [
-     {
-      "occurrence_id": "quran:24:31:23",
-      "surface": "لِبُعُولَتِهِنَّ",
-      "loc": "24:31:23",
-      "page_refs": [
-       "entry:n0231",
-       "wbw:24:31"
-      ]
-     }
+    "page_local": {
+      "entry_relationship": "own-entry-example",
+      "focus": "example-card",
+      "navigation": [],
+      "selected_highlight": true
+    }
+  },
+  "artifact_id": "artifact:rh:24:31:23",
+  "occurrence_id": "quran:24:31:23",
+  "payload_kind": "occurrence_projection",
+  "projection": {
+    "certification": {
+      "plane": {
+        "root": "candidate",
+        "segmentation": "candidate"
+      },
+      "status": "candidate"
+    },
+    "entry_link_state": "linked",
+    "entry_links": [
+      {
+        "entry_id": "n0231",
+        "relation_kind": "certified_entry",
+        "segment_index": 1,
+        "sense_id": null
+      }
+    ],
+    "evidence_refs": [
+      "corpus:rh_live_01_beta_whitelist#loc=24:31:23",
+      "candidate-payload:8eddd91c835f5535"
+    ],
+    "hover_cards": [
+      {
+        "alternatives": [],
+        "attachment": {
+          "boundary": "clitic lam | noun stem | possessive pronoun",
+          "host": "بُعُولَتِ"
+        },
+        "component_surface": "لِبُعُولَتِهِنَّ",
+        "contextual_function": "prepositional phrase in one written word: 'to' + 'husbands' + 'their'",
+        "contextual_gloss": "to their husbands",
+        "entry_link": "/qamus/entry/n0231",
+        "governed_expression": "بعولتهن",
+        "governor": null,
+        "nahw_note": "Nahw - the lam pulls the noun into the jarr (genitive) state; the suffix marks the possessor.",
+        "particle_identity": null,
+        "reason": "deterministic nominal visible morphology (calibrated family: content root base with visible suffix)",
+        "sarf_note": "Sarf - a three-piece written word: the clitic lam, a plural noun from the root ب ع ل, and the attached 'their' (feminine plural).",
+        "scope": null,
+        "unresolved": null
+      }
+    ],
+    "kind": "noun_word",
+    "learner_explanation": "لِبُعُولَتِهِنَّ contributes 'to their husbands' here; the hover exposes the content host from root ب ع ل. The attached pronoun suffix is shown separately.",
+    "morpheme_spans": [
+      {
+        "char_end": 2,
+        "char_start": 0,
+        "morpheme_occurrence_id": "morph:rh:24:31:23:li",
+        "segment_index": 0
+      },
+      {
+        "char_end": 11,
+        "char_start": 2,
+        "morpheme_occurrence_id": "morph:rh:24:31:23:stem",
+        "segment_index": 1
+      },
+      {
+        "char_end": 16,
+        "char_start": 11,
+        "morpheme_occurrence_id": "morph:rh:24:31:23:poss3fp",
+        "segment_index": 2
+      }
+    ],
+    "normalization": "NFC",
+    "occurrence_id": "quran:24:31:23",
+    "public_projection_eligible": false,
+    "root": "ب ع ل",
+    "rootless_pedagogy": null,
+    "segments": [
+      {
+        "char_end": 2,
+        "char_start": 0,
+        "gloss": "for / to",
+        "nahw_note": "Nahw - it links the noun into the sentence, pulling it into the jarr (genitive) state.",
+        "renderer_class": "qg-particle-jarr-clitic",
+        "sarf_note": "Sarf - a function proclitic with no lexical root, written joined to its host.",
+        "segment_index": 0,
+        "semantic_class": "jarr_clitic_lam",
+        "surface": "لِ"
+      },
+      {
+        "char_end": 11,
+        "char_start": 2,
+        "gloss": "husbands",
+        "nahw_note": "Nahw - the content word of this token; the pronoun after it says whose.",
+        "renderer_class": "qg-noun-stem",
+        "sarf_note": "Sarf - the lexical host: a plural noun built from the root ب ع ل.",
+        "segment_index": 1,
+        "semantic_class": "noun_stem",
+        "surface": "بُعُولَتِ"
+      },
+      {
+        "char_end": 16,
+        "char_start": 11,
+        "gloss": "their",
+        "nahw_note": "Nahw - the possessor suffix: it tells whose husbands.",
+        "renderer_class": "qg-possessive-pronoun",
+        "sarf_note": "Sarf - the attached 'their' for a group of women, written onto the noun.",
+        "segment_index": 2,
+        "semantic_class": "possessive_pronoun_3fp",
+        "surface": "هِنَّ"
+      }
+    ],
+    "surface": "لِبُعُولَتِهِنَّ",
+    "unresolved": null,
+    "whole_word_gloss": "to their husbands"
+  },
+  "projection_hash": "9aff25087157d9ab68d8f855395db498593e930b5acff42181d9442ecaca284c",
+  "provenance": {
+    "built_by": "packets.website-handoff.sample-builder v1 (2026-07-29)",
+    "provenance_class": "illustrative-from-live",
+    "source_refs": [
+      "corpus:rh_live_01_beta_whitelist#loc=24:31:23",
+      "packet:p00-vertical-slice:live-rh-rows-raw#24:31:23"
     ]
-   }
-  ]
- },
- "provenance": {
-  "provenance_class": "illustrative-from-live",
-  "built_by": "packets.website-handoff.sample-builder v1 (2026-07-29)",
-  "source_refs": [
-   "corpus:rh_live_01_beta_whitelist#loc=24:31:23",
-   "packet:p00-vertical-slice:live-rh-rows-raw#24:31:23"
-  ]
- }
+  },
+  "reverse_links": {
+    "entry_to_occurrences": [
+      {
+        "entry_id": "n0231",
+        "occurrences": [
+          {
+            "loc": "24:31:23",
+            "occurrence_id": "quran:24:31:23",
+            "page_refs": [
+              "entry:n0231",
+              "wbw:24:31"
+            ],
+            "surface": "لِبُعُولَتِهِنَّ"
+          }
+        ]
+      }
+    ],
+    "occurrence_to_appearances": [
+      {
+        "appearance_id": "app:entry:n0231:card2",
+        "page_id": "entry:n0231",
+        "page_kind": "entry",
+        "projection_hash": "9aff25087157d9ab68d8f855395db498593e930b5acff42181d9442ecaca284c"
+      },
+      {
+        "appearance_id": "app:wbw:24:31:23",
+        "page_id": "wbw:24:31",
+        "page_kind": "wbw_hover",
+        "projection_hash": "9aff25087157d9ab68d8f855395db498593e930b5acff42181d9442ecaca284c"
+      }
+    ]
+  },
+  "schema": "qamus.website_projection_payload.v1",
+  "schema_version": "1.0.0"
 }

@@ -61,6 +61,104 @@ MA_OCCURRENCES = [
 ]
 
 
+class PayloadBindingFailClosed(ValueError):
+    """Refused rather than best-effort bound: dishonest or unreadable payload posture."""
+
+
+def build_payload_binding(payload_file, pl):
+    """The authoritative curriculum payload_binding for one ma exemplar.
+
+    Carries the source payload's effective publication/certification
+    posture (never only artifact id/hash) so no downstream consumer can
+    infer deliverability from link presence or projection hash alone.
+    Refuses (PayloadBindingFailClosed) rather than best-effort binding a
+    payload whose posture is internally dishonest.
+    """
+    projection = pl.get("projection")
+    if not isinstance(projection, dict):
+        raise PayloadBindingFailClosed(
+            "%s: payload.projection must be an object" % payload_file)
+    certification = projection.get("certification") or {}
+    status = certification.get("status")
+    plane = certification.get("plane")
+    if not isinstance(plane, dict):
+        raise PayloadBindingFailClosed(
+            "%s: projection.certification.plane must be an object" % payload_file)
+
+    projection_hash = pl.get("projection_hash")
+    appearances = (pl.get("reverse_links") or {}).get("occurrence_to_appearances")
+    if not isinstance(appearances, list) or not appearances:
+        raise PayloadBindingFailClosed(
+            "%s: reverse_links.occurrence_to_appearances must be a "
+            "non-empty array" % payload_file)
+    reverse_hashes = {a.get("projection_hash") for a in appearances
+                      if isinstance(a, dict)}
+    if reverse_hashes != {projection_hash}:
+        raise PayloadBindingFailClosed(
+            "%s: projection_hash %r does not match its reverse appearance "
+            "hashes %r" % (payload_file, projection_hash, sorted(
+                h for h in reverse_hashes if h)))
+
+    evidence_refs = projection.get("evidence_refs")
+    if not isinstance(evidence_refs, list):
+        raise PayloadBindingFailClosed(
+            "%s: projection.evidence_refs must be a list" % payload_file)
+
+    eligible = projection.get("public_projection_eligible")
+    if not isinstance(eligible, bool):
+        raise PayloadBindingFailClosed(
+            "%s: projection.public_projection_eligible must be an explicit "
+            "boolean" % payload_file)
+
+    if status != "certified":
+        if eligible is not False:
+            raise PayloadBindingFailClosed(
+                "%s: certification_status %r is not certified but "
+                "public_projection_eligible is %r, not explicit false"
+                % (payload_file, status, eligible))
+        certified_planes = sorted(k for k, v in plane.items()
+                                  if v == "certified")
+        if certified_planes:
+            raise PayloadBindingFailClosed(
+                "%s: certification_status %r is not certified but plane "
+                "member(s) %s are still certified"
+                % (payload_file, status, certified_planes))
+
+    unresolved = projection.get("unresolved")
+    if isinstance(unresolved, dict):
+        unresolved_state = unresolved.get("state")
+    elif unresolved is None:
+        unresolved_state = None
+    else:
+        raise PayloadBindingFailClosed(
+            "%s: projection.unresolved must be an object or null"
+            % payload_file)
+    if status != "certified" and unresolved_state is None:
+        raise PayloadBindingFailClosed(
+            "%s: certification_status %r is not certified but carries no "
+            "projection.unresolved.state — a non-certified payload is "
+            "never a genuinely settled source" % (payload_file, status))
+
+    provenance_class = (pl.get("provenance") or {}).get("provenance_class")
+    if not isinstance(provenance_class, str) or not provenance_class:
+        raise PayloadBindingFailClosed(
+            "%s: provenance.provenance_class must be a non-empty string"
+            % payload_file)
+
+    return {
+        "payload_file": payload_file,
+        "artifact_id": pl["artifact_id"],
+        "projection_hash": projection_hash,
+        "schema": pl["schema"],
+        "certification_status": status,
+        "public_projection_eligible": eligible,
+        "unresolved_state": unresolved_state,
+        "provenance_class": provenance_class,
+        # verbatim ordered dependencies — never authority by presence alone
+        "evidence_refs": list(evidence_refs),
+    }
+
+
 def build():
     entries_by_key = {}
     with (ROOT / "qamus" / "data" / "current" / "entries.jsonl").open(encoding="utf-8") as f:
@@ -123,12 +221,7 @@ def build():
             "source_key": "p099",
             "occurrence_id": loc,
             "surface": pl["projection"]["surface"],
-            "payload_binding": {
-                "payload_file": payload,
-                "artifact_id": pl["artifact_id"],
-                "projection_hash": pl["projection_hash"],
-                "schema": pl["schema"],
-            },
+            "payload_binding": build_payload_binding(payload, pl),
             "expected_hover_component": "function_inventory_panel",
             "promotion_evidence": {
                 "existing": [payload],
@@ -184,9 +277,155 @@ def serialize(rows):
     return out
 
 
+# --------------------------------------------------------------------------- #
+# self-test -- synthetic fixtures only, never the tracked payloads
+# --------------------------------------------------------------------------- #
+
+def _synthetic_ma_payload(status, eligible, plane_function, unresolved_state,
+                          evidence_refs=("ref:a", "ref:z")):
+    proj_hash = "1" * 64
+    return {
+        "artifact_id": "artifact:selftest:1",
+        "schema": "qamus.website_projection_payload.v1",
+        "projection_hash": proj_hash,
+        "reverse_links": {
+            "occurrence_to_appearances": [
+                {"appearance_id": "app:selftest:1", "projection_hash": proj_hash},
+            ],
+        },
+        "provenance": {"provenance_class": "illustrative-from-live"},
+        "projection": {
+            "certification": {
+                "status": status,
+                "plane": {"function": plane_function, "segmentation": "candidate"},
+            },
+            "public_projection_eligible": eligible,
+            "evidence_refs": list(evidence_refs),
+            "unresolved": (
+                {"state": unresolved_state} if unresolved_state is not None
+                else None
+            ),
+        },
+    }
+
+
+def _run(label, condition, failures):
+    print(("ok   " if condition else "FAIL ") + label)
+    if not condition:
+        failures.append(label)
+
+
+def self_test():
+    failures = []
+
+    # 1. unresolved/review-required posture propagates into the binding.
+    stale = _synthetic_ma_payload(
+        status="unresolved", eligible=False, plane_function="review_required",
+        unresolved_state="certification_evidence_unresolved",
+        evidence_refs=("ref:zzz", "ref:aaa"))
+    binding = build_payload_binding("selftest.payload.json", stale)
+    _run("unresolved posture propagates into the payload binding",
+        binding["certification_status"] == "unresolved"
+        and binding["public_projection_eligible"] is False
+        and binding["unresolved_state"] == "certification_evidence_unresolved"
+        and binding["provenance_class"] == "illustrative-from-live",
+        failures)
+
+    # 2. evidence refs remain verbatim-ordered dependencies, never authority.
+    _run("evidence refs are carried verbatim-ordered, not sorted/deduped "
+        "into authority",
+        binding["evidence_refs"] == ["ref:zzz", "ref:aaa"],
+        failures)
+
+    # 3. a certified-plane residue on a non-certified payload is rejected.
+    residue = _synthetic_ma_payload(
+        status="unresolved", eligible=False, plane_function="certified",
+        unresolved_state="certification_evidence_unresolved")
+    try:
+        build_payload_binding("selftest.payload.json", residue)
+        rejected = False
+    except PayloadBindingFailClosed:
+        rejected = True
+    _run("a certified-plane residue on a non-certified payload is rejected",
+        rejected, failures)
+
+    # 4. public eligibility true on a non-certified payload is rejected.
+    over_eligible = _synthetic_ma_payload(
+        status="unresolved", eligible=True, plane_function="review_required",
+        unresolved_state="certification_evidence_unresolved")
+    try:
+        build_payload_binding("selftest.payload.json", over_eligible)
+        rejected = False
+    except PayloadBindingFailClosed:
+        rejected = True
+    _run("public_projection_eligible=true on a non-certified payload is "
+        "rejected", rejected, failures)
+
+    # 5. missing/non-list evidence_refs is refused.
+    no_refs = _synthetic_ma_payload(
+        status="unresolved", eligible=False, plane_function="review_required",
+        unresolved_state="certification_evidence_unresolved")
+    no_refs["projection"]["evidence_refs"] = None
+    try:
+        build_payload_binding("selftest.payload.json", no_refs)
+        rejected = False
+    except PayloadBindingFailClosed:
+        rejected = True
+    _run("missing/non-list evidence_refs is refused", rejected, failures)
+
+    # 6. a projection hash that does not match its reverse appearance
+    #    hashes is refused.
+    forked = _synthetic_ma_payload(
+        status="unresolved", eligible=False, plane_function="review_required",
+        unresolved_state="certification_evidence_unresolved")
+    forked["reverse_links"]["occurrence_to_appearances"][0]["projection_hash"] = "2" * 64
+    try:
+        build_payload_binding("selftest.payload.json", forked)
+        rejected = False
+    except PayloadBindingFailClosed:
+        rejected = True
+    _run("a projection hash forked from its reverse appearance hashes is "
+        "refused", rejected, failures)
+
+    # 7. a genuinely settled (certified) source needs no unresolved state.
+    settled = _synthetic_ma_payload(
+        status="certified", eligible=True, plane_function="certified",
+        unresolved_state=None)
+    settled_binding = build_payload_binding("selftest.payload.json", settled)
+    _run("a genuinely settled certified source carries unresolved_state=null",
+        settled_binding["unresolved_state"] is None, failures)
+
+    # 8. quran:61:5:4 and the p007 non-ma occurrence paths are untouched by
+    #    these ma-specific checks: real build() never attaches a
+    #    payload_binding to a class-1 pilot-occurrence row.
+    rows = build()
+    frozen = [r for r in rows if r.get("occurrence_id") == "quran:61:5:4"]
+    _run("quran:61:5:4 (p007 pilot occurrence) is present and carries no "
+        "ma-specific payload_binding",
+        bool(frozen) and all("payload_binding" not in r for r in frozen),
+        failures)
+    p007_rows = [r for r in rows if r.get("source_key") == "p007"
+                and r.get("link_class") == "occurrence"]
+    _run("p007 occurrence-class rows carry no payload_binding",
+        bool(p007_rows) and all("payload_binding" not in r for r in p007_rows),
+        failures)
+
+    if failures:
+        print("\n%d SELF-TEST CASE(S) FAILED" % len(failures))
+        return 1
+    print("\nALL SELF-TEST CASES PASSED")
+    return 0
+
+
 def main(argv):
+    if "--self-test" in argv:
+        return self_test()
     check = "--check" in argv
-    files = serialize(build())
+    try:
+        files = serialize(build())
+    except PayloadBindingFailClosed as exc:
+        print("PVN PRECISE LINKS REFUSED: %s" % exc)
+        return 1
     bad = []
     for path, data in sorted(files.items()):
         p = Path(path)

@@ -145,6 +145,7 @@ def build() -> dict[str, dict]:
                 "char_start": segments[0]["char_start"],
                 "char_end": segments[0]["char_end"],
             }],
+            "public_projection_eligible": False,
             "root": None,
             "rootless_pedagogy": source.get("rootless_pedagogy"),
             "hover_cards": [source_hover],
@@ -220,10 +221,46 @@ def serialize(payloads: dict[str, dict]) -> dict[Path, bytes]:
     }
 
 
+def self_test() -> int:
+    payloads = build()
+    if "quran:61:5:4" in TARGETS:
+        print("FAIL: quran:61:5:4 must not be a generator target")
+        return 1
+    for filename, payload in sorted(payloads.items()):
+        projection = payload["projection"]
+        if projection.get("public_projection_eligible") is not False:
+            print("FAIL: %s: public_projection_eligible is not explicit "
+                  "false" % filename)
+            return 1
+        if projection["certification"]["status"] != "unresolved":
+            print("FAIL: %s: certification.status is not unresolved" %
+                  filename)
+            return 1
+        expected_hash = _hash(projection)
+        if payload["projection_hash"] != expected_hash:
+            print("FAIL: %s: projection_hash does not match projection" %
+                  filename)
+            return 1
+        reverse_rows = payload["reverse_links"]["occurrence_to_appearances"]
+        if not reverse_rows:
+            print("FAIL: %s: no reverse appearances" % filename)
+            return 1
+        for row in reverse_rows:
+            if row["projection_hash"] != expected_hash:
+                print("FAIL: %s: reverse appearance %s carries a mismatched "
+                      "projection_hash" % (filename, row["appearance_id"]))
+                return 1
+    print("P007 WEBSITE PAYLOADS SELF-TEST GREEN")
+    return 0
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args(argv)
+    if args.self_test:
+        return self_test()
     bad = []
     for path, data in sorted(serialize(build()).items()):
         if args.check:

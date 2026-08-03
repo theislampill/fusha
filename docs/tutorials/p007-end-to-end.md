@@ -216,32 +216,49 @@ root-sharing NEVER implies entry identity. The renderer contract makes the
 same point visually: each relation kind renders in its own register
 (`docs/qamus/website-handoff/HANDOFF-RECORD.md` §1.3).
 
-## Mini-example 2 (verb/noun): documented-form ≠ page-context
+## Mini-example 2 (verb/noun): documented claims ≠ current certification authority
 
 Committed proof: `qamus/examples/website-payloads/verb_qamu_2_20_13.payload.json`
 (قَامُوا, `quran:2:20:13`) and `noun_rajulayni_2_282_59.payload.json`
 (رَجُلَيْنِ, `quran:2:282:59`) — the verb/noun entry canaries.
 
-Both are `provenance_class: certified` — but look at the per-fact plane map:
+Both carry `provenance_class: illustrative-from-live` and
+`certification.status: unresolved` today. Their `provenance.source_refs`
+document that a separate `vn-entry-canaries` lane store once claimed root and
+lexeme-attachment facts as certified (cross-source corroboration, its own
+event trail) — but that lane store is not one of the two committed
+certification stores `tools/website_evidence_resolver.py` consults, so those
+facts resolve `evidence_unresolved`, not `certified`. **Citing a fact id in
+`evidence_refs` never certifies it by presence** — only resolution against
+the repository's own committed certification-event trail does. Look at the
+per-fact plane map after `tools/migrate_website_evidence_fail_closed.py`'s
+honest downgrade:
 
-- قَامُوا: `root: certified`, `lexeme_attachment: certified` (cross-source
-  corroborated in the canary lane store, fact sha ids in `evidence_refs`) —
-  while `segmentation: candidate` and `function: candidate`.
-- رَجُلَيْنِ: form attestation + lexeme attachment certified — root and case
-  honestly `candidate`.
+- قَامُوا: `root: review_required`, `lexeme_attachment: review_required`
+  (the documented lane-store claim, not currently repository-authoritative)
+  — `segmentation: candidate`, `function: candidate`.
+- رَجُلَيْنِ: form attestation + lexeme attachment `review_required` — root
+  and case honestly `candidate`.
 
-That a FORM is documented (the dictionary/lane store knows this word, its
-root, its lexeme) certifies nothing about what the word is DOING on this
-page: case, governor, and function are page-context facts that need their own
-rung (two-vote for iʿrāb-bearing conclusions — the certifier refused those
-facts pending bundles, and the payloads honestly carry them as candidate).
-The same lesson in particle form is the مَا pair:
+That a FORM is documented somewhere (a dictionary, a lane store) certifies
+nothing about what the word is DOING on this page — case, governor, and
+function are page-context facts that need their own rung (two-vote for
+iʿrāb-bearing conclusions) — and it certifies nothing about this repository's
+CURRENT certification authority either, until that documented claim is
+re-run through this repository's own certifier and its evidence resolves
+against a committed store. The certifier refused the page-context facts
+pending bundles, and the payloads honestly carry them as candidate; the
+form-level facts are honestly carried as `review_required` pending
+re-certification here. The same lesson in particle form is the مَا pair:
 `ma_relative_2_284_10.payload.json` vs `ma_nafiya_93_3_1.payload.json` — one
-entry (`b8e480aebafe`), one surface, two occurrences, two different certified
-functions, each certified by ITS OWN occurrence-level evidence
-(PROOF-P fact `sha256:c5e69dac…` / two-vote bundle
-`two-vote-artifact:quran_93_3_1:v11`). Function is an occurrence edge, not a
-property of the entry.
+entry (`b8e480aebafe`), one surface, two occurrences, two DIFFERENT
+occurrence-specific candidate analyses, neither currently certified, each
+citing its own occurrence-level evidence ref (PROOF-P candidate-contract fact
+`sha256:c5e69dac…`, which is candidate-only and never certification
+authority; two-vote bundle `two-vote-artifact:quran_93_3_1:v11`, valid review
+evidence not yet bound by a certification-event trail). Function is an
+occurrence edge, not a property of the entry — and neither leg's evidence ref
+currently resolves as certification authority.
 
 ---
 

@@ -91,6 +91,7 @@
     ],
     "normalization": "NFC",
     "occurrence_id": "quran:12:31:24",
+    "public_projection_eligible": false,
     "root": null,
     "rootless_pedagogy": "This little lam is not built from a three-letter root - it is an indeclinable tool word (a particle). It attaches to the word after it.",
     "segments": [
@@ -138,7 +139,7 @@
     },
     "whole_word_gloss": "for Allah"
   },
-  "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae",
+  "projection_hash": "a530987f7818d502636888245b1beb94db4acf3f752729669f45e34b50df96e8",
   "provenance": {
     "built_by": "tools/build_p007_website_payloads.py",
     "provenance_class": "certified",
@@ -154,49 +155,49 @@
         "appearance_id": "0135b6be178e:u0:x0:w2",
         "page_id": "entry:0135b6be178e",
         "page_kind": "entry",
-        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+        "projection_hash": "a530987f7818d502636888245b1beb94db4acf3f752729669f45e34b50df96e8"
       },
       {
         "appearance_id": "4211cb1f5355:u0:x1:w24",
         "page_id": "entry:4211cb1f5355",
         "page_kind": "entry",
-        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+        "projection_hash": "a530987f7818d502636888245b1beb94db4acf3f752729669f45e34b50df96e8"
       },
       {
         "appearance_id": "99f8d3c2cad5:u5:x0:w24",
         "page_id": "entry:99f8d3c2cad5",
         "page_kind": "entry",
-        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+        "projection_hash": "a530987f7818d502636888245b1beb94db4acf3f752729669f45e34b50df96e8"
       },
       {
         "appearance_id": "a6de8fd64244:u4:x2:w24",
         "page_id": "entry:a6de8fd64244",
         "page_kind": "entry",
-        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+        "projection_hash": "a530987f7818d502636888245b1beb94db4acf3f752729669f45e34b50df96e8"
       },
       {
         "appearance_id": "d82582d4c8e6:u0:x2:w24",
         "page_id": "entry:d82582d4c8e6",
         "page_kind": "entry",
-        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+        "projection_hash": "a530987f7818d502636888245b1beb94db4acf3f752729669f45e34b50df96e8"
       },
       {
         "appearance_id": "e0e500c4b7a5:u0:x14:w24",
         "page_id": "entry:e0e500c4b7a5",
         "page_kind": "entry",
-        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+        "projection_hash": "a530987f7818d502636888245b1beb94db4acf3f752729669f45e34b50df96e8"
       },
       {
         "appearance_id": "e7fa3fadaf4a:u0:x0:w24",
         "page_id": "entry:e7fa3fadaf4a",
         "page_kind": "entry",
-        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+        "projection_hash": "a530987f7818d502636888245b1beb94db4acf3f752729669f45e34b50df96e8"
       },
       {
         "appearance_id": "fbd04177b8dd:u0:x26:w24",
         "page_id": "entry:fbd04177b8dd",
         "page_kind": "entry",
-        "projection_hash": "4cc421c1b8c6e82024d6e22dc7b39b671f5e751af5bdf574da745a577ec612ae"
+        "projection_hash": "a530987f7818d502636888245b1beb94db4acf3f752729669f45e34b50df96e8"
       }
     ]
   },

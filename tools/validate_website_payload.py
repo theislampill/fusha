@@ -41,6 +41,12 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 ROOT = Path(__file__).resolve().parents[1]
+
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from tools.website_evidence_resolver import WebsiteEvidenceResolver  # noqa: E402
+
 SAMPLES_DIR = ROOT / "qamus" / "examples" / "website-payloads"
 P007_DIR = ROOT / "qamus" / "examples" / "p007-li-pilot"
 APPEARANCE_UNIVERSE_PATH = (
@@ -89,7 +95,9 @@ ENTRY_LINK_STATES = frozenset({"linked", "none_yet"})
 PROVENANCE_CLASSES = frozenset({
     "certified", "illustrative-from-live", "illustrative-constructed",
 })
-CERT_STATUSES = frozenset({"certified", "candidate", "unresolved"})
+CERT_STATUSES = frozenset({
+    "certified", "candidate", "unresolved", "review_required",
+})
 V12_LINK_STATES = frozenset({"candidate", "certified"})
 V12_SENSE_STATES = frozenset({
     "candidate", "certified", "not_applicable", "unresolved",
@@ -1705,6 +1713,77 @@ def check_geometry_evidence(payload, errors):
         )
 
 
+@lru_cache(maxsize=1)
+def _website_evidence_resolver() -> WebsiteEvidenceResolver:
+    return WebsiteEvidenceResolver(ROOT)
+
+
+def check_evidence_resolution(payload, errors):
+    """Fail closed on unauthoritative evidence and public-delivery claims.
+
+    A certified payload's every ``evidence_refs`` entry must resolve as
+    ``authoritative_for_certification`` (contract §8); an unknown scheme or
+    an unresolvable, candidate, or otherwise non-authoritative reference
+    fails a certified payload rather than passing through as a non-empty
+    string. ``public_projection_eligible`` may only be true when the
+    payload is genuinely certified on authoritative evidence. Every
+    non-authoritative posture (candidate, unresolved, review_required)
+    must set it to explicit ``false`` — omission, ``null``, a non-boolean
+    value, or ``true`` all fail closed rather than passing silently.
+    """
+    projection = payload.get("projection")
+    if not isinstance(projection, dict):
+        return
+    refs = projection.get("evidence_refs")
+    if not isinstance(refs, list):
+        return
+    certification = projection.get("certification")
+    status = (
+        certification.get("status")
+        if isinstance(certification, dict)
+        else None
+    )
+    resolver = _website_evidence_resolver()
+    resolutions = resolver.resolve_many(
+        ref for ref in refs if isinstance(ref, str)
+    )
+    all_authoritative = bool(resolutions) and all(
+        resolution.authoritative_for_certification
+        for resolution in resolutions
+    )
+    if status == "certified":
+        for resolution in resolutions:
+            if not resolution.authoritative_for_certification:
+                errors.append(
+                    "evidence_resolution: certified payload cites %r, "
+                    "which resolves as %s and is not certification "
+                    "authority (%s)"
+                    % (
+                        resolution.reference,
+                        resolution.effective_state,
+                        resolution.reason,
+                    )
+                )
+    public_eligible = projection.get("public_projection_eligible")
+    if status in {"candidate", "unresolved", "review_required"}:
+        if public_eligible is not False:
+            errors.append(
+                "public_projection_eligible: certification.status %r is "
+                "non-authoritative and projection.public_projection_eligible "
+                "must be explicit false; got %r"
+                % (status, public_eligible)
+            )
+    elif public_eligible is True and not (
+        status == "certified" and all_authoritative
+    ):
+        errors.append(
+            "public_projection_eligible: public_projection_eligible is "
+            "true but the payload is not genuinely certified with every "
+            "evidence reference authoritative (certification.status=%r)"
+            % status
+        )
+
+
 def check_provenance(payload, errors):
     provenance = payload.get("provenance")
     projection = payload.get("projection")
@@ -2019,6 +2098,7 @@ def validate_payload(payload: dict) -> list[str]:
     check_unresolved_and_rootless(payload, errors)
     check_candidate_public_plane(payload, errors)
     check_geometry_evidence(payload, errors)
+    check_evidence_resolution(payload, errors)
     check_provenance(payload, errors)
     check_no_server_paths(payload, errors)
     check_p007_authority(payload, errors)
@@ -2086,7 +2166,7 @@ def _green_payload() -> dict:
         "certification": {"status": "certified",
                           "plane": {"segmentation": "certified",
                                     "function": "certified"}},
-        "evidence_refs": ["two-vote-artifact:quran_2_34_5:selftest"],
+        "evidence_refs": ["fact:p00slice:2_34_5:seg"],
     }
     return {
         "schema": PAYLOAD_SCHEMA,
@@ -2123,7 +2203,7 @@ def _green_payload() -> dict:
         "provenance": {
             "provenance_class": "certified",
             "built_by": "tools.validate_website_payload.selftest v1",
-            "source_refs": ["two-vote-artifact:quran_2_34_5:selftest"],
+            "source_refs": ["fact:p00slice:2_34_5:seg"],
         },
     }
 
@@ -2553,6 +2633,329 @@ def _self_test() -> int:
     expect_green(
         "green: legal URI is not private machine topology",
         good,
+    )
+
+    # red 30 — certified payload citing a fact reference that resolves to
+    # nothing in the repository must fail closed; the validator today only
+    # requires evidence_refs to be non-empty, it never resolves them.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = [
+        "fact:selftest:sha256:" + "0" * 64
+    ]
+    bad["projection_hash"] = projection_hash(bad["projection"])
+    for app in bad["reverse_links"]["occurrence_to_appearances"]:
+        app["projection_hash"] = bad["projection_hash"]
+    expect_red(
+        "red: certified payload citing an unresolvable fact reference",
+        bad,
+        "evidence_resolution",
+    )
+
+    # red 31 — certified payload citing evidence that itself only ever
+    # reached candidate status; a candidate fact is not certification
+    # authority no matter how the payload's own status labels itself.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = [
+        "fact:proofp:sha256:"
+        "4c3881c19eb21b0b363e688682650178e5348dc4e3dbc9b7756a9a32c2dbb6f6"
+    ]
+    bad["projection_hash"] = projection_hash(bad["projection"])
+    for app in bad["reverse_links"]["occurrence_to_appearances"]:
+        app["projection_hash"] = bad["projection_hash"]
+    expect_red(
+        "red: certified payload citing candidate-status evidence",
+        bad,
+        "evidence_resolution",
+    )
+
+    # red 32 — an unresolved, review-required posture can never be marked
+    # publicly eligible; the validator does not yet compute effective
+    # public eligibility from certification/evidence state at all.
+    bad = _green_payload()
+    bad["projection"]["certification"]["status"] = "unresolved"
+    bad["projection"]["unresolved"] = {
+        "state": "review_required",
+        "message": "review required before public delivery",
+        "candidate_count": 1, "candidates": ["pending"]}
+    bad["projection"]["public_projection_eligible"] = True
+    bad["provenance"]["provenance_class"] = "illustrative-constructed"
+    bad["projection_hash"] = projection_hash(bad["projection"])
+    for app in bad["reverse_links"]["occurrence_to_appearances"]:
+        app["projection_hash"] = bad["projection_hash"]
+    expect_red(
+        "red: review-required posture cannot be publicly eligible",
+        bad,
+        "public_projection_eligible",
+    )
+
+    # red 33 — an evidence reference in an unknown scheme is not
+    # resolvable authority and must fail closed rather than pass through
+    # as a non-empty string.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = ["unregistered-scheme:selftest:1"]
+    bad["projection_hash"] = projection_hash(bad["projection"])
+    for app in bad["reverse_links"]["occurrence_to_appearances"]:
+        app["projection_hash"] = bad["projection_hash"]
+    expect_red(
+        "red: unknown evidence-reference scheme fails closed",
+        bad,
+        "evidence_resolution",
+    )
+
+    # green 34-36 — the four formerly-unsupported certified samples were
+    # migrated to an honest unresolved posture: each now validates green,
+    # is held at unresolved with public delivery refused, is labelled
+    # non-authoritative, carries a certification_evidence_unresolved
+    # projection.unresolved, has no certification.plane left claiming
+    # certified, and still cites non-empty evidence_refs as originally
+    # gathered.
+    for filename in (
+        "ma_nafiya_93_3_1.payload.json",
+        "ma_relative_2_284_10.payload.json",
+        "noun_rajulayni_2_282_59.payload.json",
+        "verb_qamu_2_20_13.payload.json",
+    ):
+        sample = json.loads(
+            (SAMPLES_DIR / filename).read_text(encoding="utf-8")
+        )
+        expect_green(
+            "green: %s is honestly unresolved after migration" % filename,
+            sample,
+        )
+        proj = sample["projection"]
+        checks = [
+            proj["certification"]["status"] == "unresolved",
+            proj["public_projection_eligible"] is False,
+            sample["provenance"]["provenance_class"]
+            == "illustrative-from-live",
+            proj.get("unresolved") is not None,
+            proj["unresolved"]["state"]
+            == "certification_evidence_unresolved",
+            "certified"
+            not in proj["certification"]["plane"].values(),
+            "review_required"
+            in proj["certification"]["plane"].values(),
+            bool(proj.get("evidence_refs")),
+        ]
+        ok = all(checks)
+        print(("ok   " if ok else "FAIL ")
+              + "green: %s migrated posture is honest" % filename)
+        if not ok:
+            print("    checks: %s" % checks)
+            failures.append("migrated posture: " + filename)
+
+    # green 37 — explicitly pin the current certified typed fact this
+    # fixture's geometry depends on.
+    expect_green(
+        "green: certified payload pinning current certified "
+        "fact:p00slice:2_34_5:seg",
+        _green_payload(),
+    )
+
+    # green 38 — a two-vote artifact explicitly bound by a certification
+    # event trail to this payload's own currently-certified fact is
+    # accepted alongside that fact.
+    good = _green_payload()
+    good["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg",
+        "two-vote-artifact:quran_2_34_5:p00slice-li-jarr",
+    ]
+    _rehash_payload(good)
+    expect_green(
+        "green: certified fact plus its own bound verified two-vote "
+        "artifact",
+        good,
+    )
+
+    # green 39 — the fact's own current certification-event trail
+    # reference is accepted alongside the fact it certified.
+    good = _green_payload()
+    good["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg",
+        "cert-event:101:fact:p00slice:2_34_5:seg",
+    ]
+    _rehash_payload(good)
+    expect_green(
+        "green: certified fact plus its own current cert-event trail "
+        "reference",
+        good,
+    )
+
+    # red 37 — a valid two-vote artifact that is not bound to any
+    # currently-certified fact is only review_verified, never
+    # certification authority, even alongside a genuinely certified fact.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg",
+        "two-vote-artifact:quran_93_3_1:v11",
+    ]
+    _rehash_payload(bad)
+    expect_red(
+        "red: unbound two-vote evidence cannot support a certified "
+        "payload",
+        bad,
+        "review_verified",
+    )
+
+    # red 38 — a historical cert-event trail reference is reported against
+    # its fact's *current* effective state; a fact that has since moved to
+    # review_required is not authority even though the cited event once
+    # certified it.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg",
+        "cert-event:118:fact:p00slice:2_34_5:func",
+    ]
+    _rehash_payload(bad)
+    expect_red(
+        "red: historical cert-event whose fact is now review_required "
+        "cannot support certified delivery",
+        bad,
+        "review_required",
+    )
+
+    valid_custody_ref = (
+        "dawahwiki:packets/p007-direct-source-w1/wave1-worklist.json"
+        "#sha256:fb51c7de9c6951dc81015f754c1476481cd86339d577bcf6242d1d8158d604a2"
+    )
+
+    # red 39 — a valid, manifested private-custody reference is recognised
+    # (present, custody_verified) but is never certification authority, so
+    # it cannot support a certified payload even alongside another
+    # genuinely certified fact.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg",
+        valid_custody_ref,
+    ]
+    _rehash_payload(bad)
+    expect_red(
+        "red: valid private-custody evidence cannot manufacture "
+        "certification authority",
+        bad,
+        "custody_verified",
+    )
+
+    # red 40 — the same custody reference with a changed final hex digit
+    # fails closed as a hash mismatch rather than silently matching.
+    broken_custody_ref = valid_custody_ref[:-1] + (
+        "3" if valid_custody_ref[-1] != "3" else "4"
+    )
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg",
+        broken_custody_ref,
+    ]
+    _rehash_payload(bad)
+    expect_red(
+        "red: custody reference with a broken hash fails closed",
+        bad,
+        "custody_hash_mismatch",
+    )
+
+    # red 41 — contradiction/mixed-status canary: a certified payload
+    # citing its own currently-certified fact together with a historical
+    # cert-event whose fact is now review_required must stay red — no
+    # majority-of-refs or last-event shortcut may rescue it.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg",
+        "cert-event:118:fact:p00slice:2_34_5:func",
+    ]
+    _rehash_payload(bad)
+    expect_red(
+        "red: mixed-status evidence (one certified, one review_required) "
+        "fails closed with no majority shortcut",
+        bad,
+        "evidence_resolution",
+    )
+
+    # green 40 — public_projection_eligible true is legal only when the
+    # payload is genuinely certified and every evidence ref is
+    # authoritative.
+    good = _green_payload()
+    good["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg",
+        "cert-event:101:fact:p00slice:2_34_5:seg",
+    ]
+    good["projection"]["public_projection_eligible"] = True
+    _rehash_payload(good)
+    expect_green(
+        "green: public_projection_eligible true with fully authoritative "
+        "evidence",
+        good,
+    )
+
+    # red 42 — public_projection_eligible true cannot be rescued by an
+    # unbound two-vote artifact; the public-eligibility refusal itself
+    # must fire.
+    bad = _green_payload()
+    bad["projection"]["evidence_refs"] = [
+        "fact:p00slice:2_34_5:seg",
+        "two-vote-artifact:quran_93_3_1:v11",
+    ]
+    bad["projection"]["public_projection_eligible"] = True
+    _rehash_payload(bad)
+    expect_red(
+        "red: public_projection_eligible true fails closed alongside "
+        "unbound two-vote evidence",
+        bad,
+        "public_projection_eligible",
+    )
+
+    # red 43 — a candidate payload that never sets
+    # public_projection_eligible at all must still fail closed: omission is
+    # not a silent "false", it must be refused just as loudly as an
+    # explicit true would be for a non-authoritative posture.
+    bad = _green_payload()
+    bad["projection"]["certification"] = {
+        "status": "candidate",
+        "plane": {"segmentation": "candidate", "function": "candidate"},
+    }
+    bad["provenance"]["provenance_class"] = "illustrative-from-live"
+    _rehash_payload(bad)
+    expect_red(
+        "red: candidate posture omitting public_projection_eligible fails "
+        "closed",
+        bad,
+        "public_projection_eligible",
+    )
+
+    # red 44 — an unresolved payload with a schema-valid, honestly-labelled
+    # unresolved object still omits public_projection_eligible; omission
+    # must fail closed exactly like an explicit true would.
+    bad = _green_payload()
+    bad["projection"]["certification"]["status"] = "unresolved"
+    bad["projection"]["unresolved"] = {
+        "state": "function_unresolved",
+        "message": "function not yet adjudicated; 2 candidate analyses",
+        "candidate_count": 2, "candidates": ["jarr", "tawkid"]}
+    bad["provenance"]["provenance_class"] = "illustrative-constructed"
+    _rehash_payload(bad)
+    expect_red(
+        "red: unresolved posture omitting public_projection_eligible fails "
+        "closed",
+        bad,
+        "public_projection_eligible",
+    )
+
+    # red 45 — a review_required payload omitting
+    # public_projection_eligible must fail closed as well; the field is
+    # never optional for a non-certified posture.
+    bad = _green_payload()
+    bad["projection"]["certification"] = {
+        "status": "review_required",
+        "plane": {
+            "segmentation": "review_required", "function": "review_required",
+        },
+    }
+    bad["provenance"]["provenance_class"] = "illustrative-constructed"
+    _rehash_payload(bad)
+    expect_red(
+        "red: review_required posture omitting public_projection_eligible "
+        "fails closed",
+        bad,
+        "public_projection_eligible",
     )
 
     if failures:

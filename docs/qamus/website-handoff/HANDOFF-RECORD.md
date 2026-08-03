@@ -26,46 +26,54 @@ between the two agents.
 
 ### 1.2 Sample inventory (11 payloads, all green under the executable twin)
 
-All in `qamus/examples/website-payloads/`:
+All in `qamus/examples/website-payloads/`. `cert status` and `public
+eligible` are the payload's actual `projection.certification.status` and
+`projection.public_projection_eligible` today, as enforced by
+`tools/website_evidence_resolver.py` +
+`tools/validate_website_payload.py`'s evidence-resolution check — **none of
+the 11 is currently publicly deliverable**:
 
-| # | file | shows | provenance | cert status |
-|---|---|---|---|---|
-| 1 | `p007_li_adam_clean.payload.json` | clean لِـ + noun (quran:2:34:5), certified pilot analysis | certified | certified |
-| 2 | `p007_lillahi_fused.payload.json` | fused لِلَّهِ (quran:12:31:24), clitic + assimilated host boundary | certified | certified |
-| 3 | `verb_ituni_12_59_5.payload.json` | verb word ٱئْتُونِى: stem + protective nūn + object pronoun | illustrative-from-live | candidate |
-| 4 | `noun_libuulatihinna_24_31_23.payload.json` | noun word لِبُعُولَتِهِنَّ: clitic + rooted stem + possessive pronoun | illustrative-from-live | candidate |
-| 5 | `unresolved_ma_2_284_2.payload.json` | honest unresolved state, neutral `qg-unresolved`, live alternatives | illustrative-constructed | unresolved |
-| 6 | `no_entry_link_17_78_3.payload.json` | `entry_link_state: none_yet` — first-class no-entry state | illustrative-from-live | candidate |
-| 7 | `multi_entry_liqawmihi_61_5_4.payload.json` | **multi-entry token** لِقَوْمِهِ (quran:61:5:4): THREE entry-link rows with distinct relation kinds — clitic → p007 `b10a1ee04666` (`clitic_component_of_entry`), written form → n912 `65d3d5c51f24` (`candidate_entry`), shared root → v005 `3041d6f44a27` (`root_family_of_entry`); `schema_version` 1.1.0 | illustrative-from-live | candidate |
-| 8 | `verb_qamu_2_20_13.payload.json` | verb word قَامُوا (quran:2:20:13): hollow-root stem + built-in subject suffix; root + lexeme attachment certified in the vn-entry-canaries lane store (fact ids cited in `evidence_refs`) | certified | certified (segmentation/function candidate in plane map) |
-| 9 | `noun_rajulayni_2_282_59.payload.json` | noun word رَجُلَيْنِ (quran:2:282:59): stem + dual ending; form attestation + lexeme attachment certified in the lane store; root and case honestly candidate | certified | certified (root/case candidate in plane map) |
-| 10 | `ma_relative_2_284_10.payload.json` | **same-surface pair, leg 1**: مَا (quran:2:284:10) certified RELATIVE function (`qg-relative`) — PROOF-P `contextual_function` fact `sha256:c5e69dac…` via `direct_source_attestation` | certified | certified (function; segmentation/gloss candidate in plane map) |
-| 11 | `ma_nafiya_93_3_1.payload.json` | **same-surface pair, leg 2**: مَا (quran:93:3:1) certified NAFIYA function (`qg-negation`) — two-vote bundle `two-vote-artifact:quran_93_3_1:v11`, agreement on conclusion+reason key | certified | certified (function; segmentation/gloss candidate in plane map) |
+| # | file | shows | provenance_class | cert status | public eligible |
+|---|---|---|---|---|---|
+| 1 | `p007_li_adam_clean.payload.json` | clean لِـ + noun (quran:2:34:5), segmentation/function/governor-identity/case certified from the p007-li-pilot certification store; governor relation + entry sense unresolved | certified | unresolved | `false` |
+| 2 | `p007_lillahi_fused.payload.json` | fused لِلَّهِ (quran:12:31:24), clitic + assimilated host boundary, same p007 certified/unresolved split | certified | unresolved | `false` |
+| 3 | `verb_ituni_12_59_5.payload.json` | verb word ٱئْتُونِى: stem + protective nūn + object pronoun | illustrative-from-live | candidate | `false` |
+| 4 | `noun_libuulatihinna_24_31_23.payload.json` | noun word لِبُعُولَتِهِنَّ: clitic + rooted stem + possessive pronoun | illustrative-from-live | candidate | `false` |
+| 5 | `unresolved_ma_2_284_2.payload.json` | honest unresolved state, neutral `qg-unresolved`, live alternatives | illustrative-constructed | unresolved | `false` |
+| 6 | `no_entry_link_17_78_3.payload.json` | `entry_link_state: none_yet` — first-class no-entry state | illustrative-from-live | candidate | `false` |
+| 7 | `multi_entry_liqawmihi_61_5_4.payload.json` | **multi-entry token** لِقَوْمِهِ (quran:61:5:4): THREE entry-link rows with distinct relation kinds — clitic → p007 `b10a1ee04666` (`clitic_component_of_entry`), written form → n912 `65d3d5c51f24` (`candidate_entry`), shared root → v005 `3041d6f44a27` (`root_family_of_entry`); `schema_version` 1.1.0; `1.2.0` neutral candidate-plane binding | illustrative-from-live | unresolved | `false` |
+| 8 | `verb_qamu_2_20_13.payload.json` | verb word قَامُوا (quran:2:20:13): hollow-root stem + built-in subject suffix; a `vn-entry-canaries` lane store once claimed root/lexeme attachment certified, but that lane store is outside the two committed certification stores this repository's evidence resolver consults, so those facts resolve non-authoritative | illustrative-from-live | unresolved | `false` |
+| 9 | `noun_rajulayni_2_282_59.payload.json` | noun word رَجُلَيْنِ (quran:2:282:59): stem + dual ending; same lane-store-claimed-but-repo-non-authoritative history; root was already honestly candidate | illustrative-from-live | unresolved | `false` |
+| 10 | `ma_relative_2_284_10.payload.json` | **same-surface pair, leg 1**: مَا (quran:2:284:10) candidate RELATIVE function (`qg-relative`) — cites PROOF-P candidate-contract fact `sha256:c5e69dac…`, which is candidate-only evidence and never certification authority | illustrative-from-live | unresolved | `false` |
+| 11 | `ma_nafiya_93_3_1.payload.json` | **same-surface pair, leg 2**: مَا (quran:93:3:1) candidate NAFIYA function (`qg-negation`) — cites two-vote bundle `two-vote-artifact:quran_93_3_1:v11`, valid review evidence (`review_verified`) but not currently bound by any certification-event trail | illustrative-from-live | unresolved | `false` |
 
 Provenance honesty notes:
 
 - Samples 3–4 re-express already-rich live/candidate rows and are kept
-  alongside the canary-derived samples 7–9 deliberately: the renderer must
+  alongside the canary-derived samples 8–9 deliberately: the renderer must
   handle both provenance classes.
 - Samples 10–11 are the **same-surface / different-analysis** requirement
   (steer §19): one entry (`b8e480aebafe`), one written surface مَا, two
-  occurrences with two DIFFERENT certified functions, each certified by its
-  own occurrence-level evidence (fact id / two-vote artifact id in
-  `evidence_refs`, provenance-marked). The renderer must key everything on
-  `occurrence_id` + `projection_hash` — never on surface text — and the two
-  payloads must never share a cache entry. Sample 5 (`unresolved_ma_2_284_2`)
-  is the honest third leg of the same surface: unresolved, neutral render.
+  occurrences with two DIFFERENT occurrence-specific candidate analyses,
+  neither currently certified, each carrying its own occurrence-level
+  evidence ref (fact id / two-vote artifact id in `evidence_refs`,
+  provenance-marked). The renderer must key everything on `occurrence_id` +
+  `projection_hash` — never on surface text — and the two payloads must
+  never share a cache entry. Sample 5 (`unresolved_ma_2_284_2`) is the
+  honest third leg of the same surface: unresolved, neutral render.
 - Sample 7 is honest about its rungs: the p007 morpheme row is a rung-1
   deterministic **candidate** (attachment geometry), the jarr governor fact
-  was engine-REFUSED pending a two-vote bundle, and only the occurrence's
-  root fact is lane-certified (`plane.root: "certified-lane-local"`).
-  Overall `certification.status` is `candidate`.
-- Samples 8–9 claim `provenance_class: certified` because they render from
-  certified typed facts in the `vn-entry-canaries` lane typed-fact-store
-  (cross-source corroboration, full certification event trail; fact sha ids
-  in `evidence_refs`). Lane-local certification does **not** flip committed
-  entry states; refused/two-vote facts stay `candidate` in the per-fact
-  plane map. Nothing in these payloads creates or upgrades certification.
+  was engine-REFUSED pending a two-vote bundle, and no plane key is
+  certified — the `1.2.0` neutral candidate-plane binding keeps the whole
+  primary plane unresolved (root/governor/meaning/translation stay `null`).
+- Samples 8–9 and 10–11 were downgraded by
+  `tools/migrate_website_evidence_fail_closed.py` from a formerly claimed
+  `certified` status once `tools/website_evidence_resolver.py` could not
+  resolve their cited evidence as current repository certification
+  authority. This is a committed, deterministic, byte-preserving repair
+  (hashes recomputed, every other field untouched) — never a hand edit.
+  Nothing in these payloads creates or upgrades certification; an
+  `evidence_refs` entry's mere presence never certifies by itself.
 
 ### 1.3 Expected rendering (per the projection contract)
 
@@ -105,7 +113,7 @@ Provenance honesty notes:
    §3.1). Recommended: run `tools/validate_website_payload.py` against any
    payload before first render — it is the executable contract twin and
    validates the committed samples green in
-   `tools/check_regressions.py` (WEBHANDOFF gates, 9 samples).
+   `tools/check_regressions.py` (WEBHANDOFF gates, 11 samples).
 3. **Forward compatibility (§9):** unknown keys are ignored; unknown enum
    values in non-load-bearing slots get a neutral render plus a report.
 

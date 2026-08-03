@@ -1,127 +1,135 @@
 {
- "schema": "qamus.website_projection_payload.v1",
- "schema_version": "1.1.0",
- "payload_kind": "occurrence_projection",
- "occurrence_id": "quran:93:3:1",
- "artifact_id": "artifact:canary:93:3:1",
- "appearance": {
-  "appearance_id": "app:reader:93:3:w1",
-  "page_id": "reader:93:3",
-  "page_kind": "reader",
-  "page_local": {
-   "selected_highlight": false,
-   "entry_relationship": "reader",
-   "focus": null,
-   "navigation": []
-  }
- },
- "projection": {
-  "occurrence_id": "quran:93:3:1",
-  "surface": "مَا",
-  "normalization": "NFC",
-  "kind": "particle_clitic_word",
-  "segments": [
-   {
-    "segment_index": 0,
-    "surface": "مَا",
-    "char_start": 0,
-    "char_end": 3,
-    "semantic_class": "negative_ma",
-    "renderer_class": "qg-negation",
-    "gloss": "not",
-    "sarf_note": "Sarf - this particle is not built from a root; it is an indeclinable tool word.",
-    "nahw_note": "Nahw - here it negates the past verb that follows: 'your Lord has NOT abandoned you'."
-   }
-  ],
-  "whole_word_gloss": "not",
-  "learner_explanation": "This ma means 'not': it negates the past verb right after it. It is written exactly like the ma that means 'what(ever)' in other verses - same word in the dictionary, different job in each sentence.",
-  "entry_links": [
-   {
-    "entry_id": "b8e480aebafe",
-    "sense_id": null,
-    "relation_kind": "certified_entry",
-    "segment_index": 0
-   }
-  ],
-  "entry_link_state": "linked",
-  "morpheme_spans": [
-   {
-    "morpheme_occurrence_id": "morph:canary:93:3:1:ma",
-    "segment_index": 0,
-    "char_start": 0,
-    "char_end": 3
-   }
-  ],
-  "root": null,
-  "rootless_pedagogy": "This particle has no root: it is a tool word, complete as it is. Its job changes with the sentence, which is why each occurrence is analyzed in place.",
-  "hover_cards": [
-   {
-    "component_surface": "مَا",
-    "contextual_gloss": "not [has your Lord abandoned you]",
-    "particle_identity": {
-     "headword": "مَا",
-     "entry_id": "b8e480aebafe",
-     "sense": null
-    },
-    "contextual_function": "negative 'not' - it negates the past verb that follows",
-    "sarf_note": "Sarf - an indeclinable tool word; no root.",
-    "nahw_note": "Nahw - negative ma before a past verb; the parallel 'wa-ma qala' later in the same ayah repeats the same job.",
-    "governor": null,
-    "governed_expression": null,
-    "scope": "the perfect-verb clause that follows",
-    "attachment": null,
-    "alternatives": [],
-    "reason": "two independent reviewers agreed on conclusion and reason key (two-vote verified)",
-    "unresolved": null,
-    "entry_link": "/qamus/entry/b8e480aebafe"
-   }
-  ],
-  "unresolved": null,
-  "certification": {
-   "status": "certified",
-   "plane": {
-    "function": "certified",
-    "segmentation": "candidate",
-    "contextual_gloss": "candidate"
-   }
-  },
-  "evidence_refs": [
-   "two-vote-artifact:quran_93_3_1:v11",
-   "mcp-evidence:canary-execution-2026-07-29#sha256:6e4cbde5cd9b91c749bddbd510c60257f7d9d854b4c6871ee37d3f5321dde850"
-  ]
- },
- "projection_hash": "95b02fa9e39ddabaa1a97d1c0d3a63a2ce0863d019b2e29ddb67826e17f272a9",
- "reverse_links": {
-  "occurrence_to_appearances": [
-   {
+  "appearance": {
     "appearance_id": "app:reader:93:3:w1",
     "page_id": "reader:93:3",
     "page_kind": "reader",
-    "projection_hash": "95b02fa9e39ddabaa1a97d1c0d3a63a2ce0863d019b2e29ddb67826e17f272a9"
-   }
-  ],
-  "entry_to_occurrences": [
-   {
-    "entry_id": "b8e480aebafe",
-    "occurrences": [
-     {
-      "occurrence_id": "quran:93:3:1",
-      "surface": "مَا",
-      "loc": "93:3:1",
-      "page_refs": [
-       "reader:93:3"
-      ]
-     }
+    "page_local": {
+      "entry_relationship": "reader",
+      "focus": null,
+      "navigation": [],
+      "selected_highlight": false
+    }
+  },
+  "artifact_id": "artifact:canary:93:3:1",
+  "occurrence_id": "quran:93:3:1",
+  "payload_kind": "occurrence_projection",
+  "projection": {
+    "certification": {
+      "plane": {
+        "contextual_gloss": "candidate",
+        "function": "review_required",
+        "segmentation": "candidate"
+      },
+      "status": "unresolved"
+    },
+    "entry_link_state": "linked",
+    "entry_links": [
+      {
+        "entry_id": "b8e480aebafe",
+        "relation_kind": "certified_entry",
+        "segment_index": 0,
+        "sense_id": null
+      }
+    ],
+    "evidence_refs": [
+      "two-vote-artifact:quran_93_3_1:v11",
+      "mcp-evidence:canary-execution-2026-07-29#sha256:6e4cbde5cd9b91c749bddbd510c60257f7d9d854b4c6871ee37d3f5321dde850"
+    ],
+    "hover_cards": [
+      {
+        "alternatives": [],
+        "attachment": null,
+        "component_surface": "مَا",
+        "contextual_function": "negative 'not' - it negates the past verb that follows",
+        "contextual_gloss": "not [has your Lord abandoned you]",
+        "entry_link": "/qamus/entry/b8e480aebafe",
+        "governed_expression": null,
+        "governor": null,
+        "nahw_note": "Nahw - negative ma before a past verb; the parallel 'wa-ma qala' later in the same ayah repeats the same job.",
+        "particle_identity": {
+          "entry_id": "b8e480aebafe",
+          "headword": "مَا",
+          "sense": null
+        },
+        "reason": "two independent reviewers agreed on conclusion and reason key (two-vote verified)",
+        "sarf_note": "Sarf - an indeclinable tool word; no root.",
+        "scope": "the perfect-verb clause that follows",
+        "unresolved": null
+      }
+    ],
+    "kind": "particle_clitic_word",
+    "learner_explanation": "This ma means 'not': it negates the past verb right after it. It is written exactly like the ma that means 'what(ever)' in other verses - same word in the dictionary, different job in each sentence.",
+    "morpheme_spans": [
+      {
+        "char_end": 3,
+        "char_start": 0,
+        "morpheme_occurrence_id": "morph:canary:93:3:1:ma",
+        "segment_index": 0
+      }
+    ],
+    "normalization": "NFC",
+    "occurrence_id": "quran:93:3:1",
+    "public_projection_eligible": false,
+    "root": null,
+    "rootless_pedagogy": "This particle has no root: it is a tool word, complete as it is. Its job changes with the sentence, which is why each occurrence is analyzed in place.",
+    "segments": [
+      {
+        "char_end": 3,
+        "char_start": 0,
+        "gloss": "not",
+        "nahw_note": "Nahw - here it negates the past verb that follows: 'your Lord has NOT abandoned you'.",
+        "renderer_class": "qg-negation",
+        "sarf_note": "Sarf - this particle is not built from a root; it is an indeclinable tool word.",
+        "segment_index": 0,
+        "semantic_class": "negative_ma",
+        "surface": "مَا"
+      }
+    ],
+    "surface": "مَا",
+    "unresolved": {
+      "candidate_count": 1,
+      "candidates": [
+        "Re-certify against currently authoritative repository evidence before any public certified delivery."
+      ],
+      "message": "Repository certification evidence for this occurrence has not resolved to current certification authority; certification status is held at unresolved pending re-review.",
+      "state": "certification_evidence_unresolved"
+    },
+    "whole_word_gloss": "not"
+  },
+  "projection_hash": "81f51be0b2be6dee36a5259a3bb37dea6ae07112b3310e484a61e34f72a12987",
+  "provenance": {
+    "built_by": "instD.same-surface-pair-builder v1 (2026-07-29)",
+    "provenance_class": "illustrative-from-live",
+    "source_refs": [
+      "canary:two_vote_artifact_v11_canaries#quran:93:3:1",
+      "mcp-evidence:canary-execution-2026-07-29"
     ]
-   }
-  ]
- },
- "provenance": {
-  "provenance_class": "certified",
-  "built_by": "instD.same-surface-pair-builder v1 (2026-07-29)",
-  "source_refs": [
-   "canary:two_vote_artifact_v11_canaries#quran:93:3:1",
-   "mcp-evidence:canary-execution-2026-07-29"
-  ]
- }
+  },
+  "reverse_links": {
+    "entry_to_occurrences": [
+      {
+        "entry_id": "b8e480aebafe",
+        "occurrences": [
+          {
+            "loc": "93:3:1",
+            "occurrence_id": "quran:93:3:1",
+            "page_refs": [
+              "reader:93:3"
+            ],
+            "surface": "مَا"
+          }
+        ]
+      }
+    ],
+    "occurrence_to_appearances": [
+      {
+        "appearance_id": "app:reader:93:3:w1",
+        "page_id": "reader:93:3",
+        "page_kind": "reader",
+        "projection_hash": "81f51be0b2be6dee36a5259a3bb37dea6ae07112b3310e484a61e34f72a12987"
+      }
+    ]
+  },
+  "schema": "qamus.website_projection_payload.v1",
+  "schema_version": "1.1.0"
 }

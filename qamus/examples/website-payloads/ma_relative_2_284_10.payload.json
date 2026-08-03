@@ -1,127 +1,135 @@
 {
- "schema": "qamus.website_projection_payload.v1",
- "schema_version": "1.1.0",
- "payload_kind": "occurrence_projection",
- "occurrence_id": "quran:2:284:10",
- "artifact_id": "artifact:proofp:2:284:10",
- "appearance": {
-  "appearance_id": "app:reader:2:284:w10",
-  "page_id": "reader:2:284",
-  "page_kind": "reader",
-  "page_local": {
-   "selected_highlight": false,
-   "entry_relationship": "reader",
-   "focus": null,
-   "navigation": []
-  }
- },
- "projection": {
-  "occurrence_id": "quran:2:284:10",
-  "surface": "مَا",
-  "normalization": "NFC",
-  "kind": "particle_clitic_word",
-  "segments": [
-   {
-    "segment_index": 0,
-    "surface": "مَا",
-    "char_start": 0,
-    "char_end": 3,
-    "semantic_class": "relative_ma",
-    "renderer_class": "qg-relative",
-    "gloss": "what(ever)",
-    "sarf_note": "Sarf - this particle is not built from a root; it is an indeclinable tool word.",
-    "nahw_note": "Nahw - here it works as a relative 'what(ever)', standing for the things contained in your souls."
-   }
-  ],
-  "whole_word_gloss": "what(ever)",
-  "learner_explanation": "This ma is the relative 'what(ever)': it points at the things the next words describe. The SAME written word does a different job in other verses, so each occurrence is analyzed in place.",
-  "entry_links": [
-   {
-    "entry_id": "b8e480aebafe",
-    "sense_id": null,
-    "relation_kind": "certified_entry",
-    "segment_index": 0
-   }
-  ],
-  "entry_link_state": "linked",
-  "morpheme_spans": [
-   {
-    "morpheme_occurrence_id": "morph:proofp:2:284:10:ma",
-    "segment_index": 0,
-    "char_start": 0,
-    "char_end": 3
-   }
-  ],
-  "root": null,
-  "rootless_pedagogy": "This particle has no root: it is a tool word, complete as it is. Its job changes with the sentence, which is why each occurrence is analyzed in place.",
-  "hover_cards": [
-   {
-    "component_surface": "مَا",
-    "contextual_gloss": "what(ever) [is in your souls]",
-    "particle_identity": {
-     "headword": "مَا",
-     "entry_id": "b8e480aebafe",
-     "sense": null
-    },
-    "contextual_function": "relative 'what(ever)' - it stands for the thing the following clause describes",
-    "sarf_note": "Sarf - an indeclinable tool word; no root.",
-    "nahw_note": "Nahw - relative ma: the clause after it tells you what 'what(ever)' refers to.",
-    "governor": null,
-    "governed_expression": null,
-    "scope": null,
-    "attachment": null,
-    "alternatives": [],
-    "reason": "source-described as relative ma at exactly this occurrence (direct source attestation)",
-    "unresolved": null,
-    "entry_link": "/qamus/entry/b8e480aebafe"
-   }
-  ],
-  "unresolved": null,
-  "certification": {
-   "status": "certified",
-   "plane": {
-    "function": "certified",
-    "segmentation": "candidate",
-    "contextual_gloss": "candidate"
-   }
-  },
-  "evidence_refs": [
-   "fact:proofp:sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927",
-   "example:proof-particle:particle-contract#contextual_function:2:284:10"
-  ]
- },
- "projection_hash": "b502c448d596479cfbe5834ef9fad714fd74597079e2a45977511f20f590d222",
- "reverse_links": {
-  "occurrence_to_appearances": [
-   {
+  "appearance": {
     "appearance_id": "app:reader:2:284:w10",
     "page_id": "reader:2:284",
     "page_kind": "reader",
-    "projection_hash": "b502c448d596479cfbe5834ef9fad714fd74597079e2a45977511f20f590d222"
-   }
-  ],
-  "entry_to_occurrences": [
-   {
-    "entry_id": "b8e480aebafe",
-    "occurrences": [
-     {
-      "occurrence_id": "quran:2:284:10",
-      "surface": "مَا",
-      "loc": "2:284:10",
-      "page_refs": [
-       "reader:2:284"
-      ]
-     }
+    "page_local": {
+      "entry_relationship": "reader",
+      "focus": null,
+      "navigation": [],
+      "selected_highlight": false
+    }
+  },
+  "artifact_id": "artifact:proofp:2:284:10",
+  "occurrence_id": "quran:2:284:10",
+  "payload_kind": "occurrence_projection",
+  "projection": {
+    "certification": {
+      "plane": {
+        "contextual_gloss": "candidate",
+        "function": "review_required",
+        "segmentation": "candidate"
+      },
+      "status": "unresolved"
+    },
+    "entry_link_state": "linked",
+    "entry_links": [
+      {
+        "entry_id": "b8e480aebafe",
+        "relation_kind": "certified_entry",
+        "segment_index": 0,
+        "sense_id": null
+      }
+    ],
+    "evidence_refs": [
+      "fact:proofp:sha256:c5e69dacd4fc11ac763ceeacedb01124021b5aa334e408ffab6848e989f00927",
+      "example:proof-particle:particle-contract#contextual_function:2:284:10"
+    ],
+    "hover_cards": [
+      {
+        "alternatives": [],
+        "attachment": null,
+        "component_surface": "مَا",
+        "contextual_function": "relative 'what(ever)' - it stands for the thing the following clause describes",
+        "contextual_gloss": "what(ever) [is in your souls]",
+        "entry_link": "/qamus/entry/b8e480aebafe",
+        "governed_expression": null,
+        "governor": null,
+        "nahw_note": "Nahw - relative ma: the clause after it tells you what 'what(ever)' refers to.",
+        "particle_identity": {
+          "entry_id": "b8e480aebafe",
+          "headword": "مَا",
+          "sense": null
+        },
+        "reason": "source-described as relative ma at exactly this occurrence (direct source attestation)",
+        "sarf_note": "Sarf - an indeclinable tool word; no root.",
+        "scope": null,
+        "unresolved": null
+      }
+    ],
+    "kind": "particle_clitic_word",
+    "learner_explanation": "This ma is the relative 'what(ever)': it points at the things the next words describe. The SAME written word does a different job in other verses, so each occurrence is analyzed in place.",
+    "morpheme_spans": [
+      {
+        "char_end": 3,
+        "char_start": 0,
+        "morpheme_occurrence_id": "morph:proofp:2:284:10:ma",
+        "segment_index": 0
+      }
+    ],
+    "normalization": "NFC",
+    "occurrence_id": "quran:2:284:10",
+    "public_projection_eligible": false,
+    "root": null,
+    "rootless_pedagogy": "This particle has no root: it is a tool word, complete as it is. Its job changes with the sentence, which is why each occurrence is analyzed in place.",
+    "segments": [
+      {
+        "char_end": 3,
+        "char_start": 0,
+        "gloss": "what(ever)",
+        "nahw_note": "Nahw - here it works as a relative 'what(ever)', standing for the things contained in your souls.",
+        "renderer_class": "qg-relative",
+        "sarf_note": "Sarf - this particle is not built from a root; it is an indeclinable tool word.",
+        "segment_index": 0,
+        "semantic_class": "relative_ma",
+        "surface": "مَا"
+      }
+    ],
+    "surface": "مَا",
+    "unresolved": {
+      "candidate_count": 1,
+      "candidates": [
+        "Re-certify against currently authoritative repository evidence before any public certified delivery."
+      ],
+      "message": "Repository certification evidence for this occurrence has not resolved to current certification authority; certification status is held at unresolved pending re-review.",
+      "state": "certification_evidence_unresolved"
+    },
+    "whole_word_gloss": "what(ever)"
+  },
+  "projection_hash": "941fcb8b512d883ab01d54ee1cc1971ad9b6583efb76fdcf82772c660ccec0f4",
+  "provenance": {
+    "built_by": "instD.same-surface-pair-builder v1 (2026-07-29)",
+    "provenance_class": "illustrative-from-live",
+    "source_refs": [
+      "example:proof-particle:particle-contract#contextual_function:2:284:10",
+      "example:proof-particle:PROOFP-MANIFEST"
     ]
-   }
-  ]
- },
- "provenance": {
-  "provenance_class": "certified",
-  "built_by": "instD.same-surface-pair-builder v1 (2026-07-29)",
-  "source_refs": [
-   "example:proof-particle:particle-contract#contextual_function:2:284:10",
-   "example:proof-particle:PROOFP-MANIFEST"
-  ]
- }
+  },
+  "reverse_links": {
+    "entry_to_occurrences": [
+      {
+        "entry_id": "b8e480aebafe",
+        "occurrences": [
+          {
+            "loc": "2:284:10",
+            "occurrence_id": "quran:2:284:10",
+            "page_refs": [
+              "reader:2:284"
+            ],
+            "surface": "مَا"
+          }
+        ]
+      }
+    ],
+    "occurrence_to_appearances": [
+      {
+        "appearance_id": "app:reader:2:284:w10",
+        "page_id": "reader:2:284",
+        "page_kind": "reader",
+        "projection_hash": "941fcb8b512d883ab01d54ee1cc1971ad9b6583efb76fdcf82772c660ccec0f4"
+      }
+    ]
+  },
+  "schema": "qamus.website_projection_payload.v1",
+  "schema_version": "1.1.0"
 }

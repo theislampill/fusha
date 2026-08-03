@@ -2595,10 +2595,16 @@ for _script, _args, _label in (
          "L1-L6 corpus-pilot envelopes are fresh"),
         ("build_curriculum_pvn_links.py", ["--check"],
          "L1-L6 P/V/N candidate links are fresh"),
+        ("build_curriculum_pvn_links.py", ["--self-test"],
+         "L1-L6 P/V/N candidate link generator self-test"),
         ("build_curriculum_occurrence_bridge.py", ["--check"],
          "L1-L6 occurrence bridge artifacts are fresh"),
+        ("build_curriculum_occurrence_bridge.py", ["--self-test"],
+         "L1-L6 occurrence bridge generator self-test"),
         ("build_p007_website_payloads.py", ["--check"],
          "p007 website-handoff samples follow canonical occurrence facts"),
+        ("build_p007_website_payloads.py", ["--self-test"],
+         "p007 website-handoff samples generator self-test"),
         ("validate_detector_maturity.py", ["--self-test"], "Phase2 detector maturity validator self-test"),
         ("validate_detector_maturity.py",
          [os.path.join(_R, "qamus", "examples", "detector_maturity.sample.json")],
@@ -6281,7 +6287,7 @@ except Exception as _pedges_e:
 # renderer-facing payload shape the separate website agent consumes.
 # Red-first validator (missing entry links, i'rab prose leak, hash fork,
 # non-whitelist page-local metadata, segment-reconstruction failure) plus
-# nine committed green samples. Fixture-only: a fresh clone never depends on
+# 11 committed green samples. Fixture-only: a fresh clone never depends on
 # lane-side corpora or live pages.
 try:
     _webh_self = run_text([
@@ -6321,7 +6327,9 @@ try:
             "verb_qamu_2_20_13.payload.json",
             "noun_rajulayni_2_282_59.payload.json",
             # same-surface/different-analysis pair (steer §19): one surface,
-            # two occurrences, two different certified functions.
+            # two occurrences, two distinct occurrence-specific candidate
+            # analyses (neither currently certified; see the evidence
+            # fail-closed migration below).
             "ma_relative_2_284_10.payload.json",
             "ma_nafiya_93_3_1.payload.json",
     ):
@@ -6333,6 +6341,78 @@ try:
 except Exception as _webh_e:
     check("WEBHANDOFF website payload gates (harness error)", False)
     print("  ", _webh_e)
+
+# WEBHANDOFF: repository-evidence resolver + the two fail-closed migrations
+# it drives (owner steer §11 follow-on, TP-PVN-REANCHOR-HARNESS-INTEGRATION-
+# W1). The resolver is the single evidence-authority source
+# `check_evidence_resolution` in tools/validate_website_payload.py consults;
+# the migrations are the committed deterministic repair path for payloads
+# whose cited evidence no longer resolves as certification authority
+# (formerly-certified samples become unresolved/review_required, and
+# non-authoritative samples get an explicit public_projection_eligible:
+# false) rather than a hand-edited fix with no reproducible transformation.
+try:
+    _webev_resolver = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "website_evidence_resolver.py"),
+    ], timeout=120)
+    _webev_out = _webev_resolver.stdout or ""
+    check(
+        "WEBHANDOFF evidence resolver focused proof passes",
+        _webev_resolver.returncode == 0
+        and "ALL FOCUSED PROOF CASES PASSED" in _webev_out
+        and "ALL AUTHORITY-INTEGRITY PROOF CASES PASSED" in _webev_out
+        and "ALL REMAINING-SCHEME PROOF CASES PASSED" in _webev_out,
+    )
+
+    _webev_fc_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "migrate_website_evidence_fail_closed.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "WEBHANDOFF evidence fail-closed migration self-test passes",
+        _webev_fc_self.returncode == 0
+        and "ALL SELF-TEST CASES PASSED" in (_webev_fc_self.stdout or ""),
+    )
+    _webev_fc_check = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "migrate_website_evidence_fail_closed.py"),
+        "--check",
+    ], timeout=120)
+    check(
+        "WEBHANDOFF evidence fail-closed migration check is green "
+        "(4/4 payloads)",
+        _webev_fc_check.returncode == 0
+        and "WEBSITE EVIDENCE FAIL-CLOSED MIGRATION CHECK: PASS"
+        in (_webev_fc_check.stdout or ""),
+    )
+
+    _webev_pe_self = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "migrate_website_public_eligibility.py"),
+        "--self-test",
+    ], timeout=120)
+    check(
+        "WEBHANDOFF public-eligibility migration self-test passes",
+        _webev_pe_self.returncode == 0
+        and "ALL SELF-TEST CASES PASSED" in (_webev_pe_self.stdout or ""),
+    )
+    _webev_pe_check = run_text([
+        sys.executable,
+        os.path.join(ROOT, "tools", "migrate_website_public_eligibility.py"),
+        "--check",
+    ], timeout=120)
+    check(
+        "WEBHANDOFF public-eligibility migration check is green "
+        "(4/4 payloads)",
+        _webev_pe_check.returncode == 0
+        and "WEBSITE PUBLIC ELIGIBILITY MIGRATION CHECK: PASS"
+        in (_webev_pe_check.stdout or ""),
+    )
+except Exception as _webev_e:
+    check("WEBHANDOFF evidence fail-closed gates (harness error)", False)
+    print("  ", _webev_e)
 
 # TASKPACKET: delegable task packets (institutionalization lane D, steer §14).
 # qamus.task_packet.v1 — self-contained work orders a weaker model executes

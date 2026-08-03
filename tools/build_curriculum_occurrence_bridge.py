@@ -32,14 +32,97 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "curriculum" / "l1l6"
 P007 = ROOT / "qamus" / "examples" / "p007-li-pilot"
 
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from tools import build_curriculum_pvn_links as pvn_links  # noqa: E402
+
+
+class OccurrenceBridgeFailClosed(ValueError):
+    """Refused rather than best-effort bridged: link-to-payload drift or an
+    unbindable payload posture."""
+
 
 def _jsonl(p):
     return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
+def payload_unresolved_dependencies(binding):
+    """Explicit dependency naming a non-certified source's posture, plus
+    the existing future-occurrence discriminator dependency."""
+    deps = []
+    if binding["certification_status"] != "certified":
+        deps.append(
+            "source payload certification_status=%s "
+            "(unresolved_state=%s); public_projection_eligible=%s — this "
+            "occurrence is not publicly deliverable pending re-certification"
+            % (binding["certification_status"], binding["unresolved_state"],
+               binding["public_projection_eligible"]))
+    deps.append(
+        "per-occurrence discriminator features (following form, "
+        "clause type) as declared evidence for any FURTHER "
+        "occurrence beyond the payload exemplars")
+    return deps
+
+
+def build_payload_bound_fields(link, payload_file):
+    """The payload-authority row fields for one ma occurrence link.
+
+    Copies (never reconstructs a different subset of) the precise link's
+    payload_binding, but only after verifying it exactly matches a fresh
+    binding recomputed from the current committed payload — refusing
+    (OccurrenceBridgeFailClosed) on any link-to-payload drift.
+    """
+    occ = link.get("occurrence_id")
+    pl = json.loads((ROOT / payload_file).read_text(encoding="utf-8"))
+    if pl.get("occurrence_id") != occ:
+        raise OccurrenceBridgeFailClosed("payload/occ drift: %s" % occ)
+    recomputed = pvn_links.build_payload_binding(payload_file, pl)
+    link_binding = link.get("payload_binding")
+    if not isinstance(link_binding, dict):
+        raise OccurrenceBridgeFailClosed(
+            "%s: precise link carries no payload_binding to verify against "
+            "the current payload" % occ)
+    mismatches = sorted(k for k in recomputed if link_binding.get(k) != recomputed[k])
+    if mismatches:
+        raise OccurrenceBridgeFailClosed(
+            "%s: link-to-payload binding drift in field(s) %s — the "
+            "precise link's payload_binding no longer matches the current "
+            "payload" % (occ, ", ".join(mismatches)))
+
+    apps = pl["reverse_links"]["occurrence_to_appearances"]
+    plane = (pl["projection"].get("certification") or {}).get("plane", {})
+    return {
+        "surface": pl["projection"]["surface"],
+        "payload_binding": dict(link_binding),
+        "appearances": {
+            "rows": apps,
+            "count": len(apps),
+            "page_relation_note": "appearance ids are page-scoped renderings from the committed payload's reverse links; page relations are the payload's own (verbatim)",
+            "single_hash_parity": {a["projection_hash"] for a in apps}
+                                  == {pl["projection_hash"]},
+        },
+        "required_fact_planes": plane,
+        "required_sarf_facts": [],
+        "required_sarf_facts_note": (
+            "rootless particle per the payload (root: null); no sarf "
+            "fact is required for this occurrence"),
+        "required_nahw_facts": sorted(pl["projection"].get("evidence_refs") or []),
+        "required_nahw_facts_note": (
+            "the payload's function-plane evidence refs, verbatim — "
+            "declared dependencies only; an unresolved/review-required "
+            "occurrence's evidence refs are never treated as a backing "
+            "fact by presence alone"),
+        "unresolved_dependencies": payload_unresolved_dependencies(recomputed),
+    }
+
+
 def build():
     units = _jsonl(BASE / "units" / "instructional-units.jsonl")
-    plinks = _jsonl(BASE / "links" / "pvn-precise-links.jsonl")
+    # recomputed in-process (never read back from the committed output file)
+    # so an ma occurrence's payload_binding is always verified against the
+    # current payload, never against a possibly-stale link on disk.
+    plinks = pvn_links.build()
     ledger = _jsonl(BASE / "reports" / "absorption-ledger.jsonl")
     facts = _jsonl(P007 / "typed-facts.jsonl")
     projections = _jsonl(P007 / "projections.jsonl")
@@ -117,38 +200,7 @@ def build():
             # finding 4): the payload's EXACT surface, appearances, fact
             # planes and binding are preserved — never degraded to
             # surface:null / zero appearances
-            pl = json.loads((ROOT / payload_files[0]).read_text(encoding="utf-8"))
-            assert pl["occurrence_id"] == occ, "payload/occ drift: %s" % occ
-            apps = pl["reverse_links"]["occurrence_to_appearances"]
-            row["surface"] = pl["projection"]["surface"]
-            row["payload_binding"] = {
-                "payload_file": payload_files[0],
-                "artifact_id": pl["artifact_id"],
-                "projection_hash": pl["projection_hash"],
-                "schema": pl["schema"],
-            }
-            row["appearances"] = {
-                "rows": apps,
-                "count": len(apps),
-                "page_relation_note": "appearance ids are page-scoped renderings from the committed payload's reverse links; page relations are the payload's own (verbatim)",
-                "single_hash_parity": {a["projection_hash"] for a in apps}
-                                      == {pl["projection_hash"]},
-            }
-            plane = (pl["projection"].get("certification") or {}).get("plane", {})
-            row["required_fact_planes"] = plane
-            row["required_sarf_facts"] = []
-            row["required_sarf_facts_note"] = (
-                "rootless particle per the payload (root: null); no sarf "
-                "fact is required for this occurrence")
-            row["required_nahw_facts"] = sorted(
-                pl["projection"].get("evidence_refs") or [])
-            row["required_nahw_facts_note"] = (
-                "the payload's function plane evidence refs, verbatim — the "
-                "contextual-function fact backing this occurrence")
-            row["unresolved_dependencies"] = [
-                "per-occurrence discriminator features (following form, "
-                "clause type) as declared evidence for any FURTHER "
-                "occurrence beyond the payload exemplars"]
+            row.update(build_payload_bound_fields(link, payload_files[0]))
         elif occ:
             row["appearances"] = {"rows": [], "count": 0,
                                   "page_relation_note": "no committed projection row for this occurrence; appearances enumerable only after its projection artifact exists"}
@@ -221,9 +273,102 @@ def serialize(rows, readiness):
     return out
 
 
+# --------------------------------------------------------------------------- #
+# self-test -- synthetic fixtures only, never the tracked payload/link files
+# --------------------------------------------------------------------------- #
+
+def _run(label, condition, failures):
+    print(("ok   " if condition else "FAIL ") + label)
+    if not condition:
+        failures.append(label)
+
+
+def self_test():
+    failures = []
+
+    ma_file = "qamus/examples/website-payloads/ma_nafiya_93_3_1.payload.json"
+    real_pl = json.loads((ROOT / ma_file).read_text(encoding="utf-8"))
+    correct_binding = pvn_links.build_payload_binding(ma_file, real_pl)
+    good_link = {
+        "occurrence_id": real_pl["occurrence_id"],
+        "payload_binding": correct_binding,
+    }
+
+    fields = build_payload_bound_fields(good_link, ma_file)
+    _run("unresolved/review-required payload posture propagates into the "
+        "bridge row",
+        fields["payload_binding"]["certification_status"] == "unresolved"
+        and fields["payload_binding"]["public_projection_eligible"] is False,
+        failures)
+    _run("evidence refs remain dependencies (sorted required_nahw_facts, "
+        "never asserted as a backing fact)",
+        fields["required_nahw_facts"]
+        == sorted(real_pl["projection"]["evidence_refs"])
+        and "fact backing this occurrence" not in fields["required_nahw_facts_note"]
+        and "never" in fields["required_nahw_facts_note"],
+        failures)
+    _run("a non-certified posture adds an explicit unresolved dependency "
+        "naming status/state/eligibility",
+        any(
+            "certification_status=unresolved" in dep
+            and "public_projection_eligible=False" in dep
+            for dep in fields["unresolved_dependencies"]
+        )
+        and any("FURTHER" in dep for dep in fields["unresolved_dependencies"]),
+        failures)
+
+    # binding drift is rejected by the bridge.
+    drifted_link = {
+        "occurrence_id": real_pl["occurrence_id"],
+        "payload_binding": {**correct_binding, "public_projection_eligible": True},
+    }
+    try:
+        build_payload_bound_fields(drifted_link, ma_file)
+        rejected = False
+    except OccurrenceBridgeFailClosed:
+        rejected = True
+    _run("link-to-payload binding drift is rejected by the bridge",
+        rejected, failures)
+
+    missing_binding_link = {"occurrence_id": real_pl["occurrence_id"]}
+    try:
+        build_payload_bound_fields(missing_binding_link, ma_file)
+        rejected = False
+    except OccurrenceBridgeFailClosed:
+        rejected = True
+    _run("a link carrying no payload_binding is rejected, not "
+        "best-effort bridged", rejected, failures)
+
+    # quran:61:5:4 and p007 non-ma paths are not rewritten by these
+    # ma-specific checks: the real build() never attaches a payload_binding
+    # to a class-1 pilot-occurrence bridge row.
+    rows, _readiness = build()
+    frozen = [r for r in rows if r.get("occurrence_id") == "quran:61:5:4"]
+    _run("quran:61:5:4 (p007 pilot occurrence) bridge row carries no "
+        "ma-specific payload_binding",
+        bool(frozen) and all("payload_binding" not in r for r in frozen),
+        failures)
+    p007_rows = [r for r in rows if r.get("source_key") == "p007"]
+    _run("p007 bridge rows carry no payload_binding",
+        bool(p007_rows) and all("payload_binding" not in r for r in p007_rows),
+        failures)
+
+    if failures:
+        print("\n%d SELF-TEST CASE(S) FAILED" % len(failures))
+        return 1
+    print("\nALL SELF-TEST CASES PASSED")
+    return 0
+
+
 def main(argv):
+    if "--self-test" in argv:
+        return self_test()
     check = "--check" in argv
-    files = serialize(*build())
+    try:
+        files = serialize(*build())
+    except OccurrenceBridgeFailClosed as exc:
+        print("OCCURRENCE BRIDGE REFUSED: %s" % exc)
+        return 1
     bad = []
     for path, data in sorted(files.items()):
         p = Path(path)

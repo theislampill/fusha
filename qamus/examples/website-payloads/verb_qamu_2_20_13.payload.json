@@ -1,162 +1,170 @@
 {
- "schema": "qamus.website_projection_payload.v1",
- "schema_version": "1.0.0",
- "payload_kind": "occurrence_projection",
- "occurrence_id": "quran:2:20:13",
- "artifact_id": "artifact:vncanary:2:20:13",
- "appearance": {
-  "appearance_id": "app:entry:3041d6f44a27:card-2-20",
-  "page_id": "entry:3041d6f44a27",
-  "page_kind": "entry",
-  "page_local": {
-   "selected_highlight": true,
-   "entry_relationship": "own-entry-example",
-   "focus": "example-card",
-   "navigation": []
-  }
- },
- "projection": {
-  "occurrence_id": "quran:2:20:13",
-  "surface": "قَامُوا",
-  "normalization": "NFC",
-  "kind": "verb_word",
-  "segments": [
-   {
-    "segment_index": 0,
-    "surface": "قَامُ",
-    "char_start": 0,
-    "char_end": 5,
-    "semantic_class": "verb_stem_past",
-    "renderer_class": "qg-verb-stem",
-    "gloss": "stood (still)",
-    "sarf_note": "Sarf - Form I past verb of the hollow root ق و م: the middle radical waw is not on the surface; the long alif stands in its place (its origin is qawama).",
-    "nahw_note": "Nahw - the completed action: whenever the lightning goes dark, they stand still."
-   },
-   {
-    "segment_index": 1,
-    "surface": "وا",
-    "char_start": 5,
-    "char_end": 7,
-    "semantic_class": "subject_pronoun_3mp",
-    "renderer_class": "qg-subject-pronoun",
-    "gloss": "they",
-    "sarf_note": "Sarf - the plural 'they' built into the verb: the long waw plus a silent alif of spelling.",
-    "nahw_note": "Nahw - the doers of the standing."
-   }
-  ],
-  "whole_word_gloss": "they stood (still)",
-  "learner_explanation": "A past verb with the plural 'they' built in: whenever the lightning goes dark, they stand still. The middle letter of the root ق و م hides inside the long alif.",
-  "entry_links": [
-   {
-    "entry_id": "3041d6f44a27",
-    "sense_id": null,
-    "relation_kind": "certified_entry",
-    "segment_index": 0
-   }
-  ],
-  "entry_link_state": "linked",
-  "morpheme_spans": [
-   {
-    "morpheme_occurrence_id": "morph:vncanary:2:20:13:stem",
-    "segment_index": 0,
-    "char_start": 0,
-    "char_end": 5
-   },
-   {
-    "morpheme_occurrence_id": "morph:vncanary:2:20:13:subj3mp",
-    "segment_index": 1,
-    "char_start": 5,
-    "char_end": 7
-   }
-  ],
-  "root": "ق و م",
-  "rootless_pedagogy": null,
-  "hover_cards": [
-   {
-    "component_surface": "قَامُوا",
-    "contextual_gloss": "they stood (still)",
-    "particle_identity": null,
-    "contextual_function": "past verb with the plural 'they' built in",
-    "sarf_note": "Sarf - a hollow root: the waw radical of ق و م is elided on the surface and the long alif stands in for it. The final waw plus silent alif is the plural 'they'.",
-    "nahw_note": "Nahw - a complete little clause: the built-in 'they' are the doers of the standing.",
-    "governor": null,
-    "governed_expression": null,
-    "scope": null,
-    "attachment": {
-     "host": "قَامُ",
-     "boundary": "verb stem | subject suffix وا"
-    },
-    "alternatives": [],
-    "reason": "root and entry attachment certified in the vn-entry-canaries lane store by cross-source corroboration (entry field + verbatim word analysis); segmentation follows the canary projection and stays candidate",
-    "unresolved": null,
-    "entry_link": "/qamus/entry/3041d6f44a27"
-   }
-  ],
-  "unresolved": null,
-  "certification": {
-   "status": "certified",
-   "plane": {
-    "root": "certified",
-    "lexeme_attachment": "certified",
-    "segmentation": "candidate",
-    "function": "candidate"
-   }
-  },
-  "evidence_refs": [
-   "fact:vncanary:sha256:4476af6a84bdc8a3676063f49c597555b2043f82b2938a3b8d2dd9f77ee6d536",
-   "fact:vncanary:sha256:65228ff63a4597a01da8d753577d4342f23cb4f8e1055a67794d0c8ff618f512",
-   "mcp-evidence:vn-entry-canaries#mcp:2:20:13"
-  ]
- },
- "projection_hash": "8514a8644811a7f3b766cf60c104a86bd0e3f339f2943daedacf56926fdcabca",
- "reverse_links": {
-  "occurrence_to_appearances": [
-   {
-    "appearance_id": "app:reader:2:20:13",
-    "page_id": "reader:2:20",
-    "page_kind": "reader",
-    "projection_hash": "8514a8644811a7f3b766cf60c104a86bd0e3f339f2943daedacf56926fdcabca"
-   },
-   {
+  "appearance": {
     "appearance_id": "app:entry:3041d6f44a27:card-2-20",
     "page_id": "entry:3041d6f44a27",
     "page_kind": "entry",
-    "projection_hash": "8514a8644811a7f3b766cf60c104a86bd0e3f339f2943daedacf56926fdcabca"
-   }
-  ],
-  "entry_to_occurrences": [
-   {
-    "entry_id": "3041d6f44a27",
-    "occurrences": [
-     {
-      "occurrence_id": "quran:2:20:13",
-      "surface": "قَامُوا",
-      "loc": "2:20:13",
-      "page_refs": [
-       "reader:2:20",
-       "entry:3041d6f44a27"
-      ]
-     },
-     {
-      "occurrence_id": "quran:2:255:7",
-      "surface": "الْقَيُّومُ",
-      "loc": "2:255:7",
-      "page_refs": [
-       "reader:2:255",
-       "entry:3041d6f44a27"
-      ]
-     }
+    "page_local": {
+      "entry_relationship": "own-entry-example",
+      "focus": "example-card",
+      "navigation": [],
+      "selected_highlight": true
+    }
+  },
+  "artifact_id": "artifact:vncanary:2:20:13",
+  "occurrence_id": "quran:2:20:13",
+  "payload_kind": "occurrence_projection",
+  "projection": {
+    "certification": {
+      "plane": {
+        "function": "candidate",
+        "lexeme_attachment": "review_required",
+        "root": "review_required",
+        "segmentation": "candidate"
+      },
+      "status": "unresolved"
+    },
+    "entry_link_state": "linked",
+    "entry_links": [
+      {
+        "entry_id": "3041d6f44a27",
+        "relation_kind": "certified_entry",
+        "segment_index": 0,
+        "sense_id": null
+      }
+    ],
+    "evidence_refs": [
+      "fact:vncanary:sha256:4476af6a84bdc8a3676063f49c597555b2043f82b2938a3b8d2dd9f77ee6d536",
+      "fact:vncanary:sha256:65228ff63a4597a01da8d753577d4342f23cb4f8e1055a67794d0c8ff618f512",
+      "mcp-evidence:vn-entry-canaries#mcp:2:20:13"
+    ],
+    "hover_cards": [
+      {
+        "alternatives": [],
+        "attachment": {
+          "boundary": "verb stem | subject suffix وا",
+          "host": "قَامُ"
+        },
+        "component_surface": "قَامُوا",
+        "contextual_function": "past verb with the plural 'they' built in",
+        "contextual_gloss": "they stood (still)",
+        "entry_link": "/qamus/entry/3041d6f44a27",
+        "governed_expression": null,
+        "governor": null,
+        "nahw_note": "Nahw - a complete little clause: the built-in 'they' are the doers of the standing.",
+        "particle_identity": null,
+        "reason": "root and entry attachment certified in the vn-entry-canaries lane store by cross-source corroboration (entry field + verbatim word analysis); segmentation follows the canary projection and stays candidate",
+        "sarf_note": "Sarf - a hollow root: the waw radical of ق و م is elided on the surface and the long alif stands in for it. The final waw plus silent alif is the plural 'they'.",
+        "scope": null,
+        "unresolved": null
+      }
+    ],
+    "kind": "verb_word",
+    "learner_explanation": "A past verb with the plural 'they' built in: whenever the lightning goes dark, they stand still. The middle letter of the root ق و م hides inside the long alif.",
+    "morpheme_spans": [
+      {
+        "char_end": 5,
+        "char_start": 0,
+        "morpheme_occurrence_id": "morph:vncanary:2:20:13:stem",
+        "segment_index": 0
+      },
+      {
+        "char_end": 7,
+        "char_start": 5,
+        "morpheme_occurrence_id": "morph:vncanary:2:20:13:subj3mp",
+        "segment_index": 1
+      }
+    ],
+    "normalization": "NFC",
+    "occurrence_id": "quran:2:20:13",
+    "public_projection_eligible": false,
+    "root": "ق و م",
+    "rootless_pedagogy": null,
+    "segments": [
+      {
+        "char_end": 5,
+        "char_start": 0,
+        "gloss": "stood (still)",
+        "nahw_note": "Nahw - the completed action: whenever the lightning goes dark, they stand still.",
+        "renderer_class": "qg-verb-stem",
+        "sarf_note": "Sarf - Form I past verb of the hollow root ق و م: the middle radical waw is not on the surface; the long alif stands in its place (its origin is qawama).",
+        "segment_index": 0,
+        "semantic_class": "verb_stem_past",
+        "surface": "قَامُ"
+      },
+      {
+        "char_end": 7,
+        "char_start": 5,
+        "gloss": "they",
+        "nahw_note": "Nahw - the doers of the standing.",
+        "renderer_class": "qg-subject-pronoun",
+        "sarf_note": "Sarf - the plural 'they' built into the verb: the long waw plus a silent alif of spelling.",
+        "segment_index": 1,
+        "semantic_class": "subject_pronoun_3mp",
+        "surface": "وا"
+      }
+    ],
+    "surface": "قَامُوا",
+    "unresolved": {
+      "candidate_count": 1,
+      "candidates": [
+        "Re-certify against currently authoritative repository evidence before any public certified delivery."
+      ],
+      "message": "Repository certification evidence for this occurrence has not resolved to current certification authority; certification status is held at unresolved pending re-review.",
+      "state": "certification_evidence_unresolved"
+    },
+    "whole_word_gloss": "they stood (still)"
+  },
+  "projection_hash": "ee621ea8e01104cfa35c452150f0772e792df500947600f45022f4f436f70e1f",
+  "provenance": {
+    "built_by": "packets.website-handoff.delivery-builder v1 (2026-07-29)",
+    "provenance_class": "illustrative-from-live",
+    "source_refs": [
+      "packet:vn-entry-canaries:two-surface-projections#canary:2:20:13",
+      "typed-fact-store:vn-entry-canaries:events#root:2:20:13",
+      "typed-fact-store:vn-entry-canaries:events#lexeme:2:20:13"
     ]
-   }
-  ]
- },
- "provenance": {
-  "provenance_class": "certified",
-  "built_by": "packets.website-handoff.delivery-builder v1 (2026-07-29)",
-  "source_refs": [
-   "packet:vn-entry-canaries:two-surface-projections#canary:2:20:13",
-   "typed-fact-store:vn-entry-canaries:events#root:2:20:13",
-   "typed-fact-store:vn-entry-canaries:events#lexeme:2:20:13"
-  ]
- }
+  },
+  "reverse_links": {
+    "entry_to_occurrences": [
+      {
+        "entry_id": "3041d6f44a27",
+        "occurrences": [
+          {
+            "loc": "2:20:13",
+            "occurrence_id": "quran:2:20:13",
+            "page_refs": [
+              "reader:2:20",
+              "entry:3041d6f44a27"
+            ],
+            "surface": "قَامُوا"
+          },
+          {
+            "loc": "2:255:7",
+            "occurrence_id": "quran:2:255:7",
+            "page_refs": [
+              "reader:2:255",
+              "entry:3041d6f44a27"
+            ],
+            "surface": "الْقَيُّومُ"
+          }
+        ]
+      }
+    ],
+    "occurrence_to_appearances": [
+      {
+        "appearance_id": "app:reader:2:20:13",
+        "page_id": "reader:2:20",
+        "page_kind": "reader",
+        "projection_hash": "ee621ea8e01104cfa35c452150f0772e792df500947600f45022f4f436f70e1f"
+      },
+      {
+        "appearance_id": "app:entry:3041d6f44a27:card-2-20",
+        "page_id": "entry:3041d6f44a27",
+        "page_kind": "entry",
+        "projection_hash": "ee621ea8e01104cfa35c452150f0772e792df500947600f45022f4f436f70e1f"
+      }
+    ]
+  },
+  "schema": "qamus.website_projection_payload.v1",
+  "schema_version": "1.0.0"
 }

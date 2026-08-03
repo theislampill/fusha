@@ -70,6 +70,7 @@ The contract §5 obligations, verified and reported:
 | Same-surface/different-analysis pair renders as two DIFFERENT analyses (`ma_relative_2_284_10` vs `ma_nafiya_93_3_1`) with no cross-contamination and no shared cache entry | PASS / FAIL |
 | Multi-entry token renders each `entry_links` relation kind in its own register (sample 7) | PASS / FAIL |
 | `qg-unresolved` renders neutral only; alternatives in the alternatives plane | PASS / FAIL |
+| **Fail-closed delivery:** every consumed payload with `certification.status` `candidate` \| `unresolved` \| `review_required` is rendered/cached as explicitly non-authoritative (no "certified"-looking chrome, no publish/deploy affordance), matching its `public_projection_eligible: false`; the renderer never infers eligibility from `certification.status` text, an `evidence_refs` entry's mere presence, or a provenance/source label — only from the payload's own explicit `public_projection_eligible` boolean, which `tools/website_evidence_resolver.py` + `tools/validate_website_payload.py` compute fail-closed on the repository's committed evidence | PASS / FAIL |
 
 Any FAIL row is a defect report: include payload file, field, observed vs
 expected, and screenshot/DOM reference (internal ids only).

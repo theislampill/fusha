@@ -218,11 +218,17 @@ The `root_family_of_entry` link in the 61:5:4 payload above (and the
 root relation ≠ dictionary identity: the segment's own `sarf_note` teaches
 "the same root also builds the verb qama — a root-family relation, not a
 shared dictionary entry." Machine guards: `root_agreement_never_lexeme_edge`;
-evidence method `root_agreement_only`; certified root/lexeme attachment for
-the v005/n225 canaries lives in the vn-entry-canaries lane store (see
+evidence method `root_agreement_only`. A separate `vn-entry-canaries` lane
+store once claimed root/lexeme attachment certified for the v005/n225
+canaries, but that lane store is not one of the two committed certification
+stores `tools/website_evidence_resolver.py` consults, so those payloads
+(`verb_qamu_2_20_13` / `noun_rajulayni_2_282_59`) currently carry
+`certification.status: unresolved`, `plane.root: review_required` /
+`plane.lexeme_attachment: review_required`, and
+`public_projection_eligible: false` (see
 `docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md`
-§12, `verb_qamu_2_20_13` / `noun_rajulayni_2_282_59` rows — root honestly
-*candidate* where corroboration is still owed).
+§12) pending re-certification against currently authoritative repository
+evidence — neither row is currently certified payload authority.
 
 ### 4.4 An unresolved lattice — مَا at `quran:2:284:2`
 

@@ -26,8 +26,8 @@ exit 0 with the stated terminal line.
 | 15 | p007 tally recompute | `python tools/validate_p007_universe.py` |
 | 16 | Fixtures (hazard + invariants) | `python -m unittest tools.test_hazard_fixtures tools.test_entry_transclusion_invariants -q` |
 | 17 | VN readiness | `python tools/build_vn_readiness_v2.py` then `python tools/validate_vn_readiness_v2.py` |
-| 18 | Website payload validation | `python tools/validate_website_payload.py` |
-| 19 | Website payload generation | **GAP** — samples under `qamus/examples/website-payloads/` are hand-assembled per `docs/qamus/website-handoff/WEBSITE-AGENT-HANDOFF-CONTRACT-2026-07-29.md`; no committed generator yet |
+| 18 | Website payload validation | `python tools/validate_website_payload.py --self-test` then `python tools/validate_website_payload.py` (full 11-sample validation) |
+| 19 | Website payload generation | p007-derived samples: `python tools/build_p007_website_payloads.py --self-test` then `--check`. Hand-assembled samples (`ma_*`, `verb_*`, `noun_*`, `no_entry_link_*`, `unresolved_ma_*`, `multi_entry_*`) have no generator, but their public-eligibility/evidence posture has a committed deterministic repair path — never a hand edit — via command 33 |
 | 20 | Programme state refresh | `python tools/build_current_state.py` (freshness: `--check`) |
 | 21 | P/V/N rollout map | `python tools/build_pvn_rollout_map.py` (freshness: `--check`; invariants: `--self-test`) |
 | 22 | Artifact ergonomics | `python tools/check_artifact_ergonomics.py` |
@@ -41,6 +41,9 @@ exit 0 with the stated terminal line.
 | 30 | Naḥw behavioural + mutation gates | `python tools/test_nahw_behavioural_gates.py` |
 | 31 | Naḥw rule-consumer self-tests | `python tools/fusha_nahw_particle_rules.py --self-test` · `python tools/fusha_nahw_context_rules.py --self-test` · `python tools/fusha_nahw_gate_rules.py --self-test` |
 | 32 | Naḥw consumption inventory | `python tools/fusha_nahw_particle_rules.py --status` (context/gate: same flag) · gate divergences: `python tools/fusha_nahw_gate_rules.py --divergences` |
+| 33 | Website evidence fail-closed migration | `python tools/migrate_website_evidence_fail_closed.py --self-test` then `--check` (freshness) then, only to apply a new red, `--apply`. Deterministically downgrades a payload whose evidence no longer resolves as certification authority to `certification.status: unresolved` / `plane: review_required`, `public_projection_eligible: false`, `provenance_class: illustrative-from-live`, recomputing hashes — never a hand edit |
+| 34 | Website public-eligibility migration | `python tools/migrate_website_public_eligibility.py --self-test` then `--check` (freshness) then, only to apply a new red, `--apply`. Deterministically sets an explicit `public_projection_eligible: false` on an already non-authoritative payload, byte-preserving every other field and recomputing hashes |
+| 35 | Website evidence resolution (read-only) | `python tools/website_evidence_resolver.py` — focused proof of the repository-evidence resolver `tools/validate_website_payload.py` consults; never mutates a payload |
 
 ## Details per operation
 
@@ -125,9 +128,12 @@ than believed.
     the 12 entry-transclusion invariants. Exit: unittest `OK`.
 17. **VN readiness** — builds/validates the VN readiness matrix
     (`vn-readiness-matrix.json`, VNPROP namespace preserved separately).
-18. **Website payload validation** — validates
-    `qamus.website_projection_payload.v1` samples against the handoff
-    contract; parity is a renderer obligation.
+18. **Website payload validation** — `--self-test` is the red-first suite
+    (missing entry links, iʿrāb prose leak, hash fork, non-authoritative
+    `public_projection_eligible`); the bare command validates all 11
+    committed `qamus.website_projection_payload.v1` samples against the
+    handoff contract, including evidence resolution (command 35); parity is a
+    renderer obligation.
 20–21. **State refresh** — regenerate `docs/current-state.yaml` and
     `qamus/reports/pvn-rollout-map.jsonl`; both `--check` modes are wired into
     the harness so stale committed state fails CI.
@@ -173,6 +179,36 @@ than believed.
     **no longer runnerless**: `tools/run_nahw_evals.py` is registered as an
     invoked contract runner under its own result schema. Neither flag asserts
     behavioural coverage; of those seven artifacts only 2 (13 rows) earn it.
+33. **Website evidence fail-closed migration** — the committed, deterministic
+    repair path for a website payload whose cited `evidence_refs` no longer
+    resolve (command 35) as `authoritative_for_certification`: it rewrites
+    exactly the closed four-file manifest, byte-preserving every field except
+    `certification.status`/`plane`, `public_projection_eligible`,
+    `provenance_class`, and the recomputed `projection_hash` (+ every
+    reverse-appearance hash). `--check` reports staleness only; `--apply`
+    writes; `git diff` after `--apply` is the audit trail. Refuses (does not
+    best-effort mutate) any target whose identity, occurrence id, or
+    already-certified status has drifted from the pinned manifest.
+34. **Website public-eligibility migration** — the committed, deterministic
+    repair path for a payload that is already honestly non-authoritative
+    (`candidate` / `unresolved` / `review_required`) but omits, nulls, or
+    mis-types `public_projection_eligible`: it sets exactly that one field to
+    explicit `false` on the closed four-file manifest, byte-preserving every
+    other field and recomputing `projection_hash` (+ reverse-appearance
+    hashes). Same `--check`/`--apply` shape and refusal discipline as 33.
+35. **Website evidence resolution** — read-only; resolves one
+    `projection.evidence_refs` string against the committed typed-fact
+    certification stores, the candidate proof-particle contract, two-vote
+    artifact bundles, `cert-event:` history, and `dawahwiki:` custody
+    manifests, and reports a closed effective state (`certified`,
+    `review_required`, `revoked`, `dependency_failed`, `candidate`,
+    `review_verified`, `certified_support`, `custody_verified`,
+    `contradictory`, `evidence_unresolved`, or `unsupported_scheme`) —
+    never a copied status string. `tools/validate_website_payload.py`
+    consults it; a certified payload's every evidence ref must resolve
+    `authoritative_for_certification`, and every non-authoritative posture
+    must set `public_projection_eligible` to explicit `false` (commands 18,
+    33, 34).
 
 ## Rules
 

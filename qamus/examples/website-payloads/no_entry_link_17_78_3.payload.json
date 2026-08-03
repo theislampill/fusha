@@ -1,120 +1,121 @@
 {
- "schema": "qamus.website_projection_payload.v1",
- "schema_version": "1.0.0",
- "payload_kind": "occurrence_projection",
- "occurrence_id": "quran:17:78:3",
- "artifact_id": "artifact:rh:17:78:3",
- "appearance": {
-  "appearance_id": "app:wbw:17:78:3",
-  "page_id": "wbw:17:78",
-  "page_kind": "wbw_hover",
-  "page_local": {
-   "selected_highlight": false,
-   "entry_relationship": "reader",
-   "focus": null,
-   "navigation": []
-  }
- },
- "projection": {
-  "occurrence_id": "quran:17:78:3",
-  "surface": "لِدُلُوكِ",
-  "normalization": "NFC",
-  "kind": "noun_word",
-  "segments": [
-   {
-    "segment_index": 0,
-    "surface": "لِ",
-    "char_start": 0,
-    "char_end": 2,
-    "semantic_class": "jarr_clitic_lam",
-    "renderer_class": "qg-particle-jarr-clitic",
-    "gloss": "for / at",
-    "sarf_note": "Sarf - a function proclitic with no lexical root, written joined to its host.",
-    "nahw_note": "Nahw - it links the noun into the sentence, pulling it into the jarr (genitive) state."
-   },
-   {
-    "segment_index": 1,
-    "surface": "دُلُوكِ",
-    "char_start": 2,
-    "char_end": 9,
-    "semantic_class": "noun_stem",
-    "renderer_class": "qg-noun-stem",
-    "gloss": "decline",
-    "sarf_note": "Sarf - the content host of this token; its root link is not yet published.",
-    "nahw_note": "Nahw - completed by the next word: the decline OF the sun."
-   }
-  ],
-  "whole_word_gloss": "at the decline (of the sun)",
-  "learner_explanation": "لِدُلُوكِ contributes 'at the decline' in this verse; the next word completes it as 'of the sun'.",
-  "entry_links": [],
-  "entry_link_state": "none_yet",
-  "morpheme_spans": [
-   {
-    "morpheme_occurrence_id": "morph:rh:17:78:3:li",
-    "segment_index": 0,
-    "char_start": 0,
-    "char_end": 2
-   },
-   {
-    "morpheme_occurrence_id": "morph:rh:17:78:3:stem",
-    "segment_index": 1,
-    "char_start": 2,
-    "char_end": 9
-   }
-  ],
-  "root": null,
-  "rootless_pedagogy": null,
-  "hover_cards": [
-   {
-    "component_surface": "لِدُلُوكِ",
-    "contextual_gloss": "at the decline of the sun",
-    "particle_identity": null,
-    "contextual_function": "prepositional phrase: 'at' + a time-of-day noun",
-    "sarf_note": "Sarf - clitic lam plus a noun host; the host's dictionary entry is not yet linked, so no root is asserted here.",
-    "nahw_note": "Nahw - the lam pulls the noun into the jarr (genitive) state; the following word completes the phrase.",
-    "governor": null,
-    "governed_expression": "دلوك الشمس",
-    "scope": null,
-    "attachment": {
-     "host": "دُلُوكِ",
-     "boundary": "clitic lam | noun host"
-    },
-    "alternatives": [],
-    "reason": null,
-    "unresolved": null,
-    "entry_link": null
-   }
-  ],
-  "unresolved": null,
-  "certification": {
-   "status": "candidate",
-   "plane": {
-    "segmentation": "candidate",
-    "entry_link": "none_yet"
-   }
-  },
-  "evidence_refs": [
-   "corpus:rh_live_01_beta_whitelist#loc=17:78:3"
-  ]
- },
- "projection_hash": "6c3468488e63e8054300be3a9d746b8aea8ea6ef7339c20f856ec832fa286e58",
- "reverse_links": {
-  "occurrence_to_appearances": [
-   {
+  "appearance": {
     "appearance_id": "app:wbw:17:78:3",
     "page_id": "wbw:17:78",
     "page_kind": "wbw_hover",
-    "projection_hash": "6c3468488e63e8054300be3a9d746b8aea8ea6ef7339c20f856ec832fa286e58"
-   }
-  ],
-  "entry_to_occurrences": []
- },
- "provenance": {
-  "provenance_class": "illustrative-from-live",
-  "built_by": "packets.website-handoff.sample-builder v1 (2026-07-29)",
-  "source_refs": [
-   "corpus:rh_live_01_beta_whitelist#loc=17:78:3",
-   "packet:p00-vertical-slice:live-rh-rows-raw#17:78:3"
-  ]
- }
+    "page_local": {
+      "entry_relationship": "reader",
+      "focus": null,
+      "navigation": [],
+      "selected_highlight": false
+    }
+  },
+  "artifact_id": "artifact:rh:17:78:3",
+  "occurrence_id": "quran:17:78:3",
+  "payload_kind": "occurrence_projection",
+  "projection": {
+    "certification": {
+      "plane": {
+        "entry_link": "none_yet",
+        "segmentation": "candidate"
+      },
+      "status": "candidate"
+    },
+    "entry_link_state": "none_yet",
+    "entry_links": [],
+    "evidence_refs": [
+      "corpus:rh_live_01_beta_whitelist#loc=17:78:3"
+    ],
+    "hover_cards": [
+      {
+        "alternatives": [],
+        "attachment": {
+          "boundary": "clitic lam | noun host",
+          "host": "دُلُوكِ"
+        },
+        "component_surface": "لِدُلُوكِ",
+        "contextual_function": "prepositional phrase: 'at' + a time-of-day noun",
+        "contextual_gloss": "at the decline of the sun",
+        "entry_link": null,
+        "governed_expression": "دلوك الشمس",
+        "governor": null,
+        "nahw_note": "Nahw - the lam pulls the noun into the jarr (genitive) state; the following word completes the phrase.",
+        "particle_identity": null,
+        "reason": null,
+        "sarf_note": "Sarf - clitic lam plus a noun host; the host's dictionary entry is not yet linked, so no root is asserted here.",
+        "scope": null,
+        "unresolved": null
+      }
+    ],
+    "kind": "noun_word",
+    "learner_explanation": "لِدُلُوكِ contributes 'at the decline' in this verse; the next word completes it as 'of the sun'.",
+    "morpheme_spans": [
+      {
+        "char_end": 2,
+        "char_start": 0,
+        "morpheme_occurrence_id": "morph:rh:17:78:3:li",
+        "segment_index": 0
+      },
+      {
+        "char_end": 9,
+        "char_start": 2,
+        "morpheme_occurrence_id": "morph:rh:17:78:3:stem",
+        "segment_index": 1
+      }
+    ],
+    "normalization": "NFC",
+    "occurrence_id": "quran:17:78:3",
+    "public_projection_eligible": false,
+    "root": null,
+    "rootless_pedagogy": null,
+    "segments": [
+      {
+        "char_end": 2,
+        "char_start": 0,
+        "gloss": "for / at",
+        "nahw_note": "Nahw - it links the noun into the sentence, pulling it into the jarr (genitive) state.",
+        "renderer_class": "qg-particle-jarr-clitic",
+        "sarf_note": "Sarf - a function proclitic with no lexical root, written joined to its host.",
+        "segment_index": 0,
+        "semantic_class": "jarr_clitic_lam",
+        "surface": "لِ"
+      },
+      {
+        "char_end": 9,
+        "char_start": 2,
+        "gloss": "decline",
+        "nahw_note": "Nahw - completed by the next word: the decline OF the sun.",
+        "renderer_class": "qg-noun-stem",
+        "sarf_note": "Sarf - the content host of this token; its root link is not yet published.",
+        "segment_index": 1,
+        "semantic_class": "noun_stem",
+        "surface": "دُلُوكِ"
+      }
+    ],
+    "surface": "لِدُلُوكِ",
+    "unresolved": null,
+    "whole_word_gloss": "at the decline (of the sun)"
+  },
+  "projection_hash": "bb04d8217aa4516ea96e4bce4bd3415604f974a1d019047b9646d8832df2ff17",
+  "provenance": {
+    "built_by": "packets.website-handoff.sample-builder v1 (2026-07-29)",
+    "provenance_class": "illustrative-from-live",
+    "source_refs": [
+      "corpus:rh_live_01_beta_whitelist#loc=17:78:3",
+      "packet:p00-vertical-slice:live-rh-rows-raw#17:78:3"
+    ]
+  },
+  "reverse_links": {
+    "entry_to_occurrences": [],
+    "occurrence_to_appearances": [
+      {
+        "appearance_id": "app:wbw:17:78:3",
+        "page_id": "wbw:17:78",
+        "page_kind": "wbw_hover",
+        "projection_hash": "bb04d8217aa4516ea96e4bce4bd3415604f974a1d019047b9646d8832df2ff17"
+      }
+    ]
+  },
+  "schema": "qamus.website_projection_payload.v1",
+  "schema_version": "1.0.0"
 }
