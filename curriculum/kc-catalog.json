@@ -16,7 +16,12 @@
     "diagnostic_classes": ["possible_clitic_segmentation", "possible_definite_article"],
     "drill_route": "curriculum/drills/hover-composition-and-routing.md",
     "sarf_route": "sarf/procedures/clitic-and-host-morphology.md",
-    "nahw_route": null
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0003", "mc-0228", "mc-0477", "mc-0556", "mc-0193"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner sees a word beginning with a sun letter and still pronounces a full lam, treating every al- prefix the same regardless of the letter that follows it."},
+      {"kind": "error_pattern", "en": "A learner reads a prefixed particle and its host as one unfamiliar word instead of separating the small attached piece from the host first."}
+    ]
   },
   {
     "kc_id": "kc-attached-pronoun",
@@ -35,7 +40,12 @@
     "diagnostic_classes": ["possible_attached_pronoun"],
     "drill_route": "curriculum/drills/hover-composition-and-routing.md",
     "sarf_route": "sarf/procedures/suffix-pronoun-state.md",
-    "nahw_route": null
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0098", "mc-0406", "mc-0116", "mc-0194", "mc-0389", "mc-0301", "mc-0134"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner treats the final letter of a word as part of the root instead of checking whether it is an attached pronoun pointing back to someone or something already mentioned."},
+      {"kind": "error_pattern", "en": "A learner assumes an attached pronoun always matches the word it is written on, rather than the person or thing it actually refers to."}
+    ]
   },
   {
     "kc_id": "kc-unvoweled-homograph",
@@ -54,7 +64,12 @@
     "diagnostic_classes": ["ambiguous_unvoweled_token"],
     "drill_route": "curriculum/drills/root-pattern-practice.md",
     "sarf_route": "sarf/procedures/homograph-risk.md",
-    "nahw_route": null
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0142", "mc-0061", "mc-0074"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner picks the more familiar reading of an unvoweled word and drops the other possible reading, instead of keeping both until something in the sentence decides."},
+      {"kind": "error_pattern", "en": "A learner assumes every letter in an unvoweled word is a root letter without checking whether one of them actually belongs to the pattern instead."}
+    ]
   },
   {
     "kc_id": "kc-particle-function",
@@ -73,7 +88,12 @@
     "diagnostic_classes": ["possible_particle_function", "ma_function_unresolved_or_wrong"],
     "drill_route": "curriculum/drills/quranic-function-words.md",
     "sarf_route": null,
-    "nahw_route": "nahw/procedures/particle-decision.md"
+    "nahw_route": "nahw/procedures/particle-decision.md",
+    "curriculum_misconception_ids": ["mc-0082", "mc-0088", "mc-0095", "mc-0049", "mc-0054", "mc-0028", "mc-0052"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner assigns one fixed English meaning to a small particle without checking whether the surrounding words point to a different job for it here."},
+      {"kind": "error_pattern", "en": "A learner treats a multi-function particle as only ever a connector, missing that the same shape can mark a wish, a question, or an exception depending on the sentence."}
+    ]
   },
   {
     "kc_id": "kc-preposition-host",
@@ -111,7 +131,12 @@
     "diagnostic_classes": ["possible_case_or_mood_requires_context"],
     "drill_route": "curriculum/drills/sentence-foundations.md",
     "sarf_route": null,
-    "nahw_route": "nahw/procedures/irab-case-mood.md"
+    "nahw_route": "nahw/procedures/irab-case-mood.md",
+    "curriculum_misconception_ids": ["mc-0010", "mc-0024", "mc-0127", "mc-0006"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner assigns a case ending from a general rule without checking whether the clause's polarity or structure changes which rule actually applies here."},
+      {"kind": "error_pattern", "en": "A learner marks a noun by habit without checking whether the sentence's negation blocks that marking in this position."}
+    ]
   },
   {
     "kc_id": "kc-governor-justification",
@@ -130,7 +155,12 @@
     "diagnostic_classes": ["possible_governor_unresolved", "governor_not_justified", "weak_irab_reasoning"],
     "drill_route": "curriculum/drills/sentence-foundations.md",
     "sarf_route": null,
-    "nahw_route": "nahw/procedures/irab-case-mood.md"
+    "nahw_route": "nahw/procedures/irab-case-mood.md",
+    "curriculum_misconception_ids": ["mc-0409", "mc-0410", "mc-0405", "mc-0047", "mc-0057", "mc-0309", "mc-0369", "mc-0376"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner names a correct case ending but cannot say which word or particle actually requires it, treating the right answer as its own justification."},
+      {"kind": "error_pattern", "en": "A learner assumes the nearest word is always the one assigning the case, without checking whether an earlier element in the clause is the real governor."}
+    ]
   },
   {
     "kc_id": "kc-orthography",
@@ -168,7 +198,11 @@
     "diagnostic_classes": ["hidden_clitic_or_proclitic"],
     "drill_route": "curriculum/drills/hover-composition-and-routing.md",
     "sarf_route": "sarf/procedures/clitic-and-host-morphology.md",
-    "nahw_route": null
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0186"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A hover shows only the host word and drops a prefixed particle that changes whether the token is a question word or a preposition."}
+    ]
   },
   {
     "kc_id": "kc-suffix-pronoun-missing",
@@ -187,7 +221,12 @@
     "diagnostic_classes": ["suffix_pronoun_missing"],
     "drill_route": "curriculum/drills/hover-composition-and-routing.md",
     "sarf_route": "sarf/procedures/suffix-pronoun-state.md",
-    "nahw_route": null
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0106", "mc-0100"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner reads a verb's final letter as decoration and misses that it is an object pronoun, so the object of the action disappears from the reading."},
+      {"kind": "error_pattern", "en": "A learner keeps a possessive pronoun on a word after the following noun that licensed it has been dropped."}
+    ]
   },
   {
     "kc_id": "kc-passive-voice-hidden",
@@ -225,7 +264,12 @@
     "diagnostic_classes": ["dual_or_plural_suffix_hidden"],
     "drill_route": "curriculum/drills/parse-key-and-color-layer.md",
     "sarf_route": "sarf/procedures/noun-plural-gender.md",
-    "nahw_route": null
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0017", "mc-0179", "mc-0022", "mc-0036", "mc-0211", "mc-0365", "mc-0159", "mc-0238", "mc-0207", "mc-0123"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner reports a noun's number only from the English translation and does not point to the ending that actually marks it as two or many."},
+      {"kind": "error_pattern", "en": "A learner keeps a plural ending on a form after its role in the sentence changes, without checking whether that ending is still licensed there."}
+    ]
   },
   {
     "kc_id": "kc-derivative-shape-hidden",
@@ -244,7 +288,12 @@
     "diagnostic_classes": ["derivative_or_participle_prefix_hidden"],
     "drill_route": "curriculum/drills/parse-key-and-color-layer.md",
     "sarf_route": "sarf/procedures/nominal-derivative-decision.md",
-    "nahw_route": null
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0027", "mc-0046", "mc-0118", "mc-0034", "mc-0141", "mc-0087", "mc-0105"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner glosses a derived noun with the same English verb it comes from, instead of describing the person or thing that does or receives the action."},
+      {"kind": "error_pattern", "en": "A learner assumes every derived noun takes one fixed vowel pattern without first checking which class of verb it was built from."}
+    ]
   },
   {
     "kc_id": "kc-dictionary-infinitive-leakage",
@@ -263,7 +312,12 @@
     "diagnostic_classes": ["dictionary_infinitive_leakage"],
     "drill_route": "curriculum/drills/root-pattern-practice.md",
     "sarf_route": "sarf/procedures/masdar-participle.md",
-    "nahw_route": null
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0078", "mc-0019", "mc-0117", "mc-0094", "mc-0030", "mc-0073", "mc-0069"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner copies the dictionary's 'to ...' gloss onto a verb that is actually conjugated in the text, instead of glossing the form that is actually there."},
+      {"kind": "error_pattern", "en": "A learner invents one all-purpose noun for 'the act of doing X' without checking whether that particular verb actually has a noun in that shape."}
+    ]
   },
   {
     "kc_id": "kc-token-vs-phrase-hover",

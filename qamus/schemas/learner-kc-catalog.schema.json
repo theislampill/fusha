@@ -27,7 +27,25 @@
         "diagnostic_classes": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
         "drill_route": { "type": ["string", "null"] },
         "sarf_route": { "type": ["string", "null"] },
-        "nahw_route": { "type": ["string", "null"] }
+        "nahw_route": { "type": ["string", "null"] },
+        "curriculum_misconception_ids": {
+          "type": "array",
+          "description": "Optional: reviewed curriculum/l1l6 misconception cluster ids this KC covers (must resolve in misconception-registry.jsonl).",
+          "items": { "type": "string", "pattern": "^mc-[0-9]+$" }
+        },
+        "curriculum_error_examples": {
+          "type": "array",
+          "description": "Optional: authored-original example error patterns for this KC's hint-ladder examples slot. A correction-kind example is only ever surfaced when bottom_out is also safe to show.",
+          "items": {
+            "type": "object",
+            "required": ["kind", "en"],
+            "additionalProperties": false,
+            "properties": {
+              "kind": { "type": "string", "enum": ["error_pattern", "correction"] },
+              "en": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
       }
     }
   }

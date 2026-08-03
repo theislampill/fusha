@@ -105,6 +105,18 @@ out. Root is `ʿ‑l‑w/y`, **not** anything else `norm()` might suggest.
 and its clitic `إِلَيْهِ` ("to him") are root `ʾ‑l‑y` (the hamza seat is load-bearing); they are
 **not** root `ل‑ي‑ن` — `norm()` drops the seat and creates that false match. Certify the seat.
 
+## Train C — KC-bound practice items
+
+These items are graded objectively against
+[`keys/quranic-function-words.keys.jsonl`](keys/quranic-function-words.keys.jsonl) and each names a Knowledge
+Component in `curriculum/kc-catalog.json`. A miss routes back to this drill and is held pending
+(`two_vote_required`); a learner-declared second check never clears it.
+
+| item id | token | task |
+|---|---|---|
+| `FW-17-waw-circumstance-or-oath` | `وَٱلشَّمْسِ` at a clause start | Must a clause-initial `وَ` be the coordinating "and"? Name the other functions it can carry and state how you decide between them. |
+| `FW-18-maa-suspends-government` | `إِنَّمَا ٱللَّهُ وَاحِدٌ` | `ٱللَّهُ` is nominative even though `إِنَّ` alone would require the accusative. State why, and why naming "nominative" alone does not prove the reasoning. |
+
 ## Hard-tail routing addendum
 
 After the basic particle pool, graduate to the cases that closure work proved are unsafe as

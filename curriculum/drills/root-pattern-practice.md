@@ -115,6 +115,19 @@ sense from doing to *causing*; the root's theme is constant.
 
 ---
 
+## Train C — KC-bound practice items
+
+These items are graded objectively against
+[`keys/root-pattern-practice.keys.jsonl`](keys/root-pattern-practice.keys.jsonl) and each names a Knowledge
+Component in `curriculum/kc-catalog.json`. A miss routes back to this drill and is held pending
+(`two_vote_required`); a learner-declared second check never clears it.
+
+| item id | prompt | task |
+|---|---|---|
+| `RP-12-masdar-not-uniform` | `جَلَسَ` maṣdar `جُلُوس`; `شَرِبَ` maṣdar `شُرْب` | Can a Form-I maṣdar's shape be predicted from the verb alone, or must it be checked per verb? |
+| `RP-13-weak-letter-radical-or-addition` | root `ق و ل` vs. an augmenting template | State what decides whether a weak letter (`و`/`ي`/`ا`) in a word is a root radical or an added letter. |
+| `RP-14-root-not-just-consonant-count` | any inflected surface | State why counting a word's first three consonants is not a reliable way to find its triliteral root, and what must be checked instead. |
+
 ## Checklist before you leave root-pattern practice
 
 - [ ] For a given root, can I list its **verb · maṣdar · agent · patient · plural** and predict

@@ -13,7 +13,8 @@ runtime ever:
   * persists progress or an event without the explicit `--write` flag;
   * is non-deterministic (a wall clock / RNG would break replay);
   * emits an event whose fields violate the tutor-event / tutor-progress-state JSON schemas;
-  * leaks an internal/source term into an event text field.
+  * leaks an internal/source term into an event text field;
+  * records a wrong `missed[].error_reason` (must equal the row's `kc_id` when present, else stay null).
 
 Stdlib only. CLI: --self-test (runs the full battery + meta-checks that the guard itself catches a broken grader).
 See parserplans/fusha-data-runtime-completion-pass/004 (P0-C).
@@ -169,6 +170,22 @@ def validate():
     # 8. source-clean event note.
     if leak_sot.is_leak(e1.get("note", "")):
         errs.append("event note leaks an internal/source term")
+
+    # 9. Train C error_reason contract: a graded miss on a row carrying kc_id records that kc_id as
+    #    progress.missed[].error_reason; a miss on a row WITHOUT kc_id still records null (no invention).
+    bad_payload = {"answer": "totally wrong", "reasoning": []}
+    row_with_kc = dict(idx["T1-objective"], id="TC-kc-miss", kc_id="kc-clitic-segmentation")
+    prog_kc = RT.new_progress()
+    RT.apply_event_to_progress(prog_kc, row_with_kc, RT.step(row_with_kc, None, bad_payload, 0), 0)
+    miss_kc = next((m for m in prog_kc["missed"] if m["item_id"] == "TC-kc-miss"), None)
+    if not miss_kc or miss_kc["error_reason"] != "kc-clitic-segmentation":
+        errs.append("a miss on a kc_id-bearing row did not record the kc_id as error_reason: %r" % miss_kc)
+    row_without_kc = dict(idx["T1-objective"], id="TC-no-kc-miss")
+    prog_no = RT.new_progress()
+    RT.apply_event_to_progress(prog_no, row_without_kc, RT.step(row_without_kc, None, bad_payload, 0), 0)
+    miss_no = next((m for m in prog_no["missed"] if m["item_id"] == "TC-no-kc-miss"), None)
+    if not miss_no or miss_no["error_reason"] is not None:
+        errs.append("a miss on a row without kc_id invented a non-null error_reason: %r" % miss_no)
     return errs
 
 

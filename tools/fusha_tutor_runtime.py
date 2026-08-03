@@ -352,7 +352,9 @@ def apply_event_to_progress(progress, row, result, seq):
         pass
     elif not g["cleared"]:
         status = "pending_two_vote" if g["two_vote_status"] == "pending" else "open"
-        progress["missed"].append({"item_id": item_id, "error_reason": None,
+        # Train C: a row that names its own KC (curriculum/drills/keys/*.kc_id) reports that KC as the
+        # pending-reason code; a row with no kc_id keeps the prior null (no reason invented).
+        progress["missed"].append({"item_id": item_id, "error_reason": row.get("kc_id"),
                                    "remediation_route": row.get("remediation_route"), "status": status})
     return ev
 
@@ -653,6 +655,24 @@ def _self_test():
     # interleave must not change the SET of reachable items — same next-pick invariants as the default path
     if select_next(cum_bank, prog_cum, 5, interleave=False)[1] != "due_review":
         failures.append("default select_next should also pick a due review for the cumulative bank")
+
+    # 13. RED-11: every drill-key row that carries kc_id (the Train-C re-authored rows) is two_vote_required and
+    #     stays pending/HELD even on a full-content-correct answer with a DECLARED agreeing second_check.
+    _keys_dir = os.path.join(_REPO, "curriculum", "drills", "keys")
+    _kc_rows = [row for fn in os.listdir(_keys_dir) if fn.endswith(".keys.jsonl")
+                for row in load_bank(os.path.join(_keys_dir, fn)) if row.get("kc_id")]
+    if not _kc_rows:
+        failures.append("no kc_id-bearing drill-key row found (Train C binding missing)")
+    for row in _kc_rows:
+        if not row.get("two_vote_required"):
+            failures.append("kc_id-bearing row %s must be two_vote_required" % row["id"])
+            continue
+        payload = {"answer": row["expected_answer"], "reasoning": list(row.get("required_reasoning") or []),
+                   "second_check": {"conclusion_agrees": True, "reason_agrees": True}}
+        r = step(row, None, payload, now_day=0)
+        if r["grade"]["cleared"] or r["grade"]["two_vote_status"] != "pending" or r["outcome"] != "hold":
+            failures.append("Train C row %s cleared/promoted despite two_vote_required, got %s / %s"
+                            % (row["id"], r["grade"], r["outcome"]))
 
     for f in failures:
         print("FAIL " + f)

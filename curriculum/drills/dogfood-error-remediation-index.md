@@ -28,5 +28,24 @@ the history; it is to route a miss to the procedure and drill that prevents the 
 | `cognitive_load_density_overload` | one hover or explanation stacks so many facts (root, form, every clitic, case, referent) at once that the learner is overwhelmed and cannot act; density is treated as thoroughness | `parse-key-and-color-layer.md` | `../cefr-fusha-instruction.md` (hint depth, metalanguage exposure, and correction aggressiveness gated by band — teach one piece at a time, not the whole lattice) |
 | `learner_outcome_not_improving` | the same miss recurs across sessions, or a level is marked cleared while the learner cannot reproduce the reasoning cold; mastery asserted from confidence, not evidence | `../assessment/level-checkpoints.sample.jsonl` (cumulative-review rows) | `../tutor-session-protocol.md` (schema-graded loop: answer-key grading, two-vote, missed-error log, pending over guessing) |
 
+## Train C — KC-bound learner symptoms
+
+These rows route a miss to the exact Knowledge Component in `curriculum/kc-catalog.json` that now owns it
+(`progress.missed[].error_reason` carries the `kc_id` directly; see `tools/fusha_tutor_runtime.py`).
+
+| kc_id | learner symptom | drill | procedure |
+|---|---|---|---|
+| `kc-clitic-segmentation` | the whole token read as one stem instead of prefixed particle + host | `hover-composition-and-routing.md` | `../../sarf/procedures/clitic-and-host-morphology.md` |
+| `kc-hidden-proclitic` | a hover shows only the host and drops a prefixed particle (wāw/fāʾ/bāʾ/lām/kāf/al-) | `hover-composition-and-routing.md` | `../../sarf/procedures/clitic-and-host-morphology.md` |
+| `kc-attached-pronoun` | the ending folded into the stem instead of surfaced as an attached pronoun | `hover-composition-and-routing.md` | `../../sarf/procedures/suffix-pronoun-state.md` |
+| `kc-suffix-pronoun-missing` | an attached object/possessive pronoun dropped from the gloss | `hover-composition-and-routing.md` | `../../sarf/procedures/suffix-pronoun-state.md` |
+| `kc-number-suffix-hidden` | a dual/plural ending hidden behind a plain singular host or an English-only number | `parse-key-and-color-layer.md` | `../../sarf/procedures/noun-plural-gender.md` |
+| `kc-derivative-shape-hidden` | a participle/derived noun glossed as the verb, or its derivative shape hidden | `parse-key-and-color-layer.md` | `../../sarf/procedures/nominal-derivative-decision.md` |
+| `kc-dictionary-infinitive-leakage` | the dictionary "to ..." infinitive pasted onto a finite or derived form | `root-pattern-practice.md` | `../../sarf/procedures/masdar-participle.md` |
+| `kc-unvoweled-homograph` | one reading of an unvoweled token forced instead of kept as a ranked candidate set | `root-pattern-practice.md` | `../../sarf/procedures/homograph-risk.md` |
+| `kc-particle-function` | a multi-function particle (mā, wāw, ...) given one fixed gloss regardless of context | `quranic-function-words.md` | `../../nahw/procedures/particle-decision.md` |
+| `kc-case-mood-context` | a case/mood ending asserted with no visible ending and no governor named | `sentence-foundations.md` | `../../nahw/procedures/irab-case-mood.md` |
+| `kc-governor-justification` | a correct case ending given with an absent or unjustified governor (right answer, wrong reason) | `sentence-foundations.md` | `../../nahw/procedures/irab-case-mood.md` |
+
 Checkpoint rule: a remediated item is not cleared until the learner can name what the visible Arabic piece
 contributes and why the old hover failure was unsafe.
