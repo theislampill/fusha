@@ -34,6 +34,18 @@ HIGH_RISK_BARE_MATCH_SURFACES = set(_COLLISION_REGISTRY.get("high_risk_bare_matc
 
 # R4: noun|proper_noun -> ism, verb -> fil, particle -> harf.
 POS_TRICHOTOMY = {"noun": "ism", "proper_noun": "ism", "verb": "fil", "particle": "harf"}
+# Monotone gate lattice (Train E B1 repair): every _gate filter casts a vote
+# capped at its own strength; the strongest (most-abstaining) vote wins. A
+# weaker cap (e.g. source-risk pending_context) can demote the result when
+# nothing stronger fires, but it can never mask a stronger vote that did fire.
+GATE_RANK = {
+    "blocked": 4,
+    "lexical_collision_requires_context": 3,
+    "pending_context": 2,
+    "ambiguous": 1,
+    "likely_from_internal_pattern": 0,
+}
+SOURCE_RISK_CAP_FILTER = "source_requires_nahw_function"
 # R7 scoped collision: these qg roles carry the disputed stem's own reading
 # and are withheld; everything else is affix/clitic layer and is preserved.
 STEM_QG_ROLES = {"stem", "verb_stem", "adjective_stem"}
@@ -121,13 +133,21 @@ def _candidate_collision(surface, seg_cands, morph_cands, morph):
     return None
 
 
-def _skeleton_collision(surface, seg_cands, morph):
+def _skeleton_collision(surface, seg_cands, morph, selected_seg=None):
     """R4/R5: classify the SELECTED candidate's own competitor set.
 
     Competitors come from morph["collision"]["competitors"], which
     fusha_pattern_engine.py scopes to the one stem this candidate was matched
     against (R6): never a union over other segmentation hypotheses, so a
     rejected split can never manufacture a competitor here.
+
+    R7 scope is derived from `selected_seg` (the segment candidate `_selected`
+    actually returned), not from `morph["segment_candidate_ref"]`: `_selected`
+    can promote a richer multi-segment candidate over a collapsed whole-token
+    largelexicon match for the same surface, and the withheld/preserved
+    boundary must track that promotion, not the collapsed ref (Train E I4).
+    `seg_cands`/`morph.segment_candidate_ref` remain a fallback for callers
+    that have not yet resolved a selected segment candidate.
     """
     if not morph:
         return None
@@ -143,10 +163,13 @@ def _skeleton_collision(surface, seg_cands, morph):
         kind = "root_conflict" if len(roots) >= 2 else None
     if not kind:
         return None
-    ref = morph.get("segment_candidate_ref")
-    seg_count = 0
-    if isinstance(ref, int) and 0 <= ref < len(seg_cands):
-        seg_count = len(seg_cands[ref].get("segments") or [])
+    if selected_seg is not None:
+        seg_count = len(selected_seg.get("segments") or [])
+    else:
+        ref = morph.get("segment_candidate_ref")
+        seg_count = 0
+        if isinstance(ref, int) and 0 <= ref < len(seg_cands):
+            seg_count = len(seg_cands[ref].get("segments") or [])
     scope = "stem_identity" if seg_count > 1 else "whole_token"
     return {
         "kind": kind,
@@ -176,7 +199,7 @@ def _scope_collision_segments(qg_segments):
     return out
 
 
-def _strip_collision_identity(cand):
+def _strip_collision_identity(cand, decided_by=None):
     """R4/R5 effect: no lemma/root/pos/voice/number/gloss for the withheld stem."""
     cand["lemma"] = None
     cand["root"] = None
@@ -187,6 +210,11 @@ def _strip_collision_identity(cand):
     if isinstance(feats, dict):
         for key in ("voice", "verb_form", "number"):
             feats.pop(key, None)
+        if decided_by:
+            feats["identity_withheld_decided_by"] = {
+                "filter": decided_by,
+                "evidence_keys": ["collision.competitors"],
+            }
 
 
 def _function_needs_context(surface, morph):
@@ -196,7 +224,18 @@ def _function_needs_context(surface, morph):
     return bool(keys & CONTEXT_REQUIRED_FUNCTION_KEYS & set(FUNCTION_WORDS))
 
 
-def _gate(surface, seg_cands, morph, context, morph_cands=None):
+def _gate(surface, seg_cands, morph, context, morph_cands=None, selected_seg=None):
+    """Monotone gate lattice, most-abstaining-wins (Train E B1 repair).
+
+    Every filter below casts a vote: (rank, gate_name, collision_or_None,
+    tie_break_priority). The final gate is the highest-ranked vote; ties
+    within a rank are broken by tie_break_priority (lower wins), preserving
+    the previous evaluation order. This guarantees a weaker cap (source-risk
+    pending_context) can never mask a stronger vote (a skeleton collision, an
+    unsafe bare match, a segmentation/POS collision, or blocked) that also
+    fired for the same candidate; it only demotes the result when nothing
+    stronger fired.
+    """
     bare = N.bare(surface)
     if not morph:
         return "blocked", None
@@ -208,27 +247,46 @@ def _gate(surface, seg_cands, morph, context, morph_cands=None):
             "route": ["validator", "sarf"],
             "reason": "morphology candidate references a segment candidate that does not exist",
         }
-    # Stage 1: source_provenance (R1). Short-circuits: the pipeline records
-    # the conflict and stops rather than letting a later filter re-decide.
+
+    votes = []
+
+    # source_provenance (R1): a CAP, not a mask. Typed decided_by evidence is
+    # recorded on the candidate whenever the flag is present, independent of
+    # whether this vote ends up winning the lattice.
     risk_flags = set((morph.get("features") or {}).get("source_risk_flags") or [])
     if "requires_nahw_function" in risk_flags:
-        return "pending_context", None
-    # Stage 3: skeleton_collision (R4/R5), scoped to the selected stem (R6).
-    skeleton = _skeleton_collision(surface, seg_cands, morph)
+        feats = morph.setdefault("features", {})
+        feats["gate_cap_decided_by"] = {
+            "filter": SOURCE_RISK_CAP_FILTER,
+            "evidence_keys": ["features.source_risk_flags"],
+        }
+        votes.append((GATE_RANK["pending_context"], "pending_context", None, 0))
+
+    # skeleton_collision (R4/R5), scoped to the selected stem (R6/R7).
+    skeleton = _skeleton_collision(surface, seg_cands, morph, selected_seg=selected_seg)
     if skeleton:
-        return "lexical_collision_requires_context", skeleton
+        votes.append((GATE_RANK["lexical_collision_requires_context"], "lexical_collision_requires_context", skeleton, 0))
+
     collision = _candidate_collision(surface, seg_cands, morph_cands or [], morph)
     if collision:
-        return "lexical_collision_requires_context", collision
+        votes.append((GATE_RANK["lexical_collision_requires_context"], "lexical_collision_requires_context", collision, 1))
+
     if _function_needs_context(surface, morph) or bare in {"ما", "وما", "لما", "انما", "إنما"}:
-        return "pending_context", None
+        votes.append((GATE_RANK["pending_context"], "pending_context", None, 1))
+
     if any(c.get("status") == "pending_context" for c in context):
-        return "pending_context", None
+        votes.append((GATE_RANK["pending_context"], "pending_context", None, 2))
+
     if len(seg_cands) > 1 and morph.get("evidence_class") not in {"seed_lexicon", "pinned_pattern"}:
-        return "ambiguous", None
-    if morph.get("evidence_class") in {"seed_lexicon", "pinned_pattern", "function_inventory", "largelexicon_sample", "largelexicon_full"}:
-        return "likely_from_internal_pattern", None
-    return "ambiguous", None
+        votes.append((GATE_RANK["ambiguous"], "ambiguous", None, 0))
+    elif morph.get("evidence_class") in {"seed_lexicon", "pinned_pattern", "function_inventory", "largelexicon_sample", "largelexicon_full"}:
+        votes.append((GATE_RANK["likely_from_internal_pattern"], "likely_from_internal_pattern", None, 0))
+    else:
+        votes.append((GATE_RANK["ambiguous"], "ambiguous", None, 1))
+
+    votes.sort(key=lambda vote: (-vote[0], vote[3]))
+    _rank, gate, winning_collision, _priority = votes[0]
+    return gate, winning_collision
 
 
 def _parse_key(qg, morph):
@@ -318,7 +376,10 @@ def parse_text(text, document_id=None, db="smoke"):
         ctx = ctx_by_idx.get(tok["index"], [])
         tok["context_candidates"] = ctx
         seg, morph = _selected(tok.get("segment_candidates") or [], tok.get("morphology_candidates") or [])
-        gate, collision = _gate(tok["surface"], tok.get("segment_candidates") or [], morph, ctx, tok.get("morphology_candidates") or [])
+        gate, collision = _gate(
+            tok["surface"], tok.get("segment_candidates") or [], morph, ctx,
+            tok.get("morphology_candidates") or [], selected_seg=seg,
+        )
         tok["confidence_gate"] = gate
         if collision:
             tok["collision"] = collision
@@ -327,7 +388,7 @@ def parse_text(text, document_id=None, db="smoke"):
                     cand["selection_status"] = "candidate_only"
                     cand["selection_blocker"] = gate
                     if collision.get("kind") in {"pos_trichotomy_conflict", "root_conflict"}:
-                        _strip_collision_identity(cand)
+                        _strip_collision_identity(cand, decided_by=collision.get("kind"))
             if collision.get("scope") == "stem_identity":
                 tok["qg_segments"] = _scope_collision_segments(tok.get("qg_segments") or [])
             else:

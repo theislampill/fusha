@@ -153,42 +153,132 @@ def _validate_match_basis_never_norm(errors: list[str]) -> None:
         errors.append("cu-hamza-seat-selection: _match_basis must never call norm(), only norm_strict/bare")
 
 
-def _validate_trichotomy_conflict_corpus_invariant(errors: list[str]) -> None:
-    """No form in a pos_trichotomy_conflict may be projected with a non-null lemma/root/pos."""
-    if not FORM_TABLE.exists():
-        return
+def _trichotomy_conflict_candidates(rows: list[dict]) -> list[tuple[str, str]]:
+    """Corpus-defined antecedent: surfaces with >= 2 entries spanning >= 2 trichotomy classes.
+
+    Grouped by `surface_norm_strict` (falling back to the raw surface), matching the
+    same key `_lexicon_match` uses to compute competitors -- grouping by the exact
+    diacritized `surface` string under-counts entries that differ only in harakah and
+    silently drops real corpus conflicts (Train E B2). Selection of both the group key
+    and its representative surface is deterministic (sorted), never insertion-order or
+    file-order dependent.
+    """
     by_key: dict[str, dict[str, dict]] = {}
-    for row in read_jsonl(FORM_TABLE):
+    for row in rows:
         surface = row.get("surface")
         entry_id = row.get("entry_id")
-        if not surface or not entry_id:
+        if not surface or not entry_id or " " in surface.strip():
             continue
-        key = surface
+        key = row.get("surface_norm_strict") or surface
         by_key.setdefault(key, {})[entry_id] = row
-    checked = 0
-    for surface, entries in by_key.items():
-        if checked >= 40:
-            break
+    candidates = []
+    for key, entries in by_key.items():
         if len(entries) < 2:
             continue
         classes = {POS_TRICHOTOMY.get(r.get("pos")) for r in entries.values()}
         classes.discard(None)
         if len(classes) < 2:
             continue
+        representative = min(entries.items(), key=lambda item: (item[0], item[1].get("surface") or ""))[1]
+        candidates.append((key, representative.get("surface")))
+    candidates.sort(key=lambda item: item[0])
+    return candidates
+
+
+def _check_trichotomy_invariant_rows(rows: list[dict], parse_fn, max_checked: int = 40) -> list[str]:
+    """For every deterministically selected corpus-defined conflict surface, require
+    EITHER the parser exposes `pos_trichotomy_conflict` OR its top candidate carries a
+    null lemma/root/pos. Under-firing (the parser silently failing to detect a real
+    corpus conflict) is a reported failure, never a skipped/passed row (Train E B2)."""
+    errors: list[str] = []
+    checked = 0
+    for key, surface in _trichotomy_conflict_candidates(rows):
+        if checked >= max_checked:
+            break
         checked += 1
-        parsed = parse_text(surface, document_id=f"trichotomy-invariant:{surface}", db="largelexicon")
+        parsed = parse_fn(surface, key)
         tokens = parsed.get("tokens") or []
         if len(tokens) != 1:
+            errors.append(
+                f"corpus invariant: {surface!r} (key {key!r}) is a multi-entry multi-trichotomy "
+                f"surface but did not parse to exactly one token (got {len(tokens)})"
+            )
             continue
         top = (tokens[0].get("morphology_candidates") or [{}])[0]
         collision = tokens[0].get("collision") or {}
         if collision.get("kind") != "pos_trichotomy_conflict":
+            errors.append(
+                f"corpus invariant: {surface!r} (key {key!r}) is a multi-entry multi-trichotomy surface "
+                f"but the parser did not expose pos_trichotomy_conflict (got collision.kind="
+                f"{collision.get('kind')!r}, confidence_gate={tokens[0].get('confidence_gate')!r})"
+            )
             continue
         if top.get("lemma") is not None or top.get("root") is not None or top.get("pos") is not None:
             errors.append(
                 f"corpus invariant: {surface!r} is pos_trichotomy_conflict but top candidate still carries "
                 f"lemma={top.get('lemma')!r} root={top.get('root')!r} pos={top.get('pos')!r}"
             )
+    return errors
+
+
+def _validate_trichotomy_conflict_corpus_invariant(errors: list[str]) -> None:
+    """No form in a pos_trichotomy_conflict may be projected with a non-null lemma/root/pos."""
+    if not FORM_TABLE.exists():
+        return
+
+    def parse_fn(surface: str, key: str) -> dict:
+        return parse_text(surface, document_id=f"trichotomy-invariant:{key}", db="largelexicon")
+
+    errors.extend(_check_trichotomy_invariant_rows(read_jsonl(FORM_TABLE), parse_fn))
+
+
+def _self_test_trichotomy_invariant_fails_closed() -> list[str]:
+    """Red-first (Train E B2): the invariant checker must FAIL when the parser
+    under-fires on a corpus-defined multi-entry multi-trichotomy surface, and must
+    detect entries that share a norm_strict key under different raw diacritics --
+    the two failure modes the un-repaired checker silently passed through."""
+    failures: list[str] = []
+    rows = [
+        {"surface": "غَزَّى", "surface_norm_strict": "غزي", "entry_id": "self-test-1", "pos": "noun"},
+        {"surface": "غَزِيَ", "surface_norm_strict": "غزي", "entry_id": "self-test-2", "pos": "verb"},
+    ]
+    if len(_trichotomy_conflict_candidates(rows)) != 1:
+        failures.append(
+            "trichotomy invariant candidate selection must group differently-diacritized "
+            "surfaces sharing one surface_norm_strict key"
+        )
+
+    def under_firing_parse_fn(surface: str, key: str) -> dict:
+        return {
+            "tokens": [
+                {
+                    "morphology_candidates": [{"lemma": "غَزَّى", "root": "غ ز و", "pos": "noun"}],
+                    "collision": {},
+                    "confidence_gate": "likely_from_internal_pattern",
+                }
+            ]
+        }
+
+    if not _check_trichotomy_invariant_rows(rows, under_firing_parse_fn):
+        failures.append(
+            "trichotomy invariant checker must report an error when the parser under-fires "
+            "pos_trichotomy_conflict on a corpus-defined conflict surface, not skip it silently"
+        )
+
+    def firing_parse_fn(surface: str, key: str) -> dict:
+        return {
+            "tokens": [
+                {
+                    "morphology_candidates": [{"lemma": None, "root": None, "pos": None}],
+                    "collision": {"kind": "pos_trichotomy_conflict"},
+                    "confidence_gate": "lexical_collision_requires_context",
+                }
+            ]
+        }
+
+    if _check_trichotomy_invariant_rows(rows, firing_parse_fn):
+        failures.append("trichotomy invariant checker must not flag a correctly-abstained conflict surface")
+    return failures
 
 
 def validate() -> list[str]:
@@ -227,6 +317,7 @@ def validate() -> list[str]:
     _validate_collision_fixtures(errors)
     _validate_match_basis_never_norm(errors)
     _validate_trichotomy_conflict_corpus_invariant(errors)
+    errors.extend(_self_test_trichotomy_invariant_fails_closed())
     return errors
 
 
