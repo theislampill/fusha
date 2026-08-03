@@ -1009,6 +1009,48 @@ ABSORPTION_STATES = frozenset({
     "not_applicable_with_reason"})
 
 
+def check_runtime_truth_consistency(readiness, derived_runtime, drill_meta,
+                                    errors):
+    """Validate generated consumer counts against their committed sources."""
+    runtime = readiness.get("ordinary_tutor_runtime") or {}
+    for key in (
+            "drill_key_rows", "emittable_knowledge_components",
+            "emittable_kc_ids", "indirectly_linked_lessons",
+            "explicit_lesson_bindings", "explicit_canonical_unit_bindings"):
+        if runtime.get(key) != derived_runtime.get(key):
+            errors.append(
+                "absorption: ordinary runtime %s %r != derived %r"
+                % (key, runtime.get(key), derived_runtime.get(key))
+            )
+    if readiness.get("lessons_mapped_to_tutor_drills") != derived_runtime.get(
+            "explicit_lesson_bindings"):
+        errors.append(
+            "absorption: explicit tutor lesson count %r != derived %r"
+            % (readiness.get("lessons_mapped_to_tutor_drills"),
+               derived_runtime.get("explicit_lesson_bindings"))
+        )
+    if readiness.get(
+            "lessons_indirectly_linked_to_runtime_tutor_drills"
+            ) != derived_runtime.get("indirectly_linked_lessons"):
+        errors.append(
+            "absorption: indirect tutor lesson count %r != derived %r"
+            % (readiness.get(
+                "lessons_indirectly_linked_to_runtime_tutor_drills"),
+               derived_runtime.get("indirectly_linked_lessons"))
+        )
+    candidate = readiness.get("candidate_drill_packets") or {}
+    for key in ("rows", "runtime_integrated"):
+        if candidate.get(key) != drill_meta.get(key):
+            errors.append(
+                "absorption: candidate drill %s %r != derived %r"
+                % (key, candidate.get(key), drill_meta.get(key))
+            )
+    if candidate.get("runtime_integrated") != 0:
+        errors.append(
+            "absorption: candidate drill packets must remain runtime_integrated=0"
+        )
+
+
 def check_absorption(ctx, errors):
     """Full-curriculum gates: 226 controlling rows, closed states, no empty
     next actions, zero unclassified sections, live recompute parity, queue
@@ -1016,7 +1058,13 @@ def check_absorption(ctx, errors):
     try:
         sys.path.insert(0, str(ROOT / "tools"))
         import build_curriculum_absorption as ab
-        files = ab.serialize(*ab.build(ab.load()))
+        ab_ctx = ab.load()
+        derived_runtime = ab.ordinary_tutor_runtime_truth(ab_ctx)
+        files = ab.serialize(*ab.build(ab_ctx))
+        drill_meta = json.loads(
+            (BASE / "drills-candidates" / "drill-candidates.meta.json")
+            .read_text(encoding="utf-8")
+        )
     except Exception as exc:  # noqa: BLE001
         errors.append("absorption: recompute failed (%s)" % exc)
         return
@@ -1052,26 +1100,9 @@ def check_absorption(ctx, errors):
     ready_p = BASE / "reports" / "full-curriculum-readiness.json"
     if ready_p.exists():
         ready = json.loads(ready_p.read_text(encoding="utf-8"))
-        runtime = ready.get("ordinary_tutor_runtime") or {}
-        if ready.get("lessons_mapped_to_tutor_drills") != 0:
-            errors.append("absorption: runtime has no explicit lesson bindings")
-        expected_runtime = {
-            "drill_key_rows": 14,
-            "emittable_knowledge_components": 7,
-            "indirectly_linked_lessons": 27,
-            "explicit_canonical_unit_bindings": 0,
-        }
-        for key, expected in expected_runtime.items():
-            if runtime.get(key) != expected:
-                errors.append(
-                    "absorption: ordinary runtime %s %r != %d"
-                    % (key, runtime.get(key), expected)
-                )
-        candidate = ready.get("candidate_drill_packets") or {}
-        if candidate.get("runtime_integrated") != 0:
-            errors.append(
-                "absorption: candidate drill packets must remain runtime_integrated=0"
-            )
+        check_runtime_truth_consistency(
+            ready, derived_runtime, drill_meta, errors
+        )
     comp_p = BASE / "reports" / "section-completeness.json"
     if comp_p.exists():
         comp = json.loads(comp_p.read_text(encoding="utf-8"))
@@ -1202,27 +1233,10 @@ def check_freeze_planes(ctx, errors):
                 errors.append("freeze_planes: %s claims a machine consumer "
                               "without a discovered pack (invented claim)"
                               % r["unit_id"])
-        if "candidate_runtime_behavioral_mapping" in r.get("states", []):
-            evidence = r.get("runtime_behavioral_evidence") or {}
-            if (evidence.get("mapping_state") != "candidate_unproven"
-                    or evidence.get("authoritative_unit_binding") is not False):
-                errors.append(
-                    "freeze_planes: %s promotes an unproven runtime unit mapping"
-                    % r["unit_id"]
-                )
         for b in r.get("blockers", []):
             if not b.get("cause"):
                 errors.append("freeze_planes: %s blocker without exact cause"
                               % r["unit_id"])
-    candidate_runtime_units = sum(
-        1 for r in disp
-        if "candidate_runtime_behavioral_mapping" in r.get("states", [])
-    )
-    if candidate_runtime_units != 8:
-        errors.append(
-            "freeze_planes: %d candidate runtime unit mappings != 8"
-            % candidate_runtime_units
-        )
     reg = _jsonl(BASE / "misconceptions" / "misconception-registry.jsonl")
     unroutable = sum(1 for c in reg if not c.get("unit_routable")
                      and not c.get("routing_note"))

@@ -9,6 +9,7 @@ from pathlib import Path
 
 import build_curriculum_absorption as absorption
 import build_unit_dispositions as dispositions
+import validate_curriculum_l1l6 as validator
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,18 +23,6 @@ EXPECTED_LEVEL_DENOMINATORS = {
     "L5": 40,
     "L6": 38,
 }
-EXPECTED_CANDIDATE_RUNTIME_UNITS = {
-    "cu-definite-article-assimilation",
-    "u-n07",
-    "u-s01",
-    "u-s03",
-    "u-s04",
-    "u-s05",
-    "u-s08",
-    "u-s09",
-}
-
-
 def _jsonl(path: Path):
     return [
         json.loads(line)
@@ -44,9 +33,9 @@ def _jsonl(path: Path):
 
 class ConsumerTruthTests(unittest.TestCase):
     def test_readiness_separates_runtime_fixture_and_candidate_drill_evidence(self):
-        ledger, _sections, _completeness, _queues, readiness = absorption.build(
-            absorption.load()
-        )
+        ctx = absorption.load()
+        expected_runtime = absorption.ordinary_tutor_runtime_truth(ctx)
+        ledger, _sections, _completeness, _queues, readiness = absorption.build(ctx)
 
         self.assertEqual(readiness["source_lessons"], 226)
         self.assertEqual(
@@ -54,18 +43,29 @@ class ConsumerTruthTests(unittest.TestCase):
         )
         self.assertEqual(readiness["lessons_mapped_to_tutor_drills"], 0)
         self.assertEqual(
-            readiness["lessons_indirectly_linked_to_runtime_tutor_drills"], 27
+            readiness["lessons_indirectly_linked_to_runtime_tutor_drills"],
+            expected_runtime["indirectly_linked_lessons"],
         )
 
         runtime = readiness["ordinary_tutor_runtime"]
-        self.assertEqual(runtime["drill_key_rows"], 14)
-        self.assertEqual(runtime["emittable_knowledge_components"], 7)
-        self.assertEqual(runtime["indirectly_linked_lessons"], 27)
+        self.assertEqual(runtime["drill_key_rows"], expected_runtime["drill_key_rows"])
+        self.assertEqual(
+            runtime["emittable_knowledge_components"],
+            expected_runtime["emittable_knowledge_components"],
+        )
+        self.assertEqual(
+            runtime["indirectly_linked_lessons"],
+            expected_runtime["indirectly_linked_lessons"],
+        )
         self.assertEqual(runtime["explicit_canonical_unit_bindings"], 0)
         self.assertFalse(runtime["lesson_content_operationalized"])
 
         candidate = readiness["candidate_drill_packets"]
-        self.assertEqual(candidate["rows"], 834)
+        drill_meta = json.loads(
+            (BASE / "drills-candidates" / "drill-candidates.meta.json")
+            .read_text(encoding="utf-8")
+        )
+        self.assertEqual(candidate["rows"], drill_meta["rows"])
         self.assertEqual(candidate["runtime_integrated"], 0)
 
         self.assertEqual(
@@ -78,7 +78,7 @@ class ConsumerTruthTests(unittest.TestCase):
                 bool(row["runtime_tutor_evidence"]["indirect_lesson_link"])
                 for row in ledger
             ),
-            27,
+            expected_runtime["indirectly_linked_lessons"],
         )
 
         for train in ("train_d", "train_e"):
@@ -86,27 +86,37 @@ class ConsumerTruthTests(unittest.TestCase):
             self.assertEqual(linkage["explicit_lesson_bindings"], 0)
             self.assertEqual(linkage["explicit_unit_bindings"], 0)
 
-    def test_unit_dispositions_keep_runtime_unit_mapping_candidate_only(self):
+    def test_unit_dispositions_do_not_infer_runtime_unit_bindings(self):
         rows, meta = dispositions.build()
-        mapped = {
-            row["unit_id"]
-            for row in rows
-            if "candidate_runtime_behavioral_mapping" in row["states"]
-        }
-
-        self.assertEqual(mapped, EXPECTED_CANDIDATE_RUNTIME_UNITS)
-        self.assertEqual(
-            meta["state_participation"]["candidate_runtime_behavioral_mapping"],
-            8,
-        )
         self.assertEqual(meta["explicit_runtime_unit_bindings"], 0)
         for row in rows:
-            if row["unit_id"] in EXPECTED_CANDIDATE_RUNTIME_UNITS:
-                evidence = row["runtime_behavioral_evidence"]
-                self.assertFalse(evidence["authoritative_unit_binding"])
-                self.assertEqual(evidence["mapping_state"], "candidate_unproven")
-            else:
-                self.assertNotIn("runtime_behavioral_evidence", row)
+            self.assertNotIn("candidate_runtime_behavioral_mapping", row["states"])
+            self.assertNotIn("runtime_behavioral_evidence", row)
+
+    def test_runtime_validator_accepts_future_internally_consistent_counts(self):
+        derived = {
+            "drill_key_rows": 15,
+            "emittable_knowledge_components": 8,
+            "indirectly_linked_lessons": 28,
+            "explicit_lesson_bindings": 0,
+            "explicit_canonical_unit_bindings": 0,
+        }
+        readiness = {
+            "lessons_mapped_to_tutor_drills": 0,
+            "lessons_indirectly_linked_to_runtime_tutor_drills": 28,
+            "ordinary_tutor_runtime": dict(derived),
+            "candidate_drill_packets": {"rows": 900, "runtime_integrated": 0},
+        }
+        errors = []
+
+        validator.check_runtime_truth_consistency(
+            readiness,
+            derived,
+            {"rows": 900, "runtime_integrated": 0},
+            errors,
+        )
+
+        self.assertEqual(errors, [])
 
     def test_sarf_crosswalk_derivational_count_tracks_executable_bank(self):
         rows = {
