@@ -52,7 +52,7 @@ def _rule_ids(filename: str) -> frozenset[str]:
     """Return the set of stable rule ids declared in a sarf rules file."""
     payload = json.loads((RULES_DIR / filename).read_text(encoding="utf-8"))
     ids: set[str] = set()
-    for key in ("rules", "patterns"):
+    for key in ("rules", "patterns", "projector_contract"):
         for entry in payload.get(key) or []:
             if isinstance(entry, dict) and entry.get("id"):
                 ids.add(entry["id"])
@@ -137,6 +137,11 @@ def plural_gate(root: str, template_id: str) -> Dict[str, Any]:
     A sound-radical singular licenses a candidate; the plural-gender guard is
     carried verbatim ("proposes a class; never certifies"). Weak/hamza radicals
     abstain like the verb path.
+
+    This gates PARADIGM GENERATION only (can a root's radicals be safely
+    template-substituted into a NEW candidate surface). Classifying an already
+    OBSERVED occurrence against documented entry evidence is a distinct,
+    stricter gate — see ``broken_plural_lexeme_link_gate`` below.
     """
     if has_weak_or_hamza(root):
         return {
@@ -150,6 +155,159 @@ def plural_gate(root: str, template_id: str) -> Dict[str, Any]:
         "defeater": None,
         "detail": "broken plural proposes a class; never certifies the singular",
         "gates": [_cite(PLURAL_GATE, template_id)],
+    }
+
+
+@lru_cache(maxsize=1)
+def _load_plural_gender_rules() -> Dict[str, Any]:
+    return json.loads((RULES_DIR / PLURAL_GATE).read_text(encoding="utf-8"))
+
+
+def _plural_gender_rules(rules_payload: Dict[str, Any] | None = None) -> Dict[str, Any]:
+    """Return the plural-gender-rules.json payload, or a caller-supplied override.
+
+    The override exists ONLY so a mutation test can prove a gate genuinely
+    depends on the rule file's CONTENT (see ``sarf/evals/plural-gender-
+    operationalization-eval.jsonl``'s mutation row); ``_cite`` below always
+    validates ids against the real committed file regardless.
+    """
+    return rules_payload if rules_payload is not None else _load_plural_gender_rules()
+
+
+def is_broken_plural_template_id(template_id: str, rules_payload: Dict[str, Any] | None = None) -> bool:
+    """True only for a 'taksir' (broken-plural) pattern id.
+
+    False for a known msl/mfl (sound-plural, inflectional) id and for any
+    unrecognised id — a sound-plural suffix is never a root or a template
+    (plural-gender-rules.json#sound-plural-is-inflection-not-template).
+    """
+    for pattern in _plural_gender_rules(rules_payload).get("patterns") or []:
+        if pattern.get("id") == template_id:
+            return pattern.get("kind") == "taksir"
+    return False
+
+
+def broken_plural_lexeme_link_gate(
+    root: str | None,
+    template_id: str | None,
+    *,
+    attested_pair: bool,
+    rare_license_ok: bool = True,
+    plural_of_plural_base_attested: bool = True,
+    rules_payload: Dict[str, Any] | None = None,
+) -> Dict[str, Any]:
+    """Decide emit vs abstain for CLASSIFYING an already-observed broken plural.
+
+    Every requirement below is a hard abstain, never a default or a best guess
+    (plural-gender-rules.json#projector_contract carries the rule text this
+    function enforces):
+
+    * a missing ``template_id`` never defaults to any pattern
+      (``plural_template_id_missing``);
+    * an msl/mfl id is inflectional, never a broken-plural template
+      (``sound_plural_suffix_not_broken_template``);
+    * root evidence must actually be supplied (``no_root_evidence``);
+    * the observed surface must exactly pair with a documented entry
+      plural-form/lemma link (``no_attested_lexeme_pair``);
+    * a rare/second-order template needs the lexeme on its own closed
+      ``licensed_lexemes`` list (``rare_plural_unlicensed``);
+    * a jamʿ-al-jamʿ (plural-of-plural) template needs its BASE plural
+      independently attested (``plural_of_plural_base_unattested``).
+    """
+    if not template_id:
+        return {
+            "decision": "abstain",
+            "defeater": "plural_template_id_missing",
+            "detail": "no plural_template_id was supplied; a missing id is never defaulted to any template",
+            "gates": [],
+        }
+    payload = _plural_gender_rules(rules_payload)
+    pattern = next(
+        (p for p in payload.get("patterns") or [] if p.get("id") == template_id), None
+    )
+    if pattern is None:
+        raise GateError("unknown plural-gender-rules.json pattern id: " + template_id)
+    if pattern.get("kind") != "taksir":
+        return {
+            "decision": "abstain",
+            "defeater": "sound_plural_suffix_not_broken_template",
+            "detail": (
+                "%s is a sound-plural (%s) inflectional ending, never a root or a "
+                "broken-plural template" % (template_id, pattern.get("kind"))
+            ),
+            "gates": [_cite(PLURAL_GATE, template_id)],
+        }
+    if not radical_letters(root or ""):
+        return {
+            "decision": "abstain",
+            "defeater": "no_root_evidence",
+            "detail": "no root evidence was supplied for this occurrence",
+            "gates": [_cite(PLURAL_GATE, template_id)],
+        }
+    if not attested_pair:
+        return {
+            "decision": "abstain",
+            "defeater": "no_attested_lexeme_pair",
+            "detail": (
+                "an observed broken plural needs root evidence AND an exact lemma/"
+                "entry plural-form link; shape resemblance alone never certifies"
+            ),
+            "gates": [_cite(PLURAL_GATE, template_id)],
+        }
+    if pattern.get("rarity") in ("rare", "second_order") and not rare_license_ok:
+        return {
+            "decision": "abstain",
+            "defeater": "rare_plural_unlicensed",
+            "detail": (
+                "template %s is %s and this lexeme is outside its closed "
+                "licensed_lexemes list" % (template_id, pattern.get("rarity"))
+            ),
+            "gates": [_cite(PLURAL_GATE, template_id)],
+        }
+    if pattern.get("requires_attested_base") and not plural_of_plural_base_attested:
+        return {
+            "decision": "abstain",
+            "defeater": "plural_of_plural_base_unattested",
+            "detail": (
+                "template %s is a plural-of-plural; its BASE plural must itself be "
+                "an attested form, not merely the observed surface" % template_id
+            ),
+            "gates": [_cite(PLURAL_GATE, template_id)],
+        }
+    return {
+        "decision": "emit",
+        "defeater": None,
+        "detail": "attested lexeme pair, template kind, and license/base checks all pass",
+        "gates": [_cite(PLURAL_GATE, template_id)],
+    }
+
+
+def lexical_gender_gate(
+    gender_registry_entry: str | None,
+    rules_payload: Dict[str, Any] | None = None,
+) -> Dict[str, Any]:
+    """Decide emit vs abstain for asserting a noun's lexical gender.
+
+    Gender is asserted ONLY from an explicit registry/entry fact — never from
+    the presence or absence of tā' marbūṭa (plural-gender-rules.json
+    #projector_contract:lexical-gender-registry-only). شَجَرَة (has ة) and
+    شَمْس (has none) both require the SAME gate.
+    """
+    if gender_registry_entry not in ("masculine", "feminine"):
+        return {
+            "decision": "abstain",
+            "defeater": "lexical_gender_registry_missing",
+            "detail": (
+                "gender must come from an explicit registry/entry fact, never "
+                "inferred from ta marbuta presence or absence"
+            ),
+            "gates": [],
+        }
+    return {
+        "decision": "emit",
+        "defeater": None,
+        "detail": "gender read from the explicit registry/entry fact",
+        "gates": [_cite(PLURAL_GATE, "lexical-gender-registry-only")],
     }
 
 

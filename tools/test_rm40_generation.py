@@ -12,6 +12,7 @@ All fixtures are synthetic. No Qurʾān text is copied here.
 
 from __future__ import annotations
 
+import copy
 import json
 import subprocess
 import sys
@@ -205,6 +206,211 @@ class Test13SelfTestsRunOffline(unittest.TestCase):
                 cwd=ROOT, text=True, encoding="utf-8", capture_output=True, check=False,
             )
             self.assertEqual(0, result.returncode, result.stderr + result.stdout)
+
+
+# ---------------------------------------------------------------------------
+# u-s08 noun plural/gender lexeme-link Train A batch: broken-plural template
+# inventory, rare/second-order licensing, plural-of-plural, and the lexical
+# feminine registry (tools/rm40_gate_stack.py + tools/fact_projectors.py).
+# ---------------------------------------------------------------------------
+EVAL_PATH = ROOT / "sarf" / "evals" / "plural-gender-operationalization-eval.jsonl"
+LOC_SURFACE_INDEX_PATH = ROOT / "qamus" / "indexes" / "quran-loc-surface" / "index.jsonl"
+
+
+def _load_eval_rows():
+    rows = []
+    with EVAL_PATH.open(encoding="utf-8") as handle:
+        for line in handle:
+            line = line.strip()
+            if line:
+                rows.append(json.loads(line))
+    return rows
+
+
+def _load_loc_surface_index():
+    index = {}
+    with LOC_SURFACE_INDEX_PATH.open(encoding="utf-8") as handle:
+        for line in handle:
+            line = line.strip()
+            if line:
+                row = json.loads(line)
+                index[row["loc"]] = row["surface"]
+    return index
+
+
+def _eval_occurrence(row):
+    occ = row["occurrence"]
+    return {"identity": {"loc": occ["loc"]}, "surface": occ["surface"]}
+
+
+def _run_eval_row(row, rules_payload=None):
+    """Run one eval row through the consumer it declares; returns (status, reason)."""
+    if row["gate"] == "plural_lexeme_link":
+        if row["consumer"] == "gate":
+            decision = gates.broken_plural_lexeme_link_gate(
+                row.get("root"),
+                row.get("template_id"),
+                attested_pair=row.get("attested_pair", False),
+                rare_license_ok=row.get("rare_license_ok", True),
+                plural_of_plural_base_attested=row.get("plural_of_plural_base_attested", True),
+                rules_payload=rules_payload,
+            )
+            status = "candidate" if decision["decision"] == "emit" else "abstained"
+            return status, decision["defeater"]
+        result = fact_projectors.REGISTRY.run(
+            fact_projectors.NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID,
+            occurrence=_eval_occurrence(row),
+            root=row.get("root"),
+            template_id=row.get("template_id"),
+            attested_plurals=row.get("attested_plurals", []),
+            rare_license_ok=row.get("rare_license_ok", True),
+            plural_of_plural_base_attested=row.get("plural_of_plural_base_attested", True),
+        )
+        reason = None if result["status"] == "candidate" else result["abstention"]["reason"]
+        return result["status"], reason
+    if row["gate"] == "lexical_gender":
+        result = fact_projectors.REGISTRY.run(
+            fact_projectors.NOUN_LEXICAL_GENDER_PROJECTOR_ID,
+            occurrence=_eval_occurrence(row),
+            gender_registry_entry=row.get("gender_registry_entry"),
+        )
+        reason = None if result["status"] == "candidate" else result["abstention"]["reason"]
+        return result["status"], reason
+    raise ValueError("unknown gate in eval row: " + row["gate"])
+
+
+class Test14PluralTemplateIdHasNoDefault(unittest.TestCase):
+    def test_generate_noun_plural_abstains_when_template_id_missing(self):
+        noun = {"pos": "noun", "lemma": "قَلَم", "root": "ق ل م"}
+        rows = gen.generate_noun_plural(noun)
+        self.assertEqual([], rows, "a missing plural_template_id must abstain, never default to taksir-afal")
+
+    def test_gate_abstains_with_plural_template_id_missing_defeater(self):
+        decision = gates.broken_plural_lexeme_link_gate("ق ل م", None, attested_pair=True)
+        self.assertEqual("abstain", decision["decision"])
+        self.assertEqual("plural_template_id_missing", decision["defeater"])
+
+
+class Test15SoundPluralSuffixIsNotRootOrTemplate(unittest.TestCase):
+    def test_msl_and_mfl_ids_are_not_broken_plural_templates(self):
+        self.assertFalse(gates.is_broken_plural_template_id("msl-nominative"))
+        self.assertFalse(gates.is_broken_plural_template_id("mfl-sound"))
+        self.assertTrue(gates.is_broken_plural_template_id("taksir-afal"))
+
+    def test_gate_abstains_for_a_sound_plural_id(self):
+        decision = gates.broken_plural_lexeme_link_gate("س ل م", "msl-nominative", attested_pair=True)
+        self.assertEqual("abstain", decision["decision"])
+        self.assertEqual("sound_plural_suffix_not_broken_template", decision["defeater"])
+
+
+class Test16RarePluralRequiresClosedLexemeLicense(unittest.TestCase):
+    def test_broken_plural_without_attested_pair_abstains(self):
+        decision = gates.broken_plural_lexeme_link_gate("ق ل م", "taksir-afal", attested_pair=False)
+        self.assertEqual("abstain", decision["decision"])
+        self.assertEqual("no_attested_lexeme_pair", decision["defeater"])
+
+    def test_unlicensed_lexeme_abstains_licensed_lexeme_emits(self):
+        unlicensed = gates.broken_plural_lexeme_link_gate(
+            "ك ل ب", "taksir-nisa-suppletive-rare", attested_pair=True, rare_license_ok=False
+        )
+        self.assertEqual("abstain", unlicensed["decision"])
+        self.assertEqual("rare_plural_unlicensed", unlicensed["defeater"])
+
+        licensed = gates.broken_plural_lexeme_link_gate(
+            "م ر أ", "taksir-nisa-suppletive-rare", attested_pair=True, rare_license_ok=True
+        )
+        self.assertEqual("emit", licensed["decision"])
+
+
+class Test17PluralOfPluralRequiresAttestedBase(unittest.TestCase):
+    def test_unattested_base_abstains_attested_base_emits(self):
+        unattested = gates.broken_plural_lexeme_link_gate(
+            "ب ي ت", "taksir-jam-al-jam-fuulaat", attested_pair=True,
+            plural_of_plural_base_attested=False,
+        )
+        self.assertEqual("abstain", unattested["decision"])
+        self.assertEqual("plural_of_plural_base_unattested", unattested["defeater"])
+
+        attested = gates.broken_plural_lexeme_link_gate(
+            "ب ي ت", "taksir-jam-al-jam-fuulaat", attested_pair=True,
+            plural_of_plural_base_attested=True,
+        )
+        self.assertEqual("emit", attested["decision"])
+
+
+class Test18ExampleLocMustMatchRecordedSurface(unittest.TestCase):
+    def test_fixed_and_new_rule_examples_surface_match_the_canonical_authority(self):
+        index = _load_loc_surface_index()
+        payload = json.loads((ROOT / "sarf" / "rules" / "plural-gender-rules.json").read_text(encoding="utf-8"))
+        by_id = {p["id"]: p for p in payload["patterns"]}
+        for pattern_id in (
+            "msl-nominative", "taksir-afal", "taksir-fiaal", "taksir-nisa-suppletive-rare",
+        ):
+            pattern = by_id[pattern_id]
+            loc = pattern["example_loc"]
+            self.assertEqual(
+                pattern["example"], index.get(loc),
+                "%s's example does not surface-match the canonical authority at %s" % (pattern_id, loc),
+            )
+
+    def test_second_order_pattern_honestly_declares_no_corpus_attestation(self):
+        payload = json.loads((ROOT / "sarf" / "rules" / "plural-gender-rules.json").read_text(encoding="utf-8"))
+        pattern = next(p for p in payload["patterns"] if p["id"] == "taksir-jam-al-jam-fuulaat")
+        self.assertIsNone(pattern["example_loc"])
+        self.assertIsNone(pattern["example"])
+        self.assertEqual("not_attested_in_corpus", pattern["example_loc_status"])
+
+    def test_dogfood_occurrences_surface_match_the_canonical_authority(self):
+        index = _load_loc_surface_index()
+        for row in _load_eval_rows():
+            occ = row.get("occurrence")
+            if occ is None or row.get("loc_surface_deliberately_mismatched"):
+                continue
+            self.assertEqual(
+                occ["surface"], index.get(occ["loc"]),
+                "eval row %s's occurrence does not surface-match the canonical authority" % row["id"],
+            )
+
+    def test_deliberately_mismatched_row_is_declared_and_still_abstains(self):
+        rows = {row["id"]: row for row in _load_eval_rows()}
+        row = rows["plg-eval-19-loc-surface-mismatch-abstains"]
+        self.assertTrue(row["loc_surface_deliberately_mismatched"])
+        status, reason = _run_eval_row(row)
+        self.assertEqual("abstained", status)
+        self.assertEqual("loc_surface_mismatch", reason)
+
+
+class Test19PluralRuleMutationTurnsOneEvalRowRed(unittest.TestCase):
+    def test_all_rows_match_their_declared_expectation(self):
+        for row in _load_eval_rows():
+            with self.subTest(row=row["id"]):
+                status, reason = _run_eval_row(row)
+                self.assertEqual(row["expected_status"], status)
+                self.assertEqual(row.get("expected_reason"), reason)
+
+    def test_flipping_requires_attested_base_turns_exactly_one_row_red(self):
+        rows = _load_eval_rows()
+        baseline = {row["id"]: _run_eval_row(row) for row in rows}
+        for row in rows:
+            self.assertEqual(
+                (row["expected_status"], row.get("expected_reason")), baseline[row["id"]]
+            )
+
+        mutated_payload = copy.deepcopy(gates._load_plural_gender_rules())
+        pattern = next(
+            p for p in mutated_payload["patterns"] if p["id"] == "taksir-jam-al-jam-fuulaat"
+        )
+        self.assertTrue(pattern["requires_attested_base"])
+        pattern["requires_attested_base"] = False
+
+        flipped = []
+        for row in rows:
+            payload_for_row = mutated_payload if row.get("consumer") == "gate" else None
+            result = _run_eval_row(row, rules_payload=payload_for_row)
+            expected = (row["expected_status"], row.get("expected_reason"))
+            if result != expected:
+                flipped.append(row["id"])
+        self.assertEqual(["plg-eval-11-jam-al-jam-base-unattested-abstains"], flipped)
 
 
 if __name__ == "__main__":

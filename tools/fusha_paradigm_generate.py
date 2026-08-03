@@ -212,7 +212,13 @@ def generate_noun_plural(
     certifies the singular (plural-gender-rules.json guard, carried verbatim).
     """
     root = noun["root"]
-    template_id = noun.get("plural_template_id", "taksir-afal")
+    # A missing plural_template_id is a hard abstain, NEVER a default (the
+    # historical bug this closes: this line once silently fell back to
+    # "taksir-afal" for any lexeme missing the field). See
+    # plural-gender-rules.json#no-default-plural-template.
+    template_id = noun.get("plural_template_id")
+    if not template_id:
+        return []
     radicals = gates.radical_letters(root)
     template = _PLURAL_TEMPLATES.get(template_id)
     if template is None or len(radicals) != 3:

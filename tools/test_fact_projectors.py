@@ -202,6 +202,8 @@ class RegistryTests(unittest.TestCase):
                 fact_projectors.FAM4_FINITE_VERB_PROJECTOR_ID,
                 fact_projectors.FAM5_DERIVED_VERB_PROJECTOR_ID,
                 fact_projectors.PROOFV_VERB_PROJECTOR_ID,
+                fact_projectors.NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID,
+                fact_projectors.NOUN_LEXICAL_GENDER_PROJECTOR_ID,
             },
             {item["projector_id"] for item in contracts},
         )
@@ -719,6 +721,130 @@ class LargelexiconBridgeRegistrationTest(unittest.TestCase):
         for test in collected:
             with self.subTest(test=test.__name__):
                 test()
+
+
+QURAN_LOC_SURFACE_INDEX_PATH = ROOT / "qamus" / "indexes" / "quran-loc-surface" / "index.jsonl"
+
+
+def loc_surface(loc: str) -> str:
+    with QURAN_LOC_SURFACE_INDEX_PATH.open(encoding="utf-8") as handle:
+        for line in handle:
+            row = json.loads(line)
+            if row["loc"] == loc:
+                return row["surface"]
+    raise KeyError(loc)
+
+
+def noun_occurrence(loc: str) -> dict:
+    return {"identity": {"loc": loc}, "surface": loc_surface(loc)}
+
+
+class NounPluralGenderProjectorTests(unittest.TestCase):
+    """u-s08 Train A: broken-plural lexeme-link + lexical-gender-registry projectors."""
+
+    def test_broken_plural_without_attested_pair_abstains(self):
+        occurrence = noun_occurrence("2:25:12")
+        result = fact_projectors.REGISTRY.run(
+            fact_projectors.NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID,
+            occurrence=occurrence, root="ن ه ر", template_id="taksir-afal",
+            attested_plurals=[],
+        )
+        self.assertEqual("abstained", result["status"])
+        self.assertEqual("no_attested_lexeme_pair", result["abstention"]["reason"])
+        self.assertIsNone(result["candidate"])
+
+    def test_multiple_attested_plurals_remain_unranked(self):
+        occurrence = noun_occurrence("7:194:7")
+        result = fact_projectors.REGISTRY.run(
+            fact_projectors.NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID,
+            occurrence=occurrence, root="ع ب د", template_id="taksir-fiaal",
+            attested_plurals=[occurrence["surface"], "عَبِيد"],
+        )
+        self.assertEqual("candidate", result["status"])
+        self.assertTrue(result["candidate"]["semantic_tie"])
+        self.assertEqual(["عَبِيد"], result["candidate"]["competing_alternatives"])
+        self.assertNotIn("rank", result["candidate"])
+
+    def test_lexical_feminine_requires_registry_evidence(self):
+        no_marker = noun_occurrence("18:17:2")  # الشمس -- feminine, no ta marbuta
+        with_marker = noun_occurrence("31:27:6")  # شجرة -- feminine, has ta marbuta
+        for occurrence in (no_marker, with_marker):
+            abstained = fact_projectors.REGISTRY.run(
+                fact_projectors.NOUN_LEXICAL_GENDER_PROJECTOR_ID,
+                occurrence=occurrence, gender_registry_entry=None,
+            )
+            self.assertEqual("abstained", abstained["status"])
+            self.assertEqual("lexical_gender_registry_missing", abstained["abstention"]["reason"])
+
+            certified = fact_projectors.REGISTRY.run(
+                fact_projectors.NOUN_LEXICAL_GENDER_PROJECTOR_ID,
+                occurrence=occurrence, gender_registry_entry="feminine",
+            )
+            self.assertEqual("candidate", certified["status"])
+            self.assertEqual("feminine", certified["candidate"]["gender"])
+
+    def test_noun_projector_records_lexeme_link_abstention(self):
+        occurrence = noun_occurrence("33:35:2")
+        result = fact_projectors.REGISTRY.run(
+            fact_projectors.NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID,
+            occurrence=occurrence, root="س ل م", template_id="msl-genitive-accusative",
+            attested_plurals=[],
+        )
+        self.assertEqual("abstained", result["status"])
+        self.assertIsNone(result["candidate"])
+        abstention = result["abstention"]
+        self.assertEqual({"subject_identity", "reason", "detail", "dependencies"}, set(abstention))
+        self.assertEqual(occurrence["identity"], abstention["subject_identity"])
+        self.assertEqual("sound_plural_suffix_not_broken_template", abstention["reason"])
+        self.assertTrue(abstention["detail"])
+        self.assertTrue(abstention["dependencies"])
+
+    def test_noun_projector_never_certifies_generated_plural(self):
+        # A paradigm-GENERATED surface (never sourced/attested) must not be
+        # admitted as an attested pair merely because a generator produced it.
+        from tools import fusha_paradigm_generate as generator
+
+        generated_rows = generator.generate_noun_plural(
+            {"pos": "noun", "lemma": "قَلَم", "root": "ق ل م", "plural_template_id": "taksir-afal"}
+        )
+        self.assertTrue(generated_rows)
+        generated_surface = generated_rows[0]["value"]["generated_surface"]
+
+        occurrence = noun_occurrence("2:25:12")
+        result = fact_projectors.REGISTRY.run(
+            fact_projectors.NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID,
+            occurrence=occurrence, root="ق ل م", template_id="taksir-afal",
+            attested_plurals=[generated_surface],
+        )
+        self.assertEqual("abstained", result["status"])
+        self.assertNotEqual("certified", result["status"])
+        self.assertFalse(result["certification_allowed"])
+        self.assertFalse(result["materialization_allowed"])
+
+        # structural: across every scenario this projector can reach, status is
+        # only ever candidate or abstained -- never certified.
+        for scenario in (
+            dict(occurrence=noun_occurrence("2:25:12"), root="ن ه ر", template_id="taksir-afal",
+                 attested_plurals=[loc_surface("2:25:12")]),
+            dict(occurrence=noun_occurrence("33:35:2"), root="س ل م",
+                 template_id="msl-genitive-accusative", attested_plurals=[]),
+        ):
+            outcome = fact_projectors.REGISTRY.run(
+                fact_projectors.NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID, **scenario
+            )
+            self.assertIn(outcome["status"], ("candidate", "abstained"))
+            self.assertFalse(outcome["certification_allowed"])
+            self.assertFalse(outcome["materialization_allowed"])
+
+    def test_loc_surface_mismatch_abstains_before_any_other_evidence(self):
+        occurrence = {"identity": {"loc": "2:25:12"}, "surface": loc_surface("2:25:18")}
+        result = fact_projectors.REGISTRY.run(
+            fact_projectors.NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID,
+            occurrence=occurrence, root="ن ه ر", template_id="taksir-afal",
+            attested_plurals=[occurrence["surface"]],
+        )
+        self.assertEqual("abstained", result["status"])
+        self.assertEqual("loc_surface_mismatch", result["abstention"]["reason"])
 
 
 if __name__ == "__main__":
