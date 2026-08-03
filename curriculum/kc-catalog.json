@@ -65,7 +65,7 @@
     "drill_route": "curriculum/drills/root-pattern-practice.md",
     "sarf_route": "sarf/procedures/homograph-risk.md",
     "nahw_route": null,
-    "curriculum_misconception_ids": ["mc-0142", "mc-0061", "mc-0074"],
+    "curriculum_misconception_ids": ["mc-0142"],
     "curriculum_error_examples": [
       {"kind": "error_pattern", "en": "A learner picks the more familiar reading of an unvoweled word and drops the other possible reading, instead of keeping both until something in the sentence decides."},
       {"kind": "error_pattern", "en": "A learner assumes every letter in an unvoweled word is a root letter without checking whether one of them actually belongs to the pattern instead."}
@@ -313,10 +313,58 @@
     "drill_route": "curriculum/drills/root-pattern-practice.md",
     "sarf_route": "sarf/procedures/masdar-participle.md",
     "nahw_route": null,
-    "curriculum_misconception_ids": ["mc-0078", "mc-0019", "mc-0117", "mc-0094", "mc-0030", "mc-0073", "mc-0069"],
+    "curriculum_misconception_ids": ["mc-0019", "mc-0117", "mc-0094", "mc-0030", "mc-0073", "mc-0069"],
     "curriculum_error_examples": [
       {"kind": "error_pattern", "en": "A learner copies the dictionary's 'to ...' gloss onto a verb that is actually conjugated in the text, instead of glossing the form that is actually there."},
       {"kind": "error_pattern", "en": "A learner invents one all-purpose noun for 'the act of doing X' without checking whether that particular verb actually has a noun in that shape."}
+    ]
+  },
+  {
+    "kc_id": "kc-root-template-slot-classification",
+    "arabic_grammar_name": "root radical vs. template augment (al-jadhr muqābil al-ḥarf al-zāʾid fī al-wazn)",
+    "plain_rule": "A letter's role in a word -- root radical, or a letter the template itself adds -- is decided by the slot it fills once the word is matched to its template; it cannot be decided from the letter's shape alone, and counting the first three consonants of a word is not a reliable way to find its root.",
+    "trigger_condition": "a word's root is named from its consonants, by shape or by counting, before the word is matched to a template",
+    "expected_feature": "the word matched to its template first; a weak or extra-looking letter classified by the slot it occupies",
+    "typical_error_feature": "a weak letter or a template-added letter treated as a root radical (or the reverse) by shape or position alone",
+    "point_template": "Before you name this word's root, check which template it matches.",
+    "teach_template": "A letter's role -- root radical or template-contributed addition -- is decided by the slot it fills once the word is matched to its template, not by the letter's shape and not by counting the first three consonants. Match the template first, then classify the letter.",
+    "bottom_out_template": "Match the word to its template, then classify each letter by the slot -- radical or augment -- it occupies there.",
+    "severity": "warn",
+    "default_gate": "two_vote_required",
+    "grammar_topic": "root_identification",
+    "cefr_band": "B1",
+    "diagnostic_classes": ["root_radical_vs_template_addition_confused"],
+    "drill_route": "curriculum/drills/root-pattern-practice.md",
+    "sarf_route": "sarf/procedures/homograph-risk.md",
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0061", "mc-0074"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner sees a weak letter in the middle of a word and calls it a root radical without first checking whether the matched template places an added letter in that exact position."},
+      {"kind": "error_pattern", "en": "A learner counts a word's first three consonants and reports them as its root, without checking whether the matched template itself contributed one of those letters."}
+    ]
+  },
+  {
+    "kc_id": "kc-masdar-template-not-uniform",
+    "arabic_grammar_name": "non-uniform verbal-noun template (maṣdar ghayr muṭṭarid li-l-fiʿl al-thulāthī)",
+    "plain_rule": "A Form-I verb's verbal noun (maṣdar) has no single predictable shape; its exact template is a per-verb fact that must be checked, not derived from one assumed pattern.",
+    "trigger_condition": "a Form-I verb's verbal-noun shape is assumed from one fixed template instead of checked per verb",
+    "expected_feature": "the verbal noun's shape checked against the actual verb, not predicted from a single template",
+    "typical_error_feature": "one uniform verbal-noun template applied to every Form-I verb",
+    "point_template": "Before you gloss this verb's verbal noun, check its actual shape rather than assuming one pattern.",
+    "teach_template": "The Form-I verbal noun (maṣdar) does not follow one uniform template across verbs -- two ordinary Form-I verbs can take two different shapes. Its exact form is a per-verb lexical fact and must be checked, not derived from a rule.",
+    "bottom_out_template": "State the verb's actual attested verbal-noun shape rather than a predicted uniform template.",
+    "severity": "warn",
+    "default_gate": "two_vote_required",
+    "grammar_topic": "derivation",
+    "cefr_band": "B1",
+    "diagnostic_classes": ["masdar_template_overgeneralized"],
+    "drill_route": "curriculum/drills/root-pattern-practice.md",
+    "sarf_route": "sarf/procedures/masdar-participle.md",
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0078"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner assumes every Form-I verb's verbal noun follows the same shape and states a masdar the verb does not actually have."},
+      {"kind": "error_pattern", "en": "A learner copies the verbal-noun pattern of one familiar verb onto a different verb of the same form, without checking whether that verb's actual masdar takes a different shape."}
     ]
   },
   {

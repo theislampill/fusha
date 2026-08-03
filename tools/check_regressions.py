@@ -3330,7 +3330,7 @@ try:
     _p2b_d = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_learner_feedback.py"), "--self-test"])
     check("p2b learner-feedback hint ladder self-test (bottom-out withheld past gate; cause-referencing)", _p2b_d.returncode == 0)
     _p2b_e = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_learner_feedback.py"), "--self-test"])
-    check("p2b learner-feedback validator self-test (LF-1..10 reject)", _p2b_e.returncode == 0)
+    check("p2b learner-feedback validator self-test (LF-1..13 + KC-SCHEMA + LF-1-CATALOG reject)", _p2b_e.returncode == 0)
     _p2b_f = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_cefr_fusha_instruction.py"), "--self-test"])
     check("p2b CEFR instruction self-test (7 levels clean; no certification/copied prose; beginner-safe)", _p2b_f.returncode == 0)
     _p2b_g = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_cefr_gate.py"), "--self-test"])
@@ -3428,7 +3428,8 @@ try:
     _q1 = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_placement_test.py"), "--self-test"])
     check("P1-3 placement-test runner self-test (deterministic; ASAG-graded not self-report; rung routing)", _q1.returncode == 0)
     _q2 = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_drill_keys.py"), "--self-test"])
-    check("P1-4 drill answer-key validator self-test (schema + leak + dangling-citation reject)", _q2.returncode == 0)
+    check("P1-4 drill answer-key validator self-test (schema + leak + dangling-citation + orphan-drill + "
+          "kc_id resolution/locality + assessment quarantine + answer-key round-trip reject)", _q2.returncode == 0)
     _q2b = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_drill_keys.py"),
                      os.path.join(ROOT, "curriculum", "drills", "keys", "quranic-function-words.keys.jsonl"),
                      os.path.join(ROOT, "curriculum", "drills", "keys", "morphology-foundations.keys.jsonl"),

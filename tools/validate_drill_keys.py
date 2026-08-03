@@ -28,6 +28,11 @@ HARD_TERMS, the per-file "at least one two-vote hard-grammar row" rule, the Leve
   * BATCH NO-OCCURRENCE ASSERTION (Train C): the 14 Train-C re-authored rows carry `quran_example: null` (paradigm-
     level corrections with no occurrence evidence in this batch) — an explicit assertion over those ids, not a
     global rule (other rows may cite a real address).
+  * ANSWER-KEY ROUND-TRIP (Train C repair): every row's own `expected_answer` and each `accepted_variants` entry
+    must itself pass `tools/fusha_tutor_runtime.grade()` against the row's own `required_reasoning` — an authored
+    correct answer that the ordinary runtime grader cannot pass would silently remediate a learner who typed
+    exactly that accepted answer (this is what shipped PK-7/FW-18 broken: an `ordered_slots` phrase absent from
+    an accepted variant). Applies to every shipped row in every key file, not just those two.
 
 It authors nothing and grades no learner. Stdlib only; dry-run; deterministic (no clock, no network, no randomness).
 CLI: <keys.jsonl ...> | --self-test. See parserplans/fusha-data-runtime-completion-pass (P1-4).
@@ -45,6 +50,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import leak_sot  # the single source of truth for public-boundary leak detection
 
 _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+sys.path.insert(0, _REPO)
+from tools import fusha_tutor_runtime as tutor_runtime  # noqa: E402  (the SAME grader a learner's answer runs through)
 
 # Same answer-key contract as curriculum/assessment (answer-key.schema.md / validate_curriculum_assessment).
 REQUIRED = {
@@ -210,6 +217,23 @@ def validate(path, repo_root=_REPO):
             if p and not os.path.exists(os.path.join(repo_root, p)):
                 errors.append("%s:%d: %s cites missing path %r" % (path, lineno, field, p))
 
+        # ANSWER-KEY ROUND-TRIP (Train C repair, BLOCKER 2): the row's own expected_answer and every accepted
+        # variant must themselves pass fusha_tutor_runtime.grade() against the row's own required_reasoning. A
+        # row with no ordered_slots trivially passes (a form always content-matches itself); this is a real
+        # regression guard only for rows that add ordered_slots (or any future grading constraint keyed off the
+        # raw answer text rather than the matched form).
+        _variants = row["accepted_variants"] if isinstance(row["accepted_variants"], list) else []
+        _forms = [("expected_answer", row["expected_answer"])]
+        _forms += [("accepted_variants[%d]" % i, v) for i, v in enumerate(_variants)]
+        for _label, _form in _forms:
+            _g = tutor_runtime.grade(row, {"answer": _form, "reasoning": list(row.get("required_reasoning") or [])})
+            if not _g["passed"]:
+                errors.append("%s:%d: %s %r does not pass fusha_tutor_runtime.grade() against its own row — an "
+                              "authored correct answer must be gradeable" % (path, lineno, _label, _form))
+            if not _g["reasoning_passed"]:
+                errors.append("%s:%d: row %r's own required_reasoning does not pass fusha_tutor_runtime.grade() "
+                              "when checked against %s %r" % (path, lineno, row["id"], _label, _form))
+
         # hard-grammar detection mirrors validate_curriculum_assessment (whole-row substring, case-insensitive).
         blob = json.dumps(row, ensure_ascii=False).lower()
         is_hard = any(term.lower() in blob for term in HARD_TERMS)
@@ -349,6 +373,15 @@ def _self_test():
     if real_quarantine_errs:
         failures.append("real assessment banks fail the quarantine: %s" % real_quarantine_errs[:3])
 
+    # BROKEN 10 (answer-key round-trip, BLOCKER 2): an accepted_variant that cannot itself pass
+    # fusha_tutor_runtime.grade() (here, because an ordered_slots phrase appears in the wrong order in the
+    # variant) must be caught. This is the exact class of defect that let PK-7's own authored accepted_variants
+    # ship ungradeable — reusing `good`'s own expected_answer/accepted_variants text keeps the fixture honest.
+    ungradeable = dict(good, id="ST-ungradeable", ordered_slots=["particle", "context"])
+    d9, fp9 = _write([ungradeable], "quranic-function-words.keys.jsonl")
+    if not any("does not pass fusha_tutor_runtime.grade()" in e for e in validate(fp9, repo_root=d9)):
+        failures.append("an accepted_variant that cannot pass fusha_tutor_runtime.grade() was accepted")
+
     # the SHIPPED key files must validate clean (real regression guard).
     keys_dir = os.path.join(_REPO, "curriculum", "drills", "keys")
     if os.path.isdir(keys_dir):
@@ -363,7 +396,8 @@ def _self_test():
     if not failures:
         print("ok   validate_drill_keys self-test: schema + leak-SoT scan + dangling-citation + orphan-drill + "
               "address-only quran_example + Level-7 two-vote rule + kc_id resolution/locality + assessment "
-              "quarantine + batch no-occurrence assertion; shipped key files validate clean")
+              "quarantine + batch no-occurrence assertion + answer-key round-trip (own accepted forms pass the "
+              "runtime grader); shipped key files validate clean")
     return 0 if not failures else 1
 
 

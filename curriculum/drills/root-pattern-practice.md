@@ -126,7 +126,7 @@ Component in `curriculum/kc-catalog.json`. A miss routes back to this drill and 
 |---|---|---|
 | `RP-12-masdar-not-uniform` | `جَلَسَ` maṣdar `جُلُوس`; `شَرِبَ` maṣdar `شُرْب` | Can a Form-I maṣdar's shape be predicted from the verb alone, or must it be checked per verb? |
 | `RP-13-weak-letter-radical-or-addition` | root `ق و ل` vs. an augmenting template | State what decides whether a weak letter (`و`/`ي`/`ا`) in a word is a root radical or an added letter. |
-| `RP-14-root-not-just-consonant-count` | any inflected surface | State why counting a word's first three consonants is not a reliable way to find its triliteral root, and what must be checked instead. |
+| `RP-14-root-not-just-consonant-count` | any inflected surface | If you count a word's first three consonants and treat them as its triliteral root, will that always be correct? State what must be checked instead. |
 
 ## Checklist before you leave root-pattern practice
 

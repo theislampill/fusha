@@ -40,6 +40,36 @@ Copy this file outside the repo for a real learner. The repo keeps the template 
 - `estimated_ending_missed`: a defective/maqṣūr token's mood/case is muqaddar (estimated), not written; "no visible mark" was misread as "no mood/case".
 - `loc_surface_mislabel`: an authored hover was keyed to a loc whose live span renders a different surface than the row's target token (data-loc existed but the word did not match).
 
+## Train C `kc_id` Crosswalk
+
+`tools/fusha_tutor_runtime.py` writes `progress.missed[].error_reason` as EITHER a legacy error class from the
+list above OR, for a Train-C-bound drill row (`curriculum/drills/keys/*.keys.jsonl` rows carrying `kc_id`), a
+`kc_id` from `curriculum/kc-catalog.json` — never both for the same event. The two vocabularies were authored at
+different times, for different populations of items, and do not lexically match even where they describe the
+same real-world symptom; a downstream consumer of `progress.missed` must not assume a `kc-*` code and a legacy
+code are distinct errors just because their spelling differs. Known semantic overlaps are listed below; treat a
+pairing as equivalent ONLY if it appears on this list.
+
+| legacy `error_reason` | `kc_id` | same symptom? |
+|---|---|---|
+| `hidden_number_morphology` | `kc-number-suffix-hidden` | yes — a dual/plural ending hidden behind a plain singular gloss |
+| `hidden_derivative_shape` | `kc-derivative-shape-hidden` | yes — a participle/derived noun collapsed to the verb, or its derivative shape hidden |
+| `finite_verb_dictionary_gloss` | `kc-dictionary-infinitive-leakage` | yes — the dictionary "to ..." infinitive pasted onto a finite or derived form |
+| `suffix_omitted` | `kc-suffix-pronoun-missing` | yes — an attached object/possessive pronoun dropped from the answer |
+| `particle_function_flattened` | `kc-particle-function` | yes — a multi-function particle given one fixed gloss regardless of context |
+| `wrong_irab_reasoning` | `kc-governor-justification` | yes — a correct case ending given with an absent or unjustified governor (right answer, wrong reason) |
+
+Every other `kc_id` currently reachable as an `error_reason` (`kc-clitic-segmentation`,
+`kc-root-template-slot-classification`, `kc-masdar-template-not-uniform`) has NO legacy equivalent above; treat
+it as its own distinct error class, not a re-spelling of anything in the "Error Classes" list. Conversely, every
+legacy code not listed in the crosswalk table (`script_harakat`, `root_family_vibes`, `pp_attachment_unclear`,
+etc.) has no `kc_id` equivalent yet and stays a legacy-only code until a drill row binds it. The remaining KCs in
+`curriculum/kc-catalog.json` (e.g. `kc-attached-pronoun`, `kc-unvoweled-homograph`, `kc-preposition-host`,
+`kc-case-mood-context`, `kc-orthography`, `kc-hidden-proclitic`, `kc-passive-voice-hidden`,
+`kc-token-vs-phrase-hover`, `kc-source-address-scope`, `kc-canonical-address-crosswalk`,
+`kc-public-boundary-source-clean`) are not yet bound to any drill-key row and so cannot appear as an
+`error_reason` at all.
+
 ## Review Standard
 
 Levels 0-3 usually need the answer key or one competent check. Levels 4-6 need procedure-linked reasoning for

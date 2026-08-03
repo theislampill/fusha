@@ -3,6 +3,19 @@
 Use this index when a learner or agent makes a mistake already seen in Qamus dogfood. The goal is not to memorize
 the history; it is to route a miss to the procedure and drill that prevents the same hover defect from returning.
 
+**Precedence when the same symptom appears in both tables below:** `progress.missed[].error_reason` (see
+`tools/fusha_tutor_runtime.py`) carries either a legacy `error class` string (the first table) or, for a
+Train-C-bound drill row, a `kc_id` (the second table) — never both for the same event. The two vocabularies were
+authored independently and are NOT interchangeable spellings of each other; where the same real-world symptom
+shows up under two different ids (five known cases: `finite_verb_dictionary_gloss`/`kc-dictionary-infinitive-leakage`,
+`suffix_omitted`/`kc-suffix-pronoun-missing`, `wrong_irab_reasoning`/`kc-governor-justification`,
+`particle_function_flattened`/`kc-particle-function`, and `hidden_derivative_plural_piece` split across
+`kc-number-suffix-hidden`/`kc-derivative-shape-hidden`), the table whose id vocabulary matches the actual
+`error_reason` value you are looking at is authoritative for that lookup — the other table's row is documentation
+of the same defect class under its own (older or newer) id, not a competing answer. The full crosswalk, including
+which `kc_id`s have no legacy equivalent, is maintained in
+[`../progress/missed-error-log.template.md`](../progress/missed-error-log.template.md#train-c-kc_id-crosswalk).
+
 | error class | learner symptom | drill | procedure |
 |---|---|---|---|
 | `finite_verb_dictionary_gloss` | finite verb glossed as "to ..." | `../assessment/level-checkpoints.sample.jsonl` L8 item, `../../sarf/drills/dogfood-sarf-remediation.md` | `../../sarf/procedures/verb-form-and-mood-review.md` |
