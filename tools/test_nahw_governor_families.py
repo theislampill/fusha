@@ -95,5 +95,103 @@ class G1SchemaSurface(unittest.TestCase):
         )
 
 
+class G2ValidatorConditions(unittest.TestCase):
+    """G2: validator conditions 10-14 + occurrence-identity verification + attribution rules.
+
+    F11 (quran:2:80:10-11, the flagship right-answer/wrong-reason zarf frame) is asserted against the FULLY
+    assembled validator (FAIL 10 or G6's ʿāmil-kind condition, FAIL 18) in G6TrainAssembled below — at G2 time
+    neither governing_regime population (G4) nor FAIL 18 (G6) exist yet, so that specific cross-group red only
+    becomes meaningful once G6 has landed. This ordering is a deliberate, documented sequencing call.
+    """
+
+    def test_bad_lattices_10_through_13_fire(self):
+        from tools import validate_dependency_lattice as V
+        for cond, lat in V._bad_lattices():
+            conds = {c for c, _ in V.validate_lattice(lat)}
+            self.assertIn(cond, conds, (cond, sorted(conds)))
+
+    def test_fail10_family_less_abrogator_edge_rejected(self):
+        from tools.validate_dependency_lattice import validate_lattice
+        edge = _base_edge(trigger_family="kana_family", governing_regime=None)
+        lat = {
+            "schema": "fusha/dependency-candidate-lattice@1", "input_mode": "arbitrary_typing",
+            "source_unit": {"address": "", "scope": "arbitrary"},
+            "tokens": [{"ref": "tok:1", "surface": "x"}], "edges": [edge],
+            "summary": {"live_writes": 0, "n_edges": 1, "n_unresolved": 0, "by_decision": {}},
+            "public_boundary": {"public_gloss_src": "qamus", "public_gloss_kind": "authored",
+                                "public_gloss_lang": "en", "external_source_names_public": False},
+            "source_boundary": {"heuristic_never_overrides_source": True, "quran_text_altered": False},
+        }
+        conds = {c for c, _ in validate_lattice(lat)}
+        self.assertIn("10", conds)
+
+    def test_fail11_attribution_rules(self):
+        from tools.validate_dependency_lattice import validate_lattice
+        for bad in (
+            {"status": "both_licensed", "alternatives": ["only_one"]},
+            {"status": "both_licensed", "alternatives": ["a", "b"], "selected": "a"},
+            {"status": "school_dependent", "alternatives": ["a", "b"], "party_source_ref": None},
+        ):
+            edge = _base_edge(analysis_attribution=bad, decision_status="unresolved", unresolved_alternatives=[{"reading": "a"}])
+            lat = {
+                "schema": "fusha/dependency-candidate-lattice@1", "input_mode": "arbitrary_typing",
+                "source_unit": {"address": "", "scope": "arbitrary"},
+                "tokens": [{"ref": "tok:1", "surface": "x"}], "edges": [edge],
+                "summary": {"live_writes": 0, "n_edges": 1, "n_unresolved": 1, "by_decision": {}},
+                "public_boundary": {"public_gloss_src": "qamus", "public_gloss_kind": "authored",
+                                    "public_gloss_lang": "en", "external_source_names_public": False},
+                "source_boundary": {"heuristic_never_overrides_source": True, "quran_text_altered": False},
+            }
+            conds = {c for c, _ in validate_lattice(lat)}
+            self.assertTrue(conds, bad)
+
+    def test_fail14_n3_surface_present_but_address_refused(self):
+        from tools.validate_dependency_lattice import verify_occurrence_identity
+        lat = {
+            "input_mode": "source_addressed", "source_unit": {"address": "quran:2:110", "scope": "in_scope_source_addressed"},
+            "tokens": [{"ref": "2:110:11", "surface": "عِندَ"}, {"ref": "2:110:12", "surface": "ٱللَّهِ"}],
+        }
+        errs = verify_occurrence_identity(lat)
+        self.assertTrue(errs, "N3: word-level address refusal must still be a FAIL 14")
+        self.assertFalse(any("surface does not match" in msg for _, msg in errs),
+                          "N3: the surface itself DOES match the loc-surface index; only the resolver refuses")
+        self.assertTrue(any(c == "14" for c, _ in errs))
+
+    def test_fail14_n1_ayah_absent_from_spine(self):
+        from tools.validate_dependency_lattice import verify_occurrence_identity
+        lat = {
+            "input_mode": "source_addressed", "source_unit": {"address": "quran:3:198", "scope": "in_scope_source_addressed"},
+            "tokens": [{"ref": "3:198:1", "surface": "لَٰكِنِ"}, {"ref": "3:198:2", "surface": "ٱلَّذِينَ"}],
+        }
+        errs = verify_occurrence_identity(lat)
+        self.assertTrue(errs, "N1: refusal control — the address authority refuses the ayah")
+
+    def test_fail14_n2_ayah_absent_from_spine(self):
+        from tools.validate_dependency_lattice import verify_occurrence_identity
+        lat = {
+            "input_mode": "source_addressed", "source_unit": {"address": "quran:2:12", "scope": "in_scope_source_addressed"},
+            "tokens": [{"ref": "2:12:5", "surface": "وَلَٰكِن"}, {"ref": "2:12:6", "surface": "لَّا"}],
+        }
+        errs = verify_occurrence_identity(lat)
+        self.assertTrue(errs, "N2: refusal control — the address authority refuses the ayah")
+
+    def test_fail14_corrupted_surface_rejected(self):
+        from tools.validate_dependency_lattice import verify_occurrence_identity
+        lat = {
+            "input_mode": "source_addressed", "source_unit": {"address": "quran:2:7", "scope": "in_scope_source_addressed"},
+            "tokens": [{"ref": "2:7:3", "surface": "عَلَىٰ"}, {"ref": "2:7:4", "surface": "قُلُوبِهِمْXX"}],
+        }
+        errs = verify_occurrence_identity(lat)
+        self.assertTrue(any("surface does not match" in msg for _, msg in errs))
+
+    def test_fail14_clean_address_bearing_lattice_passes(self):
+        from tools.validate_dependency_lattice import verify_occurrence_identity
+        lat = {
+            "input_mode": "source_addressed", "source_unit": {"address": "quran:2:7", "scope": "in_scope_source_addressed"},
+            "tokens": [{"ref": "2:7:3", "surface": "عَلَىٰ"}, {"ref": "2:7:4", "surface": "قُلُوبِهِمْ"}],
+        }
+        self.assertEqual(verify_occurrence_identity(lat), [])
+
+
 if __name__ == "__main__":
     unittest.main()

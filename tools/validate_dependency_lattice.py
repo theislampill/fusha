@@ -17,16 +17,27 @@ conditions (parserplans/general-fusha-grammar-checker-p2/{002,008}). A lattice F
      or source_boundary.heuristic_never_overrides_source is not true.
   8. a public-facing field (governor_justification / rel_label_ar) leaks a source/provenance/path string (leak_sot).
   9. summary.live_writes != 0.
+  10. an abrogator-family trigger edge (inna/kana/zanna) carries no governing_regime — a family-less abrogator edge.
+  11. analysis_attribution has fewer than 2 alternatives, or (status=school_dependent and party_source_ref is null).
+  12. an edge carries analysis_attribution and decision_status=resolved (FAIL 2 re-expressed for the attribution path).
+  13. frame_kind=constructed on a lattice whose source_unit.address matches a quran:/wbw: pattern, or
+      frame_kind=address_bearing on a lattice with no resolvable (quran:/wbw:-shaped) address.
+  14. (--verify-occurrence-identity only) a source_addressed lattice's token (loc, surface) does not match
+      qamus/indexes/quran-loc-surface/index.jsonl byte-exactly after NFC, or tools/fusha_check.resolve_address
+      does not return in_scope_source_addressed for that token's word-level address.
 
 CLI:
   python3 tools/validate_dependency_lattice.py <lattices.jsonl>
+  python3 tools/validate_dependency_lattice.py --verify-occurrence-identity <lattices.jsonl>
   python3 tools/validate_dependency_lattice.py --self-test
 Stdlib only. Exit non-zero on any violation.
 """
 import argparse
 import json
 import os
+import re
 import sys
+import unicodedata
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -44,6 +55,26 @@ _SCHEMA = json.load(open(SCHEMA_PATH, encoding="utf-8"))
 _EDGE_SCHEMA = _SCHEMA["$defs"]["edge"]
 _NONCERT_MODES = {"arbitrary_typing", "corpus_backed"}
 _SCHOLAR_LANES = {"scholar_irab_review", "nahw"}
+_ABROGATOR_TRIGGER_FAMILIES = {"inna_family", "kana_family", "zanna_family"}
+_ADDRESS_RE = re.compile(r"^(?:quran|wbw):")
+
+LOC_SURFACE_INDEX_PATH = os.path.join(_REPO, "qamus", "indexes", "quran-loc-surface", "index.jsonl")
+_LOC_SURFACE = None
+
+
+def _load_loc_surface_index():
+    global _LOC_SURFACE
+    if _LOC_SURFACE is None:
+        _LOC_SURFACE = {}
+        if os.path.exists(LOC_SURFACE_INDEX_PATH):
+            with open(LOC_SURFACE_INDEX_PATH, encoding="utf-8") as fh:
+                for line in fh:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    row = json.loads(line)
+                    _LOC_SURFACE[row["loc"]] = row["surface"]
+    return _LOC_SURFACE
 
 
 def validate_lattice(lat):
@@ -98,6 +129,31 @@ def validate_lattice(lat):
         for f in ("governor_justification", "rel_label_ar"):
             if leak_sot.is_leak(edge.get(f) or ""):
                 errors.append(("8", "%s %s leaks a source/provenance/path string" % (tag, f)))
+        # FAIL 10: an abrogator-family (inna/kana/zanna) trigger edge with no discriminated regime.
+        if edge.get("trigger_family") in _ABROGATOR_TRIGGER_FAMILIES and edge.get("governing_regime") is None:
+            errors.append(("10", "%s abrogator-family trigger (%s) carries no governing_regime" %
+                           (tag, edge.get("trigger_family"))))
+        # FAIL 11: analysis_attribution must carry >=2 alternatives, and school_dependent requires a party source.
+        attribution = edge.get("analysis_attribution")
+        if attribution is not None:
+            alts = attribution.get("alternatives") or []
+            if len(alts) < 2:
+                errors.append(("11", "%s analysis_attribution has fewer than 2 alternatives" % tag))
+            if "selected" in attribution:
+                errors.append(("11", "%s analysis_attribution carries a selected key (attribution may not pick a winner)" % tag))
+            if attribution.get("status") == "school_dependent" and attribution.get("party_source_ref") is None:
+                errors.append(("11", "%s analysis_attribution status=school_dependent with no party_source_ref (attribution_party_unsourced)" % tag))
+        # FAIL 12: an attributed edge can never be resolved (re-expresses FAIL 2 for the attribution path).
+        if attribution is not None and dec == "resolved":
+            errors.append(("12", "%s carries analysis_attribution but decision_status=resolved" % tag))
+        # FAIL 13: frame_kind must agree with whether the LATTICE itself wears a resolvable occurrence address.
+        frame_kind = edge.get("frame_kind")
+        address = ((lat.get("source_unit") or {}).get("address") or "")
+        address_shaped = bool(_ADDRESS_RE.match(address))
+        if frame_kind == "constructed" and address_shaped:
+            errors.append(("13", "%s frame_kind=constructed on a lattice whose source_unit.address is occurrence-shaped (%s)" % (tag, address)))
+        if frame_kind == "address_bearing" and not address_shaped:
+            errors.append(("13", "%s frame_kind=address_bearing on a lattice with no resolvable (quran:/wbw:) address" % tag))
 
     # FAIL 7 (boundary): heuristic never overrides source
     sb = lat.get("source_boundary") or {}
@@ -109,7 +165,35 @@ def validate_lattice(lat):
     return errors
 
 
-def validate_file(path):
+def verify_occurrence_identity(lat):
+    """FAIL 14: every source_addressed lattice's tokens must be occurrence-identified by TWO authorities.
+
+    (a) qamus/indexes/quran-loc-surface/index.jsonl: the token's ref (loc) must carry the EXACT surface, byte-exact
+    after NFC — surface presence is not occurrence authority on its own (N3: the loc-surface index carries a
+    surface whose word-level address the resolver still refuses).
+    (b) tools/fusha_check.resolve_address: the token's ref, read as a word-level address, must resolve
+    in_scope_source_addressed. Either check failing is a FAIL — one committed index is not occurrence authority.
+    """
+    if lat.get("input_mode") != "source_addressed":
+        return []
+    from tools.fusha_check import resolve_address  # lazy: the repository's own address authority
+    index = _load_loc_surface_index()
+    lid = (lat.get("source_unit") or {}).get("address") or "?"
+    errors = []
+    for tok in lat.get("tokens") or []:
+        ref = tok.get("ref", "")
+        surface = tok.get("surface", "")
+        tag = "%s token[%s]" % (lid, ref)
+        indexed = index.get(ref)
+        if indexed is None or unicodedata.normalize("NFC", indexed) != unicodedata.normalize("NFC", surface):
+            errors.append(("14", "%s surface does not match qamus/indexes/quran-loc-surface/index.jsonl at loc=%r" % (tag, ref)))
+        detail = resolve_address(ref)
+        if detail.get("scope") != "in_scope_source_addressed":
+            errors.append(("14", "%s resolve_address refuses the word-level address (%s)" % (tag, detail.get("detail"))))
+    return errors
+
+
+def validate_file(path, *, occurrence_identity=False):
     n, errs = 0, []
     with open(path, encoding="utf-8") as fh:
         for line in fh:
@@ -117,7 +201,10 @@ def validate_file(path):
             if not line:
                 continue
             n += 1
-            errs.extend(validate_lattice(json.loads(line)))
+            lat = json.loads(line)
+            errs.extend(validate_lattice(lat))
+            if occurrence_identity:
+                errs.extend(verify_occurrence_identity(lat))
     return n, errs
 
 
@@ -176,6 +263,39 @@ def _bad_lattices():
     b["edges"][0].update({"evidence_class": "heuristic", "decision_status": "resolved", "assigned_case_mood": None,
                           "headless": False, "candidate_head": "tok:9", "unresolved_alternatives": []})
     out.append(("7", b))
+
+    # FAIL 10: a family-less abrogator edge (trigger_family=inna_family, no governing_regime).
+    b = json.loads(json.dumps(good)); b["edges"][0]["trigger_family"] = "inna_family"
+    out.append(("10", b))
+
+    # FAIL 11a: fewer than 2 alternatives.
+    b = json.loads(json.dumps(good))
+    b["edges"][0]["analysis_attribution"] = {"status": "both_licensed", "alternatives": ["badal"]}
+    out.append(("11", b))
+    # FAIL 11b: a selected key on the attribution.
+    b = json.loads(json.dumps(good))
+    b["edges"][0]["analysis_attribution"] = {"status": "both_licensed", "alternatives": ["badal", "atf_bayan"], "selected": "badal"}
+    out.append(("11", b))
+    # FAIL 11c: school_dependent with no party_source_ref (attribution_party_unsourced).
+    b = json.loads(json.dumps(good))
+    b["edges"][0]["analysis_attribution"] = {"status": "school_dependent", "alternatives": ["a", "b"], "party_source_ref": None}
+    out.append(("11", b))
+
+    # FAIL 12: an attributed edge marked resolved (re-expresses FAIL 2 for the attribution path, no empty-alts bypass).
+    b = json.loads(json.dumps(good))
+    b["edges"][0]["analysis_attribution"] = {"status": "both_licensed", "alternatives": ["badal", "atf_bayan"]}
+    b["edges"][0]["unresolved_alternatives"] = []
+    b["edges"][0]["decision_status"] = "resolved"
+    out.append(("12", b))
+
+    # FAIL 13a: frame_kind=constructed on an occurrence-addressed lattice.
+    b = json.loads(json.dumps(good)); b["edges"][0]["frame_kind"] = "constructed"
+    out.append(("13", b))
+    # FAIL 13b: frame_kind=address_bearing on a lattice with no resolvable address.
+    b = json.loads(json.dumps(good))
+    b["source_unit"] = {"address": "", "scope": "arbitrary"}
+    b["edges"][0]["frame_kind"] = "address_bearing"
+    out.append(("13", b))
     return out
 
 
@@ -194,7 +314,7 @@ def _self_test():
     for f in failures:
         print("FAIL " + f)
     if not failures:
-        print("ok   validate_dependency_lattice self-test: governor lattices clean; all 9 FAIL conditions reject")
+        print("ok   validate_dependency_lattice self-test: governor lattices clean; all 13 FAIL conditions reject")
     return 0 if not failures else 1
 
 
@@ -202,12 +322,14 @@ def main():
     ap = argparse.ArgumentParser(description="Validate governor/iʿrāb dependency lattices.")
     ap.add_argument("path", nargs="?")
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--verify-occurrence-identity", action="store_true",
+                     help="also enforce FAIL 14 (loc-surface index + resolve_address occurrence identity)")
     a = ap.parse_args()
     if a.self_test:
         return _self_test()
     if not a.path:
         ap.error("need a path or --self-test")
-    n, errs = validate_file(a.path)
+    n, errs = validate_file(a.path, occurrence_identity=a.verify_occurrence_identity)
     for cond, msg in errs:
         print("FAIL [cond %s] %s" % (cond, msg))
     print("checked %d lattice(s), %d violation(s)" % (n, len(errs)))
