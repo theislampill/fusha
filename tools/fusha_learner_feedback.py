@@ -62,6 +62,24 @@ def _hint(text, references_cause, governor_address=None):
     return {"text": t, "references_cause": bool(references_cause), "governor_address": governor_address, "source_clean": True}
 
 
+def _examples_for(kc, can_bottom):
+    """Build the event examples[] from the KC's authored curriculum_error_examples (Train C).
+
+    A `correction`-kind catalog example is included ONLY when the bottom-out answer is itself safe to show
+    (can_bottom) — otherwise the example slot would become a bottom-out side channel. An `error_pattern`-kind
+    example is always eligible. The emitted shape is the EXISTING example $def (ar/en/public_boundary) —
+    `kind` stays a catalog-only field and is never copied onto the event."""
+    out = []
+    for ex in kc.get("curriculum_error_examples") or []:
+        if ex.get("kind") == "correction" and not can_bottom:
+            continue
+        text = ex.get("en", "")
+        if leak_sot.is_leak(text):
+            text = leak_sot.redact(text)
+        out.append({"en": text, "public_boundary": dict(_PUBLIC_BOUNDARY)})
+    return out
+
+
 def to_feedback_event(diag, by_class, decision_status="pending"):
     """Build a learner-feedback event for one diagnostic, or None if no KC covers its class."""
     cls = diag.get("issue_class")
@@ -93,7 +111,7 @@ def to_feedback_event(diag, by_class, decision_status="pending"):
         "drill_route": kc.get("drill_route"),
         "sarf_route": kc.get("sarf_route"),
         "nahw_route": kc.get("nahw_route"),
-        "examples": [],
+        "examples": _examples_for(kc, can_bottom),
         "when_not_to_give_answer": {
             "gate": gate, "reason": reason,
             "route_to": {"lane": route.get("lane", "nahw"), "procedure": route.get("procedure", kc.get("nahw_route") or kc.get("sarf_route") or "nahw/procedures/irab-case-mood.md")},
@@ -157,6 +175,18 @@ def _self_test():
                 failures.append("%s: KC does not resolve" % raw)
     if not seen_classes:
         failures.append("no learner-feedback events produced across the fixtures")
+    # RED-12: bottom-out stays withheld past a non-auto_safe gate WITH examples now present — examples must never
+    # become a bottom-out side channel. Re-run over the same fixtures and require at least one non-empty examples[].
+    saw_examples = False
+    for raw in inputs:
+        rec = TC.check_text({"input_mode": "arbitrary_typing", "raw_input": raw})
+        for ev in build_events(rec["diagnostics"], by_class):
+            if ev["examples"]:
+                saw_examples = True
+            if ev["examples"] and ev["bottom_out_hint"] is not None:
+                failures.append("%s: bottom_out present alongside non-empty examples (side-channel leak)" % raw)
+    if not saw_examples:
+        failures.append("RED-12: no fixture produced a non-empty examples[] (curriculum_error_examples not wired)")
     for f in failures:
         print("FAIL " + f)
     if not failures:
@@ -179,7 +209,8 @@ def emit_fixture(path):
             "note": "Learner-feedback hint-ladder events (authored arbitrary inputs). Bottom-out withheld past the gate; "
                     "iʿrāb-sensitive teach references the cause; routes resolve; source-clean; dry-run.",
             "row_schema": ["knowledge_component", "diagnostic_class", "point_hint", "teach_hint", "bottom_out_hint",
-                           "when_not_to_give_answer", "decision_status", "right_answer_wrong_reason_marker", "cefr_level_min"]}
+                           "examples", "when_not_to_give_answer", "decision_status",
+                           "right_answer_wrong_reason_marker", "cefr_level_min"]}
     with open(path.replace(".jsonl", "") + ".meta.json", "w", encoding="utf-8") as fh:
         json.dump(meta, fh, ensure_ascii=False, indent=2, sort_keys=True)
         fh.write("\n")

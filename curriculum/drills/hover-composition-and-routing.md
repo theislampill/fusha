@@ -62,6 +62,19 @@ hover wording.
 | `يُحْيِي` | imperfect prefix + Form IV stem | the initial yāʾ is morphology and must not disappear into one verb-colored host |
 | `كُلُّ شَيْءٍ قَدِيرٌ` | quantifier + noun + adjective phrase | `كل`, `شيء`, and `قدير` each need visible role/color and phrase relation |
 
+## Train C — KC-bound practice items
+
+These items are graded objectively against
+[`keys/hover-composition-and-routing.keys.jsonl`](keys/hover-composition-and-routing.keys.jsonl) and each names a
+Knowledge Component in `curriculum/kc-catalog.json`. A miss routes back to this drill and is held pending
+(`two_vote_required`); a learner-declared second check never clears it.
+
+| item id | token | task |
+|---|---|---|
+| `HC-6-laam-sun-letter` | `ٱلْقَمَرُ` | Decide whether the article's lām is audible or assimilated before this letter, and state the rule in both directions (sun letters vs. moon letters). |
+| `HC-7-laam-gemination-merge` | `ٱلنَّهْرُ` | Decide whether the article's lām has been deleted or merged into the following letter, and explain what the doubled consonant represents. |
+| `HC-8-nun-wiqaya-drop` | `يُكْرِمُنِي` | Decide what the final `نِي` marks, and what is lost from the reading if it is treated the way a noun's possessive `ي` is treated. |
+
 ## Parse-key handoff
 
 After the routing decision, produce a renderable handoff:

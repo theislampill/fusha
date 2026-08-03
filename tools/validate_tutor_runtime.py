@@ -13,7 +13,8 @@ runtime ever:
   * persists progress or an event without the explicit `--write` flag;
   * is non-deterministic (a wall clock / RNG would break replay);
   * emits an event whose fields violate the tutor-event / tutor-progress-state JSON schemas;
-  * leaks an internal/source term into an event text field.
+  * leaks an internal/source term into an event text field;
+  * records a wrong `missed[].error_reason` (must equal the row's `kc_id` when present, else stay null).
 
 Stdlib only. CLI: --self-test (runs the full battery + meta-checks that the guard itself catches a broken grader).
 See parserplans/fusha-data-runtime-completion-pass/004 (P0-C).
@@ -37,6 +38,9 @@ from tools import leak_sot  # noqa: E402
 
 _PROG_SCHEMA = json.load(open(os.path.join(_REPO, "qamus", "schemas", "tutor-progress-state.schema.json"), encoding="utf-8"))
 _EVENT_SCHEMA = json.load(open(os.path.join(_REPO, "qamus", "schemas", "tutor-event.schema.json"), encoding="utf-8"))
+_REMEDIATION_INDEX = os.path.join(_REPO, "curriculum", "drills", "dogfood-error-remediation-index.md")
+_MISSED_ERROR_TEMPLATE = os.path.join(_REPO, "curriculum", "progress", "missed-error-log.template.md")
+_DRILL_KEYS = os.path.join(_REPO, "curriculum", "drills", "keys")
 
 # a payload read of a self-reported correctness flag — must NOT appear in grade()'s source
 _SELF_REPORT_READ = re.compile(r"""payload\s*(?:\.get\(|\[)\s*["'](?:passed|correct|is_correct|cleared|score|grade)["']""")
@@ -89,6 +93,60 @@ def _validate_obj(obj, schema, path="$"):
 def _g(passed, reasoning=True, two_vote="n/a", forbidden=False):
     return {"passed": passed, "reasoning_passed": reasoning, "two_vote_status": two_vote,
             "forbidden_hit": forbidden, "grade": "x"}
+
+
+def _reachable_kc_ids():
+    out = set()
+    for name in sorted(os.listdir(_DRILL_KEYS)):
+        if not name.endswith(".keys.jsonl"):
+            continue
+        with open(os.path.join(_DRILL_KEYS, name), encoding="utf-8") as fh:
+            for line in fh:
+                if not line.strip():
+                    continue
+                kc_id = json.loads(line).get("kc_id")
+                if kc_id:
+                    out.add(kc_id)
+    return out
+
+
+def _validate_remediation_index(text=None, reachable=None, crosswalk_text=None):
+    if text is None:
+        text = open(_REMEDIATION_INDEX, encoding="utf-8").read()
+    if crosswalk_text is None:
+        crosswalk_text = open(_MISSED_ERROR_TEMPLATE, encoding="utf-8").read()
+    reachable = _reachable_kc_ids() if reachable is None else set(reachable)
+    errs, seen = [], {}
+    row_re = re.compile(r"^\|\s*`(kc-[^`]+)`\s*\|\s*`(emittable|documented_only)`\s*\|")
+    for line in text.splitlines():
+        if not line.startswith("| `kc-"):
+            continue
+        m = row_re.match(line)
+        if not m:
+            errs.append("Train C remediation row lacks a closed runtime posture: %s" % line)
+            continue
+        kc_id, posture = m.groups()
+        if kc_id in seen:
+            errs.append("duplicate Train C remediation kc_id %s" % kc_id)
+            continue
+        seen[kc_id] = posture
+        expected = "emittable" if kc_id in reachable else "documented_only"
+        if posture != expected:
+            errs.append("Train C remediation %s is %s but runtime reachability requires %s" %
+                        (kc_id, posture, expected))
+    if not seen:
+        errs.append("Train C remediation table has no posture-bearing KC rows")
+    normalized = " ".join(text.split())
+    if "treat the ids as equivalent only when the authoritative crosswalk explicitly pairs them" not in normalized:
+        errs.append("remediation precedence does not defer equivalence to the authoritative crosswalk")
+    if "it is not an equivalence assertion for either KC" not in normalized:
+        errs.append("hidden_derivative_plural_piece is not explicitly withheld from KC equivalence")
+    if "The first table is a manual-log and historical dogfood vocabulary" not in normalized:
+        errs.append("remediation index does not mark legacy error classes as manual-log-only")
+    crosswalk_normalized = " ".join(crosswalk_text.split())
+    if "Legacy error classes from the list above remain a manual-log vocabulary; the runtime does not emit them" not in crosswalk_normalized:
+        errs.append("missed-error template overclaims runtime emission of legacy error classes")
+    return errs
 
 
 def validate():
@@ -169,6 +227,23 @@ def validate():
     # 8. source-clean event note.
     if leak_sot.is_leak(e1.get("note", "")):
         errs.append("event note leaks an internal/source term")
+
+    # 9. Train C error_reason contract: a graded miss on a row carrying kc_id records that kc_id as
+    #    progress.missed[].error_reason; a miss on a row WITHOUT kc_id still records null (no invention).
+    bad_payload = {"answer": "totally wrong", "reasoning": []}
+    row_with_kc = dict(idx["T1-objective"], id="TC-kc-miss", kc_id="kc-clitic-segmentation")
+    prog_kc = RT.new_progress()
+    RT.apply_event_to_progress(prog_kc, row_with_kc, RT.step(row_with_kc, None, bad_payload, 0), 0)
+    miss_kc = next((m for m in prog_kc["missed"] if m["item_id"] == "TC-kc-miss"), None)
+    if not miss_kc or miss_kc["error_reason"] != "kc-clitic-segmentation":
+        errs.append("a miss on a kc_id-bearing row did not record the kc_id as error_reason: %r" % miss_kc)
+    row_without_kc = dict(idx["T1-objective"], id="TC-no-kc-miss")
+    prog_no = RT.new_progress()
+    RT.apply_event_to_progress(prog_no, row_without_kc, RT.step(row_without_kc, None, bad_payload, 0), 0)
+    miss_no = next((m for m in prog_no["missed"] if m["item_id"] == "TC-no-kc-miss"), None)
+    if not miss_no or miss_no["error_reason"] is not None:
+        errs.append("a miss on a row without kc_id invented a non-null error_reason: %r" % miss_no)
+    errs += _validate_remediation_index()
     return errs
 
 
@@ -184,6 +259,25 @@ def _self_test():
                                         "forbidden_hit": False, "cleared": True}, "box_before": 0, "box_after": 1}
     if not _validate_obj(bad, _EVENT_SCHEMA):
         errs.append("META: schema checker accepted a bad outcome enum")
+    index_text = open(_REMEDIATION_INDEX, encoding="utf-8").read()
+    bad_posture = index_text.replace("| `kc-hidden-proclitic` | `documented_only` |",
+                                     "| `kc-hidden-proclitic` | `emittable` |", 1)
+    if not _validate_remediation_index(bad_posture):
+        errs.append("META: remediation index accepted an unreachable KC as emittable")
+    bad_equivalence = index_text.replace("it is not an equivalence assertion for either KC",
+                                         "it is an equivalence assertion for either KC", 1)
+    if not _validate_remediation_index(bad_equivalence):
+        errs.append("META: remediation index accepted a non-crosswalk KC equivalence")
+    bad_legacy_index = index_text.replace("The first table is a manual-log and historical dogfood vocabulary",
+                                          "The first table is a runtime-emitted vocabulary", 1)
+    if not _validate_remediation_index(bad_legacy_index):
+        errs.append("META: remediation index accepted legacy classes as runtime-emitted")
+    crosswalk_text = open(_MISSED_ERROR_TEMPLATE, encoding="utf-8").read()
+    bad_legacy_crosswalk = crosswalk_text.replace(
+        "the list above remain a manual-log vocabulary; the runtime does not emit them",
+        "the list above are emitted by the runtime", 1)
+    if not _validate_remediation_index(index_text, crosswalk_text=bad_legacy_crosswalk):
+        errs.append("META: missed-error template accepted legacy classes as runtime-emitted")
     for e in errs:
         print("FAIL " + e)
     if not errs:

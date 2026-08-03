@@ -8,6 +8,7 @@
     "point_hint",
     "teach_hint",
     "bottom_out_hint",
+    "examples",
     "when_not_to_give_answer",
     "decision_status",
     "right_answer_wrong_reason_marker",
