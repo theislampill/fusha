@@ -1232,5 +1232,133 @@ class RunnerCli(unittest.TestCase):
         self.assertEqual(before, after)
 
 
+# ---------------------------------------------------------------------------
+# letter-ownership carve — the exact-letter-ownership family (curriculum/l1l6/increments/inc-ownership,
+# cu-nisba-attribution-suffix, and the p007 clitic/host carve for quran:2:34:5 / quran:12:31:24)
+# ---------------------------------------------------------------------------
+_LOB = "sarf/evals/letter-ownership-carve-eval.jsonl"
+
+
+class LetterOwnershipCarve(unittest.TestCase):
+    """Red-first gates for the new letter-ownership bank: every row is DECIDED by
+    tools/run_sarf_evals.py:decide_letter_ownership, never echoed from its own `expected_*` fields."""
+
+    def test_bank_is_registered_implemented_and_consumed(self):
+        contract = R.load_contract(_ROOT)
+        spec = R.bank_spec(contract, _LOB)
+        self.assertEqual(spec["disposition"], "implemented_and_consumed")
+        self.assertEqual(spec["behavioral_consumer"], "tools/run_sarf_evals.py:decide_letter_ownership")
+        self.assertIn(spec["behavioral_consumer"], R.DECISION_CONSUMERS)
+        self.assertIn(_LOB, R.REQUIRED_BEHAVIORAL_BANKS)
+        rows = _rows(_LOB)
+        self.assertEqual(len(rows), 17)
+        failures, metrics = _run(_LOB, rows)
+        self.assertEqual(failures, [], "letter-ownership bank failed: %s" % failures[:5])
+        self.assertEqual(metrics["decided_rows"], len(rows))
+        self.assertEqual(metrics["consumer_calls"][spec["behavioral_consumer"]], len(rows))
+
+    def test_single_row_expected_owner_mutation_names_bank_row_and_property(self):
+        """RED-FIRST: mutating exactly one row's expected owners must fail naming that row and property."""
+        rows = copy.deepcopy(_rows(_LOB))
+        target = next(r for r in rows if r["id"] == "own-adv-01")
+        target["expected_owners"] = ["pattern_augment", "root", "root"]
+        failures, _m = _run(_LOB, rows)
+        self.assertTrue(failures)
+        self.assertTrue(all(f.startswith("own-adv-01 ") for f in failures), failures[:3])
+        self.assertTrue(any("[owners_match]" in f for f in failures), failures[:3])
+
+    def test_breaking_the_declared_consumer_turns_the_bank_red(self):
+        """MUTATION: replace decide_letter_ownership with an always-root stub; the bank must go red."""
+        ctx = _ctx()
+        ctx.letter_ownership_decide = lambda token: {"decision": "candidate_pending",
+                                                     "owners": ["root"] * len(token.get("letters") or [])}
+        failures, _m = _run(_LOB, ctx=ctx)
+        self.assertTrue(failures, "a stubbed decide_letter_ownership must fail the bank")
+
+    def test_doubly_owned_and_unownable_tokens_abstain_the_whole_token(self):
+        rows = _rows(_LOB)
+        by_id = {r["id"]: r for r in rows}
+        ctx = _ctx()
+        for rid, reason in (("own-abs-01", "no_root_evidence"), ("own-abs-02", "pending_letter_ownership"),
+                            ("own-fsr-01", "false_stem_risk"), ("own-double-01", "pending_letter_ownership"),
+                            ("own-carve-no-borrow", "no_root_evidence")):
+            rec = ctx.letter_ownership_decide(by_id[rid])
+            self.assertEqual(rec["decision"], "abstain", "%s must abstain" % rid)
+            self.assertEqual(rec["reason"], reason, "%s: wrong abstention reason" % rid)
+            self.assertFalse(rec.get("owners"), "%s: an abstaining row must never carry an owners list" % rid)
+
+    def test_shape_only_mim_is_never_forced_to_pattern_augment(self):
+        """own-adv-01 class: an initial mim that IS radical_1 must be root, never a shape-only augment guess."""
+        rows = _rows(_LOB)
+        row = next(r for r in rows if r["id"] == "own-adv-01")
+        ctx = _ctx()
+        rec = ctx.letter_ownership_decide(row)
+        self.assertEqual(rec["decision"], "candidate_pending")
+        self.assertEqual(rec["owners"][0], "root")
+
+        mutated = copy.deepcopy(row)
+        mutated["expected_owners"] = ["pattern_augment", "root", "root"]
+        failures, _m = _run(_LOB, [mutated])
+        self.assertTrue(any("[owners_match]" in f for f in failures), failures[:3])
+
+    def test_nisba_final_geminated_ya_is_affix_never_root(self):
+        rows = _rows(_LOB)
+        by_id = {r["id"]: r for r in rows}
+        ctx = _ctx()
+        pos = ctx.letter_ownership_decide(by_id["own-nisba-01"])
+        self.assertEqual(pos["owners"][-2:], ["affix", "affix"])
+        neg = ctx.letter_ownership_decide(by_id["own-nisba-02"])
+        self.assertEqual(neg["owners"][-1], "root",
+                        "a bare surface ending in ya without a declared suffix_kind must not default to affix")
+
+    def test_same_surface_needs_its_own_host_verification(self):
+        """Identical surface carves identically only within one occurrence's OWN evidence."""
+        rows = _rows(_LOB)
+        by_id = {r["id"]: r for r in rows}
+        surfaces = {by_id[i]["surface"] for i in ("own-carve-24-35-44", "own-carve-2-187-63", "own-carve-no-borrow")}
+        self.assertEqual(len(surfaces), 1, "the three rows must share one identical surface")
+        ctx = _ctx()
+        a = ctx.letter_ownership_decide(by_id["own-carve-24-35-44"])
+        b = ctx.letter_ownership_decide(by_id["own-carve-2-187-63"])
+        c = ctx.letter_ownership_decide(by_id["own-carve-no-borrow"])
+        self.assertEqual(a["decision"], "candidate_pending")
+        self.assertEqual(b["decision"], "candidate_pending")
+        self.assertEqual(a["owners"], b["owners"])
+        self.assertEqual(c["decision"], "abstain",
+                         "withheld evidence on an identical surface must never borrow a sibling row's carve")
+
+    def test_occurrence_dogfood_matches_p007_repository_evidence(self):
+        """quran:2:34:5 and quran:12:31:24 are grounded in qamus/examples/p007-li-pilot/*.jsonl (read-only locator)."""
+        with open(os.path.join(_ROOT, "qamus", "examples", "p007-li-pilot", "typed-facts.jsonl"),
+                  encoding="utf-8") as fh:
+            facts = [json.loads(l) for l in fh if l.strip()]
+        seg_2_34_5 = next(f for f in facts if f["fact_id"] == "fact:p00slice:2_34_5:seg")
+        seg_12_31_24 = next(f for f in facts if f["fact_id"] == "fact:p00slice:12_31_24:seg")
+        rows = _rows(_LOB)
+        by_id = {r["id"]: r for r in rows}
+        row_2_34_5 = by_id["own-carve-2-34-5"]
+        row_12_31_24 = by_id["own-carve-12-31-24"]
+        self.assertEqual(row_2_34_5["occurrence_id"], "quran:2:34:5")
+        self.assertEqual(row_12_31_24["occurrence_id"], "quran:12:31:24")
+        self.assertEqual("".join(row_2_34_5["letters"][:1]), seg_2_34_5["fact_value"]["clitic"][:1])
+        self.assertEqual("".join(row_12_31_24["letters"][:1]), seg_12_31_24["fact_value"]["clitic"][:1])
+        ctx = _ctx()
+        self.assertEqual(ctx.letter_ownership_decide(row_2_34_5)["owners"], row_2_34_5["expected_owners"])
+        self.assertEqual(ctx.letter_ownership_decide(row_12_31_24)["owners"], row_12_31_24["expected_owners"])
+
+    def test_analyses_stay_candidate_and_never_certify(self):
+        rows = _rows(_LOB)
+        ctx = _ctx()
+        for row in rows:
+            rec = ctx.letter_ownership_decide(row)
+            self.assertIn(rec["decision"], ("candidate_pending", "abstain"))
+            self.assertNotIn("certified", json.dumps(rec, ensure_ascii=False).lower())
+            self.assertTrue(set(rec) <= {"decision", "owners", "reason", "hidden_radicals"},
+                            "%s: ownership record must never carry a lexeme/sense/meaning key: %r"
+                            % (row["id"], sorted(rec)))
+        spec = R.bank_spec(R.load_contract(_ROOT), _LOB)
+        self.assertIsNone(spec["followup_packet"])
+
+
 if __name__ == "__main__":
     unittest.main()

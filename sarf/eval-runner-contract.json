@@ -312,6 +312,121 @@
       "secondary_consumers": []
     },
     {
+      "adapter": "letter_ownership_carve",
+      "behavioral_consumer": "tools/run_sarf_evals.py:decide_letter_ownership",
+      "consumers": [
+        "tools/run_sarf_evals.py"
+      ],
+      "disposition": "implemented_and_consumed",
+      "enforced_properties": [
+        "every row is decided by decide_letter_ownership from its letters + evidence, never echoed from the row's own expected_* fields",
+        "a token whose residual letters cannot all be owned abstains with pending_letter_ownership / false_stem_risk / no_root_evidence, never a root conclusion",
+        "a letter claimed by more than one ownership layer at once forces whole-token abstention (own-r4)",
+        "shape alone never assigns pattern_augment to an initial mim; root_evidence decides (rejects the own-adv-01 class of error)",
+        "a declared nisba suffix's final geminated yaa and its preceding kasra-bearing letter are affix, never root, even when root_evidence would otherwise reach them",
+        "a surface merely ending in yaa with no declared suffix_kind is not treated as nisba",
+        "the decision record never carries a lexeme, sense, function, meaning, translation or certification key; root-sharing between two rows never implies any of those",
+        "an identical surface across occurrence rows is re-decided from each row's own evidence; withheld evidence on a later occurrence forces abstention rather than borrowing a sibling row's carve",
+        "every emitted analysis stays candidate; nothing here certifies or promotes sarf@2.4 letter ownership"
+      ],
+      "followup_packet": null,
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [
+        "loc"
+      ],
+      "metric_floors": {},
+      "nonempty_list_fields": [
+        "letters"
+      ],
+      "note": "Behavioural through tools/run_sarf_evals.py:decide_letter_ownership, the production per-letter/per-span ownership decision for curriculum/l1l6/increments/inc-ownership (u-s01/u-s09 own-r1..r5), cu-nisba-attribution-suffix's affix layer, and the p007 clitic/host carve for quran:2:34:5 and quran:12:31:24. sarf@2.4 letter ownership stays CANDIDATE; this bank operationalizes it in the Sarf runtime without releasing or promoting it.",
+      "not_enforced_properties": [
+        "same_surface_independent_verification is a cross-row aggregate, asserted structurally over the three shared-surface rows, not decided per row by the callable",
+        "own-r5 hidden-radical bookkeeping is recorded when produced but no row in this bank requires the weak-root skip-match path, so it stays an unexercised metadata field",
+        "the deeper nahw facts named in the occurrence rows' evidence_note (jarr sign, governor) belong to the p007/nahw certification lane, not to this letter-ownership carve"
+      ],
+      "path": "sarf/evals/letter-ownership-carve-eval.jsonl",
+      "pinned_metrics": {
+        "abstain_rows": 5,
+        "candidate_pending_rows": 12,
+        "decided_rows": 17,
+        "rows": 17
+      },
+      "property_coverage": [
+        {
+          "applicable_rows": 17,
+          "covered": true,
+          "decided_by": "tools/run_sarf_evals.py:decide_letter_ownership",
+          "property": "decision_behaviorally_computed"
+        },
+        {
+          "applicable_rows": 17,
+          "covered": true,
+          "decided_by": "tools/run_sarf_evals.py:decide_letter_ownership",
+          "property": "no_semantic_identity_leak"
+        },
+        {
+          "applicable_rows": 17,
+          "covered": true,
+          "decided_by": "tools/run_sarf_evals.py:decide_letter_ownership",
+          "property": "never_certified"
+        },
+        {
+          "applicable_rows": 5,
+          "covered": true,
+          "decided_by": "tools/run_sarf_evals.py:decide_letter_ownership",
+          "note": "the 5 abstaining rows only (own-abs-01, own-abs-02, own-fsr-01, own-double-01, own-carve-no-borrow)",
+          "property": "abstains_never_claim_root"
+        },
+        {
+          "applicable_rows": 12,
+          "covered": true,
+          "decided_by": "tools/run_sarf_evals.py:decide_letter_ownership",
+          "note": "the 12 candidate_pending rows only",
+          "property": "owner_classes_closed_set"
+        },
+        {
+          "applicable_rows": 1,
+          "covered": true,
+          "decided_by": "tools/run_sarf_evals.py:decide_letter_ownership",
+          "note": "own-adv-01 only: the initial mim / radical_1 shape trap",
+          "property": "shape_only_augment_rejected"
+        },
+        {
+          "applicable_rows": 1,
+          "covered": true,
+          "decided_by": "tools/run_sarf_evals.py:decide_letter_ownership",
+          "note": "own-double-01 only: the bayt clitic-shape-vs-radical_1 conflict",
+          "property": "double_claim_forces_abstention"
+        },
+        {
+          "applicable_rows": 2,
+          "covered": true,
+          "decided_by": "tools/run_sarf_evals.py:decide_letter_ownership",
+          "note": "own-nisba-01 (declared nisba) and own-nisba-02 (the undeclared contrast row)",
+          "property": "nisba_affix_never_root"
+        },
+        {
+          "applicable_rows": 3,
+          "covered": false,
+          "decided_by": "structural:tools/run_sarf_evals.py",
+          "note": "UNCOVERED: a cross-row aggregate over own-carve-24-35-44/own-carve-2-187-63/own-carve-no-borrow, not a single-row decision consumer call; reported as a structural check, never counted as coverage",
+          "property": "same_surface_independent_verification"
+        }
+      ],
+      "required_fields": [
+        "id",
+        "mode",
+        "surface",
+        "letters",
+        "class",
+        "expected_decision",
+        "teaches"
+      ],
+      "row_key": null,
+      "secondary_consumers": []
+    },
+    {
       "adapter": "lattice_ambiguity",
       "behavioral_consumer": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
       "consumers": [
