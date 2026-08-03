@@ -147,7 +147,7 @@
     "اله"
   ],
   "not_a_registered_class": {
-    "reason": "R6 is a MUST_NOT constraint on how R4/R5 compute competitors (selected stem only, never unioned across rejected segmentation hypotheses); it has no independent trigger, gate effect, or route of its own, so it is not one of the seven registered classes.",
+    "reason": "R6 is a MUST_NOT constraint on how R4/R5 compute competitors (selected stem only, never unioned across rejected segmentation hypotheses); it has no independent trigger, gate effect, or route of its own, so it is not one of the eight registered classes.",
     "rule_id": "R6"
   },
   "projection_reconciliation": {
