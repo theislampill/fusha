@@ -433,6 +433,93 @@
       "secondary_consumers": []
     },
     {
+      "adapter": "weak_root_and_voice",
+      "behavioral_consumer": "tools/rm40_gate_stack.py:slot_gate",
+      "consumers": [
+        "tools/rm40_gate_stack.py",
+        "tools/fusha_paradigm_generate.py",
+        "tools/run_sarf_evals.py"
+      ],
+      "disposition": "implemented_and_consumed",
+      "enforced_properties": [
+        "every row is anchored by exactly one call to the REAL tools/rm40_gate_stack.py:slot_gate (the same gate tools/fusha_paradigm_generate.py:generate_verb uses in production), never a re-derived weak/sound boolean",
+        "a single hidden weak radical (hollow/defective/assimilated) or a hamza seat always abstains RM-40 template generation; the SPECIFIC reason is computed from the weak radical's POSITION, never guessed",
+        "a hollow root whose C2 pattern vowel is NOT on record in weak-root-gates.json's hollow_pattern_vowels data abstains with the sharper hollow_root_c2_hidden reason, sourced from that DATA, not a hard-coded Python constant",
+        "a لفيف (doubly-weak) root reaches candidate_pending ONLY when its declared attested_operations exactly match the ORDERED operation list in weak-root-gates.json's lafif_compositions data for its class; a surface consistent with only one operation, or with the operations reversed, abstains",
+        "voice is committed active or passive ONLY when the row's surface byte-matches the REAL tools/fusha_paradigm_generate.py:generate_verb candidate for the same lexeme/slot_family; an unvocalized surface NEVER licenses a voice reading and NEVER defaults to active",
+        "a surface matching neither (or both) of the real generated active/passive melodies abstains voice_undetermined rather than guess",
+        "a voice row over a weak root abstains because generate_verb supplies no ground truth to compare against for either slot",
+        "malformed/missing row identity (missing root, unknown mode) fails closed as a structured failure, never an exception",
+        "every decision stays candidate_pending or abstain; nothing here certifies, and no row carries occurrence-level dogfood evidence (no_occurrence_dogfood_evidence=true on every row): candidate entry/paradigm grounding is never an occurrence fact"
+      ],
+      "followup_packet": null,
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {},
+      "nonempty_list_fields": [],
+      "note": "Behavioural through the REAL tools/rm40_gate_stack.py:slot_gate (primary, once per row) and tools/fusha_paradigm_generate.py:generate_verb (secondary, twice per voice_determination row: the real active-slot and passive-slot melody candidates). The adapter also reads sarf/rules/weak-root-gates.json's hollow_pattern_vowels and lafif_compositions sections directly (data the id-citation-only gate stack never consumes) to decide the hollow-subtype and لفيف-ordered-composition rows. This bank operationalizes entry/paradigm-level weak-root and voice decision behaviour in existing authoritative Sarf machinery; it does not restructure verb-measures.json and the paradigm generator remains the sole consumer of its melody templates.",
+      "not_enforced_properties": [
+        "occurrence-level certification, entry/sense/function/meaning/translation inference and public projection are explicitly out of scope; every row stays candidate_pending or abstain",
+        "the levelwide/absorption question (which curriculum units at large teach weak-root/voice) is out of scope; this bank operationalizes the decision behaviour itself, not a curriculum coverage claim",
+        "byte-exact scripture parity against a canonical Qur'anic occurrence is out of scope: every row here is a synthetic lexeme/root/measure probe, not a source-addressed occurrence"
+      ],
+      "path": "sarf/evals/weak-root-and-voice-eval.jsonl",
+      "pinned_metrics": {
+        "abstain_rows": 11,
+        "candidate_pending_rows": 6,
+        "decided_rows": 17,
+        "rows": 17
+      },
+      "property_coverage": [
+        {
+          "applicable_rows": 17,
+          "covered": true,
+          "decided_by": "tools/rm40_gate_stack.py:slot_gate",
+          "property": "real_gate_anchors_every_row"
+        },
+        {
+          "applicable_rows": 6,
+          "covered": true,
+          "decided_by": "tools/rm40_gate_stack.py:slot_gate",
+          "note": "the 6 weak_reason_classification rows only",
+          "property": "weak_reason_matches_procedure_vocabulary"
+        },
+        {
+          "applicable_rows": 5,
+          "covered": true,
+          "decided_by": "tools/rm40_gate_stack.py:slot_gate",
+          "note": "the 5 lafif_composition rows only",
+          "property": "lafif_ordered_composition"
+        },
+        {
+          "applicable_rows": 6,
+          "covered": true,
+          "decided_by": "tools/fusha_paradigm_generate.py:generate_verb",
+          "note": "the 6 voice_determination rows only",
+          "property": "voice_never_defaults_active"
+        }
+      ],
+      "required_fields": [
+        "id",
+        "mode",
+        "class",
+        "root",
+        "measure",
+        "slot",
+        "expected_decision",
+        "teaches"
+      ],
+      "row_key": null,
+      "secondary_consumers": [
+        {
+          "applies_to": "voice_determination rows only: one real active-slot call and one real passive-slot call per row",
+          "callable": "tools/fusha_paradigm_generate.py:generate_verb",
+          "expected_calls": 12
+        }
+      ]
+    },
+    {
       "adapter": "lattice_ambiguity",
       "behavioral_consumer": "tools/fusha_morphology_lattice.py:build_morphology_lattice",
       "consumers": [
@@ -1009,7 +1096,7 @@
       "consumption_kind": "id_citation",
       "disposition": "fixture_only",
       "followup_packet": "TP-SARF-A1-STORE-A-WIRING",
-      "note": "Only stable ids are read for the citation chain; the weak-letter set is hard-coded in the module.",
+      "note": "Only stable ids are read for the citation chain; the weak-letter set is hard-coded in the module. sarf/evals/weak-root-and-voice-eval.jsonl's adapter separately reads this file's hollow_pattern_vowels/lafif_compositions sections directly (see that bank's own note); that eval-bank-layer consumption is proven by tools/test_run_sarf_evals.py's WeakRootAndVoice.test_weak_root_gate_data_mutation_disables_only_weak_root_rows, but the STORE-A disposition vocabulary here is scoped to production runtime consumers external to the eval runner itself (verb-measures.json's own precedent), so this row stays fixture_only rather than self-declaring the runner as its own production consumer.",
       "path": "sarf/rules/weak-root-gates.json"
     }
   ]

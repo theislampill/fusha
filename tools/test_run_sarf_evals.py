@@ -1711,5 +1711,278 @@ class LetterOwnershipCarve(unittest.TestCase):
         self.assertIsNone(spec["followup_packet"])
 
 
+# ---------------------------------------------------------------------------
+# weak-root-and-voice — entry/paradigm-level weak-root and voice decision behaviour, decided through the REAL
+# tools/rm40_gate_stack.py:slot_gate (RM-40's own weak-root gate) and tools/fusha_paradigm_generate.py:generate_verb
+# (the REAL melody/template generator), layered with sarf/rules/weak-root-gates.json data this adapter reads
+# directly (hollow_pattern_vowels, lafif_compositions).
+# ---------------------------------------------------------------------------
+_WRV = "sarf/evals/weak-root-and-voice-eval.jsonl"
+
+
+class WeakRootAndVoice(unittest.TestCase):
+
+    def test_bank_is_registered_implemented_and_consumed(self):
+        contract = R.load_contract(_ROOT)
+        spec = R.bank_spec(contract, _WRV)
+        self.assertEqual(spec["disposition"], "implemented_and_consumed")
+        self.assertEqual(spec["behavioral_consumer"], "tools/rm40_gate_stack.py:slot_gate")
+        self.assertIn(spec["behavioral_consumer"], R.DECISION_CONSUMERS)
+        self.assertIn(_WRV, R.REQUIRED_BEHAVIORAL_BANKS)
+        rows = _rows(_WRV)
+        self.assertEqual(len(rows), 17)
+        failures, metrics = _run(_WRV, rows)
+        self.assertEqual(failures, [], "weak-root-and-voice bank failed: %s" % failures[:5])
+        self.assertEqual(metrics["decided_rows"], len(rows))
+        self.assertEqual(metrics["consumer_calls"][spec["behavioral_consumer"]], len(rows))
+        voice_rows = [r for r in rows if r["mode"] == "voice_determination"]
+        self.assertEqual(metrics["consumer_calls"]["tools/fusha_paradigm_generate.py:generate_verb"],
+                         2 * len(voice_rows))
+        self.assertEqual(metrics["abstain_rows"], 11)
+        self.assertEqual(metrics["candidate_pending_rows"], 6)
+
+    def test_store_a_weak_root_gates_stays_fixture_only_but_the_bank_reads_its_data(self):
+        """The Store-A disposition vocabulary stays scoped to production runtime consumers external to the eval
+        runner (verb-measures.json's own precedent), so weak-root-gates.json keeps its pre-existing
+        fixture_only/id_citation Store-A row; the eval-BANK-layer data consumption is proven separately by
+        test_weak_root_gate_data_mutation_disables_only_weak_root_rows below."""
+        contract = R.load_contract(_ROOT)
+        row = next(r for r in contract["store_a_rules"] if r["path"] == "sarf/rules/weak-root-gates.json")
+        self.assertEqual(row["disposition"], "fixture_only")
+        self.assertEqual(row["consumption_kind"], "id_citation")
+        failures, _counts = R.check_store_a(contract, _ROOT)
+        self.assertEqual(failures, [])
+
+    def test_no_local_reimplementation_of_the_weak_root_gate(self):
+        """The base weak/sound decision must come from the REAL tools/rm40_gate_stack.py:slot_gate, never a
+        re-derived boolean, and the melody comparison from the REAL paradigm generator."""
+        ctx = _ctx()
+        from tools import rm40_gate_stack as gs
+        from tools import fusha_paradigm_generate as pg
+        self.assertIs(ctx.slot_gate, gs.slot_gate)
+        self.assertIs(ctx.generate_verb, pg.generate_verb)
+
+    def test_unvocalized_voice_never_defaults_active(self):
+        ctx = _ctx()
+        rec = R._voice_decision(ctx, {"pos": "verb", "lemma": "كَتَبَ", "root": "ك ت ب", "measure": "I"},
+                                "past", "كتب")
+        self.assertEqual(rec["decision"], "abstain")
+        self.assertIsNone(rec["voice"])
+        self.assertEqual(rec["reason"], "voice_undetermined")
+
+    def test_vocalized_surface_commits_the_matching_voice(self):
+        ctx = _ctx()
+        active = R._voice_decision(ctx, {"pos": "verb", "lemma": "كَتَبَ", "root": "ك ت ب", "measure": "I"},
+                                   "past", "كَتَبَ")
+        self.assertEqual(active, {"decision": "candidate_pending", "voice": "active", "reason": None})
+        passive = R._voice_decision(ctx, {"pos": "verb", "lemma": "كَتَبَ", "root": "ك ت ب", "measure": "I"},
+                                    "past", "كُتِبَ")
+        self.assertEqual(passive, {"decision": "candidate_pending", "voice": "passive", "reason": None})
+
+    def test_hollow_unrecorded_pattern_vowel_abstains_with_sharper_reason(self):
+        gate_data = R._weak_root_gate_data(_ROOT)
+        self.assertEqual(R._hollow_reason("ط ي ر", gate_data), "hollow_root_c2_hidden")
+        self.assertEqual(R._hollow_reason("ق و ل", gate_data), "hollow_defective_assimilated")
+
+    def test_lafif_requires_ordered_composition(self):
+        gate_data = R._weak_root_gate_data(_ROOT)
+        self.assertIsNone(R._lafif_reason("و ف ي", "mafruq", ["c1_recovery", "c3_recovery"], gate_data))
+        self.assertEqual(R._lafif_reason("و ف ي", "mafruq", ["c1_recovery"], gate_data),
+                         "lafif_composition_incomplete")
+        self.assertEqual(R._lafif_reason("و ف ي", "mafruq", ["c3_recovery", "c1_recovery"], gate_data),
+                         "lafif_composition_unordered")
+
+    def test_lafif_class_must_agree_with_the_derived_root_class(self):
+        """The declared `lafif_class` is a ROW claim; the actual class must come from the root's own radical
+        POSITIONS (`_weak_class_from_root`), never the row's say-so. A مفروق root relabelled مقرون, a sound
+        root, and a hamza-carrier root must all abstain lafif_composition_incomplete even when the row supplies
+        attested_operations that exactly match the (wrongly) declared class's operation list."""
+        gate_data = R._weak_root_gate_data(_ROOT)
+        # و ف ي is genuinely مفروق (C1+C3 weak); relabelled مقرون with مقرون's own matching operations.
+        self.assertEqual(R._lafif_reason("و ف ي", "maqrun", ["c2_recovery", "c3_recovery"], gate_data),
+                         "lafif_composition_incomplete")
+        # ك ت ب is a sound triliteral (no weak radical at all).
+        self.assertEqual(R._lafif_reason("ك ت ب", "mafruq", ["c1_recovery", "c3_recovery"], gate_data),
+                         "lafif_composition_incomplete")
+        # ء م ن carries a hamza carrier, not a WEAK_LETTERS radical, at any position.
+        self.assertEqual(R._lafif_reason("ء م ن", "mafruq", ["c1_recovery", "c3_recovery"], gate_data),
+                         "lafif_composition_incomplete")
+
+    def test_lafif_adapter_rejects_relabelled_and_borrowed_class_rows(self):
+        """The same three counterexamples, run through the REAL adapter (not just the helper), so the RM-40
+        gate-decision cross-check never produces a false failure for a root that was never genuinely لفيف."""
+        rows = [
+            {"id": "lf-hostile-mafruq-relabelled-maqrun", "mode": "lafif_composition", "class": "hostile_negative",
+             "root": "و ف ي", "measure": "I", "slot": "past_active", "lafif_class": "maqrun",
+             "attested_operations": ["c2_recovery", "c3_recovery"], "expected_decision": "abstain",
+             "expected_reason": "lafif_composition_incomplete",
+             "teaches": "a genuinely مفروق root relabelled مقرون must abstain even with مقرون's own matching ops"},
+            {"id": "lf-hostile-sound-root-claims-lafif", "mode": "lafif_composition", "class": "hostile_negative",
+             "root": "ك ت ب", "measure": "I", "slot": "past_active", "lafif_class": "mafruq",
+             "attested_operations": ["c1_recovery", "c3_recovery"], "expected_decision": "abstain",
+             "expected_reason": "lafif_composition_incomplete",
+             "teaches": "a sound root must never reach candidate_pending by supplying matching declared ops"},
+            {"id": "lf-hostile-hamza-root-claims-lafif", "mode": "lafif_composition", "class": "hostile_negative",
+             "root": "ء م ن", "measure": "I", "slot": "past_active", "lafif_class": "mafruq",
+             "attested_operations": ["c1_recovery", "c3_recovery"], "expected_decision": "abstain",
+             "expected_reason": "lafif_composition_incomplete",
+             "teaches": "a hamza-carrier root must never reach candidate_pending by supplying matching declared "
+                        "ops"},
+        ]
+        failures, _metrics = _run(_WRV, rows)
+        self.assertEqual(failures, [], failures[:5])
+
+    def test_hamza_seat_defeater_takes_precedence_over_position_derived_hollow(self):
+        """ء و ل carries BOTH a hamza carrier (ء) and a weak radical at C2 (و). The REAL gate's own hamza_seat
+        defeater must win; the position-derived hollow classification must never overwrite it with
+        hollow_root_c2_hidden."""
+        rows = [{"id": "wr-hostile-hamza-weak-precedence", "mode": "weak_reason_classification",
+                 "class": "hostile_negative", "root": "ء و ل", "measure": "I", "slot": "past_active",
+                 "expected_weak_class": "hollow", "expected_decision": "abstain", "expected_reason": "hamza_seat",
+                 "teaches": "a hamza carrier co-occurring with a weak C2 radical abstains hamza_seat, never the "
+                            "position-derived hollow reason"}]
+        failures, _metrics = _run(_WRV, rows)
+        self.assertEqual(failures, [], failures[:5])
+
+    def test_recorded_c2_vowels_as_string_fails_closed_without_false_substring_pass(self):
+        """A string recorded_c2_vowels table must never be treated as a per-root lookup: `in` on a string is
+        substring containment, so a malformed string that happens to CONTAIN an unrecorded root's own letters must
+        never false-pass that root as recorded (wr-hollow-unrecorded stays correctly unrecorded); the malformed
+        table can no longer vouch for any root, so the genuinely-recorded row also (correctly) loses its
+        recorded status, exactly as emptying the table already does (see
+        test_weak_root_gate_data_mutation_disables_only_weak_root_rows) -- fail-closed, never an exception."""
+        import tools.run_sarf_evals as run_module
+        original = run_module._weak_root_gate_data
+        real_data = original(_ROOT)
+        corrupted = copy.deepcopy(real_data)
+        # ط ي ر (unrecorded) appears as a literal substring of this malformed string value.
+        corrupted["hollow_pattern_vowels"]["recorded_c2_vowels"] = "a note that happens to mention ط ي ر in passing"
+        run_module._weak_root_gate_data = lambda root=_ROOT: corrupted
+        try:
+            failures, _m = _run(_WRV)
+        finally:
+            run_module._weak_root_gate_data = original
+        self.assertFalse(any(f.startswith("wr-hollow-unrecorded") for f in failures), failures[:5])
+        self.assertTrue(any(f.startswith("wr-hollow-recorded") for f in failures), failures[:5])
+        self.assertFalse(any(f.startswith("lf-") or f.startswith("vd-") for f in failures), failures[:5])
+
+    def test_recorded_c2_vowels_as_list_fails_closed_without_false_membership_pass(self):
+        """A list recorded_c2_vowels table must never be treated as a per-root lookup either: an unrecorded root
+        that happens to appear as a bare list ELEMENT must never false-pass as recorded."""
+        import tools.run_sarf_evals as run_module
+        original = run_module._weak_root_gate_data
+        real_data = original(_ROOT)
+        corrupted = copy.deepcopy(real_data)
+        corrupted["hollow_pattern_vowels"]["recorded_c2_vowels"] = ["ط ي ر"]
+        run_module._weak_root_gate_data = lambda root=_ROOT: corrupted
+        try:
+            failures, _m = _run(_WRV)
+        finally:
+            run_module._weak_root_gate_data = original
+        self.assertFalse(any(f.startswith("wr-hollow-unrecorded") for f in failures), failures[:5])
+        self.assertTrue(any(f.startswith("wr-hollow-recorded") for f in failures), failures[:5])
+        self.assertFalse(any(f.startswith("lf-") or f.startswith("vd-") for f in failures), failures[:5])
+
+    def test_lafif_compositions_classes_as_string_fails_closed_without_exception(self):
+        """lafif_compositions.classes as a string must never raise AttributeError on `.get()`; it must be treated
+        as an empty mapping (every لفيف row fails closed as incomplete), never crash the runner."""
+        import tools.run_sarf_evals as run_module
+        original = run_module._weak_root_gate_data
+        real_data = original(_ROOT)
+        corrupted = copy.deepcopy(real_data)
+        corrupted["lafif_compositions"]["classes"] = "mafruq maqrun"
+        run_module._weak_root_gate_data = lambda root=_ROOT: corrupted
+        try:
+            try:
+                failures, _m = _run(_WRV)
+            except Exception as e:  # noqa: BLE001
+                self.fail("adapter raised on malformed lafif_compositions.classes instead of failing closed: %r"
+                         % e)
+        finally:
+            run_module._weak_root_gate_data = original
+        self.assertTrue(any(f.startswith("lf-") for f in failures), failures[:5])
+        self.assertFalse(any(f.startswith("wr-") or f.startswith("vd-") for f in failures), failures[:5])
+
+    def test_wrong_expected_weak_class_is_rejected(self):
+        rows = copy.deepcopy(_rows(_WRV))
+        row = next(r for r in rows if r["id"] == "wr-defective")
+        row["expected_weak_class"] = "hollow"  # د ع و is genuinely defective (C3), not hollow (C2)
+        failures, _metrics = _run(_WRV, rows)
+        self.assertTrue(any("wr-defective" in f and "expected_weak_class" in f for f in failures), failures[:5])
+
+    def test_abstaining_voice_row_with_a_declared_voice_is_rejected(self):
+        rows = copy.deepcopy(_rows(_WRV))
+        row = next(r for r in rows if r["id"] == "vd-unvocalized-never-active")
+        row["expected_voice"] = "active"  # the row genuinely abstains; a non-null expected_voice must never pass
+        failures, _metrics = _run(_WRV, rows)
+        self.assertTrue(any("vd-unvocalized-never-active" in f for f in failures), failures[:5])
+
+    def test_missing_row_id_is_a_structured_failure_not_a_keyerror(self):
+        rows = copy.deepcopy(_rows(_WRV))
+        del rows[0]["id"]
+        failures, _metrics = _run(_WRV, rows)
+        self.assertTrue(any("missing/empty required field 'id'" in f for f in failures), failures[:5])
+
+    def test_unknown_mode_fails_closed_without_exception(self):
+        rows = copy.deepcopy(_rows(_WRV))
+        rows[0]["mode"] = "not_a_real_mode"
+        try:
+            failures, _metrics = _run(_WRV, rows)
+        except Exception as e:  # noqa: BLE001
+            self.fail("adapter raised on an unknown mode instead of failing closed: %r" % e)
+        self.assertTrue(failures)
+
+    def test_missing_root_fails_closed_without_exception(self):
+        rows = copy.deepcopy(_rows(_WRV))
+        del rows[0]["root"]
+        try:
+            failures, _metrics = _run(_WRV, rows)
+        except Exception as e:  # noqa: BLE001
+            self.fail("adapter raised on a missing root instead of failing closed: %r" % e)
+        self.assertTrue(failures)
+
+    def test_passive_melody_mutation_breaks_the_voice_bank(self):
+        """A mutated PASSIVE wazn template must break the voice determination for the passive-recognition row,
+        proving the bank genuinely depends on the REAL melody templates in verb-measures.json via
+        tools/fusha_paradigm_generate.py, never a re-derived vocalism table."""
+        import tools.fusha_paradigm_generate as pg
+        original = pg._measures
+        payload = copy.deepcopy(original())
+        payload["I"]["past_passive"] = "فُوعِلَ"
+        pg._measures = lambda: payload
+        try:
+            failures, _m = _run(_WRV)
+        finally:
+            pg._measures = original
+        self.assertTrue(any("vd-passive-form1-recognized" in f for f in failures), failures[:5])
+
+    def test_weak_root_gate_data_mutation_disables_only_weak_root_rows(self):
+        """Stripping the new weak-root-gates.json data sections must break the hollow/lafif rows' reason
+        assertions while leaving the voice-mode rows (which never read this data) untouched."""
+        import tools.run_sarf_evals as run_module
+        original = run_module._weak_root_gate_data
+        real_data = original(_ROOT)
+        stripped = copy.deepcopy(real_data)
+        stripped["hollow_pattern_vowels"]["recorded_c2_vowels"] = {}
+        stripped["lafif_compositions"]["classes"] = {}
+        run_module._weak_root_gate_data = lambda root=_ROOT: stripped
+        try:
+            failures, _m = _run(_WRV)
+        finally:
+            run_module._weak_root_gate_data = original
+        self.assertTrue(any(f.startswith("wr-hollow-recorded") for f in failures), failures[:5])
+        self.assertTrue(any(f.startswith("lf-") for f in failures), failures[:5])
+        self.assertFalse(any(f.startswith("vd-") for f in failures), failures[:5])
+
+    def test_analyses_stay_candidate_and_never_certify(self):
+        rows = _rows(_WRV)
+        for row in rows:
+            self.assertIn(row["expected_decision"], ("candidate_pending", "abstain"))
+            self.assertTrue(row.get("no_occurrence_dogfood_evidence") is True,
+                            "%s: must declare no_occurrence_dogfood_evidence" % row["id"])
+        spec = R.bank_spec(R.load_contract(_ROOT), _WRV)
+        self.assertIsNone(spec["followup_packet"])
+
+
 if __name__ == "__main__":
     unittest.main()

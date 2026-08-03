@@ -7,5 +7,34 @@
     {"id": "hollow_defective_assimilated", "when": "hollow/defective/assimilated root whose radical is hidden/alternating (قَالَ ق-و-ل; دَعَا د-ع-و; يَجِدُ و-ج-د)", "gate": "two_vote_required", "triggers": ["multi_sense_root"], "hover": "pending_if_reason_uncertain", "note": "recover the radical from QAC/the family before authoring"},
     {"id": "weak_root_qac_agrees", "when": "QAC root+POS confirm the weak root AND a single Qamus sense applies AND no homograph", "gate": "auto_safe", "triggers": [], "hover": "safe_if_cited"},
     {"id": "qac_conflict", "when": "QAC root/POS contradicts the proposed reading", "gate": "never_auto_resolve", "triggers": ["qac_pos_conflict"], "hover": "never_auto"}
-  ]
+  ],
+  "voice_signature_gate": {
+    "id": "voice_signature_gate",
+    "purpose": "An unvocalized (harakah-free) skeleton never licenses a voice reading, and a voice is never defaulted to active. Voice is committed ONLY when a candidate surface byte-matches the melody-templated active OR passive form the paradigm generator (verb-measures.json, read-only, via tools/fusha_paradigm_generate.py:generate_verb) actually produced for the same lemma/measure/slot; a match to both, a match to neither, or the absence of harakat all abstain. Operationalizes sarf@2.1 sarf-passive-vocalism-voice-commit (SKILL.md) without releasing or promoting it.",
+    "consumed_by": "tools/run_sarf_evals.py:_voice_decision",
+    "abstain_reason": "voice_undetermined"
+  },
+  "hollow_pattern_vowels": {
+    "id": "hollow_c2_pattern_vowel_required",
+    "purpose": "A hollow (أجوف) root's C2 (middle) pattern vowel must be on record from the recovered muḍāriʿ family (procedures/weak-root.md step 3) before its abstention reason may cite the sharper hollow_root_c2_hidden gap; an unrecorded root still abstains (RM-40 never templates a weak radical) but must never be reported as a generic weak-root abstention when the true defect is a specifically HIDDEN, never-recovered C2 vowel.",
+    "consumed_by": "tools/run_sarf_evals.py:_hollow_reason",
+    "recorded_c2_vowels": {
+      "ق و ل": "و",
+      "ن و م": "و",
+      "ب ي ع": "ي"
+    },
+    "recorded_reason": "hollow_defective_assimilated",
+    "unrecorded_reason": "hollow_root_c2_hidden"
+  },
+  "lafif_compositions": {
+    "id": "lafif_two_weak_ordered_composition",
+    "purpose": "A لفيف root carries two weak radicals recovered by two ordered operations (procedures/weak-root.md's لفيف rule: 'recover both, never read one as a long vowel'). مفروق (C1+C3 weak, e.g. وَفَىٰ ← و ف ي) and مقرون (C2+C3 weak, e.g. طَوَىٰ ← ط و ي) each require BOTH operations attested IN ORDER; a surface consistent with only one operation, or with the operations out of order, fails composition and must abstain rather than certify a half-recovered root.",
+    "consumed_by": "tools/run_sarf_evals.py:_lafif_reason",
+    "classes": {
+      "mafruq": {"operations": ["c1_recovery", "c3_recovery"]},
+      "maqrun": {"operations": ["c2_recovery", "c3_recovery"]}
+    },
+    "incomplete_reason": "lafif_composition_incomplete",
+    "unordered_reason": "lafif_composition_unordered"
+  }
 }
