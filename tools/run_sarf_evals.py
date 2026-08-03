@@ -1007,34 +1007,51 @@ def _weak_class_from_root(root_str):
     return None
 
 
+def _as_mapping(v):
+    """Fail-closed type guard: any DATA a rule file supplies where a mapping is required must be treated as an
+    empty mapping if it is not actually a dict — never a string (whose `in` means substring containment) or a
+    list (whose `in` means element membership), and never an attribute-access target that could raise."""
+    return v if isinstance(v, dict) else {}
+
+
 def _hollow_reason(root_str, gate_data):
     """The hollow-specific abstention reason, DATA-DRIVEN from `weak-root-gates.json`'s
     `hollow_pattern_vowels.recorded_c2_vowels` table: a recorded C2 pattern vowel keeps the standard weak-root
     reason; an unrecorded one sharpens to `hollow_root_c2_hidden` (sarf/procedures/weak-root.md's own vocabulary).
-    Emptying/removing this table collapses every hollow root to the unrecorded reason."""
-    hp = gate_data.get("hollow_pattern_vowels") or {}
-    table = hp.get("recorded_c2_vowels") or {}
+    Emptying/removing this table collapses every hollow root to the unrecorded reason. A malformed (non-mapping)
+    table is never trusted as a per-root lookup: it fails closed to the unrecorded reason."""
+    hp = _as_mapping(gate_data.get("hollow_pattern_vowels"))
+    table = _as_mapping(hp.get("recorded_c2_vowels"))
     if root_str in table:
         return hp.get("recorded_reason") or "hollow_defective_assimilated"
     return hp.get("unrecorded_reason") or "hollow_root_c2_hidden"
 
 
-def _lafif_reason(lafif_class, attested_ops, gate_data):
+def _lafif_reason(root_str, lafif_class, attested_ops, gate_data):
     """The لفيف ordered-composition check, DATA-DRIVEN from `weak-root-gates.json`'s
     `lafif_compositions.classes[lafif_class].operations`. Returns None (no abstention — the composition is
     complete and correctly ordered) or the exact abstention reason. Removing/emptying the `classes` table makes
-    every لفيف row fail closed as incomplete (an unknown class can never license a candidate)."""
-    lc = gate_data.get("lafif_compositions") or {}
-    classes = lc.get("classes") or {}
-    required = (classes.get(lafif_class) or {}).get("operations") or []
+    every لفيف row fail closed as incomplete (an unknown class can never license a candidate).
+
+    Before ever consulting the row's declared `attested_ops`, the ACTUAL class derived from `root_str`'s own
+    radical positions (`_weak_class_from_root`, never the row's own claim) must exactly agree with
+    `"lafif_" + lafif_class`; a مفروق root relabelled مقرون, a sound root, or a hamza-carrier root abstains
+    incomplete regardless of what operations the row supplies. A malformed (non-mapping) `classes` table fails
+    closed the same way, never raising."""
+    lc = _as_mapping(gate_data.get("lafif_compositions"))
+    incomplete_reason = lc.get("incomplete_reason") or "lafif_composition_incomplete"
+    if _weak_class_from_root(root_str) != "lafif_" + str(lafif_class or ""):
+        return incomplete_reason
+    classes = _as_mapping(lc.get("classes"))
+    required = _as_mapping(classes.get(lafif_class)).get("operations") or []
     attested = list(attested_ops or [])
     if not required:
-        return lc.get("incomplete_reason") or "lafif_composition_incomplete"
+        return incomplete_reason
     if attested == required:
         return None
     if sorted(attested) == sorted(required):
         return lc.get("unordered_reason") or "lafif_composition_unordered"
-    return lc.get("incomplete_reason") or "lafif_composition_incomplete"
+    return incomplete_reason
 
 
 def _voice_decision(ctx, lexeme, slot_family, surface):
@@ -1101,12 +1118,21 @@ def adapter_weak_root_and_voice(rows, spec, ctx, root):
         if mode == "weak_reason_classification":
             props.hit(rid, _SLOT_GATE, "weak_reason_matches_procedure_vocabulary")
             weak_class = _weak_class_from_root(root_str)
+            expected_weak_class = row.get("expected_weak_class")
+            if weak_class != expected_weak_class:
+                fails.append(_f(rid, "expected_weak_class_matches",
+                                "derived weak_class %r, bank expects %r" % (weak_class, expected_weak_class)))
             if gate["decision"] == "emit":
                 got_decision = "candidate_pending"
             else:
                 got_decision = "abstain"
                 gate_data = _weak_root_gate_data(root)
-                if weak_class == "hollow":
+                # the REAL gate's own hamza_seat defeater always wins: a root may carry BOTH a hamza carrier and a
+                # weak radical (ء و ل), and the position-derived hollow/defective/assimilated reason must never
+                # overwrite the gate's own hamza finding.
+                if gate["defeater"] == "hamza_seat":
+                    got_reason = "hamza_seat"
+                elif weak_class == "hollow":
                     got_reason = _hollow_reason(root_str, gate_data)
                 elif weak_class == "assimilated":
                     got_reason = "assimilated_c1_dropped"
@@ -1116,11 +1142,14 @@ def adapter_weak_root_and_voice(rows, spec, ctx, root):
                     got_reason = gate["defeater"]
         elif mode == "lafif_composition":
             props.hit(rid, _SLOT_GATE, "lafif_ordered_composition")
-            if gate["decision"] != "abstain":
+            gate_data = _weak_root_gate_data(root)
+            reason = _lafif_reason(root_str, row.get("lafif_class"), row.get("attested_operations"), gate_data)
+            # the RM-40 gate-decision cross-check only applies once the row's declared class has already agreed
+            # with the root's own derived class AND the operations fully licensed candidate_pending; a root that
+            # was never genuinely لفيف abstains on the class check alone and never reaches this cross-check.
+            if reason is None and gate["decision"] != "abstain":
                 fails.append(_f(rid, "lafif_ordered_composition",
                                 "a genuinely doubly-weak root must abstain the RM-40 generation gate"))
-            gate_data = _weak_root_gate_data(root)
-            reason = _lafif_reason(row.get("lafif_class"), row.get("attested_operations"), gate_data)
             got_decision = "abstain" if reason else "candidate_pending"
             got_reason = reason
         else:  # voice_determination
@@ -1144,6 +1173,12 @@ def adapter_weak_root_and_voice(rows, spec, ctx, root):
             if got_reason != expected_reason:
                 fails.append(_f(rid, "reason_matches",
                                 "decided reason %r, bank expects %r" % (got_reason, expected_reason)))
+            if mode == "voice_determination":
+                want_voice = row.get("expected_voice")
+                if got_voice is not None or want_voice is not None:
+                    fails.append(_f(rid, "voice_matches",
+                                    "an abstaining voice row must carry no voice: decided voice %r, bank "
+                                    "expects %r" % (got_voice, want_voice)))
         else:
             candidate_pending_rows += 1
             if mode == "voice_determination":
