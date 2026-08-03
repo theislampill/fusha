@@ -638,35 +638,45 @@ def noun_plural_lexeme_link_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
     return None
 
 
-def _attested_pair_status(surface: str, attested: List[str]) -> tuple[bool, Optional[str]]:
+def _attested_pair_status(surface: str, attested: List[str]) -> tuple[bool, Optional[str], Optional[str]]:
     """Decide attested-pair status for ONE occurrence surface against the entry's
     attested plurals.
 
-    Exact attestation requires NFC byte-exact equality — never a norm_strict
-    match, which drops harakāt/shadda and would accept a deliberately wrong
-    vocalization or a bare (unvocalized) surface as if it were the documented
-    form. ``norm_strict`` is used only as RECALL, to find near-miss candidates;
-    any near-miss must then survive the SAME homograph/harakah defeaters a
-    documented-form lookup uses (``homograph_norm_key_collision``,
-    ``harakah_blind_sole_candidate``). A near-miss that trips one of those
-    defeaters is reported (not silently dropped to the generic
-    ``no_attested_lexeme_pair``), so a caller can see exactly why a
-    shape-plausible pairing was refused.
+    Exact attestation requires LITERAL, byte-exact written-surface equality —
+    never NFC normalization and never a norm_strict match. NFC normalization
+    can itself reorder combining marks (e.g. the shadda/damma canonical
+    ordering the loc-surface authority does not use) and so can turn two
+    byte-different surfaces into the "same" string; treating that as
+    attestation would silently authorize a candidate the entry never actually
+    documents byte-for-byte. norm_strict likewise drops harakāt/shadda and
+    would accept a deliberately wrong vocalization or a bare (unvocalized)
+    surface as if it were the documented form. Both NFC and ``norm_strict``
+    are used only as RECALL, to find near-miss candidates; any near-miss is
+    reported with an explicit typed reason — never silently dropped to the
+    generic ``no_attested_lexeme_pair`` and never silently promoted to
+    attestation.
 
-    Returns ``(attested_pair, near_miss_defeater_detail)``.
+    Returns ``(attested_pair, near_miss_reason, near_miss_detail)``.
     """
-    exact = {unicodedata.normalize("NFC", p) for p in attested}
-    if unicodedata.normalize("NFC", surface) in exact:
-        return True, None
+    if surface in attested:
+        return True, None, None
     occ = {"surface": surface}
+    surface_nfc = unicodedata.normalize("NFC", surface)
     for p in attested:
+        if p != surface and unicodedata.normalize("NFC", p) == surface_nfc:
+            return False, "attested_pair_normalization_only_match", (
+                "an NFC-normalization-only match was refused: attested plural %r is "
+                "byte-different from the occurrence surface %r though their NFC-normalized "
+                "forms are equal — exact attestation requires literal written-surface equality"
+                % (p, surface)
+            )
         if normalize_ar.norm_strict(p) != normalize_ar.norm_strict(surface):
             continue
         form = {"surface": p}
         detail = homograph_norm_key_collision(occ, form) or harakah_blind_sole_candidate(occ, form)
         if detail:
-            return False, detail
-    return False, None
+            return False, "attested_pair_vocalization_mismatch", "a norm_strict-only match was refused: " + detail
+    return False, None, None
 
 
 def project_noun_plural_lexeme_link(
@@ -684,8 +694,8 @@ def project_noun_plural_lexeme_link(
     A candidate requires ALL of: the occurrence surface-matching the canonical
     loc-surface authority, an explicit ``template_id`` (never defaulted), a
     ``taksir`` (never sound-plural) pattern, supplied root evidence, an exact
-    (NFC byte-exact) attested-plural pairing, and — where the pattern demands
-    it — the caller's exact ``lexeme_id`` present on that pattern's closed
+    (literal, byte-exact — never NFC-normalized) attested-plural pairing, and
+    — where the pattern demands it — the caller's exact ``lexeme_id`` present on that pattern's closed
     ``licensed_lexemes`` (lexeme_id, root) list, or an attested plural-of-plural
     base. Multiple attested plurals for the SAME lemma are preserved as
     unranked competing alternatives; nothing here is ever certified.
@@ -701,13 +711,12 @@ def project_noun_plural_lexeme_link(
         )
     attested = list(attested_plurals)
     surface = occurrence.get("surface", "")
-    attested_pair, near_miss_detail = _attested_pair_status(surface, attested)
-    if near_miss_detail:
+    attested_pair, near_miss_reason, near_miss_detail = _attested_pair_status(surface, attested)
+    if near_miss_reason:
         return _noun_result(
-            contract, "abstained", "attested_pair_vocalization_mismatch", None,
+            contract, "abstained", near_miss_reason, None,
             _noun_abstention(
-                occurrence, "attested_pair_vocalization_mismatch",
-                "a norm_strict-only match was refused: " + near_miss_detail,
+                occurrence, near_miss_reason, near_miss_detail,
                 [gates.PLURAL_GATE + "#attested-pair-required"],
             ),
         )

@@ -8,6 +8,7 @@ import json
 import subprocess
 import sys
 import tempfile
+import unicodedata
 import unittest
 from pathlib import Path
 
@@ -910,6 +911,42 @@ class NounPluralGenderProjectorTests(unittest.TestCase):
         )
         self.assertEqual("abstained", result["status"])
         self.assertEqual("attested_pair_vocalization_mismatch", result["abstention"]["reason"])
+
+    # -- hostile regression: NFC-only equality must never authorize attestation --
+
+    def test_nfc_only_equality_abstains_but_literal_equality_still_certifies(self):
+        occurrence = noun_occurrence("12:110:4")  # ٱلرُّسُلُ
+        canonical_surface = occurrence["surface"]
+        nfc_reordered = unicodedata.normalize("NFC", canonical_surface)
+        # The canonical loc-surface authority stores shadda-before-damma combining-mark
+        # order; NFC canonical ordering reorders damma (combining class 30) before shadda
+        # (combining class 33), producing a BYTE-DIFFERENT string with the SAME NFC form.
+        self.assertNotEqual(nfc_reordered, canonical_surface)
+        self.assertEqual(
+            unicodedata.normalize("NFC", nfc_reordered),
+            unicodedata.normalize("NFC", canonical_surface),
+        )
+
+        # Attestation against the NFC-reordered (byte-different) form must abstain, typed --
+        # never silently pass the candidate boundary just because NFC forms agree.
+        nfc_only = fact_projectors.REGISTRY.run(
+            fact_projectors.NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID,
+            occurrence=occurrence, root="ر س ل", template_id="taksir-fual",
+            attested_plurals=[nfc_reordered],
+        )
+        self.assertEqual("abstained", nfc_only["status"])
+        self.assertIsNone(nfc_only["candidate"])
+        self.assertEqual("attested_pair_normalization_only_match", nfc_only["abstention"]["reason"])
+        self.assertTrue(nfc_only["abstention"]["detail"])
+
+        # Attestation against the LITERAL, byte-exact canonical surface still passes.
+        literal = fact_projectors.REGISTRY.run(
+            fact_projectors.NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID,
+            occurrence=occurrence, root="ر س ل", template_id="taksir-fual",
+            attested_plurals=[canonical_surface],
+        )
+        self.assertEqual("candidate", literal["status"])
+        self.assertEqual(canonical_surface, literal["candidate"]["surface"])
 
     def test_bare_attested_entry_is_recall_only_never_a_false_candidate(self):
         occurrence = noun_occurrence("9:18:3")  # مَسَٰجِدَ

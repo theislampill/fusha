@@ -408,6 +408,10 @@ def runner_results(repo_root=_REPO, invoke=None, discovered=None, rejected=None)
                     "declared_disposition": item.get("disposition"),
                     "declared_consumer": primary,
                     "observed_consumer_calls": calls.get(primary, 0) if primary else 0,
+                    # the TRUE subset of rows the declared primary consumer directly decides, when the adapter
+                    # honestly reports a split-consumer bank (e.g. rows partitioned across a direct gate call and
+                    # a projector that calls the same gate internally); absent/None means "all rows" downstream
+                    "primary_applicable_rows": (item.get("metrics") or {}).get("primary_applicable_rows"),
                     # A2: quarantined rows and unowned axes stay VISIBLE instead of being folded into coverage
                     "quarantined_rows": (item.get("metrics") or {}).get("quarantined", 0),
                     "unowned_axes": (item.get("metrics") or {}).get("unowned_axes") or {},
@@ -466,7 +470,19 @@ def behavioral_coverage(result, expected_entrypoint=BEHAVIORAL_ENTRYPOINTS, bank
             return False
         # at least one real observed call per row; a consumer may legitimately be asked more than once
         return result.get("decided_rows") == rows and (result.get("observed_consumer_calls") or 0) >= rows
-    return result.get("decided_rows") == rows and result.get("observed_consumer_calls") == rows
+    # `primary_applicable_rows`, when the adapter honestly reports it, is the TRUE subset of rows the declared
+    # primary consumer directly decides (a bank may split rows across a direct call and a real second consumer
+    # that calls the primary internally, bypassing this reporter's counting proxy). Absent means "all rows" —
+    # the ORIGINAL exact len(rows) requirement, unchanged for every bank that never sets this key. A reported
+    # value must be a positive integer no greater than rows: it can narrow the primary's claimed per-row
+    # applicability, never launder it away entirely or inflate it past the row count. An invalid claim fails
+    # closed (no credit), it is never silently coerced.
+    primary_rows = result.get("primary_applicable_rows")
+    if primary_rows is None:
+        primary_rows = rows
+    if not isinstance(primary_rows, int) or isinstance(primary_rows, bool) or not (0 < primary_rows <= rows):
+        return False
+    return result.get("decided_rows") == rows and result.get("observed_consumer_calls") == primary_rows
 
 
 def report(repo_root=_REPO):
@@ -930,6 +946,47 @@ def _self_test():
         if _disposition != "implemented_and_consumed" and _row["has_behavioral_runner"]:
             failures.append("%s is not implemented_and_consumed yet claims behavioural coverage" % _bank)
 
+    # ---------------------------------------------------------------------------
+    # ROUND-10: `primary_applicable_rows` (a bank whose rows are honestly split across
+    # a direct primary-consumer call and a second real consumer that calls the primary
+    # internally) must fail closed on a bad claim and credit only a verified, honest split.
+    # ---------------------------------------------------------------------------
+    _split_bank = "sarf/evals/plural-gender-operationalization-eval.jsonl"
+    _split_row = next((i for i in real["items"] if i["bank"] == _split_bank), None)
+    if _split_row is None or not _split_row["has_behavioral_runner"]:
+        failures.append("%s (a real split-consumer bank) did not receive behavioural credit" % _split_bank)
+
+    def _split_result(**overrides):
+        base = {
+            "entrypoint": "tools/run_sarf_evals.py", "invoked": True, "runner_ok": True,
+            "rows": 25, "decided_rows": 25, "failures": 0,
+            "declared_disposition": "implemented_and_consumed",
+            "declared_consumer": "tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate",
+            "observed_consumer_calls": 10, "primary_applicable_rows": 10,
+        }
+        base.update(overrides)
+        return base
+
+    if not behavioral_coverage(_split_result(), bank=_split_bank, repo_root=_REPO):
+        failures.append("an honest 10/25 split-consumer claim (observed calls == primary_applicable_rows, "
+                        "decided_rows == rows) was refused behavioural credit")
+    for _label, _overrides in (
+        ("zero", {"primary_applicable_rows": 0}),
+        ("oversized (> rows)", {"primary_applicable_rows": 26}),
+        ("non-integer (string)", {"primary_applicable_rows": "10"}),
+        ("boolean", {"primary_applicable_rows": True}),
+        ("call-mismatched (claims 10, observed 9)", {"primary_applicable_rows": 10, "observed_consumer_calls": 9}),
+    ):
+        if behavioral_coverage(_split_result(**_overrides), bank=_split_bank, repo_root=_REPO):
+            failures.append("a %s primary_applicable_rows claim was NOT refused behavioural credit" % _label)
+    # an ABSENT primary_applicable_rows must default to len(rows) -- the original, unnarrowed requirement --
+    # not be silently treated as always-satisfied.
+    _absent = _split_result(observed_consumer_calls=10)
+    del _absent["primary_applicable_rows"]
+    if behavioral_coverage(_absent, bank=_split_bank, repo_root=_REPO):
+        failures.append("an absent primary_applicable_rows credited a 10/25 observed-call claim as if it "
+                        "were the default full-row requirement")
+
     for f in failures:
         print("FAIL " + f)
     if not failures:
@@ -949,7 +1006,11 @@ def _self_test():
               "import-root integrity check probes EVERY sys.modules key a consumer file could be bound "
               "under, derived from its path rather than hand-written, including the exact `tools.leak_sot` "
               "key tools/run_nahw_evals.py imports, and a foreign module at any of those keys costs the "
-              "artifact both resolution and behavioural credit")
+              "artifact both resolution and behavioural credit; ROUND-10 — a real split-consumer sarf bank "
+              "(plural-gender-operationalization-eval.jsonl, 25 rows across a 10-row direct gate call and an "
+              "11+4-row projector call) receives behavioural credit via primary_applicable_rows, while a "
+              "zero, oversized, non-integer, boolean, call-mismatched or key-absent-but-under-claimed "
+              "primary_applicable_rows all fail closed")
     return 0 if not failures else 1
 
 
