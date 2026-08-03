@@ -33,12 +33,22 @@ non-quarantined row must carry an exact binding — a missing binding is a failu
                     Replays each gloss through tools/leak_sot.LEAK_RE (the single leak SoT) and asserts the
                     word-boundary behaviour: 'hypocrites' must not trip on 'ocr', 'see OCR scan' must.
 
+  ma-function-occurrence   nahw/evals/ma-function-occurrence-eval.jsonl
+                    Occurrence-specific contextual مَا relative-vs-negation discrimination. Each row supplies a
+                    typed, source-addressed CONTEXTUAL FRAME (never the conclusion label) for one exact مَا
+                    occurrence; tools.fusha_nahw_particle_rules.maa_context_frame() reads the frame_table on
+                    particle-context-rules.json#maa_relative_vs_negation to decide candidate-or-pending. A
+                    frame the table does not bind to exactly one function stays pending with both rivals
+                    preserved. Every row is also replayed at every OTHER row's exact address to prove the
+                    evidence cannot be reused across occurrences. Registered in BANKS/--self-test but NOT in
+                    A2_ARTIFACT_OWNERSHIP (see the comment above run_ma_function_occurrence for why).
+
 Rows whose contract defect is NOT mechanically repairable carry `contract_status` + `packet`; the runner keeps
 them visible, excludes them from the gates they cannot satisfy, and fails if such a row lacks its packet
 reference. Exit 0 = every bank green.
 
 CLI:  python tools/run_nahw_evals.py [--bank all|state-machine|hover-context|wrong-reasoning|llx-collision|
-                                      public-boundary] [--json]
+                                      public-boundary|ma-function-occurrence] [--json]
 """
 import argparse
 import json
@@ -958,6 +968,83 @@ def run_function_polysemy(errors, stats):
     return bank
 
 
+# ---------------------------------------------------------------------------
+# bank 7 — ma-function-occurrence-eval.jsonl (occurrence-specific contextual مَا discrimination)
+# ---------------------------------------------------------------------------
+# Every row supplies a typed, source-addressed CONTEXTUAL FRAME observation (never the conclusion label) for
+# one exact مَا occurrence, and PR.maa_context_frame() — reading nahw/rules/particle-context-rules.json's own
+# `maa_relative_vs_negation#frame_table` — says which function(s) that frame licenses. A unique frame must
+# reach `candidate` with exactly the bank's expected function; a non-unique frame must stay `pending` with
+# BOTH declared rival functions still unresolved. Every row's evidence is additionally replayed at every OTHER
+# row's exact address to prove it cannot be reused across occurrences (same surface never authorises reuse).
+#
+# HONEST SCOPE NOTE: this bank is invoked (registered in BANKS, exercised by `--bank ma-function-occurrence`,
+# `--bank all` and `--self-test`) but is deliberately NOT added to A2_ARTIFACT_OWNERSHIP below.
+# tools/fusha_eval_coverage.py carries its OWN independent allowlist by design ("Importing the map from the
+# runner would defeat the point") and that file is outside this change's permitted edit set; adding an entry
+# here that reporter cannot corroborate would desynchronise the two and cost EVERY existing A2 artifact its
+# behavioural credit. The bank therefore reports its own honest row/call metrics under `--bank
+# ma-function-occurrence --json` without claiming A2 contract-result coverage it cannot prove there.
+def run_ma_function_occurrence(errors, stats):
+    bank = "ma-function-occurrence"
+    rows = _jsonl(os.path.join(EVAL_DIR, "ma-function-occurrence-eval.jsonl"))
+    stats[bank] = {"cases": len(rows), "candidates": 0, "pending": 0, "consumer_calls": 0,
+                   "replay_checks": 0}
+    addresses = [r["source_address"] for r in rows if r.get("source_address")]
+    for r in rows:
+        rid = r.get("id")
+        for key in ("surface", "quran_loc", "word", "source_address", "frame", "expected_decision"):
+            if key not in r:
+                errors.append("%s:%s missing required field %s" % (bank, rid, key))
+        surface, at = r.get("surface"), r.get("source_address")
+        evidence = PR.mint_fixture_observation(r.get("frame"), source_address=at, quran_loc=r.get("quran_loc"),
+                                               word=r.get("word"), surface=surface, target_kind="token",
+                                               target_value="maa_relative_vs_negation")
+        res = PR.maa_context_frame(surface, evidence=evidence, at=at)
+        stats[bank]["consumer_calls"] += 1
+        if res.get("decision") == "candidate":
+            stats[bank]["candidates"] += 1
+        elif res.get("decision") == "pending":
+            stats[bank]["pending"] += 1
+        if res.get("decision") != r.get("expected_decision"):
+            errors.append("%s:%s decision %r != expected %r"
+                          % (bank, rid, res.get("decision"), r.get("expected_decision")))
+        if res.get("decision") == "resolved":
+            errors.append("%s:%s reached resolved from typed evidence; candidate posture only" % (bank, rid))
+        if r.get("expected_decision") == "candidate":
+            if res.get("function_candidate") != r.get("expected_function"):
+                errors.append("%s:%s function_candidate %r != expected %r"
+                              % (bank, rid, res.get("function_candidate"), r.get("expected_function")))
+        else:
+            expected_rivals = set(r.get("expected_rivals") or [])
+            if expected_rivals:
+                got_unresolved = {x["role"] for x in (res.get("unresolved_alternatives") or [])
+                                  if x.get("decision_status") == "unresolved"}
+                if not expected_rivals <= got_unresolved:
+                    errors.append("%s:%s expected rivals %s not all preserved unresolved (got %s)"
+                                  % (bank, rid, sorted(expected_rivals), sorted(got_unresolved)))
+                if any(x.get("selected") for x in (res.get("unresolved_alternatives") or [])):
+                    errors.append("%s:%s an ambiguous frame must select no winner" % (bank, rid))
+            if r.get("expected_defect") and res.get("evidence_defect") != r.get("expected_defect"):
+                errors.append("%s:%s evidence_defect %r != expected %r"
+                              % (bank, rid, res.get("evidence_defect"), r.get("expected_defect")))
+        # exact-address binding: an otherwise-VALID row's evidence replayed at every OTHER row's address must
+        # fail closed (an already-invalid, e.g. off-vocabulary, row is skipped: its own address already fails
+        # for a different, unrelated reason, so the replay defect would never surface there either)
+        if not r.get("expected_defect"):
+            for other in addresses:
+                if other == at:
+                    continue
+                replay = PR.maa_context_frame(surface, evidence=evidence, at=other)
+                stats[bank]["replay_checks"] += 1
+                if replay.get("evidence_defect") != "occurrence_not_current":
+                    errors.append("%s:%s evidence replayed at %s was not rejected as occurrence_not_current "
+                                  "(%r)" % (bank, rid, other, replay.get("evidence_defect")))
+    if stats[bank]["candidates"] < 1 or stats[bank]["pending"] < 1:
+        errors.append("%s: the bank must carry both a candidate-reaching row and a pending row" % bank)
+    return bank
+
+
 BANKS = {
     "function-polysemy": run_function_polysemy,
     "state-machine": run_state_machine,
@@ -965,7 +1052,17 @@ BANKS = {
     "wrong-reasoning": run_wrong_reasoning,
     "llx-collision": run_llx_collision,
     "public-boundary": run_public_boundary,
+    "ma-function-occurrence": run_ma_function_occurrence,
 }
+# The historical `--bank all` / no-flag aggregate is pinned to these six banks so its well-known row/call
+# totals stay stable for external consumers that assert an exact count (tools/check_regressions.py: "314 rows
+# across 7 artifacts" via the A2 contract path, and a SEPARATE hardcoded "6 banks / 314 rows" assertion against
+# THIS aggregate specifically). ma-function-occurrence is fully invoked and self-tested (BANKS, --self-test,
+# run_all()'s per-bank error sweep) but is reachable from the CLI only by naming it explicitly
+# (--bank ma-function-occurrence) — see the HONEST SCOPE NOTE above run_ma_function_occurrence for why it is
+# not folded into A2_ARTIFACT_OWNERSHIP either.
+DEFAULT_CLI_BANKS = ("function-polysemy", "state-machine", "hover-context", "wrong-reasoning",
+                     "llx-collision", "public-boundary")
 
 
 # ---------------------------------------------------------------------------
@@ -1222,7 +1319,7 @@ def main():
     a = ap.parse_args()
     if a.self_test:
         return _self_test()
-    names = sorted(BANKS) if a.bank == "all" else [a.bank]
+    names = sorted(DEFAULT_CLI_BANKS) if a.bank == "all" else [a.bank]
     errors, stats = [], {}
     for name in names:
         BANKS[name](errors, stats)
