@@ -153,6 +153,10 @@ NEUTRAL_CLITIC_QG_CLASS = "qg-clitic-undetermined"
 CLASS_NEUTRAL_QG_ROLES = {
     "prefix_conjunction", "prefix_resumption_fa", "prefix_preposition",
     "definite_article", "particle_inna", "ma_particle",
+    # already class-neutral on arrival (no asserted role/gloss) when the pattern engine itself
+    # could not decide subject vs. object from written vocalization alone (Finding F6) -- there is
+    # nothing left to withhold.
+    "clitic_undetermined",
 }
 # Train E follow-up defect B: the ONE authoritative union of roles whose
 # role/label/gloss/class presupposes the disputed stem_identity host
@@ -163,10 +167,88 @@ CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES = (
 )
 
 
+# Closed set of lexicalized relative/function words whose written form happens to LOOK LIKE
+# article + noun-stem (اللَّذِي, اللَّتِي, ...): these are single function words, never a genuine
+# "the" + host split, regardless of whether a matching whole-token lexicon row exists (Finding F4
+# -- the guard must key on the hazard itself, not on lexicon-row availability, so the written لِ +
+# ال contraction لِلَّذِي/لِلَّتِي/لِلَّذِينَ is caught the same as the uncontracted ٱلَّذِي).
+_LEXICALIZED_RELATIVE_NORM_FORMS = {
+    N.norm_strict(w) for w in (
+        "الذي", "التي", "الذين", "اللذان", "اللذين",
+        "اللتان", "اللتين", "اللاتي", "اللائي", "اللواتي",
+    )
+}
+
+
+def _lexicalized_relative_hazard(seg_cand):
+    """True when `seg_cand`'s own definite_article + stem segments reconstruct a closed
+    lexicalized relative/function surface -- a single function word that must never be exposed as
+    a shape-only "the" + host split, and whose peeled stem must never leak an unrelated lexicon
+    gloss (e.g. لِلَّذِي's peeled ذِي stem coincidentally matching the ذُو "possessor of" entry).
+    The written لِ + ال contraction elides the article's own alif (لِلَّذِي carries only the
+    assimilated lām, not الَّ), so the canonical "ال" spelling is reconstructed either way before
+    matching -- the guard must key on the SAME lexical hazard regardless of which of the two
+    written article shapes (contracted or not) produced this candidate."""
+    segments = seg_cand.get("segments") or []
+    article_seg = next((s for s in segments if s.get("role") == "definite_article"), None)
+    stem_surface = "".join(s.get("surface", "") for s in segments if s.get("role") == "stem")
+    if article_seg is None or not stem_surface:
+        return False
+    article_surface = article_seg.get("surface", "")
+    if N.bare(article_surface)[:1] not in ("ا", "ٱ"):
+        article_surface = "ا" + article_surface
+    return N.norm_strict(article_surface + stem_surface) in _LEXICALIZED_RELATIVE_NORM_FORMS
+
+
+_CLEAN_PROCLITIC_ROLES = {"prefix_conjunction", "prefix_resumption_fa", "prefix_preposition", "prefix_particle"}
+
+
+def _is_clean_proclitic_plus_stem(seg_cand):
+    """True when `seg_cand` is nothing but zero-or-more class-neutral proclitics followed by
+    exactly one whole stem -- no article peel, no invented enclitic. The fallback candidate for a
+    lexicalized-relative hazard (F4) should look like this whenever one is available: the
+    hazardous word stays one indivisible stem, but a genuinely attached leading preposition/
+    conjunction is still surfaced (لِلَّذِي keeps its لِ, exactly like the existing لِلَّهِ case)."""
+    roles = [s.get("role") for s in seg_cand.get("segments") or []]
+    return bool(roles) and roles[-1] == "stem" and all(r in _CLEAN_PROCLITIC_ROLES for r in roles[:-1])
+
+
 def _selected(seg_cands, morph_cands):
     if not morph_cands:
         return None, None
     morph = morph_cands[0]
+    # A tied whole-token candidate whose own source record requires Naḥw
+    # function review is more conservative than a shape-only article peel.
+    # Select that candidate for gating; do not let candidate ordering turn a
+    # lexicalized relative/function form such as ٱلَّذِى into definite article
+    # + an unrelated lexical stem.
+    top_score = float(morph.get("score") or 0.0)
+    for candidate in morph_cands:
+        if float(candidate.get("score") or 0.0) != top_score:
+            break
+        risk_flags = set((candidate.get("features") or {}).get("source_risk_flags") or [])
+        if "requires_nahw_function" in risk_flags:
+            morph = candidate
+            break
+    ref = morph.get("segment_candidate_ref")
+    if (isinstance(ref, int) and 0 <= ref < len(seg_cands)
+            and _lexicalized_relative_hazard(seg_cands[ref])):
+        safe_candidates = [
+            c for c in morph_cands
+            if not (isinstance(c.get("segment_candidate_ref"), int)
+                    and 0 <= c["segment_candidate_ref"] < len(seg_cands)
+                    and _lexicalized_relative_hazard(seg_cands[c["segment_candidate_ref"]]))
+        ]
+        clean_candidates = [
+            c for c in safe_candidates
+            if isinstance(c.get("segment_candidate_ref"), int)
+            and 0 <= c["segment_candidate_ref"] < len(seg_cands)
+            and _is_clean_proclitic_plus_stem(seg_cands[c["segment_candidate_ref"]])
+        ]
+        if clean_candidates:
+            morph = clean_candidates[0]
+        elif safe_candidates:
+            morph = safe_candidates[0]
     if morph.get("pos") == "particle":
         for cand in seg_cands:
             if cand.get("evidence_class") == "pinned_function_cluster":
@@ -192,7 +274,10 @@ def _selected(seg_cands, morph_cands):
         "particle_inna",
         "ma_particle",
     }
-    if selected_collapsed and morph.get("evidence_class") in {"largelexicon_sample", "largelexicon_full"}:
+    selected_risks = set((morph.get("features") or {}).get("source_risk_flags") or [])
+    if (selected_collapsed
+            and "requires_nahw_function" not in selected_risks
+            and morph.get("evidence_class") in {"largelexicon_sample", "largelexicon_full"}):
         for cand in seg_cands:
             segments = cand.get("segments") or []
             if len(segments) <= 1:
@@ -315,6 +400,29 @@ def _candidate_collision(surface, seg_cands, morph_cands, morph):
     refs = {c.get("segment_candidate_ref") for c in tops}
     if len(refs) <= 1:
         return None
+    # A source-marked function/relative whole token outranks a shape-only
+    # definite-article peel. Keep the peel in the candidate lattice, but do
+    # not reclassify this known Naḥw-review obligation as a segmentation
+    # collision. This is intentionally narrow: every non-risk rival must be
+    # an article-bearing segmentation candidate.
+    risk_tops = [
+        c for c in tops
+        if "requires_nahw_function" in set((c.get("features") or {}).get("source_risk_flags") or [])
+    ]
+    if risk_tops:
+        risk_refs = {c.get("segment_candidate_ref") for c in risk_tops}
+        other_refs = refs - risk_refs
+        article_only_alternatives = bool(other_refs)
+        for ref in other_refs:
+            if not isinstance(ref, int) or ref < 0 or ref >= len(seg_cands):
+                article_only_alternatives = False
+                break
+            roles = {s.get("role") for s in (seg_cands[ref].get("segments") or [])}
+            if "definite_article" not in roles:
+                article_only_alternatives = False
+                break
+        if article_only_alternatives:
+            return None
     if not any(c.get("evidence_class") != "surface_candidate" for c in tops):
         return None
     pos_values = {c.get("pos") for c in tops}
@@ -537,11 +645,55 @@ def _gate(surface, seg_cands, morph, context, morph_cands=None, selected_seg=Non
         rank, cap, order = _registry_vote(SOURCE_RISK_CAP_FILTER)
         votes.append((rank, cap, None, order))
 
-    # skeleton_collision (R4/R5), scoped to the selected stem (R6/R7).
-    skeleton = _skeleton_collision(surface, seg_cands, morph, selected_seg=selected_seg, morph_cands=morph_cands)
-    if skeleton:
+    # skeleton_collision (R4/R5), scoped independently to each tied top
+    # candidate's own segmentation (R6/R7). We never union competitor sets
+    # across segmentations. If one co-leading candidate already carries a
+    # corpus-defined POS/root conflict, that semantic identity hazard must not
+    # be masked by the weaker fact that the written segmentation also ties.
+    best_score = max((float(c.get("score") or 0.0) for c in (morph_cands or [morph])), default=0.0)
+    semantic_votes = []
+
+    def add_semantic_vote(candidate, candidate_seg, siblings):
+        ref = candidate.get("segment_candidate_ref")
+        skeleton = _skeleton_collision(
+            surface, seg_cands, candidate, selected_seg=candidate_seg,
+            morph_cands=siblings,
+        )
+        if not skeleton:
+            return
+        skeleton = dict(skeleton)
+        top_tie_candidate_refs = sorted({
+            int(c.get("segment_candidate_ref"))
+            for c in (morph_cands or [])
+            if float(c.get("score") or 0.0) == best_score
+            and isinstance(c.get("segment_candidate_ref"), int)
+        })
+        if len(top_tie_candidate_refs) > 1:
+            skeleton["top_tie_candidate_refs"] = top_tie_candidate_refs
         rank, cap, order = _registry_vote(skeleton.get("kind"))
-        votes.append((rank, cap, skeleton, order))
+        semantic_votes.append((rank, cap, skeleton, order))
+
+    # Preserve the established selected-candidate fallback to same-ref
+    # siblings (needed when a function-inventory candidate outranks the
+    # lexicon row that carries the collision evidence).
+    add_semantic_vote(morph, selected_seg, morph_cands)
+
+    # A co-leading *other segmentation* may contribute a stronger semantic
+    # vote only when that candidate itself carries the competitor evidence.
+    # Do not reach down to a lower-ranked sibling of that other segmentation:
+    # on لما, for example, that would collapse the genuine top-level ل+ما vs
+    # whole-token segmentation dispute into an unrelated lower lexical row.
+    for candidate in (morph_cands or []):
+        if candidate is morph or float(candidate.get("score") or 0.0) != best_score:
+            continue
+        if len((candidate.get("collision") or {}).get("competitors") or []) < 2:
+            continue
+        ref = candidate.get("segment_candidate_ref")
+        candidate_seg = selected_seg
+        if isinstance(ref, int) and 0 <= ref < len(seg_cands):
+            candidate_seg = seg_cands[ref]
+        add_semantic_vote(candidate, candidate_seg, None)
+    votes.extend(semantic_votes)
 
     collision = _candidate_collision(surface, seg_cands, morph_cands or [], morph)
     if collision:
@@ -684,8 +836,15 @@ def parse_text(text, document_id=None, db="smoke"):
                             evidence_keys=["morphology_candidates", "segment_candidate_ref"],
                         )
             else:
-                for cand in tok.get("morphology_candidates") or []:
-                    if cand.get("rank") == 1:
+                all_cands = tok.get("morphology_candidates") or []
+                top_score = max((float(c.get("score") or 0.0) for c in all_cands), default=None)
+                tied_semantic_collision = bool(collision.get("top_tie_candidate_refs"))
+                for cand in all_cands:
+                    if cand.get("rank") == 1 or (
+                        tied_semantic_collision
+                        and top_score is not None
+                        and float(cand.get("score") or 0.0) == top_score
+                    ):
                         cand["selection_status"] = "candidate_only"
                         cand["selection_blocker"] = gate
                         if collision.get("kind") in {"pos_trichotomy_conflict", "root_conflict"}:

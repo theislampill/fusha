@@ -1011,8 +1011,12 @@ ABSORPTION_STATES = frozenset({
     "not_applicable_with_reason"})
 
 CONSUMER_BINDING_SCHEMA = "curriculum.l1l6_consumer_operationalization_binding.v1"
-# the current closed set of consumer planes a binding row may name (Bounded Mechanical Finding 1).
-CONSUMER_PLANES = frozenset({"tutor_runtime", "nahw_analytical"})
+# The current closed set of consumer planes a binding row may name.  Ṣarf and
+# Naḥw remain distinct analytical destinations; neither may borrow the tutor's
+# runtime evidence fields.
+CONSUMER_PLANES = frozenset({
+    "tutor_runtime", "nahw_analytical", "sarf_analytical",
+})
 _WORKER_HEAD_ANCESTOR_CACHE = {}
 
 
@@ -1078,6 +1082,30 @@ TRAIN_C_EXPECTED_KCS = {
     "kc-coordination-particle-case-following",
     "kc-waw-function-accompaniment",
 }
+# Per-tranche exact binding-id set (F7). A bare `tranche_[0-9]{3}[a-d]?` regex match on
+# consumer_train let ANY row under an undeclared tranche name validate, and let extra/duplicate
+# rows under an ALREADY-declared tranche pass unnoticed once the old exact row-count guard was
+# removed. Each tranche declares its own closed binding-id set here; a later slice adds its OWN
+# entry rather than growing one global magic total that would block unrelated future slices.
+TRANCHE_EXPECTED_BINDING_IDS = {
+    "tranche_001a": frozenset({"l1l6-tranche-001a-foundational-orthography-analysis"}),
+}
+# test_paths must name an actual test file, never a production/consumer module (F8).
+_TEST_PATH_BASENAME_RE = re.compile(r"^test_.*\.py$")
+# F8 residual: the basename check above proves nothing about CONTENT -- a production module could
+# simply be renamed test_fake.py. Require real test structure: a unittest.TestCase, at least one
+# `def test_` method, or one of this repo's own existing non-unittest self-test entrypoints (several
+# tools here ship a red-first `_self_test()`/`self_test()` function or a `--self-test` CLI flag
+# instead of a unittest.TestCase; both count, since both are genuine, already-used test-runner
+# entrypoints -- but a bare renamed production file matches neither).
+_TEST_CONTENT_RE = re.compile(
+    r"unittest\.TestCase|^\s*def\s+test_\w|def\s+_?self_test\s*\(|--self-test", re.MULTILINE)
+
+
+def _test_path_has_real_test_structure(text):
+    """True when `text` (a candidate test_paths file's source) shows real test structure. Never
+    derived from the filename alone (F8) -- a file merely NAMED like a test must fail this."""
+    return bool(_TEST_CONTENT_RE.search(text or ""))
 
 
 def check_consumer_operationalization_bindings(ctx, errors):
@@ -1112,7 +1140,8 @@ def check_consumer_operationalization_bindings(ctx, errors):
         if row.get("schema") != CONSUMER_BINDING_SCHEMA:
             errors.append("consumer_bindings: %s wrong schema" % binding_id)
         train = row.get("consumer_train")
-        if train not in ("train_b", "train_c"):
+        if train not in ("train_b", "train_c") and not re.fullmatch(
+                r"tranche_[0-9]{3}[a-d]?", str(train)):
             errors.append("consumer_bindings: %s unapproved train %r" %
                           (binding_id, train))
         if not _worker_head_is_ancestor(row.get("worker_head")):
@@ -1127,10 +1156,12 @@ def check_consumer_operationalization_bindings(ctx, errors):
                 if not row.get("runtime_item_ids") or not row.get("knowledge_component_ids"):
                     errors.append("consumer_bindings: %s explicit tutor_runtime row needs "
                                   "runtime_item_ids AND knowledge_component_ids" % binding_id)
-            elif plane == "nahw_analytical":
-                if row.get("runtime_item_ids") or row.get("knowledge_component_ids"):
-                    errors.append("consumer_bindings: %s explicit nahw_analytical row must carry "
-                                  "neither runtime_item_ids nor knowledge_component_ids" % binding_id)
+            elif plane in {"nahw_analytical", "sarf_analytical"}:
+                if (row.get("runtime_item_ids")
+                        or row.get("knowledge_component_ids")
+                        or row.get("candidate_drill_ids")):
+                    errors.append("consumer_bindings: %s explicit %s row must carry no "
+                                  "tutor runtime evidence" % (binding_id, plane))
         if row.get("public_projection_eligible") is not False:
             errors.append("consumer_bindings: %s public eligibility overclaim" %
                           binding_id)
@@ -1164,6 +1195,25 @@ def check_consumer_operationalization_bindings(ctx, errors):
                     if not (ROOT / path).exists():
                         errors.append("consumer_bindings: %s missing path %s" %
                                       (binding_id, path))
+            for path in row.get("test_paths", []):
+                if not _TEST_PATH_BASENAME_RE.match(Path(path).name):
+                    errors.append(
+                        "consumer_bindings: %s test_paths entry %s is not a test file "
+                        "(a production/consumer module cannot be counted as a test)" %
+                        (binding_id, path))
+                    continue
+                full = ROOT / path
+                if full.exists() and full.is_file():
+                    try:
+                        text = full.read_text(encoding="utf-8")
+                    except (UnicodeDecodeError, OSError):
+                        text = ""
+                    if not _test_path_has_real_test_structure(text):
+                        errors.append(
+                            "consumer_bindings: %s test_paths entry %s is named like a test but "
+                            "has no real test structure (no unittest.TestCase, def test_, or "
+                            "self-test entrypoint) -- a production file merely renamed cannot be "
+                            "counted as a test" % (binding_id, path))
         elif status == "pending_authoring":
             if contribution != "pending_authoring":
                 errors.append("consumer_bindings: %s pending status mismatch" %
@@ -1207,9 +1257,27 @@ def check_consumer_operationalization_bindings(ctx, errors):
                               candidate_id)
             bound_candidate_ids.add(candidate_id)
 
-    if len(rows) != 16:
-        errors.append("consumer_bindings: %d rows != exact B/C manifest 16" %
-                      len(rows))
+    # F7: every tranche_NNN[a-d] train present must match a REGISTERED, exact binding-id set --
+    # an unregistered tranche name, or a drift (a missing, extra, or duplicate row) from a
+    # registered one, fails closed. This is scoped per tranche, so a later slice's registration
+    # never has to touch (or risk drifting) an earlier slice's expected set.
+    tranche_trains = sorted({
+        row.get("consumer_train") for row in rows
+        if re.fullmatch(r"tranche_[0-9]{3}[a-d]?", str(row.get("consumer_train")))
+    })
+    for train in tranche_trains:
+        expected = TRANCHE_EXPECTED_BINDING_IDS.get(train)
+        if expected is None:
+            errors.append(
+                "consumer_bindings: %s has no registered expected binding-id set "
+                "(add an entry to TRANCHE_EXPECTED_BINDING_IDS)" % train)
+            continue
+        actual = {row["binding_id"] for row in rows if row.get("consumer_train") == train}
+        if actual != expected:
+            errors.append(
+                "consumer_bindings: %s binding-id set drift: expected %s, got %s" %
+                (train, sorted(expected), sorted(actual)))
+
     train_b = [row for row in rows if row.get("consumer_train") == "train_b"]
     train_c = [row for row in rows if row.get("consumer_train") == "train_c"]
     b_counts = {
@@ -1243,9 +1311,15 @@ def check_consumer_operationalization_bindings(ctx, errors):
         errors.append("consumer_bindings: Train C unit set drift")
     if c_kcs != TRAIN_C_EXPECTED_KCS:
         errors.append("consumer_bindings: Train C KC set drift")
-    if len(bound_runtime_ids) != 27 or len(bound_candidate_ids) != 27:
+    train_c_runtime_ids = {
+        item for row in train_c for item in row.get("runtime_item_ids", [])
+    }
+    train_c_candidate_ids = {
+        item for row in train_c for item in row.get("candidate_drill_ids", [])
+    }
+    if len(train_c_runtime_ids) != 27 or len(train_c_candidate_ids) != 27:
         errors.append("consumer_bindings: Train C runtime/candidate counts %d/%d != 27/27"
-                      % (len(bound_runtime_ids), len(bound_candidate_ids)))
+                      % (len(train_c_runtime_ids), len(train_c_candidate_ids)))
     if bound_runtime_ids & bound_candidate_ids:
         errors.append("consumer_bindings: candidate and runtime identities overlap")
 
@@ -1968,10 +2042,66 @@ def self_test():
     mut("consumer_binding_tutor_row_missing_runtime_evidence", "runtime_item_ids AND knowledge_component_ids",
         lambda c: next(r for r in c["consumer_bindings"]
                        if r["consumer_plane"] == "tutor_runtime").update(runtime_item_ids=[]))
-    mut("consumer_binding_analytical_row_claims_runtime_evidence", "neither runtime_item_ids nor",
+    mut("consumer_binding_analytical_row_claims_runtime_evidence", "must carry no tutor runtime evidence",
         lambda c: next(r for r in c["consumer_bindings"]
                        if r["consumer_plane"] == "nahw_analytical").update(
                            knowledge_component_ids=["kc-attributive-follower-licensing"]))
+    # F7/F8 (adversarial orthography review): a per-tranche binding-id set must be pinned (not
+    # just an "approved train" regex), and a non-test file must never count as a test.
+    mut("tranche_duplicate_binding_id_escapes_pinning", "binding-id set drift",
+        lambda c: c["consumer_bindings"].append(dict(
+            next(r for r in c["consumer_bindings"] if r["consumer_train"] == "tranche_001a"),
+            binding_id="l1l6-tranche-001a-duplicate-row")))
+    mut("tranche_unregistered_train_name_validates_unchecked", "no registered expected binding-id set",
+        lambda c: c["consumer_bindings"].append(dict(
+            next(r for r in c["consumer_bindings"] if r["consumer_train"] == "tranche_001a"),
+            binding_id="l1l6-tranche-002a-unregistered", consumer_train="tranche_002a",
+            lesson_ids=[], unit_ids=[])))
+    mut("consumer_module_counted_as_test_path", "is not a test file",
+        lambda c: next(r for r in c["consumer_bindings"]
+                       if r["consumer_train"] == "tranche_001a").update(
+                           test_paths=list(next(r for r in c["consumer_bindings"]
+                                                 if r["consumer_train"] == "tranche_001a")["test_paths"])
+                           + ["tools/curriculum_unit_consumer.py"]))
+    # F8 hostile probe (round-trip: no fake file is ever committed, the real file's bytes are
+    # restored in a `finally` before this function returns): a production module RENAMED to a
+    # test_*.py basename must still pass the cheap name check, so the check must catch it on
+    # CONTENT instead. Temporarily overwrite the real file tools/test_paths already cites
+    # (tools/test_fusha_orthography.py) with production-shaped source carrying no test structure,
+    # run the real check against it, then restore the original bytes.
+    p_t = ROOT / "tools" / "test_fusha_orthography.py"
+    if p_t.exists():
+        raw_t = p_t.read_bytes()
+        try:
+            p_t.write_bytes(
+                b"#!/usr/bin/env python3\n"
+                b"def compute_something(x):\n"
+                b"    return x + 1\n"
+            )
+            errs5 = []
+            check_consumer_operationalization_bindings(copy.deepcopy(base), errs5)
+        finally:
+            p_t.write_bytes(raw_t)
+        ok5 = any("has no real test structure" in e for e in errs5)
+        mutations.append(("test_path_named_test_but_no_test_structure", ok5))
+        if not ok5:
+            print("  test_path_named_test_but_no_test_structure did NOT trip on a production "
+                  "file merely renamed to a test_*.py basename; errors=%r" % errs5[:3])
+    # In-memory probe on the content-check helper itself, independent of any real file: a genuine
+    # unittest.TestCase and this repo's own non-unittest self-test entrypoints must both still be
+    # accepted (the content check must not become so strict it rejects real, already-used test
+    # styles), while renamed production source is rejected.
+    ok6 = (
+        not _test_path_has_real_test_structure(
+            "#!/usr/bin/env python3\ndef compute_something(x):\n    return x + 1\n")
+        and _test_path_has_real_test_structure(
+            "import unittest\nclass T(unittest.TestCase):\n    def test_ok(self):\n        pass\n")
+        and _test_path_has_real_test_structure("def _self_test():\n    return 0\n")
+    )
+    mutations.append(("test_path_content_helper_accepts_real_rejects_renamed", ok6))
+    if not ok6:
+        print("  test_path_content_helper_accepts_real_rejects_renamed: helper misclassified "
+              "at least one of the renamed-production/unittest/self-test probes")
     # Sol witness canaries: a context-only appearance injected as a witness
     # must trip the same-entry/selected re-verification gate (file-level
     # mutation: checked via a temp-modified copy of the grounding rows)

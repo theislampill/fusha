@@ -479,12 +479,67 @@ def adapter_lattice_ambiguity(rows, spec, ctx, root):
                    "property_hits": props.as_metric()}
 
 
+_VM_PROCLITIC_ROLE_BY_BASE = {
+    "و": "prefix_conjunction",
+    "ف": "prefix_resumption_fa",
+    "ب": "prefix_preposition",
+    "ك": "prefix_preposition",
+    "ل": "prefix_preposition",
+    "س": "prefix_particle",
+}
+
+
+def _visible_morphology_expected_roles(vm):
+    """The row's OWN declared correct segmentation (proclitics/article/host/suffixes), as an
+    ordered role skeleton -- ground truth independent of whatever the engine under audit
+    currently ranks first (Finding F5: the audit must not trust the thing it is auditing)."""
+    roles = []
+    for piece in vm.get("proclitics") or []:
+        base = (piece.replace("ـ", "") or " ")[0]
+        roles.append(_VM_PROCLITIC_ROLE_BY_BASE.get(base, "prefix_preposition"))
+    if vm.get("article"):
+        roles.append("definite_article")
+    roles.append("stem")
+    roles.extend("object_pronoun" for _ in (vm.get("suffixes") or []))
+    return roles
+
+
+def _declared_allowed_replacements(row, rec_cands):
+    """Split replacement strings a reject_-decision row may still legally expose, derived ONLY
+    from the row's own declared `visible_morphology` role skeleton -- never from which candidate
+    the engine under audit happens to rank first (F5). Returns None when the row carries no
+    declared ground truth; the caller then fails CLOSED (no replacement is ever allowed), because
+    a bare replacement-string equality check cannot be trusted either: two structurally different
+    segmentations (e.g. a preposition+pronoun reading and a rejected noun+possessive reading, such
+    as لَهُ / فِيهِ) can share the identical surface substrings while disagreeing on role, so text
+    equality alone would let the wrong reading ride along with the right one."""
+    vm = row.get("visible_morphology")
+    if not vm:
+        return None
+    expected_roles = _visible_morphology_expected_roles(vm)
+    allowed = set()
+    for candidate in rec_cands:
+        segments = candidate.get("segments") or []
+        if len(segments) < 2 or not candidate.get("legal", True):
+            continue
+        if [s.get("role") for s in segments] == expected_roles:
+            allowed.add(" ".join(s.get("surface", "") for s in segments))
+    return allowed
+
+
 def adapter_clitic_split_guard(rows, spec, ctx, root):
     """sarf/evals/false-clitic-split-eval.jsonl -> the real segmenter, lattice and suggestion quarantine.
 
     The bank's job is that a look-alike clitic never becomes an asserted split. The consumer's job is to KEEP the
     whole-token reading, never auto_safe an arbitrary token, never peel a tanwīn-alif as the pronoun نا, and never
-    promote a rejected split to an editable `split` suggestion.
+    promote a rejected split to an editable `split` suggestion. A distinct, ROLE-DECLARED legal segmentation (for
+    example the real article in ``ٱلْمُلْكُ``, declared via the row's own `visible_morphology`) remains
+    reviewable; the bank quarantines the rejected look-alike split, not every valid segmentation of the same
+    token. A reject_-decision row with NO declared `visible_morphology` ground truth fails CLOSED: it is never
+    allowed to expose ANY split suggestion, because the audited engine's own ranking is not trustworthy ground
+    truth (F5), and replacement-string equality alone cannot disambiguate two same-text, different-role readings
+    (F5 residual: e.g. لَهُ / فِيهِ, where a preposition+pronoun reading and a rejected noun+possessive reading
+    are byte-identical splits).
     """
     fails, reject_rows, tanwin_rows, splits_blocked, decided = [], 0, 0, 0, 0
     props = _Props()
@@ -527,7 +582,22 @@ def adapter_clitic_split_guard(rows, spec, ctx, root):
             reject_rows += 1
             rec = ctx.check_text({"input_mode": "arbitrary_typing", "raw_input": surface})
             props.hit(rid, _CHK, "rejected_split_quarantined")
-            if any((s.get("edit") or {}).get("op") == "split" for s in rec.get("suggestions") or []):
+            token = (rec.get("analysis_tokens") or [{}])[0]
+            rec_cands = token.get("segment_candidates") or []
+            declared = _declared_allowed_replacements(row, rec_cands)
+            # F5: NO trust-the-engine fallback. A row with no declared `visible_morphology` ground
+            # truth fails CLOSED -- an empty allowed set, so every split suggestion for it is unsafe,
+            # regardless of what the audited engine itself ranks first.
+            allowed_replacements = declared if declared is not None else set()
+            split_suggestions = [
+                s for s in (rec.get("suggestions") or [])
+                if (s.get("edit") or {}).get("op") == "split"
+            ]
+            unsafe_splits = [
+                s for s in split_suggestions
+                if (s.get("edit") or {}).get("replacement") not in allowed_replacements
+            ]
+            if unsafe_splits:
                 fails.append(_f(rid, "rejected_split_quarantined",
                                 "a rejected split escaped as an editable split suggestion"))
             else:

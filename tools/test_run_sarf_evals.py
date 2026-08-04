@@ -291,6 +291,145 @@ class PassThroughAndTargetedMutation(unittest.TestCase):
         self.assertTrue(all(f.startswith(target["id"] + " ") for f in failures), failures[:3])
         self.assertTrue(any("[no_split_suggestion]" in f for f in failures), failures[:3])
 
+    def test_false_clitic_bank_allows_only_top_backed_article_split(self):
+        """The real article split is not the rejected final-kāf pronoun split."""
+        bank = "sarf/evals/false-clitic-split-eval.jsonl"
+        rows = _rows(bank)
+        row = next(r for r in rows if r["id"] == "FCS-001")
+        ctx = _ctx()
+        failures, _ = _run(bank, [row], ctx)
+        self.assertEqual([], failures)
+
+        real = ctx.check_text
+
+        def false_suffix_escape(req):
+            rec = copy.deepcopy(real(req))
+            rec["suggestions"].append({
+                "edit": {"op": "split", "replacement": "ٱلْ مُلْ كُ"},
+                "gate": "two_vote_required",
+            })
+            return rec
+
+        ctx.check_text = false_suffix_escape
+        failures, _ = _run(bank, [row], ctx)
+        self.assertTrue(any("[rejected_split_quarantined]" in f for f in failures), failures)
+
+    def test_false_clitic_bank_does_not_trust_the_engines_own_ranking_fcs049(self):
+        """F5 (red-first): the audit must not certify a split merely because the AUDITED engine's
+        own rank-1 candidate happens to agree with it. Corrupt FCS-049's rank-1 morphology
+        candidate to point at the rejected لَكُ+نَّا split (simulating a regressed engine that
+        would itself rank the look-alike top), inject that exact split as a suggestion, and
+        require the guard to still quarantine it -- ground truth must come from the row's own
+        declared visible_morphology, never from engine ranking alone."""
+        bank = "sarf/evals/false-clitic-split-eval.jsonl"
+        rows = _rows(bank)
+        row = next(r for r in rows if r["id"] == "FCS-049")
+        self.assertIn("visible_morphology", row, "FCS-049 must carry declared ground truth")
+        ctx = _ctx()
+        real = ctx.check_text
+
+        def corrupted_rank_and_escape(req):
+            rec = copy.deepcopy(real(req))
+            tok = rec["analysis_tokens"][0]
+            cands = tok["segment_candidates"]
+            bad_ref = next(i for i, c in enumerate(cands)
+                           if [s["role"] for s in c["segments"]] == ["stem", "object_pronoun"])
+            for m in tok["morphology_candidates"]:
+                m["rank"] += 1
+            tok["morphology_candidates"].insert(0, {
+                "lemma": None, "root": None, "pos": "particle", "pattern": None, "features": {},
+                "gloss_hint": None, "evidence_class": "surface_candidate", "confidence": "low",
+                "score": 9.0, "rank": 1, "segment_candidate_ref": bad_ref,
+            })
+            replacement = " ".join(s["surface"] for s in cands[bad_ref]["segments"])
+            rec["suggestions"].append({
+                "edit": {"op": "split", "replacement": replacement},
+                "gate": "two_vote_required",
+            })
+            return rec
+
+        ctx.check_text = corrupted_rank_and_escape
+        failures, _ = _run(bank, [row], ctx)
+        self.assertTrue(any("[rejected_split_quarantined]" in f for f in failures), failures)
+
+    def test_false_clitic_bank_reject_possessive_row_with_no_declared_ground_truth_fails_closed(self):
+        """R1 (F5 residual, red-first): FCS-016 (فِيهِ = preposition فِي + pronoun هِ) carries NO
+        declared visible_morphology, because the segmenter cannot structurally tell that reading
+        apart from the rejected noun+possessive reading -- both are the identical stem+object_pronoun
+        split (فِي + هِ) over the same byte range, so replacement-string equality could not
+        disambiguate them either. Corrupt the rank-1 morphology candidate to point straight at that
+        split (simulating a regressed engine that would itself rank the look-alike top -- the SAME
+        attack the FCS-049 test proves for a row that DOES carry ground truth) and inject that exact
+        split as a suggestion. Before this fix the legacy rank-based fallback let it straight through
+        (FAILS == [] against the pre-repair adapter); the repaired guard must quarantine it, because a
+        row with no declared ground truth may never expose ANY split, regardless of engine ranking."""
+        bank = "sarf/evals/false-clitic-split-eval.jsonl"
+        rows = _rows(bank)
+        row = next(r for r in rows if r["id"] == "FCS-016")
+        self.assertNotIn("visible_morphology", row, "FCS-016 must carry no declared ground truth")
+        ctx = _ctx()
+        real = ctx.check_text
+
+        def corrupted_rank_and_escape(req):
+            rec = copy.deepcopy(real(req))
+            tok = rec["analysis_tokens"][0]
+            cands = tok["segment_candidates"]
+            bad_ref = next(i for i, c in enumerate(cands)
+                           if [s["role"] for s in c["segments"]] == ["stem", "object_pronoun"])
+            for m in tok["morphology_candidates"]:
+                m["rank"] += 1
+            tok["morphology_candidates"].insert(0, {
+                "lemma": None, "root": None, "pos": "noun", "pattern": None, "features": {},
+                "gloss_hint": None, "evidence_class": "surface_candidate", "confidence": "low",
+                "score": 9.0, "rank": 1, "segment_candidate_ref": bad_ref,
+            })
+            replacement = " ".join(s["surface"] for s in cands[bad_ref]["segments"])
+            rec["suggestions"].append({
+                "edit": {"op": "split", "replacement": replacement},
+                "gate": "two_vote_required",
+            })
+            return rec
+
+        ctx.check_text = corrupted_rank_and_escape
+        failures, _ = _run(bank, [row], ctx)
+        self.assertTrue(any("[rejected_split_quarantined]" in f for f in failures), failures)
+
+    def test_false_clitic_bank_declared_proclitic_split_accepted_wrong_role_split_rejected(self):
+        """R1: FCS-004 (فَلَهُ) DOES carry declared visible_morphology (proclitic فَ + stem لَهُ).
+        The declared, role-bearing split (فَ لَهُ) must stay reviewable when it is the only split
+        offered; a DIFFERENT-role split over the same surface (فَلَ + هُ, the rejected noun+kaf-less
+        possessive-shaped peel) must still be quarantined."""
+        bank = "sarf/evals/false-clitic-split-eval.jsonl"
+        rows = _rows(bank)
+        row = next(r for r in rows if r["id"] == "FCS-004")
+        self.assertIn("visible_morphology", row, "FCS-004 must carry declared ground truth")
+        ctx = _ctx()
+        real = ctx.check_text
+
+        def inject_valid_split(req):
+            rec = copy.deepcopy(real(req))
+            rec["suggestions"].append({
+                "edit": {"op": "split", "replacement": "فَ لَهُ"},
+                "gate": "two_vote_required",
+            })
+            return rec
+
+        ctx.check_text = inject_valid_split
+        failures, _ = _run(bank, [row], ctx)
+        self.assertEqual([], failures, "the declared role-bearing split must remain accepted")
+
+        def inject_wrong_role_split(req):
+            rec = copy.deepcopy(real(req))
+            rec["suggestions"].append({
+                "edit": {"op": "split", "replacement": "فَلَ هُ"},
+                "gate": "two_vote_required",
+            })
+            return rec
+
+        ctx.check_text = inject_wrong_role_split
+        failures, _ = _run(bank, [row], ctx)
+        self.assertTrue(any("[rejected_split_quarantined]" in f for f in failures), failures)
+
     def test_one_wrong_byte_exact_result_fails_with_exact_row_and_property(self):
         bank = "sarf/evals/combining-mark-byte-exact-eval.jsonl"
         rows = _rows(bank)

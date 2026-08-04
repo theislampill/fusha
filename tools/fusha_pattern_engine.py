@@ -306,6 +306,32 @@ def _has_tanwin(surface):
     return any(0x064B <= ord(ch) <= 0x064D for ch in surface or "")
 
 
+def _final_cluster_marks(surface):
+    """The combining marks written on the LAST base-letter cluster of `surface` -- a read of what
+    is actually on the page, never an inferred vowel."""
+    marks = ""
+    i = len(surface or "") - 1
+    while i >= 0 and 0x064B <= ord(surface[i]) <= 0x0652:
+        marks = surface[i] + marks
+        i -= 1
+    return marks
+
+
+def _naa_role(stem_before_naa):
+    """Written-vocalization-only subject/object discrimination for a verb stem's trailing نا.
+    A sukūn on the stem's OWN final letter is the classic 1st-person-plural perfect subject
+    suffix (خَلَقْنَا 'we created'); a fatḥa on that same letter is a 3ms perfect verb PLUS an
+    attached object pronoun (خَلَقَنَا 'He created us') -- same bare letters, opposite function.
+    Anything else (no mark, or a different vowel) is not decisive and must never be guessed from
+    POS alone (Finding F6)."""
+    marks = _final_cluster_marks(stem_before_naa)
+    if "ْ" in marks:
+        return "subject"
+    if "َ" in marks:
+        return "object"
+    return "undetermined"
+
+
 def _row_score(row, basis):
     if (row.get("features") or {}).get("proper_name"):
         return 7.0
@@ -373,7 +399,18 @@ def build_morphology(surface, segment_candidates, lexicon=None, db="smoke"):
             "rank": 0,
             "segment_candidate_ref": i,
         })
-    cands.sort(key=lambda c: (-c.get("score", 0), c.get("segment_candidate_ref", 0)))
+    # On an equal evidence score, put the candidate carrying the stricter
+    # source-declared Naḥw review obligation first. Downstream gates and
+    # validators inspect the top candidate; a safer shape-only rival must not
+    # hide an equally scored source risk merely because its segmentation ref
+    # sorts earlier.
+    cands.sort(key=lambda c: (
+        -c.get("score", 0),
+        0 if "requires_nahw_function" in set(
+            (c.get("features") or {}).get("source_risk_flags") or []
+        ) else 1,
+        c.get("segment_candidate_ref", 0),
+    ))
     for idx, cand in enumerate(cands, 1):
         cand["rank"] = idx
     return cands
@@ -433,10 +470,32 @@ def _verb_parts(stem, morph):
             {"role": "derivative_prefix", "surface": pref, "class": "qg-derivative-prefix", "label": "DER", "gloss_contribution": "derived-form prefix"},
             {"role": "adjective_stem", "surface": rest, "class": "qg-adjective", "label": "AP", "gloss_contribution": morph.get("gloss_hint")},
         ]
-    if bare.endswith("نا") and len(bare) > 4:
+    # A trailing bare نا LOOKS like stem+"we", but قُرْءَانًا (tanwīn fatḥa + support alif) has the same bare
+    # tail without being a pronoun at all. Only split when there is COMPATIBLE VERB EVIDENCE (morph.pos ==
+    # "verb") AND the ending is not a tanwīn support alif in disguise (normalize_ar.ends_tanwin_alef).
+    if (bare.endswith("نا") and len(bare) > 4
+            and (morph.get("pos") or "") == "verb"
+            and not N.ends_tanwin_alef(stem)):
+        host, naa = stem[:-2], stem[-2:]
+        naa_role = _naa_role(host)
+        # POS alone never decides subject vs. object here (Finding F6): a sukūn-terminated host is
+        # the 1p subject suffix (خَلَقْنَا "we created"); a fatḥa-terminated host is the SAME bare
+        # letters as a 3ms verb plus an attached object pronoun (خَلَقَنَا "He created us"). When the
+        # written vocalization is not decisive, the clitic's role stays undetermined rather than
+        # guessed.
+        if naa_role == "subject":
+            return [
+                {"role": "verb_stem", "surface": host, "class": "qg-verb-stem", "label": "STEM", "gloss_contribution": morph.get("gloss_hint")},
+                {"role": "subject_pronoun", "surface": naa, "class": "qg-subject-pronoun", "label": "SUBJ", "gloss_contribution": "we"},
+            ]
+        if naa_role == "object":
+            return [
+                {"role": "verb_stem", "surface": host, "class": "qg-verb-stem", "label": "STEM", "gloss_contribution": morph.get("gloss_hint")},
+                {"role": "object_pronoun", "surface": naa, "class": "qg-object-pronoun", "label": "OBJ", "gloss_contribution": "us"},
+            ]
         return [
-            {"role": "verb_stem", "surface": stem[:-2], "class": "qg-verb-stem", "label": "STEM", "gloss_contribution": morph.get("gloss_hint")},
-            {"role": "subject_pronoun", "surface": stem[-2:], "class": "qg-subject-pronoun", "label": "SUBJ", "gloss_contribution": "we"},
+            {"role": "verb_stem", "surface": host, "class": "qg-verb-stem", "label": "STEM", "gloss_contribution": morph.get("gloss_hint")},
+            {"role": "clitic_undetermined", "surface": naa, "class": "qg-clitic-undetermined", "label": "UNDET", "gloss_contribution": None},
         ]
     if (morph.get("pos") or "") == "verb":
         return [{"role": "verb_stem", "surface": stem, "class": "qg-verb-stem", "label": "STEM", "gloss_contribution": morph.get("gloss_hint")}]
@@ -446,10 +505,12 @@ def _verb_parts(stem, morph):
 def preview_segments(surface, seg_candidate, morph):
     """Build qamus-grammar-v1 preview segments for a selected candidate."""
     out = []
+    last_stem_surface = None
     for seg in seg_candidate.get("segments") or []:
         role = seg.get("role")
         seg_surface = seg.get("surface", "")
         if role == "stem":
+            last_stem_surface = seg_surface
             vparts = _verb_parts(seg_surface, morph)
             if vparts:
                 out.extend(vparts)
@@ -461,8 +522,28 @@ def preview_segments(surface, seg_candidate, morph):
                 out.append({"role": "stem", "surface": seg_surface, "class": cls, "label": label,
                             "gloss_contribution": morph.get("gloss_hint")})
         elif role == "object_pronoun":
-            out.append({"role": "object_pronoun", "surface": seg_surface, "class": "qg-object-pronoun",
-                        "label": "OBJ", "gloss_contribution": _pronoun_gloss(seg_surface)})
+            # The checker's generic enclitic peeler may ALREADY have split a trailing نا off a verb stem
+            # (e.g. bare أهلكنا, whose candidate outranked the unsplit reading after split_clitics' by-length
+            # re-sort), so _verb_parts never saw the combined stem to relabel it. Apply the SAME compatible-
+            # verb-evidence guard here (pos == "verb", and not a tanwīn support alif in disguise), and the
+            # SAME written-vocalization discrimination as _verb_parts (Finding F6): POS alone never decides
+            # subject vs. object for a trailing نا.
+            if (N.bare(seg_surface) == "نا" and (morph.get("pos") or "") == "verb"
+                    and last_stem_surface is not None
+                    and not N.ends_tanwin_alef(last_stem_surface + seg_surface)):
+                naa_role = _naa_role(last_stem_surface)
+                if naa_role == "subject":
+                    out.append({"role": "subject_pronoun", "surface": seg_surface, "class": "qg-subject-pronoun",
+                                "label": "SUBJ", "gloss_contribution": "we"})
+                elif naa_role == "object":
+                    out.append({"role": "object_pronoun", "surface": seg_surface, "class": "qg-object-pronoun",
+                                "label": "OBJ", "gloss_contribution": "us"})
+                else:
+                    out.append({"role": "clitic_undetermined", "surface": seg_surface, "class": "qg-clitic-undetermined",
+                                "label": "UNDET", "gloss_contribution": None})
+            else:
+                out.append({"role": "object_pronoun", "surface": seg_surface, "class": "qg-object-pronoun",
+                            "label": "OBJ", "gloss_contribution": _pronoun_gloss(seg_surface)})
         elif role == "prefix_particle":
             out.append({"role": "future_particle", "surface": seg_surface, "class": "qg-particle",
                         "label": "FUT", "gloss_contribution": "will"})

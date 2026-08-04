@@ -4,31 +4,31 @@
   "generator": "tools/build_unit_dispositions.py",
   "generic_unresolved_remainders": 0,
   "lessons_fully_operationalized": 0,
-  "lessons_partially_operationalized": 14,
-  "new_real_consumer_unit_bindings": 8,
+  "lessons_partially_operationalized": 21,
+  "new_real_consumer_unit_bindings": 13,
   "note": "candidate readiness states remain separate from exact plane-specific consumer bindings; no binding certifies a linguistic fact or marks a whole lesson operationalized",
   "pending_authoring_unit_bindings": 5,
   "reverified_consumer_unit_bindings": 5,
   "schema": "curriculum.l1l6_unit_disposition.v1.meta",
   "state_participation": {
     "candidate_occurrence_witnesses": 12,
-    "candidate_pack_harnessed": 35,
+    "candidate_pack_harnessed": 38,
     "candidate_presentation_template": 166,
     "candidate_remediation_material": 18,
     "evidence_blocked": 29,
     "fixture_source_candidate": 35,
     "instructional_only_candidate_presentation": 25,
     "owner_adjudication_blocked": 0,
-    "promotion_bundle_prepared": 35,
+    "promotion_bundle_prepared": 38,
     "scholar_review_blocked": 0,
     "sol_integration_blocked": 76
   },
   "strongest_state_histogram": {
     "candidate_occurrence_witnesses": 7,
-    "candidate_pack_harnessed": 35,
-    "candidate_presentation_template": 95,
+    "candidate_pack_harnessed": 38,
+    "candidate_presentation_template": 94,
     "candidate_remediation_material": 9,
-    "fixture_source_candidate": 20
+    "fixture_source_candidate": 18
   },
   "strongest_sums_to_units": true,
   "units": 166

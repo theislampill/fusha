@@ -65,6 +65,26 @@ def _jsonl(path: Path):
 
 
 class ConsumerTruthTests(unittest.TestCase):
+    def test_tranche_slice_sarf_binding_is_real_and_candidate_only(self):
+        bindings = absorption.load_consumer_bindings()
+        rows = [
+            row for row in bindings
+            if row.get("consumer_train") == "tranche_001a"
+        ]
+
+        self.assertEqual(len(rows), 1)
+        row = rows[0]
+        self.assertEqual(row["consumer_plane"], "sarf_analytical")
+        self.assertEqual(row["binding_status"], "explicit")
+        self.assertEqual(row["certification_posture"], "candidate_analysis_only")
+        self.assertFalse(row["public_projection_eligible"])
+
+        errors = []
+        validator.check_consumer_operationalization_bindings(
+            validator.load_context(), errors
+        )
+        self.assertEqual(errors, [])
+
     def test_train_c_runtime_bindings_do_not_promote_candidate_drills(self):
         ctx = absorption.load()
         runtime = absorption.ordinary_tutor_runtime_truth(ctx)

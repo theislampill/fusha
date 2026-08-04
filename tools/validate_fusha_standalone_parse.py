@@ -295,9 +295,13 @@ def _self_test():
             failures.append("%s should expose qg_segments" % surface)
     # Component regressions from RH-LIVE ANDONs: future particle, imperfect prefix, subject/object pieces,
     # derivative prefix, and plural suffix must not disappear behind a host-only preview.
+    # فأهلكناهم's inner نا is UNVOWELED and so genuinely ambiguous between subject and object
+    # readings on the surface alone (see R1/F6 elsewhere in this repo); the corrected parser
+    # exposes it honestly as clitic_undetermined rather than pinning the unvoweled form to
+    # subject_pronoun, while the trailing هم still resolves to the unambiguous object_pronoun.
     role_expect = {
         "فسيكفيكهم": {"prefix_resumption_fa", "future_particle", "verb_prefix", "verb_stem", "object_pronoun"},
-        "فأهلكناهم": {"prefix_resumption_fa", "verb_stem", "subject_pronoun", "object_pronoun"},
+        "فأهلكناهم": {"prefix_resumption_fa", "verb_stem", "clitic_undetermined", "object_pronoun"},
         "مستغفرين": {"derivative_prefix", "adjective_stem", "plural_suffix"},
     }
     for surface, expected in role_expect.items():

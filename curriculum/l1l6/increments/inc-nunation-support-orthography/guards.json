@@ -1,0 +1,26 @@
+{
+  "guards": [
+    {
+      "guard": "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+      "id": "g-nun-evidence-only"
+    },
+    {
+      "guard": "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+      "id": "g-nun-contradiction"
+    },
+    {
+      "guard": "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+      "id": "g-nun-hamza-seat"
+    },
+    {
+      "guard": "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+      "id": "g-nun-unpointed"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-nun-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

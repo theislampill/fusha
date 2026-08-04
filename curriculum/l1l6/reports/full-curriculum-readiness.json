@@ -4,7 +4,7 @@
     "canonical_units_nahw": 76,
     "canonical_units_sarf": 39,
     "canonical_units_total": 166,
-    "canonical_units_with_machine_pack": 35,
+    "canonical_units_with_machine_pack": 38,
     "error_section_lessons_processed": 226,
     "honesty": "canonical units from the qualification wave are AUTHORED CANDIDATE UNITS (summary, capability family, contributing lessons, two-way map); their machine packs are the bounded remaining executable work, not silent gaps",
     "lessons_instructional_only_with_reason": 5,
@@ -14,7 +14,7 @@
     "lessons_semantically_qualified": 226,
     "misconception_clusters": 906,
     "misconception_manifestations": 912,
-    "pack_authoring_remaining": 106,
+    "pack_authoring_remaining": 103,
     "sections_linked_to_canonical_units": 1491,
     "sections_still_only_domain_classified": 0
   },
@@ -23,12 +23,19 @@
     "runtime_integrated": 0,
     "status": "candidate_not_runtime_integrated"
   },
-  "canonical_units_with_real_consumers": 13,
+  "canonical_units_with_real_consumers": 18,
   "consumer_operationalization": {
     "new_real_unit_ids_by_plane": {
       "nahw_analytical": [
         "cu-bound-fa-function-discrimination",
         "cu-fa-function-and-mood-licensing"
+      ],
+      "sarf_analytical": [
+        "cu-definite-article-assimilation",
+        "cu-grapheme-inventory-and-confusables",
+        "cu-nunation-support-orthography",
+        "cu-orthographic-connectivity-classes",
+        "cu-short-vowel-diacritics-and-vocalization-state"
       ],
       "tutor_runtime": [
         "cu-atf-case-following",
@@ -68,6 +75,15 @@
         "L5.M3.02",
         "L5.M6.04"
       ],
+      "sarf_analytical": [
+        "L1.M1.01",
+        "L1.M1.02",
+        "L1.M1.03",
+        "L1.M1.04",
+        "L1.M1.05",
+        "L1.M1.06",
+        "L1.M1.07"
+      ],
       "tutor_runtime": [
         "L1.M4.05",
         "L2.M5.01",
@@ -106,7 +122,7 @@
   "lessons_mapped_to_nahw": 175,
   "lessons_mapped_to_sarf": 213,
   "lessons_mapped_to_tutor_drills": 6,
-  "lessons_partially_operationalized": 14,
+  "lessons_partially_operationalized": 21,
   "lessons_with_entry_level_links": 147,
   "lessons_with_exact_pvn_links": 1,
   "lessons_with_family_only_links": 77,
@@ -229,7 +245,7 @@
     "q-paradigm-consumer": 56,
     "q-pvn-grounding": 224,
     "q-sarf-backprop": 9,
-    "q-scholar-owner-review": 35,
+    "q-scholar-owner-review": 38,
     "q-tutor-adoption": 10,
     "q-unit-authoring": 0
   },

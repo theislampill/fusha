@@ -1,0 +1,633 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-definite-article-assimilation/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-definite-article-assimilation/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; out_of_regime_no_article; sun_letter_shadda_unobserved; moon_letter_shadda_contradiction",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+        "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+        "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+        "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+        "no declared article means out of regime; the table never activates on following-letter evidence alone",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0fc98eb21fb72f7b89046d2b888eee0ed0153d188b96c5dfe2213803f4f5b771",
+      "guards_payload": [
+        {
+          "guard": "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+          "id": "g-def-inventory"
+        },
+        {
+          "guard": "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+          "id": "g-def-observed-shadda"
+        },
+        {
+          "guard": "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+          "id": "g-def-moon-contradiction"
+        },
+        {
+          "guard": "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+          "id": "g-def-laam-owned"
+        },
+        {
+          "guard": "no declared article means out of regime; the table never activates on following-letter evidence alone",
+          "id": "g-def-no-article"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-def-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "def-adv-01",
+        "def-adv-02",
+        "def-adv-03",
+        "def-abs-01",
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
+      ],
+      "positive_examples": [
+        "def-pos-01",
+        "def-pos-02",
+        "def-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "scope": {
+        "increment": "inc-definite-article-assimilation",
+        "statement": "the closed sun-letter set (fourteen letters) and the closed moon-letter set (fourteen letters) partition the consonants that can follow the article; membership decides only whether assimilation is even possible, never whether it happened",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-definite-article-assimilation-def-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; out_of_regime_no_article; sun_letter_shadda_unobserved; moon_letter_shadda_contradiction",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+        "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+        "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+        "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+        "no declared article means out of regime; the table never activates on following-letter evidence alone",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0fc98eb21fb72f7b89046d2b888eee0ed0153d188b96c5dfe2213803f4f5b771",
+      "guards_payload": [
+        {
+          "guard": "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+          "id": "g-def-inventory"
+        },
+        {
+          "guard": "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+          "id": "g-def-observed-shadda"
+        },
+        {
+          "guard": "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+          "id": "g-def-moon-contradiction"
+        },
+        {
+          "guard": "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+          "id": "g-def-laam-owned"
+        },
+        {
+          "guard": "no declared article means out of regime; the table never activates on following-letter evidence alone",
+          "id": "g-def-no-article"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-def-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "def-adv-01",
+        "def-adv-02",
+        "def-adv-03",
+        "def-abs-01",
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
+      ],
+      "positive_examples": [
+        "def-pos-01",
+        "def-pos-02",
+        "def-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "scope": {
+        "increment": "inc-definite-article-assimilation",
+        "statement": "an assimilation-completed claim additionally requires an OBSERVED written shadda on the following letter; a sun-letter context with no observed shadda withholds the claim rather than assuming an unmarked text still assimilated",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-definite-article-assimilation-def-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; out_of_regime_no_article; sun_letter_shadda_unobserved; moon_letter_shadda_contradiction",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+        "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+        "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+        "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+        "no declared article means out of regime; the table never activates on following-letter evidence alone",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0fc98eb21fb72f7b89046d2b888eee0ed0153d188b96c5dfe2213803f4f5b771",
+      "guards_payload": [
+        {
+          "guard": "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+          "id": "g-def-inventory"
+        },
+        {
+          "guard": "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+          "id": "g-def-observed-shadda"
+        },
+        {
+          "guard": "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+          "id": "g-def-moon-contradiction"
+        },
+        {
+          "guard": "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+          "id": "g-def-laam-owned"
+        },
+        {
+          "guard": "no declared article means out of regime; the table never activates on following-letter evidence alone",
+          "id": "g-def-no-article"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-def-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "def-adv-01",
+        "def-adv-02",
+        "def-adv-03",
+        "def-abs-01",
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
+      ],
+      "positive_examples": [
+        "def-pos-01",
+        "def-pos-02",
+        "def-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "scope": {
+        "increment": "inc-definite-article-assimilation",
+        "statement": "a moon-letter context resolves as non-assimilating from membership alone, since gemination there is structurally excluded; an observed shadda on a moon letter contradicts the closed inventory and is refused, never explained away",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-definite-article-assimilation-def-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; out_of_regime_no_article; sun_letter_shadda_unobserved; moon_letter_shadda_contradiction",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+        "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+        "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+        "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+        "no declared article means out of regime; the table never activates on following-letter evidence alone",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0fc98eb21fb72f7b89046d2b888eee0ed0153d188b96c5dfe2213803f4f5b771",
+      "guards_payload": [
+        {
+          "guard": "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+          "id": "g-def-inventory"
+        },
+        {
+          "guard": "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+          "id": "g-def-observed-shadda"
+        },
+        {
+          "guard": "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+          "id": "g-def-moon-contradiction"
+        },
+        {
+          "guard": "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+          "id": "g-def-laam-owned"
+        },
+        {
+          "guard": "no declared article means out of regime; the table never activates on following-letter evidence alone",
+          "id": "g-def-no-article"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-def-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "def-adv-01",
+        "def-adv-02",
+        "def-adv-03",
+        "def-abs-01",
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
+      ],
+      "positive_examples": [
+        "def-pos-01",
+        "def-pos-02",
+        "def-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "scope": {
+        "increment": "inc-definite-article-assimilation",
+        "statement": "the article's written laam stays article-owned in every resolved outcome; assimilation is a pronunciation fact about that laam, never a re-attribution of it to the following consonant, and never evidence of a doubled root or a Form II stem",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-definite-article-assimilation-def-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; out_of_regime_no_article; sun_letter_shadda_unobserved; moon_letter_shadda_contradiction",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+        "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+        "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+        "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+        "no declared article means out of regime; the table never activates on following-letter evidence alone",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0fc98eb21fb72f7b89046d2b888eee0ed0153d188b96c5dfe2213803f4f5b771",
+      "guards_payload": [
+        {
+          "guard": "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+          "id": "g-def-inventory"
+        },
+        {
+          "guard": "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+          "id": "g-def-observed-shadda"
+        },
+        {
+          "guard": "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+          "id": "g-def-moon-contradiction"
+        },
+        {
+          "guard": "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+          "id": "g-def-laam-owned"
+        },
+        {
+          "guard": "no declared article means out of regime; the table never activates on following-letter evidence alone",
+          "id": "g-def-no-article"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-def-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "def-adv-01",
+        "def-adv-02",
+        "def-adv-03",
+        "def-abs-01",
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
+      ],
+      "positive_examples": [
+        "def-pos-01",
+        "def-pos-02",
+        "def-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "scope": {
+        "increment": "inc-definite-article-assimilation",
+        "statement": "no declared article evidence means the table is out of regime; it never activates on a bare following-letter observation alone",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-definite-article-assimilation-def-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; out_of_regime_no_article; sun_letter_shadda_unobserved; moon_letter_shadda_contradiction",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+        "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+        "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+        "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+        "no declared article means out of regime; the table never activates on following-letter evidence alone",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0fc98eb21fb72f7b89046d2b888eee0ed0153d188b96c5dfe2213803f4f5b771",
+      "guards_payload": [
+        {
+          "guard": "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+          "id": "g-def-inventory"
+        },
+        {
+          "guard": "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+          "id": "g-def-observed-shadda"
+        },
+        {
+          "guard": "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+          "id": "g-def-moon-contradiction"
+        },
+        {
+          "guard": "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+          "id": "g-def-laam-owned"
+        },
+        {
+          "guard": "no declared article means out of regime; the table never activates on following-letter evidence alone",
+          "id": "g-def-no-article"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-def-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "def-adv-01",
+        "def-adv-02",
+        "def-adv-03",
+        "def-abs-01",
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
+      ],
+      "positive_examples": [
+        "def-pos-01",
+        "def-pos-02",
+        "def-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "scope": {
+        "increment": "inc-definite-article-assimilation",
+        "statement": "the fourteen abstract moon letters include hamza as ONE abstract member, not bare alif; the discriminator's following_letter moon list enumerates the WRITTEN hamza seat spellings that actually occur after the article (ء، أ، إ) instead, since a bare, unseated ا never follows the article as hamza's spelling -- omitting those seat forms is a coverage gap, not a conservative abstention (F9)",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-definite-article-assimilation-def-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-definite-article-assimilation",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "def-abs-01",
+      "def-abs-02"
+    ],
+    "adversarial": [
+      "def-adv-01",
+      "def-adv-02",
+      "def-adv-03",
+      "def-adv-04",
+      "def-adv-05",
+      "def-adv-06"
+    ],
+    "positive": [
+      "def-pos-01",
+      "def-pos-02"
+    ],
+    "transfer": [
+      "def-trn-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-definite-article-assimilation",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "out_of_regime_no_article",
+      "sun_letter_shadda_unobserved",
+      "moon_letter_shadda_contradiction"
+    ],
+    "capability": "discriminator_table",
+    "encoding_limitation": "the registered discriminator_table capability can only emit insufficient_features (or preserve_alternatives) for anything unmatched; the evidence-specific abstention reasons declared here are therefore DECLARED-BUT-UNREACHABLE pending a keyed-evidence capability -- kept as the unit's honest abstention vocabulary, not as consumer behavior (audit finding, modeled on inc-hamza-carrier-licensing)",
+    "functions": [
+      {
+        "discriminators": {
+          "article_observed": [
+            "yes"
+          ],
+          "following_letter": [
+            "ت",
+            "ث",
+            "د",
+            "ذ",
+            "ر",
+            "ز",
+            "س",
+            "ش",
+            "ص",
+            "ض",
+            "ط",
+            "ظ",
+            "ل",
+            "ن"
+          ],
+          "shadda_observed": [
+            "yes"
+          ]
+        },
+        "id": "assimilation_completed",
+        "name": "sun letter with an observed shadda: assimilation completed"
+      },
+      {
+        "discriminators": {
+          "article_observed": [
+            "yes"
+          ],
+          "following_letter": [
+            "ء",
+            "أ",
+            "إ",
+            "ب",
+            "ج",
+            "ح",
+            "خ",
+            "ع",
+            "غ",
+            "ف",
+            "ق",
+            "ك",
+            "م",
+            "ه",
+            "و",
+            "ي"
+          ],
+          "shadda_observed": [
+            "no"
+          ]
+        },
+        "id": "non_assimilating_moon_letter",
+        "name": "moon letter: gemination is structurally excluded"
+      }
+    ],
+    "increment": "inc-definite-article-assimilation",
+    "rules": [
+      {
+        "id": "def-r1",
+        "text": "the closed sun-letter set (fourteen letters) and the closed moon-letter set (fourteen letters) partition the consonants that can follow the article; membership decides only whether assimilation is even possible, never whether it happened"
+      },
+      {
+        "id": "def-r2",
+        "text": "an assimilation-completed claim additionally requires an OBSERVED written shadda on the following letter; a sun-letter context with no observed shadda withholds the claim rather than assuming an unmarked text still assimilated"
+      },
+      {
+        "id": "def-r3",
+        "text": "a moon-letter context resolves as non-assimilating from membership alone, since gemination there is structurally excluded; an observed shadda on a moon letter contradicts the closed inventory and is refused, never explained away"
+      },
+      {
+        "id": "def-r4",
+        "text": "the article's written laam stays article-owned in every resolved outcome; assimilation is a pronunciation fact about that laam, never a re-attribution of it to the following consonant, and never evidence of a doubled root or a Form II stem"
+      },
+      {
+        "id": "def-r5",
+        "text": "no declared article evidence means the table is out of regime; it never activates on a bare following-letter observation alone"
+      },
+      {
+        "id": "def-r6",
+        "text": "the fourteen abstract moon letters include hamza as ONE abstract member, not bare alif; the discriminator's following_letter moon list enumerates the WRITTEN hamza seat spellings that actually occur after the article (ء، أ، إ) instead, since a bare, unseated ا never follows the article as hamza's spelling -- omitting those seat forms is a coverage gap, not a conservative abstention (F9)"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-definite-article-assimilation",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "assimilation_chip",
+      "teaching": "shows the resolved reading next to the following letter's sun/moon membership and whether a shadda was actually observed"
+    },
+    {
+      "key": "article_laam_note",
+      "teaching": "states that the article's written laam stays article-owned whether or not its sound assimilates"
+    },
+    {
+      "key": "unobserved_shadda_note",
+      "teaching": "flags a sun-letter context with no observed shadda as withheld, not a silent assumption that assimilation occurred"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "connectivity_chip",
+      "teaching": "shows the classified joining shape next to the declared neighbor evidence that produced it, so the reader sees the test, not just the answer"
+    },
+    {
+      "key": "non_attaching_note",
+      "teaching": "for a non-attaching letter, states that no outgoing connection is possible here regardless of what follows"
+    },
+    {
+      "key": "unclassified_note",
+      "teaching": "flags an unlisted letter or missing neighbor evidence as outside this table's closed inventory, never a silent best guess"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

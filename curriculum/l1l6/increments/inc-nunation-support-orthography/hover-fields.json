@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "support_alif_chip",
+      "teaching": "shows whether the support alif is written or blocked next to the exact final grapheme that decided it"
+    },
+    {
+      "key": "exempt_grapheme_note",
+      "teaching": "names which of the three exempt graphemes blocked the support alif, so the exemption is never presented as arbitrary"
+    },
+    {
+      "key": "contradiction_note",
+      "teaching": "flags a token declaring both the article and nunation as a written contradiction, never a resolved reading"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

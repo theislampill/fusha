@@ -1,0 +1,87 @@
+{
+  "abstention_reasons": [
+    "insufficient_features"
+  ],
+  "capability": "discriminator_table",
+  "functions": [
+    {
+      "discriminators": {
+        "letter": ["ا", "أ", "إ", "آ", "ٱ", "د", "ذ", "ر", "ز", "و"],
+        "preceding_neighbor_class": ["word_start", "non_attaching_letter"]
+      },
+      "id": "non_attaching_standalone",
+      "name": "non-attaching letter, no incoming connection"
+    },
+    {
+      "discriminators": {
+        "letter": ["ا", "أ", "إ", "آ", "ٱ", "د", "ذ", "ر", "ز", "و"],
+        "preceding_neighbor_class": ["attaching_letter"]
+      },
+      "id": "non_attaching_final",
+      "name": "non-attaching letter, incoming connection only"
+    },
+    {
+      "discriminators": {
+        "following_neighbor_present": ["no"],
+        "letter": ["ب", "ت", "ث", "ج", "ح", "خ", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ك", "ل", "م", "ن", "ه", "ي"],
+        "preceding_neighbor_class": ["word_start", "non_attaching_letter"]
+      },
+      "id": "attaching_standalone",
+      "name": "attaching letter, no incoming and no outgoing connection"
+    },
+    {
+      "discriminators": {
+        "following_neighbor_present": ["yes"],
+        "letter": ["ب", "ت", "ث", "ج", "ح", "خ", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ك", "ل", "م", "ن", "ه", "ي"],
+        "preceding_neighbor_class": ["word_start", "non_attaching_letter"]
+      },
+      "id": "attaching_initial",
+      "name": "attaching letter, outgoing connection only"
+    },
+    {
+      "discriminators": {
+        "following_neighbor_present": ["no"],
+        "letter": ["ب", "ت", "ث", "ج", "ح", "خ", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ك", "ل", "م", "ن", "ه", "ي"],
+        "preceding_neighbor_class": ["attaching_letter"]
+      },
+      "id": "attaching_final",
+      "name": "attaching letter, incoming connection only"
+    },
+    {
+      "discriminators": {
+        "following_neighbor_present": ["yes"],
+        "letter": ["ب", "ت", "ث", "ج", "ح", "خ", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف", "ق", "ك", "ل", "م", "ن", "ه", "ي"],
+        "preceding_neighbor_class": ["attaching_letter"]
+      },
+      "id": "attaching_medial",
+      "name": "attaching letter, incoming and outgoing connection"
+    }
+  ],
+  "increment": "inc-orthographic-connectivity-classes",
+  "rules": [
+    {
+      "id": "con-r1",
+      "text": "membership in the six-letter non-attaching set is a closed lexical fact about the letter itself, never inferred from shape resemblance; every other letter of the inventory attaches forward when a following letter is declared present"
+    },
+    {
+      "id": "con-r2",
+      "text": "a non-attaching letter never sends an outgoing connection to what follows it, regardless of what that neighbor is, so it realizes only the final or the standalone shape"
+    },
+    {
+      "id": "con-r3",
+      "text": "an attaching letter's incoming connection depends on whether the declared preceding neighbor is itself capable of sending an outgoing connection (word start or a non-attaching predecessor both block it); its outgoing connection depends only on whether a following letter is declared present"
+    },
+    {
+      "id": "con-r4",
+      "text": "the hamza-bearing and bare variants of the alif member are one member of the non-attaching set; a hamza-bearing variant of a different letter is not folded into that letter's class without its own licensed row"
+    },
+    {
+      "id": "con-r5",
+      "text": "this table classifies one letter's joining behaviour only; a classification, and any run boundary it might suggest, is never promoted to a token, morpheme, root, entry, or sense boundary"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-orthographic-connectivity-classes",
+  "version": 1
+}

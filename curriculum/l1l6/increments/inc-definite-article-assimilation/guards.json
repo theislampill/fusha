@@ -1,0 +1,30 @@
+{
+  "guards": [
+    {
+      "guard": "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+      "id": "g-def-inventory"
+    },
+    {
+      "guard": "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+      "id": "g-def-observed-shadda"
+    },
+    {
+      "guard": "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+      "id": "g-def-moon-contradiction"
+    },
+    {
+      "guard": "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+      "id": "g-def-laam-owned"
+    },
+    {
+      "guard": "no declared article means out of regime; the table never activates on following-letter evidence alone",
+      "id": "g-def-no-article"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-def-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

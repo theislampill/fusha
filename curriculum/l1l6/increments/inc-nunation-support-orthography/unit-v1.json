@@ -1,0 +1,83 @@
+{
+  "abstention_reasons": [
+    "reject_reconstruction",
+    "article_and_nunation_contradiction",
+    "out_of_regime_non_a_form",
+    "unpointed_ending_evidence_insufficient"
+  ],
+  "capability": "licensing_table",
+  "encoding_limitation": "the registered licensing_table capability matches ONE compound construction key and can only emit reject_reconstruction for anything unmatched; the evidence-specific abstention reasons declared here are therefore DECLARED-BUT-UNREACHABLE pending a keyed-evidence capability — kept as the unit's honest abstention vocabulary, not as consumer behavior (audit finding, modeled on inc-hamza-carrier-licensing)",
+  "increment": "inc-nunation-support-orthography",
+  "licensing_table": [
+    {
+      "construction": "fathatan_on_ordinary_final_consonant",
+      "hidden": {
+        "type": "support_alif_written",
+        "value_class": "ordinary_final_consonant_requires_support"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "fathatan_on_taa_marbuta",
+      "hidden": {
+        "type": "support_alif_absent",
+        "value_class": "taa_marbuta_exempt_grapheme"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "fathatan_on_final_alif_maqsura",
+      "hidden": {
+        "type": "support_alif_absent",
+        "value_class": "alif_maqsura_exempt_grapheme"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "fathatan_on_hamza_seated_on_final_alif",
+      "hidden": {
+        "type": "support_alif_absent",
+        "value_class": "hamza_on_alif_seat_exempt_grapheme"
+      },
+      "obligatory": true
+    },
+    {
+      "construction": "fathatan_on_hamza_not_seated_on_alif",
+      "hidden": {
+        "type": "support_alif_written",
+        "value_class": "hamza_without_alif_seat_still_requires_support"
+      },
+      "obligatory": true
+    }
+  ],
+  "rules": [
+    {
+      "id": "nun-r1",
+      "text": "fathatan written directly on an ordinary final consonant is spelled with a following unpronounced support alif; the alif is orthographic only and carries no sound of its own"
+    },
+    {
+      "id": "nun-r2",
+      "text": "three exact final-grapheme environments block the support alif outright: a word already ending in the tied taa, a hamza already seated on an alif carrier, and the variant final a-spelling; in each the fathatan is carried directly with no added alif"
+    },
+    {
+      "id": "nun-r3",
+      "text": "a hamza that is NOT seated on an alif carrier does not qualify for the hamza exemption; it still takes the support alif like an ordinary consonant, so the exemption is keyed on the exact seat, never on hamza presence alone"
+    },
+    {
+      "id": "nun-r4",
+      "text": "nunation and the definite article are a written contradiction; a token declaring both is refused outright, never resolved by preferring one marker over the other"
+    },
+    {
+      "id": "nun-r5",
+      "text": "the support-alif rule concerns only the a-form of nunation; the u-form and i-form marks are never licensed constructions in this table, and an unpointed final ending supplies no tanwin evidence to decide on at all"
+    },
+    {
+      "id": "nun-r6",
+      "text": "this table decides written support-alif licensing from exact declared final-grapheme/mark evidence only; it never infers case, definiteness beyond the stated ban, governor, function, or contextual meaning"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-nunation-support-orthography",
+  "version": 1
+}

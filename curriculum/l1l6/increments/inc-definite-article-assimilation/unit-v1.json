@@ -1,0 +1,61 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "out_of_regime_no_article",
+    "sun_letter_shadda_unobserved",
+    "moon_letter_shadda_contradiction"
+  ],
+  "capability": "discriminator_table",
+  "encoding_limitation": "the registered discriminator_table capability can only emit insufficient_features (or preserve_alternatives) for anything unmatched; the evidence-specific abstention reasons declared here are therefore DECLARED-BUT-UNREACHABLE pending a keyed-evidence capability -- kept as the unit's honest abstention vocabulary, not as consumer behavior (audit finding, modeled on inc-hamza-carrier-licensing)",
+  "functions": [
+    {
+      "discriminators": {
+        "article_observed": ["yes"],
+        "following_letter": ["ت", "ث", "د", "ذ", "ر", "ز", "س", "ش", "ص", "ض", "ط", "ظ", "ل", "ن"],
+        "shadda_observed": ["yes"]
+      },
+      "id": "assimilation_completed",
+      "name": "sun letter with an observed shadda: assimilation completed"
+    },
+    {
+      "discriminators": {
+        "article_observed": ["yes"],
+        "following_letter": ["ء", "أ", "إ", "ب", "ج", "ح", "خ", "ع", "غ", "ف", "ق", "ك", "م", "ه", "و", "ي"],
+        "shadda_observed": ["no"]
+      },
+      "id": "non_assimilating_moon_letter",
+      "name": "moon letter: gemination is structurally excluded"
+    }
+  ],
+  "increment": "inc-definite-article-assimilation",
+  "rules": [
+    {
+      "id": "def-r1",
+      "text": "the closed sun-letter set (fourteen letters) and the closed moon-letter set (fourteen letters) partition the consonants that can follow the article; membership decides only whether assimilation is even possible, never whether it happened"
+    },
+    {
+      "id": "def-r2",
+      "text": "an assimilation-completed claim additionally requires an OBSERVED written shadda on the following letter; a sun-letter context with no observed shadda withholds the claim rather than assuming an unmarked text still assimilated"
+    },
+    {
+      "id": "def-r3",
+      "text": "a moon-letter context resolves as non-assimilating from membership alone, since gemination there is structurally excluded; an observed shadda on a moon letter contradicts the closed inventory and is refused, never explained away"
+    },
+    {
+      "id": "def-r4",
+      "text": "the article's written laam stays article-owned in every resolved outcome; assimilation is a pronunciation fact about that laam, never a re-attribution of it to the following consonant, and never evidence of a doubled root or a Form II stem"
+    },
+    {
+      "id": "def-r5",
+      "text": "no declared article evidence means the table is out of regime; it never activates on a bare following-letter observation alone"
+    },
+    {
+      "id": "def-r6",
+      "text": "the fourteen abstract moon letters include hamza as ONE abstract member, not bare alif; the discriminator's following_letter moon list enumerates the WRITTEN hamza seat spellings that actually occur after the article (ء، أ، إ) instead, since a bare, unseated ا never follows the article as hamza's spelling -- omitting those seat forms is a coverage gap, not a conservative abstention (F9)"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-definite-article-assimilation",
+  "version": 1
+}
