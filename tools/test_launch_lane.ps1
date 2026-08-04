@@ -67,7 +67,7 @@ try {
     [Text.UTF8Encoding]::new($false)
 )
 Write-Output '{"type":"result","subtype":"success","session_id":"test-session","model":"claude-sonnet-5"}'
-& cmd /c exit 0
+& git --version | Out-Null
 '@,
         [Text.UTF8Encoding]::new($false)
     )
