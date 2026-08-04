@@ -60,6 +60,8 @@ import tempfile
 import unicodedata
 from pathlib import Path
 
+import kc_catalog
+
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
@@ -1122,11 +1124,7 @@ def check_consumer_operationalization_bindings(ctx, errors):
         for row in _jsonl(path)
     ]
     runtime_ids = {row["id"] for row in runtime_rows}
-    kc_ids = {
-        row["kc_id"] for row in json.loads(
-            (ROOT / "curriculum" / "kc-catalog.json")
-            .read_text(encoding="utf-8"))
-    }
+    kc_ids = {row["kc_id"] for row in kc_catalog.load_kc_catalog(ROOT)}
     candidate_rows = {
         row["drill_id"]: row for row in ctx["drills"]
     }

@@ -52,6 +52,7 @@ import leak_sot  # the single source of truth for public-boundary leak detection
 _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _REPO)
 from tools import fusha_tutor_runtime as tutor_runtime  # noqa: E402  (the SAME grader a learner's answer runs through)
+from tools import kc_catalog  # noqa: E402
 
 # Same answer-key contract as curriculum/assessment (answer-key.schema.md / validate_curriculum_assessment).
 REQUIRED = {
@@ -92,11 +93,7 @@ ASSESSMENT_PROVENANCE_FIELDS = frozenset({
 
 
 def _kc_catalog(repo_root=_REPO):
-    path = os.path.join(repo_root, "curriculum", "kc-catalog.json")
-    if not os.path.exists(path):
-        return {}
-    with open(path, encoding="utf-8") as fh:
-        return {kc["kc_id"]: kc for kc in json.load(fh)}
+    return kc_catalog.load_kc_catalog_by_id(repo_root)
 
 
 def assessment_quarantine_violations(repo_root=_REPO):

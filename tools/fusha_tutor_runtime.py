@@ -46,6 +46,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _REPO)
+from tools import kc_catalog  # noqa: E402
 from tools import fusha_review_scheduler as SCHED  # noqa: E402
 from tools import leak_sot  # noqa: E402
 
@@ -499,6 +500,50 @@ def _authored_bank():
          "sarf_procedure": None, "nahw_procedure": "nahw/procedures/irab-case-mood.md",
          "remediation_route": "nahw/drills/dogfood-nahw-remediation.md", "two_vote_required": False},
     ]
+
+
+def _load_kc_catalog_by_id():
+    return kc_catalog.load_kc_catalog_by_id(_REPO)
+
+
+def _check_kc_gate_row(row, kc_by_id=None):
+    """CATALOG-GATE RULE: a kc_id-bearing drill-key row's required posture is decided by its OWN KC's
+    `default_gate` in curriculum/kc-catalog.json:
+      * default_gate == "auto_safe": the row may clear on content + reasoning alone (two_vote_required must be
+        false, and a full-content-correct answer must actually CLEAR + PROMOTE).
+      * default_gate != "auto_safe" (two_vote_required / human_source_review_required / never_auto_resolve, or a
+        dangling/missing kc_id): the row MUST set two_vote_required=true and stays pending/HELD even on a
+        full-content-correct answer with a DECLARED agreeing second_check.
+
+    Returns a list of failure strings (empty when the row conforms). Pure; no I/O beyond an optionally-supplied
+    catalog map."""
+    if kc_by_id is None:
+        kc_by_id = _load_kc_catalog_by_id()
+    kc = kc_by_id.get(row.get("kc_id"))
+    gate = kc.get("default_gate") if kc else None
+    failures = []
+    if gate == "auto_safe":
+        if row.get("two_vote_required"):
+            failures.append("auto_safe KC row %s (kc=%s) must NOT set two_vote_required=true" %
+                            (row["id"], row.get("kc_id")))
+            return failures
+        payload = {"answer": row["expected_answer"], "reasoning": list(row.get("required_reasoning") or [])}
+        r = step(row, None, payload, now_day=0)
+        if not r["grade"]["cleared"] or r["outcome"] != "promote":
+            failures.append("auto_safe KC row %s (kc=%s) should clear on content+reasoning, got %s / %s" %
+                            (row["id"], row.get("kc_id"), r["grade"], r["outcome"]))
+    else:
+        if not row.get("two_vote_required"):
+            failures.append("KC row %s (kc=%s, gate=%r) is not auto_safe, so it must be two_vote_required" %
+                            (row["id"], row.get("kc_id"), gate))
+            return failures
+        payload = {"answer": row["expected_answer"], "reasoning": list(row.get("required_reasoning") or []),
+                   "second_check": {"conclusion_agrees": True, "reason_agrees": True}}
+        r = step(row, None, payload, now_day=0)
+        if r["grade"]["cleared"] or r["grade"]["two_vote_status"] != "pending" or r["outcome"] != "hold":
+            failures.append("two_vote_required row %s cleared/promoted despite its KC's non-auto_safe gate, "
+                            "got %s / %s" % (row["id"], r["grade"], r["outcome"]))
+    return failures
 
 
 def _self_test():
