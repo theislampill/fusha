@@ -20,7 +20,8 @@ if hasattr(sys.stdout, "reconfigure"):
 _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _REPO)
 from tools import leak_sot  # noqa: E402
-from tools.fusha_check import IRAB_SENSITIVE_ISSUE_CLASSES, GATE_ALIAS, ISSUE_ROUTE  # noqa: E402
+from tools.fusha_check import IRAB_SENSITIVE_ISSUE_CLASSES, GATE_ALIAS, ISSUE_ROUTE, NAWASIKH_FAMILY_KC  # noqa: E402
+from tools import fusha_governor as GOV  # noqa: E402
 
 SCHEMA = "fusha/learner-feedback-event@1"
 KC_CATALOG_PATH = os.path.join(_REPO, "curriculum", "kc-catalog.json")
@@ -48,12 +49,29 @@ def issue_route_kc_coverage(by_class):
     return covered, uncovered
 
 
+_GENERIC_GOVERNOR_KC_ID = "kc-governor-justification"
+
+
 def load_kc_catalog(path=KC_CATALOG_PATH):
-    kcs = json.load(open(path, encoding="utf-8"))
+    with open(path, encoding="utf-8") as fh:
+        kcs = json.load(fh)
     by_class = {}
     for kc in kcs:
         for cls in kc.get("diagnostic_classes", []):
             by_class.setdefault(cls, kc)
+    # PIN (fail-closed): `possible_governor_unresolved` is the ARBITRARY-TEXT checker's generic issue class.
+    # It is deliberately shared by kc-governor-justification AND the five nawasikh family KCs (each family's
+    # own KC resolves it separately via NAWASIKH_FAMILY_KC / nawasikh_family_events, which never reads
+    # `by_class`). The plain `setdefault` loop above is catalog-FILE-ORDER dependent — a reordered or extended
+    # catalog could let a family KC "steal" the generic arbitrary-text mapping merely by appearing earlier in
+    # the file. Pin the generic mapping explicitly here so catalog order can never change it; fail closed
+    # (raise) if the generic KC is ever missing from the catalog, rather than silently falling through to
+    # whichever KC file order happened to pick.
+    generic_kc = next((kc for kc in kcs if kc.get("kc_id") == _GENERIC_GOVERNOR_KC_ID), None)
+    if generic_kc is None:
+        raise ValueError("%s missing from %s; possible_governor_unresolved cannot resolve"
+                         % (_GENERIC_GOVERNOR_KC_ID, path))
+    by_class["possible_governor_unresolved"] = generic_kc
     return kcs, by_class
 
 
@@ -133,6 +151,32 @@ def build_events(diagnostics, by_class, decision_status="pending"):
 
 
 # ---------------------------------------------------------------------------
+# TRAIN-B/C L2.M2 nawāsikh diagnostic export — the bounded adapter's feedback-path end.
+# ---------------------------------------------------------------------------
+def nawasikh_family_events(unit, kcs=None):
+    """Adapt one CheckUnit's governor lattice into learner-feedback events for the five genuinely-emitted
+    nawāsikh families (`tools.fusha_governor.nawasikh_pending_diagnostics`).
+
+    Reuses `to_feedback_event` UNCHANGED for the hint-ladder/gate/bottom-out-withholding logic — the only new
+    behaviour here is resolving each diagnostic's `family` to ITS OWN KC (`fusha_check.NAWASIKH_FAMILY_KC`)
+    instead of the single generic `possible_governor_unresolved` KC (`kc-governor-justification`) the arbitrary
+    checker's `by_class` dict would otherwise return. A diagnostic whose family has no registered KC (inna-family
+    modal force) is skipped — never routed through a substitute KC. `kcs`, when given, is a pre-loaded
+    `(kcs_list, by_class)` pair from `load_kc_catalog()`; a fresh load is used when omitted."""
+    _kcs, _by_class = kcs if kcs is not None else load_kc_catalog()
+    kc_by_id = {kc["kc_id"]: kc for kc in _kcs}
+    out = []
+    for diag in GOV.nawasikh_pending_diagnostics(unit):
+        kc_id = NAWASIKH_FAMILY_KC.get(diag["family"])
+        if kc_id is None or kc_id not in kc_by_id:
+            continue
+        ev = to_feedback_event(diag, {diag["issue_class"]: kc_by_id[kc_id]}, decision_status=diag["decision_status"])
+        if ev is not None:
+            out.append(ev)
+    return out
+
+
+# ---------------------------------------------------------------------------
 # self-test
 # ---------------------------------------------------------------------------
 def _self_test():
@@ -187,11 +231,71 @@ def _self_test():
                 failures.append("%s: bottom_out present alongside non-empty examples (side-channel leak)" % raw)
     if not saw_examples:
         failures.append("RED-12: no fixture produced a non-empty examples[] (curriculum_error_examples not wired)")
+
+    # NAWASIKH-ADAPTER: each of the five genuinely-emitted families reaches its OWN KC, never the generic
+    # kc-governor-justification, never resolved, never a bottom-out.
+    _naw_units = {
+        "kana_laysa_government": {"input_mode": "arbitrary_typing", "frame_kind": "constructed",
+                                  "construction_family": "nawasikh", "source_unit": {"address": "", "scope": "arbitrary"},
+                                  "tokens": [{"ref": "tok:0", "surface": "x"}],
+                                  "features": {"ism_marking": "raf3", "khabar_marking": "nasb", "regime": "kana_family"}},
+        "inna_family_government": {"input_mode": "arbitrary_typing", "frame_kind": "constructed",
+                                   "construction_family": "nawasikh", "source_unit": {"address": "", "scope": "arbitrary"},
+                                   "tokens": [{"ref": "tok:0", "surface": "x"}],
+                                   "features": {"ism_marking": "raf3", "khabar_marking": "nasb", "regime": "inna_family"}},
+        "continuative_licensing": {"input_mode": "arbitrary_typing", "frame_kind": "constructed",
+                                   "construction_family": "nawasikh", "source_unit": {"address": "", "scope": "arbitrary"},
+                                   "tokens": [{"ref": "tok:0", "surface": "x"}],
+                                   "features": {"polarity_licenser": "absent", "regime": "kana_family_polarity_licensed"}},
+        "qalb_verb_transitivity": {"input_mode": "arbitrary_typing", "frame_kind": "constructed",
+                                   "construction_family": "nawasikh", "source_unit": {"address": "", "scope": "arbitrary"},
+                                   "tokens": [{"ref": "tok:0", "surface": "x"}],
+                                   "features": {"regime": "zanna_family", "sense": "literal_perception"}},
+        "stacked_governor_scope": {"input_mode": "arbitrary_typing", "frame_kind": "constructed",
+                                   "construction_family": "nawasikh", "source_unit": {"address": "", "scope": "arbitrary"},
+                                   "tokens": [{"ref": "tok:0", "surface": "x"}],
+                                   "features": {"abrogator_count": 2, "bracketing": "ambiguous"}},
+    }
+    for family, unit in _naw_units.items():
+        evs = nawasikh_family_events(unit, kcs=(_kcs, by_class))
+        if not evs:
+            failures.append("nawasikh-adapter %s: no event produced" % family)
+            continue
+        for ev in evs:
+            if ev["knowledge_component"] != NAWASIKH_FAMILY_KC[family]:
+                failures.append("nawasikh-adapter %s: routed to KC %r, expected %r"
+                                % (family, ev["knowledge_component"], NAWASIKH_FAMILY_KC[family]))
+            if ev["knowledge_component"] == "kc-governor-justification":
+                failures.append("nawasikh-adapter %s: fell back to the generic KC instead of its own" % family)
+            if ev["bottom_out_hint"] is not None:
+                failures.append("nawasikh-adapter %s: bottom_out must never be given (candidate lattice, never a fact)" % family)
+            if ev["decision_status"] != "pending":
+                failures.append("nawasikh-adapter %s: decision_status must stay pending" % family)
+            errs = _validate_nawasikh_event_shape(ev)
+            if errs:
+                failures.append("nawasikh-adapter %s: %s" % (family, errs))
+    # inna-family MODAL FORCE has no KC: an unclassified/unmapped family must be skipped, never substituted.
+    if "inna_modal_force" in NAWASIKH_FAMILY_KC:
+        failures.append("nawasikh-adapter: inna_modal_force must NOT be registered (no genuinely emitted class)")
+
     for f in failures:
         print("FAIL " + f)
     if not failures:
-        print("ok   fusha_learner_feedback self-test: Point->Teach->Bottom-out; bottom-out withheld past the gate; cause-referencing; routes resolve; source-clean")
+        print("ok   fusha_learner_feedback self-test: Point->Teach->Bottom-out; bottom-out withheld past the gate; cause-referencing; routes resolve; source-clean; nawāsikh five-family export routes to its own KC, never the generic one, never a bottom-out")
     return 0 if not failures else 1
+
+
+def _validate_nawasikh_event_shape(ev):
+    """Minimal inline shape check (kept dependency-free of validate_learner_feedback here): an event's gate is
+    off the auto_safe tier and its route resolves on disk. Full schema conformance is asserted by
+    tools/validate_learner_feedback.py's own self-test, which this module does not import (would cycle)."""
+    gate = (ev.get("when_not_to_give_answer") or {}).get("gate")
+    if gate not in ("two_vote_required", "human_source_review_required", "never_auto_resolve"):
+        return "gate %r must never be auto_safe" % gate
+    proc = (ev.get("when_not_to_give_answer") or {}).get("route_to", {}).get("procedure")
+    if proc and not os.path.exists(os.path.join(_REPO, proc)):
+        return "route_to.procedure %r does not resolve on disk" % proc
+    return None
 
 
 def emit_fixture(path):

@@ -36,7 +36,7 @@
     "explicit_lesson_refs": 16
   },
   "lessons_fully_accounted": 226,
-  "lessons_indirectly_linked_to_runtime_tutor_drills": 27,
+  "lessons_indirectly_linked_to_runtime_tutor_drills": 33,
   "lessons_mapped_to_nahw": 175,
   "lessons_mapped_to_sarf": 213,
   "lessons_mapped_to_tutor_drills": 0,
@@ -46,20 +46,25 @@
   "lessons_with_no_corpus_bridge": 1,
   "ordinary_tutor_runtime": {
     "binding_note": "runtime behavior is proven only for the committed drill-key rows; lesson linkage is indirect via KC curriculum_misconception_ids and misconception manifestations; related_units do not establish a runtime canonical-unit binding",
-    "drill_key_rows": 14,
+    "drill_key_rows": 37,
     "emittable_kc_ids": [
       "kc-clitic-segmentation",
       "kc-derivative-shape-hidden",
       "kc-masdar-template-not-uniform",
+      "kc-nawasikh-continuative-licensing",
+      "kc-nawasikh-inna-family-government",
+      "kc-nawasikh-kana-laysa-government",
+      "kc-nawasikh-qalb-verb-transitivity",
+      "kc-nawasikh-stacked-governor-scope",
       "kc-number-suffix-hidden",
       "kc-particle-function",
       "kc-root-template-slot-classification",
       "kc-suffix-pronoun-missing"
     ],
-    "emittable_knowledge_components": 7,
+    "emittable_knowledge_components": 12,
     "explicit_canonical_unit_bindings": 0,
     "explicit_lesson_bindings": 0,
-    "indirectly_linked_lessons": 27,
+    "indirectly_linked_lessons": 33,
     "lesson_content_operationalized": false
   },
   "other_train_l1l6_linkage": {
@@ -88,7 +93,7 @@
   },
   "schema": "curriculum.l1l6_full_readiness.v1",
   "semantic_units_authored": 21,
-  "separation_note": "lesson METADATA coverage is 226/226; semantic KNOWLEDGE coverage is the claims+units numbers; CAPABILITY fixture-harness coverage is candidate evidence; ordinary tutor CONSUMER coverage is 14 runtime key rows across 7 emittable KCs with 27 indirect lesson links and 0 explicit canonical-unit bindings; the 834 candidate drill packets remain runtime_integrated=0; OCCURRENCE coverage is the exact-link lessons — these denominators are never merged",
+  "separation_note": "lesson METADATA coverage is 226/226; semantic KNOWLEDGE coverage is the claims+units numbers; CAPABILITY fixture-harness coverage is candidate evidence; ordinary tutor CONSUMER coverage is 37 runtime key rows across 12 emittable KCs with 33 indirect lesson links and 0 explicit canonical-unit bindings; the 834 candidate drill packets remain runtime_integrated=0; OCCURRENCE coverage is the exact-link lessons — these denominators are never merged",
   "source_lessons": 226,
   "state_histogram": {
     "candidate_fixture_harness_exercised": 8,

@@ -3486,8 +3486,13 @@ try:
                      os.path.join(ROOT, "curriculum", "drills", "keys", "hover-composition-and-routing.keys.jsonl"),
                      os.path.join(ROOT, "curriculum", "drills", "keys", "parse-key-and-color-layer.keys.jsonl"),
                      os.path.join(ROOT, "curriculum", "drills", "keys", "vn00-aggressive-hover-closure.keys.jsonl"),
-                     os.path.join(ROOT, "curriculum", "drills", "keys", "plan15-route-families.keys.jsonl")])
+                     os.path.join(ROOT, "curriculum", "drills", "keys", "plan15-route-families.keys.jsonl"),
+                     os.path.join(ROOT, "curriculum", "drills", "keys", "nawasikh-governor-families.keys.jsonl")])
     check("P1-4 drill answer-key fixtures validate (0 violations)", _q2b.returncode == 0)
+    _q2c = run_text([sys.executable, os.path.join(ROOT, "tools", "test_nawasikh_diagnostic_export.py")])
+    check("P1-4 nawāsikh diagnostic export hostile fixtures pass", _q2c.returncode == 0)
+    _q2d = run_text([sys.executable, os.path.join(ROOT, "tools", "test_nawasikh_tutor_batch.py")])
+    check("P1-4 nawāsikh runtime drill and remediation batch passes", _q2d.returncode == 0)
     _q3 = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_eval_coverage.py"), "--self-test"])
     check("P1-5 eval-bank coverage reporter self-test (per-bank counts; runner-gap; report-only)", _q3.returncode == 0)
     _q3b = run_text([sys.executable, os.path.join(ROOT, "tools", "fusha_eval_coverage.py")])
