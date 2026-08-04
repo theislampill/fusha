@@ -312,6 +312,36 @@ class F1CombiningMarkInventoryTests(unittest.TestCase):
             self.assertEqual(O.connectivity_class(ch), "dual_joining", ch)
 
 
+class R4AbstainingConnectivityLettersTests(unittest.TestCase):
+    """R4: the curriculum pack (inc-orthographic-connectivity-classes, con-adv-01..03) explicitly
+    abstains on ة/ى/ؤ pending a source-backed closed inventory, because each merely visually
+    RESEMBLES an already-classified letter (ه, ا, و respectively) rather than being licensed into
+    that class. The code must not assert them as right_joining: it must fail closed to 'unknown',
+    matching the pack's own abstention posture, never guessed by resemblance."""
+
+    def test_ta_marbuta_is_unknown_not_right_joining(self):
+        self.assertEqual(O.connectivity_class("ة"), "unknown")
+
+    def test_alif_maqsura_is_unknown_not_right_joining(self):
+        self.assertEqual(O.connectivity_class("ى"), "unknown")
+
+    def test_hamza_on_waw_is_unknown_not_right_joining(self):
+        self.assertEqual(O.connectivity_class("ؤ"), "unknown")
+
+    def test_licensed_alif_variants_remain_right_joining(self):
+        # only the licensed alif family (con-r4) stays right_joining; ى is a resemblance, not a
+        # licensed member of it.
+        for ch in "اآأإٱ":
+            self.assertEqual(O.connectivity_class(ch), "right_joining", ch)
+
+    def test_abstaining_letters_never_silently_end_a_visual_run(self):
+        for ch, hosted in (("ة", "مَدْرَسَة"), ("ى", "مُوسَى"), ("ؤ", "مُؤْمِن")):
+            runs = O.visual_runs(hosted)
+            all_indices = [i for run in runs for i in run["cluster_indices"]]
+            self.assertEqual(sorted(all_indices), list(range(len(O.grapheme_clusters(hosted)))),
+                             "abstaining letter %r must not corrupt run coverage" % ch)
+
+
 class F2TanwinBeforeAlifMaqsuraTests(unittest.TestCase):
     """F2: a physically written fatḥatān immediately before a bare alif maqṣūra (هُدًى، فَتًى،
     مُصَلًّى) must be observed as tanwīn WITHOUT claiming a support alif -- ى is the direct

@@ -80,12 +80,18 @@ def written_surface(surface):
 # Right-joining letters connect to the PREVIOUS letter but never to the NEXT one, so a visual
 # run ends right after them even mid-word (e.g. the ا/د/ر/و family). This is purely a rendering
 # fact about the Arabic joining script; it must never be read back as a segmentation boundary.
-_RIGHT_JOINING = set("اآأإٱؤدذرزوىة")
+# ة (tāʾ marbūṭa), ى (alif maqṣūra) and ؤ (hamza on wāw) are DELIBERATELY excluded: the
+# curriculum pack (inc-orthographic-connectivity-classes) explicitly abstains on all three
+# pending a source-backed closed inventory (con-adv-01..03) rather than assuming they join like
+# the visually-resembled letters ه/ا/و -- resemblance is not membership (R4). Do not add them
+# back without that same source-backed authority.
+_RIGHT_JOINING = set("اآأإٱدذرزو")
 _NON_JOINING = set("ء")  # an isolated hamza joins neither side
 # The closed set of base letters that join BOTH neighbours -- the remainder of the 28-letter
 # Arabic alphabet plus ئ (hamza on yāʾ, which joins like yāʾ). Anything NOT in this closed
 # inventory (nor combining/non-joining/right-joining above) is out-of-inventory and must fail
-# closed rather than default to dual_joining (F1).
+# closed rather than default to dual_joining (F1). ة، ى، ؤ fall through to 'unknown' here on
+# purpose (see _RIGHT_JOINING above), never guessed as dual_joining either.
 _DUAL_JOINING = set("بتثجحخسشصضطظعغفقكلمنهيئ")
 
 

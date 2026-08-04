@@ -20,7 +20,7 @@
     {
       "discriminators": {
         "article_observed": ["yes"],
-        "following_letter": ["ا", "ء", "أ", "إ", "ب", "ج", "ح", "خ", "ع", "غ", "ف", "ق", "ك", "م", "ه", "و", "ي"],
+        "following_letter": ["ء", "أ", "إ", "ب", "ج", "ح", "خ", "ع", "غ", "ف", "ق", "ك", "م", "ه", "و", "ي"],
         "shadda_observed": ["no"]
       },
       "id": "non_assimilating_moon_letter",
@@ -48,6 +48,10 @@
     {
       "id": "def-r5",
       "text": "no declared article evidence means the table is out of regime; it never activates on a bare following-letter observation alone"
+    },
+    {
+      "id": "def-r6",
+      "text": "the fourteen abstract moon letters include hamza as ONE abstract member, not bare alif; the discriminator's following_letter moon list enumerates the WRITTEN hamza seat spellings that actually occur after the article (ء، أ، إ) instead, since a bare, unseated ا never follows the article as hamza's spelling -- omitting those seat forms is a coverage gap, not a conservative abstention (F9)"
     }
   ],
   "schema": "curriculum.l1l6_machine_unit.v1",

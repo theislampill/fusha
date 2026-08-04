@@ -505,12 +505,14 @@ def _visible_morphology_expected_roles(vm):
 
 
 def _declared_allowed_replacements(row, rec_cands):
-    """Split replacement strings a reject_-decision row may still legally expose, derived from
-    the row's own declared `visible_morphology` role skeleton -- never from which candidate the
-    engine under audit happens to rank first, and never from replacement-string equality alone
-    (two structurally different segmentations, e.g. preposition+pronoun vs. noun+pronoun, can
-    share the identical surface substrings while disagreeing on role). Returns None when the row
-    carries no declared ground truth, so the caller keeps its legacy rank-based fallback."""
+    """Split replacement strings a reject_-decision row may still legally expose, derived ONLY
+    from the row's own declared `visible_morphology` role skeleton -- never from which candidate
+    the engine under audit happens to rank first (F5). Returns None when the row carries no
+    declared ground truth; the caller then fails CLOSED (no replacement is ever allowed), because
+    a bare replacement-string equality check cannot be trusted either: two structurally different
+    segmentations (e.g. a preposition+pronoun reading and a rejected noun+possessive reading, such
+    as لَهُ / فِيهِ) can share the identical surface substrings while disagreeing on role, so text
+    equality alone would let the wrong reading ride along with the right one."""
     vm = row.get("visible_morphology")
     if not vm:
         return None
@@ -530,10 +532,14 @@ def adapter_clitic_split_guard(rows, spec, ctx, root):
 
     The bank's job is that a look-alike clitic never becomes an asserted split. The consumer's job is to KEEP the
     whole-token reading, never auto_safe an arbitrary token, never peel a tanwīn-alif as the pronoun نا, and never
-    promote a rejected split to an editable `split` suggestion. A distinct,
-    top-ranked legal segmentation (for example the real article in
-    ``ٱلْمُلْكُ``) remains reviewable; the bank quarantines the rejected
-    look-alike split, not every valid segmentation of the same token.
+    promote a rejected split to an editable `split` suggestion. A distinct, ROLE-DECLARED legal segmentation (for
+    example the real article in ``ٱلْمُلْكُ``, declared via the row's own `visible_morphology`) remains
+    reviewable; the bank quarantines the rejected look-alike split, not every valid segmentation of the same
+    token. A reject_-decision row with NO declared `visible_morphology` ground truth fails CLOSED: it is never
+    allowed to expose ANY split suggestion, because the audited engine's own ranking is not trustworthy ground
+    truth (F5), and replacement-string equality alone cannot disambiguate two same-text, different-role readings
+    (F5 residual: e.g. لَهُ / فِيهِ, where a preposition+pronoun reading and a rejected noun+possessive reading
+    are byte-identical splits).
     """
     fails, reject_rows, tanwin_rows, splits_blocked, decided = [], 0, 0, 0, 0
     props = _Props()
@@ -578,26 +584,11 @@ def adapter_clitic_split_guard(rows, spec, ctx, root):
             props.hit(rid, _CHK, "rejected_split_quarantined")
             token = (rec.get("analysis_tokens") or [{}])[0]
             rec_cands = token.get("segment_candidates") or []
-            top_morphs = [
-                c for c in (token.get("morphology_candidates") or [])
-                if c.get("rank") == 1
-            ]
-            allowed_replacements = _declared_allowed_replacements(row, rec_cands)
-            if allowed_replacements is None:
-                # legacy rows with no declared visible_morphology ground truth: fall back to the
-                # established rank-1 check (a distinct, top-ranked legal segmentation such as the
-                # real article in ٱلْمُلْكُ stays reviewable even though the row rejects a
-                # different, look-alike split of the same surface).
-                allowed_replacements = set()
-                for morph in top_morphs:
-                    ref = morph.get("segment_candidate_ref")
-                    if not isinstance(ref, int) or ref < 0 or ref >= len(rec_cands):
-                        continue
-                    candidate = rec_cands[ref]
-                    segments = candidate.get("segments") or []
-                    if len(segments) < 2 or not candidate.get("legal", True):
-                        continue
-                    allowed_replacements.add(" ".join(s.get("surface", "") for s in segments))
+            declared = _declared_allowed_replacements(row, rec_cands)
+            # F5: NO trust-the-engine fallback. A row with no declared `visible_morphology` ground
+            # truth fails CLOSED -- an empty allowed set, so every split suggestion for it is unsafe,
+            # regardless of what the audited engine itself ranks first.
+            allowed_replacements = declared if declared is not None else set()
             split_suggestions = [
                 s for s in (rec.get("suggestions") or [])
                 if (s.get("edit") or {}).get("op") == "split"

@@ -1092,6 +1092,20 @@ TRANCHE_EXPECTED_BINDING_IDS = {
 }
 # test_paths must name an actual test file, never a production/consumer module (F8).
 _TEST_PATH_BASENAME_RE = re.compile(r"^test_.*\.py$")
+# F8 residual: the basename check above proves nothing about CONTENT -- a production module could
+# simply be renamed test_fake.py. Require real test structure: a unittest.TestCase, at least one
+# `def test_` method, or one of this repo's own existing non-unittest self-test entrypoints (several
+# tools here ship a red-first `_self_test()`/`self_test()` function or a `--self-test` CLI flag
+# instead of a unittest.TestCase; both count, since both are genuine, already-used test-runner
+# entrypoints -- but a bare renamed production file matches neither).
+_TEST_CONTENT_RE = re.compile(
+    r"unittest\.TestCase|^\s*def\s+test_\w|def\s+_?self_test\s*\(|--self-test", re.MULTILINE)
+
+
+def _test_path_has_real_test_structure(text):
+    """True when `text` (a candidate test_paths file's source) shows real test structure. Never
+    derived from the filename alone (F8) -- a file merely NAMED like a test must fail this."""
+    return bool(_TEST_CONTENT_RE.search(text or ""))
 
 
 def check_consumer_operationalization_bindings(ctx, errors):
@@ -1187,6 +1201,19 @@ def check_consumer_operationalization_bindings(ctx, errors):
                         "consumer_bindings: %s test_paths entry %s is not a test file "
                         "(a production/consumer module cannot be counted as a test)" %
                         (binding_id, path))
+                    continue
+                full = ROOT / path
+                if full.exists() and full.is_file():
+                    try:
+                        text = full.read_text(encoding="utf-8")
+                    except (UnicodeDecodeError, OSError):
+                        text = ""
+                    if not _test_path_has_real_test_structure(text):
+                        errors.append(
+                            "consumer_bindings: %s test_paths entry %s is named like a test but "
+                            "has no real test structure (no unittest.TestCase, def test_, or "
+                            "self-test entrypoint) -- a production file merely renamed cannot be "
+                            "counted as a test" % (binding_id, path))
         elif status == "pending_authoring":
             if contribution != "pending_authoring":
                 errors.append("consumer_bindings: %s pending status mismatch" %
@@ -2036,6 +2063,45 @@ def self_test():
                            test_paths=list(next(r for r in c["consumer_bindings"]
                                                  if r["consumer_train"] == "tranche_001a")["test_paths"])
                            + ["tools/curriculum_unit_consumer.py"]))
+    # F8 hostile probe (round-trip: no fake file is ever committed, the real file's bytes are
+    # restored in a `finally` before this function returns): a production module RENAMED to a
+    # test_*.py basename must still pass the cheap name check, so the check must catch it on
+    # CONTENT instead. Temporarily overwrite the real file tools/test_paths already cites
+    # (tools/test_fusha_orthography.py) with production-shaped source carrying no test structure,
+    # run the real check against it, then restore the original bytes.
+    p_t = ROOT / "tools" / "test_fusha_orthography.py"
+    if p_t.exists():
+        raw_t = p_t.read_bytes()
+        try:
+            p_t.write_bytes(
+                b"#!/usr/bin/env python3\n"
+                b"def compute_something(x):\n"
+                b"    return x + 1\n"
+            )
+            errs5 = []
+            check_consumer_operationalization_bindings(copy.deepcopy(base), errs5)
+        finally:
+            p_t.write_bytes(raw_t)
+        ok5 = any("has no real test structure" in e for e in errs5)
+        mutations.append(("test_path_named_test_but_no_test_structure", ok5))
+        if not ok5:
+            print("  test_path_named_test_but_no_test_structure did NOT trip on a production "
+                  "file merely renamed to a test_*.py basename; errors=%r" % errs5[:3])
+    # In-memory probe on the content-check helper itself, independent of any real file: a genuine
+    # unittest.TestCase and this repo's own non-unittest self-test entrypoints must both still be
+    # accepted (the content check must not become so strict it rejects real, already-used test
+    # styles), while renamed production source is rejected.
+    ok6 = (
+        not _test_path_has_real_test_structure(
+            "#!/usr/bin/env python3\ndef compute_something(x):\n    return x + 1\n")
+        and _test_path_has_real_test_structure(
+            "import unittest\nclass T(unittest.TestCase):\n    def test_ok(self):\n        pass\n")
+        and _test_path_has_real_test_structure("def _self_test():\n    return 0\n")
+    )
+    mutations.append(("test_path_content_helper_accepts_real_rejects_renamed", ok6))
+    if not ok6:
+        print("  test_path_content_helper_accepts_real_rejects_renamed: helper misclassified "
+              "at least one of the renamed-production/unittest/self-test probes")
     # Sol witness canaries: a context-only appearance injected as a witness
     # must trip the same-entry/selected re-verification gate (file-level
     # mutation: checked via a temp-modified copy of the grounding rows)
