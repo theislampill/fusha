@@ -1978,7 +1978,7 @@ def self_test():
     mut("consumer_binding_tutor_row_missing_runtime_evidence", "runtime_item_ids AND knowledge_component_ids",
         lambda c: next(r for r in c["consumer_bindings"]
                        if r["consumer_plane"] == "tutor_runtime").update(runtime_item_ids=[]))
-    mut("consumer_binding_analytical_row_claims_runtime_evidence", "neither runtime_item_ids nor",
+    mut("consumer_binding_analytical_row_claims_runtime_evidence", "must carry no tutor runtime evidence",
         lambda c: next(r for r in c["consumer_bindings"]
                        if r["consumer_plane"] == "nahw_analytical").update(
                            knowledge_component_ids=["kc-attributive-follower-licensing"]))

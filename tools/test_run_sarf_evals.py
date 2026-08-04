@@ -291,6 +291,29 @@ class PassThroughAndTargetedMutation(unittest.TestCase):
         self.assertTrue(all(f.startswith(target["id"] + " ") for f in failures), failures[:3])
         self.assertTrue(any("[no_split_suggestion]" in f for f in failures), failures[:3])
 
+    def test_false_clitic_bank_allows_only_top_backed_article_split(self):
+        """The real article split is not the rejected final-kāf pronoun split."""
+        bank = "sarf/evals/false-clitic-split-eval.jsonl"
+        rows = _rows(bank)
+        row = next(r for r in rows if r["id"] == "FCS-001")
+        ctx = _ctx()
+        failures, _ = _run(bank, [row], ctx)
+        self.assertEqual([], failures)
+
+        real = ctx.check_text
+
+        def false_suffix_escape(req):
+            rec = copy.deepcopy(real(req))
+            rec["suggestions"].append({
+                "edit": {"op": "split", "replacement": "ٱلْ مُلْ كُ"},
+                "gate": "two_vote_required",
+            })
+            return rec
+
+        ctx.check_text = false_suffix_escape
+        failures, _ = _run(bank, [row], ctx)
+        self.assertTrue(any("[rejected_split_quarantined]" in f for f in failures), failures)
+
     def test_one_wrong_byte_exact_result_fails_with_exact_row_and_property(self):
         bank = "sarf/evals/combining-mark-byte-exact-eval.jsonl"
         rows = _rows(bank)

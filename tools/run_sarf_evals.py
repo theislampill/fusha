@@ -484,7 +484,10 @@ def adapter_clitic_split_guard(rows, spec, ctx, root):
 
     The bank's job is that a look-alike clitic never becomes an asserted split. The consumer's job is to KEEP the
     whole-token reading, never auto_safe an arbitrary token, never peel a tanwīn-alif as the pronoun نا, and never
-    promote a rejected split to an editable `split` suggestion.
+    promote a rejected split to an editable `split` suggestion. A distinct,
+    top-ranked legal segmentation (for example the real article in
+    ``ٱلْمُلْكُ``) remains reviewable; the bank quarantines the rejected
+    look-alike split, not every valid segmentation of the same token.
     """
     fails, reject_rows, tanwin_rows, splits_blocked, decided = [], 0, 0, 0, 0
     props = _Props()
@@ -527,7 +530,31 @@ def adapter_clitic_split_guard(rows, spec, ctx, root):
             reject_rows += 1
             rec = ctx.check_text({"input_mode": "arbitrary_typing", "raw_input": surface})
             props.hit(rid, _CHK, "rejected_split_quarantined")
-            if any((s.get("edit") or {}).get("op") == "split" for s in rec.get("suggestions") or []):
+            token = (rec.get("analysis_tokens") or [{}])[0]
+            rec_cands = token.get("segment_candidates") or []
+            top_morphs = [
+                c for c in (token.get("morphology_candidates") or [])
+                if c.get("rank") == 1
+            ]
+            allowed_replacements = set()
+            for morph in top_morphs:
+                ref = morph.get("segment_candidate_ref")
+                if not isinstance(ref, int) or ref < 0 or ref >= len(rec_cands):
+                    continue
+                candidate = rec_cands[ref]
+                segments = candidate.get("segments") or []
+                if len(segments) < 2 or not candidate.get("legal", True):
+                    continue
+                allowed_replacements.add(" ".join(s.get("surface", "") for s in segments))
+            split_suggestions = [
+                s for s in (rec.get("suggestions") or [])
+                if (s.get("edit") or {}).get("op") == "split"
+            ]
+            unsafe_splits = [
+                s for s in split_suggestions
+                if (s.get("edit") or {}).get("replacement") not in allowed_replacements
+            ]
+            if unsafe_splits:
                 fails.append(_f(rid, "rejected_split_quarantined",
                                 "a rejected split escaped as an editable split suggestion"))
             else:

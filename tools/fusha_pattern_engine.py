@@ -373,7 +373,18 @@ def build_morphology(surface, segment_candidates, lexicon=None, db="smoke"):
             "rank": 0,
             "segment_candidate_ref": i,
         })
-    cands.sort(key=lambda c: (-c.get("score", 0), c.get("segment_candidate_ref", 0)))
+    # On an equal evidence score, put the candidate carrying the stricter
+    # source-declared Naḥw review obligation first. Downstream gates and
+    # validators inspect the top candidate; a safer shape-only rival must not
+    # hide an equally scored source risk merely because its segmentation ref
+    # sorts earlier.
+    cands.sort(key=lambda c: (
+        -c.get("score", 0),
+        0 if "requires_nahw_function" in set(
+            (c.get("features") or {}).get("source_risk_flags") or []
+        ) else 1,
+        c.get("segment_candidate_ref", 0),
+    ))
     for idx, cand in enumerate(cands, 1):
         cand["rank"] = idx
     return cands
