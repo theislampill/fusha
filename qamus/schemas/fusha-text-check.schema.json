@@ -271,7 +271,7 @@
         "gate": { "type": "string", "enum": ["auto_safe", "two_vote_required", "human_source_review_required", "never_auto_resolve"] },
         "safe_to_show_inline": { "type": "boolean" },
         "needs_review": { "type": "boolean" },
-        "reject_reason": { "type": ["string", "null"], "enum": ["ambiguous_unvoweled", "needs_context", "governor_not_justified", "nms_suppressed_conflict", "below_threshold", "verdict_blocks", "leak_tripwire", null] },
+        "reject_reason": { "type": ["string", "null"], "enum": ["ambiguous_unvoweled", "needs_context", "governor_not_justified", "lexical_collision_requires_context", "nms_suppressed_conflict", "below_threshold", "verdict_blocks", "leak_tripwire", null] },
         "nms_group": { "type": ["string", "null"], "description": "Shared id for an overlapping suggestion group resolved by NMS (the loser also points at a C10 conflict)." },
         "learner_level_min": { "type": ["string", "null"], "enum": ["pre_A1", "A1", "A2", "B1", "B2", "C1", "C2", null] },
         "learner_level_max": { "type": ["string", "null"], "enum": ["pre_A1", "A1", "A2", "B1", "B2", "C1", "C2", null] },

@@ -123,6 +123,12 @@ def _validate_collision_fixtures(errors: list[str]) -> None:
             ids = collision.get("competing_entry_ids") or []
             if len(ids) < required["require_competitor_entry_ids_min"]:
                 errors.append(f"{fixture_id}: expected >= {required['require_competitor_entry_ids_min']} competing_entry_ids, got {len(ids)}")
+        if "require_candidate_refs_min" in required:
+            refs = collision.get("candidate_refs") or []
+            if len(refs) < required["require_candidate_refs_min"]:
+                errors.append(f"{fixture_id}: expected >= {required['require_candidate_refs_min']} candidate_refs, got {len(refs)}")
+        if required.get("forbid_selected_preview") and token.get("selected_preview") is not None:
+            errors.append(f"{fixture_id}: selected_preview must be cleared, got {token.get('selected_preview')!r}")
         for key, value in (required.get("require_features") or {}).items():
             if features.get(key) != value:
                 errors.append(f"{fixture_id}: expected features.{key} == {value!r}, got {features.get(key)!r}")

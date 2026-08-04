@@ -31,6 +31,70 @@ _COLLISION_REGISTRY_PATH = os.path.join(_REPO, "fusha", "parser", "collision-cla
 with open(_COLLISION_REGISTRY_PATH, encoding="utf-8") as _cr_fh:
     _COLLISION_REGISTRY = json.load(_cr_fh)
 HIGH_RISK_BARE_MATCH_SURFACES = set(_COLLISION_REGISTRY.get("high_risk_bare_match_surfaces") or [])
+# I8 (partial): the registry is authoritative for a fired class's gate cap, route,
+# and lattice tie-break order; the code below still decides WHETHER a class fires
+# (trigger predicates stay reviewed code), it just stops hand-duplicating the
+# literals the registry already names. `class_id` is the lookup key throughout.
+_CLASS_BY_ID = {c["class_id"]: c for c in _COLLISION_REGISTRY.get("classes") or []}
+
+
+class RegistryAuthorityError(RuntimeError):
+    """A fired collision class's gate cap/route/filter_order must come from
+    fusha/parser/collision-classes.json; there is no hardcoded historical
+    fallback (Train E finding 2). A missing entry, or one missing a required
+    field, for a class that just fired is a registry/code drift bug and must
+    fail closed -- never silently recreate a shadow authority by reusing a
+    superseded literal."""
+
+
+def _registry_entry_or_raise(class_id):
+    entry = _CLASS_BY_ID.get(class_id)
+    if entry is None:
+        raise RegistryAuthorityError(
+            "collision class %r fired but has no entry in fusha/parser/collision-classes.json; "
+            "the registry is the sole authority for gate cap/route/order, there is no fallback" % class_id
+        )
+    return entry
+
+
+def _registry_vote(class_id):
+    """(gate_rank, cap, filter_order) for a fired class, sourced from the registry.
+
+    Fail closed: a missing registry entry, a missing/invalid
+    `gate_effect.cap`, or a missing/non-int `filter_order` raises
+    `RegistryAuthorityError` rather than silently substituting a hardcoded
+    historical default.
+    """
+    entry = _registry_entry_or_raise(class_id)
+    cap = (entry.get("gate_effect") or {}).get("cap")
+    if cap not in GATE_RANK:
+        raise RegistryAuthorityError(
+            "collision class %r has no valid gate_effect.cap registered (got %r)" % (class_id, cap)
+        )
+    order = entry.get("filter_order")
+    if not isinstance(order, int):
+        raise RegistryAuthorityError(
+            "collision class %r has no valid filter_order registered (got %r)" % (class_id, order)
+        )
+    return GATE_RANK[cap], cap, order
+
+
+def _registry_route(class_id):
+    """Route for a fired class, sourced from the registry. Fail closed: a
+    missing registry entry, or a route that is not a registered list, raises
+    `RegistryAuthorityError` rather than substituting a hardcoded default."""
+    entry = _registry_entry_or_raise(class_id)
+    route = entry.get("route")
+    if not isinstance(route, list):
+        raise RegistryAuthorityError(
+            "collision class %r has no valid route registered (got %r)" % (class_id, route)
+        )
+    return list(route)
+
+
+def _registry_canonical_unit_ids(class_id):
+    entry = _CLASS_BY_ID.get(class_id)
+    return list(entry.get("canonical_unit_ids") or []) if entry else []
 
 # R4: noun|proper_noun -> ism, verb -> fil, particle -> harf.
 POS_TRICHOTOMY = {"noun": "ism", "proper_noun": "ism", "verb": "fil", "particle": "harf"}
@@ -140,7 +204,96 @@ def _selected(seg_cands, morph_cands):
     return selected, morph
 
 
+def _shared_class_neutral_segments(seg_cands, refs):
+    """Finding 2 (Train E repair): the exact-span, exact-ownership intersection
+    of class-neutral segments across every tied rival `segment_candidate_ref`.
+
+    A genuine `competing_segmentation` tie disputes which letters belong to
+    which morpheme -- but when every tied rival independently places the SAME
+    class-neutral piece (role AND surface both agree) at the SAME character
+    span, that piece is not actually contested; only the letters after it
+    are. This computes, per `ref`, a `{(start, end): segment}` map from that
+    rival's own segment list (offsets are the cumulative surface length,
+    valid because `split_clitics` guarantees each candidate's segments
+    concatenate exactly to the token surface), intersects the span KEYS
+    across all rivals, and keeps only the spans where role+surface also agree
+    AND the role is in `CLASS_NEUTRAL_QG_ROLES` (never a stem, never a
+    host-class-presupposing affix/clitic -- those roles are never members of
+    that set, so they can never survive this intersection). Returns `[]`
+    (fail closed) when fewer than two valid refs are available, a ref is out
+    of range, or no span survives the intersection -- e.g. `بالله`'s bā'+Allah
+    split (ref 0) against its whole-token match (ref 1) shares no span at all
+    because the whole-token rival has no prefix segment to agree with.
+    """
+    per_ref_spans = []
+    for ref in refs:
+        if not isinstance(ref, int) or ref < 0 or ref >= len(seg_cands):
+            return []
+        spans = {}
+        pos = 0
+        for seg in seg_cands[ref].get("segments") or []:
+            piece = seg.get("surface", "")
+            spans[(pos, pos + len(piece))] = seg
+            pos += len(piece)
+        per_ref_spans.append(spans)
+    if len(per_ref_spans) < 2:
+        return []
+    common_keys = set(per_ref_spans[0])
+    for spans in per_ref_spans[1:]:
+        common_keys &= set(spans)
+    shared = []
+    for key in sorted(common_keys):
+        rivals = [spans[key] for spans in per_ref_spans]
+        role = rivals[0].get("role")
+        surface_piece = rivals[0].get("surface")
+        if role not in CLASS_NEUTRAL_QG_ROLES:
+            continue
+        if not all(r.get("role") == role and r.get("surface") == surface_piece for r in rivals):
+            continue
+        shared.append(dict(rivals[0]))
+    return shared
+
+
 def _candidate_collision(surface, seg_cands, morph_cands, morph):
+    """Top-score ties across `morph_cands`: an unsafe bare match, or `competing_segmentation`.
+
+    Finding 1 (Train E repair): `competing_segmentation` fires whenever the
+    tied top-scored candidates span >= 2 distinct `segment_candidate_ref`
+    values, full stop -- i.e. the tie is between rival written SEGMENTATIONS
+    (rival letter-ownership decompositions of the surface), never a same-
+    segmentation identity question. A prior revision additionally required
+    the tied candidates to disagree on identity (pos/lemma/root) before
+    firing, which let `بالله` (a bā'+Allah split, ref 0, tied at top score
+    against a whole-token largelexicon match, ref 1) silently commit to one
+    segmentation whenever both rivals happened to resolve to the same
+    lemma/pos/root. Same identity does not authorize choosing one
+    segmentation over another -- the letters are still contested between two
+    structurally different splits regardless of what either one resolves to.
+    A same-ref tie (all tied candidates share one `segment_candidate_ref`,
+    i.e. rival lexicon rows for the SAME segmentation, such as a same-ref
+    `function_inventory` particle cluster tie) is not this filter's concern
+    at all: that is R4/R5's job via `collision.competitors`, computed only
+    over the selected stem's own competitors per R6.
+
+    Finding 1 evidence floor (Train E repair): `tools/fusha_pattern_engine.py`
+    emits one no-evidence fallback candidate per segmentation
+    (`evidence_class=surface_candidate`, constant `score=1.0`) whenever
+    nothing else matched. When EVERY tied top-scored candidate is one of
+    these fallbacks, the tie proves an ABSENCE of evidence for any
+    segmentation, not a lexical collision between two real readings -- firing
+    here would falsely wipe class-neutral clitics via the empty-qg branch and
+    divert an ordinary ambiguous token into the collision queue. This
+    requires at least one tied-top candidate to carry real evidence
+    (`evidence_class != "surface_candidate"`) before firing; an all-fallback
+    tie returns `None` and keeps the pre-existing `ambiguous` gate vote
+    (`len(seg_cands) > 1` in `_gate`).
+
+    Finding 2 (Train E repair): a genuine tie's `scope` and `shared_segments`
+    are attached via `_shared_class_neutral_segments` (see there) so
+    `parse_text` can retain the exact-span, exact-ownership class-neutral
+    prefix/article every tied rival agrees on, instead of unconditionally
+    emptying `qg_segments`.
+    """
     if not morph:
         return None
     features = morph.get("features") or {}
@@ -148,7 +301,7 @@ def _candidate_collision(surface, seg_cands, morph_cands, morph):
         return {
             "kind": "unsafe_bare_match",
             "surface": surface,
-            "route": ["sarf", "nahw"],
+            "route": _registry_route("unsafe_bare_match"),
             "basis": features.get("match_basis"),
             "decided_by": "unsafe_bare_match",
             "reason": "bare-match largelexicon evidence is useful internally but not a public hover selection for this high-risk surface",
@@ -159,23 +312,30 @@ def _candidate_collision(surface, seg_cands, morph_cands, morph):
         tops = [c for c in morph_cands if float(c.get("score") or 0.0) == best]
     if len(tops) < 2:
         return None
-    if all(c.get("evidence_class") == "function_inventory" and c.get("pos") == "particle" for c in tops):
+    refs = {c.get("segment_candidate_ref") for c in tops}
+    if len(refs) <= 1:
+        return None
+    if not any(c.get("evidence_class") != "surface_candidate" for c in tops):
         return None
     pos_values = {c.get("pos") for c in tops}
     lemmas = {c.get("lemma") for c in tops}
-    roots = {c.get("root") for c in tops}
-    refs = {c.get("segment_candidate_ref") for c in tops}
-    if len(pos_values) > 1 or len(lemmas) > 1 or len(roots) > 1:
-        return {
-            "kind": "segmentation_or_pos_collision",
-            "surface": surface,
-            "candidate_count_at_top_score": len(tops),
-            "candidate_refs": sorted(int(ref) for ref in refs if ref is not None),
-            "pos_values": sorted(str(v) for v in pos_values),
-            "route": ["sarf", "nahw"],
-            "decided_by": "segmentation_or_pos_collision",
-        }
-    return None
+    candidate_refs = sorted(int(ref) for ref in refs if ref is not None)
+    result = {
+        "kind": "competing_segmentation",
+        "surface": surface,
+        "candidate_count_at_top_score": len(tops),
+        "candidate_refs": candidate_refs,
+        "pos_values": sorted(str(v) for v in pos_values),
+        "lemma_values": sorted(str(v) for v in lemmas if v is not None),
+        "route": _registry_route("competing_segmentation"),
+        "canonical_unit_ids": _registry_canonical_unit_ids("competing_segmentation"),
+        "decided_by": "competing_segmentation",
+    }
+    shared = _shared_class_neutral_segments(seg_cands, candidate_refs)
+    if shared:
+        result["scope"] = "shared_class_neutral_prefix"
+        result["shared_segments"] = shared
+    return result
 
 
 def _skeleton_collision(surface, seg_cands, morph, selected_seg=None, morph_cands=None):
@@ -244,8 +404,9 @@ def _skeleton_collision(surface, seg_cands, morph, selected_seg=None, morph_cand
         "kind": kind,
         "scope": scope,
         "surface": surface,
-        "route": ["sarf_collision_review", "nahw_function_review"],
+        "route": _registry_route(kind),
         "competing_entry_ids": collision_source.get("competing_entry_ids") or [],
+        "canonical_unit_ids": _registry_canonical_unit_ids(kind),
         "decided_by": kind,
     }
 
@@ -304,8 +465,15 @@ def _scope_collision_segments(qg_segments):
     return out
 
 
-def _strip_collision_identity(cand, decided_by=None):
-    """R4/R5 effect: no lemma/root/pos/voice/number/gloss for the withheld stem."""
+def _strip_collision_identity(cand, decided_by=None, evidence_keys=None):
+    """No lemma/root/pos/voice/number/gloss for a withheld/rival-tied candidate.
+
+    `evidence_keys` names where the deciding evidence lives: R4/R5 (skeleton
+    collision) decide from `collision.competitors`; `competing_segmentation`
+    decides from the tied `morphology_candidates` set itself (there is no
+    single stem's `collision.competitors` to point at -- the tie is across
+    segmentations, not entries for one segmentation).
+    """
     cand["lemma"] = None
     cand["root"] = None
     cand["pos"] = None
@@ -318,7 +486,7 @@ def _strip_collision_identity(cand, decided_by=None):
         if decided_by:
             feats["identity_withheld_decided_by"] = {
                 "filter": decided_by,
-                "evidence_keys": ["collision.competitors"],
+                "evidence_keys": list(evidence_keys or ["collision.competitors"]),
             }
 
 
@@ -357,7 +525,8 @@ def _gate(surface, seg_cands, morph, context, morph_cands=None, selected_seg=Non
 
     # source_provenance (R1): a CAP, not a mask. Typed decided_by evidence is
     # recorded on the candidate whenever the flag is present, independent of
-    # whether this vote ends up winning the lattice.
+    # whether this vote ends up winning the lattice. I8 (partial): cap and
+    # tie-break order come from the registry, not a hardcoded literal.
     risk_flags = set((morph.get("features") or {}).get("source_risk_flags") or [])
     if "requires_nahw_function" in risk_flags:
         feats = morph.setdefault("features", {})
@@ -365,16 +534,19 @@ def _gate(surface, seg_cands, morph, context, morph_cands=None, selected_seg=Non
             "filter": SOURCE_RISK_CAP_FILTER,
             "evidence_keys": ["features.source_risk_flags"],
         }
-        votes.append((GATE_RANK["pending_context"], "pending_context", None, 0))
+        rank, cap, order = _registry_vote(SOURCE_RISK_CAP_FILTER)
+        votes.append((rank, cap, None, order))
 
     # skeleton_collision (R4/R5), scoped to the selected stem (R6/R7).
     skeleton = _skeleton_collision(surface, seg_cands, morph, selected_seg=selected_seg, morph_cands=morph_cands)
     if skeleton:
-        votes.append((GATE_RANK["lexical_collision_requires_context"], "lexical_collision_requires_context", skeleton, 0))
+        rank, cap, order = _registry_vote(skeleton.get("kind"))
+        votes.append((rank, cap, skeleton, order))
 
     collision = _candidate_collision(surface, seg_cands, morph_cands or [], morph)
     if collision:
-        votes.append((GATE_RANK["lexical_collision_requires_context"], "lexical_collision_requires_context", collision, 1))
+        rank, cap, order = _registry_vote(collision.get("kind"))
+        votes.append((rank, cap, collision, order))
 
     if _function_needs_context(surface, morph) or bare in {"ما", "وما", "لما", "انما", "إنما"}:
         votes.append((GATE_RANK["pending_context"], "pending_context", None, 1))
@@ -488,14 +660,46 @@ def parse_text(text, document_id=None, db="smoke"):
         tok["confidence_gate"] = gate
         if collision:
             tok["collision"] = collision
-            for cand in tok.get("morphology_candidates") or []:
-                if cand.get("rank") == 1:
-                    cand["selection_status"] = "candidate_only"
-                    cand["selection_blocker"] = gate
-                    if collision.get("kind") in {"pos_trichotomy_conflict", "root_conflict"}:
-                        _strip_collision_identity(cand, decided_by=collision.get("kind"))
+            if collision.get("kind") == "competing_segmentation":
+                # Finding 3 (Train E repair): collision MEMBERSHIP here is tie
+                # membership -- `_candidate_collision` fires on an equal top
+                # score across >= 2 distinct `segment_candidate_ref` values,
+                # so every morphology candidate sharing that top score is a
+                # disputed rival, not only whichever one happens to sort to
+                # rank 1. Stripping identity from rank 1 alone left every
+                # OTHER co-tied rival (rank 2+, same top score) still exposing
+                # its own lemma/pos/root/gloss_hint -- a public leak of one of
+                # the two (or more) contested readings. Every co-tied rival
+                # (I9: none of them may be emitted as "the" selected
+                # function/POS/entry) is marked candidate-only/blocked and
+                # stripped here; none are removed from morphology_candidates.
+                all_cands = tok.get("morphology_candidates") or []
+                top_score = max((float(c.get("score") or 0.0) for c in all_cands), default=None)
+                for cand in all_cands:
+                    if top_score is not None and float(cand.get("score") or 0.0) == top_score:
+                        cand["selection_status"] = "candidate_only"
+                        cand["selection_blocker"] = gate
+                        _strip_collision_identity(
+                            cand, decided_by=collision.get("kind"),
+                            evidence_keys=["morphology_candidates", "segment_candidate_ref"],
+                        )
+            else:
+                for cand in tok.get("morphology_candidates") or []:
+                    if cand.get("rank") == 1:
+                        cand["selection_status"] = "candidate_only"
+                        cand["selection_blocker"] = gate
+                        if collision.get("kind") in {"pos_trichotomy_conflict", "root_conflict"}:
+                            _strip_collision_identity(cand, decided_by=collision.get("kind"))
             if collision.get("scope") == "stem_identity":
                 tok["qg_segments"] = _scope_collision_segments(tok.get("qg_segments") or [])
+            elif collision.get("scope") == "shared_class_neutral_prefix":
+                # Finding 2 (Train E repair): retain only the exact-span,
+                # exact-ownership class-neutral prefix/article every tied
+                # rival agrees on (computed in `_candidate_collision`); never
+                # a stem or a host-class-presupposing segment -- those roles
+                # can never appear in `shared_segments` (see
+                # `_shared_class_neutral_segments`).
+                tok["qg_segments"] = list(collision.get("shared_segments") or [])
             else:
                 tok["qg_segments"] = []
             tok["selected_preview"] = None

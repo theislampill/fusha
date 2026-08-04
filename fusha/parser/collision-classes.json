@@ -89,7 +89,9 @@
     {
       "canonical_unit_ids": [
         "cu-nisba-attribution-suffix",
-        "cu-clitic-pronoun-role-discriminator"
+        "cu-clitic-pronoun-role-discriminator",
+        "cu-orthographic-connectivity-classes",
+        "cu-definite-article-assimilation"
       ],
       "class_id": "scoped_collision",
       "filter_order": 3,
@@ -120,6 +122,23 @@
         "match_basis",
         "high_risk_bare_match_surfaces"
       ]
+    },
+    {
+      "canonical_unit_ids": [],
+      "class_id": "competing_segmentation",
+      "filter_order": 4,
+      "gate_effect": {
+        "cap": "lexical_collision_requires_context"
+      },
+      "route": [
+        "sarf",
+        "nahw"
+      ],
+      "rule_id": "R9",
+      "trigger_keys": [
+        "morphology_candidates",
+        "segment_candidate_ref"
+      ]
     }
   ],
   "generator": null,
@@ -128,7 +147,7 @@
     "اله"
   ],
   "not_a_registered_class": {
-    "reason": "R6 is a MUST_NOT constraint on how R4/R5 compute competitors (selected stem only, never unioned across rejected segmentation hypotheses); it has no independent trigger, gate effect, or route of its own, so it is not one of the seven registered classes.",
+    "reason": "R6 is a MUST_NOT constraint on how R4/R5 compute competitors (selected stem only, never unioned across rejected segmentation hypotheses); it has no independent trigger, gate effect, or route of its own, so it is not one of the eight registered classes.",
     "rule_id": "R6"
   },
   "projection_reconciliation": {
