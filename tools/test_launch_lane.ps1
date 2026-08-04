@@ -33,6 +33,14 @@ try {
     Assert-True ($meta.status -eq 'PRECHECK_PASS') 'metadata did not record PRECHECK_PASS'
     Assert-True ($meta.requested_model -eq 'claude-sonnet-5') 'requested model drifted'
     Assert-True ($meta.fallback_model -eq $null) 'fallback model must remain disabled'
+    Assert-True ($meta.claude_cli_version -eq 'not_invoked_preflight_only') `
+        'preflight-only must be hermetic and must not invoke the Claude CLI'
+    Assert-True ($meta.PSObject.Properties.Name -contains 'actual_session_id') `
+        'metadata must predeclare actual_session_id for worker finalization'
+    Assert-True ($meta.PSObject.Properties.Name -contains 'finished_at_utc') `
+        'metadata must predeclare finished_at_utc for worker finalization'
+    Assert-True ($meta.PSObject.Properties.Name -contains 'exit_code') `
+        'metadata must predeclare exit_code for worker finalization'
     Assert-True ($meta.prompt_sha256 -match '^[0-9a-f]{64}$') 'prompt hash is missing'
 
     $probe = Get-Content -LiteralPath (Join-Path $runDir 'preflight.stream.jsonl') `

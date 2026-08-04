@@ -166,14 +166,19 @@ if ($roundTrip.canary -cne $canary -or $roundTrip.model -ne $Model) {
     throw 'preflight stream round-trip changed the Arabic canary or model id'
 }
 
-$claudeCommand = (Get-Command claude -ErrorAction Stop).Source
-$cliVersion = (& claude --version 2>$null | Select-Object -First 1).Trim()
 $sessionId = [guid]::NewGuid().ToString()
+$claudeCommand = $null
+$cliVersion = 'not_invoked_preflight_only'
+if (-not $PreflightOnly) {
+    $claudeCommand = (Get-Command claude -ErrorAction Stop).Source
+    $cliVersion = (& claude --version 2>$null | Select-Object -First 1).Trim()
+}
 $metadata = [ordered]@{
     schema = 'fusha.lane_launch_metadata.v1'
     status = 'PRECHECK_PASS'
     requested_model = $Model
     actual_models = @()
+    actual_session_id = $null
     fallback_model = $null
     claude_cli_version = $cliVersion
     session_id = $sessionId
@@ -185,6 +190,8 @@ $metadata = [ordered]@{
     permission_mode = $PermissionMode
     disallowed_tools = @('Task', 'EnterWorktree')
     started_at_utc = [DateTime]::UtcNow.ToString('o')
+    finished_at_utc = $null
+    exit_code = $null
 }
 $metadataPath = Join-Path $runFull 'metadata.json'
 Write-JsonFile $metadataPath $metadata
