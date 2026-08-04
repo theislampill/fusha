@@ -36,7 +36,7 @@ type); those items are answered by naming the construction as genuinely undecida
 | family | signature | licensing test |
 |---|---|---|
 | **attributive agreement** | adjective copies head's case, definiteness, gender, number | non-human-plural -> feminine singular; indefinite non-annexed elative -> invariable base shape |
-| **coordination case-following** | conjunct copies the case of the joined-to element | position between two terms, then case inheritance; light لكن (no shadda) coordinates, heavy لَٰكِنَّ (shadda) abrogates |
+| **coordination case-following** | conjunct copies the case of the joined-to element | position between two terms, then case inheritance; light لكن (no shadda) coordinates ONLY after negation/prohibition and before a single word — elsewhere it is a non-governing adversative; heavy لَٰكِنَّ (shadda) abrogates |
 | **apposition (badal) typology** | appositive copies antecedent's case | total (identity, no clitic) / partitive / inclusion (both need a resumptive clitic) / identity-vs-quality boundary with naʿt |
 | **wāw function discrimination** | coordination (case copy) vs. accompaniment (accusative object) | verbal governor required for accompaniment; animacy is a cue, not a gate; foregrounding of one actor licenses accompaniment even for an animate object |
 
@@ -68,20 +68,20 @@ clears it. The task column poses the question; it does not give the answer.
 |---|---|---|
 | `FCA-09` | `مَا كَتَبَ زَيْدٌ الدَّرْسَ بَلْ مَا قَرَأَهُ` (a second negation added after the correction connector بَلْ) | Explain why the second negation is redundant and give the corrected sentence. |
 | `FCA-10` | `نَجَحَ زَيْدٌ وَعَمْرًا` (conjunct marked accusative although the joined-to element is nominative) | Name the rule this violates and give the corrected sentence. |
-| `FCA-11` | `حَضَرَ زَيْدٌ لكن عَمْرٌو غَائِبٌ` (ungeminated لكن forced into the heavy abrogator's accusative-ism reading) | Explain how the nūn's shape decides the reading, and give the correct case. |
+| `FCA-11` | `حَضَرَ زَيْدٌ لكن عَمْرٌو غَائِبٌ` (ungeminated لكن insisted to still govern عَمْرو's case, either as the heavy abrogator's accusative ism or as a light coordinator's case-copy) | Explain why light لكن governs nothing here, and give the correct case and reason for عَمْرٌو. |
 | `FCA-12` | `دَخَلَ زَيْدٌ وَخَرَجَ عَمْرٌو` (plain وَ used where the intended message needs an ordering claim) | Explain why the intended sequencing is unrecoverable here and name the correct connector. |
 | `FCA-13` | `تَزَوَّجَ زَيْدٌ فَوُلِدَ لَهُ وَلَدٌ بَعْدَ عَشْرِ سَنَوَاتٍ` (فَ used although the sentence states a ten-year gap) | Explain the contradiction and give the corrected connector. |
 | `FCA-14` | `سَافَرَ الطَّالِبَانِ وَالْمُدَرِّسَيْنِ` (dual conjunct left accusative although the joined-to element is nominative dual) | Explain the discriminator test and give the corrected sentence. |
 | `FCA-15` | `سَأُسَافِرُ إِمَّا غَدًا` (paired alternation particle with no closing second member) | Explain why this is incomplete and give a correctly closed version. |
 | `FCA-16` | `زَيْدٌ حَاضِرٌ لا غَائِبٌ` (لا between two terms read as ordinary clause negation) | Explain why its position marks it as a coordinator instead, and what it actually negates. |
-| `FCA-17` | `زَيْدٌ حَاضِرٌ بَلْ عَمْرٌو غَائِبٌ` (بَلْ used for a plain contrast between two different people after an affirmed clause) | Explain the mismatch with بَلْ's actual force after an affirmed clause and name the correct connector. |
+| `FCA-17` | `زَيْدٌ حَاضِرٌ بَلْ عَمْرٌو غَائِبٌ` (بَلْ used for a plain contrast between two different people after an affirmed clause) | Explain why بَلْ's idrab/redirection force doesn't fit two unrelated facts, and name the correct connector. |
 | `FCA-18` | `زَيْدٌ مُسَافِرٌ أَمْ عَمْرٌو` (no هَلْ/أَ interrogative marker at all; أَمْ demanded to be replaced by أَوْ) | Explain why the choice between the two particles cannot be forced here. |
 
 ### 19–23. Apposition (badal) typology
 
 | item id | stimulus | task |
 |---|---|---|
-| `FCA-19` | `أَعْجَبَنِي الطَّالِبُ خُلُقُهُ` (part-apposition treated as a quality-describing modifier and marked accusative) | Explain why this is a part-apposition, not a quality reading, and give the case it must actually carry. |
+| `FCA-19` | `اِحْتَرَقَ الْبَيْتُ نِصْفُهُ` (part-apposition — a literal fraction of the whole — treated as a quality-describing modifier and marked accusative) | Explain why this is a part-apposition, not a quality reading, and give the case it must actually carry. |
 | `FCA-20` | `هَذَا صَدِيقِي زَيْدُهُ` (resumptive clitic wrongly attached to a total apposition) | Explain why a total apposition needs no clitic here and give the corrected sentence. |
 | `FCA-21` | `نَجَحَ الطَّالِبَانِ خَالِدًا وَسَعِيدًا` (appositive pair marked accusative although the antecedent is nominative) | Name the rule this breaks and give the corrected sentence. |
 | `FCA-22` | `قَابَلْتُ صَدِيقِي خَالِدًا` (apposition labelled a naʿt) | Explain why this is an apposition, not a description, and what test tells the two apart. |

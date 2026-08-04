@@ -61,13 +61,20 @@ class TB1FaFunctionDiscrimination(unittest.TestCase):
             row["frame"], source_address=row["source_address"], quran_loc=row["quran_loc"],
             word=row["word"], surface=row["surface"], target_kind="token", target_value="fa_function_frame")
 
-    def test_fa_occ_001_2_37_1_ordinary_sequence_istinafiyya(self):
+    def test_fa_occ_001_2_37_1_ordinary_sequence_stays_pending_atfiyya_not_excluded(self):
+        """narrative_perfect_no_mood_question cannot exclude a plain listing ʿāṭifa reading, so this frame
+        must fail closed as pending rather than silently selecting istinafiyya (MERGE BLOCKER 1)."""
         row = self.bank["fa-occ-001"]
         r = PR.fa_context_frame(row["surface"], evidence=self._evidence_for(row), at=row["source_address"])
-        self.assertEqual(r["decision"], "candidate")
-        self.assertEqual(r["function_candidate"], "istinafiyya")
-        self.assertFalse(r["mood_licensing"]["fa_governs_mood"])
-        self.assertIsNone(r["mood_licensing"]["governor"])
+        self.assertEqual(r["decision"], "pending")
+        self.assertEqual(r.get("evidence_defect"), "fa_function_unresolved")
+        self.assertIsNone(r["mood_licensing"])
+        rivals = {a["role"] for a in r["unresolved_alternatives"]
+                  if a["defeater"] != "not_examined_by_this_axis"}
+        self.assertEqual(rivals, {"istinafiyya", "sababiyya", "rabita"})
+        for a in r["unresolved_alternatives"]:
+            if a["defeater"] != "not_examined_by_this_axis":
+                self.assertFalse(a["selected"])
 
     def test_fa_occ_002_17_22_7_causative_result_subjunctive(self):
         row = self.bank["fa-occ-002"]
@@ -108,17 +115,20 @@ class TB1FaFunctionDiscrimination(unittest.TestCase):
         self.assertEqual(ml["licensed_mood"], "jussive")
         self.assertNotEqual(ml["governor"], "fa")
 
-    def test_fa_occ_005_7_39_4_fa_and_ma_are_distinct_components(self):
+    def test_fa_occ_005_7_39_4_fa_and_ma_stay_pending_atfiyya_not_excluded(self):
+        """linked_to_separate_particle_component cannot exclude a plain listing ʿāṭifa reading either, so this
+        frame must also fail closed as pending (MERGE BLOCKER 1) — the linked particle's own function is still
+        decided independently, at the same address, regardless of fa's own pending state."""
         row = self.bank["fa-occ-005"]
         r = PR.fa_context_frame(row["surface"], evidence=self._evidence_for(row), at=row["source_address"])
-        self.assertEqual(r["decision"], "candidate")
-        self.assertEqual(r["function_candidate"], "rabita")
-        self.assertIsNotNone(r.get("component_boundary"))
-        # fa's own function candidate never encodes or requires the negation reading of the following ma.
-        self.assertNotIn("negation", r["function_candidate"])
-        self.assertNotIn("fa_plus", r["function_candidate"])
+        self.assertEqual(r["decision"], "pending")
+        self.assertEqual(r.get("evidence_defect"), "fa_function_unresolved")
+        rivals = {a["role"] for a in r["unresolved_alternatives"]
+                  if a["defeater"] != "not_examined_by_this_axis"}
+        self.assertEqual(rivals, {"istinafiyya", "sababiyya", "rabita"})
         # the linked negation particle's OWN function is decided independently, at the SAME address, via a
-        # completely separate consumer — proving the two decisions are genuinely not fused into one call.
+        # completely separate consumer — proving the two decisions are genuinely not fused into one call, even
+        # while fa's own function candidate stays pending.
         neg = PR.negation_effect("مَا", context={"following_token_mood": "indicative"},
                                  at="quran:7:39:4", rules=PR.load_negation_rules(),
                                  particle_rules=PR.load_particle_rules())
@@ -158,10 +168,23 @@ class TB1FaFunctionDiscrimination(unittest.TestCase):
             self.assertNotIn(rid, seen)
             seen.add(rid)
             scope = resolve_address(row["source_address"]).get("scope")
-            if row.get("expected_decision") == "refused":
+            # a refusal control is identified by the real consumer's own decision vocabulary
+            # (pending/caller_occurrence_invalid) — "refused" is not a value fa_context_frame() ever emits.
+            if row.get("expected_defect") == "caller_occurrence_invalid":
                 self.assertEqual(scope, "out_of_scope", rid)
             else:
                 self.assertEqual(scope, "in_scope_source_addressed", rid)
+
+    def test_fa_exact_indexed_surface_bound_at_source_address(self):
+        """MERGE BLOCKER 4: every bank row's surface is the exact indexed token at source_address (proclitic
+        fused onto its host word), never the bare morpheme فَ that no real corpus word-index equals."""
+        from tools.normalize_ar import bare as _bare
+        for rid, row in self.bank.items():
+            self.assertNotEqual(row["surface"], "فَ", "%s: surface must be the exact indexed token" % rid)
+            self.assertGreater(len(_bare(row["surface"])), 1,
+                               "%s: surface must be a full word, not the isolated fa" % rid)
+            ev = self._evidence_for(row)
+            self.assertEqual(ev["occurrence"]["surface"], row["surface"], rid)
 
 
 # ---------------------------------------------------------------------------
@@ -171,8 +194,8 @@ class TB2LaNegativeVsProhibitive(unittest.TestCase):
 
     def test_2_2_3_la_of_genus_not_2_2_2(self):
         """CORRECTION: the task packet's canary cites quran:2:2:2, but 2:2:2 is ٱلْكِتَٰبُ ('the Book') --
-        لَا النافية للجنس is word 3 (verified via qamus/indexes/quran-loc-surface/index.jsonl and the tafsir
-        MCP's own word-level irab: 'حَرْفُ نَفْيٍ لِلْجِنْسِ'). The pre-existing nahw/evals/particle-function-eval.jsonl
+        لَا النافية للجنس is word 3 (verified via qamus/indexes/quran-loc-surface/index.jsonl, the repository's
+        own internal word-index authority). The pre-existing nahw/evals/particle-function-eval.jsonl
         row PF-011 carries the SAME off-by-one (loc:"2:2:2"), so this is an inherited data-quality defect, not
         one introduced here; PF-011 is left untouched (a broadly shared bank) and this test uses the correct
         occurrence 2:2:3 instead of miscoding new evidence at the wrong address."""

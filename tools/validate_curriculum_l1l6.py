@@ -1011,10 +1011,31 @@ ABSORPTION_STATES = frozenset({
     "not_applicable_with_reason"})
 
 CONSUMER_BINDING_SCHEMA = "curriculum.l1l6_consumer_operationalization_binding.v1"
-CONSUMER_BINDING_HEADS = {
-    "train_b": "72647c2da35026b5d8f872f85afc2428e0c6dcfc",
-    "train_c": "14ac82b7bab610e86f04d57ab986381866699490",
-}
+# the current closed set of consumer planes a binding row may name (Bounded Mechanical Finding 1).
+CONSUMER_PLANES = frozenset({"tutor_runtime", "nahw_analytical"})
+_WORKER_HEAD_ANCESTOR_CACHE = {}
+
+
+def _worker_head_is_ancestor(sha):
+    """A binding's worker_head must be a REAL, resolvable commit that is an ancestor of the assembled HEAD —
+    never a hard-coded, potentially-dangling pair. Memoized: only a handful of distinct heads appear across the
+    manifest."""
+    if sha in _WORKER_HEAD_ANCESTOR_CACHE:
+        return _WORKER_HEAD_ANCESTOR_CACHE[sha]
+    ok = False
+    if isinstance(sha, str) and re.fullmatch(r"[0-9a-f]{40}", sha):
+        try:
+            subprocess.run(["git", "cat-file", "-e", sha + "^{commit}"], cwd=ROOT,
+                           check=True, capture_output=True)
+            subprocess.run(["git", "merge-base", "--is-ancestor", sha, "HEAD"], cwd=ROOT,
+                           check=True, capture_output=True)
+            ok = True
+        except subprocess.CalledProcessError:
+            ok = False
+    _WORKER_HEAD_ANCESTOR_CACHE[sha] = ok
+    return ok
+
+
 REAL_CONTRIBUTION_STATUSES = {
     "operationalized_real_consumer",
     "already_operational_consumer_reverified",
@@ -1091,11 +1112,25 @@ def check_consumer_operationalization_bindings(ctx, errors):
         if row.get("schema") != CONSUMER_BINDING_SCHEMA:
             errors.append("consumer_bindings: %s wrong schema" % binding_id)
         train = row.get("consumer_train")
-        if train not in CONSUMER_BINDING_HEADS:
+        if train not in ("train_b", "train_c"):
             errors.append("consumer_bindings: %s unapproved train %r" %
                           (binding_id, train))
-        elif row.get("worker_head") != CONSUMER_BINDING_HEADS[train]:
-            errors.append("consumer_bindings: %s worker head drift" % binding_id)
+        if not _worker_head_is_ancestor(row.get("worker_head")):
+            errors.append("consumer_bindings: %s worker_head is not a real ancestor commit of HEAD" %
+                          binding_id)
+        plane = row.get("consumer_plane")
+        if plane not in CONSUMER_PLANES:
+            errors.append("consumer_bindings: %s consumer_plane %r outside the closed set %s" %
+                          (binding_id, plane, sorted(CONSUMER_PLANES)))
+        if row.get("binding_status") == "explicit":
+            if plane == "tutor_runtime":
+                if not row.get("runtime_item_ids") or not row.get("knowledge_component_ids"):
+                    errors.append("consumer_bindings: %s explicit tutor_runtime row needs "
+                                  "runtime_item_ids AND knowledge_component_ids" % binding_id)
+            elif plane == "nahw_analytical":
+                if row.get("runtime_item_ids") or row.get("knowledge_component_ids"):
+                    errors.append("consumer_bindings: %s explicit nahw_analytical row must carry "
+                                  "neither runtime_item_ids nor knowledge_component_ids" % binding_id)
         if row.get("public_projection_eligible") is not False:
             errors.append("consumer_bindings: %s public eligibility overclaim" %
                           binding_id)
@@ -1921,6 +1956,22 @@ def self_test():
     mut("family_unit_uncovered", "ledger_qualification",
         lambda c: [c["families"].__setitem__(i, dict(r, family="u-s01"))
                    for i, r in enumerate(c["families"]) if r["family"] == "u-n12"])
+    # consumer-binding provenance canaries (Bounded Mechanical Findings 1/3/6): a fabricated/dangling worker_head
+    # must never pass as real runtime evidence, a closed-vocabulary plane violation must be caught, and an
+    # explicit tutor_runtime row that drops its runtime/KC evidence (or an explicit nahw_analytical row that
+    # invents some) must both fail closed — restoring the top-level no-false-runtime-evidence assertion this
+    # manifest's own check exists to make.
+    mut("consumer_binding_worker_head_not_ancestor", "worker_head",
+        lambda c: c["consumer_bindings"][0].update(worker_head="f" * 40))
+    mut("consumer_binding_plane_outside_closed_set", "consumer_plane",
+        lambda c: c["consumer_bindings"][0].update(consumer_plane="public_website"))
+    mut("consumer_binding_tutor_row_missing_runtime_evidence", "runtime_item_ids AND knowledge_component_ids",
+        lambda c: next(r for r in c["consumer_bindings"]
+                       if r["consumer_plane"] == "tutor_runtime").update(runtime_item_ids=[]))
+    mut("consumer_binding_analytical_row_claims_runtime_evidence", "neither runtime_item_ids nor",
+        lambda c: next(r for r in c["consumer_bindings"]
+                       if r["consumer_plane"] == "nahw_analytical").update(
+                           knowledge_component_ids=["kc-attributive-follower-licensing"]))
     # Sol witness canaries: a context-only appearance injected as a witness
     # must trip the same-entry/selected re-verification gate (file-level
     # mutation: checked via a temp-modified copy of the grounding rows)

@@ -28,12 +28,13 @@ Proves, in order:
   8. Hostile mutations of the shipped file (dropping two_vote_required / remediation_route, inserting candidate
      provenance, misrouting a kc_id to another drill) are all caught by `tools.validate_drill_keys.validate()`.
   9. The four proposed Knowledge Components (kc-attributive-follower-licensing, kc-coordination-particle-case-
-     following, kc-badal-apposition-typology, kc-waw-function-accompaniment) do NOT yet resolve in the shared
-     `curriculum/kc-catalog.json` — proven RED against the real, unmodified catalog — and a temp-fixture carrying
-     EXACTLY the proposed patch (four catalog entries routed to this drill) makes the same rows validate clean
-     and routes a genuine miss to KC-coded remediation. This is the exact missing integration-owner patch; it is
-     never written to a real repo file by this batch.
- 10. Nine pre-existing keyed drill files and the 25-entry KC catalog are BYTE-IDENTICAL to the batch's start SHA.
+     following, kc-badal-apposition-typology, kc-waw-function-accompaniment) HAVE SINCE been integrated into the
+     shared `curriculum/kc-catalog.json` by the integration-owner commit that bound these drills to the shared
+     KC runtime (append-only: the original 25 entries plus exactly these four, `_proposed_kc_catalog_patch()`,
+     unchanged). This class now verifies that real integration byte-for-byte, and a genuine miss on an
+     integrated row routes to KC-coded remediation through the real, unmodified catalog.
+ 10. Nine pre-existing keyed drill files are BYTE-IDENTICAL to the batch's start SHA; the KC catalog is
+     append-only (original 25 unchanged, plus exactly the four integrated entries above).
 
 Run: python3 tools/test_followers_coordination_apposition_batch.py
 """
@@ -661,6 +662,44 @@ class SharedKCCatalogIntegration(unittest.TestCase):
         self.assertEqual(missed[row["id"]]["remediation_route"], _DRILL_ROUTE)
 
 
+# --------------------------------------------------------------------------- 9b. badal subtype regression
+class FCA19BadalSubtypeRegression(unittest.TestCase):
+    """MERGE BLOCKER 2: FCA-19 must stay badal baʿḍ min kull (a literal part/fraction of the whole) and must
+    never regress into an ishtimāl-style stimulus (an abstract attribute/quality of the whole) while keeping
+    the ba'd-min-kull label — that combination is a right-answer/wrong-reason defect the grammar-safety gate
+    forbids (AGENTS.md: 'a correct answer with wrong iʿrāb reasoning is unsafe')."""
+
+    _ISHTIMAL_MARKERS = ("خُلُقُ", "خلقه", "khuluquhu")
+
+    def _row(self):
+        rows = _load_runtime_rows()
+        return next(r for r in rows if r["id"] == "FCA-19-badal-bad-min-kull-vs-naat")
+
+    def test_stimulus_is_a_genuine_literal_part_not_an_abstract_attribute(self):
+        row = self._row()
+        blob = row["prompt"] + row["expected_answer"] + " ".join(row["accepted_variants"])
+        for marker in self._ISHTIMAL_MARKERS:
+            self.assertNotIn(marker, blob,
+                            "FCA-19 regressed to an ishtimal-typed stimulus (%r) under the ba'd-min-kull label"
+                            % marker)
+        self.assertIn("نِصْفُ", row["prompt"], "FCA-19 must use a literal-fraction (نِصْف) partitive stimulus")
+
+    def test_reasoning_names_a_literal_part_never_an_abstract_attribute(self):
+        row = self._row()
+        joined = " ".join(row["required_reasoning"]).lower()
+        self.assertIn("literal", joined)
+        self.assertIn("part", joined)
+
+    def test_ishtimal_mislabel_is_a_forbidden_answer(self):
+        row = self._row()
+        self.assertTrue(any("ishtimal" in bad.lower() for bad in row["forbidden_answers"]),
+                        "FCA-19 must explicitly forbid mislabeling this literal-part badal as ishtimal")
+        for bad in row["forbidden_answers"]:
+            if "ishtimal" in bad.lower():
+                g = RT.grade(row, {"answer": bad, "reasoning": []})
+                self.assertFalse(g["cleared"], "the ishtimal mislabel must not clear")
+
+
 # --------------------------------------------------------------------------- 10. existing artifacts unchanged
 
 class ExistingArtifactsUnchanged(unittest.TestCase):
@@ -682,18 +721,43 @@ class ExistingArtifactsUnchanged(unittest.TestCase):
         self.assertEqual(current[25:], _proposed_kc_catalog_patch())
 
     def test_no_other_untracked_or_modified_files_outside_the_writable_set(self):
+        """Integration-aware: this repair round's permitted-writable set spans a targeted merge-blocker repair
+        across nahw/particle rules, the fa bank, the Train-B reference doc, the follower drills, and the L1-L6
+        consumer-truth builders/validators — a superset of this batch's own original narrow set, authorized by
+        the repair task's own explicit writable-file list. Anything outside it is still caught."""
         out = subprocess.run(["git", "status", "--porcelain"], cwd=_REPO, capture_output=True, check=True)
         allowed = {
+            "nahw/rules/particle-context-rules.json",
+            "nahw/evals/fa-function-occurrence-eval.jsonl",
+            "nahw/references/relation-scope-candidate-units.md",
+            "tools/fusha_nahw_particle_rules.py",
+            "tools/test_nahw_relation_scope_train_b.py",
             "curriculum/drills/followers-coordination-apposition.md",
             "curriculum/drills/keys/followers-coordination-apposition.keys.jsonl",
             "curriculum/kc-catalog.json",
             "tools/test_followers_coordination_apposition_batch.py",
+            "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl",
+            "tools/build_curriculum_absorption.py",
+            "tools/build_unit_dispositions.py",
+            "tools/test_l1l6_consumer_truth.py",
+            "tools/validate_curriculum_l1l6.py",
+            "curriculum/l1l6/reports/absorption-ledger.jsonl",
+            "curriculum/l1l6/reports/absorption-ledger.meta.json",
+            "curriculum/l1l6/reports/section-ledger.jsonl",
+            "curriculum/l1l6/reports/section-ledger.meta.json",
+            "curriculum/l1l6/reports/section-completeness.json",
+            "curriculum/l1l6/reports/full-curriculum-readiness.json",
+            "curriculum/l1l6/canonical/unit-dispositions.jsonl",
+            "curriculum/l1l6/canonical/unit-dispositions.meta.json",
         }
+        allowed_prefixes = ("curriculum/l1l6/reports/queues/",)
         for line in out.stdout.decode("utf-8").splitlines():
             path = line[3:].strip().replace("\\", "/")
             if not path:
                 continue
-            self.assertIn(path, allowed, "unexpected working-tree change outside the writable set: %s" % path)
+            if path in allowed or path.startswith(allowed_prefixes):
+                continue
+            self.fail("unexpected working-tree change outside the writable set: %s" % path)
 
 
 if __name__ == "__main__":

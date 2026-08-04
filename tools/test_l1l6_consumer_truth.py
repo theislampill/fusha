@@ -73,10 +73,11 @@ class ConsumerTruthTests(unittest.TestCase):
         self.assertEqual(set(runtime["explicit_lesson_ids"]), TRAIN_C_LESSONS)
         self.assertEqual(set(runtime["explicit_unit_ids"]), TRAIN_C_UNITS)
         self.assertEqual(len(runtime["bound_runtime_item_ids"]), 27)
-        self.assertEqual(runtime["runtime_original_drills_from_candidate_specs"], 27)
+        self.assertEqual(runtime["bound_runtime_item_count"], 27)
         self.assertEqual(runtime["candidate_drill_specs_promoted"], 0)
         self.assertEqual(readiness["lessons_mapped_to_tutor_drills"], 6)
         self.assertEqual(readiness["lessons_fully_operationalized"], 0)
+        self.assertEqual(readiness["lessons_fully_operationalized_basis"], "not_yet_computed")
         self.assertEqual(
             readiness["candidate_drill_packets"]["runtime_integrated"], 0
         )
@@ -168,6 +169,7 @@ class ConsumerTruthTests(unittest.TestCase):
         )
         self.assertEqual(runtime["explicit_canonical_unit_bindings"], 6)
         self.assertFalse(runtime["lesson_content_fully_operationalized"])
+        self.assertEqual(runtime["lesson_content_fully_operationalized_basis"], "not_yet_computed")
 
         candidate = readiness["candidate_drill_packets"]
         drill_meta = json.loads(
@@ -190,10 +192,26 @@ class ConsumerTruthTests(unittest.TestCase):
             expected_runtime["indirectly_linked_lessons"],
         )
 
+        # train_d/train_e have no bindings in ANY committed link file, so asserting they are 0 alone is
+        # tautological (true regardless of whether explicit_other_train_linkage reads the right manifest at
+        # all). Also assert train_b/train_c against independently known, non-zero evidence -- this is the
+        # genuine no-false-runtime-evidence check: it would catch both a broken reader (e.g. one that globs
+        # unrelated link files with no consumer_train field and silently returns 0) and a false inflation.
+        linkage = readiness["other_train_l1l6_linkage"]
+        train_b_lessons = {lid for row in absorption.load_consumer_bindings()
+                           if row["consumer_train"] == "train_b" and row["binding_status"] == "explicit"
+                           for lid in row["lesson_ids"]}
+        train_b_units = {uid for row in absorption.load_consumer_bindings()
+                         if row["consumer_train"] == "train_b" and row["binding_status"] == "explicit"
+                         for uid in row["unit_ids"]}
+        self.assertGreater(len(train_b_lessons), 0)
+        self.assertEqual(linkage["train_b"]["explicit_lesson_bindings"], len(train_b_lessons))
+        self.assertEqual(linkage["train_b"]["explicit_unit_bindings"], len(train_b_units))
+        self.assertEqual(linkage["train_c"]["explicit_lesson_bindings"], len(TRAIN_C_LESSONS))
+        self.assertEqual(linkage["train_c"]["explicit_unit_bindings"], len(TRAIN_C_UNITS))
         for train in ("train_d", "train_e"):
-            linkage = readiness["other_train_l1l6_linkage"][train]
-            self.assertEqual(linkage["explicit_lesson_bindings"], 0)
-            self.assertEqual(linkage["explicit_unit_bindings"], 0)
+            self.assertEqual(linkage[train]["explicit_lesson_bindings"], 0)
+            self.assertEqual(linkage[train]["explicit_unit_bindings"], 0)
 
     def test_unit_dispositions_keep_consumer_evidence_out_of_candidate_states(self):
         rows, meta = dispositions.build()
@@ -201,6 +219,8 @@ class ConsumerTruthTests(unittest.TestCase):
         for row in rows:
             self.assertNotIn("candidate_runtime_behavioral_mapping", row["states"])
             self.assertNotIn("runtime_behavioral_evidence", row["states"])
+            self.assertFalse(row["fully_operationalized"])
+            self.assertEqual(row["fully_operationalized_basis"], "not_yet_computed")
 
     def test_runtime_validator_accepts_future_internally_consistent_counts(self):
         derived = {

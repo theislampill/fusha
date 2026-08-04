@@ -28,13 +28,20 @@ its own — always fatḥa — so the homograph-haraka registry does not apply h
 most frequent reading (istiʾnāfiyya).
 
 **Worked occurrences (candidate, not certified):**
-- `quran:2:37:1` فَتَلَقَّىٰٓ — narrative perfect, no mood in play → istinafiyya.
-- `quran:17:22:7` فَتَقْعُدَ — after a prohibition, visible subjunctive fatḥa → sababiyya.
-- `quran:2:283:14` فَلْيُؤَدِّ — links the apodosis; the jussive is governed by لْ (lām al-amr), not fa → rābiṭa.
-- `quran:7:39:4` فَمَا — links/resumes; مَا is a DISTINCT negation particle, decided independently.
+- `quran:2:37:1` فَتَلَقَّىٰٓ — narrative perfect, no mood in play. This observable cannot exclude a plain
+  listing ʿāṭifa reading (out-of-axis), so it stays **pending** with istinafiyya/sababiyya/rabita all
+  preserved as rivals — never a silent istinafiyya default.
+- `quran:17:22:7` فَتَقْعُدَ — after a prohibition, visible subjunctive fatḥa → sababiyya (genuinely
+  discriminating: a plain ʿāṭifa could not itself license that subjunctive).
+- `quran:2:283:14` فَلْيُؤَدِّ — links the apodosis; the jussive is governed by لْ (lām al-amr), not fa →
+  rābiṭa (genuinely discriminating: the lām al-amr apodosis shape is not what a plain ʿāṭifa produces).
+- `quran:7:39:4` فَمَا — links/resumes; مَا is a DISTINCT negation particle, decided independently. Fa's own
+  frame here likewise cannot exclude ʿāṭifa, so fa's own function candidate stays **pending** (the linked
+  مَا's negation reading is unaffected and decided separately).
 - `quran:80:4:3` فَتَنفَعَهُ — same sababiyya frame as 17:22:7, but ayah 80:4 is absent from the repository's
-  address spine (a coverage accident). Correct disposition: refusal, never fabricated evidence — matches the
-  established N1/N2/N4 refusal-control pattern (`tools/test_nahw_governor_families.py`).
+  address spine (a coverage accident). Correct disposition: the ordinary pending/`caller_occurrence_invalid`
+  refusal, never fabricated evidence — matches the established N1/N2/N4 refusal-control pattern
+  (`tools/test_nahw_governor_families.py`).
 
 **Executable surface:** `tools.fusha_nahw_particle_rules.fa_context_frame()` (new).
 **Machine fixture:** `nahw/evals/fa-function-occurrence-eval.jsonl`.
@@ -54,7 +61,10 @@ regime (subjunctive fatḥa under sababiyya's implied أَنْ; jussive apocope/
 **Negative conditions:** fa is never itself cited as `governor`; a mood claim naming "fa" as governor is a
 malformed row this table cannot produce (no frame row sets `fa_governs_mood: true`).
 
-**Worked occurrences:** same four in-scope rows as the previous unit; `2:283:14` is the clearest guard —
+**Worked occurrences:** the two frames that actually reach `candidate` in the previous unit (`17:22:7`
+sababiyya, `2:283:14` rabita) are the ones with a non-null `governor`; the two that stay pending
+(`2:37:1`, `7:39:4`) report `mood_licensing: null` — a pending decision names no governor at all. `2:283:14`
+is the clearest guard —
 `governor: "lam_al_amr"`, explicitly `governor != "fa"`.
 
 **Executable surface:** `tools.fusha_nahw_particle_rules.fa_context_frame()` (`mood_licensing` field, new).
@@ -256,8 +266,8 @@ effect) — are decided by the FOLLOWING token's category and features, never by
 
 **Positive conditions:** following=indefinite noun with no declensional exponent (fatḥa, no tanwīn) → la_jins
 (`quran:2:2:3` لَا رَيْبَ — NOTE: the task packet's canary cited `2:2:2`, which is ٱلْكِتَٰبُ; لا النافية للجنس is
-word 3, verified against `qamus/indexes/quran-loc-surface/index.jsonl` and the tafsir MCP's word-level iʿrāb;
-the pre-existing `nahw/evals/particle-function-eval.jsonl#PF-011` carries the same off-by-one and was left
+word 3, verified against `qamus/indexes/quran-loc-surface/index.jsonl` (the repository's own internal
+word-index authority); the pre-existing `nahw/evals/particle-function-eval.jsonl#PF-011` carries the same off-by-one and was left
 untouched — see `tools/test_nahw_relation_scope_train_b.py::TB2LaNegativeVsProhibitive` for the corrected,
 address-verified regression test); following=verb with visible jussive mood → la_nahiya
 (`quran:4:43:4` لَا تَقْرَبُوا۟); following=verb with visible indicative/subjunctive mood → la_nafiya

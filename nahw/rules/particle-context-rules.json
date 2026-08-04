@@ -281,15 +281,15 @@
         "also": "a frame this table does not bind to EXACTLY one function is never guessed at; both/all rivals stay pending, exactly like an absent observation. fa's own function is ALWAYS decided separately from any following particle's function (e.g. a following مَا) — this table never reports a blended label."
       },
       "axis": ["istinafiyya", "sababiyya", "rabita"],
-      "axis_note": "This rule discriminates fa's own function among three members: istiʾnāfiyya (resumptive, opens a new clause with no mood claim), sababiyya (fā' al-sababiyya, the causative/result clause whose following imperfect is licensed into the subjunctive by an implied أَنْ — fa itself is the licensing CONTEXT, never the stated governor), and rābiṭa (a bare linking fa before an apodosis/next clause whose own mood, if any, is governed by something else entirely, e.g. lām al-amr — fa is explicitly NOT the mood governor in this member). ʿāṭifa (plain listing coordination) is an attested fa function this table does not discriminate; it stays out-of-axis.",
+      "axis_note": "This rule discriminates fa's own function among three members: istiʾnāfiyya (resumptive, opens a new clause with no mood claim), sababiyya (fā' al-sababiyya, the causative/result clause whose following imperfect is licensed into the subjunctive by an implied أَنْ — fa itself is the licensing CONTEXT, never the stated governor), and rābiṭa (a bare linking fa before an apodosis/next clause whose own mood, if any, is governed by something else entirely, e.g. lām al-amr — fa is explicitly NOT the mood governor in this member). ʿāṭifa (plain listing coordination) is an attested fa function this table does not discriminate; it stays out-of-axis. Two frames (narrative_perfect_no_mood_question, linked_to_separate_particle_component) are marked unique_within_axis:false precisely because their own observable is equally compatible with the out-of-axis ʿāṭifa reading — they cannot honestly exclude it, so they stay pending rather than silently selecting an in-axis winner; only result_after_prohibition_or_negation_with_visible_subjunctive and linked_to_lam_al_amr_jussive_apodosis carry a structural signal (the licensed subjunctive; the lām al-amr apodosis) that a plain listing ʿāṭifa could not itself produce, so those two stay genuinely discriminating.",
       "functions_not_discriminated": ["atfiyya"],
       "author_circularity_disclosure": "This frame_table's `frame` values and their bound `function` are authored by the same party, from no mechanical extraction source; the bank rows built against it (nahw/evals/fa-function-occurrence-eval.jsonl) supply the frame observation and check the table's own verdict, so the bank cannot fail unless the table itself or its consumer breaks. Candidate-only, fixture-producer posture — see the bank file's own header note.",
       "frame_table": [
         {
           "frame": "narrative_perfect_no_mood_question",
           "function": "istinafiyya",
-          "unique_within_axis": true,
-          "reason": "fa links to a perfect-tense narrative verb; there is no mood to license and fa opens/continues the narration, e.g. فَتَلَقَّىٰٓ ءَادَمُ",
+          "unique_within_axis": false,
+          "reason": "fa links to a perfect-tense narrative verb with no mood to license, e.g. فَتَلَقَّىٰٓ ءَادَمُ; this observable is equally consistent with fa being a plain listing ʿāṭifa (out-of-axis, functions_not_discriminated) coordinating the clause, so istinafiyya is never selected from this frame alone — the axis stays pending with every in-axis rival preserved until a discriminator that actually excludes ʿāṭifa is supplied",
           "mood_licensing": {"fa_governs_mood": false, "governor": null, "licensed_mood": null}
         },
         {
@@ -309,8 +309,8 @@
         {
           "frame": "linked_to_separate_particle_component",
           "function": "rabita",
-          "unique_within_axis": true,
-          "reason": "fa links/resumes and is immediately followed by a DISTINCT particle (e.g. مَا) that carries its own separate function, decided independently by that particle's own rule (never fused into one 'fa_plus_x' label), e.g. فَمَا كَانَ لَكُم",
+          "unique_within_axis": false,
+          "reason": "fa links/resumes and is immediately followed by a DISTINCT particle (e.g. مَا) that carries its own separate function, decided independently by that particle's own rule (never fused into one 'fa_plus_x' label), e.g. فَمَا كَانَ لَكُم; this observable does not itself exclude fa being a plain listing ʿāṭifa (out-of-axis) before that particle, so rabita is never selected from this frame alone — the axis stays pending with every in-axis rival preserved",
           "mood_licensing": {"fa_governs_mood": false, "governor": null, "licensed_mood": null},
           "component_boundary": "this frame never asserts or requires the linked particle's own function; that is a separate decision"
         },

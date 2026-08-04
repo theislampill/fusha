@@ -133,6 +133,7 @@ def consumer_operationalization_truth(bindings=None):
         "candidate_drill_ids": candidate_drill_ids,
         "lessons_partially_operationalized": len(real_lesson_ids),
         "lessons_fully_operationalized": 0,
+        "lessons_fully_operationalized_basis": "not_yet_computed",
     }
 
 
@@ -255,10 +256,11 @@ def ordinary_tutor_runtime_truth(ctx, bindings=None):
         "explicit_unit_ids": sorted(explicit_unit_bindings),
         "explicit_canonical_unit_bindings": len(explicit_unit_bindings),
         "bound_runtime_item_ids": sorted(bound_runtime_ids),
-        "runtime_original_drills_from_candidate_specs": len(bound_runtime_ids),
+        "bound_runtime_item_count": len(bound_runtime_ids),
         "candidate_drill_spec_ids": sorted(candidate_ids),
         "candidate_drill_specs_promoted": len(promoted_candidate_ids),
         "lesson_content_fully_operationalized": False,
+        "lesson_content_fully_operationalized_basis": "not_yet_computed",
         "binding_note": (
             "runtime behavior is proven by committed drill-key rows plus exact "
             "explicit consumer-binding rows; candidate drill specifications "
@@ -269,20 +271,21 @@ def ordinary_tutor_runtime_truth(ctx, bindings=None):
 
 
 def explicit_other_train_linkage(train_id):
-    """Count only closed-form explicit consumer binding rows in links/."""
+    """Count only closed-form explicit consumer binding rows in the authoritative consumer binding manifest
+    (never other, unrelated link files under curriculum/l1l6/links/, e.g. the PVN link files, which carry no
+    consumer_train field and would otherwise be globbed and silently no-op)."""
     lesson_ids, unit_ids = set(), set()
-    for path in sorted((BASE / "links").glob("*.jsonl")):
-        for row in _jsonl(path):
-            if (row.get("consumer_train") != train_id
-                    or row.get("binding_status") != "explicit"):
-                continue
-            lesson_ids.update(row.get("lesson_ids", []))
-            unit_ids.update(row.get("unit_ids", []))
+    for row in load_consumer_bindings():
+        if (row.get("consumer_train") != train_id
+                or row.get("binding_status") != "explicit"):
+            continue
+        lesson_ids.update(row.get("lesson_ids", []))
+        unit_ids.update(row.get("unit_ids", []))
     return {
         "explicit_lesson_bindings": len(lesson_ids),
         "explicit_unit_bindings": len(unit_ids),
         "binding_basis": (
-            "closed-form rows under curriculum/l1l6/links with matching "
+            "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl rows with matching "
             "consumer_train and binding_status=explicit"
         ),
     }
@@ -806,6 +809,8 @@ def build(ctx):
             "lessons_partially_operationalized"],
         "lessons_fully_operationalized": operationalization[
             "lessons_fully_operationalized"],
+        "lessons_fully_operationalized_basis": operationalization[
+            "lessons_fully_operationalized_basis"],
         "canonical_units_with_real_consumers": len(
             operationalization["real_consumer_unit_ids"]),
         "consumer_operationalization": {
@@ -835,14 +840,16 @@ def build(ctx):
                 "explicit_canonical_unit_bindings"],
             "bound_runtime_item_ids": runtime_truth[
                 "bound_runtime_item_ids"],
-            "runtime_original_drills_from_candidate_specs": runtime_truth[
-                "runtime_original_drills_from_candidate_specs"],
+            "bound_runtime_item_count": runtime_truth[
+                "bound_runtime_item_count"],
             "candidate_drill_spec_ids": runtime_truth[
                 "candidate_drill_spec_ids"],
             "candidate_drill_specs_promoted": runtime_truth[
                 "candidate_drill_specs_promoted"],
             "lesson_content_fully_operationalized": runtime_truth[
                 "lesson_content_fully_operationalized"],
+            "lesson_content_fully_operationalized_basis": runtime_truth[
+                "lesson_content_fully_operationalized_basis"],
             "binding_note": runtime_truth["binding_note"],
         },
         "candidate_drill_packets": {

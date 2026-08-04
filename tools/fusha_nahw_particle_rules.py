@@ -1555,8 +1555,13 @@ def _self_test():
     FA_SAB = mint_fixture_observation("result_after_prohibition_or_negation_with_visible_subjunctive",
                                       source_address="quran:17:22:7", quran_loc="17:22", word=7,
                                       surface="فَتَقْعُدَ", target_kind="token", target_value="fa_function_frame")
-    eq("2:37:1 frame -> istinafiyya candidate",
-       fa_context_frame("فَتَلَقَّىٰٓ", evidence=FA_ISTI, at="quran:2:37:1")["function_candidate"], "istinafiyya")
+    _isti = fa_context_frame("فَتَلَقَّىٰٓ", evidence=FA_ISTI, at="quran:2:37:1")
+    eq("2:37:1 frame cannot exclude atfiyya -> stays pending, never a silent istinafiyya default",
+       _isti["decision"], "pending")
+    eq("2:37:1 pending frame preserves istinafiyya/sababiyya/rabita as live rivals",
+       {x["role"] for x in _isti["unresolved_alternatives"]
+        if x["defeater"] != "not_examined_by_this_axis" and not x["selected"]},
+       {"istinafiyya", "sababiyya", "rabita"})
     _sab = fa_context_frame("فَتَقْعُدَ", evidence=FA_SAB, at="quran:17:22:7")
     eq("17:22:7 frame -> sababiyya candidate", _sab["function_candidate"], "sababiyya")
     eq("sababiyya never names fa itself as the mood governor",
@@ -1576,10 +1581,12 @@ def _self_test():
                                      quran_loc="7:39", word=4, surface="فَمَا", target_kind="token",
                                      target_value="fa_function_frame")
     _fama = fa_context_frame("فَمَا", evidence=FA_MA, at="quran:7:39:4")
-    eq("7:39:4 frame -> rabita candidate (never a blended fa_plus_negation label)",
-       _fama["function_candidate"], "rabita")
-    eq("7:39:4 the linked مَا's own function is out of this call's scope",
-       _fama.get("component_boundary") is not None, True)
+    eq("7:39:4 frame cannot exclude atfiyya either -> stays pending, never a silent rabita default",
+       _fama["decision"], "pending")
+    eq("7:39:4 pending frame preserves istinafiyya/sababiyya/rabita as live rivals",
+       {x["role"] for x in _fama["unresolved_alternatives"]
+        if x["defeater"] != "not_examined_by_this_axis" and not x["selected"]},
+       {"istinafiyya", "sababiyya", "rabita"})
     _fa_amb_ev = mint_fixture_observation("ambiguous_link_or_sequence", source_address="quran:2:37:1",
                                           quran_loc="2:37", word=1, surface="فَتَلَقَّىٰٓ", target_kind="token",
                                           target_value="fa_function_frame")

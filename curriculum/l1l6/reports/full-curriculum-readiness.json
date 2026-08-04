@@ -101,6 +101,7 @@
   },
   "lessons_fully_accounted": 226,
   "lessons_fully_operationalized": 0,
+  "lessons_fully_operationalized_basis": "not_yet_computed",
   "lessons_indirectly_linked_to_runtime_tutor_drills": 33,
   "lessons_mapped_to_nahw": 175,
   "lessons_mapped_to_sarf": 213,
@@ -112,6 +113,7 @@
   "lessons_with_no_corpus_bridge": 1,
   "ordinary_tutor_runtime": {
     "binding_note": "runtime behavior is proven by committed drill-key rows plus exact explicit consumer-binding rows; candidate drill specifications remain candidate_not_runtime_integrated; related_units never establish a runtime canonical-unit binding",
+    "bound_runtime_item_count": 27,
     "bound_runtime_item_ids": [
       "FCA-01-naat-case-copy",
       "FCA-02-naat-definiteness-predicate-boundary",
@@ -195,26 +197,26 @@
     "explicit_lesson_bindings": 6,
     "indirectly_linked_lessons": 33,
     "lesson_content_fully_operationalized": false,
-    "runtime_original_drills_from_candidate_specs": 27
+    "lesson_content_fully_operationalized_basis": "not_yet_computed"
   },
   "other_train_l1l6_linkage": {
     "train_b": {
-      "binding_basis": "closed-form rows under curriculum/l1l6/links with matching consumer_train and binding_status=explicit",
+      "binding_basis": "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl rows with matching consumer_train and binding_status=explicit",
       "explicit_lesson_bindings": 8,
       "explicit_unit_bindings": 7
     },
     "train_c": {
-      "binding_basis": "closed-form rows under curriculum/l1l6/links with matching consumer_train and binding_status=explicit",
+      "binding_basis": "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl rows with matching consumer_train and binding_status=explicit",
       "explicit_lesson_bindings": 6,
       "explicit_unit_bindings": 6
     },
     "train_d": {
-      "binding_basis": "closed-form rows under curriculum/l1l6/links with matching consumer_train and binding_status=explicit",
+      "binding_basis": "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl rows with matching consumer_train and binding_status=explicit",
       "explicit_lesson_bindings": 0,
       "explicit_unit_bindings": 0
     },
     "train_e": {
-      "binding_basis": "closed-form rows under curriculum/l1l6/links with matching consumer_train and binding_status=explicit",
+      "binding_basis": "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl rows with matching consumer_train and binding_status=explicit",
       "explicit_lesson_bindings": 0,
       "explicit_unit_bindings": 0
     }

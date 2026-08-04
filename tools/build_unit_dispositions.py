@@ -184,6 +184,7 @@ def build(bindings=None):
             "pending_consumer_planes": sorted({
                 binding["consumer_plane"] for binding in pending_consumers}),
             "fully_operationalized": False,
+            "fully_operationalized_basis": "not_yet_computed",
             "states": states,
             "strongest_state": strongest,
             "blockers": blockers,
