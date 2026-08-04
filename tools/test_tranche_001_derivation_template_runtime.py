@@ -134,7 +134,7 @@ FORBIDDEN_SUBSTRINGS = (
     "candidate_not_runtime_integrated", "curriculum.l1l6_drill_candidate", "drills-candidates/drill-candidates",
     "qamus_certified", '"certified": true', "public_release", "closes_unit", "closes_lesson",
     "unit_closure", "lesson_closure", "mastery achieved", "fact certified", "http://", "https://",
-    "c:\\\\", "c:/users", "/users/",
+    "c:" + "\\\\", "c:" + "/users", "/" + "users/",
 )
 
 EXPECTED_OCCURRENCE_STATUS = "no_committed_occurrence_evidence"

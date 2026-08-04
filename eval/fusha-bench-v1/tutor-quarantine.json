@@ -4,6 +4,7 @@
     "candidate-drill-specifications",
     "runtime-default-level-checkpoints",
     "runtime-keys-followers-coordination-apposition",
+    "runtime-keys-foundational-script-orthography",
     "runtime-keys-hover-composition",
     "runtime-keys-morphology-foundations",
     "runtime-keys-nawasikh-governor",
@@ -12,7 +13,10 @@
     "runtime-keys-quranic-function-words",
     "runtime-keys-root-pattern",
     "runtime-keys-sentence-foundations",
-    "runtime-keys-vn00-hover-closure"
+    "runtime-keys-tranche-001-derivation-template",
+    "runtime-keys-tranche-001-ma-context",
+    "runtime-keys-vn00-hover-closure",
+    "runtime-keys-weak-root-voice"
   ],
   "probe_ids": [
     "PA1-script-vowels-kataba",
