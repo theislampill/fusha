@@ -33,6 +33,7 @@ _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _REPO)
 from tools import normalize_ar as N  # noqa: E402
 from tools import fusha_check as FC  # noqa: E402
+from tools import fusha_orthography as O  # noqa: E402  (T001 — grapheme/connectivity/mark/vocalization observations)
 from tools import fusha_morphology_lattice as ML  # noqa: E402  (P2b A — populates morphology_candidates)
 from tools import fusha_suggest as SG  # noqa: E402  (P2b C — populates suggestions)
 from tools.validate_linguistic_decisions import required_gate, _GATE_RANK  # noqa: E402
@@ -171,6 +172,9 @@ def _clusters(s):
     return out
 
 
+_ARTICLE_ALIF_FORMS = ("ا", "ٱ")  # bare alif and the canonical alif-waṣla both open the article
+
+
 def _proclitic_pieces(clusters):
     """Decompose proclitic CLUSTERS (display, mark-bearing) into ordered (role, surface) pieces honoring F8 ordering-
     legality (conjunction wa/fa < preposition bi/ka/li < article al). Returns (pieces, num_clusters_consumed)."""
@@ -180,11 +184,11 @@ def _proclitic_pieces(clusters):
         pieces.append(("prefix_conjunction", clusters[i])); i += 1
     elif i < n and base(i) == "ف":
         pieces.append(("prefix_resumption_fa", clusters[i])); i += 1
-    if i + 1 < n and base(i) == "ا" and base(i + 1) == "ل":
+    if i + 1 < n and base(i) in _ARTICLE_ALIF_FORMS and base(i + 1) == "ل":
         pieces.append(("definite_article", clusters[i] + clusters[i + 1])); i += 2
     elif i < n and base(i) in ("ب", "ك"):
         pieces.append(("prefix_preposition", clusters[i])); i += 1
-        if i + 1 < n and base(i) == "ا" and base(i + 1) == "ل":
+        if i + 1 < n and base(i) in _ARTICLE_ALIF_FORMS and base(i + 1) == "ل":
             pieces.append(("definite_article", clusters[i] + clusters[i + 1])); i += 2
     elif i < n and base(i) == "ل":
         if i + 1 < n and base(i + 1) == "ل":
@@ -217,7 +221,9 @@ def segment_candidates(surface):
     the whole-token reading (a 'proclitic' may be a radical) plus every legal proclitic/enclitic peel. The surfaces of
     EVERY candidate concatenate to `surface` exactly (asserted). Ambiguity is preserved; nothing is collapsed or forced."""
     clusters = _clusters(surface)
-    bare = "".join(c[0] for c in clusters)
+    # PROCLITICS spells the article with bare ا only; fold the canonical ٱ (alif waṣla) to ا for THIS
+    # prefix-matching key alone (display clusters below stay untouched, so ٱ is never lost from the surface).
+    bare = "".join(("ا" if c[0] == "ٱ" else c[0]) for c in clusters)
     cands = []
     cands.append({"segments": [{"role": "stem", "surface": surface, "gloss_contribution": None}],
                   "rank": 1, "score": None, "legal": True, "single_letter_clitic": False})
@@ -370,6 +376,7 @@ def _analyze_arbitrary_token(idx, surface, ops_for_tok, start=None, end=None, ws
         "norm_strict_key": N.norm_strict(surface), "bare_key": bare,
         "is_arabic": True, "parse_confidence": parse_confidence, "decision_status": "pending",
         "segment_candidates": cands, "morphology_candidates": morph["candidates"], "blocker": blocker,
+        "orthography": O.analyze_orthography(surface),
     }
     return tok, diags, amb
 
@@ -427,6 +434,7 @@ def _analyze_source_addressed_token(idx, surface, loc, claim, start=None, end=No
         "norm_strict_key": N.norm_strict(surface), "bare_key": N.bare(surface),
         "is_arabic": _is_arabic(surface), "parse_confidence": parse_confidence,
         "decision_status": decision_status, "segment_candidates": [], "morphology_candidates": [], "blocker": blocker,
+        "orthography": O.analyze_orthography(surface),
     }
     return tok, diags, []
 

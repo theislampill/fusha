@@ -433,7 +433,12 @@ def _verb_parts(stem, morph):
             {"role": "derivative_prefix", "surface": pref, "class": "qg-derivative-prefix", "label": "DER", "gloss_contribution": "derived-form prefix"},
             {"role": "adjective_stem", "surface": rest, "class": "qg-adjective", "label": "AP", "gloss_contribution": morph.get("gloss_hint")},
         ]
-    if bare.endswith("نا") and len(bare) > 4:
+    # A trailing bare نا LOOKS like stem+"we", but قُرْءَانًا (tanwīn fatḥa + support alif) has the same bare
+    # tail without being a pronoun at all. Only split when there is COMPATIBLE VERB EVIDENCE (morph.pos ==
+    # "verb") AND the ending is not a tanwīn support alif in disguise (normalize_ar.ends_tanwin_alef).
+    if (bare.endswith("نا") and len(bare) > 4
+            and (morph.get("pos") or "") == "verb"
+            and not N.ends_tanwin_alef(stem)):
         return [
             {"role": "verb_stem", "surface": stem[:-2], "class": "qg-verb-stem", "label": "STEM", "gloss_contribution": morph.get("gloss_hint")},
             {"role": "subject_pronoun", "surface": stem[-2:], "class": "qg-subject-pronoun", "label": "SUBJ", "gloss_contribution": "we"},
@@ -446,10 +451,12 @@ def _verb_parts(stem, morph):
 def preview_segments(surface, seg_candidate, morph):
     """Build qamus-grammar-v1 preview segments for a selected candidate."""
     out = []
+    last_stem_surface = None
     for seg in seg_candidate.get("segments") or []:
         role = seg.get("role")
         seg_surface = seg.get("surface", "")
         if role == "stem":
+            last_stem_surface = seg_surface
             vparts = _verb_parts(seg_surface, morph)
             if vparts:
                 out.extend(vparts)
@@ -461,8 +468,20 @@ def preview_segments(surface, seg_candidate, morph):
                 out.append({"role": "stem", "surface": seg_surface, "class": cls, "label": label,
                             "gloss_contribution": morph.get("gloss_hint")})
         elif role == "object_pronoun":
-            out.append({"role": "object_pronoun", "surface": seg_surface, "class": "qg-object-pronoun",
-                        "label": "OBJ", "gloss_contribution": _pronoun_gloss(seg_surface)})
+            # The checker's generic enclitic peeler may ALREADY have split a trailing نا off a verb stem
+            # (e.g. bare أهلكنا, whose candidate outranked the unsplit reading after split_clitics' by-length
+            # re-sort), so _verb_parts never saw the combined stem to relabel it. Apply the SAME compatible-
+            # verb-evidence guard here (pos == "verb", and not a tanwīn support alif in disguise) so a genuine
+            # verb subject pronoun is never left mislabeled as a generic object pronoun by an accident of
+            # candidate ranking.
+            if (N.bare(seg_surface) == "نا" and (morph.get("pos") or "") == "verb"
+                    and last_stem_surface is not None
+                    and not N.ends_tanwin_alef(last_stem_surface + seg_surface)):
+                out.append({"role": "subject_pronoun", "surface": seg_surface, "class": "qg-subject-pronoun",
+                            "label": "SUBJ", "gloss_contribution": "we"})
+            else:
+                out.append({"role": "object_pronoun", "surface": seg_surface, "class": "qg-object-pronoun",
+                            "label": "OBJ", "gloss_contribution": _pronoun_gloss(seg_surface)})
         elif role == "prefix_particle":
             out.append({"role": "future_particle", "surface": seg_surface, "class": "qg-particle",
                         "label": "FUT", "gloss_contribution": "will"})
