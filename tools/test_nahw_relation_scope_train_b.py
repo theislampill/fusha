@@ -19,6 +19,7 @@ This module is deliberately split into:
 import json
 import os
 import sys
+import unicodedata
 import unittest
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,6 +30,7 @@ from tools import fusha_governor as G  # noqa: E402
 from tools.fusha_check import resolve_address  # noqa: E402
 
 NAHW_EVALS = os.path.join(REPO, "nahw", "evals")
+SURFACE_INDEX_PATH = os.path.join(REPO, "qamus", "indexes", "quran-loc-surface", "index.jsonl")
 
 
 def _jsonl(name):
@@ -43,6 +45,19 @@ def _jsonl(name):
     return rows
 
 
+def _load_surface_index():
+    """quran_loc:word -> committed authoritative surface, from the repo's own word-index."""
+    idx = {}
+    with open(SURFACE_INDEX_PATH, encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            row = json.loads(line)
+            idx[row["loc"]] = row["surface"]
+    return idx
+
+
 def _lattice_for(row):
     return G.build_dependency_lattice(row)
 
@@ -55,6 +70,18 @@ class TB1FaFunctionDiscrimination(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.bank = _jsonl("fa-function-occurrence-eval.jsonl")
+        cls.surface_index = _load_surface_index()
+
+    def _assert_row_surface_matches_index(self, rid, row):
+        """The row's surface must be NFC-exact-equal to the committed index at its own quran_loc:word — never
+        merely equal to itself (self-consistency is not authority)."""
+        loc = "%s:%d" % (row["quran_loc"], row["word"])
+        indexed = self.surface_index.get(loc)
+        self.assertIsNotNone(
+            indexed, "%s: %s not present in qamus/indexes/quran-loc-surface/index.jsonl" % (rid, loc))
+        self.assertEqual(
+            unicodedata.normalize("NFC", indexed), unicodedata.normalize("NFC", row["surface"]),
+            "%s: surface %r does not match the committed index surface %r at %s" % (rid, row["surface"], indexed, loc))
 
     def _evidence_for(self, row):
         return PR.mint_fixture_observation(
@@ -177,7 +204,10 @@ class TB1FaFunctionDiscrimination(unittest.TestCase):
 
     def test_fa_exact_indexed_surface_bound_at_source_address(self):
         """MERGE BLOCKER 4: every bank row's surface is the exact indexed token at source_address (proclitic
-        fused onto its host word), never the bare morpheme فَ that no real corpus word-index equals."""
+        fused onto its host word), never the bare morpheme فَ that no real corpus word-index equals, and never
+        a surface that merely equals itself — it must be NFC-exact-equal to the repository's own committed
+        qamus/indexes/quran-loc-surface/index.jsonl at that row's quran_loc:word (authority, not
+        self-consistency)."""
         from tools.normalize_ar import bare as _bare
         for rid, row in self.bank.items():
             self.assertNotEqual(row["surface"], "فَ", "%s: surface must be the exact indexed token" % rid)
@@ -185,6 +215,24 @@ class TB1FaFunctionDiscrimination(unittest.TestCase):
                                "%s: surface must be a full word, not the isolated fa" % rid)
             ev = self._evidence_for(row)
             self.assertEqual(ev["occurrence"]["surface"], row["surface"], rid)
+            self._assert_row_surface_matches_index(rid, row)
+
+    def test_fa_stale_surface_from_another_address_is_rejected(self):
+        """Hostile control: proves the index-authority check above actually checks the committed index rather
+        than the bank's own self-equality. Substitutes a real, multi-character indexed surface from a
+        DIFFERENT address/word (fa-occ-002's 17:22:7 token) onto a copy of fa-occ-001's row (2:37:1) and
+        proves the surface-matches-index assertion fails on that stale value."""
+        rid = "fa-occ-001"
+        row = dict(self.bank[rid])
+        own_loc = "%s:%d" % (row["quran_loc"], row["word"])
+        stale_loc = "17:22:7"
+        stale_surface = self.surface_index[stale_loc]
+        self.assertNotEqual(own_loc, stale_loc)
+        self.assertNotEqual(stale_surface, self.surface_index[own_loc],
+                            "the substituted surface must genuinely differ from the row's own indexed surface")
+        row["surface"] = stale_surface
+        with self.assertRaises(AssertionError):
+            self._assert_row_surface_matches_index(rid, row)
 
 
 # ---------------------------------------------------------------------------

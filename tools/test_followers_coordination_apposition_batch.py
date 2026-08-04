@@ -155,11 +155,17 @@ def _proposed_kc_catalog_patch():
         dict(common, kc_id="kc-coordination-particle-case-following",
              arabic_grammar_name="ʿaṭf case-following and the light/heavy لكن split",
              plain_rule="A coordinated conjunct copies the case of the element it is joined to, whatever that "
-                        "case is; لكن with no gemination coordinates, لَٰكِنَّ with gemination abrogates.",
+                        "case is; لَٰكِنَّ with gemination abrogates. Light لكن (no gemination) coordinates ONLY "
+                        "when it follows a negation/prohibition AND is followed by a single word; before an "
+                        "independent clause, or with no prior negation, light لكن is a non-governing "
+                        "adversative/ibtidāʾ particle, and the following noun's case comes from its own role "
+                        "in its own clause, never from case-copy onto لكن's conjunct.",
              trigger_condition="a coordinator joins two terms and the governor lattice cannot confirm the "
                                "conjunct's case matches the joined-to element from the supplied evidence",
              expected_feature="the conjunct's case named as inherited from the joined-to element",
-             typical_error_feature="the conjunct assigned a case of its own, or لكن's gemination misread",
+             typical_error_feature="the conjunct assigned a case of its own, or light لكن treated as a "
+                                   "case-copying coordinator before an independent clause or with no prior "
+                                   "negation/prohibition, without checking its licensing conditions",
              point_template="Before assigning the conjunct's case, name the element it is joined to.",
              teach_template="A conjunct never carries a case of its own; it copies the joined-to element's "
                             "case, whatever that case is.",
@@ -643,6 +649,34 @@ class SharedKCCatalogIntegration(unittest.TestCase):
 
     def test_bound_runtime_rows_validate_against_the_real_catalog(self):
         self.assertEqual(VDK.validate(_KEYS_PATH, repo_root=_REPO), [])
+
+    def test_lakin_kc_names_licensing_conditions_and_matches_fca_11(self):
+        """REPAIR: kc-coordination-particle-case-following must not reduce light لكن's coordination to
+        gemination alone (the old plain_rule/typical_error_feature said only ungeminated لكن coordinates,
+        with no licensing conditions). It must name that light لكن coordinates ONLY after a negation/
+        prohibition AND before a single word, and that before an independent clause it is a non-governing
+        adversative/ibtidāʾ particle whose following noun's case is never inherited from لكن — exactly what
+        FCA-11 (this batch's own runtime row) teaches."""
+        with open(os.path.join(_REPO, "curriculum", "kc-catalog.json"), encoding="utf-8") as fh:
+            catalog = {kc["kc_id"]: kc for kc in json.load(fh)}
+        kc = catalog["kc-coordination-particle-case-following"]
+        self.assertNotIn("لكن with no gemination coordinates", kc["plain_rule"],
+                         "plain_rule must not teach unconditional coordination from gemination alone")
+        for field in ("plain_rule", "typical_error_feature"):
+            self.assertIn("negation", kc[field], "%s must name the negation/prohibition licensing condition" % field)
+        self.assertIn("single word", kc["plain_rule"],
+                      "plain_rule must name light لكن's single-word coordination scope")
+        self.assertIn("independent clause", kc["plain_rule"],
+                      "plain_rule must name the independent-clause case where light لكن does not coordinate")
+        self.assertIn("adversative", kc["plain_rule"],
+                      "plain_rule must name light لكن's non-governing adversative/ibtidāʾ reading")
+
+        fca_11 = next(r for r in _load_runtime_rows() if r["id"] == "FCA-11-lakin-light-vs-heavy-nun-shape")
+        self.assertEqual(fca_11["kc_id"], "kc-coordination-particle-case-following")
+        for term in ("negation", "prohibition", "single word", "independent clause", "adversative"):
+            self.assertIn(term, fca_11["concept"], "FCA-11 concept missing %r (test fixture drifted)" % term)
+            self.assertIn(term, kc["plain_rule"],
+                          "%r present in FCA-11's concept but not in the KC plain_rule it is bound to" % term)
 
     def test_a_genuine_miss_once_patched_routes_to_kc_coded_remediation(self):
         """Proves 'genuine misses route remediation and KC progress': once a row is kc_id-bound (the
