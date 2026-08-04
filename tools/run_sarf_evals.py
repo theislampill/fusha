@@ -479,6 +479,52 @@ def adapter_lattice_ambiguity(rows, spec, ctx, root):
                    "property_hits": props.as_metric()}
 
 
+_VM_PROCLITIC_ROLE_BY_BASE = {
+    "و": "prefix_conjunction",
+    "ف": "prefix_resumption_fa",
+    "ب": "prefix_preposition",
+    "ك": "prefix_preposition",
+    "ل": "prefix_preposition",
+    "س": "prefix_particle",
+}
+
+
+def _visible_morphology_expected_roles(vm):
+    """The row's OWN declared correct segmentation (proclitics/article/host/suffixes), as an
+    ordered role skeleton -- ground truth independent of whatever the engine under audit
+    currently ranks first (Finding F5: the audit must not trust the thing it is auditing)."""
+    roles = []
+    for piece in vm.get("proclitics") or []:
+        base = (piece.replace("ـ", "") or " ")[0]
+        roles.append(_VM_PROCLITIC_ROLE_BY_BASE.get(base, "prefix_preposition"))
+    if vm.get("article"):
+        roles.append("definite_article")
+    roles.append("stem")
+    roles.extend("object_pronoun" for _ in (vm.get("suffixes") or []))
+    return roles
+
+
+def _declared_allowed_replacements(row, rec_cands):
+    """Split replacement strings a reject_-decision row may still legally expose, derived from
+    the row's own declared `visible_morphology` role skeleton -- never from which candidate the
+    engine under audit happens to rank first, and never from replacement-string equality alone
+    (two structurally different segmentations, e.g. preposition+pronoun vs. noun+pronoun, can
+    share the identical surface substrings while disagreeing on role). Returns None when the row
+    carries no declared ground truth, so the caller keeps its legacy rank-based fallback."""
+    vm = row.get("visible_morphology")
+    if not vm:
+        return None
+    expected_roles = _visible_morphology_expected_roles(vm)
+    allowed = set()
+    for candidate in rec_cands:
+        segments = candidate.get("segments") or []
+        if len(segments) < 2 or not candidate.get("legal", True):
+            continue
+        if [s.get("role") for s in segments] == expected_roles:
+            allowed.add(" ".join(s.get("surface", "") for s in segments))
+    return allowed
+
+
 def adapter_clitic_split_guard(rows, spec, ctx, root):
     """sarf/evals/false-clitic-split-eval.jsonl -> the real segmenter, lattice and suggestion quarantine.
 
@@ -536,16 +582,22 @@ def adapter_clitic_split_guard(rows, spec, ctx, root):
                 c for c in (token.get("morphology_candidates") or [])
                 if c.get("rank") == 1
             ]
-            allowed_replacements = set()
-            for morph in top_morphs:
-                ref = morph.get("segment_candidate_ref")
-                if not isinstance(ref, int) or ref < 0 or ref >= len(rec_cands):
-                    continue
-                candidate = rec_cands[ref]
-                segments = candidate.get("segments") or []
-                if len(segments) < 2 or not candidate.get("legal", True):
-                    continue
-                allowed_replacements.add(" ".join(s.get("surface", "") for s in segments))
+            allowed_replacements = _declared_allowed_replacements(row, rec_cands)
+            if allowed_replacements is None:
+                # legacy rows with no declared visible_morphology ground truth: fall back to the
+                # established rank-1 check (a distinct, top-ranked legal segmentation such as the
+                # real article in ٱلْمُلْكُ stays reviewable even though the row rejects a
+                # different, look-alike split of the same surface).
+                allowed_replacements = set()
+                for morph in top_morphs:
+                    ref = morph.get("segment_candidate_ref")
+                    if not isinstance(ref, int) or ref < 0 or ref >= len(rec_cands):
+                        continue
+                    candidate = rec_cands[ref]
+                    segments = candidate.get("segments") or []
+                    if len(segments) < 2 or not candidate.get("legal", True):
+                        continue
+                    allowed_replacements.add(" ".join(s.get("surface", "") for s in segments))
             split_suggestions = [
                 s for s in (rec.get("suggestions") or [])
                 if (s.get("edit") or {}).get("op") == "split"

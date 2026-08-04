@@ -20,7 +20,7 @@
     {
       "discriminators": {
         "article_observed": ["yes"],
-        "following_letter": ["ا", "ب", "ج", "ح", "خ", "ع", "غ", "ف", "ق", "ك", "م", "ه", "و", "ي"],
+        "following_letter": ["ا", "ء", "أ", "إ", "ب", "ج", "ح", "خ", "ع", "غ", "ف", "ق", "ك", "م", "ه", "و", "ي"],
         "shadda_observed": ["no"]
       },
       "id": "non_assimilating_moon_letter",

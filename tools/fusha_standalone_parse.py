@@ -153,6 +153,10 @@ NEUTRAL_CLITIC_QG_CLASS = "qg-clitic-undetermined"
 CLASS_NEUTRAL_QG_ROLES = {
     "prefix_conjunction", "prefix_resumption_fa", "prefix_preposition",
     "definite_article", "particle_inna", "ma_particle",
+    # already class-neutral on arrival (no asserted role/gloss) when the pattern engine itself
+    # could not decide subject vs. object from written vocalization alone (Finding F6) -- there is
+    # nothing left to withhold.
+    "clitic_undetermined",
 }
 # Train E follow-up defect B: the ONE authoritative union of roles whose
 # role/label/gloss/class presupposes the disputed stem_identity host
@@ -161,6 +165,52 @@ CLASS_NEUTRAL_QG_ROLES = {
 CLASS_PRESUPPOSING_STEM_IDENTITY_ROLES = (
     STEM_QG_ROLES | PRONOUN_CLITIC_QG_ROLES | CLASS_PRESUPPOSING_QG_ROLES
 )
+
+
+# Closed set of lexicalized relative/function words whose written form happens to LOOK LIKE
+# article + noun-stem (اللَّذِي, اللَّتِي, ...): these are single function words, never a genuine
+# "the" + host split, regardless of whether a matching whole-token lexicon row exists (Finding F4
+# -- the guard must key on the hazard itself, not on lexicon-row availability, so the written لِ +
+# ال contraction لِلَّذِي/لِلَّتِي/لِلَّذِينَ is caught the same as the uncontracted ٱلَّذِي).
+_LEXICALIZED_RELATIVE_NORM_FORMS = {
+    N.norm_strict(w) for w in (
+        "الذي", "التي", "الذين", "اللذان", "اللذين",
+        "اللتان", "اللتين", "اللاتي", "اللائي", "اللواتي",
+    )
+}
+
+
+def _lexicalized_relative_hazard(seg_cand):
+    """True when `seg_cand`'s own definite_article + stem segments reconstruct a closed
+    lexicalized relative/function surface -- a single function word that must never be exposed as
+    a shape-only "the" + host split, and whose peeled stem must never leak an unrelated lexicon
+    gloss (e.g. لِلَّذِي's peeled ذِي stem coincidentally matching the ذُو "possessor of" entry).
+    The written لِ + ال contraction elides the article's own alif (لِلَّذِي carries only the
+    assimilated lām, not الَّ), so the canonical "ال" spelling is reconstructed either way before
+    matching -- the guard must key on the SAME lexical hazard regardless of which of the two
+    written article shapes (contracted or not) produced this candidate."""
+    segments = seg_cand.get("segments") or []
+    article_seg = next((s for s in segments if s.get("role") == "definite_article"), None)
+    stem_surface = "".join(s.get("surface", "") for s in segments if s.get("role") == "stem")
+    if article_seg is None or not stem_surface:
+        return False
+    article_surface = article_seg.get("surface", "")
+    if N.bare(article_surface)[:1] not in ("ا", "ٱ"):
+        article_surface = "ا" + article_surface
+    return N.norm_strict(article_surface + stem_surface) in _LEXICALIZED_RELATIVE_NORM_FORMS
+
+
+_CLEAN_PROCLITIC_ROLES = {"prefix_conjunction", "prefix_resumption_fa", "prefix_preposition", "prefix_particle"}
+
+
+def _is_clean_proclitic_plus_stem(seg_cand):
+    """True when `seg_cand` is nothing but zero-or-more class-neutral proclitics followed by
+    exactly one whole stem -- no article peel, no invented enclitic. The fallback candidate for a
+    lexicalized-relative hazard (F4) should look like this whenever one is available: the
+    hazardous word stays one indivisible stem, but a genuinely attached leading preposition/
+    conjunction is still surfaced (لِلَّذِي keeps its لِ, exactly like the existing لِلَّهِ case)."""
+    roles = [s.get("role") for s in seg_cand.get("segments") or []]
+    return bool(roles) and roles[-1] == "stem" and all(r in _CLEAN_PROCLITIC_ROLES for r in roles[:-1])
 
 
 def _selected(seg_cands, morph_cands):
@@ -180,6 +230,25 @@ def _selected(seg_cands, morph_cands):
         if "requires_nahw_function" in risk_flags:
             morph = candidate
             break
+    ref = morph.get("segment_candidate_ref")
+    if (isinstance(ref, int) and 0 <= ref < len(seg_cands)
+            and _lexicalized_relative_hazard(seg_cands[ref])):
+        safe_candidates = [
+            c for c in morph_cands
+            if not (isinstance(c.get("segment_candidate_ref"), int)
+                    and 0 <= c["segment_candidate_ref"] < len(seg_cands)
+                    and _lexicalized_relative_hazard(seg_cands[c["segment_candidate_ref"]]))
+        ]
+        clean_candidates = [
+            c for c in safe_candidates
+            if isinstance(c.get("segment_candidate_ref"), int)
+            and 0 <= c["segment_candidate_ref"] < len(seg_cands)
+            and _is_clean_proclitic_plus_stem(seg_cands[c["segment_candidate_ref"]])
+        ]
+        if clean_candidates:
+            morph = clean_candidates[0]
+        elif safe_candidates:
+            morph = safe_candidates[0]
     if morph.get("pos") == "particle":
         for cand in seg_cands:
             if cand.get("evidence_class") == "pinned_function_cluster":

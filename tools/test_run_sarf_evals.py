@@ -314,6 +314,44 @@ class PassThroughAndTargetedMutation(unittest.TestCase):
         failures, _ = _run(bank, [row], ctx)
         self.assertTrue(any("[rejected_split_quarantined]" in f for f in failures), failures)
 
+    def test_false_clitic_bank_does_not_trust_the_engines_own_ranking_fcs049(self):
+        """F5 (red-first): the audit must not certify a split merely because the AUDITED engine's
+        own rank-1 candidate happens to agree with it. Corrupt FCS-049's rank-1 morphology
+        candidate to point at the rejected لَكُ+نَّا split (simulating a regressed engine that
+        would itself rank the look-alike top), inject that exact split as a suggestion, and
+        require the guard to still quarantine it -- ground truth must come from the row's own
+        declared visible_morphology, never from engine ranking alone."""
+        bank = "sarf/evals/false-clitic-split-eval.jsonl"
+        rows = _rows(bank)
+        row = next(r for r in rows if r["id"] == "FCS-049")
+        self.assertIn("visible_morphology", row, "FCS-049 must carry declared ground truth")
+        ctx = _ctx()
+        real = ctx.check_text
+
+        def corrupted_rank_and_escape(req):
+            rec = copy.deepcopy(real(req))
+            tok = rec["analysis_tokens"][0]
+            cands = tok["segment_candidates"]
+            bad_ref = next(i for i, c in enumerate(cands)
+                           if [s["role"] for s in c["segments"]] == ["stem", "object_pronoun"])
+            for m in tok["morphology_candidates"]:
+                m["rank"] += 1
+            tok["morphology_candidates"].insert(0, {
+                "lemma": None, "root": None, "pos": "particle", "pattern": None, "features": {},
+                "gloss_hint": None, "evidence_class": "surface_candidate", "confidence": "low",
+                "score": 9.0, "rank": 1, "segment_candidate_ref": bad_ref,
+            })
+            replacement = " ".join(s["surface"] for s in cands[bad_ref]["segments"])
+            rec["suggestions"].append({
+                "edit": {"op": "split", "replacement": replacement},
+                "gate": "two_vote_required",
+            })
+            return rec
+
+        ctx.check_text = corrupted_rank_and_escape
+        failures, _ = _run(bank, [row], ctx)
+        self.assertTrue(any("[rejected_split_quarantined]" in f for f in failures), failures)
+
     def test_one_wrong_byte_exact_result_fails_with_exact_row_and_property(self):
         bank = "sarf/evals/combining-mark-byte-exact-eval.jsonl"
         rows = _rows(bank)

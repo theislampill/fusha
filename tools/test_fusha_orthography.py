@@ -21,6 +21,7 @@ sys.path.insert(0, _REPO)
 from tools import fusha_orthography as O  # noqa: E402
 from tools import fusha_text_check as TC  # noqa: E402
 from tools import fusha_pattern_engine as PE  # noqa: E402
+from tools import fusha_standalone_parse as SP  # noqa: E402
 from tools.fusha_clitic_splitter import split_clitics  # noqa: E402
 
 
@@ -253,10 +254,15 @@ class TanwinIntegrationInPatternEngineTests(unittest.TestCase):
         self.assertNotIn("subject_pronoun", roles)
 
     def test_genuine_verb_plus_naa_still_splits(self):
-        # أهلكنا: PINNED_FORMS Form-IV verb اهلك/أهلك + نا subject pronoun (compatible verb evidence).
+        # أهلكنا: PINNED_FORMS Form-IV verb اهلك/أهلك + نا (compatible verb evidence) still splits
+        # off from the verb stem, but the surface is fully UNVOWELED -- no written vocalization
+        # decides subject vs. object here, so the clitic's function is honestly undetermined
+        # rather than guessed from POS alone (Finding F6).
         roles = self._roles_for("أهلكنا")
-        self.assertIn("subject_pronoun", roles)
         self.assertIn("verb_stem", roles)
+        self.assertIn("clitic_undetermined", roles)
+        self.assertNotIn("subject_pronoun", roles)
+        self.assertNotIn("object_pronoun", roles)
 
     def test_ends_tanwin_alef_stem_is_excluded_directly(self):
         from tools import normalize_ar as N
@@ -265,6 +271,180 @@ class TanwinIntegrationInPatternEngineTests(unittest.TestCase):
         self.assertFalse(any(p["role"] == "subject_pronoun" for p in parts),
                           "a tanwin-support-alif stem must never be split as stem+نا even if pos=verb")
         self.assertTrue(N.ends_tanwin_alef("قُرْءَانًا"))
+
+
+class F1CombiningMarkInventoryTests(unittest.TestCase):
+    """F1: U+0653 (maddah above) and U+0656..U+065F must be transparent combining marks, never a
+    base cluster, and connectivity_class must fail closed (never dual_joining by default) for a
+    character outside the closed Arabic letter inventory."""
+
+    def test_madda_above_never_becomes_a_base_cluster(self):
+        clusters = O.grapheme_clusters("جَآءَ")
+        bases = [c["base"] for c in clusters]
+        self.assertNotIn("ٓ", bases)
+        self.assertEqual("".join(c["surface"] for c in clusters), "جَآءَ")
+
+    def test_madda_above_is_transparent_and_kept_off_base_surface(self):
+        self.assertEqual(O.connectivity_class("ٓ"), "transparent")
+        self.assertNotIn("ٓ", O.base_surface("جَآءَ"))
+
+    def test_extended_combining_range_all_transparent_and_never_a_base(self):
+        for cp in range(0x0656, 0x0660):
+            ch = chr(cp)
+            self.assertEqual(O.connectivity_class(ch), "transparent", hex(cp))
+            clusters = O.grapheme_clusters("ب" + ch)
+            self.assertEqual(len(clusters), 1, hex(cp))
+            self.assertEqual(clusters[0]["base"], "ب", hex(cp))
+
+    def test_lilmalaikah_fully_voweled_not_partial(self):
+        # the dagger-alif + maddah-above sequence on ل before ئِ must not fall out of the mark
+        # inventory and silently degrade the token to partially_voweled.
+        state = O.vocalization_state("لِلْمَلَٰٓئِكَةِ")["state"]
+        self.assertEqual(state, "fully_voweled")
+
+    def test_unknown_character_fails_closed_not_dual_joining(self):
+        self.assertEqual(O.connectivity_class("a"), "unknown")
+        self.assertEqual(O.connectivity_class("5"), "unknown")
+        self.assertNotEqual(O.connectivity_class("a"), "dual_joining")
+
+    def test_known_dual_joining_letters_still_classify(self):
+        for ch in "بتثجحخسشصضطظعغفقكلمنهيئ":
+            self.assertEqual(O.connectivity_class(ch), "dual_joining", ch)
+
+
+class F2TanwinBeforeAlifMaqsuraTests(unittest.TestCase):
+    """F2: a physically written fatḥatān immediately before a bare alif maqṣūra (هُدًى، فَتًى،
+    مُصَلًّى) must be observed as tanwīn WITHOUT claiming a support alif -- ى is the direct
+    spelling of the mark, not a separate support letter like قُرْءَانًا's ا."""
+
+    def test_huda_fatan_musallan_observe_tanwin_without_support_alif(self):
+        for surface in ("هُدًى", "فَتًى", "مُصَلًّى"):
+            obs = O.tanwin_observation(surface)
+            self.assertTrue(obs["has_tanwin"], surface)
+            self.assertEqual(obs["tanwin_mark"], "fathatan", surface)
+            self.assertFalse(obs["has_support_alif"], surface)
+            self.assertIsNone(obs["support_alif_cluster_index"], surface)
+
+    def test_article_plus_alif_maqsura_tanwin_still_abstains(self):
+        conflict = O.article_tanwin_conflict("الهُدًى")
+        self.assertIsNotNone(conflict)
+        self.assertEqual(conflict["status"], "abstain")
+        self.assertEqual(conflict["conflict"], "article_and_tanwin")
+
+    def test_support_alif_case_is_unaffected(self):
+        obs = O.tanwin_observation("قُرْءَانًا")
+        self.assertTrue(obs["has_tanwin"])
+        self.assertTrue(obs["has_support_alif"])
+
+
+class F3ArticleCandidateShapeAmbiguityTests(unittest.TestCase):
+    """F3: و/ف + BARE ا + ل opens the identical shape as a radical-initial فَاعِل stem
+    (فَالِقُ، وَالِد، وَالٍ); shape alone must never assert an article there. A bare "ال" or a
+    conjunction+article with nothing left for a host is never a genuine article+host token."""
+
+    def test_radical_initial_faliq_walid_wali_fail_closed(self):
+        for surface in ("فَالِقُ", "وَالِد", "وَالٍ"):
+            self.assertIsNone(O.article_candidate(surface), surface)
+
+    def test_bare_article_with_no_host_fails_closed(self):
+        self.assertIsNone(O.article_candidate("ال"))
+
+    def test_conjunction_article_with_no_host_fails_closed(self):
+        self.assertIsNone(O.article_candidate("وَٱلْ"))
+
+    def test_genuine_canonical_conjunction_article_canaries_still_open(self):
+        for surface, conj in (("وَٱلْأُنثَىٰ", "وَ"), ("فَٱلْقَمَرَ", "فَ")):
+            art = O.article_candidate(surface)
+            self.assertIsNotNone(art, surface)
+            self.assertEqual(art["conjunction"], conj, surface)
+            self.assertEqual(art["article_form"], "ٱ", surface)
+
+    def test_bare_alif_article_with_no_leading_conjunction_still_opens(self):
+        self.assertIsNotNone(O.article_candidate("الْقَمَرَ"))
+        self.assertIsNotNone(O.article_candidate("ٱلْقَمَرَ"))
+
+
+class F4LexicalizedRelativeContractionTests(unittest.TestCase):
+    """F4: the written لِ + ال contraction (لِلَّذِي، لِلَّتِي، لِلَّذِينَ) must never emit a
+    definite_article split or a peeled-stem gloss -- these are lexicalized relative/function
+    words, not article + noun-stem, regardless of whole-token lexicon-row availability. Genuine
+    contracted-article cases like لِلَّهِ stay conservative (no article split either, unaffected)."""
+
+    def _qg_roles_and_gloss(self, surface):
+        rec = SP.parse_text(surface, db="full")
+        tok = rec["tokens"][0]
+        roles = {s["role"] for s in tok["qg_segments"]}
+        gloss = (tok.get("hover_preview") or {}).get("token_contribution_gloss")
+        return roles, gloss
+
+    def test_lilladhi_lillati_lilladhina_never_split_the_article(self):
+        for surface in ("لِلَّذِى", "لِلَّتِي", "لِلَّذِينَ"):
+            roles, _ = self._qg_roles_and_gloss(surface)
+            self.assertNotIn("definite_article", roles, surface)
+
+    def test_lilladhi_never_leaks_the_unrelated_dhu_gloss(self):
+        _, gloss = self._qg_roles_and_gloss("لِلَّذِى")
+        self.assertIsNotNone(gloss)
+        self.assertNotIn("possess", gloss.lower())
+
+    def test_lillahi_stays_conservative_no_article_split(self):
+        roles, _ = self._qg_roles_and_gloss("لِلَّهِ")
+        self.assertNotIn("definite_article", roles)
+
+    def test_hazard_helper_matches_the_canonical_and_contracted_spelling(self):
+        contracted = {"segments": [{"role": "prefix_preposition", "surface": "لِ"},
+                                    {"role": "definite_article", "surface": "لَّ"},
+                                    {"role": "stem", "surface": "ذِى"}]}
+        canonical = {"segments": [{"role": "definite_article", "surface": "ٱلَّ"},
+                                   {"role": "stem", "surface": "ذِي"}]}
+        self.assertTrue(SP._lexicalized_relative_hazard(contracted))
+        self.assertTrue(SP._lexicalized_relative_hazard(canonical))
+
+    def test_genuine_article_canaries_are_not_flagged_as_hazards(self):
+        genuine = {"segments": [{"role": "definite_article", "surface": "ٱلْ"},
+                                 {"role": "stem", "surface": "قَمَرَ"}]}
+        self.assertFalse(SP._lexicalized_relative_hazard(genuine))
+
+
+class F6NaaSubjectObjectDiscriminationTests(unittest.TestCase):
+    """F6: enclitic نا must never be relabeled subject_pronoun ("we") solely because POS is verb.
+    A written fatḥa on the stem's own final letter (خَلَقَنَا 'He created us') is the SAME bare
+    letters as a written sukūن (خَلَقْنَا 'we created') with the OPPOSITE function; the two must
+    never collapse to an identical asserted role."""
+
+    def _roles_for(self, surface):
+        cands = split_clitics(surface)
+        morph = PE.build_morphology(surface, cands, db="largelexicon")
+        top = morph[0]
+        seg_ref = top["segment_candidate_ref"]
+        preview = PE.preview_segments(surface, cands[seg_ref], top)
+        return {p["role"]: p for p in preview}
+
+    def test_fatha_before_naa_is_object_not_subject(self):
+        for surface in ("خَلَقَنَا", "رَزَقَنَا"):
+            roles = self._roles_for(surface)
+            self.assertIn("object_pronoun", roles, surface)
+            self.assertNotIn("subject_pronoun", roles, surface)
+
+    def test_sukun_before_naa_stays_subject(self):
+        roles = self._roles_for("خَلَقْنَا")
+        self.assertIn("subject_pronoun", roles)
+        self.assertNotIn("object_pronoun", roles)
+
+    def test_object_and_subject_pair_never_produce_identical_asserted_function(self):
+        object_roles = self._roles_for("خَلَقَنَا")
+        subject_roles = self._roles_for("خَلَقْنَا")
+        object_naa = object_roles.get("object_pronoun") or object_roles.get("subject_pronoun")
+        subject_naa = subject_roles.get("object_pronoun") or subject_roles.get("subject_pronoun")
+        self.assertNotEqual(
+            (set(object_roles) & {"object_pronoun", "subject_pronoun"}),
+            (set(subject_roles) & {"object_pronoun", "subject_pronoun"}),
+        )
+
+    def test_naa_role_helper_is_decisive_only_on_written_vocalization(self):
+        self.assertEqual(PE._naa_role("خَلَقَ"), "object")
+        self.assertEqual(PE._naa_role("خَلَقْ"), "subject")
+        self.assertEqual(PE._naa_role("خلق"), "undetermined")
 
 
 if __name__ == "__main__":

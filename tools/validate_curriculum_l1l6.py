@@ -1082,6 +1082,16 @@ TRAIN_C_EXPECTED_KCS = {
     "kc-coordination-particle-case-following",
     "kc-waw-function-accompaniment",
 }
+# Per-tranche exact binding-id set (F7). A bare `tranche_[0-9]{3}[a-d]?` regex match on
+# consumer_train let ANY row under an undeclared tranche name validate, and let extra/duplicate
+# rows under an ALREADY-declared tranche pass unnoticed once the old exact row-count guard was
+# removed. Each tranche declares its own closed binding-id set here; a later slice adds its OWN
+# entry rather than growing one global magic total that would block unrelated future slices.
+TRANCHE_EXPECTED_BINDING_IDS = {
+    "tranche_001a": frozenset({"l1l6-tranche-001a-foundational-orthography-analysis"}),
+}
+# test_paths must name an actual test file, never a production/consumer module (F8).
+_TEST_PATH_BASENAME_RE = re.compile(r"^test_.*\.py$")
 
 
 def check_consumer_operationalization_bindings(ctx, errors):
@@ -1171,6 +1181,12 @@ def check_consumer_operationalization_bindings(ctx, errors):
                     if not (ROOT / path).exists():
                         errors.append("consumer_bindings: %s missing path %s" %
                                       (binding_id, path))
+            for path in row.get("test_paths", []):
+                if not _TEST_PATH_BASENAME_RE.match(Path(path).name):
+                    errors.append(
+                        "consumer_bindings: %s test_paths entry %s is not a test file "
+                        "(a production/consumer module cannot be counted as a test)" %
+                        (binding_id, path))
         elif status == "pending_authoring":
             if contribution != "pending_authoring":
                 errors.append("consumer_bindings: %s pending status mismatch" %
@@ -1213,6 +1229,27 @@ def check_consumer_operationalization_bindings(ctx, errors):
                 errors.append("consumer_bindings: duplicate candidate drill %s" %
                               candidate_id)
             bound_candidate_ids.add(candidate_id)
+
+    # F7: every tranche_NNN[a-d] train present must match a REGISTERED, exact binding-id set --
+    # an unregistered tranche name, or a drift (a missing, extra, or duplicate row) from a
+    # registered one, fails closed. This is scoped per tranche, so a later slice's registration
+    # never has to touch (or risk drifting) an earlier slice's expected set.
+    tranche_trains = sorted({
+        row.get("consumer_train") for row in rows
+        if re.fullmatch(r"tranche_[0-9]{3}[a-d]?", str(row.get("consumer_train")))
+    })
+    for train in tranche_trains:
+        expected = TRANCHE_EXPECTED_BINDING_IDS.get(train)
+        if expected is None:
+            errors.append(
+                "consumer_bindings: %s has no registered expected binding-id set "
+                "(add an entry to TRANCHE_EXPECTED_BINDING_IDS)" % train)
+            continue
+        actual = {row["binding_id"] for row in rows if row.get("consumer_train") == train}
+        if actual != expected:
+            errors.append(
+                "consumer_bindings: %s binding-id set drift: expected %s, got %s" %
+                (train, sorted(expected), sorted(actual)))
 
     train_b = [row for row in rows if row.get("consumer_train") == "train_b"]
     train_c = [row for row in rows if row.get("consumer_train") == "train_c"]
@@ -1982,6 +2019,23 @@ def self_test():
         lambda c: next(r for r in c["consumer_bindings"]
                        if r["consumer_plane"] == "nahw_analytical").update(
                            knowledge_component_ids=["kc-attributive-follower-licensing"]))
+    # F7/F8 (adversarial orthography review): a per-tranche binding-id set must be pinned (not
+    # just an "approved train" regex), and a non-test file must never count as a test.
+    mut("tranche_duplicate_binding_id_escapes_pinning", "binding-id set drift",
+        lambda c: c["consumer_bindings"].append(dict(
+            next(r for r in c["consumer_bindings"] if r["consumer_train"] == "tranche_001a"),
+            binding_id="l1l6-tranche-001a-duplicate-row")))
+    mut("tranche_unregistered_train_name_validates_unchecked", "no registered expected binding-id set",
+        lambda c: c["consumer_bindings"].append(dict(
+            next(r for r in c["consumer_bindings"] if r["consumer_train"] == "tranche_001a"),
+            binding_id="l1l6-tranche-002a-unregistered", consumer_train="tranche_002a",
+            lesson_ids=[], unit_ids=[])))
+    mut("consumer_module_counted_as_test_path", "is not a test file",
+        lambda c: next(r for r in c["consumer_bindings"]
+                       if r["consumer_train"] == "tranche_001a").update(
+                           test_paths=list(next(r for r in c["consumer_bindings"]
+                                                 if r["consumer_train"] == "tranche_001a")["test_paths"])
+                           + ["tools/curriculum_unit_consumer.py"]))
     # Sol witness canaries: a context-only appearance injected as a witness
     # must trip the same-entry/selected re-verification gate (file-level
     # mutation: checked via a temp-modified copy of the grounding rows)

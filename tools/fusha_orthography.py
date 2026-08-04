@@ -35,8 +35,11 @@ _HARAKAT = set(chr(c) for c in range(0x064B, 0x0653))          # fathatan..sukun
 _QURANIC_MARKS = set(chr(c) for c in range(0x06D6, 0x06ED + 1))
 _DAGGER_ALIF = "ٰ"
 _TATWEEL = "ـ"
-_HAMZA_COMBINING = {"ٔ", "ٕ"}                         # combining hamza above/below (seat carried separately)
-_COMBINING = _HARAKAT | _QURANIC_MARKS | {_DAGGER_ALIF} | _HAMZA_COMBINING
+# U+0653..U+065F: the rest of the Arabic combining-mark inventory used by the corpus -- maddah
+# above (٬), combining hamza above/below (seat carried separately by the base letter), subscript
+# alif, and the remaining Qur'anic vowel-sign variants. NEVER a base letter (F1).
+_EXTENDED_COMBINING_MARKS = set(chr(c) for c in range(0x0653, 0x0660))
+_COMBINING = _HARAKAT | _QURANIC_MARKS | {_DAGGER_ALIF} | _EXTENDED_COMBINING_MARKS
 
 
 def grapheme_clusters(surface):
@@ -79,19 +82,28 @@ def written_surface(surface):
 # fact about the Arabic joining script; it must never be read back as a segmentation boundary.
 _RIGHT_JOINING = set("اآأإٱؤدذرزوىة")
 _NON_JOINING = set("ء")  # an isolated hamza joins neither side
+# The closed set of base letters that join BOTH neighbours -- the remainder of the 28-letter
+# Arabic alphabet plus ئ (hamza on yāʾ, which joins like yāʾ). Anything NOT in this closed
+# inventory (nor combining/non-joining/right-joining above) is out-of-inventory and must fail
+# closed rather than default to dual_joining (F1).
+_DUAL_JOINING = set("بتثجحخسشصضطظعغفقكلمنهيئ")
 
 
 def connectivity_class(base_char):
     """Classify one BASE letter's joining behaviour: 'transparent' (a combining mark — never
     breaks or carries the joining chain), 'non_joining', 'right_joining' (joins the previous
-    letter only — ends a visual run), or 'dual_joining' (joins both neighbours)."""
+    letter only — ends a visual run), 'dual_joining' (joins both neighbours), or 'unknown' for
+    a character outside the closed Arabic letter inventory this table has authority over — a
+    fail-closed class, never guessed as dual_joining."""
     if base_char in _COMBINING or base_char == _TATWEEL:
         return "transparent"
     if base_char in _NON_JOINING:
         return "non_joining"
     if base_char in _RIGHT_JOINING:
         return "right_joining"
-    return "dual_joining"
+    if base_char in _DUAL_JOINING:
+        return "dual_joining"
+    return "unknown"
 
 
 def visual_runs(surface):
@@ -189,8 +201,15 @@ _SUN_LETTERS = set("تثدذرزسشصضطظلن")
 def article_candidate(surface):
     """Detect a definite-article candidate (ال or ٱل) opening `surface`, optionally after a
     single leading وَ/فَ conjunction cluster. Returns None when the token does not open with one
-    of the two accepted article spellings followed by a lām. Candidate only — no case/function
-    claim, and the article's written lām is always kept as part of the article segment."""
+    of the two accepted article spellings followed by a lām, when the article would leave no
+    host letters at all (a bare "ال" or a conjunction+article with nothing after the lām is never
+    a genuine article-plus-host token), or when a leading و/ف is followed by the AMBIGUOUS bare
+    alif spelling: و/ف + bare ا + ل also opens a radical-initial فَاعِل-pattern stem (فَالِقُ،
+    وَالِد، وَالٍ) that shares the identical shape, so shape alone cannot assert an article there
+    (F3). Only the canonical ٱ (alif waṣla) spelling disambiguates a genuine article after a
+    leading conjunction; a bare ا article is still accepted with NO leading conjunction, where
+    that ambiguity does not arise. Candidate only — no case/function claim, and the article's
+    written lām is always kept as part of the article segment."""
     clusters = grapheme_clusters(surface)
     i = 0
     conjunction = None
@@ -201,8 +220,12 @@ def article_candidate(surface):
         return None
     if clusters[i]["base"] not in _ARTICLE_ALIF_FORMS or clusters[i + 1]["base"] != "ل":
         return None
-    article_surface = clusters[i]["surface"] + clusters[i + 1]["surface"]
+    if conjunction is not None and clusters[i]["base"] != "ٱ":
+        return None
     host_clusters = clusters[i + 2:]
+    if not host_clusters:
+        return None
+    article_surface = clusters[i]["surface"] + clusters[i + 1]["surface"]
     return {
         "conjunction": conjunction["surface"] if conjunction else None,
         "article_form": clusters[i]["base"],
@@ -251,12 +274,17 @@ def tanwin_observation(surface):
     if direct_mark is not None:
         return {"has_tanwin": True, "tanwin_mark": direct_mark, "tanwin_cluster_index": len(clusters) - 1,
                 "has_support_alif": False, "support_alif_cluster_index": None}
-    if len(clusters) >= 2 and last["base"] == "ا" and last["marks"] == "":
+    if len(clusters) >= 2 and last["marks"] == "" and last["base"] in ("ا", "ى"):
         prev = clusters[-2]
         prev_mark = next((TANWIN_MARKS[m] for m in prev["marks"] if m in TANWIN_MARKS), None)
         if prev_mark == "fathatan":
+            # ا is a bare SUPPORT alif carrying no vowel of its own (قُرْءَانًا); ى (alif maqṣūra)
+            # is the direct spelling of the fatḥatān itself (هُدًى، فَتًى، مُصَلًّى) -- the mark is
+            # physically written on the PRECEDING consonant either way, but only the ا case is a
+            # separate support letter (F2).
             return {"has_tanwin": True, "tanwin_mark": prev_mark, "tanwin_cluster_index": len(clusters) - 2,
-                    "has_support_alif": True, "support_alif_cluster_index": len(clusters) - 1}
+                    "has_support_alif": last["base"] == "ا",
+                    "support_alif_cluster_index": (len(clusters) - 1) if last["base"] == "ا" else None}
     return {"has_tanwin": False, "tanwin_mark": None, "has_support_alif": False}
 
 
