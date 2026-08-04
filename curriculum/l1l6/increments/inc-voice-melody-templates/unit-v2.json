@@ -1,0 +1,282 @@
+{
+  "abstention_reasons": [
+    "no_root_evidence",
+    "no_template",
+    "ambiguous_template",
+    "written_vocalization_mismatch"
+  ],
+  "capability": "template_classification",
+  "coverage": {
+    "decidable_from_letters": [
+      "form III perfect",
+      "medial-weak form I perfect",
+      "medial-weak form I imperfect"
+    ],
+    "decidable_from_written_vocalization": [
+      "form I perfect",
+      "form II perfect",
+      "form I imperfect",
+      "form III imperfect",
+      "form IV perfect"
+    ],
+    "not_covered": [
+      "final-weak",
+      "doubly weak",
+      "geminate"
+    ]
+  },
+  "increment": "inc-voice-melody-templates",
+  "rules": [
+    {
+      "id": "voi-r1",
+      "text": "voice is a MELODY imposed on an existing stem: no consonant is added or removed, so a voice row is a vocalised skeleton, not a new template family"
+    },
+    {
+      "id": "voi-r2",
+      "text": "each row is written as a letter shape over SUPPLIED radicals; a row is a survivor only on an exact letter match, and the radicals are never derived here"
+    },
+    {
+      "id": "voi-r3",
+      "text": "where the active and passive melodies of a cell share one consonant skeleton the pack declares BOTH rows, so the cell collides and the unit abstains ambiguous_template unless a genuinely WRITTEN vocalization is also supplied — that abstention IS the correct verdict for unvocalised text, not a defect"
+    },
+    {
+      "id": "voi-r4",
+      "text": "where the melody changes a LETTER — the third form's long low vowel becoming a long back vowel in the perfect passive, and the medial-weak cells in both tenses — the rows are distinct and the voice is decidable from the letters alone"
+    },
+    {
+      "id": "voi-r5",
+      "text": "medial-weak rows are matched against the two SOUND radicals, with the weak radical and its position carried in the evidence record; the melody letter is a template literal because it is an exponent of voice, not a realization of the radical"
+    },
+    {
+      "id": "voi-r6",
+      "text": "the imperfect passive melody overwrites the lexically stored active vowel, so that vowel is NOT recoverable from a passive surface and is never reported from one"
+    },
+    {
+      "id": "voi-r7",
+      "text": "promotion of the patient to subject and the agreement that follows are syntactic consequences; this unit classifies the verb's voice and emits no case or agreement fact"
+    },
+    {
+      "id": "voi-r8",
+      "text": "final-weak, doubly weak and geminate stem classes have NO row in this pack; a surface from those classes abstains no_template rather than borrowing a sound-stem melody"
+    },
+    {
+      "id": "voi-r9",
+      "text": "cu-passive-voice-vocalization: a letter-identical collision may be narrowed to one row ONLY by a genuinely WRITTEN short-vowel pattern that is independently verified on the surface itself, never by a caller assertion alone; a partially or wholly unvocalised surface keeps abstaining exactly as unit-v1.json already did"
+    },
+    {
+      "id": "voi-r10",
+      "text": "the form I/form II perfect collision additionally turns on whether R2 carries a WRITTEN shadda; a shadda is a vocalization mark like any other and is verified the same way, never assumed from the declared form alone"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "templates": [
+    {
+      "class": "active",
+      "form": "I",
+      "gem_required": false,
+      "gem_slot": "R2",
+      "id": "f1_perfect_active",
+      "letter_identical_to": [
+        "f1_perfect_passive",
+        "f2_perfect_active",
+        "f2_perfect_passive"
+      ],
+      "melody": "low vowel run on the radicals",
+      "name": "form I perfect, active melody",
+      "shape": ["R1", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "perfect",
+      "vowel_pattern": {"R1": "fatha", "R2": "fatha"}
+    },
+    {
+      "class": "passive",
+      "form": "I",
+      "gem_required": false,
+      "gem_slot": "R2",
+      "id": "f1_perfect_passive",
+      "letter_identical_to": [
+        "f1_perfect_active",
+        "f2_perfect_active",
+        "f2_perfect_passive"
+      ],
+      "melody": "high back vowel on R1, high front vowel on R2",
+      "name": "form I perfect, passive melody",
+      "shape": ["R1", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "perfect",
+      "vowel_pattern": {"R1": "damma", "R2": "kasra"}
+    },
+    {
+      "class": "active",
+      "form": "II",
+      "gem_required": true,
+      "gem_slot": "R2",
+      "id": "f2_perfect_active",
+      "letter_identical_to": [
+        "f1_perfect_active",
+        "f1_perfect_passive",
+        "f2_perfect_passive"
+      ],
+      "melody": "doubled R2 carried by harakat, low vowel run",
+      "name": "form II perfect, active melody",
+      "shape": ["R1", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "perfect",
+      "vowel_pattern": {"R1": "fatha", "R2": "fatha"}
+    },
+    {
+      "class": "passive",
+      "form": "II",
+      "gem_required": true,
+      "gem_slot": "R2",
+      "id": "f2_perfect_passive",
+      "letter_identical_to": [
+        "f1_perfect_active",
+        "f1_perfect_passive",
+        "f2_perfect_active"
+      ],
+      "melody": "doubled R2 carried by harakat, high back then high front vowel",
+      "name": "form II perfect, passive melody",
+      "shape": ["R1", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "perfect",
+      "vowel_pattern": {"R1": "damma", "R2": "kasra"}
+    },
+    {
+      "class": "active",
+      "form": "I",
+      "id": "f1_imperfect_active",
+      "letter_identical_to": ["f1_imperfect_passive"],
+      "melody": "low vowel on the person prefix, lexically stored vowel on R2",
+      "name": "form I imperfect, active melody",
+      "shape": ["ي", "R1", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "imperfect",
+      "vowel_pattern": {"ي": "fatha"}
+    },
+    {
+      "class": "passive",
+      "form": "I",
+      "id": "f1_imperfect_passive",
+      "letter_identical_to": ["f1_imperfect_active"],
+      "melody": "high back vowel on the person prefix, low vowel on R2",
+      "name": "form I imperfect, passive melody",
+      "shape": ["ي", "R1", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "imperfect",
+      "vowel_pattern": {"ي": "damma"}
+    },
+    {
+      "class": "active",
+      "form": "III",
+      "id": "f3_perfect_active",
+      "melody": "the template's long low vowel is retained",
+      "name": "form III perfect, active melody",
+      "shape": ["R1", "ا", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "perfect"
+    },
+    {
+      "class": "passive",
+      "form": "III",
+      "id": "f3_perfect_passive",
+      "melody": "the template's long low vowel is REPLACED by a long back vowel — a letter change, visible unvocalised",
+      "name": "form III perfect, passive melody",
+      "shape": ["R1", "و", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "perfect"
+    },
+    {
+      "class": "active",
+      "form": "III",
+      "id": "f3_imperfect_active",
+      "letter_identical_to": ["f3_imperfect_passive"],
+      "melody": "high back vowel on the prefix, high front vowel on R2",
+      "name": "form III imperfect, active melody",
+      "shape": ["ي", "R1", "ا", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "imperfect",
+      "vowel_pattern": {"R2": "kasra"}
+    },
+    {
+      "class": "passive",
+      "form": "III",
+      "id": "f3_imperfect_passive",
+      "letter_identical_to": ["f3_imperfect_active"],
+      "melody": "high back vowel on the prefix, low vowel on R2",
+      "name": "form III imperfect, passive melody",
+      "shape": ["ي", "R1", "ا", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "imperfect",
+      "vowel_pattern": {"R2": "fatha"}
+    },
+    {
+      "class": "active",
+      "form": "IV",
+      "id": "f4_perfect_active",
+      "letter_identical_to": ["f4_perfect_passive"],
+      "melody": "low vowel on the augment",
+      "name": "form IV perfect, active melody",
+      "shape": ["أ", "R1", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "perfect",
+      "vowel_pattern": {"أ": "fatha"}
+    },
+    {
+      "class": "passive",
+      "form": "IV",
+      "id": "f4_perfect_passive",
+      "letter_identical_to": ["f4_perfect_active"],
+      "melody": "high back vowel on the augment, high front vowel on R2",
+      "name": "form IV perfect, passive melody",
+      "shape": ["أ", "R1", "R2", "R3"],
+      "stem_class": "sound",
+      "tense": "perfect",
+      "vowel_pattern": {"أ": "damma"}
+    },
+    {
+      "class": "active",
+      "form": "I",
+      "id": "hollow_f1_perfect_active",
+      "melody": "the weak radical surfaces as a long low vowel",
+      "name": "form I perfect, medial-weak active melody",
+      "shape": ["R1", "ا", "R2"],
+      "stem_class": "medial_weak",
+      "tense": "perfect"
+    },
+    {
+      "class": "passive",
+      "form": "I",
+      "id": "hollow_f1_perfect_passive",
+      "melody": "high front vowel plus a long front glide — a LETTER difference, visible unvocalised",
+      "name": "form I perfect, medial-weak passive melody",
+      "shape": ["R1", "ي", "R2"],
+      "stem_class": "medial_weak",
+      "tense": "perfect"
+    },
+    {
+      "class": "active",
+      "form": "I",
+      "id": "hollow_f1_imperfect_active",
+      "melody": "the weak radical surfaces as a long back glide",
+      "name": "form I imperfect, medial-weak active melody",
+      "shape": ["ي", "R1", "و", "R2"],
+      "stem_class": "medial_weak",
+      "tense": "imperfect"
+    },
+    {
+      "class": "passive",
+      "form": "I",
+      "id": "hollow_f1_imperfect_passive",
+      "melody": "the weak radical surfaces as a long low vowel — a LETTER difference, visible unvocalised",
+      "name": "form I imperfect, medial-weak passive melody",
+      "shape": ["ي", "R1", "ا", "R2"],
+      "stem_class": "medial_weak",
+      "tense": "imperfect"
+    }
+  ],
+  "unit_ref": "cu-passive-voice-vocalization",
+  "version": 2,
+  "vocalization_disambiguation": true
+}

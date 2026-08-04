@@ -1,0 +1,57 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives",
+    "school_dependent_attributed"
+  ],
+  "capability": "discriminator_table",
+  "functions": [
+    {
+      "discriminators": {
+        "particle": ["قد"],
+        "verb_tense": ["perfect"]
+      },
+      "id": "qad_confirmation_of_past"
+    },
+    {
+      "discriminators": {
+        "particle": ["قد"],
+        "verb_tense": ["imperfect"]
+      },
+      "id": "qad_reduction_of_probability"
+    },
+    {
+      "discriminators": {
+        "particle": ["سَوْفَ"],
+        "verb_tense": ["imperfect"]
+      },
+      "id": "sawfa_future_marker"
+    },
+    {
+      "discriminators": {
+        "particle": ["لقد"],
+        "verb_tense": ["perfect"]
+      },
+      "id": "laqad_emphatic_past"
+    }
+  ],
+  "increment": "inc-nongoverning-preverbal-inventory",
+  "rules": [
+    {
+      "id": "npv-r1",
+      "text": "this pack is a CLOSED registry of preverbal items that never license invented case/mood/governor effects -- it emits a class label only, never a mood, case or governor key"
+    },
+    {
+      "id": "npv-r2",
+      "text": "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in; it abstains insufficient_features exactly like an unrecognised surface"
+    },
+    {
+      "id": "npv-r3",
+      "text": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-nongoverning-preverbal-inventory",
+  "version": 1
+}

@@ -1,0 +1,43 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives",
+    "school_dependent_attributed"
+  ],
+  "capability": "discriminator_table",
+  "functions": [
+    {
+      "discriminators": {
+        "final_letter": ["none_word_final_yaa"],
+        "shadda_on_yaa_evidence": ["written_shadda"]
+      },
+      "id": "nisba_relational_yaa"
+    },
+    {
+      "discriminators": {
+        "final_letter": ["taa_marbuta"],
+        "shadda_on_yaa_evidence": ["written_shadda"]
+      },
+      "id": "abstract_noun_yaa"
+    }
+  ],
+  "increment": "inc-suffix-abstract-noun",
+  "rules": [
+    {
+      "id": "sab-r1",
+      "text": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; both share a geminated yaa, so the shadda itself must be written evidence, never assumed"
+    },
+    {
+      "id": "sab-r2",
+      "text": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense"
+    },
+    {
+      "id": "sab-r3",
+      "text": "an unmarked (unvocalised) surface carries no shadda evidence and abstains insufficient_features -- normalisation is never treated as confirmation"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-suffix-abstract-noun",
+  "version": 1
+}

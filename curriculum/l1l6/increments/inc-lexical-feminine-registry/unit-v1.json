@@ -1,0 +1,35 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives",
+    "school_dependent_attributed"
+  ],
+  "capability": "discriminator_table",
+  "functions": [
+    {
+      "discriminators": {
+        "lexeme_surface": ["أرض", "شمس", "ريح", "نار", "حرب"]
+      },
+      "id": "lexically_feminine_noun"
+    }
+  ],
+  "increment": "inc-lexical-feminine-registry",
+  "rules": [
+    {
+      "id": "lfr-r1",
+      "text": "a CLOSED declared registry of nouns that are lexically feminine despite carrying none of the regular feminine markers (ة/اء/ى) -- membership is exact, never inferred from shape"
+    },
+    {
+      "id": "lfr-r2",
+      "text": "a noun outside the registry never gets a shape-based vote here, whether it is masculine (قمر) or already regularly feminine-marked by ة (a DIFFERENT, morphological mechanism this pack does not decide)"
+    },
+    {
+      "id": "lfr-r3",
+      "text": "growing the registry is a deliberate, reviewed pack edit -- never a runtime inference"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-lexical-feminine-registry",
+  "version": 1
+}

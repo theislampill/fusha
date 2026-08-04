@@ -1269,6 +1269,48 @@
       ],
       "row_key": null,
       "secondary_consumers": []
+    },
+    {
+      "adapter": "structural",
+      "behavioral_consumer": null,
+      "consumers": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "disposition": "candidate_no_consumer",
+      "enforced_properties": [
+        "every row carries the full required field set and a unique id",
+        "every declared increment resolves to a real directory-discovered curriculum/l1l6/increments/<inc> pack",
+        "every surface survives the engine's byte-exactness contract"
+      ],
+      "followup_packet": "TP-SARF-T2-TEMPLATE-CLASSIFICATION-CONSUMER",
+      "form": "jsonl",
+      "id_field": "id",
+      "loc_fields": [],
+      "metric_floors": {},
+      "nonempty_list_fields": [],
+      "not_enforced_properties": [
+        "the per-row decision itself: tools/curriculum_unit_consumer.py:analyze_derivative and :analyze_discriminator_table are the REAL production decision consumers for these ten units (proven behaviourally by tools/test_tranche_002_template_classification.py and the packs' own fixtures.jsonl via --all/--self-test), but wiring THIS bank to `implemented_and_consumed` needs adding its path to tools/run_sarf_evals.py's hard-coded REQUIRED_BEHAVIORAL_BANKS tuple, which is outside this batch's writable allowlist -- deferred to the integration owner",
+        "TP-SARF-T2-TEMPLATE-CLASSIFICATION-CONSUMER.json does not exist yet (qamus/task-packets/** is outside this batch's writable allowlist); a full `--strict` run with no --bank filter will report it missing until the integration owner authors it"
+      ],
+      "note": "Candidate-only structural bank for the ten preserved T2 template-classification units (cu-diminutive-template-family, cu-five-verb-inflection-class, cu-passive-voice-vocalization, cu-quadriliteral-templates, cu-suffix-abstract-noun, cu-nongoverning-preverbal-inventory, cu-nun-raf-vs-nun-niswa, cu-initial-hamza-class, cu-lexical-feminine-registry, cu-gemination-licensing). Every row's real behavioural coverage already exists through tools/curriculum_unit_consumer.py (analyze_derivative / analyze_discriminator_table) -- proven by the packs' own fixtures.jsonl and tools/test_tranche_002_template_classification.py, both run independently of this bank -- but this SARF-facing bank cannot itself claim implemented_and_consumed without editing tools/run_sarf_evals.py's REQUIRED_BEHAVIORAL_BANKS, a prohibited shared file for this batch.",
+      "path": "sarf/evals/template-classification-train-1-eval.jsonl",
+      "pinned_metrics": {
+        "decided_rows": 0,
+        "distinct_ids": 20,
+        "rows": 20,
+        "surfaces_byte_exact": 20
+      },
+      "property_coverage": [],
+      "required_fields": [
+        "id",
+        "increment",
+        "surface",
+        "class",
+        "expected_decision",
+        "teaches"
+      ],
+      "row_key": null,
+      "secondary_consumers": []
     }
   ],
   "candidate_boundary_surfaces": {

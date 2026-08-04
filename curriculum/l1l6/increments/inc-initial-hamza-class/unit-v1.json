@@ -1,0 +1,43 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives",
+    "school_dependent_attributed"
+  ],
+  "capability": "discriminator_table",
+  "functions": [
+    {
+      "discriminators": {
+        "initial_seat": ["hamza_qat_alif"],
+        "vocalization_evidence": ["written_mark"]
+      },
+      "id": "hamzat_qat"
+    },
+    {
+      "discriminators": {
+        "initial_seat": ["hamza_wasl_seated"],
+        "vocalization_evidence": ["written_mark"]
+      },
+      "id": "hamzat_wasl"
+    }
+  ],
+  "increment": "inc-initial-hamza-class",
+  "rules": [
+    {
+      "id": "ihc-r1",
+      "text": "hamzat al-qat' (a genuine glottal-stop hamza) and hamzat al-wasl (the seated helper alif, ٱ, pronounced only in isolation) are DISTINCT initial-hamza classes"
+    },
+    {
+      "id": "ihc-r2",
+      "text": "the seat and its exact vocalization must be WRITTEN evidence -- normalisation (which regularly strips or unifies hamza seats) can never decide this on its own"
+    },
+    {
+      "id": "ihc-r3",
+      "text": "a bare initial alif with no hamza mark at all is unresolved: it abstains rather than defaulting to either class"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-initial-hamza-class",
+  "version": 1
+}
