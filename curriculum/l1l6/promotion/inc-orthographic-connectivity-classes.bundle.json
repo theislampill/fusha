@@ -1,0 +1,640 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "membership in the six-letter non-attaching set is a closed lexical fact, never guessed from shape resemblance to a member",
+        "a classification is a per-letter joining fact only; it is never promoted to a token, morpheme, root, entry, or sense boundary",
+        "neighbor context (preceding class, following presence) is declared evidence; an unlisted letter or missing context abstains rather than defaulting to a shape",
+        "the hamza-bearing alif variants are the one licensed unification; no other letter's hamza-bearing variant is folded into its base class without its own row",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e479b7d0ce1a5b4a48573b75d0140e17f2ac0e22e8151235eeef1cba72f95e98",
+      "guards_payload": [
+        {
+          "guard": "membership in the six-letter non-attaching set is a closed lexical fact, never guessed from shape resemblance to a member",
+          "id": "g-con-membership"
+        },
+        {
+          "guard": "a classification is a per-letter joining fact only; it is never promoted to a token, morpheme, root, entry, or sense boundary",
+          "id": "g-con-no-boundary"
+        },
+        {
+          "guard": "neighbor context (preceding class, following presence) is declared evidence; an unlisted letter or missing context abstains rather than defaulting to a shape",
+          "id": "g-con-declared-only"
+        },
+        {
+          "guard": "the hamza-bearing alif variants are the one licensed unification; no other letter's hamza-bearing variant is folded into its base class without its own row",
+          "id": "g-con-variant-scope"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-con-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "con-adv-01",
+        "con-adv-02",
+        "con-adv-03",
+        "con-abs-01",
+        "con-abs-02"
+      ],
+      "positive_examples": [
+        "con-pos-01",
+        "con-pos-02",
+        "con-pos-03",
+        "con-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-orthographic-connectivity-classes"
+      },
+      "scope": {
+        "increment": "inc-orthographic-connectivity-classes",
+        "statement": "membership in the six-letter non-attaching set is a closed lexical fact about the letter itself, never inferred from shape resemblance; every other letter of the inventory attaches forward when a following letter is declared present",
+        "unit_ref": "cu-orthographic-connectivity-classes"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-orthographic-connectivity-classes-con-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "membership in the six-letter non-attaching set is a closed lexical fact, never guessed from shape resemblance to a member",
+        "a classification is a per-letter joining fact only; it is never promoted to a token, morpheme, root, entry, or sense boundary",
+        "neighbor context (preceding class, following presence) is declared evidence; an unlisted letter or missing context abstains rather than defaulting to a shape",
+        "the hamza-bearing alif variants are the one licensed unification; no other letter's hamza-bearing variant is folded into its base class without its own row",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e479b7d0ce1a5b4a48573b75d0140e17f2ac0e22e8151235eeef1cba72f95e98",
+      "guards_payload": [
+        {
+          "guard": "membership in the six-letter non-attaching set is a closed lexical fact, never guessed from shape resemblance to a member",
+          "id": "g-con-membership"
+        },
+        {
+          "guard": "a classification is a per-letter joining fact only; it is never promoted to a token, morpheme, root, entry, or sense boundary",
+          "id": "g-con-no-boundary"
+        },
+        {
+          "guard": "neighbor context (preceding class, following presence) is declared evidence; an unlisted letter or missing context abstains rather than defaulting to a shape",
+          "id": "g-con-declared-only"
+        },
+        {
+          "guard": "the hamza-bearing alif variants are the one licensed unification; no other letter's hamza-bearing variant is folded into its base class without its own row",
+          "id": "g-con-variant-scope"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-con-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "con-adv-01",
+        "con-adv-02",
+        "con-adv-03",
+        "con-abs-01",
+        "con-abs-02"
+      ],
+      "positive_examples": [
+        "con-pos-01",
+        "con-pos-02",
+        "con-pos-03",
+        "con-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-orthographic-connectivity-classes"
+      },
+      "scope": {
+        "increment": "inc-orthographic-connectivity-classes",
+        "statement": "a non-attaching letter never sends an outgoing connection to what follows it, regardless of what that neighbor is, so it realizes only the final or the standalone shape",
+        "unit_ref": "cu-orthographic-connectivity-classes"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-orthographic-connectivity-classes-con-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "membership in the six-letter non-attaching set is a closed lexical fact, never guessed from shape resemblance to a member",
+        "a classification is a per-letter joining fact only; it is never promoted to a token, morpheme, root, entry, or sense boundary",
+        "neighbor context (preceding class, following presence) is declared evidence; an unlisted letter or missing context abstains rather than defaulting to a shape",
+        "the hamza-bearing alif variants are the one licensed unification; no other letter's hamza-bearing variant is folded into its base class without its own row",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e479b7d0ce1a5b4a48573b75d0140e17f2ac0e22e8151235eeef1cba72f95e98",
+      "guards_payload": [
+        {
+          "guard": "membership in the six-letter non-attaching set is a closed lexical fact, never guessed from shape resemblance to a member",
+          "id": "g-con-membership"
+        },
+        {
+          "guard": "a classification is a per-letter joining fact only; it is never promoted to a token, morpheme, root, entry, or sense boundary",
+          "id": "g-con-no-boundary"
+        },
+        {
+          "guard": "neighbor context (preceding class, following presence) is declared evidence; an unlisted letter or missing context abstains rather than defaulting to a shape",
+          "id": "g-con-declared-only"
+        },
+        {
+          "guard": "the hamza-bearing alif variants are the one licensed unification; no other letter's hamza-bearing variant is folded into its base class without its own row",
+          "id": "g-con-variant-scope"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-con-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "con-adv-01",
+        "con-adv-02",
+        "con-adv-03",
+        "con-abs-01",
+        "con-abs-02"
+      ],
+      "positive_examples": [
+        "con-pos-01",
+        "con-pos-02",
+        "con-pos-03",
+        "con-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-orthographic-connectivity-classes"
+      },
+      "scope": {
+        "increment": "inc-orthographic-connectivity-classes",
+        "statement": "an attaching letter's incoming connection depends on whether the declared preceding neighbor is itself capable of sending an outgoing connection (word start or a non-attaching predecessor both block it); its outgoing connection depends only on whether a following letter is declared present",
+        "unit_ref": "cu-orthographic-connectivity-classes"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-orthographic-connectivity-classes-con-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "membership in the six-letter non-attaching set is a closed lexical fact, never guessed from shape resemblance to a member",
+        "a classification is a per-letter joining fact only; it is never promoted to a token, morpheme, root, entry, or sense boundary",
+        "neighbor context (preceding class, following presence) is declared evidence; an unlisted letter or missing context abstains rather than defaulting to a shape",
+        "the hamza-bearing alif variants are the one licensed unification; no other letter's hamza-bearing variant is folded into its base class without its own row",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e479b7d0ce1a5b4a48573b75d0140e17f2ac0e22e8151235eeef1cba72f95e98",
+      "guards_payload": [
+        {
+          "guard": "membership in the six-letter non-attaching set is a closed lexical fact, never guessed from shape resemblance to a member",
+          "id": "g-con-membership"
+        },
+        {
+          "guard": "a classification is a per-letter joining fact only; it is never promoted to a token, morpheme, root, entry, or sense boundary",
+          "id": "g-con-no-boundary"
+        },
+        {
+          "guard": "neighbor context (preceding class, following presence) is declared evidence; an unlisted letter or missing context abstains rather than defaulting to a shape",
+          "id": "g-con-declared-only"
+        },
+        {
+          "guard": "the hamza-bearing alif variants are the one licensed unification; no other letter's hamza-bearing variant is folded into its base class without its own row",
+          "id": "g-con-variant-scope"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-con-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "con-adv-01",
+        "con-adv-02",
+        "con-adv-03",
+        "con-abs-01",
+        "con-abs-02"
+      ],
+      "positive_examples": [
+        "con-pos-01",
+        "con-pos-02",
+        "con-pos-03",
+        "con-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-orthographic-connectivity-classes"
+      },
+      "scope": {
+        "increment": "inc-orthographic-connectivity-classes",
+        "statement": "the hamza-bearing and bare variants of the alif member are one member of the non-attaching set; a hamza-bearing variant of a different letter is not folded into that letter's class without its own licensed row",
+        "unit_ref": "cu-orthographic-connectivity-classes"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-orthographic-connectivity-classes-con-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "membership in the six-letter non-attaching set is a closed lexical fact, never guessed from shape resemblance to a member",
+        "a classification is a per-letter joining fact only; it is never promoted to a token, morpheme, root, entry, or sense boundary",
+        "neighbor context (preceding class, following presence) is declared evidence; an unlisted letter or missing context abstains rather than defaulting to a shape",
+        "the hamza-bearing alif variants are the one licensed unification; no other letter's hamza-bearing variant is folded into its base class without its own row",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e479b7d0ce1a5b4a48573b75d0140e17f2ac0e22e8151235eeef1cba72f95e98",
+      "guards_payload": [
+        {
+          "guard": "membership in the six-letter non-attaching set is a closed lexical fact, never guessed from shape resemblance to a member",
+          "id": "g-con-membership"
+        },
+        {
+          "guard": "a classification is a per-letter joining fact only; it is never promoted to a token, morpheme, root, entry, or sense boundary",
+          "id": "g-con-no-boundary"
+        },
+        {
+          "guard": "neighbor context (preceding class, following presence) is declared evidence; an unlisted letter or missing context abstains rather than defaulting to a shape",
+          "id": "g-con-declared-only"
+        },
+        {
+          "guard": "the hamza-bearing alif variants are the one licensed unification; no other letter's hamza-bearing variant is folded into its base class without its own row",
+          "id": "g-con-variant-scope"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-con-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "con-adv-01",
+        "con-adv-02",
+        "con-adv-03",
+        "con-abs-01",
+        "con-abs-02"
+      ],
+      "positive_examples": [
+        "con-pos-01",
+        "con-pos-02",
+        "con-pos-03",
+        "con-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-orthographic-connectivity-classes"
+      },
+      "scope": {
+        "increment": "inc-orthographic-connectivity-classes",
+        "statement": "this table classifies one letter's joining behaviour only; a classification, and any run boundary it might suggest, is never promoted to a token, morpheme, root, entry, or sense boundary",
+        "unit_ref": "cu-orthographic-connectivity-classes"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-orthographic-connectivity-classes-con-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-orthographic-connectivity-classes/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-orthographic-connectivity-classes",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "con-abs-01",
+      "con-abs-02"
+    ],
+    "adversarial": [
+      "con-adv-01",
+      "con-adv-02",
+      "con-adv-03"
+    ],
+    "positive": [
+      "con-pos-01",
+      "con-pos-02",
+      "con-pos-03"
+    ],
+    "transfer": [
+      "con-trn-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-orthographic-connectivity-classes",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features"
+    ],
+    "capability": "discriminator_table",
+    "functions": [
+      {
+        "discriminators": {
+          "letter": [
+            "ا",
+            "أ",
+            "إ",
+            "آ",
+            "ٱ",
+            "د",
+            "ذ",
+            "ر",
+            "ز",
+            "و"
+          ],
+          "preceding_neighbor_class": [
+            "word_start",
+            "non_attaching_letter"
+          ]
+        },
+        "id": "non_attaching_standalone",
+        "name": "non-attaching letter, no incoming connection"
+      },
+      {
+        "discriminators": {
+          "letter": [
+            "ا",
+            "أ",
+            "إ",
+            "آ",
+            "ٱ",
+            "د",
+            "ذ",
+            "ر",
+            "ز",
+            "و"
+          ],
+          "preceding_neighbor_class": [
+            "attaching_letter"
+          ]
+        },
+        "id": "non_attaching_final",
+        "name": "non-attaching letter, incoming connection only"
+      },
+      {
+        "discriminators": {
+          "following_neighbor_present": [
+            "no"
+          ],
+          "letter": [
+            "ب",
+            "ت",
+            "ث",
+            "ج",
+            "ح",
+            "خ",
+            "س",
+            "ش",
+            "ص",
+            "ض",
+            "ط",
+            "ظ",
+            "ع",
+            "غ",
+            "ف",
+            "ق",
+            "ك",
+            "ل",
+            "م",
+            "ن",
+            "ه",
+            "ي"
+          ],
+          "preceding_neighbor_class": [
+            "word_start",
+            "non_attaching_letter"
+          ]
+        },
+        "id": "attaching_standalone",
+        "name": "attaching letter, no incoming and no outgoing connection"
+      },
+      {
+        "discriminators": {
+          "following_neighbor_present": [
+            "yes"
+          ],
+          "letter": [
+            "ب",
+            "ت",
+            "ث",
+            "ج",
+            "ح",
+            "خ",
+            "س",
+            "ش",
+            "ص",
+            "ض",
+            "ط",
+            "ظ",
+            "ع",
+            "غ",
+            "ف",
+            "ق",
+            "ك",
+            "ل",
+            "م",
+            "ن",
+            "ه",
+            "ي"
+          ],
+          "preceding_neighbor_class": [
+            "word_start",
+            "non_attaching_letter"
+          ]
+        },
+        "id": "attaching_initial",
+        "name": "attaching letter, outgoing connection only"
+      },
+      {
+        "discriminators": {
+          "following_neighbor_present": [
+            "no"
+          ],
+          "letter": [
+            "ب",
+            "ت",
+            "ث",
+            "ج",
+            "ح",
+            "خ",
+            "س",
+            "ش",
+            "ص",
+            "ض",
+            "ط",
+            "ظ",
+            "ع",
+            "غ",
+            "ف",
+            "ق",
+            "ك",
+            "ل",
+            "م",
+            "ن",
+            "ه",
+            "ي"
+          ],
+          "preceding_neighbor_class": [
+            "attaching_letter"
+          ]
+        },
+        "id": "attaching_final",
+        "name": "attaching letter, incoming connection only"
+      },
+      {
+        "discriminators": {
+          "following_neighbor_present": [
+            "yes"
+          ],
+          "letter": [
+            "ب",
+            "ت",
+            "ث",
+            "ج",
+            "ح",
+            "خ",
+            "س",
+            "ش",
+            "ص",
+            "ض",
+            "ط",
+            "ظ",
+            "ع",
+            "غ",
+            "ف",
+            "ق",
+            "ك",
+            "ل",
+            "م",
+            "ن",
+            "ه",
+            "ي"
+          ],
+          "preceding_neighbor_class": [
+            "attaching_letter"
+          ]
+        },
+        "id": "attaching_medial",
+        "name": "attaching letter, incoming and outgoing connection"
+      }
+    ],
+    "increment": "inc-orthographic-connectivity-classes",
+    "rules": [
+      {
+        "id": "con-r1",
+        "text": "membership in the six-letter non-attaching set is a closed lexical fact about the letter itself, never inferred from shape resemblance; every other letter of the inventory attaches forward when a following letter is declared present"
+      },
+      {
+        "id": "con-r2",
+        "text": "a non-attaching letter never sends an outgoing connection to what follows it, regardless of what that neighbor is, so it realizes only the final or the standalone shape"
+      },
+      {
+        "id": "con-r3",
+        "text": "an attaching letter's incoming connection depends on whether the declared preceding neighbor is itself capable of sending an outgoing connection (word start or a non-attaching predecessor both block it); its outgoing connection depends only on whether a following letter is declared present"
+      },
+      {
+        "id": "con-r4",
+        "text": "the hamza-bearing and bare variants of the alif member are one member of the non-attaching set; a hamza-bearing variant of a different letter is not folded into that letter's class without its own licensed row"
+      },
+      {
+        "id": "con-r5",
+        "text": "this table classifies one letter's joining behaviour only; a classification, and any run boundary it might suggest, is never promoted to a token, morpheme, root, entry, or sense boundary"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-orthographic-connectivity-classes",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "connectivity_chip",
+      "teaching": "shows the classified joining shape next to the declared neighbor evidence that produced it, so the reader sees the test, not just the answer"
+    },
+    {
+      "key": "non_attaching_note",
+      "teaching": "for a non-attaching letter, states that no outgoing connection is possible here regardless of what follows"
+    },
+    {
+      "key": "unclassified_note",
+      "teaching": "flags an unlisted letter or missing neighbor evidence as outside this table's closed inventory, never a silent best guess"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

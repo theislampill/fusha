@@ -1011,8 +1011,12 @@ ABSORPTION_STATES = frozenset({
     "not_applicable_with_reason"})
 
 CONSUMER_BINDING_SCHEMA = "curriculum.l1l6_consumer_operationalization_binding.v1"
-# the current closed set of consumer planes a binding row may name (Bounded Mechanical Finding 1).
-CONSUMER_PLANES = frozenset({"tutor_runtime", "nahw_analytical"})
+# The current closed set of consumer planes a binding row may name.  Ṣarf and
+# Naḥw remain distinct analytical destinations; neither may borrow the tutor's
+# runtime evidence fields.
+CONSUMER_PLANES = frozenset({
+    "tutor_runtime", "nahw_analytical", "sarf_analytical",
+})
 _WORKER_HEAD_ANCESTOR_CACHE = {}
 
 
@@ -1112,7 +1116,8 @@ def check_consumer_operationalization_bindings(ctx, errors):
         if row.get("schema") != CONSUMER_BINDING_SCHEMA:
             errors.append("consumer_bindings: %s wrong schema" % binding_id)
         train = row.get("consumer_train")
-        if train not in ("train_b", "train_c"):
+        if train not in ("train_b", "train_c") and not re.fullmatch(
+                r"tranche_[0-9]{3}[a-d]?", str(train)):
             errors.append("consumer_bindings: %s unapproved train %r" %
                           (binding_id, train))
         if not _worker_head_is_ancestor(row.get("worker_head")):
@@ -1127,10 +1132,12 @@ def check_consumer_operationalization_bindings(ctx, errors):
                 if not row.get("runtime_item_ids") or not row.get("knowledge_component_ids"):
                     errors.append("consumer_bindings: %s explicit tutor_runtime row needs "
                                   "runtime_item_ids AND knowledge_component_ids" % binding_id)
-            elif plane == "nahw_analytical":
-                if row.get("runtime_item_ids") or row.get("knowledge_component_ids"):
-                    errors.append("consumer_bindings: %s explicit nahw_analytical row must carry "
-                                  "neither runtime_item_ids nor knowledge_component_ids" % binding_id)
+            elif plane in {"nahw_analytical", "sarf_analytical"}:
+                if (row.get("runtime_item_ids")
+                        or row.get("knowledge_component_ids")
+                        or row.get("candidate_drill_ids")):
+                    errors.append("consumer_bindings: %s explicit %s row must carry no "
+                                  "tutor runtime evidence" % (binding_id, plane))
         if row.get("public_projection_eligible") is not False:
             errors.append("consumer_bindings: %s public eligibility overclaim" %
                           binding_id)
@@ -1207,9 +1214,6 @@ def check_consumer_operationalization_bindings(ctx, errors):
                               candidate_id)
             bound_candidate_ids.add(candidate_id)
 
-    if len(rows) != 16:
-        errors.append("consumer_bindings: %d rows != exact B/C manifest 16" %
-                      len(rows))
     train_b = [row for row in rows if row.get("consumer_train") == "train_b"]
     train_c = [row for row in rows if row.get("consumer_train") == "train_c"]
     b_counts = {
@@ -1243,9 +1247,15 @@ def check_consumer_operationalization_bindings(ctx, errors):
         errors.append("consumer_bindings: Train C unit set drift")
     if c_kcs != TRAIN_C_EXPECTED_KCS:
         errors.append("consumer_bindings: Train C KC set drift")
-    if len(bound_runtime_ids) != 27 or len(bound_candidate_ids) != 27:
+    train_c_runtime_ids = {
+        item for row in train_c for item in row.get("runtime_item_ids", [])
+    }
+    train_c_candidate_ids = {
+        item for row in train_c for item in row.get("candidate_drill_ids", [])
+    }
+    if len(train_c_runtime_ids) != 27 or len(train_c_candidate_ids) != 27:
         errors.append("consumer_bindings: Train C runtime/candidate counts %d/%d != 27/27"
-                      % (len(bound_runtime_ids), len(bound_candidate_ids)))
+                      % (len(train_c_runtime_ids), len(train_c_candidate_ids)))
     if bound_runtime_ids & bound_candidate_ids:
         errors.append("consumer_bindings: candidate and runtime identities overlap")
 

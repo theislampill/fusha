@@ -1,0 +1,578 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-nunation-support-orthography/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-nunation-support-orthography/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "reject_reconstruction; article_and_nunation_contradiction; out_of_regime_non_a_form; unpointed_ending_evidence_insufficient",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+        "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+        "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+        "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "f66a121ebd1211747bb752c5730137838dcc10c537e1221ea08370f6de0feaed",
+      "guards_payload": [
+        {
+          "guard": "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+          "id": "g-nun-evidence-only"
+        },
+        {
+          "guard": "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+          "id": "g-nun-contradiction"
+        },
+        {
+          "guard": "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+          "id": "g-nun-hamza-seat"
+        },
+        {
+          "guard": "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+          "id": "g-nun-unpointed"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-nun-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "nun-adv-01",
+        "nun-adv-02",
+        "nun-adv-03",
+        "nun-abs-01",
+        "nun-abs-02"
+      ],
+      "positive_examples": [
+        "nun-pos-01",
+        "nun-pos-02",
+        "nun-pos-03",
+        "nun-pos-04",
+        "nun-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "scope": {
+        "increment": "inc-nunation-support-orthography",
+        "statement": "fathatan written directly on an ordinary final consonant is spelled with a following unpronounced support alif; the alif is orthographic only and carries no sound of its own",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nunation-support-orthography-nun-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; article_and_nunation_contradiction; out_of_regime_non_a_form; unpointed_ending_evidence_insufficient",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+        "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+        "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+        "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "f66a121ebd1211747bb752c5730137838dcc10c537e1221ea08370f6de0feaed",
+      "guards_payload": [
+        {
+          "guard": "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+          "id": "g-nun-evidence-only"
+        },
+        {
+          "guard": "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+          "id": "g-nun-contradiction"
+        },
+        {
+          "guard": "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+          "id": "g-nun-hamza-seat"
+        },
+        {
+          "guard": "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+          "id": "g-nun-unpointed"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-nun-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "nun-adv-01",
+        "nun-adv-02",
+        "nun-adv-03",
+        "nun-abs-01",
+        "nun-abs-02"
+      ],
+      "positive_examples": [
+        "nun-pos-01",
+        "nun-pos-02",
+        "nun-pos-03",
+        "nun-pos-04",
+        "nun-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "scope": {
+        "increment": "inc-nunation-support-orthography",
+        "statement": "three exact final-grapheme environments block the support alif outright: a word already ending in the tied taa, a hamza already seated on an alif carrier, and the variant final a-spelling; in each the fathatan is carried directly with no added alif",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nunation-support-orthography-nun-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; article_and_nunation_contradiction; out_of_regime_non_a_form; unpointed_ending_evidence_insufficient",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+        "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+        "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+        "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "f66a121ebd1211747bb752c5730137838dcc10c537e1221ea08370f6de0feaed",
+      "guards_payload": [
+        {
+          "guard": "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+          "id": "g-nun-evidence-only"
+        },
+        {
+          "guard": "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+          "id": "g-nun-contradiction"
+        },
+        {
+          "guard": "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+          "id": "g-nun-hamza-seat"
+        },
+        {
+          "guard": "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+          "id": "g-nun-unpointed"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-nun-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "nun-adv-01",
+        "nun-adv-02",
+        "nun-adv-03",
+        "nun-abs-01",
+        "nun-abs-02"
+      ],
+      "positive_examples": [
+        "nun-pos-01",
+        "nun-pos-02",
+        "nun-pos-03",
+        "nun-pos-04",
+        "nun-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "scope": {
+        "increment": "inc-nunation-support-orthography",
+        "statement": "a hamza that is NOT seated on an alif carrier does not qualify for the hamza exemption; it still takes the support alif like an ordinary consonant, so the exemption is keyed on the exact seat, never on hamza presence alone",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nunation-support-orthography-nun-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; article_and_nunation_contradiction; out_of_regime_non_a_form; unpointed_ending_evidence_insufficient",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+        "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+        "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+        "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "f66a121ebd1211747bb752c5730137838dcc10c537e1221ea08370f6de0feaed",
+      "guards_payload": [
+        {
+          "guard": "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+          "id": "g-nun-evidence-only"
+        },
+        {
+          "guard": "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+          "id": "g-nun-contradiction"
+        },
+        {
+          "guard": "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+          "id": "g-nun-hamza-seat"
+        },
+        {
+          "guard": "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+          "id": "g-nun-unpointed"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-nun-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "nun-adv-01",
+        "nun-adv-02",
+        "nun-adv-03",
+        "nun-abs-01",
+        "nun-abs-02"
+      ],
+      "positive_examples": [
+        "nun-pos-01",
+        "nun-pos-02",
+        "nun-pos-03",
+        "nun-pos-04",
+        "nun-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "scope": {
+        "increment": "inc-nunation-support-orthography",
+        "statement": "nunation and the definite article are a written contradiction; a token declaring both is refused outright, never resolved by preferring one marker over the other",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nunation-support-orthography-nun-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; article_and_nunation_contradiction; out_of_regime_non_a_form; unpointed_ending_evidence_insufficient",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+        "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+        "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+        "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "f66a121ebd1211747bb752c5730137838dcc10c537e1221ea08370f6de0feaed",
+      "guards_payload": [
+        {
+          "guard": "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+          "id": "g-nun-evidence-only"
+        },
+        {
+          "guard": "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+          "id": "g-nun-contradiction"
+        },
+        {
+          "guard": "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+          "id": "g-nun-hamza-seat"
+        },
+        {
+          "guard": "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+          "id": "g-nun-unpointed"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-nun-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "nun-adv-01",
+        "nun-adv-02",
+        "nun-adv-03",
+        "nun-abs-01",
+        "nun-abs-02"
+      ],
+      "positive_examples": [
+        "nun-pos-01",
+        "nun-pos-02",
+        "nun-pos-03",
+        "nun-pos-04",
+        "nun-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "scope": {
+        "increment": "inc-nunation-support-orthography",
+        "statement": "the support-alif rule concerns only the a-form of nunation; the u-form and i-form marks are never licensed constructions in this table, and an unpointed final ending supplies no tanwin evidence to decide on at all",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nunation-support-orthography-nun-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "reject_reconstruction; article_and_nunation_contradiction; out_of_regime_non_a_form; unpointed_ending_evidence_insufficient",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+        "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+        "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+        "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "licensing_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "f66a121ebd1211747bb752c5730137838dcc10c537e1221ea08370f6de0feaed",
+      "guards_payload": [
+        {
+          "guard": "the support-alif decision is read from the exact declared final grapheme and mark, never from case, definiteness, governor, or function",
+          "id": "g-nun-evidence-only"
+        },
+        {
+          "guard": "the definite article and nunation together are a written contradiction; the table refuses rather than repairing a guess about which marker wins",
+          "id": "g-nun-contradiction"
+        },
+        {
+          "guard": "the hamza exemption is keyed on the exact alif seat; a hamza on any other seat, or no seat at all, still requires the support alif",
+          "id": "g-nun-hamza-seat"
+        },
+        {
+          "guard": "an unpointed final ending supplies no evidence; the question is refused, never answered from the bare letter",
+          "id": "g-nun-unpointed"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-nun-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "nun-adv-01",
+        "nun-adv-02",
+        "nun-adv-03",
+        "nun-abs-01",
+        "nun-abs-02"
+      ],
+      "positive_examples": [
+        "nun-pos-01",
+        "nun-pos-02",
+        "nun-pos-03",
+        "nun-pos-04",
+        "nun-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nunation-support-orthography/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "scope": {
+        "increment": "inc-nunation-support-orthography",
+        "statement": "this table decides written support-alif licensing from exact declared final-grapheme/mark evidence only; it never infers case, definiteness beyond the stated ban, governor, function, or contextual meaning",
+        "unit_ref": "cu-nunation-support-orthography"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nunation-support-orthography-nun-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nunation-support-orthography/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "licensing_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-nunation-support-orthography",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "nun-abs-01",
+      "nun-abs-02"
+    ],
+    "adversarial": [
+      "nun-adv-01",
+      "nun-adv-02",
+      "nun-adv-03"
+    ],
+    "positive": [
+      "nun-pos-01",
+      "nun-pos-02",
+      "nun-pos-03",
+      "nun-pos-04"
+    ],
+    "transfer": [
+      "nun-trn-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-nunation-support-orthography",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "reject_reconstruction",
+      "article_and_nunation_contradiction",
+      "out_of_regime_non_a_form",
+      "unpointed_ending_evidence_insufficient"
+    ],
+    "capability": "licensing_table",
+    "encoding_limitation": "the registered licensing_table capability matches ONE compound construction key and can only emit reject_reconstruction for anything unmatched; the evidence-specific abstention reasons declared here are therefore DECLARED-BUT-UNREACHABLE pending a keyed-evidence capability — kept as the unit's honest abstention vocabulary, not as consumer behavior (audit finding, modeled on inc-hamza-carrier-licensing)",
+    "increment": "inc-nunation-support-orthography",
+    "licensing_table": [
+      {
+        "construction": "fathatan_on_ordinary_final_consonant",
+        "hidden": {
+          "type": "support_alif_written",
+          "value_class": "ordinary_final_consonant_requires_support"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "fathatan_on_taa_marbuta",
+        "hidden": {
+          "type": "support_alif_absent",
+          "value_class": "taa_marbuta_exempt_grapheme"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "fathatan_on_final_alif_maqsura",
+        "hidden": {
+          "type": "support_alif_absent",
+          "value_class": "alif_maqsura_exempt_grapheme"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "fathatan_on_hamza_seated_on_final_alif",
+        "hidden": {
+          "type": "support_alif_absent",
+          "value_class": "hamza_on_alif_seat_exempt_grapheme"
+        },
+        "obligatory": true
+      },
+      {
+        "construction": "fathatan_on_hamza_not_seated_on_alif",
+        "hidden": {
+          "type": "support_alif_written",
+          "value_class": "hamza_without_alif_seat_still_requires_support"
+        },
+        "obligatory": true
+      }
+    ],
+    "rules": [
+      {
+        "id": "nun-r1",
+        "text": "fathatan written directly on an ordinary final consonant is spelled with a following unpronounced support alif; the alif is orthographic only and carries no sound of its own"
+      },
+      {
+        "id": "nun-r2",
+        "text": "three exact final-grapheme environments block the support alif outright: a word already ending in the tied taa, a hamza already seated on an alif carrier, and the variant final a-spelling; in each the fathatan is carried directly with no added alif"
+      },
+      {
+        "id": "nun-r3",
+        "text": "a hamza that is NOT seated on an alif carrier does not qualify for the hamza exemption; it still takes the support alif like an ordinary consonant, so the exemption is keyed on the exact seat, never on hamza presence alone"
+      },
+      {
+        "id": "nun-r4",
+        "text": "nunation and the definite article are a written contradiction; a token declaring both is refused outright, never resolved by preferring one marker over the other"
+      },
+      {
+        "id": "nun-r5",
+        "text": "the support-alif rule concerns only the a-form of nunation; the u-form and i-form marks are never licensed constructions in this table, and an unpointed final ending supplies no tanwin evidence to decide on at all"
+      },
+      {
+        "id": "nun-r6",
+        "text": "this table decides written support-alif licensing from exact declared final-grapheme/mark evidence only; it never infers case, definiteness beyond the stated ban, governor, function, or contextual meaning"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-nunation-support-orthography",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "support_alif_chip",
+      "teaching": "shows whether the support alif is written or blocked next to the exact final grapheme that decided it"
+    },
+    {
+      "key": "exempt_grapheme_note",
+      "teaching": "names which of the three exempt graphemes blocked the support alif, so the exemption is never presented as arbitrary"
+    },
+    {
+      "key": "contradiction_note",
+      "teaching": "flags a token declaring both the article and nunation as a written contradiction, never a resolved reading"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}
