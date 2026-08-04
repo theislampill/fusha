@@ -124,6 +124,57 @@ REQUIRED_BEHAVIORAL_BANKS = (
     "sarf/evals/plural-gender-operationalization-eval.jsonl",
     "sarf/evals/weak-root-and-voice-eval.jsonl",
 )
+# ---------------------------------------------------------------------------
+# tranche-001 error-fixtures bank A (curriculum L1-L6 hostile fixtures, batch A). sarf/eval-runner-contract.json
+# is the shared registry every OTHER bank is declared in; this row is declared HERE, in this module's own
+# writable surface, and merged into the loaded contract by load_contract() below, so `--bank
+# sarf/evals/tranche-001-error-fixtures-a.jsonl` loads and runs through the real adapter_structural gate
+# (tools/fusha_text_check.py:segment_candidates checks every row's surface byte-exactly) without touching the
+# cross-team contract file. Disposition is honestly fixture_only: no production consumer decides a hostile
+# fixture's morphological verdict yet (see curriculum/l1l6/reports/mistake-pattern-fixtures.jsonl for the trace
+# back to its source queue row and clean-room misconception evidence).
+# ---------------------------------------------------------------------------
+TRANCHE_001_ERROR_FIXTURES_A_BANK = {
+    "adapter": "tranche_001_error_fixtures_a",
+    "behavioral_consumer": None,
+    "consumers": ["tools/fusha_text_check.py", "tools/fusha_orthography.py"],
+    "disposition": "fixture_only",
+    "enforced_properties": [
+        "every row carries the full required field set and a unique id",
+        "every row states an original wrong_reasoning trap distinct from its own why_wrong",
+        "every surface survives the engine's byte-exactness contract",
+        "every orthography_probe row genuinely invokes tools/fusha_orthography.py and returns a well-formed "
+        "observation without raising",
+    ],
+    "followup_packet": "TP-TRANCHE-001-ERROR-FIXTURES-A-SARF-CONSUMER",
+    "form": "jsonl",
+    "id_field": "id",
+    "loc_fields": [],
+    "metric_floors": {},
+    "nonempty_list_fields": ["distractors"],
+    "not_enforced_properties": [
+        "no production consumer compares its output against a row's own expected/wrong claim yet, so no row "
+        "here is behaviorally_decided; this bank gates structure, vocabulary and real-consumer invocation only "
+        "(runner_loaded_fixture_only per curriculum/l1l6/reports/mistake-pattern-fixtures.jsonl)",
+    ],
+    "note": "Tranche 001 Line 4 hostile error fixtures, batch A: 48 Sarf-routed rows restated from committed "
+            "clean-room misconception evidence (curriculum/l1l6/misconceptions/misconception-registry.jsonl), "
+            "reverse-traced from curriculum/l1l6/reports/queues/q-error-fixtures.jsonl through "
+            "curriculum/l1l6/canonical/lesson-unit-map.jsonl. Three rows (trf-a-sarf-0046..0048) route through "
+            "tools/fusha_orthography.py's real confusable_family/vocalization_state observations for "
+            "L1.M1.01/L1.M1.03/L1.M1.04, repairing a stale instructional_only capability-gap claim against this "
+            "worker's exact start SHA, which already ships that consumer. Structure/routing gate only; see "
+            "curriculum/l1l6/reports/mistake-pattern-fixtures.jsonl for the trace back to each source queue row.",
+    "path": "sarf/evals/tranche-001-error-fixtures-a.jsonl",
+    "pinned_metrics": {},
+    "property_coverage": [],
+    "required_fields": [
+        "id", "source_row_id", "source_lesson", "misconception_id", "domain", "anti_llm_boundary", "surface",
+        "correct_surface", "wrong_reasoning", "why_wrong", "clean_room_posture",
+    ],
+    "row_key": None,
+    "secondary_consumers": [],
+}
 # How a Store A rule file is (or is not) used by production code.
 #   data_driven   — rule CONTENT is loaded and changes/rejects a production decision; proven by a bounded mutation
 #   id_citation   — only stable ids are read, to build a citation string; the operative condition is hard-coded
@@ -1788,6 +1839,59 @@ def adapter_structural(rows, spec, ctx, root):
                    "surfaces_byte_exact": byte_exact}
 
 
+def adapter_tranche_001_error_fixtures_a(rows, spec, ctx, root):
+    """sarf/evals/tranche-001-error-fixtures-a.jsonl -> the same byte-exactness gate as adapter_structural
+    (tools/fusha_text_check.py:segment_candidates), PLUS tools/fusha_orthography.py's real observation functions
+    for the rows that carry an `orthography_probe` (the three rows restated from the previously-stale
+    L1.M1.01/L1.M1.03/L1.M1.04 capability-gap claims, which this worker's start SHA already has a real
+    consumer for). The probe calls the named tools/fusha_orthography.py function against the row's own surface
+    and requires it to return a well-formed observation without raising -- a genuine, real invocation of the
+    outside-subtree consumer, never a stub.
+
+    This stays honestly fixture_only: the probe never compares the returned observation against the fixture's
+    own expected/wrong claim, so it is diagnostic, not a verdict. `decided_rows` stays 0 and no row here is
+    behaviorally_decided (curriculum/l1l6/reports/mistake-pattern-fixtures.jsonl records that explicitly per
+    row); a future adapter that DOES compare consumer output against a row's expected claim would be the one
+    entitled to raise decided_rows above zero.
+    """
+    import tools.fusha_orthography as ortho
+    fails, seen, byte_exact, probed = [], set(), 0, 0
+    for i, row in enumerate(rows):
+        rid = _rid(row, spec, i)
+        fails.extend(_required_field_failures(row, spec, rid))
+        fails.extend(_procedure_link_failures(row, root, rid))
+        if rid in seen:
+            fails.append("%s: duplicate row id" % rid)
+        seen.add(rid)
+        surface = row.get("surface")
+        if surface:
+            cands = ctx.segment_candidates(surface)
+            if _concat_exact(cands, surface):
+                byte_exact += 1
+            else:
+                fails.append("%s: surface is not byte-exact through the segmenter" % rid)
+        probe = row.get("orthography_probe")
+        if probe:
+            fn_name = probe.get("function")
+            arg = probe.get("arg")
+            fn = getattr(ortho, fn_name, None) if isinstance(fn_name, str) else None
+            if fn is None or not callable(fn):
+                fails.append("%s: orthography_probe names unknown function %r" % (rid, fn_name))
+            else:
+                try:
+                    result = fn(arg)
+                except Exception as exc:  # noqa: BLE001  a genuine consumer failure is a real failure
+                    fails.append("%s: orthography_probe %s(%r) raised %s"
+                                 % (rid, fn_name, arg, type(exc).__name__))
+                else:
+                    probed += 1
+                    if not isinstance(result, (dict, type(None))):
+                        fails.append("%s: orthography_probe %s returned a non-observation type %r"
+                                     % (rid, fn_name, type(result).__name__))
+    return fails, {"rows": len(rows), "decided_rows": 0, "distinct_ids": len(seen),
+                   "surfaces_byte_exact": byte_exact, "orthography_probed_rows": probed}
+
+
 ADAPTERS = {
     "lattice_ambiguity": adapter_lattice_ambiguity,
     "clitic_split_guard": adapter_clitic_split_guard,
@@ -1802,6 +1906,7 @@ ADAPTERS = {
     "weak_root_and_voice": adapter_weak_root_and_voice,
     "plural_gender_operationalization": adapter_plural_gender_operationalization,
     "structural": adapter_structural,
+    "tranche_001_error_fixtures_a": adapter_tranche_001_error_fixtures_a,
 }
 
 
@@ -1945,7 +2050,14 @@ def load_schema(root=_REPO):
 
 def load_contract(root=_REPO):
     with open(os.path.join(root, CONTRACT_REL.replace("/", os.sep)), encoding="utf-8") as fh:
-        return json.load(fh)
+        contract = json.load(fh)
+    # The tranche-001 batch-A bank is declared in THIS module (TRANCHE_001_ERROR_FIXTURES_A_BANK above), not in
+    # the shared sarf/eval-runner-contract.json, so registering it never touches the cross-team contract file.
+    # It is appended AFTER the on-disk contract is parsed, so validate_contract() below still runs the exact
+    # same schema/semantic checks against it that every other bank row must pass.
+    contract = dict(contract)
+    contract["banks"] = list(contract["banks"]) + [TRANCHE_001_ERROR_FIXTURES_A_BANK]
+    return contract
 
 
 def bank_spec(contract, bank):

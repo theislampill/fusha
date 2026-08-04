@@ -1,0 +1,55 @@
+{
+  "schema": "curriculum.l1l6_mistake_pattern_fixture_trace.v1.meta",
+  "generator": "hand-authored: tools/test_tranche_001_error_fixtures.py pins the selection this file records",
+  "task": "tranche-001 Line 4 hostile error fixtures, batch A",
+  "selected_unit_ids": [
+    "cu-grapheme-inventory-and-confusables",
+    "cu-orthographic-connectivity-classes",
+    "cu-short-vowel-diacritics-and-vocalization-state",
+    "u-s06",
+    "u-s01",
+    "cu-nunation-support-orthography",
+    "u-n01",
+    "cu-definite-article-assimilation"
+  ],
+  "selection_algorithm": "curriculum/l1l6/canonical/lesson-unit-map.jsonl rows whose units[] intersects selected_unit_ids name the source lessons; curriculum/l1l6/reports/queues/q-error-fixtures.jsonl rows whose source lesson is in that set, sorted by row_id, form the candidate universe; the first 50 by row_id are this batch.",
+  "candidate_universe_row_count": 101,
+  "selected_batch_row_count": 50,
+  "remaining_row_count": 51,
+  "remaining_row_ids": [
+    "q-error-fixtures-0088", "q-error-fixtures-0089", "q-error-fixtures-0091", "q-error-fixtures-0092",
+    "q-error-fixtures-0093", "q-error-fixtures-0094", "q-error-fixtures-0095", "q-error-fixtures-0096",
+    "q-error-fixtures-0097", "q-error-fixtures-0098", "q-error-fixtures-0099", "q-error-fixtures-0101",
+    "q-error-fixtures-0102", "q-error-fixtures-0103", "q-error-fixtures-0104", "q-error-fixtures-0107",
+    "q-error-fixtures-0108", "q-error-fixtures-0109", "q-error-fixtures-0111", "q-error-fixtures-0114",
+    "q-error-fixtures-0115", "q-error-fixtures-0116", "q-error-fixtures-0117", "q-error-fixtures-0127",
+    "q-error-fixtures-0130", "q-error-fixtures-0133", "q-error-fixtures-0134", "q-error-fixtures-0145",
+    "q-error-fixtures-0150", "q-error-fixtures-0151", "q-error-fixtures-0153", "q-error-fixtures-0154",
+    "q-error-fixtures-0155", "q-error-fixtures-0156", "q-error-fixtures-0158", "q-error-fixtures-0162",
+    "q-error-fixtures-0173", "q-error-fixtures-0174", "q-error-fixtures-0175", "q-error-fixtures-0176",
+    "q-error-fixtures-0179", "q-error-fixtures-0180", "q-error-fixtures-0181", "q-error-fixtures-0184",
+    "q-error-fixtures-0185", "q-error-fixtures-0192", "q-error-fixtures-0193", "q-error-fixtures-0194",
+    "q-error-fixtures-0197", "q-error-fixtures-0203", "q-error-fixtures-0204"
+  ],
+  "outcomes": {
+    "runner_loaded_fixture_only_count": 50,
+    "behaviorally_decided_count": 0,
+    "capability_gap_count": 0,
+    "vocabulary_note": "runner_loaded_fixture_only means: the row's bank is loaded and its structural/routing gate is enforced by a real eval runner (tools/run_sarf_evals.py or tools/run_nahw_evals.py), but no production consumer compares its output against the fixture's expected/wrong claim, so the row is NOT behaviorally decided. This batch previously mislabelled these rows 'executable' and reported an 'executable_fixture_count'; that vocabulary implied behavioral closure the runners never provide (both runner outputs report zero decided rows for this bank and say structural checks are not behavioral closure) and has been removed. behaviorally_decided_count stays 0 unless a future adapter genuinely compares a real consumer's output against a row's own expected claim."
+  },
+  "domain_routing": {
+    "sarf_runner_loaded_count": 48,
+    "sarf_behaviorally_decided_count": 0,
+    "sarf_bank": "sarf/evals/tranche-001-error-fixtures-a.jsonl",
+    "sarf_runner": "python tools/run_sarf_evals.py --bank tranche-001-error-fixtures-a.jsonl",
+    "nahw_runner_loaded_count": 2,
+    "nahw_behaviorally_decided_count": 0,
+    "nahw_bank": "nahw/evals/tranche-001-error-fixtures-a.jsonl",
+    "nahw_runner": "python tools/run_nahw_evals.py --bank tranche-001-error-fixtures-a"
+  },
+  "capability_gap_lessons": [],
+  "capability_gap_note": "Zero capability gaps in this repaired batch. q-error-fixtures-0000/-0002/-0003 (L1.M1.01/L1.M1.03/L1.M1.04) were previously recorded as capability_gap on the stale claim that no consumer exists for grapheme confusables/vocalization-state/sukūn-shadda observation. That claim is stale relative to this worker's exact start SHA ec961722238d577e7ee0094b8725526f9f8f2b78, which already ships tools/fusha_orthography.py (confusable_family, vocalization_state), tools/fusha_text_check.py, tools/fusha_pattern_engine.py and tools/test_fusha_orthography.py as real outside-subtree consumers. All three rows are now runner_loaded_fixture_only fixtures (trf-a-sarf-0046..0048) routed through tools/fusha_orthography.py's real observation functions; they remain not behaviorally_decided because the adapter checks that the real consumer returns a well-formed observation without raising, not that it agrees with a fixture's expected claim. A different concrete gap would need fresh evidence against current code before this batch could reclaim capability_gap status for any row.",
+  "consumer_wiring_note": "sarf/eval-runner-contract.json and nahw/evals' A2_ARTIFACT_OWNERSHIP map are the shared rule-registry surfaces for every OTHER bank; neither was edited. The sarf bank is declared in-memory by TRANCHE_001_ERROR_FIXTURES_A_BANK inside tools/run_sarf_evals.py (merged into load_contract()'s return value), disposition fixture_only, adapter tranche_001_error_fixtures_a, real consumers tools/fusha_text_check.py:segment_candidates (byte-exactness gate, all 48 rows) and tools/fusha_orthography.py:confusable_family/vocalization_state (orthography_probe rows trf-a-sarf-0046..0048 only). The naḥw bank is a plain BANKS-dict entry inside tools/run_nahw_evals.py (run_tranche_001_error_fixtures_a), disposition fixture_only, real consumer tools/fusha_nahw_gate_rules.py:gate_rank (gate-floor check). Every disposition is honest fixture_only: no production consumer compares its output against a row's own expected/wrong claim, so behaviorally_decided is false for all 50 rows; that is the exact same disposition the precedent banks (surfacemap-wbw-absent-eval.jsonl for sarf, grammar-wrong-reasoning-cases.jsonl for naḥw) already carry. The correct focused Sarf CLI form is `--bank tranche-001-error-fixtures-a.jsonl` (repo path or basename accepted; the selector was not broadened to accept an extensionless stem).",
+  "no_certification_claim": "no row in this file, the sarf bank or the naḥw bank asserts qamus/fusha certification, public release, or behavioral closure; every trace row carries certification_status: not_certified; no public claim; fixture_only classification, no behavioral-closure claim.",
+  "clean_room_posture": "every fixture is an original restatement of the committed misconception-registry.jsonl's abstract pattern/correction_principle/why_wrong fields, with a freshly authored Arabic example; no private source prose was read or reproduced."
+}
