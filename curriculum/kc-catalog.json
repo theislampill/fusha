@@ -810,5 +810,166 @@
       {"kind": "error_pattern", "en": "A learner adds gemination after the article's lām before a moon letter, extending the sun-letter pattern by analogy."},
       {"kind": "error_pattern", "en": "A learner drops the article's lām before a sun letter without doubling the following consonant, treating assimilation as deletion rather than merger."}
     ]
+  },
+  {
+    "kc_id": "kc-assimilated-verb-radical-scope",
+    "arabic_grammar_name": "assimilated (mithāl) verb — Form I imperfect first-radical deletion",
+    "plain_rule": "In Form I only, an assimilated verb whose first radical is wāw deletes that radical in the imperfect when the stem vowel is /i/ or /u/; the derived-form/imperative rebuilding this deletion licenses is scoped to that same Form I imperfect cell — it is never extended to Forms II-X, to the corresponding imperative of a stem that already opens on a voweled consonant, or read back as if a derived form's retained first radical meant the verb was still Form I.",
+    "trigger_condition": "a Form I assimilated verb's imperfect, imperative, or a derived-form (II-X) cell built on the same root is being formed and the deletion rule's Form-I-only scope has not been checked",
+    "expected_feature": "the imperfect first-radical deletion applied only to the Form I imperfect cell it is licensed for, with derived forms and the imperative correctly excluded or re-derived from their own template",
+    "typical_error_feature": "the deletion extended to a derived (II-X) form, a prosthetic hamza added to an imperative stem that already opens on a voweled consonant, or a derived form's retained first radical misread as evidence the verb is still Form I",
+    "point_template": "Before you touch the first radical, check which form (I or derived) and which cell (imperfect/imperative) you are actually building.",
+    "teach_template": "First-radical wāw-deletion is a Form I imperfect fact only; the imperative built from a deleted stem needs no prosthetic hamza, derived forms (II-X) keep the first radical because they never delete it, and a retained first radical after a derived-form prefix is not a sign the verb reverted to Form I.",
+    "bottom_out_template": "Name the form and the cell, then state whether first-radical deletion applies there.",
+    "severity": "warn",
+    "default_gate": "human_source_review_required",
+    "grammar_topic": "weak_root_morphology",
+    "cefr_band": "C1",
+    "diagnostic_classes": ["assimilated_verb_deletion_scope_error"],
+    "drill_route": "curriculum/drills/weak-root-voice-runtime.md",
+    "sarf_route": "sarf/procedures/weak-root.md",
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0119", "mc-0129", "mc-0242", "mc-0592"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner treats the Form I imperfect deletion rule as if it applied to a Form II-X verb sharing the same root, wrongly dropping the first radical from a derived form that never deletes it."}
+    ]
+  },
+  {
+    "kc_id": "kc-defective-verb-suffix-and-jussive-shift",
+    "arabic_grammar_name": "defective (nāqiṣ) verb — subtype vowel, jussive deletion, and suffix-triggered shift",
+    "plain_rule": "A defective verb's imperfect middle/final vowel is a lexically stored subtype fact, never interchangeable between subtypes; its jussive/imperative is formed by deleting the final weak radical outright rather than adding sukūn to it; and a consonant-initial suffix on the past stem (e.g. the masculine plural wāw) forces the weak final radical to shift/reappear rather than leaving the bare past's long vowel in place.",
+    "trigger_condition": "a defective verb's imperfect subtype vowel, its jussive/imperative form, or a suffixed past cell is being produced and the subtype-specific vowel, the deletion rule, or the suffix-triggered shift has not been checked against this verb's own lexical entry",
+    "expected_feature": "the subtype's own stored vowel used (never swapped for the other subtype's), the final weak radical deleted (not merely marked with sukūn) under a jussive/imperative operator, and the suffix-triggered shift applied before a consonant-initial suffix",
+    "typical_error_feature": "the two subtype vowels exchanged, the final weak consonant kept visible under a jussive operator, or a suffixed past cell written with the bare past's long alif instead of the shifted consonant the suffix licenses",
+    "point_template": "Before you write this cell, check the verb's own subtype vowel and whether a jussive operator or a consonant-initial suffix is acting on it.",
+    "teach_template": "Nāqiṣ subtype vowels are stored per verb, not interchangeable; the jussive/imperative is exponed by deleting the final radical outright; and a consonant-initial suffix forces the underlying weak radical back, so the bare past's long vowel is not available in that cell.",
+    "bottom_out_template": "Name the subtype vowel, then state what the jussive/imperative or the suffix does to the final radical.",
+    "severity": "warn",
+    "default_gate": "human_source_review_required",
+    "grammar_topic": "weak_root_morphology",
+    "cefr_band": "C1",
+    "diagnostic_classes": ["defective_verb_subtype_or_shift_error"],
+    "drill_route": "curriculum/drills/weak-root-voice-runtime.md",
+    "sarf_route": "sarf/procedures/weak-root.md",
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0234", "mc-0278", "mc-0353", "mc-0891"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner writes the masculine plural past of a defective verb with the bare past's final long vowel instead of the consonant the suffix forces back, producing a non-existent past-tense cell."}
+    ]
+  },
+  {
+    "kc_id": "kc-geminate-verb-merger-licensing",
+    "arabic_grammar_name": "geminate (muḍaʿʿaf) verb — merger/separation licensing and the jussive shapes",
+    "plain_rule": "A geminate verb's imperfect vowel is a lexically stored fact, not predictable from the class; its gemination realizes two root consonants and is never dropped as if optional; the two identical radicals merge only where the following element is NOT a bare consonant-initial suffix, and separate only where a consonant-initial suffix follows — reversing this licensing stacks or drops a radical; and the jussive of a geminate verb has exactly two licensed shapes (merged with fatḥa, or separated with sukūn) — a merged form with ḍamma is simply the indicative, not a third jussive option.",
+    "trigger_condition": "a geminate verb's imperfect vowel, its merger/separation, or its jussive shape is being produced and the per-verb vowel or the suffix-conditioned merger licensing has not been checked",
+    "expected_feature": "the verb's own stored imperfect vowel used, merger applied only where no consonant-initial suffix follows and separation only where one does, and the jussive limited to its two licensed shapes",
+    "typical_error_feature": "one uniform imperfect vowel assumed for the whole class, the gemination mark dropped as if decorative, merger and separation licensing reversed against the following suffix, or an indicative-shaped (ḍamma) merged form mistaken for a jussive",
+    "point_template": "Before you write this cell, check the verb's own stored vowel and what actually follows the second radical.",
+    "teach_template": "The geminate imperfect vowel is stored per verb; gemination realizes two radicals and is never optional; a consonant-initial suffix forces separation and blocks merger; and the jussive has only two licensed shapes, merged-with-fatḥa or separated-with-sukūn — a merged-with-ḍamma form is the indicative.",
+    "bottom_out_template": "State the stored vowel, then justify merger or separation from what follows, then name the licensed jussive shape.",
+    "severity": "warn",
+    "default_gate": "human_source_review_required",
+    "grammar_topic": "weak_root_morphology",
+    "cefr_band": "C1",
+    "diagnostic_classes": ["geminate_verb_merger_or_jussive_error"],
+    "drill_route": "curriculum/drills/weak-root-voice-runtime.md",
+    "sarf_route": "sarf/procedures/doubled-root.md",
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0076", "mc-0225", "mc-0355", "mc-0674", "mc-0899"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner keeps a geminate verb's two identical radicals merged even though a consonant-initial suffix follows, stacking a doubled consonant against a vowelless one."}
+    ]
+  },
+  {
+    "kc_id": "kc-hamzated-verb-carrier-and-imperfect",
+    "arabic_grammar_name": "hamzated (mahmūz) verb — carrier selection and stored irregular cells",
+    "plain_rule": "A hamzated verb's hamza carrier is selected by the vowels in its immediate environment, never a free spelling choice, and that carrier is re-evaluated after every affixation; a small closed set of hamzated verbs additionally have stored irregular imperatives (formed without the hamza) and, for one member, a stored irregular imperfect with no hamza at all — lexical facts to check, not outputs of the regular carrier rule; and a hamza radical is a separate class from the weak (wāw/yāʾ) radicals, so weak-root rules never transfer to it.",
+    "trigger_condition": "a hamzated verb's carrier, its imperative, its imperfect, or its root classification is being decided and the vowel-environment carrier rule, the small stored-irregular list, or the hamza-vs-weak-root distinction has not been checked",
+    "expected_feature": "the carrier chosen from the immediate vowel environment and re-checked after affixation, the stored irregular imperatives (and the one stored irregular imperfect) used as lexical facts rather than derived, and a hamza radical never treated as a weak radical",
+    "typical_error_feature": "the wrong carrier chosen or kept unchanged after a plural suffix, a regular hamza restored into a cell that is lexically hamza-less, or a hamza-bearing root run through a weak-root rule",
+    "point_template": "Before you write the hamza, check the vowels immediately around it and whether this cell is one of the small stored-irregular ones.",
+    "teach_template": "The hamza carrier is decided by its immediate vowel environment and must be re-checked after every affixation; a short stored list of hamzated verbs has irregular imperatives (and one an irregular imperfect) with no hamza at all; and a hamza radical is a separate class from the weak radicals, so weak-root rules do not transfer to it.",
+    "bottom_out_template": "Name the carrier from its vowel environment (or the stored irregular form), then confirm the root's class is hamza, not weak.",
+    "severity": "warn",
+    "default_gate": "human_source_review_required",
+    "grammar_topic": "weak_root_morphology",
+    "cefr_band": "C1",
+    "diagnostic_classes": ["hamzated_verb_carrier_or_classification_error"],
+    "drill_route": "curriculum/drills/weak-root-voice-runtime.md",
+    "sarf_route": "sarf/procedures/hamza-root.md",
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0145", "mc-0356", "mc-0653", "mc-0709", "mc-0859"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner restores a regular hamza into the imperfect of one of the few hamzated verbs that are lexically stored without a hamza there at all."}
+    ]
+  },
+  {
+    "kc_id": "kc-doubly-weak-verb-subtype-composition",
+    "arabic_grammar_name": "doubly weak (lafīf) verb — subtype composition",
+    "plain_rule": "A lafīf verb's subtype (maqrūn/mafrūq — which two positions carry the weak radicals) is assigned from the positions of its weak radicals before conjugating, and the two subtypes' imperfect stems differ in shape AND length; the separated (mafrūq) subtype deletes its first weak radical in the imperfect exactly as a plain first-weak (assimilated) verb does, so restoring it produces a non-word; a lafīf verb's jussive still deletes its final weak radical, exactly as an ordinary defective verb's does; and in the indefinite, its active participle's final radical gives way to tanwīn — writing that radical as a visible consonant there is a spelling error, not a variant.",
+    "trigger_condition": "a lafīf verb's subtype, its imperfect stem, its jussive, or its indefinite active-participle spelling is being produced and the subtype has not been fixed from the weak-radical positions first",
+    "expected_feature": "the subtype assigned from radical position before conjugating, the correct (subtype-specific) imperfect stem produced, the final weak radical deleted under the jussive, and the indefinite participle spelled with tanwīn in place of the final radical",
+    "typical_error_feature": "the two subtypes' imperfect shapes conflated, the mafrūq subtype's first weak radical wrongly restored into the imperfect, the final weak radical kept visible under a jussive operator, or the indefinite active participle written with a visible final radical instead of tanwīn",
+    "point_template": "Before you conjugate a lafīf verb, fix its subtype from the positions of its two weak radicals.",
+    "teach_template": "Lafīf subtype is decided by radical position first; maqrūn and mafrūq imperfects differ in shape and length; the mafrūq subtype deletes its first radical in the imperfect exactly like a plain assimilated verb; the jussive still deletes the final radical exactly like a plain defective verb; and the indefinite active participle spells tanwīn where the final radical would be, never the radical itself.",
+    "bottom_out_template": "Name the subtype, then justify the imperfect stem, the jussive, or the indefinite spelling from it.",
+    "severity": "warn",
+    "default_gate": "human_source_review_required",
+    "grammar_topic": "weak_root_morphology",
+    "cefr_band": "C1",
+    "diagnostic_classes": ["doubly_weak_verb_subtype_error"],
+    "drill_route": "curriculum/drills/weak-root-voice-runtime.md",
+    "sarf_route": "sarf/procedures/weak-root.md",
+    "nahw_route": null,
+    "curriculum_misconception_ids": ["mc-0173", "mc-0278", "mc-0354", "mc-0654", "mc-0898"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner conjugates a lafīf verb's imperfect without first checking whether its two weak radicals are in the maqrūn or mafrūq positions, producing the wrong stem shape and length."}
+    ]
+  },
+  {
+    "kc_id": "kc-passive-voice-melody-and-argument-promotion",
+    "arabic_grammar_name": "passive voice melody (bināʾ lil-majhūl) and promoted-argument case/agreement, in weak-root stems",
+    "plain_rule": "Voice is carried entirely by the vowel melody (the prefix vowel together with the vowel before the final radical, or — for a medial-weak stem — its own distinct passive melody), never by argument marking alone; a medial-weak (hollow) stem takes its own passive melody and rejects the sound-stem melody; once an argument is promoted to fill the missing agent slot, it takes the case a subject takes (nominative, never left accusative) and controls agreement exactly as an agent would, including the feminine-singular pattern for a non-human plural; and an active melody left in place states an active proposition however the arguments are marked.",
+    "trigger_condition": "a passive clause's verb melody, or the case/agreement of its promoted argument, is being produced for a weak-root (specifically medial-weak/hollow) stem and the melody or the promotion consequence has not been checked",
+    "expected_feature": "the correct passive melody used for the stem's own class (including the hollow stem's own passive melody), the promoted argument marked nominative, and agreement controlled by the promoted argument",
+    "typical_error_feature": "the ordinary (sound-stem) passive melody applied to a medial-weak stem, the active prefix vowel kept in the imperfect passive, an active melody paired with passive-looking argument marking, the promoted argument left accusative, or the passive verb left unagreed with its promoted argument",
+    "point_template": "Before you assign case or agreement here, check the verb's own melody first — voice is decided there.",
+    "teach_template": "Voice is exponed by the vowel melody, not by argument marking; a hollow (medial-weak) stem has its own passive melody, never the sound-stem one; once promoted, the argument takes the subject's case (nominative) and controls agreement exactly as an agent would; and an active melody always states an active proposition, regardless of how the arguments happen to be marked.",
+    "bottom_out_template": "Name the melody first, then justify the promoted argument's case and agreement from it.",
+    "severity": "warn",
+    "default_gate": "human_source_review_required",
+    "grammar_topic": "verb_voice",
+    "cefr_band": "C1",
+    "diagnostic_classes": ["passive_melody_or_promotion_error"],
+    "drill_route": "curriculum/drills/weak-root-voice-runtime.md",
+    "sarf_route": "sarf/procedures/verb-form.md",
+    "nahw_route": "nahw/procedures/irab-case-mood.md",
+    "curriculum_misconception_ids": ["mc-0031", "mc-0251", "mc-0348", "mc-0398", "mc-0422"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner applies the ordinary sound-stem passive melody to a medial-weak (hollow) verb instead of that stem's own distinct passive melody."}
+    ]
+  },
+  {
+    "kc_id": "kc-deputy-agent-function-discrimination",
+    "arabic_grammar_name": "deputy agent (nāʾib al-fāʿil) function discrimination",
+    "plain_rule": "The deputy agent is identified by case and position — the nominative element occupying the subject position of a passive verb — never by translating into a language whose passive uses a by-phrase; a following prepositional phrase is a separate constituent in the genitive and is never itself the deputy agent; the deputy agent controls agreement exactly as an agent does, including the feminine-singular pattern for a non-human plural; once promoted, an element takes the case a subject takes (nominative), never the accusative case it had in the active sentence; and the verb's melody must itself be set to passive.",
+    "trigger_condition": "a passive clause's subject-position element, or the agreement/case it carries, is being identified and a following prepositional phrase, an unagreed verb, a leftover accusative case, or the verb's own melody has not been checked",
+    "expected_feature": "the deputy agent identified by case and position (not by a by-phrase translation), a following PP correctly excluded as a separate genitive constituent, agreement and nominative case correctly assigned to the deputy agent, and the verb's melody confirmed passive",
+    "typical_error_feature": "a following prepositional phrase mistaken for the deputy agent, the passive verb left unagreed with its actual deputy agent, the promoted element left in the accusative case it had in the active sentence, or an active verb melody used with a nominative patient",
+    "point_template": "Before you name the deputy agent, check case and position first, then confirm the verb's own melody is passive.",
+    "teach_template": "The deputy agent is the nominative element in the passive subject position, found from case and position, never from a by-phrase translation; a following PP is a separate genitive constituent, not the deputy agent; it controls agreement like any agent; it takes nominative case, never the accusative it had actively; and the verb's melody itself must be passive for any of this to cohere.",
+    "bottom_out_template": "Name the deputy agent by case and position, confirm the verb's melody is passive, then justify its case and agreement.",
+    "severity": "warn",
+    "default_gate": "human_source_review_required",
+    "grammar_topic": "deputy_agent",
+    "cefr_band": "C1",
+    "diagnostic_classes": ["deputy_agent_function_error"],
+    "drill_route": "curriculum/drills/weak-root-voice-runtime.md",
+    "sarf_route": "sarf/procedures/verb-form.md",
+    "nahw_route": "nahw/procedures/irab-case-mood.md",
+    "curriculum_misconception_ids": ["mc-0176", "mc-0250", "mc-0423", "mc-0806"],
+    "curriculum_error_examples": [
+      {"kind": "error_pattern", "en": "A learner names the object of a following prepositional phrase as the deputy agent instead of the nominative element actually occupying the passive subject position."}
+    ]
   }
 ]
