@@ -1,0 +1,14 @@
+{
+  "fields": [
+    {
+      "key": "nongoverning_preverbal_chip",
+      "teaching": "names the closed-registry class this particle+tense pair matched, never a mood/case/governor"
+    },
+    {
+      "key": "tense_dependent_reading_note",
+      "teaching": "for قد, shows which of the two tense-dependent readings the declared verb tense selected"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

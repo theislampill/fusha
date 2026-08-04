@@ -1,0 +1,14 @@
+{
+  "fields": [
+    {
+      "key": "suffix_class_chip",
+      "teaching": "shows which classifier (nisba ـيّ vs abstract-noun ـيّة) the written shadda + final letter decided"
+    },
+    {
+      "key": "shadda_evidence_note",
+      "teaching": "shows the exact written-shadda evidence the decision rested on, or the honest abstention when it is unmarked"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

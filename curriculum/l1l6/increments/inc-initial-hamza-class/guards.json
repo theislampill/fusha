@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "hamzat al-qat' and hamzat al-wasl are DISTINCT initial-hamza classes",
+      "id": "g-ihc-1"
+    },
+    {
+      "guard": "the seat and its exact vocalization must be WRITTEN evidence; a normalized/collapsed key can never decide this alone",
+      "id": "g-ihc-2"
+    },
+    {
+      "guard": "a bare initial alif with no hamza mark at all is unresolved and abstains rather than defaulting to either class",
+      "id": "g-ihc-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-ihc-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

@@ -1271,36 +1271,69 @@
       "secondary_consumers": []
     },
     {
-      "adapter": "structural",
-      "behavioral_consumer": null,
+      "adapter": "template_classification_train1",
+      "behavioral_consumer": "tools/curriculum_unit_consumer.py:analyze_derivative",
       "consumers": [
         "tools/curriculum_unit_consumer.py"
       ],
-      "disposition": "candidate_no_consumer",
+      "disposition": "implemented_and_consumed",
       "enforced_properties": [
-        "every row carries the full required field set and a unique id",
-        "every declared increment resolves to a real directory-discovered curriculum/l1l6/increments/<inc> pack",
-        "every surface survives the engine's byte-exactness contract"
+        "every row is bound (_TC1_ROW_TO_FIXTURE, authored by hand against the row's own surface/teaches text) to the exact fixture_id in that pack's OWN committed fixtures.jsonl, and decided by calling the REAL tools/curriculum_unit_consumer.py:analyze_derivative (10 template_classification rows) or :analyze_discriminator_table (10 discriminator_table rows) with that fixture's exact input -- never a value re-derived from the bank row's own fields",
+        "a row whose declared increment disagrees with its binding, whose bound fixture_id no longer exists in the pack's fixtures.jsonl, or whose bank-declared surface disagrees with the bound fixture's own surface fails closed rather than silently substituting a nearby fixture",
+        "the pack's own declared capability (template_classification vs discriminator_table) selects which real consumer function decides the row -- never a bank-declared or hard-coded capability",
+        "the consumer's returned decision must be candidate_pending or abstain, matching the bank's own expected_decision -- an eval fixture's expected answer never certifies anything by itself",
+        "no decision record emitted by either consumer may ever claim a certified state"
       ],
-      "followup_packet": "TP-SARF-T2-TEMPLATE-CLASSIFICATION-CONSUMER",
+      "followup_packet": null,
       "form": "jsonl",
       "id_field": "id",
       "loc_fields": [],
       "metric_floors": {},
       "nonempty_list_fields": [],
       "not_enforced_properties": [
-        "the per-row decision itself: tools/curriculum_unit_consumer.py:analyze_derivative and :analyze_discriminator_table are the REAL production decision consumers for these ten units (proven behaviourally by tools/test_tranche_002_template_classification.py and the packs' own fixtures.jsonl via --all/--self-test), but wiring THIS bank to `implemented_and_consumed` needs adding its path to tools/run_sarf_evals.py's hard-coded REQUIRED_BEHAVIORAL_BANKS tuple, which is outside this batch's writable allowlist -- deferred to the integration owner",
-        "TP-SARF-T2-TEMPLATE-CLASSIFICATION-CONSUMER.json does not exist yet (qamus/task-packets/** is outside this batch's writable allowlist); a full `--strict` run with no --bank filter will report it missing until the integration owner authors it"
+        "the exact fixture each row replays is a fixed, hand-authored binding (_TC1_ROW_TO_FIXTURE in tools/run_sarf_evals.py), not derived at runtime from the bank row's own evidence -- the bank row itself carries no letters/root_evidence/features fields at all, so there is no possibility of it supplying its own consumer input",
+        "coverage of the OTHER fixtures in each pack's fixtures.jsonl beyond the one bound per row: the packs' own --all/--self-test (tools/curriculum_unit_consumer.py) and tools/test_tranche_002_template_classification.py already exercise every committed fixture; this bank only proves the SARF-facing eval layer genuinely calls the same two production functions, never restates their full coverage"
       ],
-      "note": "Candidate-only structural bank for the ten preserved T2 template-classification units (cu-diminutive-template-family, cu-five-verb-inflection-class, cu-passive-voice-vocalization, cu-quadriliteral-templates, cu-suffix-abstract-noun, cu-nongoverning-preverbal-inventory, cu-nun-raf-vs-nun-niswa, cu-initial-hamza-class, cu-lexical-feminine-registry, cu-gemination-licensing). Every row's real behavioural coverage already exists through tools/curriculum_unit_consumer.py (analyze_derivative / analyze_discriminator_table) -- proven by the packs' own fixtures.jsonl and tools/test_tranche_002_template_classification.py, both run independently of this bank -- but this SARF-facing bank cannot itself claim implemented_and_consumed without editing tools/run_sarf_evals.py's REQUIRED_BEHAVIORAL_BANKS, a prohibited shared file for this batch.",
+      "note": "Behavioural through the REAL tools/curriculum_unit_consumer.py:analyze_derivative (10 rows: cu-diminutive-template-family, cu-five-verb-inflection-class, cu-passive-voice-vocalization, cu-quadriliteral-templates, cu-gemination-licensing) and :analyze_discriminator_table (10 rows: cu-suffix-abstract-noun, cu-nongoverning-preverbal-inventory, cu-nun-raf-vs-nun-niswa, cu-initial-hamza-class, cu-lexical-feminine-registry) -- the SAME two production functions the T2 batch's own fixtures.jsonl/tools/test_tranche_002_template_classification.py already prove decide every one of the ten packs. Each of this bank's 20 rows is bound to the exact fixture_id in its own pack's committed fixtures.jsonl whose input this row replays (a fixed, hand-authored table, never a runtime re-derivation from the bank row's own minimal id/increment/surface/class/expected_decision/teaches fields), so every row is genuinely decided by a real production call, never an echo of its own expected_decision.",
       "path": "sarf/evals/template-classification-train-1-eval.jsonl",
       "pinned_metrics": {
-        "decided_rows": 0,
+        "decided_rows": 20,
+        "discriminator_table_rows": 10,
         "distinct_ids": 20,
         "rows": 20,
-        "surfaces_byte_exact": 20
+        "surfaces_byte_exact": 20,
+        "template_classification_rows": 10
       },
-      "property_coverage": [],
+      "property_coverage": [
+        {
+          "applicable_rows": 10,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_derivative",
+          "note": "the 10 template_classification rows: dim/fiv/voc/quad/gem, 2 rows each",
+          "property": "template_classification_rows_decided"
+        },
+        {
+          "applicable_rows": 10,
+          "covered": true,
+          "decided_by": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "note": "the 10 discriminator_table rows: sab/npv/nrn/ihc/lfr, 2 rows each",
+          "property": "discriminator_table_rows_decided"
+        },
+        {
+          "applicable_rows": 20,
+          "covered": false,
+          "decided_by": "structural:tools/run_sarf_evals.py",
+          "note": "checked every row regardless of which of the two real consumers decided it, so it is reported structurally rather than bound to a single decision callable",
+          "property": "never_certified"
+        },
+        {
+          "applicable_rows": 20,
+          "covered": false,
+          "decided_by": "structural:tools/run_sarf_evals.py",
+          "note": "every row's consumer input traces to a specific fixture_id in its pack's own committed fixtures.jsonl (never fabricated per-row evidence); reported structurally since it is a sourcing check, not itself a decision",
+          "property": "fixture_binding_grounded_in_committed_pack"
+        }
+      ],
       "required_fields": [
         "id",
         "increment",
@@ -1310,7 +1343,13 @@
         "teaches"
       ],
       "row_key": null,
-      "secondary_consumers": []
+      "secondary_consumers": [
+        {
+          "applies_to": "the 10 discriminator_table rows (sab/npv/nrn/ihc/lfr): each is decided by analyze_discriminator_table instead of the primary analyze_derivative",
+          "callable": "tools/curriculum_unit_consumer.py:analyze_discriminator_table",
+          "expected_calls": 10
+        }
+      ]
     }
   ],
   "candidate_boundary_surfaces": {

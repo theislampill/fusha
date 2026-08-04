@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
+      "id": "g-npv-1"
+    },
+    {
+      "guard": "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
+      "id": "g-npv-2"
+    },
+    {
+      "guard": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+      "id": "g-npv-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-npv-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

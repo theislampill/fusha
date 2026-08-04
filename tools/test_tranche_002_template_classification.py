@@ -13,6 +13,7 @@ input never survives as a default candidate.
 
 from __future__ import annotations
 
+import copy
 import json
 import sys
 import unittest
@@ -107,6 +108,39 @@ class NewIncrementsDiscoveredAndGreenTests(unittest.TestCase):
 
     def test_consumer_self_test_still_passes(self):
         self.assertEqual(cu.self_test(), 0)
+
+
+SEVEN_PART_CONTRACT_FILES = ("reference.md", "procedure.md", "staged-explanation.md",
+                             "hover-fields.json", "guards.json")
+
+
+class SevenPartPackContractTests(unittest.TestCase):
+    """Every directory-discovered committed pack (a unit-vN.json + fixtures.jsonl already present) must
+    also carry its reference/procedure/staged-explanation/hover-fields/guards quintet -- the complete
+    seven-part contract (unit, fixtures, reference, procedure, staged explanation, hover fields, guards).
+    Before this batch authored the five support files for each of the nine T2 packs,
+    tools/validate_curriculum_l1l6.py independently reported exactly 45 missing-file failures across
+    these same nine increments; this test reproduces that same completeness requirement directly against
+    the real directory-discovered pack set (never a hard-coded increment list)."""
+
+    def test_every_discovered_increment_has_the_complete_seven_part_contract(self):
+        discovered = cu.discover_increments()
+        missing_by_inc = {}
+        for inc in sorted(discovered):
+            inc_dir = INC_BASE / inc
+            missing = [name for name in SEVEN_PART_CONTRACT_FILES if not (inc_dir / name).is_file()]
+            if missing:
+                missing_by_inc[inc] = missing
+        self.assertEqual(missing_by_inc, {},
+                         "every committed pack (unit + fixtures) needs its full seven-part contract "
+                         "(unit, fixtures, reference.md, procedure.md, staged-explanation.md, "
+                         "hover-fields.json, guards.json): %r" % missing_by_inc)
+
+    def test_the_nine_t2_increments_specifically_carry_every_support_file(self):
+        for inc in ALL_NEW_INCREMENTS:
+            inc_dir = INC_BASE / inc
+            for name in SEVEN_PART_CONTRACT_FILES:
+                self.assertTrue((inc_dir / name).is_file(), "%s/%s must exist" % (inc, name))
 
 
 class QuadriliteralTemplateR4Tests(unittest.TestCase):
@@ -517,7 +551,8 @@ class EvalBankStructuralTests(unittest.TestCase):
         bank = next((b for b in contract["banks"]
                     if b["path"] == "sarf/evals/template-classification-train-1-eval.jsonl"), None)
         self.assertIsNotNone(bank, "the new bank must be registered in the contract")
-        self.assertIn(bank["disposition"], ("candidate_no_consumer", "fixture_only", "documentary"))
+        self.assertEqual(bank["disposition"], "implemented_and_consumed")
+        self.assertEqual(bank["behavioral_consumer"], "tools/curriculum_unit_consumer.py:analyze_derivative")
 
     def test_bank_file_is_valid_jsonl_and_covers_all_ten_units(self):
         path = ROOT / "sarf" / "evals" / "template-classification-train-1-eval.jsonl"
@@ -527,6 +562,117 @@ class EvalBankStructuralTests(unittest.TestCase):
 
 
 ALL_NEW_INCREMENTS_SET = set(ALL_NEW_INCREMENTS)
+
+_TC1_BANK = "sarf/evals/template-classification-train-1-eval.jsonl"
+
+
+def _rse_ctx():
+    import tools.run_sarf_evals as rse
+    return rse.Consumers.real()
+
+
+def _rse_spec():
+    import tools.run_sarf_evals as rse
+    return rse.bank_spec(rse.load_contract(str(ROOT)), _TC1_BANK)
+
+
+def _rse_rows():
+    import tools.run_sarf_evals as rse
+    return rse.load_bank(str(ROOT), _rse_spec())
+
+
+def _rse_run(ctx=None):
+    import tools.run_sarf_evals as rse
+    return rse.run_adapter(_rse_spec(), _rse_rows(), ctx or _rse_ctx(), str(ROOT))
+
+
+class EvalBankBehavioralAdapterTests(unittest.TestCase):
+    """The template-classification-train-1-eval.jsonl bank is genuinely decided by the real
+    tools/curriculum_unit_consumer.py:analyze_derivative / :analyze_discriminator_table -- never a
+    structural echo of the bank's own expected_decision field."""
+
+    def test_all_twenty_rows_are_decided_by_the_real_consumers_and_go_green(self):
+        failures, metrics = _rse_run()
+        self.assertEqual(failures, [], "template-classification-train-1 bank failed: %s" % failures[:5])
+        self.assertEqual(metrics["decided_rows"], 20)
+        self.assertEqual(metrics["consumer_calls"]["tools/curriculum_unit_consumer.py:analyze_derivative"], 10)
+        self.assertEqual(metrics["consumer_calls"]["tools/curriculum_unit_consumer.py:analyze_discriminator_table"],
+                         10)
+
+    def test_a_stubbed_injected_consumer_turns_the_bank_red(self):
+        """MUTATION (a): rebind the INJECTED ctx slot to a constant-return stub -- the bank must go RED."""
+        ctx = _rse_ctx()
+        ctx.derivative_decide = lambda inp, unit: {"decision": "candidate_pending",
+                                                   "authority": "none_fixture_harness",
+                                                   "class": "diminutive_noun", "template": "fu3ayl"}
+        failures, _m = _rse_run(ctx)
+        self.assertTrue(failures, "a stubbed analyze_derivative must fail the bank")
+
+    def test_a_stubbed_injected_discriminator_consumer_turns_the_bank_red(self):
+        ctx = _rse_ctx()
+        ctx.discriminator_decide = lambda inp, unit: {"decision": "candidate_pending",
+                                                       "function": "nisba_relational_yaa"}
+        failures, _m = _rse_run(ctx)
+        self.assertTrue(failures, "a stubbed analyze_discriminator_table must fail the bank")
+
+    def test_external_derivative_module_is_genuinely_invoked(self):
+        """MUTATION (b): rebind the EXTERNAL tools.curriculum_unit_consumer MODULE ATTRIBUTE run_sarf_evals.py
+        itself imports (`import tools.curriculum_unit_consumer` -- a DISTINCT sys.modules entry from this
+        file's own bare `import curriculum_unit_consumer as cu`) -- proves run_sarf_evals.py genuinely calls
+        the external module, never a local echo of the bank's own expected_decision."""
+        import tools.curriculum_unit_consumer as tcu
+        import tools.run_sarf_evals as rse
+        original = tcu.analyze_derivative
+        tcu.analyze_derivative = lambda inp, unit: {"decision": "candidate_pending",
+                                                    "authority": "none_fixture_harness",
+                                                    "class": "diminutive_noun", "template": "fu3ayl"}
+        try:
+            failures, _m = _rse_run(rse.Consumers.real())
+        finally:
+            tcu.analyze_derivative = original
+        self.assertTrue(failures, "a stubbed EXTERNAL analyze_derivative must fail the bank")
+
+    def test_external_discriminator_module_is_genuinely_invoked(self):
+        import tools.curriculum_unit_consumer as tcu
+        import tools.run_sarf_evals as rse
+        original = tcu.analyze_discriminator_table
+        tcu.analyze_discriminator_table = lambda inp, unit: {"decision": "candidate_pending",
+                                                             "function": "nisba_relational_yaa"}
+        try:
+            failures, _m = _rse_run(rse.Consumers.real())
+        finally:
+            tcu.analyze_discriminator_table = original
+        self.assertTrue(failures, "a stubbed EXTERNAL analyze_discriminator_table must fail the bank")
+
+    def test_an_eval_fixtures_own_expected_answer_cannot_certify_a_fact_by_itself(self):
+        """A row's expected_decision must be independently REPRODUCED by the real consumer -- flipping the
+        bank's own expected_decision (never touching the consumer) must also fail, proving the assertion is a
+        genuine comparison and not a tautology."""
+        rows = copy.deepcopy(_rse_rows())
+        row = next(r for r in rows if r["id"] == "tc1-dim-01")
+        row["expected_decision"] = "abstain"
+        import tools.run_sarf_evals as rse
+        failures, _m = rse.run_adapter(_rse_spec(), rows, _rse_ctx(), str(ROOT))
+        self.assertTrue(any(f.startswith("tc1-dim-01 ") for f in failures), failures[:5])
+
+    def test_pack_mutation_removing_a_bound_template_flips_the_bound_row(self):
+        """The bound fixture's decision genuinely depends on the PACK content: dropping fu3ayl from
+        inc-diminutive-template-family's in-memory pack must flip tc1-dim-01 away from candidate_pending."""
+        import tools.run_sarf_evals as rse
+        original = rse._tc1_pack
+
+        def _dropped(increment, root=str(ROOT)):
+            unit, fixtures = original(increment, root)
+            if increment == "inc-diminutive-template-family":
+                unit = _deep_copy(unit)
+                unit["templates"] = [t for t in unit["templates"] if t["id"] != "fu3ayl"]
+            return unit, fixtures
+        rse._tc1_pack = _dropped
+        try:
+            failures, _m = _rse_run()
+        finally:
+            rse._tc1_pack = original
+        self.assertTrue(any(f.startswith("tc1-dim-01 ") for f in failures), failures[:5])
 
 
 if __name__ == "__main__":

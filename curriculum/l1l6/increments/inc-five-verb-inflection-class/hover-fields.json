@@ -1,0 +1,14 @@
+{
+  "fields": [
+    {
+      "key": "five_verb_class_chip",
+      "teaching": "names which of the five surface inflection classes matched (prefix + suffix), never a mood/case/governor"
+    },
+    {
+      "key": "shape_evidence_note",
+      "teaching": "shows the exact prefix/suffix letters that decided the class, so the learner can see the shape is letter-decidable"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

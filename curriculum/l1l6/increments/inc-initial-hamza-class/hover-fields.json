@@ -1,0 +1,14 @@
+{
+  "fields": [
+    {
+      "key": "initial_hamza_class_chip",
+      "teaching": "shows which class (hamzat al-qat' vs hamzat al-wasl) the WRITTEN seat mark decided"
+    },
+    {
+      "key": "vocalization_evidence_note",
+      "teaching": "shows the exact written-mark evidence the decision rested on, or the honest abstention when the seat is unmarked"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

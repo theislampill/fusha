@@ -1,0 +1,14 @@
+{
+  "fields": [
+    {
+      "key": "quadriliteral_template_chip",
+      "teaching": "names the matched four-radical template, or the honest active/passive-participle collision when unvocalised"
+    },
+    {
+      "key": "radical_count_note",
+      "teaching": "shows the four supplied radicals filling R1-R4, so the learner sees why a three- or five-radical root never matches"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

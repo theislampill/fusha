@@ -1,0 +1,30 @@
+{
+  "guards": [
+    {
+      "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+      "id": "g-gem-1"
+    },
+    {
+      "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+      "id": "g-gem-2"
+    },
+    {
+      "guard": "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+      "id": "g-gem-3"
+    },
+    {
+      "guard": "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+      "id": "g-gem-4"
+    },
+    {
+      "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+      "id": "g-gem-5"
+    },
+    {
+      "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+      "id": "g-gem-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}
