@@ -289,10 +289,10 @@ class BatchAImmutabilityTests(unittest.TestCase):
 
 
 class TraceAppendTests(unittest.TestCase):
-    """17 new rows appended after batch A's 50, for 67 unique covered queue rows total."""
+    """The 17 B1 rows remain the immutable second slice of the append-only shared trace."""
 
-    def test_trace_has_exactly_67_rows(self):
-        self.assertEqual(len(_jsonl(TRACE)), 67)
+    def test_trace_preserves_at_least_the_67_row_a_plus_b1_prefix(self):
+        self.assertGreaterEqual(len(_jsonl(TRACE)), 67)
 
     def test_appended_rows_are_a_bijection_with_the_manifest(self):
         trace = _jsonl(TRACE)
@@ -331,7 +331,7 @@ class TraceAppendTests(unittest.TestCase):
         source_ids = [r["source_queue_row_id"] for r in trace]
         self.assertEqual(len(row_ids), len(set(row_ids)))
         self.assertEqual(len(source_ids), len(set(source_ids)))
-        self.assertEqual(len(set(source_ids)), 67)
+        self.assertGreaterEqual(len(set(source_ids)), 67)
 
     def test_no_behavioral_closure_vocabulary_anywhere_in_the_trace(self):
         for row in _jsonl(TRACE):
@@ -353,13 +353,15 @@ class TraceAppendTests(unittest.TestCase):
 class MetaUpdateTests(unittest.TestCase):
     """The shared meta file honestly records the append; behaviorally_decided stays zero throughout."""
 
-    def test_meta_counts_reflect_67_loaded_rows_zero_decided(self):
+    def test_meta_counts_include_the_67_b1_prefix_and_stay_zero_decided(self):
         meta = json.loads(TRACE_META.read_text(encoding="utf-8"))
-        self.assertEqual(meta["outcomes"]["runner_loaded_fixture_only_count"], 67)
+        loaded = meta["outcomes"]["runner_loaded_fixture_only_count"]
+        self.assertGreaterEqual(loaded, 67)
+        self.assertEqual(loaded, len(_jsonl(TRACE)))
         self.assertEqual(meta["outcomes"]["behaviorally_decided_count"], 0)
         self.assertEqual(meta["outcomes"]["capability_gap_count"], 0)
         self.assertNotIn("executable_fixture_count", meta["outcomes"])
-        self.assertEqual(meta["domain_routing"]["sarf_runner_loaded_count"], 65)
+        self.assertEqual(meta["domain_routing"]["sarf_runner_loaded_count"], loaded - 2)
         self.assertEqual(meta["domain_routing"]["sarf_behaviorally_decided_count"], 0)
         self.assertEqual(meta["domain_routing"]["nahw_runner_loaded_count"], 2)
         self.assertEqual(meta["domain_routing"]["nahw_behaviorally_decided_count"], 0)
@@ -369,11 +371,14 @@ class MetaUpdateTests(unittest.TestCase):
         self.assertEqual(meta["candidate_universe_row_count"], 101)
         self.assertEqual(meta["selected_batch_row_count"], 50)
 
-    def test_meta_remaining_count_drops_the_17_b1_rows(self):
+    def test_meta_remaining_count_excludes_b1_and_matches_the_append_only_trace(self):
         meta = json.loads(TRACE_META.read_text(encoding="utf-8"))
-        self.assertEqual(meta["remaining_row_count"], 34)
         remaining = meta.get("remaining_row_ids") or []
-        self.assertEqual(len(remaining), 34)
+        self.assertEqual(meta["remaining_row_count"], len(remaining))
+        self.assertEqual(
+            meta["remaining_row_count"],
+            meta["candidate_universe_row_count"] - len(_jsonl(TRACE)),
+        )
         self.assertEqual(len(remaining), len(set(remaining)))
         self.assertEqual(set(remaining) & set(MANIFEST_ROW_IDS), set())
 
