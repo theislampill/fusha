@@ -302,11 +302,12 @@ class RuntimeBatchManifest(unittest.TestCase):
                          ("nahw/procedures/irab-case-mood.md", "nahw/procedures/coordination-case-following.md"),
                          "%s cites an unexpected nahw_procedure %r" % (row["id"], row["nahw_procedure"]))
 
-    def test_no_kc_id_shipped_yet_pending_the_integration_owner_patch(self):
-        # this batch cannot edit curriculum/kc-catalog.json; shipping an unresolved kc_id would break the
-        # shared tools.validate_drill_keys self-test's "shipped key files validate clean" regression loop.
-        for row in _load_runtime_rows():
-            self.assertNotIn("kc_id", row, "%s must not ship a kc_id before the catalog patch lands" % row["id"])
+    def test_every_row_is_bound_to_its_reviewed_kc_family(self):
+        rows = _load_runtime_rows()
+        expected = _proposed_kc_map(rows)
+        for row in rows:
+            self.assertEqual(row.get("kc_id"), expected[row["id"]],
+                             "%s must resolve to its reviewed follower-family KC" % row["id"])
 
     def test_drill_keys_validator_accepts_the_file_clean(self):
         errs = VDK.validate(_KEYS_PATH)
@@ -628,80 +629,19 @@ class HostileMutationsAreRejected(unittest.TestCase):
                         "a kc_id misrouted to a different drill's key file was accepted: %s" % errs)
 
 
-# --------------------------------------------------------------------------- 9. the missing shared-KC patch
+# --------------------------------------------------------------------------- 9. shared-KC integration
 
-class MissingSharedKCPatchIsExactlyDocumented(unittest.TestCase):
-    """RED-first: the four proposed KCs are used by this batch's design but do not yet exist in the shared
-    catalog. This class proves (a) the gap against the REAL, unmodified curriculum/kc-catalog.json, and
-    (b) that the exact proposed patch — four catalog entries routed to this drill — is precisely sufficient,
-    using only temp-fixture repos. curriculum/kc-catalog.json is never written by this batch."""
+class SharedKCCatalogIntegration(unittest.TestCase):
+    """The integration owner applied the exact Sonnet-authored four-KC patch and row mapping."""
 
-    def test_proposed_kc_ids_are_absent_from_the_real_catalog(self):
+    def test_reviewed_kc_entries_are_present_exactly(self):
         with open(os.path.join(_REPO, "curriculum", "kc-catalog.json"), encoding="utf-8") as fh:
-            real_ids = {kc["kc_id"] for kc in json.load(fh)}
-        for kc_id in PROPOSED_KC_IDS:
-            self.assertNotIn(kc_id, real_ids,
-                             "%s already exists in the shared catalog — the proposed patch needs revising" % kc_id)
+            real = {kc["kc_id"]: kc for kc in json.load(fh)}
+        expected = {kc["kc_id"]: kc for kc in _proposed_kc_catalog_patch()}
+        self.assertEqual({kc_id: real.get(kc_id) for kc_id in PROPOSED_KC_IDS}, expected)
 
-    def test_binding_the_proposed_kc_ids_against_the_real_catalog_is_red(self):
-        rows = _load_runtime_rows()
-        kc_of = _proposed_kc_map(rows)
-        mutated = copy.deepcopy(rows)
-        for r in mutated:
-            r["kc_id"] = kc_of[r["id"]]
-        d = tempfile.mkdtemp()
-        keys_dir = os.path.join(d, "curriculum", "drills", "keys")
-        os.makedirs(keys_dir)
-        open(os.path.join(d, "curriculum", "drills", "followers-coordination-apposition.md"),
-             "w", encoding="utf-8").close()
-        for proc in ("nahw/procedures/irab-case-mood.md", "nahw/procedures/coordination-case-following.md"):
-            pdir = os.path.join(d, os.path.dirname(proc))
-            os.makedirs(pdir, exist_ok=True)
-            open(os.path.join(d, proc), "w", encoding="utf-8").close()
-        # the REAL, unmodified catalog — no proposed patch applied.
-        with open(os.path.join(_REPO, "curriculum", "kc-catalog.json"), encoding="utf-8") as fh:
-            real_catalog = json.load(fh)
-        os.makedirs(os.path.join(d, "curriculum"), exist_ok=True)
-        with open(os.path.join(d, "curriculum", "kc-catalog.json"), "w", encoding="utf-8") as fh:
-            json.dump(real_catalog, fh)
-        fp = os.path.join(keys_dir, "followers-coordination-apposition.keys.jsonl")
-        with open(fp, "w", encoding="utf-8") as fh:
-            for r in mutated:
-                fh.write(json.dumps(r, ensure_ascii=False) + "\n")
-        errs = VDK.validate(fp, repo_root=d)
-        unresolved = {kc_id for kc_id in PROPOSED_KC_IDS
-                     if any(("kc_id %r does not resolve" % kc_id) in e for e in errs)}
-        self.assertEqual(unresolved, set(PROPOSED_KC_IDS),
-                         "expected all four proposed KCs to be reported unresolved against the real catalog; "
-                         "got errors: %s" % errs)
-
-    def test_the_proposed_patch_alone_makes_the_same_rows_validate_clean(self):
-        rows = _load_runtime_rows()
-        kc_of = _proposed_kc_map(rows)
-        mutated = copy.deepcopy(rows)
-        for r in mutated:
-            r["kc_id"] = kc_of[r["id"]]
-        d = tempfile.mkdtemp()
-        keys_dir = os.path.join(d, "curriculum", "drills", "keys")
-        os.makedirs(keys_dir)
-        open(os.path.join(d, "curriculum", "drills", "followers-coordination-apposition.md"),
-             "w", encoding="utf-8").close()
-        for proc in ("nahw/procedures/irab-case-mood.md", "nahw/procedures/coordination-case-following.md"):
-            pdir = os.path.join(d, os.path.dirname(proc))
-            os.makedirs(pdir, exist_ok=True)
-            open(os.path.join(d, proc), "w", encoding="utf-8").close()
-        with open(os.path.join(_REPO, "curriculum", "kc-catalog.json"), encoding="utf-8") as fh:
-            real_catalog = json.load(fh)
-        patched_catalog = real_catalog + _proposed_kc_catalog_patch()
-        os.makedirs(os.path.join(d, "curriculum"), exist_ok=True)
-        with open(os.path.join(d, "curriculum", "kc-catalog.json"), "w", encoding="utf-8") as fh:
-            json.dump(patched_catalog, fh)
-        fp = os.path.join(keys_dir, "followers-coordination-apposition.keys.jsonl")
-        with open(fp, "w", encoding="utf-8") as fh:
-            for r in mutated:
-                fh.write(json.dumps(r, ensure_ascii=False) + "\n")
-        errs = VDK.validate(fp, repo_root=d)
-        self.assertEqual(errs, [], "the proposed four-KC patch must be exactly sufficient: %s" % errs)
+    def test_bound_runtime_rows_validate_against_the_real_catalog(self):
+        self.assertEqual(VDK.validate(_KEYS_PATH, repo_root=_REPO), [])
 
     def test_a_genuine_miss_once_patched_routes_to_kc_coded_remediation(self):
         """Proves 'genuine misses route remediation and KC progress': once a row is kc_id-bound (the
@@ -710,7 +650,7 @@ class MissingSharedKCPatchIsExactlyDocumented(unittest.TestCase):
         rows = _load_runtime_rows()
         kc_of = _proposed_kc_map(rows)
         row = copy.deepcopy(rows[0])
-        row["kc_id"] = kc_of[row["id"]]
+        self.assertEqual(row["kc_id"], kc_of[row["id"]])
         payload = {"answer": row["forbidden_answers"][0], "reasoning": []}
         r = RT.step(row, None, payload, now_day=0)
         progress = RT.new_progress()
@@ -724,8 +664,7 @@ class MissingSharedKCPatchIsExactlyDocumented(unittest.TestCase):
 # --------------------------------------------------------------------------- 10. existing artifacts unchanged
 
 class ExistingArtifactsUnchanged(unittest.TestCase):
-    """The nine pre-existing keyed drill files and the 25-entry KC catalog are BYTE-IDENTICAL to the batch's
-    start SHA — this batch adds two new files; it touches nothing else."""
+    """The nine pre-existing keyed drill files remain byte-identical; the KC catalog is append-only."""
 
     def test_pre_existing_keyed_drill_files_are_byte_identical_to_start_sha(self):
         for name in _PRE_EXISTING_KEYED_DRILLS:
@@ -735,18 +674,19 @@ class ExistingArtifactsUnchanged(unittest.TestCase):
                 current = fh.read()
             self.assertEqual(original, current, "%s must be byte-identical to the start SHA" % rel)
 
-    def test_kc_catalog_is_byte_identical_to_start_sha(self):
-        original = _git_show("curriculum/kc-catalog.json")
+    def test_kc_catalog_preserves_the_original_25_and_appends_exactly_four(self):
+        original = json.loads(_git_show("curriculum/kc-catalog.json"))
         with open(os.path.join(_REPO, "curriculum", "kc-catalog.json"), encoding="utf-8") as fh:
-            current = fh.read()
-        self.assertEqual(original, current, "curriculum/kc-catalog.json must be byte-identical to the start SHA")
-        self.assertEqual(len(json.loads(current)), 25)
+            current = json.load(fh)
+        self.assertEqual(current[:25], original)
+        self.assertEqual(current[25:], _proposed_kc_catalog_patch())
 
     def test_no_other_untracked_or_modified_files_outside_the_writable_set(self):
         out = subprocess.run(["git", "status", "--porcelain"], cwd=_REPO, capture_output=True, check=True)
         allowed = {
             "curriculum/drills/followers-coordination-apposition.md",
             "curriculum/drills/keys/followers-coordination-apposition.keys.jsonl",
+            "curriculum/kc-catalog.json",
             "tools/test_followers_coordination_apposition_batch.py",
         }
         for line in out.stdout.decode("utf-8").splitlines():
