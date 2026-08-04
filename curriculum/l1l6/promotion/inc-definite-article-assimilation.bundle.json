@@ -53,7 +53,10 @@
         "def-adv-02",
         "def-adv-03",
         "def-abs-01",
-        "def-abs-02"
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
       ],
       "positive_examples": [
         "def-pos-01",
@@ -129,7 +132,10 @@
         "def-adv-02",
         "def-adv-03",
         "def-abs-01",
-        "def-abs-02"
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
       ],
       "positive_examples": [
         "def-pos-01",
@@ -205,7 +211,10 @@
         "def-adv-02",
         "def-adv-03",
         "def-abs-01",
-        "def-abs-02"
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
       ],
       "positive_examples": [
         "def-pos-01",
@@ -281,7 +290,10 @@
         "def-adv-02",
         "def-adv-03",
         "def-abs-01",
-        "def-abs-02"
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
       ],
       "positive_examples": [
         "def-pos-01",
@@ -357,7 +369,10 @@
         "def-adv-02",
         "def-adv-03",
         "def-abs-01",
-        "def-abs-02"
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
       ],
       "positive_examples": [
         "def-pos-01",
@@ -381,6 +396,85 @@
       "test_references": [
         "curriculum/l1l6/increments/inc-definite-article-assimilation/fixtures.jsonl"
       ]
+    },
+    {
+      "abstention_condition": "insufficient_features; out_of_regime_no_article; sun_letter_shadda_unobserved; moon_letter_shadda_contradiction",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+        "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+        "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+        "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+        "no declared article means out of regime; the table never activates on following-letter evidence alone",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "0fc98eb21fb72f7b89046d2b888eee0ed0153d188b96c5dfe2213803f4f5b771",
+      "guards_payload": [
+        {
+          "guard": "sun/moon membership is a closed fourteen-fourteen inventory; it decides only whether assimilation is possible, never whether it happened",
+          "id": "g-def-inventory"
+        },
+        {
+          "guard": "an assimilation-completed claim requires an observed written shadda; an unmarked sun-letter surface withholds the claim instead of assuming it",
+          "id": "g-def-observed-shadda"
+        },
+        {
+          "guard": "a shadda observed on a moon letter is a contradiction of the closed inventory and is refused, never resolved as assimilation",
+          "id": "g-def-moon-contradiction"
+        },
+        {
+          "guard": "the article's written laam stays article-owned in every outcome; assimilation is never re-attributed to the following consonant and never read as a doubled root or Form II",
+          "id": "g-def-laam-owned"
+        },
+        {
+          "guard": "no declared article means out of regime; the table never activates on following-letter evidence alone",
+          "id": "g-def-no-article"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-def-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "def-adv-01",
+        "def-adv-02",
+        "def-adv-03",
+        "def-abs-01",
+        "def-abs-02",
+        "def-adv-04",
+        "def-adv-05",
+        "def-adv-06"
+      ],
+      "positive_examples": [
+        "def-pos-01",
+        "def-pos-02",
+        "def-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-definite-article-assimilation/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "scope": {
+        "increment": "inc-definite-article-assimilation",
+        "statement": "the fourteen abstract moon letters include hamza as ONE abstract member, not bare alif; the discriminator's following_letter moon list enumerates the WRITTEN hamza seat spellings that actually occur after the article (ء، أ، إ) instead, since a bare, unseated ا never follows the article as hamza's spelling -- omitting those seat forms is a coverage gap, not a conservative abstention (F9)",
+        "unit_ref": "cu-definite-article-assimilation"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-definite-article-assimilation-def-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-definite-article-assimilation/fixtures.jsonl"
+      ]
     }
   ],
   "capability": "discriminator_table",
@@ -399,7 +493,10 @@
     "adversarial": [
       "def-adv-01",
       "def-adv-02",
-      "def-adv-03"
+      "def-adv-03",
+      "def-adv-04",
+      "def-adv-05",
+      "def-adv-06"
     ],
     "positive": [
       "def-pos-01",
@@ -456,7 +553,9 @@
             "yes"
           ],
           "following_letter": [
-            "ا",
+            "ء",
+            "أ",
+            "إ",
             "ب",
             "ج",
             "ح",
@@ -500,6 +599,10 @@
       {
         "id": "def-r5",
         "text": "no declared article evidence means the table is out of regime; it never activates on a bare following-letter observation alone"
+      },
+      {
+        "id": "def-r6",
+        "text": "the fourteen abstract moon letters include hamza as ONE abstract member, not bare alif; the discriminator's following_letter moon list enumerates the WRITTEN hamza seat spellings that actually occur after the article (ء، أ، إ) instead, since a bare, unseated ا never follows the article as hamza's spelling -- omitting those seat forms is a coverage gap, not a conservative abstention (F9)"
       }
     ],
     "schema": "curriculum.l1l6_machine_unit.v1",

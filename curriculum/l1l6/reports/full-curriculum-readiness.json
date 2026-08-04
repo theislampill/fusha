@@ -23,7 +23,7 @@
     "runtime_integrated": 0,
     "status": "candidate_not_runtime_integrated"
   },
-  "canonical_units_with_real_consumers": 20,
+  "canonical_units_with_real_consumers": 18,
   "consumer_operationalization": {
     "new_real_unit_ids_by_plane": {
       "nahw_analytical": [
@@ -35,9 +35,7 @@
         "cu-grapheme-inventory-and-confusables",
         "cu-nunation-support-orthography",
         "cu-orthographic-connectivity-classes",
-        "cu-short-vowel-diacritics-and-vocalization-state",
-        "u-s01",
-        "u-s06"
+        "cu-short-vowel-diacritics-and-vocalization-state"
       ],
       "tutor_runtime": [
         "cu-atf-case-following",
