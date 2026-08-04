@@ -268,10 +268,11 @@ def _expected_new_kc_entries():
               "identical radicals merge only where the following element is NOT a bare consonant-initial "
               "suffix, and separate only where a consonant-initial suffix follows — reversing this licensing "
               "stacks or drops a radical; and merged-with-fatḥa and separated-with-sukūn are two SECURELY "
-              "licensed jussive shapes of a geminate verb (a merged form with ḍamma is simply the "
-              "indicative, not a jussive option at all) — this pair is taught as securely licensed examples, "
-              "not as a claim that they exhaust the complete classical geminate-jussive inventory; a further "
-              "merged-vowel variant is an open scholar-review question this KC does not settle.",
+              "licensed jussive shapes of a geminate verb — this pair is taught as securely licensed "
+              "examples, not as a claim that they exhaust the complete classical geminate-jussive inventory; "
+              "whether a further merged-vowel shape (kasra-merged or ḍamma-merged, by itbāʿ) is also a "
+              "licensed jussive alternative, or is simply the bare indicative, is a disputed, open "
+              "scholar-review question this KC does not settle.",
               "a geminate verb's imperfect vowel, its merger/separation, or its jussive shape is being "
               "produced and the per-verb vowel or the suffix-conditioned merger licensing has not been "
               "checked",
@@ -279,15 +280,17 @@ def _expected_new_kc_entries():
               "suffix follows and separation only where one does, and the jussive limited to its securely "
               "licensed shapes",
               "one uniform imperfect vowel assumed for the whole class, the gemination mark dropped as if "
-              "decorative, merger and separation licensing reversed against the following suffix, or an "
-              "indicative-shaped (ḍamma) merged form mistaken for a jussive",
+              "decorative, merger and separation licensing reversed against the following suffix, or the "
+              "jussive operator's effect ignored altogether as if the geminate verb's shape never changes "
+              "from the indicative",
               "Before you write this cell, check the verb's own stored vowel and what actually follows the "
               "second radical.",
               "The geminate imperfect vowel is stored per verb; gemination realizes two radicals and is "
               "never optional; a consonant-initial suffix forces separation and blocks merger; and "
-              "merged-with-fatḥa and separated-with-sukūn are two securely licensed jussive shapes — a "
-              "merged-with-ḍamma form is the indicative, not a jussive option — without this being a claim "
-              "that no other merged-vowel shape is ever licensed.",
+              "merged-with-fatḥa and separated-with-sukūn are two securely licensed jussive shapes — "
+              "without this being a claim that no other merged-vowel shape (kasra- or ḍamma-merged, by "
+              "itbāʿ) is ever licensed; that wider question is disputed and awaits scholar review, not "
+              "settled here either way.",
               "State the stored vowel, then justify merger or separation from what follows, then name the "
               "licensed jussive shape.",
               "geminate_verb_merger_or_jussive_error", "weak_root_morphology",
@@ -804,18 +807,59 @@ class GeminateJussiveInventoryNoContradiction(unittest.TestCase):
         exhaustive_phrases = ("exactly two", "only two licensed", "only two shapes",
                               "the two licensed jussive shapes")
         for label, blob in (
+            ("WRV-13 prompt", row["prompt"]),
             ("WRV-13 concept", row["concept"]),
             ("WRV-13 expected_answer", row["expected_answer"]),
             ("WRV-13 accepted_variants", " ".join(row["accepted_variants"])),
+            ("WRV-13 forbidden_answers", " ".join(row["forbidden_answers"])),
             ("WRV-13 required_reasoning", " ".join(row["required_reasoning"])),
             ("WRV-13 explanation", row["explanation"]),
             ("kc-geminate-verb-merger-licensing plain_rule", kc["plain_rule"]),
+            ("kc-geminate-verb-merger-licensing typical_error_feature", kc["typical_error_feature"]),
             ("kc-geminate-verb-merger-licensing teach_template", kc["teach_template"]),
         ):
             low = blob.lower()
             for phrase in exhaustive_phrases:
                 self.assertNotIn(phrase, low, "%s must not assert an exhaustive inventory claim (%r)"
                                  % (label, phrase))
+
+    def test_wrv13_and_kc_no_longer_hard_settle_the_disputed_vowel_question(self):
+        # R3: "not a jussive option at all" (and its ḍamma-specific framing) was the exact language that hard-
+        # settled the disputed ḍamma-merged question in the Sonnet vote's favor while claiming the disagreement
+        # was preserved. A bounded repair that genuinely preserves the disagreement must not use it anywhere.
+        row = self._row("WRV-13-mudaaf-jussive-licensed-shapes")
+        kc = {kc["kc_id"]: kc for kc in _load_kc_catalog()}["kc-geminate-verb-merger-licensing"]
+        banned_phrases = ("not a jussive option at all", "not a jussive shape at all",
+                          "simply the indicative, not a jussive")
+        for label, blob in (
+            ("WRV-13 prompt", row["prompt"]),
+            ("WRV-13 concept", row["concept"]),
+            ("WRV-13 expected_answer", row["expected_answer"]),
+            ("WRV-13 accepted_variants", " ".join(row["accepted_variants"])),
+            ("WRV-13 forbidden_answers", " ".join(row["forbidden_answers"])),
+            ("WRV-13 required_reasoning", " ".join(row["required_reasoning"])),
+            ("WRV-13 explanation", row["explanation"]),
+            ("kc-geminate-verb-merger-licensing plain_rule", kc["plain_rule"]),
+            ("kc-geminate-verb-merger-licensing typical_error_feature", kc["typical_error_feature"]),
+            ("kc-geminate-verb-merger-licensing teach_template", kc["teach_template"]),
+        ):
+            low = blob.lower()
+            for phrase in banned_phrases:
+                self.assertNotIn(phrase, low, "%s must not hard-settle the disputed vowel question (%r)"
+                                 % (label, phrase))
+
+    def test_wrv13_prompt_does_not_presuppose_the_disputed_form_is_an_error(self):
+        # R3: asking a learner to "correct" a specific disputed surface presupposes it is wrong, which is
+        # itself picking a side of the unresolved disagreement -- even without a matching forbidden_answers
+        # entry. The prompt must ask for the safe intersection, never stage a disputed form as a mistake.
+        row = self._row("WRV-13-mudaaf-jussive-licensed-shapes")
+        prompt_low = row["prompt"].lower()
+        for phrase in ("correct this", "a learner writes", "correct a learner"):
+            self.assertNotIn(phrase, prompt_low,
+                             "WRV-13's prompt must not frame a disputed surface as something to correct: %r"
+                             % phrase)
+        self.assertNotIn("يَمُدُّ", row["prompt"],
+                         "WRV-13's prompt must not single out the disputed ḍamma-merged surface at all")
 
     def test_wrv13_does_not_hard_reject_the_disputed_kasra_merged_variant(self):
         # R2: the disputed variant (Opus: possibly licensed by itbaa; Sonnet: not licensed) must be neither
@@ -831,13 +875,44 @@ class GeminateJussiveInventoryNoContradiction(unittest.TestCase):
                           "reasoning": list(row["required_reasoning"])})
         self.assertFalse(g["forbidden_hit"], "mentioning the disputed variant must not be graded a forbidden hit")
 
-    def test_wrv13_uncontested_damma_merged_indicative_still_rejected(self):
-        # both independent reviews agree the damma-merged shape is simply the indicative, never a jussive
-        # option -- that uncontested rejection must survive the R2 non-exhaustive rewording.
+    def test_wrv13_does_not_hard_reject_the_disputed_damma_merged_variant(self):
+        # R3: the ḍamma-merged variant (لَمْ يَمُدُّ) is EQUALLY disputed -- an Opus 5 review and an independent
+        # Sonnet 5 vote disagree on whether it is a further itbaa-licensed jussive shape or simply the bare
+        # indicative -- so it must be neither accepted nor hard-rejected either, the exact residual this test
+        # closes (the prior repair kept a hard-reject of this specific surface while claiming the disagreement
+        # was preserved).
         row = self._row("WRV-13-mudaaf-jussive-licensed-shapes")
-        g = RT.grade(row, {"answer": "لَمْ يَمُدُّ is a valid jussive shape merged with ḍamma.",
+        disputed_damma_merged = "لَمْ يَمُدُّ"
+        blob = " ".join(row["forbidden_answers"]).lower()
+        self.assertNotIn(disputed_damma_merged, blob,
+                         "the disputed ḍamma-merged variant must not appear as a forbidden (hard-rejected) form")
+        g = RT.grade(row, {"answer": "some describe a disputed ḍamma-merged form %s as licensed by itbaa"
+                                     % disputed_damma_merged,
+                          "reasoning": list(row["required_reasoning"])})
+        self.assertFalse(g["forbidden_hit"], "mentioning the disputed variant must not be graded a forbidden hit")
+
+    def test_wrv13_still_rejects_the_uncontested_no_change_misconception(self):
+        # both reviews agree a geminate verb's jussive is NEVER identical to the indicative in every cell (the
+        # separated-sukun shape alone disproves "no change") -- that genuinely uncontested misconception, unlike
+        # any specific disputed vowel realization, must still be rejected.
+        row = self._row("WRV-13-mudaaf-jussive-licensed-shapes")
+        g = RT.grade(row, {"answer": "the jussive of a geminate verb always keeps the indicative's ending "
+                                     "unchanged.",
                           "reasoning": list(row["required_reasoning"])})
         self.assertFalse(g["content_mastered"])
+
+    def test_wrv13_unresolved_wider_question_variant_is_content_mastered_but_held(self):
+        # required repair #4: an accepted variant names the wider kasra/damma question as unresolved while
+        # still supplying a secure example; the REAL grader must content-master it (right answer + right
+        # reasoning, no forbidden hit) yet still HOLD it for the mandatory two-vote fact gate -- content mastery
+        # is not fact certification.
+        row = self._row("WRV-13-mudaaf-jussive-licensed-shapes")
+        variant = next((v for v in row["accepted_variants"] if "unresolved" in v.lower()), None)
+        self.assertIsNotNone(variant, "expected an accepted variant naming the wider question unresolved")
+        g = RT.grade(row, {"answer": variant, "reasoning": list(row["required_reasoning"])})
+        self.assertTrue(g["content_mastered"], "the unresolved-question variant must be content-mastered: %s" % g)
+        self.assertTrue(g["held_for_fact_gate"], "it must still be HELD pending the two-vote fact gate: %s" % g)
+        self.assertFalse(g["cleared"], "content mastery must never auto-clear a two_vote_required row: %s" % g)
 
     def test_wrv13_records_the_honest_scholar_review_blocker(self):
         row = self._row("WRV-13-mudaaf-jussive-licensed-shapes")

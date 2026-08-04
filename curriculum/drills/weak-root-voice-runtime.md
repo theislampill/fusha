@@ -70,7 +70,7 @@ paradigm practice — no item claims an exact Qurʾānic occurrence (`quran_exam
 | `WRV-10-mudaaf-gemination-mark-not-optional` | dropping the gemination mark in the imperfect | Give the imperfect of مَدَّ and state what the shadda represents. |
 | `WRV-11-mudaaf-separation-before-suffix` | keeping the geminate before a consonant-initial suffix | Give the past of مَدَّ with the suffix تُ. |
 | `WRV-12-mudaaf-merger-default-no-trigger` | separating the radicals in a cell that should merge | Give the masculine-plural indicative (hum) of مَدَّ and state whether the radicals may separate before the plural suffix's own vowel. |
-| `WRV-13-mudaaf-jussive-licensed-shapes` | writing the indicative shape after a jussive operator | Correct a learner's ḍamma-marked "jussive" of مَدَّ. |
+| `WRV-13-mudaaf-jussive-licensed-shapes` | asserting the two securely licensed jussive shapes exhaust the classical inventory, or treating the disputed kasra/ḍamma-merged (itbāʿ) question as already resolved | Give the two securely licensed jussive shapes of مَدَّ after لَمْ and state whether a further merged-vowel shape remains open. |
 
 ### `L4.M1.04` — hamzated (mahmūz) verbs — 5 items
 

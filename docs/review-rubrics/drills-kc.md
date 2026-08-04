@@ -25,7 +25,16 @@ Record findings by stable class so recurrence can be measured across tranches.
   securely licensed, drop any exhaustive "only/exactly N" claim and any forbidden-answer that would hard-reject
   the disputed form, and record an honest blocker (in existing free-text fields — never invent a schema field
   for it) naming the open question for scholar review. A row's held/two-vote gate posture and public-eligibility
-  fields stay unchanged; the disagreement is preserved, not resolved, by this bounded repair.
+  fields stay unchanged; the disagreement is preserved, not resolved, by this bounded repair. When a review
+  disagreement spans MULTIPLE disputed forms sharing the same shape of ambiguity (e.g. a kasra-merged AND a
+  ḍamma-merged geminate-jussive candidate, both disputed by itbāʿ), a repair that only removes the hard-reject
+  from ONE of them and leaves the other's prompt, expected answer, forbidden answer, required reasoning, or
+  explanation still asserting it is "not licensed at all" has not preserved the disagreement — it has just
+  picked a side for the untouched form while claiming otherwise. Check every disputed form named by either
+  review, not only the one the finding happened to name first. A prompt that asks a learner to "correct" one
+  specific disputed surface also presupposes that surface is wrong — that is the same defect even with no
+  matching forbidden_answers entry, because the task framing itself picks a side; author the prompt around the
+  safe-intersection fact instead of staging a disputed form as an error to fix.
 - **diacritic-blind-grading-collision**: a row whose answer correctness depends on a vowel, shadda, or case/mood
   ending must declare an exact/diacritic-sensitive contract (never rely on the lenient recall normalizer alone,
   which discards every harakah and cannot discriminate a swapped-vowel or dropped-shadda hostile answer). When a
