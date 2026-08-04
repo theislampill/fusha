@@ -1091,6 +1091,12 @@ TRAIN_C_EXPECTED_KCS = {
 # entry rather than growing one global magic total that would block unrelated future slices.
 TRANCHE_EXPECTED_BINDING_IDS = {
     "tranche_001a": frozenset({"l1l6-tranche-001a-foundational-orthography-analysis"}),
+    "tranche_001b": frozenset({
+        "l1l6-tranche-001b-foundational-script-runtime",
+        "l1l6-tranche-001b-weak-root-voice-runtime",
+        "l1l6-tranche-001b-derivation-template-runtime",
+        "l1l6-tranche-001b-ma-context-runtime",
+    }),
 }
 # test_paths must name an actual test file, never a production/consumer module (F8).
 _TEST_PATH_BASENAME_RE = re.compile(r"^test_.*\.py$")

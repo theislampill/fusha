@@ -54,6 +54,29 @@ TRAIN_C_UNITS = {
     "cu-lakin-coordinator-vs-abrogator",
     "cu-waw-function-discriminator",
 }
+TRANCHE_001B_BINDING_IDS = {
+    "l1l6-tranche-001b-foundational-script-runtime",
+    "l1l6-tranche-001b-weak-root-voice-runtime",
+    "l1l6-tranche-001b-derivation-template-runtime",
+    "l1l6-tranche-001b-ma-context-runtime",
+}
+TRANCHE_001B_LESSONS = {
+    "L1.M1.01", "L1.M1.02", "L1.M1.03", "L1.M1.04", "L1.M1.05",
+    "L1.M1.06", "L1.M1.07", "L1.M5.04", "L1.M5.05", "L1.M5.07",
+    "L2.M1.02", "L2.M1.04", "L2.M4.02", "L2.M5.02", "L2.M5.03",
+    "L3.M4.04", "L3.M4.08", "L4.M1.01", "L4.M1.02", "L4.M1.03",
+    "L4.M1.04", "L4.M1.05", "L4.M1.06", "L4.M1.07", "L4.M2.04",
+    "L4.M3.07", "L4.M4.04", "L4.M5.10", "L5.M1.06", "L5.M4.01",
+    "L6.M3.01", "L6.M3.07", "L6.M4.06", "L6.M6.04",
+}
+TRANCHE_001B_UNITS = {
+    "cu-definite-article-assimilation", "cu-grapheme-inventory-and-confusables",
+    "cu-nunation-support-orthography", "cu-orthographic-connectivity-classes",
+    "cu-short-vowel-diacritics-and-vocalization-state",
+    "u-n01", "u-n02", "u-n03", "u-n04", "u-n06", "u-n07", "u-n08",
+    "u-n09", "u-n10", "u-n11", "u-n12", "u-s01", "u-s02", "u-s03",
+    "u-s04", "u-s05", "u-s06", "u-s07", "u-s09",
+}
 
 
 def _jsonl(path: Path):
@@ -85,17 +108,45 @@ class ConsumerTruthTests(unittest.TestCase):
         )
         self.assertEqual(errors, [])
 
-    def test_train_c_runtime_bindings_do_not_promote_candidate_drills(self):
+    def test_tranche_001b_runtime_bindings_are_exact_and_candidate_only(self):
+        rows = [
+            row for row in absorption.load_consumer_bindings()
+            if row.get("consumer_train") == "tranche_001b"
+        ]
+
+        self.assertEqual({row["binding_id"] for row in rows}, TRANCHE_001B_BINDING_IDS)
+        self.assertEqual(sum(len(row["runtime_item_ids"]) for row in rows), 128)
+        self.assertEqual(len({rid for row in rows for rid in row["runtime_item_ids"]}), 128)
+        for row in rows:
+            self.assertEqual(row["consumer_plane"], "tutor_runtime")
+            self.assertEqual(row["binding_status"], "explicit")
+            self.assertEqual(row["certification_posture"], "instructional_runtime_only")
+            self.assertTrue(row["candidate_status_preserved"])
+            self.assertFalse(row["public_projection_eligible"])
+
+        errors = []
+        validator.check_consumer_operationalization_bindings(
+            validator.load_context(), errors
+        )
+        self.assertEqual(errors, [])
+
+    def test_explicit_runtime_bindings_do_not_promote_candidate_drills(self):
         ctx = absorption.load()
         runtime = absorption.ordinary_tutor_runtime_truth(ctx)
         _ledger, _sections, _completeness, _queues, readiness = absorption.build(ctx)
 
-        self.assertEqual(set(runtime["explicit_lesson_ids"]), TRAIN_C_LESSONS)
-        self.assertEqual(set(runtime["explicit_unit_ids"]), TRAIN_C_UNITS)
-        self.assertEqual(len(runtime["bound_runtime_item_ids"]), 27)
-        self.assertEqual(runtime["bound_runtime_item_count"], 27)
+        self.assertEqual(
+            set(runtime["explicit_lesson_ids"]),
+            TRAIN_C_LESSONS | TRANCHE_001B_LESSONS,
+        )
+        self.assertEqual(
+            set(runtime["explicit_unit_ids"]),
+            TRAIN_C_UNITS | TRANCHE_001B_UNITS,
+        )
+        self.assertEqual(len(runtime["bound_runtime_item_ids"]), 155)
+        self.assertEqual(runtime["bound_runtime_item_count"], 155)
         self.assertEqual(runtime["candidate_drill_specs_promoted"], 0)
-        self.assertEqual(readiness["lessons_mapped_to_tutor_drills"], 6)
+        self.assertEqual(readiness["lessons_mapped_to_tutor_drills"], 39)
         self.assertEqual(readiness["lessons_fully_operationalized"], 0)
         self.assertEqual(readiness["lessons_fully_operationalized_basis"], "not_yet_computed")
         self.assertEqual(
@@ -120,7 +171,7 @@ class ConsumerTruthTests(unittest.TestCase):
             set(truth["pending_unit_ids_by_plane"]["nahw_analytical"]),
             TRAIN_B_PENDING_UNITS,
         )
-        self.assertEqual(meta["explicit_runtime_unit_bindings"], 6)
+        self.assertEqual(meta["explicit_runtime_unit_bindings"], 30)
         self.assertEqual(meta["lessons_fully_operationalized"], 0)
 
         badal = by_id["cu-badal-typology-discriminator"]
@@ -171,7 +222,7 @@ class ConsumerTruthTests(unittest.TestCase):
         self.assertEqual(
             readiness["lesson_denominators_by_level"], EXPECTED_LEVEL_DENOMINATORS
         )
-        self.assertEqual(readiness["lessons_mapped_to_tutor_drills"], 6)
+        self.assertEqual(readiness["lessons_mapped_to_tutor_drills"], 39)
         self.assertEqual(
             readiness["lessons_indirectly_linked_to_runtime_tutor_drills"],
             expected_runtime["indirectly_linked_lessons"],
@@ -187,7 +238,7 @@ class ConsumerTruthTests(unittest.TestCase):
             runtime["indirectly_linked_lessons"],
             expected_runtime["indirectly_linked_lessons"],
         )
-        self.assertEqual(runtime["explicit_canonical_unit_bindings"], 6)
+        self.assertEqual(runtime["explicit_canonical_unit_bindings"], 30)
         self.assertFalse(runtime["lesson_content_fully_operationalized"])
         self.assertEqual(runtime["lesson_content_fully_operationalized_basis"], "not_yet_computed")
 
@@ -235,7 +286,7 @@ class ConsumerTruthTests(unittest.TestCase):
 
     def test_unit_dispositions_keep_consumer_evidence_out_of_candidate_states(self):
         rows, meta = dispositions.build()
-        self.assertEqual(meta["explicit_runtime_unit_bindings"], 6)
+        self.assertEqual(meta["explicit_runtime_unit_bindings"], 30)
         for row in rows:
             self.assertNotIn("candidate_runtime_behavioral_mapping", row["states"])
             self.assertNotIn("runtime_behavioral_evidence", row["states"])
