@@ -299,7 +299,7 @@
       "artifact_id": "runtime-keys-weak-root-voice",
       "path": "curriculum/drills/keys/weak-root-voice-runtime.keys.jsonl",
       "role": "runtime_drill_input",
-      "sha256": "d116b95d3b1ffef4225acc4c832a271123f184aaec568e4176ee2364f040b653"
+      "sha256": "59d08d817fba75e15bd2c60bfebd18a0ccdbda1efb0c9590ce5270ae998694eb"
     },
     {
       "artifact_id": "canary-ma-relative",
