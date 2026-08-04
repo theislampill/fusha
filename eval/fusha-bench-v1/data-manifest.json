@@ -1,0 +1,387 @@
+{
+  "aggregate_score_allowed": false,
+  "artifacts": [
+    {
+      "artifact_id": "qamus-entries",
+      "path": "qamus/data/current/entries.jsonl",
+      "role": "geometry_builder_input",
+      "sha256": "b742fde5a8c1a6f04cdf104e0e12fb374ed0d5349eb6a3ace7e34ba2f9e1c15d"
+    },
+    {
+      "artifact_id": "example-ayah-universe",
+      "path": "qamus/lattice/example-ayah-universe.jsonl",
+      "role": "geometry_builder_input",
+      "sha256": "3d24985ef635ef2fd8be06187158233def0a612a01aabe5fd8cc3c186734f1f2"
+    },
+    {
+      "artifact_id": "example-ayah-occurrences",
+      "path": "qamus/lattice/example-ayah-universe.occurrences.jsonl",
+      "role": "geometry_builder_input",
+      "sha256": "2b0cc14bbd36efdf6687cb4ae4ef4f2065b29a4c9f55845bc9056873bbea5884"
+    },
+    {
+      "artifact_id": "occurrence-appearance-index",
+      "path": "qamus/indexes/occurrence-appearances.jsonl",
+      "role": "geometry_builder_input",
+      "sha256": "df0a5ab0e9381d717570fffbe6866e92f3f9f9afc4a2cf0169e84a276eb3df8f"
+    },
+    {
+      "artifact_id": "particle-occurrence-matrix",
+      "path": "qamus/lattice/particle-occurrence-matrix.jsonl",
+      "role": "geometry_builder_input",
+      "sha256": "48c8996c3c0da5b6390e5612d94dc00b8fcf8935d05c1465bd4fdd173dccdefe"
+    },
+    {
+      "artifact_id": "geometry-reverse-universe",
+      "path": "qamus/lattice/p007-reverse-universe.jsonl",
+      "role": "ownership_gold_input",
+      "sha256": "54fea0f3e3a214c978eb065d5d0b7e2a2532fa1f6d02682c6bfc2a95041a85e1"
+    },
+    {
+      "artifact_id": "geometry-typed-facts",
+      "path": "qamus/certification/p007-geometry-wave/typed-facts.jsonl",
+      "role": "ownership_gold_input",
+      "sha256": "6e428baab29da63c2a452d304dac60f3a4d4c4c5fe7908c28830303db26af2fa"
+    },
+    {
+      "artifact_id": "geometry-events",
+      "path": "qamus/certification/p007-geometry-wave/events.jsonl",
+      "role": "ownership_certification_trail",
+      "sha256": "6c0c37f6c2948d5ff4fd812c0ee3bc88713aad9e57d9c0619a6d235e7907a2eb"
+    },
+    {
+      "artifact_id": "geometry-projection-baseline",
+      "path": "qamus/reports/p007-geometry-corpus-projection-baseline.json",
+      "role": "ownership_projection_baseline",
+      "sha256": "d0987f32e7f64f1110c3c167b1a968f9a98473c425ae65a4c2e47ce561d352b6"
+    },
+    {
+      "artifact_id": "pilot-locations",
+      "path": "qamus/examples/p007-li-pilot/locations.json",
+      "role": "structured_hover_gold_input",
+      "sha256": "07a85ae342ab9a63a87ef44d1b07c14a899773adcb7555dcc9c07bfe72d51fbc"
+    },
+    {
+      "artifact_id": "pilot-family-selection",
+      "path": "qamus/examples/p007-li-pilot/family-selection.json",
+      "role": "structured_hover_gold_input",
+      "sha256": "319ecead2d216b7436db155588be2e000e273b066191b7e553b4bcf42ce587f2"
+    },
+    {
+      "artifact_id": "pilot-candidate-lattice",
+      "path": "qamus/examples/p007-li-pilot/candidate-lattice.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "b7570b4a83abae08e28fbcbd64302e6dde88cead35a1b22e5f5970e7eec4cd7b"
+    },
+    {
+      "artifact_id": "pilot-typed-facts",
+      "path": "qamus/examples/p007-li-pilot/typed-facts.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "57dfa089efbcf15b7d903ab3947a9ed394989bc298c015e5f949b86153084163"
+    },
+    {
+      "artifact_id": "pilot-evidence",
+      "path": "qamus/examples/p007-li-pilot/mcp-evidence.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "ec9ccd497c1e547aa39c3fdbbbea45bd0dd7cc0f6d196e23964a11f5c0f946d7"
+    },
+    {
+      "artifact_id": "pilot-votes-a",
+      "path": "qamus/examples/p007-li-pilot/votes-a.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "e41b09b18f0c4a161d59036d8fe2038865aaba294d8c3e0fe180f24dd936c6bb"
+    },
+    {
+      "artifact_id": "pilot-votes-b",
+      "path": "qamus/examples/p007-li-pilot/votes-b.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "f94b1eac1a26007c107c142f02cb8a5350cce80c04d2a0f772028674a494ed63"
+    },
+    {
+      "artifact_id": "pilot-votes-b-calls",
+      "path": "qamus/examples/p007-li-pilot/votes-b-mcp-calls.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "0b578bb218993fc54088025a86b6a9c83ac5d25acdc4974b1dc7f40fe687e225"
+    },
+    {
+      "artifact_id": "pilot-reviewer-b-worklist",
+      "path": "qamus/examples/p007-li-pilot/reviewer-b-worklist.json",
+      "role": "structured_hover_gold_input",
+      "sha256": "e286460ab65ffe67a2c3b3cac93014f70d7bb161a09e7618cd07e3a30b615fdc"
+    },
+    {
+      "artifact_id": "pilot-two-vote-v1",
+      "path": "qamus/examples/p007-li-pilot/two-vote-artifacts.v1.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "9d0bb73255f2feb3dd2b9f6ddddef89183c5fb113a3ceecf8f7a442e45477348"
+    },
+    {
+      "artifact_id": "pilot-two-vote-v11",
+      "path": "qamus/examples/p007-li-pilot/two-vote-artifacts.v1_1.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "b1f74ed09a7781af678aa730b142b492da4128879ba90fc80fbcde39f13564a8"
+    },
+    {
+      "artifact_id": "pilot-migration-provenance",
+      "path": "qamus/examples/p007-li-pilot/migration-provenance.json",
+      "role": "structured_hover_gold_input",
+      "sha256": "317c3d238f708119ff2074c968cec33606de559d374d8df630f5618f5db54295"
+    },
+    {
+      "artifact_id": "pilot-projections",
+      "path": "qamus/examples/p007-li-pilot/projections.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "cdc9d956cf711512f92c4919a27f68fd2578d05d6e6d42ca428740c0788843e6"
+    },
+    {
+      "artifact_id": "pilot-parity-report",
+      "path": "qamus/examples/p007-li-pilot/parity-report.json",
+      "role": "structured_hover_gold_input",
+      "sha256": "5ac1f10e807aba6ffbada7c25c9cf519ce5fa34cb167eae914b0a428c3bb4670"
+    },
+    {
+      "artifact_id": "pilot-reverse-trace",
+      "path": "qamus/examples/p007-li-pilot/reverse-trace.json",
+      "role": "structured_hover_gold_input",
+      "sha256": "e8be592b2f030358ca0aa96ec1e9f57dc644d42381fd7bf0884cba8d13aa164c"
+    },
+    {
+      "artifact_id": "pilot-morpheme-occurrences",
+      "path": "qamus/examples/p007-li-pilot/morpheme-occurrences.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "b83fc472928ecde4f8b208574894377d81fc25238efd31f6dff929204112f385"
+    },
+    {
+      "artifact_id": "pilot-transclusion-edges",
+      "path": "qamus/examples/p007-li-pilot/transclusion-edges.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "2988a66bb8263c4cb22bf91586843a24aebc1187c95158eeb379e7bc19b6ba3c"
+    },
+    {
+      "artifact_id": "pilot-entry-reverse-index",
+      "path": "qamus/examples/p007-li-pilot/entry-reverse-index.json",
+      "role": "structured_hover_gold_input",
+      "sha256": "1a7b4b3fbda650e01c84918402e70f6e97e47fa62ff47b61b946fd5968de477d"
+    },
+    {
+      "artifact_id": "pilot-production-difference",
+      "path": "qamus/examples/p007-li-pilot/production-difference.json",
+      "role": "structured_hover_gold_input",
+      "sha256": "1374a96d221776e517b675434635e41883d5c05c25911dcbffaf7f4f809b08ed"
+    },
+    {
+      "artifact_id": "pilot-vn-unlock",
+      "path": "qamus/examples/p007-li-pilot/vn-unlock.json",
+      "role": "structured_hover_gold_input",
+      "sha256": "0b03c22d13ab88b291a14cfdcb6b6c84bbd79252bf58f790fa9870488b160a57"
+    },
+    {
+      "artifact_id": "pilot-live-rows",
+      "path": "qamus/examples/p007-li-pilot/live-rows.jsonl",
+      "role": "structured_hover_gold_input",
+      "sha256": "f4d1c5125bf9ae3d0109e81442a71ff00cf6172e037d7e4afafbc5f433925765"
+    },
+    {
+      "artifact_id": "pilot-events",
+      "path": "qamus/examples/p007-li-pilot/certification/events.jsonl",
+      "role": "structured_hover_certification_trail",
+      "sha256": "ae58eb6502c451ee1969fd51b144b32b7db25600532a6dd3e85e7e40c4f023f7"
+    },
+    {
+      "artifact_id": "pilot-claim-binding-migration",
+      "path": "qamus/examples/p007-li-pilot/certification/claim-binding-migration.json",
+      "role": "structured_hover_gold_input",
+      "sha256": "c1cbb115875a10f554d81d7ba583818fe25d8488fabc44936fdf0cdf1bb50153"
+    },
+    {
+      "artifact_id": "placement-probes",
+      "path": "curriculum/assessment/placement-test.sample.jsonl",
+      "role": "tutor_quarantined_probe_gold",
+      "sha256": "1f4497d8e9f26a040cf52735a4fbe5d99524e76ae43ba8ae712a3c042a4b50a1"
+    },
+    {
+      "artifact_id": "tutor-runtime",
+      "path": "tools/fusha_tutor_runtime.py",
+      "role": "tutor_runtime_consumer",
+      "sha256": "63354631480132cbd6f377144a281f6050111e0abf1906d3612282a6f4bfcd89"
+    },
+    {
+      "artifact_id": "candidate-drill-specifications",
+      "path": "curriculum/l1l6/drills-candidates/drill-candidates.jsonl",
+      "role": "drill_authoring_input",
+      "sha256": "254ede37bcf42568f0d92a9d79bd8ab0b2d2584a371b35f8a00cec15a21f3faa"
+    },
+    {
+      "artifact_id": "runtime-keys-hover-composition",
+      "path": "curriculum/drills/keys/hover-composition-and-routing.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "61746bd7008bcdd2d61c373ba54a6fa43f0da552400fa803532c7f30d82a72a8"
+    },
+    {
+      "artifact_id": "runtime-keys-morphology-foundations",
+      "path": "curriculum/drills/keys/morphology-foundations.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "98b102cbdccbb292703e9017e00ba1e980798c731767155b9863a2ac63124126"
+    },
+    {
+      "artifact_id": "runtime-keys-nawasikh-governor",
+      "path": "curriculum/drills/keys/nawasikh-governor-families.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "c153abb1f00dadf44eb8c9ee9944b50d7e6bd024b59eac6f42fc4595d827a22a"
+    },
+    {
+      "artifact_id": "runtime-keys-parse-key-colour",
+      "path": "curriculum/drills/keys/parse-key-and-color-layer.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "51eb4c1a3c9152e3fe01e5822e33f80fd1522a65ec2f1f234e38cc112d7e4126"
+    },
+    {
+      "artifact_id": "runtime-keys-plan15-routes",
+      "path": "curriculum/drills/keys/plan15-route-families.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "9f74e5ae6f3cd33cf222029ea54051dd8bd6303c9c4322e7a49c4f83bf224685"
+    },
+    {
+      "artifact_id": "runtime-keys-quranic-function-words",
+      "path": "curriculum/drills/keys/quranic-function-words.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "31a79814d9902d01323c92d0e416ed1fd3b50a34614b76d20fef4747de63f3ca"
+    },
+    {
+      "artifact_id": "runtime-keys-root-pattern",
+      "path": "curriculum/drills/keys/root-pattern-practice.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "d37f5478d67957651978cf87ade649298993f9db85ed31ec212038a36e7dbfc3"
+    },
+    {
+      "artifact_id": "runtime-keys-sentence-foundations",
+      "path": "curriculum/drills/keys/sentence-foundations.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "bf79a212597c99e9c02bc6e42dc762aad6fbb8fcb76b446bb0f1c7e8952b162a"
+    },
+    {
+      "artifact_id": "runtime-keys-vn00-hover-closure",
+      "path": "curriculum/drills/keys/vn00-aggressive-hover-closure.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "7e234a9219b7dc9ff8e5f3b2caa2f86b285bf3a4d69cc648080c417d797a023d"
+    },
+    {
+      "artifact_id": "canary-ma-relative",
+      "path": "qamus/examples/website-payloads/ma_relative_2_284_10.payload.json",
+      "role": "safety_canary",
+      "sha256": "28c16a2489c6fe55e94c42fa73e53ce00273a1327acc248f6e320256e48322eb"
+    },
+    {
+      "artifact_id": "canary-ma-negative",
+      "path": "qamus/examples/website-payloads/ma_nafiya_93_3_1.payload.json",
+      "role": "safety_canary",
+      "sha256": "9ebe22833550e24afca2e4f9965c0ae1467921a8fd2c05f8b46a2ee48c1d5c25"
+    },
+    {
+      "artifact_id": "canary-ma-unresolved",
+      "path": "qamus/examples/website-payloads/unresolved_ma_2_284_2.payload.json",
+      "role": "safety_canary",
+      "sha256": "f9469da56a95ec1504b24cfdfd5c3dabd7cc2ebda0093753095a5b42cca8143c"
+    },
+    {
+      "artifact_id": "canary-liqawmihi",
+      "path": "qamus/examples/website-payloads/multi_entry_liqawmihi_61_5_4.payload.json",
+      "role": "safety_canary",
+      "sha256": "5f27ced1dd998e1874a2c2b4b468ca899f9147a2a20c1179af7a4bd81d479518"
+    }
+  ],
+  "authority_commit": "1bd48d1bf3664316415a01d976fc3b7771dbb38a",
+  "axes": {
+    "contextual_translation": {
+      "denominator": 0,
+      "gold_artifact_ids": [],
+      "status": "not_scored_no_certified_gold"
+    },
+    "ownership_geometry": {
+      "allowed_fact_types": [
+        "attachment_geometry",
+        "surface_reconstruction_nfc",
+        "token_host_boundary"
+      ],
+      "certification_store_dir": "qamus/certification/p007-geometry-wave",
+      "claims_path": "qamus/certification/p007-geometry-wave/typed-facts.jsonl",
+      "gold_artifact_ids": [
+        "qamus-entries",
+        "example-ayah-universe",
+        "example-ayah-occurrences",
+        "occurrence-appearance-index",
+        "particle-occurrence-matrix",
+        "geometry-reverse-universe",
+        "geometry-typed-facts",
+        "geometry-events",
+        "geometry-projection-baseline"
+      ],
+      "identity_join": "exact_quran_occurrence_id"
+    },
+    "structured_hover": {
+      "allowed_fact_types": [
+        "case_mood_governor",
+        "clitic_host_segmentation",
+        "contextual_function",
+        "governor_relation",
+        "particle_rootlessness"
+      ],
+      "certification_store_dir": "qamus/examples/p007-li-pilot/certification",
+      "claims_path": "qamus/examples/p007-li-pilot/typed-facts.jsonl",
+      "gold_artifact_ids": [
+        "pilot-locations",
+        "pilot-family-selection",
+        "pilot-candidate-lattice",
+        "pilot-typed-facts",
+        "pilot-evidence",
+        "pilot-votes-a",
+        "pilot-votes-b",
+        "pilot-votes-b-calls",
+        "pilot-reviewer-b-worklist",
+        "pilot-two-vote-v1",
+        "pilot-two-vote-v11",
+        "pilot-migration-provenance",
+        "pilot-projections",
+        "pilot-parity-report",
+        "pilot-reverse-trace",
+        "pilot-morpheme-occurrences",
+        "pilot-transclusion-edges",
+        "pilot-entry-reverse-index",
+        "pilot-production-difference",
+        "pilot-vn-unlock",
+        "pilot-live-rows",
+        "pilot-events",
+        "pilot-claim-binding-migration"
+      ],
+      "identity_join": "exact_quran_occurrence_id",
+      "pilot_dir": "qamus/examples/p007-li-pilot"
+    },
+    "tutor": {
+      "excluded_input_artifact_ids": [
+        "candidate-drill-specifications",
+        "runtime-keys-hover-composition",
+        "runtime-keys-morphology-foundations",
+        "runtime-keys-nawasikh-governor",
+        "runtime-keys-parse-key-colour",
+        "runtime-keys-plan15-routes",
+        "runtime-keys-quranic-function-words",
+        "runtime-keys-root-pattern",
+        "runtime-keys-sentence-foundations",
+        "runtime-keys-vn00-hover-closure"
+      ],
+      "gold_artifact_ids": [
+        "placement-probes"
+      ],
+      "probe_artifact_id": "placement-probes",
+      "runtime_artifact_id": "tutor-runtime"
+    }
+  },
+  "benchmark_id": "fusha-bench-v1",
+  "safety_canary_artifact_ids": [
+    "canary-ma-relative",
+    "canary-ma-negative",
+    "canary-ma-unresolved",
+    "canary-liqawmihi"
+  ],
+  "schema": "fusha.bench_data_manifest.v1"
+}

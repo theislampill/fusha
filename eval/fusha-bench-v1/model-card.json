@@ -1,0 +1,16 @@
+{
+  "axes": {
+    "contextual_translation": "Unscored until the repository contains certified contextual-translation gold.",
+    "ownership_geometry": "Checks exact-occurrence geometry facts and their appearance dispositions through the effective certification trail.",
+    "structured_hover": "Checks exact projection-to-fact parity and derived appearance bindings for the currently certified p007 pilot facts; historical review-required facts and candidate payload prose remain excluded.",
+    "tutor": "Replays quarantined placement probes through the ordinary tutor grader for accepted-answer, forbidden-answer, required-reason and two-vote-hold behavior; this is runtime contract coverage, not learner performance."
+  },
+  "benchmark_id": "fusha-bench-v1",
+  "limitations": [
+    "Version 1 measures authority integrity and deterministic ordinary-runtime replay, not unconstrained model or learner accuracy.",
+    "A perfect axis score means that the frozen certified facts or runtime probes passed their bounded contracts; it does not imply corpus completion or learner capability.",
+    "No aggregate score is defined because the axes have different denominators and evidence postures."
+  ],
+  "purpose": "Provide a deterministic train-over-train baseline for segmentation ownership, structured hover projection parity, contextual translation readiness, and ordinary tutor runtime behavior.",
+  "schema": "fusha.bench_model_card.v1"
+}

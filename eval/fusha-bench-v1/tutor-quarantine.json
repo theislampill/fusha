@@ -1,0 +1,34 @@
+{
+  "benchmark_id": "fusha-bench-v1",
+  "excluded_input_artifact_ids": [
+    "candidate-drill-specifications",
+    "runtime-keys-hover-composition",
+    "runtime-keys-morphology-foundations",
+    "runtime-keys-nawasikh-governor",
+    "runtime-keys-parse-key-colour",
+    "runtime-keys-plan15-routes",
+    "runtime-keys-quranic-function-words",
+    "runtime-keys-root-pattern",
+    "runtime-keys-sentence-foundations",
+    "runtime-keys-vn00-hover-closure"
+  ],
+  "probe_ids": [
+    "PA1-script-vowels-kataba",
+    "PA3-script-shadda-rabb",
+    "PB2-particle-min",
+    "PB5-particle-lam-lima",
+    "PC1-noun-gender-mualima",
+    "PC3-noun-broken-plural-bint",
+    "PD2-verb-tense-root-yansuru",
+    "PD4-verb-rasul-not-verb",
+    "PE1-idafa-bab-al-bayt",
+    "PE4-jar-ilayna-root",
+    "PF1-sentence-nominal-subject",
+    "PF2-sentence-verbal-doer-object",
+    "PG1-function-man-min",
+    "PG2-function-inna-anna",
+    "PH1-reading-blank-plaque",
+    "PH4-reading-jadaluka-missing"
+  ],
+  "schema": "fusha.bench_tutor_quarantine.v1"
+}
