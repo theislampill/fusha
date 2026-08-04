@@ -83,3 +83,15 @@ Record findings by stable class so recurrence can be measured across tranches.
 - **convention-dependent-default-treated-as-universal**: an orthographic or grammatical default that depends on
   a specific, closed convention (e.g. dotless final yāʾ vs. alif maqṣūra) must name that convention explicitly
   and reject a claim that it holds universally, rather than clearing as an unconditional auto-safe fact.
+- **disputed-adjudication-mirror-in-sibling-or-remediation-text**: repairing the one row/KC a finding named is
+  not enough when the same disputed linguistic question is restated elsewhere in the same paradigm. Before
+  closing a repair that preserves an open, two-vote-blocked disagreement (see
+  `geminate-jussive-licensed-form-forbidden` above), check every SIBLING row of the same paradigm for the same
+  hard-settled conclusion or exhaustive-inventory count stated in its own words, and check every learner-facing
+  mirror of that row's content — a Train C remediation-index symptom cell, a dogfood/error-remediation summary,
+  a KC's `plain_rule`/`teach_template`/`typical_error_feature` — for the same defect restated as routing or
+  remediation prose. A prior repair that fixed only the row the finding quoted verbatim, while a sibling row's
+  own concept/explanation field or the remediation index's learner-facing symptom text still asserted the
+  identical settled conclusion or exhaustive count in different words, has not closed the finding — it has
+  relocated it. Match by MEANING (a closed set of paraphrases: "form X is simply indicative, not a jussive",
+  "this cell has its own N licensed shapes"), not by the one exact phrase the finding happened to quote.

@@ -925,6 +925,119 @@ class GeminateJussiveInventoryNoContradiction(unittest.TestCase):
         self.assertTrue(g["content_mastered"])
 
 
+# --------------------------------------------------------------------------- 4b2. Sonnet repair: two surviving
+# semantic mirrors of the WRV-13 adjudication (Train C remediation-index row + WRV-12's own exhaustive claim)
+class SonnetMirrorAdjudicationRepairGuard(unittest.TestCase):
+    """Two surviving semantic mirrors of the disputed WRV-13 kasra/damma-merged jussive adjudication, found by
+    Opus targeted re-review after the prior Sonnet repair:
+    (1) the Train C emittable remediation-index row for kc-geminate-verb-merger-licensing said an indicative
+        ḍamma-marked form is "mistaken for a jussive" — delivering the disputed Sonnet-side adjudication as
+        learner-facing remediation text, contradicting WRV-13's own unresolved posture.
+    (2) WRV-12's own concept/explanation asserted the jussive/imperative cell has its "own two licensed
+        shapes" — an exhaustive-inventory claim one row above WRV-13's explicit disclaimer that the pair does
+        not exhaust the classical inventory.
+    Both must keep teaching the secure merger/separation distinction with concrete examples while explicitly
+    routing the wider merged-vowel inventory question to unresolved scholar review — never accepting,
+    hard-rejecting, or silently settling the disputed reading. These checks scan for the underlying MEANING
+    (a closed set of paraphrases), not one exact phrase, so a superficial reword cannot silently reintroduce
+    either defect."""
+
+    # paraphrases of "this disputed form is settled as indicative-only / not a jussive" — the exact defect in
+    # the Train C row and the exact class of language WRV-13 itself already had to be repaired to drop.
+    _HARD_SETTLE_PHRASES = (
+        "mistaken for a jussive", "form mistaken for", "is simply indicative, not a jussive",
+        "damma-marked form is invalid", "damma-marked form is indicative only",
+        "damma-marked form is indicative-only", "not a jussive option at all", "not a jussive shape at all",
+        "simply the indicative, not a jussive", "is not a licensed jussive", "is not licensed as a jussive",
+    )
+    # paraphrases of "this pair is the complete/only licensed inventory for that cell".
+    _EXHAUSTIVE_PHRASES = (
+        "exactly two", "only two licensed", "only two shapes", "the two licensed jussive shapes",
+        "own two licensed shapes", "has its own two licensed shapes", "exactly two licensed shapes",
+        "the only two licensed shapes",
+    )
+
+    def _row(self, item_id):
+        return {r["id"]: r for r in _load_runtime_rows()}[item_id]
+
+    def _remediation_index_text(self):
+        with open(os.path.join(_REPO, "curriculum", "drills", "dogfood-error-remediation-index.md"),
+                  encoding="utf-8") as fh:
+            return fh.read()
+
+    def _kc_geminate_remediation_row_line(self):
+        for line in self._remediation_index_text().splitlines():
+            if line.startswith("| `kc-geminate-verb-merger-licensing`"):
+                return line
+        self.fail("kc-geminate-verb-merger-licensing row missing from the Train C remediation index")
+        return ""
+
+    def _all_scanned_blobs(self, row12):
+        remediation_line = self._kc_geminate_remediation_row_line()
+        return [
+            ("WRV-12 concept", row12["concept"]),
+            ("WRV-12 explanation", row12["explanation"]),
+            ("WRV-12 expected_answer", row12["expected_answer"]),
+            ("WRV-12 accepted_variants", " ".join(row12["accepted_variants"])),
+            ("Train C kc-geminate-verb-merger-licensing remediation-index row", remediation_line),
+        ]
+
+    def test_remediation_index_row_does_not_deliver_the_disputed_adjudication_as_settled(self):
+        line = self._kc_geminate_remediation_row_line()
+        low = line.lower()
+        for phrase in self._HARD_SETTLE_PHRASES:
+            self.assertNotIn(phrase, low,
+                             "Train C kc-geminate-verb-merger-licensing row must not hard-settle the disputed "
+                             "kasra/damma-merged jussive question as learner-facing remediation text (%r)"
+                             % phrase)
+
+    def test_remediation_index_row_routes_the_wider_inventory_to_scholar_review(self):
+        line = self._kc_geminate_remediation_row_line()
+        low = line.lower()
+        self.assertTrue(
+            ("scholar review" in low or "scholar-review" in low) and
+            ("unresolved" in low or "disputed" in low or "open question" in low),
+            "Train C kc-geminate-verb-merger-licensing row must explicitly route the wider merged-vowel "
+            "inventory question to unresolved scholar review: %r" % line)
+
+    def test_remediation_index_row_still_teaches_the_secure_merger_separation_distinction(self):
+        line = self._kc_geminate_remediation_row_line()
+        low = line.lower()
+        self.assertIn("merger", low)
+        self.assertIn("separat", low)
+
+    def test_wrv12_does_not_assert_the_jussive_cells_licensed_pair_is_exhaustive(self):
+        row12 = self._row("WRV-12-mudaaf-merger-default-no-trigger")
+        for label, blob in self._all_scanned_blobs(row12)[:-1]:
+            low = blob.lower()
+            for phrase in self._EXHAUSTIVE_PHRASES:
+                self.assertNotIn(phrase, low, "%s must not assert an exhaustive jussive-shape-count claim "
+                                              "(%r)" % (label, phrase))
+
+    def test_wrv12_still_distinguishes_merger_and_separation_with_secure_examples(self):
+        row12 = self._row("WRV-12-mudaaf-merger-default-no-trigger")
+        self.assertIn("يَمُدُّونَ", row12["expected_answer"])
+        self.assertIn("suffix", (row12["concept"] + row12["explanation"]).lower())
+
+    def test_wrv12_still_preserves_its_own_suffix_triggered_licensing_target(self):
+        # the repair must not lose WRV-12's actual point: merger is obligatory once a vowel follows the second
+        # radical (the plural-indicative suffix cell), and a separated answer there must still fail.
+        row12 = self._row("WRV-12-mudaaf-merger-default-no-trigger")
+        g = RT.grade(row12, {"answer": "يَمْدُدُونَ — the radicals separate here.",
+                             "reasoning": list(row12["required_reasoning"])})
+        self.assertFalse(g["content_mastered"])
+
+    def test_no_scanned_source_hard_settles_or_exhaustively_claims_the_disputed_question(self):
+        """Cross-check across every surviving surface named by the finding: neither WRV-12's own fields nor
+        the Train C remediation-index row may recur EITHER defect, matched by meaning-level paraphrase rather
+        than the one exact phrase each was originally reported with."""
+        row12 = self._row("WRV-12-mudaaf-merger-default-no-trigger")
+        for label, blob in self._all_scanned_blobs(row12):
+            low = blob.lower()
+            for phrase in self._HARD_SETTLE_PHRASES + self._EXHAUSTIVE_PHRASES:
+                self.assertNotIn(phrase, low, "%s must not recur %r" % (label, phrase))
+
+
 # --------------------------------------------------------------------------- 4c. F8: WRV-18 dual hamza spellings
 class WRV18DualHamzaCarrierSpellingsAccepted(unittest.TestCase):
     """F8: WRV-18 must accept BOTH licensed hamza-carrier spellings for the plural cell (bare hamza يَقْرَءُونَ
