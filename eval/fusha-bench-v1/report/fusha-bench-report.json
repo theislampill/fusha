@@ -1,0 +1,106 @@
+{
+  "aggregate_score_allowed": false,
+  "authority_commit": "1bd48d1bf3664316415a01d976fc3b7771dbb38a",
+  "axes": {
+    "contextual_translation": {
+      "denominator": 0,
+      "score": null,
+      "status": "not_scored_no_certified_gold"
+    },
+    "ownership_geometry": {
+      "appearances_dispositioned": 985,
+      "canonical_occurrences": 454,
+      "effectively_certified_facts": 1362,
+      "fact_type_counts": {
+        "attachment_geometry": 454,
+        "surface_reconstruction_nfc": 454,
+        "token_host_boundary": 454
+      },
+      "full_token_ownership_gold": false,
+      "gold_scope": "partial_attachment_geometry_only",
+      "identity_join": "exact_quran_occurrence_id",
+      "metric": {
+        "comparison": "baseline_no_previous_report",
+        "delta": null,
+        "denominator": 1362,
+        "name": "effective_certified_geometry_fact_integrity",
+        "numerator": 1362,
+        "score": 1.0
+      },
+      "projection_ready_appearances": 820,
+      "status": "scored_authority_integrity",
+      "withheld_appearances": 165
+    },
+    "structured_hover": {
+      "active_rivals": 0,
+      "appearances_dispositioned": 78,
+      "canonical_occurrences": 12,
+      "canonical_projections": 12,
+      "effectively_certified_facts": 49,
+      "full_rich_hover_gold": false,
+      "gold_scope": "p007_pilot_structured_facts_only",
+      "identity_join": "exact_quran_occurrence_id",
+      "metric": {
+        "comparison": "baseline_no_previous_report",
+        "delta": null,
+        "denominator": 49,
+        "name": "projection_effective_fact_parity",
+        "numerator": 49,
+        "score": 1.0
+      },
+      "occurrence_scoped_facts": 48,
+      "review_required_historical_facts_excluded": 36,
+      "safety_canaries_scored_as_gold": 0,
+      "status": "scored_projection_fact_parity",
+      "supporting_entry_facts": 1
+    },
+    "tutor": {
+      "answers_exposed_to_authoring_inputs": 0,
+      "learner_performance_scored": false,
+      "metric": {
+        "comparison": "baseline_no_previous_report",
+        "delta": null,
+        "denominator": 16,
+        "name": "ordinary_tutor_runtime_replay",
+        "numerator": 16,
+        "score": 1.0
+      },
+      "probe_count": 16,
+      "probe_ids": [
+        "PA1-script-vowels-kataba",
+        "PA3-script-shadda-rabb",
+        "PB2-particle-min",
+        "PB5-particle-lam-lima",
+        "PC1-noun-gender-mualima",
+        "PC3-noun-broken-plural-bint",
+        "PD2-verb-tense-root-yansuru",
+        "PD4-verb-rasul-not-verb",
+        "PE1-idafa-bab-al-bayt",
+        "PE4-jar-ilayna-root",
+        "PF1-sentence-nominal-subject",
+        "PF2-sentence-verbal-doer-object",
+        "PG1-function-man-min",
+        "PG2-function-inna-anna",
+        "PH1-reading-blank-plaque",
+        "PH4-reading-jadaluka-missing"
+      ],
+      "quarantine_overlap_count": 0,
+      "runtime_replay": {
+        "accepted_forms_checked": 47,
+        "expected_answers_accepted": 16,
+        "forbidden_answers_rejected": 33,
+        "probe_passes": 16,
+        "required_reason_gates_enforced": 16,
+        "two_vote_rows_held": 3
+      },
+      "status": "scored_runtime_replay"
+    }
+  },
+  "benchmark_id": "fusha-bench-v1",
+  "limitations": [
+    "v1 scores authority integrity and ordinary tutor runtime replay, not unconstrained model or learner accuracy",
+    "contextual translation remains unscored until certified gold exists",
+    "candidate payload examples are safety canaries and never benchmark truth"
+  ],
+  "schema": "fusha.bench_report.v1"
+}
