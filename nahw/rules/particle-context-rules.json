@@ -270,6 +270,68 @@
         "pending_reason": "maa_category_unresolved",
         "note": "no frame observation, or a frame value outside this table AND outside recognized_unmapped_frames, stays pending; a frame is never inferred from the caller's own conclusion label"
       }
+    },
+    {
+      "id": "fa_function_frame",
+      "$surface_note": "'فَ' below is a documentary EXAMPLE surface for this rule's prose, not a matching key — exactly like maa_relative_vs_negation above, no code path looks up a surface string here; the frame_table governs by OCCURRENCE-SPECIFIC contextual frame, never by surface identity. فاء carries no content-letter diacritic distinction of its own (always fatḥa), so this rule's signal is structural, not haraka.",
+      "example_surface": "فَ",
+      "distinguish_by": {
+        "signal": "occurrence-specific CONTEXTUAL FRAME: the mood marking of the following/linked verb, and what element (if any) actually licenses that mood — never fa's bare presence",
+        "frame_fields": ["following_clause_shape", "mood_governor_if_any"],
+        "also": "a frame this table does not bind to EXACTLY one function is never guessed at; both/all rivals stay pending, exactly like an absent observation. fa's own function is ALWAYS decided separately from any following particle's function (e.g. a following مَا) — this table never reports a blended label."
+      },
+      "axis": ["istinafiyya", "sababiyya", "rabita"],
+      "axis_note": "This rule discriminates fa's own function among three members: istiʾnāfiyya (resumptive, opens a new clause with no mood claim), sababiyya (fā' al-sababiyya, the causative/result clause whose following imperfect is licensed into the subjunctive by an implied أَنْ — fa itself is the licensing CONTEXT, never the stated governor), and rābiṭa (a bare linking fa before an apodosis/next clause whose own mood, if any, is governed by something else entirely, e.g. lām al-amr — fa is explicitly NOT the mood governor in this member). ʿāṭifa (plain listing coordination) is an attested fa function this table does not discriminate; it stays out-of-axis.",
+      "functions_not_discriminated": ["atfiyya"],
+      "author_circularity_disclosure": "This frame_table's `frame` values and their bound `function` are authored by the same party, from no mechanical extraction source; the bank rows built against it (nahw/evals/fa-function-occurrence-eval.jsonl) supply the frame observation and check the table's own verdict, so the bank cannot fail unless the table itself or its consumer breaks. Candidate-only, fixture-producer posture — see the bank file's own header note.",
+      "frame_table": [
+        {
+          "frame": "narrative_perfect_no_mood_question",
+          "function": "istinafiyya",
+          "unique_within_axis": true,
+          "reason": "fa links to a perfect-tense narrative verb; there is no mood to license and fa opens/continues the narration, e.g. فَتَلَقَّىٰٓ ءَادَمُ",
+          "mood_licensing": {"fa_governs_mood": false, "governor": null, "licensed_mood": null}
+        },
+        {
+          "frame": "result_after_prohibition_or_negation_with_visible_subjunctive",
+          "function": "sababiyya",
+          "unique_within_axis": true,
+          "reason": "fa follows a prohibition/negation/request and the next imperfect verb carries a visible subjunctive (fatḥa) ending; fā' al-sababiyya is the causative/result frame, but the subjunctive is licensed by an implied أَنْ, not by fa directly, e.g. فَتَقْعُدَ مَذْمُومًا",
+          "mood_licensing": {"fa_governs_mood": false, "governor": "implied_an_after_fa_sababiyya", "licensed_mood": "subjunctive"}
+        },
+        {
+          "frame": "linked_to_lam_al_amr_jussive_apodosis",
+          "function": "rabita",
+          "unique_within_axis": true,
+          "reason": "fa merely links to an apodosis/command clause opened by lām al-amr + jussive verb; the jussive is governed by the lām, never by fa, e.g. فَلْيُؤَدِّ",
+          "mood_licensing": {"fa_governs_mood": false, "governor": "lam_al_amr", "licensed_mood": "jussive"}
+        },
+        {
+          "frame": "linked_to_separate_particle_component",
+          "function": "rabita",
+          "unique_within_axis": true,
+          "reason": "fa links/resumes and is immediately followed by a DISTINCT particle (e.g. مَا) that carries its own separate function, decided independently by that particle's own rule (never fused into one 'fa_plus_x' label), e.g. فَمَا كَانَ لَكُم",
+          "mood_licensing": {"fa_governs_mood": false, "governor": null, "licensed_mood": null},
+          "component_boundary": "this frame never asserts or requires the linked particle's own function; that is a separate decision"
+        },
+        {
+          "frame": "ambiguous_link_or_sequence",
+          "functions": ["istinafiyya", "rabita"],
+          "unique_within_axis": false,
+          "reason": "the observed frame does not establish whether fa opens a genuinely new resumptive clause or merely links to what follows; both readings stay open rather than defaulting to either"
+        }
+      ],
+      "recognized_unmapped_frames": [
+        {
+          "frame": "plain_listing_conjunction",
+          "reason": "the source mechanism can report fa joining two like items in a simple list (ʿāṭifa) — a real, closed-vocabulary frame an observer may legitimately report, but this table's axis does not discriminate ʿāṭifa from its sisters, so it is recognized but deliberately left UNMAPPED rather than folded into istinafiyya or rabita. A recognized-but-unmapped frame stays pending with pending_reason=frame_row_missing — distinct from an off-vocabulary caller error — and never defaults to a function."
+        }
+      ],
+      "pending_fallback": {
+        "decision": "pending",
+        "pending_reason": "fa_function_unresolved",
+        "note": "no frame observation, or a frame value outside this table AND outside recognized_unmapped_frames, stays pending; a frame is never inferred from the caller's own conclusion label, and fa's bare surface presence is never treated as evidence of any one function"
+      }
     }
   ]
 }
