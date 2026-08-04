@@ -133,6 +133,72 @@ class FushaBenchTest(unittest.TestCase):
                 {"synthetic-authoring-input": {self.quarantine["probe_ids"][0]}},
             )
 
+    def test_quarantine_rejects_a_discovered_but_unlisted_runtime_key_bank(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = os.path.abspath(temp_dir)
+            assessment_dir = os.path.join(temp_root, "curriculum", "assessment")
+            keys_dir = os.path.join(temp_root, "curriculum", "drills", "keys")
+            os.makedirs(assessment_dir)
+            os.makedirs(keys_dir)
+            probe_path = os.path.join(assessment_dir, "placement-test.sample.jsonl")
+            listed_path = os.path.join(keys_dir, "listed.keys.jsonl")
+            unlisted_path = os.path.join(keys_dir, "unlisted.keys.jsonl")
+            shutil.copyfile(
+                os.path.join(ROOT, "curriculum", "assessment", "placement-test.sample.jsonl"),
+                probe_path,
+            )
+            with open(listed_path, "w", encoding="utf-8", newline="\n") as handle:
+                handle.write('{"id":"listed-runtime-row","expected_answer":"listed"}\n')
+            with open(unlisted_path, "w", encoding="utf-8", newline="\n") as handle:
+                handle.write('{"id":"unlisted-runtime-row","expected_answer":"unlisted"}\n')
+            manifest = {
+                "axes": {"tutor": {
+                    "probe_artifact_id": "probes",
+                    "excluded_input_artifact_ids": ["listed"],
+                }}
+            }
+            quarantine = copy.deepcopy(self.quarantine)
+            quarantine["excluded_input_artifact_ids"] = ["listed"]
+            artifacts = {
+                "probes": {"path": os.path.relpath(probe_path, temp_root)},
+                "listed": {
+                    "path": os.path.relpath(listed_path, temp_root),
+                    "role": "runtime_drill_input",
+                },
+            }
+            with self.assertRaisesRegex(bench.BenchError, "discovered.*unlisted"):
+                bench._validate_quarantine(temp_root, manifest, quarantine, artifacts)
+
+    def test_quarantine_rejects_probe_answer_text_exposed_to_an_input(self):
+        probe_rows = bench.read_jsonl(
+            os.path.join(ROOT, "curriculum", "assessment", "placement-test.sample.jsonl")
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            probe_path = os.path.join(temp_dir, "placement.jsonl")
+            input_path = os.path.join(temp_dir, "runtime.keys.jsonl")
+            shutil.copyfile(
+                os.path.join(ROOT, "curriculum", "assessment", "placement-test.sample.jsonl"),
+                probe_path,
+            )
+            with open(input_path, "w", encoding="utf-8", newline="\n") as handle:
+                handle.write(json.dumps({
+                    "id": "different-stable-id",
+                    "prompt": "Unrelated prompt",
+                    "expected_answer": probe_rows[0]["expected_answer"],
+                }, ensure_ascii=False) + "\n")
+            manifest = {"axes": {"tutor": {
+                "probe_artifact_id": "probes",
+                "excluded_input_artifact_ids": ["input"],
+            }}}
+            quarantine = copy.deepcopy(self.quarantine)
+            quarantine["excluded_input_artifact_ids"] = ["input"]
+            artifacts = {
+                "probes": {"path": probe_path},
+                "input": {"path": input_path, "role": "runtime_drill_input"},
+            }
+            with self.assertRaisesRegex(bench.BenchError, "answer exposure"):
+                bench._validate_quarantine(temp_dir, manifest, quarantine, artifacts)
+
     def test_tutor_runtime_replay_fails_closed_on_bad_key_semantics(self):
         rows = bench.read_jsonl(
             os.path.join(ROOT, "curriculum", "assessment", "placement-test.sample.jsonl")
@@ -258,6 +324,31 @@ class FushaBenchTest(unittest.TestCase):
         mutated["artifacts"][0]["sha256"] = "0" * 64
         with self.assertRaisesRegex(bench.BenchError, "sha256 mismatch"):
             bench.validate_manifest(mutated, root=ROOT)
+
+    def test_axis_paths_are_bound_to_the_exact_pinned_artifacts(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            copied_claims = os.path.join(temp_dir, "typed-facts.jsonl")
+            shutil.copyfile(
+                os.path.join(ROOT, self.manifest["axes"]["structured_hover"]["claims_path"]),
+                copied_claims,
+            )
+            mutated = copy.deepcopy(self.manifest)
+            mutated["axes"]["structured_hover"]["claims_path"] = copied_claims
+            with self.assertRaisesRegex(bench.BenchError, "pinned artifact"):
+                bench.validate_manifest(mutated, root=ROOT)
+
+    def test_missing_certification_store_is_refused_without_creating_it(self):
+        pilot = self.manifest["axes"]["structured_hover"]
+        with tempfile.TemporaryDirectory() as temp_dir:
+            missing_store = os.path.join(temp_dir, "missing-certification-store")
+            with self.assertRaisesRegex(bench.BenchError, "store directory missing"):
+                bench.load_effective_certified_facts(
+                    root=ROOT,
+                    store_dir=missing_store,
+                    claims_path=pilot["claims_path"],
+                    allowed_fact_types=set(pilot["allowed_fact_types"]),
+                )
+            self.assertFalse(os.path.exists(missing_store))
 
     def test_leakage_and_aggregate_score_are_rejected(self):
         with self.assertRaisesRegex(bench.BenchError, "source-boundary leak"):

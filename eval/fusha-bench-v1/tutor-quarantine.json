@@ -2,6 +2,8 @@
   "benchmark_id": "fusha-bench-v1",
   "excluded_input_artifact_ids": [
     "candidate-drill-specifications",
+    "runtime-default-level-checkpoints",
+    "runtime-keys-followers-coordination-apposition",
     "runtime-keys-hover-composition",
     "runtime-keys-morphology-foundations",
     "runtime-keys-nawasikh-governor",

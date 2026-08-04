@@ -212,6 +212,18 @@
       "sha256": "254ede37bcf42568f0d92a9d79bd8ab0b2d2584a371b35f8a00cec15a21f3faa"
     },
     {
+      "artifact_id": "runtime-default-level-checkpoints",
+      "path": "curriculum/assessment/level-checkpoints.sample.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "a7f4a47169519ffbe3288440d2bd4ece5414e9673bbe2dedc729b0c21178ee0f"
+    },
+    {
+      "artifact_id": "runtime-keys-followers-coordination-apposition",
+      "path": "curriculum/drills/keys/followers-coordination-apposition.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "946cb99b0dc66d3ec2a9cafb503594adf4f94ccd64358e0088682937fee8e1b1"
+    },
+    {
       "artifact_id": "runtime-keys-hover-composition",
       "path": "curriculum/drills/keys/hover-composition-and-routing.keys.jsonl",
       "role": "runtime_drill_input",
@@ -359,6 +371,8 @@
     "tutor": {
       "excluded_input_artifact_ids": [
         "candidate-drill-specifications",
+        "runtime-default-level-checkpoints",
+        "runtime-keys-followers-coordination-apposition",
         "runtime-keys-hover-composition",
         "runtime-keys-morphology-foundations",
         "runtime-keys-nawasikh-governor",

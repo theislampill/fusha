@@ -47,6 +47,16 @@ DEFAULT_REPORT = ROOT / "eval" / "fusha-bench-v1" / "report" / "fusha-bench-repo
 _QURAN_OCCURRENCE_RE = re.compile(r"^quran:\d+:\d+:\d+$")
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _AGGREGATE_KEYS = {"aggregate_score", "overall_score", "combined_score", "total_score"}
+_ANSWER_BEARING_FIELDS = {
+    "accepted_variants",
+    "expected_answer",
+    "expected_rubric",
+    "explanation",
+    "forbidden_answers",
+    "prompt",
+    "prompt_specification",
+    "required_reasoning",
+}
 
 
 class BenchError(ValueError):
@@ -215,6 +225,25 @@ def validate_manifest(manifest, *, root=ROOT):
     if artifacts[runtime_artifact_id].get("role") != "tutor_runtime_consumer":
         raise BenchError("tutor runtime artifact has the wrong role")
 
+    axis_bindings = {
+        "ownership_geometry": ("geometry-typed-facts", "geometry-events"),
+        "structured_hover": ("pilot-typed-facts", "pilot-events"),
+    }
+    for axis_name, (claims_id, events_id) in axis_bindings.items():
+        axis = axes[axis_name]
+        claims_path = _resolve(root, axis.get("claims_path") or "")
+        pinned_claims_path = _resolve(root, artifacts[claims_id]["path"])
+        if claims_path != pinned_claims_path:
+            raise BenchError(f"{axis_name} claims_path is not the pinned artifact")
+        store_path = _resolve(root, axis.get("certification_store_dir") or "")
+        pinned_store_path = _resolve(root, artifacts[events_id]["path"]).parent
+        if store_path != pinned_store_path:
+            raise BenchError(f"{axis_name} certification store is not the pinned artifact parent")
+    pilot_dir = _resolve(root, axes["structured_hover"].get("pilot_dir") or "")
+    pinned_pilot_dir = _resolve(root, artifacts["pilot-typed-facts"]["path"]).parent
+    if pilot_dir != pinned_pilot_dir:
+        raise BenchError("structured_hover pilot_dir is not the pinned artifact parent")
+
     for artifact_id, row in artifacts.items():
         path = _resolve(root, row["path"])
         if not path.is_file():
@@ -299,6 +328,8 @@ def validate_certified_fact(fact):
 
 def load_effective_certified_facts(*, root, store_dir, claims_path, allowed_fact_types):
     store_path = _resolve(root, store_dir)
+    if not store_path.is_dir():
+        raise BenchError(f"canonical certification store directory missing: {store_path}")
     claims = read_jsonl(_resolve(root, claims_path))
     store = TypedFactCertificationStore(store_path)
     trail_errors = store.validate_trail()
@@ -347,6 +378,54 @@ def ensure_no_quarantine_overlap(probe_ids, input_id_sets):
             )
 
 
+def _normalized_text(value):
+    return " ".join(unicodedata.normalize("NFKC", value).casefold().split())
+
+
+def _answer_texts(rows):
+    texts = set()
+    for row in rows:
+        for key, value in row.items():
+            if key not in _ANSWER_BEARING_FIELDS:
+                continue
+            values = value if isinstance(value, list) else [value]
+            for item in values:
+                if isinstance(item, str) and item.strip():
+                    texts.add(_normalized_text(item))
+    return texts
+
+
+def answer_exposures(probe_rows, input_rows_by_source):
+    probe_answers = set()
+    for row in probe_rows:
+        for key in ("expected_answer", "accepted_variants"):
+            value = row.get(key)
+            values = value if isinstance(value, list) else [value]
+            for item in values:
+                if isinstance(item, str) and item.strip():
+                    probe_answers.add(_normalized_text(item))
+    exposures = []
+    for source, rows in input_rows_by_source.items():
+        for text in sorted(probe_answers & _answer_texts(rows)):
+            exposures.append({"source": source, "normalized_answer": text})
+    return exposures
+
+
+def _discovered_quarantine_paths(root):
+    root_path = Path(root).resolve()
+    paths = set()
+    for pattern in (
+        "curriculum/drills/keys/*.keys.jsonl",
+        "curriculum/l1l6/drills-candidates/*.jsonl",
+    ):
+        paths.update(path.resolve() for path in root_path.glob(pattern) if path.is_file())
+    default_relative = Path(tutor_runtime.DEFAULT_BANK).resolve().relative_to(ROOT)
+    default_path = (root_path / default_relative).resolve()
+    if default_path.is_file():
+        paths.add(default_path)
+    return paths
+
+
 def _validate_model_card(model_card):
     if model_card.get("schema") != MODEL_CARD_SCHEMA \
             or model_card.get("benchmark_id") != BENCHMARK_ID:
@@ -373,15 +452,28 @@ def _validate_quarantine(root, manifest, quarantine, artifacts):
     if quarantine.get("excluded_input_artifact_ids") != tutor.get("excluded_input_artifact_ids"):
         raise BenchError("tutor quarantine exclusion inventory differs from data manifest")
     input_sets = {}
+    input_rows = {}
+    listed_paths = set()
     for artifact_id in quarantine["excluded_input_artifact_ids"]:
         role = artifacts[artifact_id].get("role")
         if role not in {"drill_authoring_input", "runtime_drill_input"}:
             raise BenchError(f"{artifact_id}: invalid tutor exclusion role")
-        input_sets[artifact_id] = _ids_from_artifact(
-            _resolve(root, artifacts[artifact_id]["path"])
-        )
+        path = _resolve(root, artifacts[artifact_id]["path"])
+        listed_paths.add(path)
+        input_sets[artifact_id] = _ids_from_artifact(path)
+        input_rows[artifact_id] = read_jsonl(path)
+    discovered_paths = _discovered_quarantine_paths(root)
+    unlisted = sorted(str(path) for path in discovered_paths - listed_paths)
+    if unlisted:
+        raise BenchError("discovered tutor inputs are unlisted: " + ", ".join(unlisted[:5]))
     ensure_no_quarantine_overlap(set(probe_ids), input_sets)
-    return probe_ids, source_rows
+    exposures = answer_exposures(source_rows, input_rows)
+    if exposures:
+        raise BenchError(
+            "tutor answer exposure in authoring/runtime input: "
+            + ", ".join(row["source"] for row in exposures[:5])
+        )
+    return probe_ids, source_rows, len(exposures)
 
 
 def replay_tutor_probes(rows):
@@ -562,7 +654,9 @@ def build_report(*, root=ROOT, manifest_path=DEFAULT_MANIFEST,
     quarantine = read_json(quarantine_path)
     artifacts = validate_manifest(manifest, root=root)
     _validate_model_card(model_card)
-    probe_ids, probe_rows = _validate_quarantine(root, manifest, quarantine, artifacts)
+    probe_ids, probe_rows, answer_exposure_count = _validate_quarantine(
+        root, manifest, quarantine, artifacts
+    )
     tutor_replay = replay_tutor_probes(probe_rows)
 
     geometry = manifest["axes"]["ownership_geometry"]
@@ -680,7 +774,7 @@ def build_report(*, root=ROOT, manifest_path=DEFAULT_MANIFEST,
                 "probe_count": len(probe_ids),
                 "probe_ids": sorted(probe_ids),
                 "quarantine_overlap_count": 0,
-                "answers_exposed_to_authoring_inputs": 0,
+                "answers_exposed_to_authoring_inputs": answer_exposure_count,
                 "learner_performance_scored": False,
                 "runtime_replay": tutor_replay,
                 "metric": tutor_metric,
