@@ -175,6 +175,54 @@ TRANCHE_001_ERROR_FIXTURES_A_BANK = {
     "row_key": None,
     "secondary_consumers": [],
 }
+# ---------------------------------------------------------------------------
+# tranche-001 error-fixtures bank B1 (curriculum L4-L6 hostile fixtures, derivation/inflection/paradigms). Same
+# pattern as TRANCHE_001_ERROR_FIXTURES_A_BANK above: declared HERE, in this module's own writable surface, and
+# merged into the loaded contract by load_contract() below. Continues batch A without mutating it — batch A's own
+# bank/trace rows are untouched; this row only adds a new bank entry and a new adapter. Disposition is honestly
+# fixture_only: no production consumer decides a hostile fixture's morphological/inflectional verdict yet (see
+# curriculum/l1l6/reports/mistake-pattern-fixtures.jsonl for the trace back to each source queue row and
+# clean-room misconception/qualification evidence).
+# ---------------------------------------------------------------------------
+TRANCHE_001_ERROR_FIXTURES_B1_BANK = {
+    "adapter": "tranche_001_error_fixtures_b1",
+    "behavioral_consumer": None,
+    "consumers": ["tools/fusha_text_check.py"],
+    "disposition": "fixture_only",
+    "enforced_properties": [
+        "every row carries the full required field set and a unique id",
+        "every row states an original wrong_reasoning trap distinct from its own why_wrong",
+        "every surface survives the engine's byte-exactness contract",
+    ],
+    "followup_packet": "TP-TRANCHE-001-ERROR-FIXTURES-B1-SARF-CONSUMER",
+    "form": "jsonl",
+    "id_field": "id",
+    "loc_fields": [],
+    "metric_floors": {},
+    "nonempty_list_fields": ["distractors", "misconception_ids"],
+    "not_enforced_properties": [
+        "no production consumer compares its output against a row's own expected/wrong claim yet, so no row "
+        "here is behaviorally_decided; this bank gates structure, vocabulary and real-consumer invocation only "
+        "(runner_loaded_fixture_only per curriculum/l1l6/reports/mistake-pattern-fixtures.jsonl)",
+    ],
+    "note": "Tranche 001 Line 4 hostile error fixtures, batch B1: 17 Sarf-routed rows (derivation/inflection/"
+            "paradigms) restated from committed clean-room misconception evidence "
+            "(curriculum/l1l6/misconceptions/misconception-registry.jsonl) and qualification evidence "
+            "(curriculum/l1l6/qualification/*.jsonl), reverse-traced from "
+            "curriculum/l1l6/reports/queues/q-error-fixtures.jsonl. Continues batch A "
+            "(sarf/evals/tranche-001-error-fixtures-a.jsonl) without mutating it: batch A's rows and this bank's "
+            "rows never share an id. Structure/routing gate only; see "
+            "curriculum/l1l6/reports/mistake-pattern-fixtures.jsonl for the trace back to each source queue row.",
+    "path": "sarf/evals/tranche-001-error-fixtures-b1.jsonl",
+    "pinned_metrics": {},
+    "property_coverage": [],
+    "required_fields": [
+        "id", "source_row_id", "source_lesson", "misconception_ids", "domain", "anti_llm_boundary", "surface",
+        "correct_surface", "wrong_reasoning", "why_wrong", "clean_room_posture",
+    ],
+    "row_key": None,
+    "secondary_consumers": [],
+}
 # How a Store A rule file is (or is not) used by production code.
 #   data_driven   — rule CONTENT is loaded and changes/rejects a production decision; proven by a bounded mutation
 #   id_citation   — only stable ids are read, to build a citation string; the operative condition is hard-coded
@@ -1892,6 +1940,32 @@ def adapter_tranche_001_error_fixtures_a(rows, spec, ctx, root):
                    "surfaces_byte_exact": byte_exact, "orthography_probed_rows": probed}
 
 
+def adapter_tranche_001_error_fixtures_b1(rows, spec, ctx, root):
+    """sarf/evals/tranche-001-error-fixtures-b1.jsonl -> the same byte-exactness gate as adapter_structural /
+    adapter_tranche_001_error_fixtures_a (tools/fusha_text_check.py:segment_candidates checks every row's
+    surface byte-exactly). Honestly fixture_only: decided_rows stays 0 and no row here is behaviorally_decided
+    (curriculum/l1l6/reports/mistake-pattern-fixtures.jsonl records that explicitly per row); this batch's rows
+    carry misconception_ids (plural — the manifest links several misconceptions per source row) rather than
+    batch A's single misconception_id.
+    """
+    fails, seen, byte_exact = [], set(), 0
+    for i, row in enumerate(rows):
+        rid = _rid(row, spec, i)
+        fails.extend(_required_field_failures(row, spec, rid))
+        if rid in seen:
+            fails.append("%s: duplicate row id" % rid)
+        seen.add(rid)
+        surface = row.get("surface")
+        if surface:
+            cands = ctx.segment_candidates(surface)
+            if _concat_exact(cands, surface):
+                byte_exact += 1
+            else:
+                fails.append("%s: surface is not byte-exact through the segmenter" % rid)
+    return fails, {"rows": len(rows), "decided_rows": 0, "distinct_ids": len(seen),
+                   "surfaces_byte_exact": byte_exact}
+
+
 ADAPTERS = {
     "lattice_ambiguity": adapter_lattice_ambiguity,
     "clitic_split_guard": adapter_clitic_split_guard,
@@ -1907,6 +1981,7 @@ ADAPTERS = {
     "plural_gender_operationalization": adapter_plural_gender_operationalization,
     "structural": adapter_structural,
     "tranche_001_error_fixtures_a": adapter_tranche_001_error_fixtures_a,
+    "tranche_001_error_fixtures_b1": adapter_tranche_001_error_fixtures_b1,
 }
 
 
@@ -2056,7 +2131,7 @@ def load_contract(root=_REPO):
     # It is appended AFTER the on-disk contract is parsed, so validate_contract() below still runs the exact
     # same schema/semantic checks against it that every other bank row must pass.
     contract = dict(contract)
-    contract["banks"] = list(contract["banks"]) + [TRANCHE_001_ERROR_FIXTURES_A_BANK]
+    contract["banks"] = list(contract["banks"]) + [TRANCHE_001_ERROR_FIXTURES_A_BANK, TRANCHE_001_ERROR_FIXTURES_B1_BANK]
     return contract
 
 
