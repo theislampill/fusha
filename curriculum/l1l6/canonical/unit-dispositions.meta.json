@@ -1,8 +1,14 @@
 {
-  "explicit_runtime_unit_bindings": 0,
+  "explicit_analytical_unit_bindings": 7,
+  "explicit_runtime_unit_bindings": 6,
   "generator": "tools/build_unit_dispositions.py",
   "generic_unresolved_remainders": 0,
-  "note": "every state is computed from committed evidence; runtime key rows contain no authoritative canonical-unit ids; machine states require a discovered pack; blockers carry exact causes",
+  "lessons_fully_operationalized": 0,
+  "lessons_partially_operationalized": 14,
+  "new_real_consumer_unit_bindings": 8,
+  "note": "candidate readiness states remain separate from exact plane-specific consumer bindings; no binding certifies a linguistic fact or marks a whole lesson operationalized",
+  "pending_authoring_unit_bindings": 5,
+  "reverified_consumer_unit_bindings": 5,
   "schema": "curriculum.l1l6_unit_disposition.v1.meta",
   "state_participation": {
     "candidate_occurrence_witnesses": 12,

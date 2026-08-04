@@ -5,9 +5,9 @@
 Every canonical unit ends in one or more CLOSED states, with a single
 strongest_state; the strongest-state totals sum to exactly the unit count.
 States are COMPUTED from committed evidence (packs, projections, grounding,
-misconception bindings, bundles, loops) — never asserted. The closed state
-vocabulary (NOTHING here is consumed by any runtime — every state is a
-candidate/readiness label awaiting Sol-owned integration):
+misconception bindings, bundles, loops) — never asserted. Candidate/readiness
+states remain separate from exact real-consumer bindings, which are recorded
+per consumer plane and never promote linguistic certification:
 
   candidate_pack_harnessed     a discovered machine pack exists and the
                                NON-AUTHORITATIVE fixture harness decides its
@@ -39,6 +39,8 @@ import json
 import sys
 from pathlib import Path
 
+import build_curriculum_absorption as absorption
+
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "curriculum" / "l1l6"
 
@@ -56,7 +58,18 @@ def _jsonl(p):
     return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
-def build():
+def build(bindings=None):
+    bindings = (absorption.load_consumer_bindings()
+                if bindings is None else bindings)
+    consumer_truth = absorption.consumer_operationalization_truth(bindings)
+    real_rows_by_unit = {}
+    pending_rows_by_unit = {}
+    for binding in consumer_truth["real_bindings"]:
+        for unit_id in binding.get("unit_ids", []):
+            real_rows_by_unit.setdefault(unit_id, []).append(binding)
+    for binding in consumer_truth["pending_bindings"]:
+        for unit_id in binding.get("unit_ids", []):
+            pending_rows_by_unit.setdefault(unit_id, []).append(binding)
     units = _jsonl(BASE / "canonical" / "canonical-units.jsonl")
     projections = {r["unit_id"]: r for r in
                    _jsonl(BASE / "projections" / "unit-projections.jsonl")}
@@ -79,6 +92,8 @@ def build():
         proj = projections.get(uid)
         grow = grounding.get(uid, {})
         mis = mis_by_unit.get(uid, [])
+        real_consumers = real_rows_by_unit.get(uid, [])
+        pending_consumers = pending_rows_by_unit.get(uid, [])
         states, blockers = [], []
         if incs:
             states.append("candidate_pack_harnessed")
@@ -146,6 +161,29 @@ def build():
                 "n": grow.get("n_candidates", 0),
                 "occurrence_links": uid in occ_units,
             },
+            "real_consumer_bindings": [{
+                "binding_id": binding["binding_id"],
+                "consumer_paths": binding["consumer_paths"],
+                "consumer_plane": binding["consumer_plane"],
+                "consumer_train": binding["consumer_train"],
+                "contribution_status": binding["contribution_status"],
+                "test_paths": binding["test_paths"],
+            } for binding in sorted(real_consumers,
+                                    key=lambda r: r["binding_id"])],
+            "pending_consumer_bindings": [{
+                "binding_id": binding["binding_id"],
+                "consumer_plane": binding["consumer_plane"],
+                "consumer_train": binding["consumer_train"],
+                "contribution_status": binding["contribution_status"],
+                "proposed_destination_paths": binding.get(
+                    "proposed_destination_paths", []),
+            } for binding in sorted(pending_consumers,
+                                    key=lambda r: r["binding_id"])],
+            "operationalized_planes": sorted({
+                binding["consumer_plane"] for binding in real_consumers}),
+            "pending_consumer_planes": sorted({
+                binding["consumer_plane"] for binding in pending_consumers}),
+            "fully_operationalized": False,
             "states": states,
             "strongest_state": strongest,
             "blockers": blockers,
@@ -173,8 +211,30 @@ def build():
             s: sum(1 for r in rows if s in r["states"])
             for s in STRONGEST_ORDER},
         "generic_unresolved_remainders": 0,
-        "explicit_runtime_unit_bindings": 0,
-        "note": "every state is computed from committed evidence; runtime key rows contain no authoritative canonical-unit ids; machine states require a discovered pack; blockers carry exact causes",
+        "explicit_runtime_unit_bindings": len(set(
+            consumer_truth["new_real_unit_ids_by_plane"].get(
+                "tutor_runtime", [])
+            + consumer_truth["reverified_unit_ids_by_plane"].get(
+                "tutor_runtime", []))),
+        "explicit_analytical_unit_bindings": len(set(
+            consumer_truth["new_real_unit_ids_by_plane"].get(
+                "nahw_analytical", [])
+            + consumer_truth["reverified_unit_ids_by_plane"].get(
+                "nahw_analytical", []))),
+        "new_real_consumer_unit_bindings": sum(
+            len(ids) for ids in
+            consumer_truth["new_real_unit_ids_by_plane"].values()),
+        "reverified_consumer_unit_bindings": sum(
+            len(ids) for ids in
+            consumer_truth["reverified_unit_ids_by_plane"].values()),
+        "pending_authoring_unit_bindings": sum(
+            len(ids) for ids in
+            consumer_truth["pending_unit_ids_by_plane"].values()),
+        "lessons_partially_operationalized": consumer_truth[
+            "lessons_partially_operationalized"],
+        "lessons_fully_operationalized": consumer_truth[
+            "lessons_fully_operationalized"],
+        "note": "candidate readiness states remain separate from exact plane-specific consumer bindings; no binding certifies a linguistic fact or marks a whole lesson operationalized",
     }
     return rows, meta
 

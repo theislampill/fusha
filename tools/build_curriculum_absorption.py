@@ -34,6 +34,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "curriculum" / "l1l6"
 RPT = BASE / "reports"
+CONSUMER_BINDINGS = BASE / "links" / "consumer-operationalization-bindings.jsonl"
+
+REAL_CONSUMER_STATUSES = frozenset({
+    "operationalized_real_consumer",
+    "already_operational_consumer_reverified",
+})
 
 SARF_DOMAINS = {"script_phonology", "roots_patterns", "derivation",
                 "clitics_affixes", "paradigms", "inflection",
@@ -60,6 +66,74 @@ NEXT_ACTION_BY_STATE = {
 
 def _jsonl(p):
     return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+
+
+def load_consumer_bindings():
+    """Load explicit lesson/unit-to-consumer evidence without inference."""
+    return _jsonl(CONSUMER_BINDINGS) if CONSUMER_BINDINGS.exists() else []
+
+
+def consumer_operationalization_truth(bindings=None):
+    """Partition exact consumer evidence by plane and contribution posture."""
+    bindings = load_consumer_bindings() if bindings is None else bindings
+    real = [
+        row for row in bindings
+        if row.get("binding_status") == "explicit"
+        and row.get("contribution_status") in REAL_CONSUMER_STATUSES
+    ]
+    pending = [
+        row for row in bindings
+        if row.get("binding_status") == "pending_authoring"
+        and row.get("contribution_status") == "pending_authoring"
+    ]
+
+    def ids_by_plane(rows, key):
+        out = {}
+        for row in rows:
+            out.setdefault(row["consumer_plane"], set()).update(row.get(key, []))
+        return {plane: sorted(ids) for plane, ids in sorted(out.items())}
+
+    def binding_ids_by_subject(rows, key):
+        out = {}
+        for row in rows:
+            for subject_id in row.get(key, []):
+                out.setdefault(subject_id, set()).add(row["binding_id"])
+        return {sid: sorted(ids) for sid, ids in sorted(out.items())}
+
+    new_real = [r for r in real
+                if r["contribution_status"] == "operationalized_real_consumer"]
+    reverified = [r for r in real if r["contribution_status"] ==
+                  "already_operational_consumer_reverified"]
+    runtime_item_ids = sorted({item for r in real
+                               if r["consumer_plane"] == "tutor_runtime"
+                               for item in r.get("runtime_item_ids", [])})
+    candidate_drill_ids = sorted({item for r in real
+                                  if r["consumer_plane"] == "tutor_runtime"
+                                  for item in r.get("candidate_drill_ids", [])})
+    real_lesson_ids = sorted({lid for r in real for lid in r.get("lesson_ids", [])})
+    return {
+        "bindings": bindings,
+        "real_bindings": real,
+        "pending_bindings": pending,
+        "real_consumer_lesson_ids": real_lesson_ids,
+        "real_consumer_unit_ids": sorted({uid for r in real
+                                           for uid in r.get("unit_ids", [])}),
+        "real_binding_ids_by_lesson": binding_ids_by_subject(real, "lesson_ids"),
+        "real_binding_ids_by_unit": binding_ids_by_subject(real, "unit_ids"),
+        "pending_binding_ids_by_lesson": binding_ids_by_subject(
+            pending, "lesson_ids"),
+        "pending_binding_ids_by_unit": binding_ids_by_subject(
+            pending, "unit_ids"),
+        "new_real_unit_ids_by_plane": ids_by_plane(new_real, "unit_ids"),
+        "reverified_unit_ids_by_plane": ids_by_plane(reverified, "unit_ids"),
+        "pending_unit_ids_by_plane": ids_by_plane(pending, "unit_ids"),
+        "real_lesson_ids_by_plane": ids_by_plane(real, "lesson_ids"),
+        "pending_lesson_ids_by_plane": ids_by_plane(pending, "lesson_ids"),
+        "runtime_item_ids": runtime_item_ids,
+        "candidate_drill_ids": candidate_drill_ids,
+        "lessons_partially_operationalized": len(real_lesson_ids),
+        "lessons_fully_operationalized": 0,
+    }
 
 
 def load():
@@ -89,7 +163,7 @@ def load():
     return ctx
 
 
-def ordinary_tutor_runtime_truth(ctx):
+def ordinary_tutor_runtime_truth(ctx, bindings=None):
     """Derive the ordinary runtime's bounded L1-L6 evidence.
 
     A drill-key row with a kc_id is behaviorally consumed by the ordinary
@@ -125,16 +199,48 @@ def ordinary_tutor_runtime_truth(ctx):
             for manifestation in misconception.get("manifestations", []):
                 lesson_kcs.setdefault(manifestation["lesson_id"], set()).add(kc_id)
 
+    operationalization = consumer_operationalization_truth(bindings)
+    tutor_rows = [r for r in operationalization["real_bindings"]
+                  if r["consumer_plane"] == "tutor_runtime"]
     explicit_lesson_bindings = {
         lesson_id
         for row in key_rows
         for lesson_id in row.get("lesson_ids", [])
     }
+    explicit_lesson_bindings.update(
+        lesson_id for row in tutor_rows for lesson_id in row.get("lesson_ids", [])
+    )
     explicit_unit_bindings = {
         unit_id
         for row in key_rows
         for unit_id in row.get("unit_ids", [])
     }
+    explicit_unit_bindings.update(
+        unit_id for row in tutor_rows for unit_id in row.get("unit_ids", [])
+    )
+    runtime_ids = {row["id"] for row in key_rows}
+    bound_runtime_ids = {
+        item for row in tutor_rows for item in row.get("runtime_item_ids", [])
+    }
+    missing_runtime_ids = sorted(bound_runtime_ids - runtime_ids)
+    if missing_runtime_ids:
+        raise ValueError("consumer bindings cite missing runtime drills: %s" %
+                         missing_runtime_ids)
+    candidate_rows = {
+        row["drill_id"]: row for row in
+        _jsonl(BASE / "drills-candidates" / "drill-candidates.jsonl")
+    }
+    candidate_ids = {
+        item for row in tutor_rows for item in row.get("candidate_drill_ids", [])
+    }
+    missing_candidate_ids = sorted(candidate_ids - set(candidate_rows))
+    if missing_candidate_ids:
+        raise ValueError("consumer bindings cite missing candidate drills: %s" %
+                         missing_candidate_ids)
+    promoted_candidate_ids = sorted(
+        item for item in candidate_ids
+        if candidate_rows[item].get("status") != "candidate_not_runtime_integrated"
+    )
     return {
         "drill_key_rows": len(key_rows),
         "emittable_kc_ids": emittable_kcs,
@@ -148,18 +254,22 @@ def ordinary_tutor_runtime_truth(ctx):
         "explicit_lesson_bindings": len(explicit_lesson_bindings),
         "explicit_unit_ids": sorted(explicit_unit_bindings),
         "explicit_canonical_unit_bindings": len(explicit_unit_bindings),
-        "lesson_content_operationalized": False,
+        "bound_runtime_item_ids": sorted(bound_runtime_ids),
+        "runtime_original_drills_from_candidate_specs": len(bound_runtime_ids),
+        "candidate_drill_spec_ids": sorted(candidate_ids),
+        "candidate_drill_specs_promoted": len(promoted_candidate_ids),
+        "lesson_content_fully_operationalized": False,
         "binding_note": (
-            "runtime behavior is proven only for the committed drill-key rows; "
-            "lesson linkage is indirect via KC curriculum_misconception_ids and "
-            "misconception manifestations; related_units do not establish a "
-            "runtime canonical-unit binding"
+            "runtime behavior is proven by committed drill-key rows plus exact "
+            "explicit consumer-binding rows; candidate drill specifications "
+            "remain candidate_not_runtime_integrated; related_units never "
+            "establish a runtime canonical-unit binding"
         ),
     }
 
 
 def explicit_other_train_linkage(train_id):
-    """Count only closed-form explicit Train D/E binding rows in links/."""
+    """Count only closed-form explicit consumer binding rows in links/."""
     lesson_ids, unit_ids = set(), set()
     for path in sorted((BASE / "links").glob("*.jsonl")):
         for row in _jsonl(path):
@@ -235,8 +345,11 @@ def _campaign_numbers(ctx, ledger, section_rows, completeness):
 
 
 def build(ctx):
-    runtime_truth = ordinary_tutor_runtime_truth(ctx)
+    bindings = load_consumer_bindings()
+    operationalization = consumer_operationalization_truth(bindings)
+    runtime_truth = ordinary_tutor_runtime_truth(ctx, bindings=bindings)
     runtime_lesson_kcs = runtime_truth["indirect_lesson_kcs"]
+    binding_by_id = {r["binding_id"]: r for r in bindings}
     concepts_by_lesson = {}
     for c in ctx["concepts"]:
         concepts_by_lesson.setdefault(c["lesson_id"], []).append(c)
@@ -313,6 +426,18 @@ def build(ctx):
                                     for u in assoc_units) else
                "family_links" if assoc_units else "no_corpus_bridge")
 
+        real_binding_ids = operationalization[
+            "real_binding_ids_by_lesson"].get(lid, [])
+        pending_binding_ids = operationalization[
+            "pending_binding_ids_by_lesson"].get(lid, [])
+        real_planes = sorted({binding_by_id[bid]["consumer_plane"]
+                              for bid in real_binding_ids})
+        pending_planes = sorted({binding_by_id[bid]["consumer_plane"]
+                                 for bid in pending_binding_ids})
+        tutor_binding_ids = [bid for bid in real_binding_ids
+                             if binding_by_id[bid]["consumer_plane"] ==
+                             "tutor_runtime"]
+
         counts = l["counts"]
         ledger.append({
             "schema": "curriculum.l1l6_absorption_row.v1",
@@ -349,15 +474,29 @@ def build(ctx):
             "runtime_tutor_evidence": {
                 "indirect_lesson_link": lid in runtime_lesson_kcs,
                 "emittable_kc_ids": runtime_lesson_kcs.get(lid, []),
+                "explicit_binding_ids": tutor_binding_ids,
                 "binding_basis": (
+                    "explicit consumer binding"
+                    if tutor_binding_ids else
                     "KC curriculum_misconception_ids -> misconception manifestations"
                     if lid in runtime_lesson_kcs else None
                 ),
-                "lesson_content_operationalized": False,
+                "lesson_contribution_operationalized": bool(tutor_binding_ids),
+                "lesson_content_fully_operationalized": False,
+            },
+            "consumer_operationalization": {
+                "status": ("partially_operationalized" if real_binding_ids
+                           else "pending_authoring" if pending_binding_ids
+                           else "not_operationalized"),
+                "real_binding_ids": real_binding_ids,
+                "pending_binding_ids": pending_binding_ids,
+                "operationalized_planes": real_planes,
+                "pending_planes": pending_planes,
+                "fully_operationalized": False,
             },
             "tutor_drill_destinations": (
                 ["ordinary tutor runtime via emittable KC drill-key rows"]
-                if lid in runtime_lesson_kcs else []),
+                if lid in runtime_lesson_kcs or tutor_binding_ids else []),
             "candidate_tutor_drill_destinations": (
                 ["candidate drill packets derived from learner-error material"]
                 if counts["common_mistakes_sections"] else []) + [
@@ -663,6 +802,24 @@ def build(ctx):
         "lesson_denominators_by_level": dict(sorted(level_denominators.items())),
         "lessons_mapped_to_tutor_drills": runtime_truth[
             "explicit_lesson_bindings"],
+        "lessons_partially_operationalized": operationalization[
+            "lessons_partially_operationalized"],
+        "lessons_fully_operationalized": operationalization[
+            "lessons_fully_operationalized"],
+        "canonical_units_with_real_consumers": len(
+            operationalization["real_consumer_unit_ids"]),
+        "consumer_operationalization": {
+            "new_real_unit_ids_by_plane": operationalization[
+                "new_real_unit_ids_by_plane"],
+            "reverified_unit_ids_by_plane": operationalization[
+                "reverified_unit_ids_by_plane"],
+            "pending_unit_ids_by_plane": operationalization[
+                "pending_unit_ids_by_plane"],
+            "real_lesson_ids_by_plane": operationalization[
+                "real_lesson_ids_by_plane"],
+            "pending_lesson_ids_by_plane": operationalization[
+                "pending_lesson_ids_by_plane"],
+        },
         "lessons_indirectly_linked_to_runtime_tutor_drills": runtime_truth[
             "indirectly_linked_lessons"],
         "ordinary_tutor_runtime": {
@@ -676,8 +833,16 @@ def build(ctx):
                 "explicit_lesson_bindings"],
             "explicit_canonical_unit_bindings": runtime_truth[
                 "explicit_canonical_unit_bindings"],
-            "lesson_content_operationalized": runtime_truth[
-                "lesson_content_operationalized"],
+            "bound_runtime_item_ids": runtime_truth[
+                "bound_runtime_item_ids"],
+            "runtime_original_drills_from_candidate_specs": runtime_truth[
+                "runtime_original_drills_from_candidate_specs"],
+            "candidate_drill_spec_ids": runtime_truth[
+                "candidate_drill_spec_ids"],
+            "candidate_drill_specs_promoted": runtime_truth[
+                "candidate_drill_specs_promoted"],
+            "lesson_content_fully_operationalized": runtime_truth[
+                "lesson_content_fully_operationalized"],
             "binding_note": runtime_truth["binding_note"],
         },
         "candidate_drill_packets": {
@@ -686,6 +851,8 @@ def build(ctx):
             "status": "candidate_not_runtime_integrated",
         },
         "other_train_l1l6_linkage": {
+            "train_b": explicit_other_train_linkage("train_b"),
+            "train_c": explicit_other_train_linkage("train_c"),
             "train_d": explicit_other_train_linkage("train_d"),
             "train_e": explicit_other_train_linkage("train_e"),
         },
