@@ -10,7 +10,7 @@ drill covers the seven L4.M1 lessons on weak roots and the voice/deputy-agent fa
 |---|---|---|
 | `L4.M1.01` | assimilated (mithāl) verbs — Form I imperfect first-radical deletion, scoped to Form I only | `kc-assimilated-verb-radical-scope` |
 | `L4.M1.02` | defective (nāqiṣ) verbs — subtype vowel, jussive deletion, suffix-triggered shift | `kc-defective-verb-suffix-and-jussive-shift` |
-| `L4.M1.03` | geminate (muḍaʿʿaf) verbs — merger/separation licensing, the two licensed jussive shapes | `kc-geminate-verb-merger-licensing` |
+| `L4.M1.03` | geminate (muḍaʿʿaf) verbs — merger/separation licensing, two securely licensed jussive shapes (not asserted exhaustive) | `kc-geminate-verb-merger-licensing` |
 | `L4.M1.04` | hamzated (mahmūz) verbs — carrier selection, stored irregular cells | `kc-hamzated-verb-carrier-and-imperfect` |
 | `L4.M1.05` | doubly weak (lafīf) verbs — subtype composition (maqrūn vs. mafrūq) | `kc-doubly-weak-verb-subtype-composition` |
 | `L4.M1.06` | passive voice melody (bināʾ lil-majhūl) and promoted-argument case/agreement | `kc-passive-voice-melody-and-argument-promotion` |

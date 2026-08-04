@@ -203,7 +203,7 @@
       "artifact_id": "tutor-runtime",
       "path": "tools/fusha_tutor_runtime.py",
       "role": "tutor_runtime_consumer",
-      "sha256": "7b9581dcbb866771ff46593776bf68b6880e5c211608318de518ae170d35afd1"
+      "sha256": "bcb5e1ed815d53142698b9961924023d06d072b40b4339e17f88feb36a8218ef"
     },
     {
       "artifact_id": "candidate-drill-specifications",
@@ -227,7 +227,7 @@
       "artifact_id": "runtime-keys-foundational-script-orthography",
       "path": "curriculum/drills/keys/foundational-script-orthography.keys.jsonl",
       "role": "runtime_drill_input",
-      "sha256": "47965aeff5e851a2a4a5d69acf8e655f58e362407933c47089a07169470f34cd"
+      "sha256": "a557e908dab18632685a16f309be91f42c4847feb3594f8550bc31643c921d60"
     },
     {
       "artifact_id": "runtime-keys-hover-composition",
@@ -287,7 +287,7 @@
       "artifact_id": "runtime-keys-tranche-001-ma-context",
       "path": "curriculum/drills/keys/tranche-001-ma-context-runtime.keys.jsonl",
       "role": "runtime_drill_input",
-      "sha256": "70c3d745b11c254708ef18d398d5e99b440c9f990a79a1998157df9693c588d2"
+      "sha256": "449c2ed2d6c56a3b6eda458ce426cc79948d383082e7af8335f0a723fb8bf65f"
     },
     {
       "artifact_id": "runtime-keys-vn00-hover-closure",
@@ -299,7 +299,7 @@
       "artifact_id": "runtime-keys-weak-root-voice",
       "path": "curriculum/drills/keys/weak-root-voice-runtime.keys.jsonl",
       "role": "runtime_drill_input",
-      "sha256": "aaa59f491ba180987d4140fc44bdf9cb932dd63e9ae1114c9eee09b60be61deb"
+      "sha256": "b4ae53df8f9f389d3df8fb19c1021307123382e0355d24fb2997256523b6f1ac"
     },
     {
       "artifact_id": "canary-ma-relative",
@@ -324,6 +324,30 @@
       "path": "qamus/examples/website-payloads/multi_entry_liqawmihi_61_5_4.payload.json",
       "role": "safety_canary",
       "sha256": "5f27ced1dd998e1874a2c2b4b468ca899f9147a2a20c1179af7a4bd81d479518"
+    },
+    {
+      "artifact_id": "kc-catalog-legacy",
+      "path": "curriculum/kc-catalog.json",
+      "role": "kc_catalog_input",
+      "sha256": "e16c05f857ddde048fbc03b0e742f74fd2b8ec84fea3fea74ba57718fc09687a"
+    },
+    {
+      "artifact_id": "kc-catalog-shard-derivation-template",
+      "path": "curriculum/kc-catalog.d/tranche-001-derivation-template.jsonl",
+      "role": "kc_catalog_input",
+      "sha256": "07eca62ffeb93c6e5ec9a49c8b236a22c4a48bdc7c78c6ea7d31857081c21a48"
+    },
+    {
+      "artifact_id": "kc-catalog-shard-ma-context",
+      "path": "curriculum/kc-catalog.d/tranche-001-ma-context.jsonl",
+      "role": "kc_catalog_input",
+      "sha256": "8a1856ac62c1c8063ceb49fbcb95072b4a6f1b206193ca7c7a45ae6d87672889"
+    },
+    {
+      "artifact_id": "kc-catalog-loader",
+      "path": "tools/kc_catalog.py",
+      "role": "kc_catalog_input",
+      "sha256": "bcb9ad138412510756caa53897ca27a0205501c360c7486a94aa565a4d074fae"
     }
   ],
   "authority_commit": "1bd48d1bf3664316415a01d976fc3b7771dbb38a",

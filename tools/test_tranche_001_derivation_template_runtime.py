@@ -628,20 +628,44 @@ class F2ExactDiacriticContractGuard(unittest.TestCase):
                          "rows whose expected/forbidden collide under the lenient normalizer (differ only by "
                          "diacritics) but do not declare exact_surface_forms: %s" % missing)
 
-    def test_exact_surface_forms_rows_reject_their_own_colliding_forbidden_text(self):
+    def test_exact_surface_forms_rows_reject_a_token_level_hostile_substitution(self):
+        """R7: token-level hostile substitution -- for every row that authored a forbidden_answers TOKEN
+        colliding with one of its own declared exact_surface_forms under the lenient normalizer, substitute
+        that REAL authored hostile token into the REAL gold answer and assert the real grader rejects it.
+        Replaces the vacuous whole-sentence membership check, which compared an entire forbidden_answers
+        sentence's normalized text against an entire expected_answer/accepted_variant and so never fired."""
         import fusha_tutor_runtime as ftr
         rows = ftr.load_bank(str(NEW_BANK))
         for row in rows:
-            if not row.get("exact_surface_forms"):
+            if not row.get("exact_surface_forms") or row.get("exact_surface_forms_mode", "all") != "all":
                 continue
-            for forbidden in row["forbidden_answers"]:
-                if ftr._norm(forbidden) in {ftr._norm(row["expected_answer"])} | {
-                        ftr._norm(v) for v in row.get("accepted_variants") or []}:
-                    with self.subTest(id=row["id"]):
-                        g = ftr.grade(row, {"answer": forbidden, "reasoning": list(row["required_reasoning"])})
-                        self.assertFalse(g["passed"],
-                                        "%s: exact_surface_forms must reject the diacritic-colliding forbidden "
-                                        "text %r" % (row["id"], forbidden[:60]))
+            for gold, hostile in ftr.exact_surface_hostile_pairs(row):
+                hostile_answer = row["expected_answer"].replace(gold, hostile)
+                with self.subTest(id=row["id"], gold=gold, hostile=hostile):
+                    self.assertNotEqual(hostile_answer, row["expected_answer"])
+                    g = ftr.grade(row, {"answer": hostile_answer, "reasoning": list(row["required_reasoning"])})
+                    self.assertFalse(g["passed"],
+                                    "%s: exact_surface_forms must reject the token-level hostile substitution "
+                                    "%r -> %r" % (row["id"], gold, hostile))
+
+    def test_conjunctive_multiform_rows_require_every_declared_surface(self):
+        """R1: a row with >=2 exact_surface_forms and mode 'all' (the default) must reject an answer dropping
+        one of the declared surfaces. This bank currently authors no such multi-form row, so the loop is
+        expected to be a no-op today; it stays live so a future conjunctive row is covered automatically."""
+        import fusha_tutor_runtime as ftr
+        rows = ftr.load_bank(str(NEW_BANK))
+        for row in rows:
+            forms = row.get("exact_surface_forms") or []
+            if len(forms) < 2 or row.get("exact_surface_forms_mode", "all") != "all":
+                continue
+            partial = row["expected_answer"]
+            for missing in forms[1:]:
+                partial = partial.replace(missing, "")
+            with self.subTest(id=row["id"]):
+                self.assertNotEqual(partial, row["expected_answer"])
+                g = ftr.grade(row, {"answer": partial, "reasoning": list(row["required_reasoning"])})
+                self.assertFalse(g["passed"], "%s: dropping a required conjunctive surface must fail "
+                                              "exact_surface_forms" % row["id"])
 
     def test_exact_surface_forms_rows_still_accept_their_own_gold_form(self):
         import fusha_tutor_runtime as ftr

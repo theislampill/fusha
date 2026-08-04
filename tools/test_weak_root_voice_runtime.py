@@ -267,14 +267,16 @@ def _expected_new_kc_entries():
               "its gemination realizes two root consonants and is never dropped as if optional; the two "
               "identical radicals merge only where the following element is NOT a bare consonant-initial "
               "suffix, and separate only where a consonant-initial suffix follows — reversing this licensing "
-              "stacks or drops a radical; and the jussive of a geminate verb has exactly two licensed shapes "
-              "(merged with fatḥa, or separated with sukūn) — a merged form with ḍamma is simply the "
-              "indicative, not a third jussive option.",
+              "stacks or drops a radical; and merged-with-fatḥa and separated-with-sukūn are two SECURELY "
+              "licensed jussive shapes of a geminate verb (a merged form with ḍamma is simply the "
+              "indicative, not a jussive option at all) — this pair is taught as securely licensed examples, "
+              "not as a claim that they exhaust the complete classical geminate-jussive inventory; a further "
+              "merged-vowel variant is an open scholar-review question this KC does not settle.",
               "a geminate verb's imperfect vowel, its merger/separation, or its jussive shape is being "
               "produced and the per-verb vowel or the suffix-conditioned merger licensing has not been "
               "checked",
               "the verb's own stored imperfect vowel used, merger applied only where no consonant-initial "
-              "suffix follows and separation only where one does, and the jussive limited to its two "
+              "suffix follows and separation only where one does, and the jussive limited to its securely "
               "licensed shapes",
               "one uniform imperfect vowel assumed for the whole class, the gemination mark dropped as if "
               "decorative, merger and separation licensing reversed against the following suffix, or an "
@@ -282,9 +284,10 @@ def _expected_new_kc_entries():
               "Before you write this cell, check the verb's own stored vowel and what actually follows the "
               "second radical.",
               "The geminate imperfect vowel is stored per verb; gemination realizes two radicals and is "
-              "never optional; a consonant-initial suffix forces separation and blocks merger; and the "
-              "jussive has only two licensed shapes, merged-with-fatḥa or separated-with-sukūn — a "
-              "merged-with-ḍamma form is the indicative.",
+              "never optional; a consonant-initial suffix forces separation and blocks merger; and "
+              "merged-with-fatḥa and separated-with-sukūn are two securely licensed jussive shapes — a "
+              "merged-with-ḍamma form is the indicative, not a jussive option — without this being a claim "
+              "that no other merged-vowel shape is ever licensed.",
               "State the stored vowel, then justify merger or separation from what follows, then name the "
               "licensed jussive shape.",
               "geminate_verb_merger_or_jussive_error", "weak_root_morphology",
@@ -441,6 +444,7 @@ _WRITABLE_SET = {
     "curriculum/drills/dogfood-error-remediation-index.md",
     "curriculum/progress/missed-error-log.template.md",
     "tools/fusha_tutor_runtime.py",
+    "tools/kc_catalog.py",
     "tools/validate_drill_keys.py",
     "tools/validate_tutor_runtime.py",
     "tools/test_foundational_script_orthography_runtime.py",
@@ -790,6 +794,55 @@ class GeminateJussiveInventoryNoContradiction(unittest.TestCase):
         g = RT.grade(row12, payload)
         self.assertFalse(g["content_mastered"], "a separated form must not clear in an obligatory-merger cell")
 
+    def test_wrv13_teaches_no_exhaustive_only_or_exactly_claim(self):
+        # R2: the Opus targeted re-review and the independent Sonnet linguistic vote DISAGREE on whether the
+        # merged geminate-jussive inventory is limited to exactly these two shapes (a further kasra/damma-by-
+        # itbaa merged variant is contested). WRV-13 and its KC must teach the merged-fatha/separated-sukun
+        # pair as SECURELY licensed examples without asserting they exhaust the classical inventory.
+        row = self._row("WRV-13-mudaaf-jussive-licensed-shapes")
+        kc = {kc["kc_id"]: kc for kc in _load_kc_catalog()}["kc-geminate-verb-merger-licensing"]
+        exhaustive_phrases = ("exactly two", "only two licensed", "only two shapes",
+                              "the two licensed jussive shapes")
+        for label, blob in (
+            ("WRV-13 concept", row["concept"]),
+            ("WRV-13 expected_answer", row["expected_answer"]),
+            ("WRV-13 accepted_variants", " ".join(row["accepted_variants"])),
+            ("WRV-13 required_reasoning", " ".join(row["required_reasoning"])),
+            ("WRV-13 explanation", row["explanation"]),
+            ("kc-geminate-verb-merger-licensing plain_rule", kc["plain_rule"]),
+            ("kc-geminate-verb-merger-licensing teach_template", kc["teach_template"]),
+        ):
+            low = blob.lower()
+            for phrase in exhaustive_phrases:
+                self.assertNotIn(phrase, low, "%s must not assert an exhaustive inventory claim (%r)"
+                                 % (label, phrase))
+
+    def test_wrv13_does_not_hard_reject_the_disputed_kasra_merged_variant(self):
+        # R2: the disputed variant (Opus: possibly licensed by itbaa; Sonnet: not licensed) must be neither
+        # accepted nor hard-rejected by this bounded repair -- it must stay an open scholar-review question, so
+        # a learner mentioning it must not trigger forbidden_hit.
+        row = self._row("WRV-13-mudaaf-jussive-licensed-shapes")
+        disputed_kasra_merged = "لَمْ يَمُدِّ"
+        blob = " ".join(row["forbidden_answers"]).lower()
+        self.assertNotIn(disputed_kasra_merged, blob,
+                         "the disputed kasra-merged variant must not appear as a forbidden (hard-rejected) form")
+        g = RT.grade(row, {"answer": "some describe a disputed kasra-merged form %s as licensed by itbaa"
+                                     % disputed_kasra_merged,
+                          "reasoning": list(row["required_reasoning"])})
+        self.assertFalse(g["forbidden_hit"], "mentioning the disputed variant must not be graded a forbidden hit")
+
+    def test_wrv13_uncontested_damma_merged_indicative_still_rejected(self):
+        # both independent reviews agree the damma-merged shape is simply the indicative, never a jussive
+        # option -- that uncontested rejection must survive the R2 non-exhaustive rewording.
+        row = self._row("WRV-13-mudaaf-jussive-licensed-shapes")
+        g = RT.grade(row, {"answer": "لَمْ يَمُدُّ is a valid jussive shape merged with ḍamma.",
+                          "reasoning": list(row["required_reasoning"])})
+        self.assertFalse(g["content_mastered"])
+
+    def test_wrv13_records_the_honest_scholar_review_blocker(self):
+        row = self._row("WRV-13-mudaaf-jussive-licensed-shapes")
+        self.assertIn("scholar review", row["explanation"].lower())
+
     def test_wrv12_correct_merged_form_still_clears_content(self):
         row12 = self._row("WRV-12-mudaaf-merger-default-no-trigger")
         payload = {"answer": row12["expected_answer"], "reasoning": list(row12["required_reasoning"])}
@@ -888,18 +941,34 @@ class F2ExactDiacriticContractGuard(unittest.TestCase):
                          "rows whose expected/forbidden collide under the lenient normalizer (differ only by "
                          "diacritics) but do not declare exact_surface_forms: %s" % missing)
 
-    def test_exact_surface_forms_rows_reject_their_own_colliding_forbidden_text(self):
+    def test_exact_surface_forms_rows_reject_a_token_level_hostile_substitution(self):
+        """R7: token-level hostile substitution replaces the vacuous whole-sentence membership check (which
+        compared an entire forbidden_answers sentence's normalized text against an entire expected_answer/
+        accepted_variant and so never fired, since authored forbidden prose always differs in wording). For
+        every row that authored a forbidden_answers TOKEN colliding with one of its own declared
+        exact_surface_forms under the lenient normalizer, substitute that REAL authored hostile token into the
+        REAL gold answer and assert the real grader rejects it."""
+        exercised = 0
         for row in _load_runtime_rows():
             if not row.get("exact_surface_forms"):
                 continue
-            for forbidden in row["forbidden_answers"]:
-                if RT._norm(forbidden) in {RT._norm(row["expected_answer"])} | {
-                        RT._norm(v) for v in row.get("accepted_variants") or []}:
-                    with self.subTest(id=row["id"]):
-                        g = RT.grade(row, {"answer": forbidden, "reasoning": list(row["required_reasoning"])})
-                        self.assertFalse(g["passed"],
-                                        "%s: exact_surface_forms must reject the diacritic-colliding forbidden "
-                                        "text %r" % (row["id"], forbidden[:60]))
+            if row.get("exact_surface_forms_mode", "all") != "all":
+                # mode 'any': corrupting ONE declared alternative while a SIBLING alternative stays present in
+                # the same expected_answer text correctly still passes (any() semantics) -- that is exactly
+                # WRV-13/WRV-18's own point, tested separately by test_alternative_multiform_rows_accept_...;
+                # a single-token substitution here is not a real hostile case for those rows.
+                continue
+            for gold, hostile in RT.exact_surface_hostile_pairs(row):
+                exercised += 1
+                hostile_answer = row["expected_answer"].replace(gold, hostile)
+                with self.subTest(id=row["id"], gold=gold, hostile=hostile):
+                    self.assertNotEqual(hostile_answer, row["expected_answer"],
+                                        "%s: the substitution must actually change the answer text" % row["id"])
+                    g = RT.grade(row, {"answer": hostile_answer, "reasoning": list(row["required_reasoning"])})
+                    self.assertFalse(g["passed"],
+                                    "%s: exact_surface_forms must reject the token-level hostile substitution "
+                                    "%r -> %r" % (row["id"], gold, hostile))
+        self.assertGreater(exercised, 0, "no row exercised a real token-level hostile pair -- the guard is vacuous")
 
     def test_exact_surface_forms_rows_still_accept_their_own_gold_form(self):
         for row in _load_runtime_rows():
@@ -908,6 +977,52 @@ class F2ExactDiacriticContractGuard(unittest.TestCase):
             with self.subTest(id=row["id"]):
                 g = RT.grade(row, {"answer": row["expected_answer"], "reasoning": list(row["required_reasoning"])})
                 self.assertTrue(g["passed"], "%s: exact_surface_forms must still accept the gold answer" % row["id"])
+
+    def test_conjunctive_multiform_rows_require_every_declared_surface(self):
+        """R1: a row with >=2 exact_surface_forms and mode 'all' (the default) must reject an answer that drops
+        one of the declared surfaces -- even though the ordinary lenient content-coverage match alone would
+        still accept it. This is the exact defect the geminate/hamzated/defective contrastive rows exist to
+        test: a learner who supplies only ONE half of a two-cell contrast has not demonstrated the row's fact."""
+        exercised = 0
+        for row in _load_runtime_rows():
+            forms = row.get("exact_surface_forms") or []
+            if len(forms) < 2 or row.get("exact_surface_forms_mode", "all") != "all":
+                continue
+            exercised += 1
+            partial = row["expected_answer"]
+            for missing in forms[1:]:
+                partial = partial.replace(missing, "")
+            with self.subTest(id=row["id"]):
+                self.assertNotEqual(partial, row["expected_answer"],
+                                    "%s: the drop must actually change the answer text" % row["id"])
+                g = RT.grade(row, {"answer": partial, "reasoning": list(row["required_reasoning"])})
+                self.assertFalse(g["passed"], "%s: dropping a required conjunctive surface must fail "
+                                              "exact_surface_forms" % row["id"])
+                full = RT.grade(row, {"answer": row["expected_answer"],
+                                      "reasoning": list(row["required_reasoning"])})
+                self.assertTrue(full["passed"], "%s: the full gold answer must still pass" % row["id"])
+        self.assertGreaterEqual(exercised, 4,
+                                "expected at least the 4 conjunctive contrastive rows (WRV-05/09/14/19)")
+
+    def test_alternative_multiform_rows_accept_either_licensed_surface(self):
+        """R1: a row with mode 'any' must accept an answer supplying just ONE of its declared alternatives
+        (WRV-13's two licensed jussive shapes; WRV-18's two licensed plural hamza-carrier spellings)."""
+        exercised = 0
+        for row in _load_runtime_rows():
+            forms = row.get("exact_surface_forms") or []
+            if row.get("exact_surface_forms_mode") != "any" or len(forms) < 2:
+                continue
+            exercised += 1
+            partial = row["expected_answer"]
+            for missing in forms[1:]:
+                partial = partial.replace(missing, "")
+            with self.subTest(id=row["id"]):
+                self.assertNotEqual(partial, row["expected_answer"],
+                                    "%s: the drop must actually change the answer text" % row["id"])
+                g = RT.grade(row, {"answer": partial, "reasoning": list(row["required_reasoning"])})
+                self.assertTrue(g["passed"], "%s: mode 'any' must accept an answer with just one licensed "
+                                             "surface" % row["id"])
+        self.assertGreaterEqual(exercised, 2, "expected at least WRV-13 and WRV-18")
 
 
 # --------------------------------------------------------------------------- 6. KC catalog resolution

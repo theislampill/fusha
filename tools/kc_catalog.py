@@ -10,6 +10,32 @@ class KcCatalogError(ValueError):
     pass
 
 
+# R4: the declared-shard fail-closed gate lives HERE, at the loader's own choke point, so every caller of
+# `load_kc_catalog` — the tutor runtime, `build_curriculum_absorption.py`, `fusha_learner_feedback.py` (and
+# through it `fusha_cefr_gate.py`), `validate_curriculum_l1l6.py` — inherits it automatically. A gate placed only
+# on one caller's own private wrapper (the previous shape) leaves every OTHER direct caller able to silently pick
+# up an undeclared shard. Every gate-bearing `curriculum/kc-catalog.d/*.jsonl` shard must be pinned here by name;
+# an undeclared shard fails closed rather than silently joining the catalog.
+DECLARED_KC_SHARDS = frozenset({
+    "tranche-001-derivation-template.jsonl",
+    "tranche-001-ma-context.jsonl",
+})
+
+
+def assert_declared_kc_shards(repo_root: str | Path) -> None:
+    """Fail closed if curriculum/kc-catalog.d/ contains a shard file not listed in DECLARED_KC_SHARDS."""
+    root = Path(repo_root).resolve()
+    shard_dir = root / "curriculum" / "kc-catalog.d"
+    if not shard_dir.is_dir():
+        return
+    found = {p.name for p in shard_dir.glob("*.jsonl")}
+    undeclared = found - DECLARED_KC_SHARDS
+    if undeclared:
+        raise KcCatalogError(
+            f"undeclared curriculum/kc-catalog.d shard(s) {sorted(undeclared)}: every gate-bearing KC shard "
+            "must be pinned in tools.kc_catalog.DECLARED_KC_SHARDS before it can be loaded")
+
+
 def _read_legacy(path: Path) -> list[dict]:
     if not path.exists():
         return []
@@ -39,8 +65,11 @@ def _read_shard(path: Path) -> list[dict]:
 
 
 def load_kc_catalog(repo_root: str | Path) -> list[dict]:
-    """Return legacy rows followed by rows from lexically sorted JSONL shards."""
+    """Return legacy rows followed by rows from lexically sorted JSONL shards. Fails closed (KcCatalogError) if
+    curriculum/kc-catalog.d/ contains an undeclared shard — see assert_declared_kc_shards; this is the single
+    choke point every caller goes through, so no direct caller can bypass the gate."""
     root = Path(repo_root).resolve()
+    assert_declared_kc_shards(root)
     curriculum = root / "curriculum"
     rows = _read_legacy(curriculum / "kc-catalog.json")
     shard_dir = curriculum / "kc-catalog.d"

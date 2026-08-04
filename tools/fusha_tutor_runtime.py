@@ -189,18 +189,59 @@ def diacritic_only_collision(row):
     return False
 
 
+def exact_surface_hostile_pairs(row):
+    """R1/R7: token-level hostile pairs for a row that declares `exact_surface_forms` — for each declared gold
+    surface, find an authored `forbidden_answers` Arabic token that collides with it under the lenient `_norm`
+    recall normalizer (same base letters, differing only by a vowel mark, shadda, or case/mood ending) but is
+    NOT byte-identical to it. Returns a list of (gold_form, hostile_form) pairs drawn from the row's OWN authored
+    text — never synthesized — so a test built on this list substitutes a REAL authored hostile surface into the
+    REAL gold answer and checks the REAL grader, instead of the vacuous whole-sentence membership check F2's own
+    hostile test used to perform (R7: that check compared an entire forbidden_answers sentence's normalized text
+    against an entire expected_answer/accepted_variant, which never fires because authored forbidden prose always
+    differs in wording)."""
+    forms = row.get("exact_surface_forms") or []
+    norm_to_form = {_norm(f): f for f in forms if f}
+    pairs = []
+    seen = set()
+    for forbidden in row.get("forbidden_answers", []) or []:
+        for tok in _arabic_surface_tokens(forbidden):
+            gold = norm_to_form.get(_norm(tok))
+            if gold and tok != gold and (gold, tok) not in seen:
+                seen.add((gold, tok))
+                pairs.append((gold, tok))
+    return pairs
+
+
+# R1: the closed, fail-closed vocabulary for `exact_surface_forms_mode`. "all" (the default) means the declared
+# surfaces are a CONJUNCTION — the row's graded fact is a contrast between two-or-more cells and every
+# discriminating surface must appear (e.g. WRV-09's مَدَّ/فَرَّ imperfect-vowel contrast: a learner who supplies
+# only one verb's correct vowel has not demonstrated the row's own fact). "any" means the declared surfaces are
+# true ALTERNATIVES — either licensed shape suffices (e.g. WRV-13's two licensed jussive shapes). An unrecognized
+# mode value fails closed to the STRICTER "all" behavior (reject more, never less); `tools/validate_drill_keys.py`
+# separately hard-rejects any authored value outside this vocabulary so a typo can never silently relax grading.
+EXACT_SURFACE_FORMS_MODES = frozenset({"all", "any"})
+
+
 def _exact_surface_ok(row, answer):
-    """F2: bounded opt-in exact/diacritic-sensitive contract. A row whose graded fact IS a vowel, shadda, or
+    """F2/R1: bounded opt-in exact/diacritic-sensitive contract. A row whose graded fact IS a vowel, shadda, or
     case/mood ending can declare `exact_surface_forms` (a list of the fully-diacritized gold forms); the
-    learner's raw answer must then contain at least one of them VERBATIM (diacritics/shadda preserved) for the
+    learner's raw answer must then contain the declared surface(s) VERBATIM (diacritics/shadda preserved) for the
     row to pass, in ADDITION to (never instead of) the ordinary lenient content-coverage match. A row without
     `exact_surface_forms` is completely unaffected (returns True) — this never weakens the global `_norm`
-    recall normalizer used by every other row."""
+    recall normalizer used by every other row.
+
+    `exact_surface_forms_mode` (default "all") decides how MULTIPLE declared surfaces combine: "all" requires
+    every one of them verbatim (a conjunctive/contrastive row); "any" requires only one (a row that licenses
+    genuine alternative spellings). See EXACT_SURFACE_FORMS_MODES."""
     forms = row.get("exact_surface_forms")
     if not forms:
         return True
+    mode = row.get("exact_surface_forms_mode", "all")
     hay = _norm_exact(answer)
-    return any(_norm_exact(f) in hay for f in forms if f)
+    present = [bool(f) and _norm_exact(f) in hay for f in forms]
+    if mode == "any":
+        return any(present)
+    return all(present)  # "all", and the fail-closed default for any unrecognized mode value
 
 
 # --------------------------------------------------------------------------- grading (content-only, no self-report)
@@ -580,32 +621,20 @@ def _authored_bank():
     ]
 
 
-# F3: every curriculum/kc-catalog.d/*.jsonl shard the gate-bearing KC lookup consumes must be pinned here by
-# name. An undeclared shard fails closed rather than silently joining the catalog `_check_kc_gate_row` reads —
-# a rogue or forgotten-to-review shard must never widen (or narrow) the two-vote gate surface unnoticed.
-_DECLARED_KC_SHARDS = frozenset({
-    "tranche-001-derivation-template.jsonl",
-    "tranche-001-ma-context.jsonl",
-})
+# R4: the declared-shard fail-closed gate now lives at the loader's own choke point, tools.kc_catalog
+# (assert_declared_kc_shards / DECLARED_KC_SHARDS), so every caller of kc_catalog.load_kc_catalog inherits it —
+# not only this runtime's own wrapper. These names stay as thin, backward-compatible aliases so existing callers
+# and tests keep working; the real fail-closed check now runs inside kc_catalog.load_kc_catalog itself.
+_DECLARED_KC_SHARDS = kc_catalog.DECLARED_KC_SHARDS
 
 
 def _assert_declared_kc_shards(repo_root=None):
-    """Fail closed if curriculum/kc-catalog.d/ contains a shard file not listed in _DECLARED_KC_SHARDS."""
-    root = repo_root or _REPO
-    shard_dir = os.path.join(root, "curriculum", "kc-catalog.d")
-    if not os.path.isdir(shard_dir):
-        return
-    found = {fn for fn in os.listdir(shard_dir) if fn.endswith(".jsonl")}
-    undeclared = found - _DECLARED_KC_SHARDS
-    if undeclared:
-        raise kc_catalog.KcCatalogError(
-            "undeclared curriculum/kc-catalog.d shard(s) %s: every gate-bearing KC shard must be pinned in "
-            "tools.fusha_tutor_runtime._DECLARED_KC_SHARDS before it can be loaded" % sorted(undeclared))
+    """Thin compat wrapper — delegates to tools.kc_catalog.assert_declared_kc_shards (R4's single choke point)."""
+    kc_catalog.assert_declared_kc_shards(repo_root or _REPO)
 
 
 def _load_kc_catalog_by_id():
-    _assert_declared_kc_shards()
-    return kc_catalog.load_kc_catalog_by_id(_REPO)
+    return kc_catalog.load_kc_catalog_by_id(_REPO)  # the fail-closed gate now runs inside load_kc_catalog itself
 
 
 def _check_kc_gate_row(row, kc_by_id=None):
@@ -741,6 +770,46 @@ def _self_test():
     exact_match = grade(t4_exact, {"answer": "the merged jussive is لَمْ يَمُدَّ"})
     if not exact_match["passed"]:
         failures.append("exact_surface_forms must accept the byte-exact gold form, got %s" % exact_match)
+    # 7c-mode. R1: exact_surface_forms_mode distinguishes a CONJUNCTIVE row (mode "all", also the default for a
+    #     multi-form row) from an ALTERNATIVE row (mode "any"). A conjunctive row must reject an answer supplying
+    #     only ONE of the declared surfaces; an alternative row must accept EITHER one alone, and still reject an
+    #     answer supplying NEITHER.
+    t4_all = {"id": "T4-all-mode", "level": "6", "concept": "two contrastive stored forms", "quran_example": None,
+              "prompt": "State both forms.", "expected_answer": "the two stored forms are ALPHA and BETA",
+              "accepted_variants": [], "forbidden_answers": [], "required_reasoning": [],
+              "sarf_procedure": None, "nahw_procedure": None,
+              "remediation_route": "sarf/drills/dogfood-sarf-remediation.md", "two_vote_required": False,
+              "exact_surface_forms": ["ALPHA", "BETA"], "exact_surface_forms_mode": "all"}
+    only_alpha = grade(t4_all, {"answer": "the two stored forms are ALPHA and GAMMA"})
+    if only_alpha["passed"]:
+        failures.append("exact_surface_forms_mode='all' must reject an answer missing a required surface, got %s"
+                        % only_alpha)
+    both_present = grade(t4_all, {"answer": "the two stored forms are ALPHA and BETA"})
+    if not both_present["passed"]:
+        failures.append("exact_surface_forms_mode='all' must accept an answer with every required surface, got %s"
+                        % both_present)
+    t4_default_mode = dict(t4_all, id="T4-default-mode-is-all")
+    del t4_default_mode["exact_surface_forms_mode"]
+    default_only_alpha = grade(t4_default_mode, {"answer": "the two stored forms are ALPHA and GAMMA"})
+    if default_only_alpha["passed"]:
+        failures.append("exact_surface_forms with no explicit mode must default to 'all', got %s"
+                        % default_only_alpha)
+
+    t4_any = dict(t4_all, id="T4-any-mode", exact_surface_forms_mode="any",
+                 expected_answer="either licensed form is ALPHA or BETA")
+    any_alpha_only = grade(t4_any, {"answer": "either licensed form is ALPHA alone here"})
+    if not any_alpha_only["passed"]:
+        failures.append("exact_surface_forms_mode='any' must accept just ONE licensed surface, got %s"
+                        % any_alpha_only)
+    any_beta_only = grade(t4_any, {"answer": "either licensed form is BETA alone here"})
+    if not any_beta_only["passed"]:
+        failures.append("exact_surface_forms_mode='any' must accept the OTHER licensed surface alone too, got %s"
+                        % any_beta_only)
+    any_neither = grade(t4_any, {"answer": "either licensed form is GAMMA alone here"})
+    if any_neither["passed"]:
+        failures.append("exact_surface_forms_mode='any' must still reject an answer with NEITHER surface, got %s"
+                        % any_neither)
+
     # a row WITHOUT exact_surface_forms is unaffected: the same swapped-vowel text still content-matches under
     # the ordinary lenient recall normalizer (proves the opt-in gate never touches a row that does not set it).
     t4_lenient = dict(t4_exact, id="T4-lenient-unaffected"); del t4_lenient["exact_surface_forms"]

@@ -52,6 +52,8 @@ NEW_BANK_REL = "curriculum/drills/keys/tranche-001-ma-context-runtime.keys.jsonl
 NEW_LESSON = _REPO / "curriculum" / "drills" / "tranche-001-ma-context-runtime.md"
 NEW_LESSON_REL = "curriculum/drills/tranche-001-ma-context-runtime.md"
 NEW_SHARD = _REPO / "curriculum" / "kc-catalog.d" / "tranche-001-ma-context.jsonl"
+REMEDIATION_INDEX = _REPO / "curriculum" / "drills" / "dogfood-error-remediation-index.md"
+MISSED_ERROR_LOG_TEMPLATE = _REPO / "curriculum" / "progress" / "missed-error-log.template.md"
 
 # ---------------------------------------------------------------------------
 # the 14 KC families: kc_id -> ordered list of misconception ids (ascending numeric within family). Family order
@@ -826,7 +828,9 @@ class F6InterrogativeVsRelativeAlifProseUnambiguous(unittest.TestCase):
 class F11ProseIntegrityBoundedAssertion(unittest.TestCase):
     """F11: no committed T1b file may contain a digit-corrupted Arabic transliteration token (e.g. 'a1n' for
     'in'/'إِنْ') or a mixed-script token that directly fuses a Latin letter with an Arabic letter with no
-    separator (e.g. 'command-lام'). Scoped to this batch's own writable T1b artifacts only."""
+    separator (e.g. 'command-lام'). R6: scoped to this batch's own writable T1b artifacts PLUS the shared
+    remediation index and missed-error-log template this same repair round may also edit (the F11 residue was
+    exactly a token that survived in the remediation index outside the original three-file scan)."""
 
     # a lowercase LETTER-DIGIT-LETTER(S) run at a word boundary — the exact 'a1n' (for 'in'/'إِنْ')
     # corruption shape. Deliberately narrow: repo IDs like T1MC-11, kc-t1-..., l1l6 never match (uppercase, or
@@ -835,7 +839,7 @@ class F11ProseIntegrityBoundedAssertion(unittest.TestCase):
     _MIXED_SCRIPT_TOKEN = __import__("re").compile(r"[A-Za-z][؀-ۿ]|[؀-ۿ][A-Za-z]")
 
     def _scan_paths(self):
-        return [NEW_BANK, NEW_LESSON, NEW_SHARD]
+        return [NEW_BANK, NEW_LESSON, NEW_SHARD, REMEDIATION_INDEX, MISSED_ERROR_LOG_TEMPLATE]
 
     def test_no_digit_corrupted_transliteration_token(self):
         for path in self._scan_paths():
@@ -851,17 +855,18 @@ class F11ProseIntegrityBoundedAssertion(unittest.TestCase):
 
 
 class F9HijaziyyaZarfJarrMajrurExceptionQualified(unittest.TestCase):
-    """F9: the hijaziyya cancellation-by-predicate-fronting rule must be qualified with the licensed zarf/
-    jarr-majrur exception (fronting a shibh al-jumla predicate does NOT cancel ma's government), both in the
-    KC prose and in T1MC-07's own row reasoning — and add no occurrence certification (quran_example stays
-    null)."""
+    """F9: the hijaziyya cancellation-by-predicate-fronting AND cancellation-by-complement-fronting rules must
+    both be qualified with the licensed zarf/jarr-majrur exception (fronting a shibh al-jumla khabar, OR a
+    shibh al-jumla complement of an otherwise-ordinary khabar, does NOT cancel ma's government), in the KC
+    prose and in BOTH T1MC-07's (khabar-fronting) and T1MC-08's (complement-fronting) own row reasoning — and
+    add no occurrence certification (quran_example stays null on either row)."""
 
     def _kc(self):
         return {row["kc_id"]: row for row in _jsonl_shard(NEW_SHARD)}["kc-t1-ma-context-hijaziyya-tamimiyya-nullifiers"]
 
-    def _row(self):
+    def _row(self, item_id="T1MC-07"):
         import fusha_tutor_runtime as ftr
-        return {r["id"]: r for r in ftr.load_bank(str(NEW_BANK))}["T1MC-07"]
+        return {r["id"]: r for r in ftr.load_bank(str(NEW_BANK))}[item_id]
 
     def test_kc_plain_rule_names_the_zarf_jarr_majrur_exception(self):
         kc = self._kc()
@@ -870,20 +875,48 @@ class F9HijaziyyaZarfJarrMajrurExceptionQualified(unittest.TestCase):
         self.assertIn("majrūr", blob)
         self.assertIn("does not cancel", blob)
 
+    def test_kc_plain_rule_scopes_the_exception_to_both_the_khabar_and_complement_triggers(self):
+        # R3: the licensed exception must cover BOTH the predicate(khabar)-fronting trigger and the
+        # complement-fronting trigger, not only the one F9's original repair touched.
+        kc = self._kc()
+        blob = kc["plain_rule"].lower()
+        self.assertIn("complement", blob)
+        self.assertIn("maʿmūl", blob)
+        self.assertIn("both the predicate-fronting trigger and the complement-fronting trigger", blob)
+
     def test_row_reasoning_names_the_exception_and_stays_occurrence_neutral(self):
-        row = self._row()
-        self.assertIsNone(row["quran_example"], "F9 qualification must add no occurrence certification")
-        blob = " ".join(row["required_reasoning"]).lower()
-        self.assertIn("zarf", blob)
-        self.assertIn("licensed exception", blob)
+        for item_id in ("T1MC-07", "T1MC-08"):
+            with self.subTest(id=item_id):
+                row = self._row(item_id)
+                self.assertIsNone(row["quran_example"], "F9 qualification must add no occurrence certification")
+                blob = " ".join(row["required_reasoning"]).lower()
+                self.assertIn("zarf", blob)
+                self.assertIn("licensed exception", blob)
 
     def test_row_rejects_the_overgeneralized_every_predicate_cancels_claim(self):
         import fusha_tutor_runtime as ftr
-        row = self._row()
+        row = self._row("T1MC-07")
         g = ftr.grade(row, {"answer": "Fronting any predicate at all, including a zarf or jarr-majrur, always "
                                      "cancels ma's government the same way an ordinary predicate does.",
                           "reasoning": []})
         self.assertFalse(g["content_mastered"])
+
+    def test_t1mc08_rejects_the_overgeneralized_every_complement_cancels_claim(self):
+        # R3: the mirror forbidden answer on T1MC-08 itself, proven through the real grader (not just present
+        # in forbidden_answers text) -- this is the exact counterexample the Opus targeted re-review named.
+        import fusha_tutor_runtime as ftr
+        row = self._row("T1MC-08")
+        g = ftr.grade(row, {"answer": "Fronting any complement at all, including a zarf or jarr-majrur, always "
+                                     "cancels ma's government over the predicate the same way an ordinary "
+                                     "complement does.",
+                          "reasoning": []})
+        self.assertFalse(g["content_mastered"])
+
+    def test_t1mc08_still_clears_content_on_its_own_gold_answer(self):
+        import fusha_tutor_runtime as ftr
+        row = self._row("T1MC-08")
+        g = ftr.grade(row, {"answer": row["expected_answer"], "reasoning": list(row["required_reasoning"])})
+        self.assertTrue(g["content_mastered"])
 
 
 class F2ExactDiacriticContractGuard(unittest.TestCase):
@@ -901,20 +934,25 @@ class F2ExactDiacriticContractGuard(unittest.TestCase):
                          "rows whose expected/forbidden collide under the lenient normalizer (differ only by "
                          "diacritics) but do not declare exact_surface_forms: %s" % missing)
 
-    def test_exact_surface_forms_rows_reject_their_own_colliding_forbidden_text(self):
+    def test_exact_surface_forms_rows_reject_a_token_level_hostile_substitution(self):
+        """R7: token-level hostile substitution -- for every row that authored a forbidden_answers TOKEN
+        colliding with one of its own declared exact_surface_forms under the lenient normalizer, substitute
+        that REAL authored hostile token into the REAL gold answer and assert the real grader rejects it.
+        Replaces the vacuous whole-sentence membership check, which compared an entire forbidden_answers
+        sentence's normalized text against an entire expected_answer/accepted_variant and so never fired."""
         import fusha_tutor_runtime as ftr
         rows = ftr.load_bank(str(NEW_BANK))
         for row in rows:
-            if not row.get("exact_surface_forms"):
+            if not row.get("exact_surface_forms") or row.get("exact_surface_forms_mode", "all") != "all":
                 continue
-            for forbidden in row["forbidden_answers"]:
-                if ftr._norm(forbidden) in {ftr._norm(row["expected_answer"])} | {
-                        ftr._norm(v) for v in row.get("accepted_variants") or []}:
-                    with self.subTest(id=row["id"]):
-                        g = ftr.grade(row, {"answer": forbidden, "reasoning": list(row["required_reasoning"])})
-                        self.assertFalse(g["passed"],
-                                        "%s: exact_surface_forms must reject the diacritic-colliding forbidden "
-                                        "text %r" % (row["id"], forbidden[:60]))
+            for gold, hostile in ftr.exact_surface_hostile_pairs(row):
+                hostile_answer = row["expected_answer"].replace(gold, hostile)
+                with self.subTest(id=row["id"], gold=gold, hostile=hostile):
+                    self.assertNotEqual(hostile_answer, row["expected_answer"])
+                    g = ftr.grade(row, {"answer": hostile_answer, "reasoning": list(row["required_reasoning"])})
+                    self.assertFalse(g["passed"],
+                                    "%s: exact_surface_forms must reject the token-level hostile substitution "
+                                    "%r -> %r" % (row["id"], gold, hostile))
 
     def test_exact_surface_forms_rows_still_accept_their_own_gold_form(self):
         import fusha_tutor_runtime as ftr
@@ -925,6 +963,25 @@ class F2ExactDiacriticContractGuard(unittest.TestCase):
             with self.subTest(id=row["id"]):
                 g = ftr.grade(row, {"answer": row["expected_answer"], "reasoning": list(row["required_reasoning"])})
                 self.assertTrue(g["passed"], "%s: exact_surface_forms must still accept the gold answer" % row["id"])
+
+    def test_conjunctive_multiform_rows_require_every_declared_surface(self):
+        """R1: a row with >=2 exact_surface_forms and mode 'all' (the default) must reject an answer dropping
+        one of the declared surfaces. This bank currently authors no such multi-form row, so the loop is
+        expected to be a no-op today; it stays live so a future conjunctive row is covered automatically."""
+        import fusha_tutor_runtime as ftr
+        rows = ftr.load_bank(str(NEW_BANK))
+        for row in rows:
+            forms = row.get("exact_surface_forms") or []
+            if len(forms) < 2 or row.get("exact_surface_forms_mode", "all") != "all":
+                continue
+            partial = row["expected_answer"]
+            for missing in forms[1:]:
+                partial = partial.replace(missing, "")
+            with self.subTest(id=row["id"]):
+                self.assertNotEqual(partial, row["expected_answer"])
+                g = ftr.grade(row, {"answer": partial, "reasoning": list(row["required_reasoning"])})
+                self.assertFalse(g["passed"], "%s: dropping a required conjunctive surface must fail "
+                                              "exact_surface_forms" % row["id"])
 
 
 if __name__ == "__main__":

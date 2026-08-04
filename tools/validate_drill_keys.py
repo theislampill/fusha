@@ -179,6 +179,20 @@ def validate(path, repo_root=_REPO):
         if not isinstance(row["two_vote_required"], bool):
             errors.append("%s:%d: two_vote_required must be boolean" % (path, lineno))
 
+        # R1: exact_surface_forms_mode is a CLOSED, fail-closed vocabulary ({"all", "any"}) declaring whether a
+        # row's exact_surface_forms are a CONJUNCTION (every discriminating surface required) or an ALTERNATION
+        # (any one licensed surface suffices). A row may only declare the mode alongside exact_surface_forms
+        # itself (a mode with nothing to modulate is an authoring error), and any value outside the closed
+        # vocabulary is rejected rather than silently defaulting.
+        mode = row.get("exact_surface_forms_mode")
+        if mode is not None:
+            if mode not in tutor_runtime.EXACT_SURFACE_FORMS_MODES:
+                errors.append("%s:%d: exact_surface_forms_mode %r is not in the closed vocabulary %s" %
+                              (path, lineno, mode, sorted(tutor_runtime.EXACT_SURFACE_FORMS_MODES)))
+            if not row.get("exact_surface_forms"):
+                errors.append("%s:%d: exact_surface_forms_mode declared without exact_surface_forms" %
+                              (path, lineno))
+
         # quran_example: null or a source address (never inline scripture text).
         qx = row["quran_example"]
         if qx is not None:
@@ -378,6 +392,18 @@ def _self_test():
     d9, fp9 = _write([ungradeable], "quranic-function-words.keys.jsonl")
     if not any("does not pass fusha_tutor_runtime.grade()" in e for e in validate(fp9, repo_root=d9)):
         failures.append("an accepted_variant that cannot pass fusha_tutor_runtime.grade() was accepted")
+
+    # BROKEN 11 (R1): exact_surface_forms_mode outside the closed {"all", "any"} vocabulary must be rejected.
+    bad_mode = dict(objective, id="ST-bad-mode", exact_surface_forms=["x"], exact_surface_forms_mode="sometimes")
+    d10, fp10 = _write([good, bad_mode], "morphology-foundations.keys.jsonl")
+    if not any("not in the closed vocabulary" in e for e in validate(fp10, repo_root=d10)):
+        failures.append("an exact_surface_forms_mode outside {all, any} was accepted")
+
+    # BROKEN 12 (R1): exact_surface_forms_mode declared without exact_surface_forms must be rejected.
+    orphan_mode = dict(objective, id="ST-orphan-mode", exact_surface_forms_mode="any")
+    d11, fp11 = _write([good, orphan_mode], "morphology-foundations.keys.jsonl")
+    if not any("declared without exact_surface_forms" in e for e in validate(fp11, repo_root=d11)):
+        failures.append("an exact_surface_forms_mode with no exact_surface_forms was accepted")
 
     # the SHIPPED key files must validate clean (real regression guard).
     keys_dir = os.path.join(_REPO, "curriculum", "drills", "keys")

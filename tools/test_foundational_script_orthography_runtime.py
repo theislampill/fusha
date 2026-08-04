@@ -394,18 +394,40 @@ class F2ExactDiacriticContractGuard(unittest.TestCase):
                          "rows whose expected/forbidden collide under the lenient normalizer (differ only by "
                          "diacritics) but do not declare exact_surface_forms: %s" % missing)
 
-    def test_exact_surface_forms_rows_reject_their_own_colliding_forbidden_text(self):
+    def test_exact_surface_forms_rows_reject_a_token_level_hostile_substitution(self):
+        """R7: token-level hostile substitution -- for every row that authored a forbidden_answers TOKEN
+        colliding with one of its own declared exact_surface_forms under the lenient normalizer, substitute
+        that REAL authored hostile token into the REAL gold answer and assert the real grader rejects it.
+        Replaces the vacuous whole-sentence membership check, which compared an entire forbidden_answers
+        sentence's normalized text against an entire expected_answer/accepted_variant and so never fired."""
         for row in _load_rows():
-            if not row.get("exact_surface_forms"):
+            if not row.get("exact_surface_forms") or row.get("exact_surface_forms_mode", "all") != "all":
                 continue
-            for forbidden in row["forbidden_answers"]:
-                if RT._norm(forbidden) in {RT._norm(row["expected_answer"])} | {
-                        RT._norm(v) for v in row.get("accepted_variants") or []}:
-                    with self.subTest(id=row["id"]):
-                        g = RT.grade(row, {"answer": forbidden, "reasoning": list(row["required_reasoning"])})
-                        self.assertFalse(g["passed"],
-                                        "%s: exact_surface_forms must reject the diacritic-colliding forbidden "
-                                        "text %r" % (row["id"], forbidden[:60]))
+            for gold, hostile in RT.exact_surface_hostile_pairs(row):
+                hostile_answer = row["expected_answer"].replace(gold, hostile)
+                with self.subTest(id=row["id"], gold=gold, hostile=hostile):
+                    self.assertNotEqual(hostile_answer, row["expected_answer"])
+                    g = RT.grade(row, {"answer": hostile_answer, "reasoning": list(row["required_reasoning"])})
+                    self.assertFalse(g["passed"],
+                                    "%s: exact_surface_forms must reject the token-level hostile substitution "
+                                    "%r -> %r" % (row["id"], gold, hostile))
+
+    def test_conjunctive_multiform_rows_require_every_declared_surface(self):
+        """R1: a row with >=2 exact_surface_forms and mode 'all' (the default) must reject an answer dropping
+        one of the declared surfaces. This bank currently authors no such multi-form row, so the loop is
+        expected to be a no-op today; it stays live so a future conjunctive row is covered automatically."""
+        for row in _load_rows():
+            forms = row.get("exact_surface_forms") or []
+            if len(forms) < 2 or row.get("exact_surface_forms_mode", "all") != "all":
+                continue
+            partial = row["expected_answer"]
+            for missing in forms[1:]:
+                partial = partial.replace(missing, "")
+            with self.subTest(id=row["id"]):
+                self.assertNotEqual(partial, row["expected_answer"])
+                g = RT.grade(row, {"answer": partial, "reasoning": list(row["required_reasoning"])})
+                self.assertFalse(g["passed"], "%s: dropping a required conjunctive surface must fail "
+                                              "exact_surface_forms" % row["id"])
 
     def test_exact_surface_forms_rows_still_accept_their_own_gold_form(self):
         for row in _load_rows():
@@ -428,11 +450,24 @@ class F7DotlessFinalYaaConventionScoped(unittest.TestCase):
 
     def test_fso17_names_its_governing_convention_explicitly(self):
         row = self._row()
-        blob = (row["expected_answer"] + " ".join(row.get("accepted_variants") or [])).lower()
+        blob = (row["prompt"] + row["expected_answer"] + " ".join(row.get("accepted_variants") or [])).lower()
         self.assertIn("convention", blob,
                      "FSO-17 must document the runtime posture as an explicit, named convention")
         self.assertIn("uthmani", blob,
                      "FSO-17 must name the specific closed convention it assumes, not just say 'convention'")
+
+    def test_fso17_uses_the_safe_narrowed_label_not_the_overbroad_standard_modern_print_claim(self):
+        # R5: "standard modern-print" overgeneralizes -- most contemporary Arabic typesetting outside the
+        # Uthmani/Egyptian-print tradition DOES distinguish dotted yaa from dotless alif maqsura. The safe,
+        # independently-agreed label is "Qur'anic Uthmani / Egyptian-style print convention".
+        row = self._row()
+        blob = (row["prompt"] + row["expected_answer"] + " ".join(row.get("accepted_variants") or [])).lower()
+        self.assertNotIn("standard modern-print", blob,
+                         "FSO-17 must not claim 'standard modern-print' leaves the final yāʾ dotless -- most "
+                         "modern typesetting outside Uthmani/Egyptian print distinguishes the two graphemes")
+        self.assertIn("egyptian", blob,
+                     "FSO-17 must name the safe narrowed label (Qur'anic Uthmani / Egyptian-style print "
+                     "convention)")
 
     def test_fso17_rejects_a_universal_every_convention_overclaim(self):
         row = self._row()
