@@ -1,0 +1,290 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-nun-raf-vs-nun-niswa/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-nun-raf-vs-nun-niswa/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "نون الرفع and نون النسوة are DISTINCT نونs; this pack classifies IDENTITY only, never a mood, case or governor",
+        "both POS and the preceding-letter evidence are required together; a contradictory pairing never licenses either نون",
+        "occurrence-level dropping of نون الرفع under a governor is a Naḥw fact this pack never emits",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nun-raf-vs-nun-niswa/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4a0b9b816cb44d8551724d0019951646f3a56cb3c4b039c273e33b9c221fa67b",
+      "guards_payload": [
+        {
+          "guard": "نون الرفع and نون النسوة are DISTINCT نونs; this pack classifies IDENTITY only, never a mood, case or governor",
+          "id": "g-nrn-1"
+        },
+        {
+          "guard": "both POS and the preceding-letter evidence are required together; a contradictory pairing never licenses either نون",
+          "id": "g-nrn-2"
+        },
+        {
+          "guard": "occurrence-level dropping of نون الرفع under a governor is a Naḥw fact this pack never emits",
+          "id": "g-nrn-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-nrn-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "nrn-abs-01",
+        "nrn-abs-02",
+        "nrn-adv-01",
+        "nrn-adv-02"
+      ],
+      "positive_examples": [
+        "nrn-pos-01",
+        "nrn-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nun-raf-vs-nun-niswa/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nun-raf-vs-nun-niswa"
+      },
+      "scope": {
+        "increment": "inc-nun-raf-vs-nun-niswa",
+        "statement": "the نون of رفع (on the five verbs, e.g. تفعلون) and the نون of نسوة (feminine plural, e.g. يفعلن) are DISTINCT nūns; this pack classifies IDENTITY only, never a mood, case or governor",
+        "unit_ref": "cu-nun-raf-vs-nun-niswa"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nun-raf-vs-nun-niswa-nrn-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nun-raf-vs-nun-niswa/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "نون الرفع and نون النسوة are DISTINCT نونs; this pack classifies IDENTITY only, never a mood, case or governor",
+        "both POS and the preceding-letter evidence are required together; a contradictory pairing never licenses either نون",
+        "occurrence-level dropping of نون الرفع under a governor is a Naḥw fact this pack never emits",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nun-raf-vs-nun-niswa/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4a0b9b816cb44d8551724d0019951646f3a56cb3c4b039c273e33b9c221fa67b",
+      "guards_payload": [
+        {
+          "guard": "نون الرفع and نون النسوة are DISTINCT نونs; this pack classifies IDENTITY only, never a mood, case or governor",
+          "id": "g-nrn-1"
+        },
+        {
+          "guard": "both POS and the preceding-letter evidence are required together; a contradictory pairing never licenses either نون",
+          "id": "g-nrn-2"
+        },
+        {
+          "guard": "occurrence-level dropping of نون الرفع under a governor is a Naḥw fact this pack never emits",
+          "id": "g-nrn-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-nrn-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "nrn-abs-01",
+        "nrn-abs-02",
+        "nrn-adv-01",
+        "nrn-adv-02"
+      ],
+      "positive_examples": [
+        "nrn-pos-01",
+        "nrn-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nun-raf-vs-nun-niswa/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nun-raf-vs-nun-niswa"
+      },
+      "scope": {
+        "increment": "inc-nun-raf-vs-nun-niswa",
+        "statement": "نون الرفع always follows a long vowel/glide (و، ا، ي); نون النسوة always attaches directly to a consonant stem final -- both POS and the preceding-letter evidence are required together",
+        "unit_ref": "cu-nun-raf-vs-nun-niswa"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nun-raf-vs-nun-niswa-nrn-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nun-raf-vs-nun-niswa/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "نون الرفع and نون النسوة are DISTINCT نونs; this pack classifies IDENTITY only, never a mood, case or governor",
+        "both POS and the preceding-letter evidence are required together; a contradictory pairing never licenses either نون",
+        "occurrence-level dropping of نون الرفع under a governor is a Naḥw fact this pack never emits",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nun-raf-vs-nun-niswa/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "4a0b9b816cb44d8551724d0019951646f3a56cb3c4b039c273e33b9c221fa67b",
+      "guards_payload": [
+        {
+          "guard": "نون الرفع and نون النسوة are DISTINCT نونs; this pack classifies IDENTITY only, never a mood, case or governor",
+          "id": "g-nrn-1"
+        },
+        {
+          "guard": "both POS and the preceding-letter evidence are required together; a contradictory pairing never licenses either نون",
+          "id": "g-nrn-2"
+        },
+        {
+          "guard": "occurrence-level dropping of نون الرفع under a governor is a Naḥw fact this pack never emits",
+          "id": "g-nrn-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-nrn-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "nrn-abs-01",
+        "nrn-abs-02",
+        "nrn-adv-01",
+        "nrn-adv-02"
+      ],
+      "positive_examples": [
+        "nrn-pos-01",
+        "nrn-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nun-raf-vs-nun-niswa/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nun-raf-vs-nun-niswa"
+      },
+      "scope": {
+        "increment": "inc-nun-raf-vs-nun-niswa",
+        "statement": "occurrence-level dropping of نون الرفع under a governor (نصب/جزم) is a Naḥw fact this pack never emits; it classifies the nūn's identity on a surface that carries it",
+        "unit_ref": "cu-nun-raf-vs-nun-niswa"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nun-raf-vs-nun-niswa-nrn-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nun-raf-vs-nun-niswa/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-nun-raf-vs-nun-niswa",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "nrn-abs-01",
+      "nrn-abs-02"
+    ],
+    "adversarial": [
+      "nrn-adv-01",
+      "nrn-adv-02"
+    ],
+    "positive": [
+      "nrn-pos-01",
+      "nrn-pos-02"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-nun-raf-vs-nun-niswa",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives",
+      "school_dependent_attributed"
+    ],
+    "capability": "discriminator_table",
+    "functions": [
+      {
+        "discriminators": {
+          "pos": [
+            "verb_imperfect_five_verb_form"
+          ],
+          "preceding_letter_class": [
+            "long_vowel_glide"
+          ]
+        },
+        "id": "nun_al_rafa"
+      },
+      {
+        "discriminators": {
+          "pos": [
+            "verb_imperfect_feminine_plural"
+          ],
+          "preceding_letter_class": [
+            "consonant_stem_final"
+          ]
+        },
+        "id": "nun_al_niswa"
+      }
+    ],
+    "increment": "inc-nun-raf-vs-nun-niswa",
+    "rules": [
+      {
+        "id": "nrn-r1",
+        "text": "the نون of رفع (on the five verbs, e.g. تفعلون) and the نون of نسوة (feminine plural, e.g. يفعلن) are DISTINCT nūns; this pack classifies IDENTITY only, never a mood, case or governor"
+      },
+      {
+        "id": "nrn-r2",
+        "text": "نون الرفع always follows a long vowel/glide (و، ا، ي); نون النسوة always attaches directly to a consonant stem final -- both POS and the preceding-letter evidence are required together"
+      },
+      {
+        "id": "nrn-r3",
+        "text": "occurrence-level dropping of نون الرفع under a governor (نصب/جزم) is a Naḥw fact this pack never emits; it classifies the nūn's identity on a surface that carries it"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-nun-raf-vs-nun-niswa",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "nun_identity_chip",
+      "teaching": "names which نون (رفع vs نسوة) the POS + preceding-letter evidence decided"
+    },
+    {
+      "key": "preceding_letter_evidence_note",
+      "teaching": "shows the exact preceding-letter class (long-glide vs consonant-final) that separated the two families"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

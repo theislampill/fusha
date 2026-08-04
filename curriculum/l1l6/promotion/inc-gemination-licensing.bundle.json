@@ -1,0 +1,520 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-gemination-licensing/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-gemination-licensing/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_declaration_unbound; shadda_source_unresolved; jussive_variant_unlicensed; cross_boundary_merger_unlicensed; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+        "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "29ff03c69ce953619fc964866b825098e9bcc38b0d349b0d5944c8cb387d8212",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-abs-05",
+        "gem-adv-01",
+        "gem-adv-02"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two -- writing it as two base letters does not reconstruct the surface",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_declaration_unbound; shadda_source_unresolved; jussive_variant_unlicensed; cross_boundary_merger_unlicensed; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+        "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "29ff03c69ce953619fc964866b825098e9bcc38b0d349b0d5944c8cb387d8212",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-abs-05",
+        "gem-adv-01",
+        "gem-adv-02"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence, checked only after the shape has matched",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_declaration_unbound; shadda_source_unresolved; jussive_variant_unlicensed; cross_boundary_merger_unlicensed; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+        "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "29ff03c69ce953619fc964866b825098e9bcc38b0d349b0d5944c8cb387d8212",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-abs-05",
+        "gem-adv-01",
+        "gem-adv-02"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "the licence requires an EXACT declared environment: the bound slot/radical, a written (never assumed) shadda source, a non-jussive mood, and a word-internal (never cross-boundary) merger -- missing any one of these abstains rather than assuming the doubling is licensed",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_declaration_unbound; shadda_source_unresolved; jussive_variant_unlicensed; cross_boundary_merger_unlicensed; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+        "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "29ff03c69ce953619fc964866b825098e9bcc38b0d349b0d5944c8cb387d8212",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-abs-05",
+        "gem-adv-01",
+        "gem-adv-02"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_declaration_unbound; shadda_source_unresolved; jussive_variant_unlicensed; cross_boundary_merger_unlicensed; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+        "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "29ff03c69ce953619fc964866b825098e9bcc38b0d349b0d5944c8cb387d8212",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-abs-05",
+        "gem-adv-01",
+        "gem-adv-02"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families: this pack declares no R4 slot, and inc-quadriliteral-templates declares no GEM slot, so the two never collide by construction",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "template_classification",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-gemination-licensing",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "gem-abs-01",
+      "gem-abs-02",
+      "gem-abs-03",
+      "gem-abs-04",
+      "gem-abs-05"
+    ],
+    "adversarial": [
+      "gem-adv-01",
+      "gem-adv-02"
+    ],
+    "positive": [
+      "gem-pos-01",
+      "gem-pos-02"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-gemination-licensing",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "no_root_evidence",
+      "surface_letter_mismatch",
+      "no_template",
+      "gemination_declaration_unbound",
+      "shadda_source_unresolved",
+      "jussive_variant_unlicensed",
+      "cross_boundary_merger_unlicensed",
+      "gemination_realization_unlicensed"
+    ],
+    "capability": "template_classification",
+    "gemination_realizations": {
+      "by_template": {
+        "fa33ala_perfect_active": {
+          "R2": {
+            "ر": {
+              "licensed": true
+            }
+          }
+        },
+        "mufa33il_active_participle": {
+          "R2": {
+            "ر": {
+              "licensed": true
+            }
+          }
+        }
+      }
+    },
+    "gemination_templates": {
+      "fa33ala_perfect_active": "R2",
+      "mufa33il_active_participle": "R2"
+    },
+    "increment": "inc-gemination-licensing",
+    "rules": [
+      {
+        "id": "gem-r1",
+        "text": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two -- writing it as two base letters does not reconstruct the surface"
+      },
+      {
+        "id": "gem-r2",
+        "text": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence, checked only after the shape has matched"
+      },
+      {
+        "id": "gem-r3",
+        "text": "the licence requires an EXACT declared environment: the bound slot/radical, a written (never assumed) shadda source, a non-jussive mood, and a word-internal (never cross-boundary) merger -- missing any one of these abstains rather than assuming the doubling is licensed"
+      },
+      {
+        "id": "gem-r4",
+        "text": "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one"
+      },
+      {
+        "id": "gem-r5",
+        "text": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families: this pack declares no R4 slot, and inc-quadriliteral-templates declares no GEM slot, so the two never collide by construction"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "templates": [
+      {
+        "class": "form_ii_perfect_active",
+        "id": "fa33ala_perfect_active",
+        "name": "Form II perfect, R2 geminated (فَعَّلَ)",
+        "shape": [
+          "R1",
+          "GEM",
+          "R3"
+        ]
+      },
+      {
+        "class": "form_ii_active_participle",
+        "id": "mufa33il_active_participle",
+        "name": "Form II active participle, R2 geminated (مُفَعِّل)",
+        "shape": [
+          "م",
+          "R1",
+          "GEM",
+          "R3"
+        ]
+      }
+    ],
+    "unit_ref": "cu-gemination-licensing",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "gemination_template_chip",
+      "teaching": "names the matched template and the GEM slot that carries the doubled radical"
+    },
+    {
+      "key": "gemination_licence_note",
+      "teaching": "shows the exact declared environment (written shadda source, mood, boundary) that licensed the doubling, or the exact reason it did not"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

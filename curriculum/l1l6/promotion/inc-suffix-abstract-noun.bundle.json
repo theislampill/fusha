@@ -1,0 +1,290 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-suffix-abstract-noun/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-suffix-abstract-noun/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+        "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+        "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "29d52d2872e29ef4b03cf8b874f99746a4eea6d11c4b17a6741336aa7d2a5e16",
+      "guards_payload": [
+        {
+          "guard": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+          "id": "g-sab-1"
+        },
+        {
+          "guard": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+          "id": "g-sab-2"
+        },
+        {
+          "guard": "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+          "id": "g-sab-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-sab-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "sab-abs-01",
+        "sab-abs-02",
+        "sab-adv-01",
+        "sab-adv-02"
+      ],
+      "positive_examples": [
+        "sab-pos-01",
+        "sab-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "scope": {
+        "increment": "inc-suffix-abstract-noun",
+        "statement": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; both share a geminated yaa, so the shadda itself must be written evidence, never assumed",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-suffix-abstract-noun-sab-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+        "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+        "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "29d52d2872e29ef4b03cf8b874f99746a4eea6d11c4b17a6741336aa7d2a5e16",
+      "guards_payload": [
+        {
+          "guard": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+          "id": "g-sab-1"
+        },
+        {
+          "guard": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+          "id": "g-sab-2"
+        },
+        {
+          "guard": "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+          "id": "g-sab-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-sab-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "sab-abs-01",
+        "sab-abs-02",
+        "sab-adv-01",
+        "sab-adv-02"
+      ],
+      "positive_examples": [
+        "sab-pos-01",
+        "sab-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "scope": {
+        "increment": "inc-suffix-abstract-noun",
+        "statement": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-suffix-abstract-noun-sab-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+        "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+        "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "29d52d2872e29ef4b03cf8b874f99746a4eea6d11c4b17a6741336aa7d2a5e16",
+      "guards_payload": [
+        {
+          "guard": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+          "id": "g-sab-1"
+        },
+        {
+          "guard": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+          "id": "g-sab-2"
+        },
+        {
+          "guard": "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+          "id": "g-sab-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-sab-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "sab-abs-01",
+        "sab-abs-02",
+        "sab-adv-01",
+        "sab-adv-02"
+      ],
+      "positive_examples": [
+        "sab-pos-01",
+        "sab-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "scope": {
+        "increment": "inc-suffix-abstract-noun",
+        "statement": "an unmarked (unvocalised) surface carries no shadda evidence and abstains insufficient_features -- normalisation is never treated as confirmation",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-suffix-abstract-noun-sab-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-suffix-abstract-noun",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "sab-abs-01",
+      "sab-abs-02"
+    ],
+    "adversarial": [
+      "sab-adv-01",
+      "sab-adv-02"
+    ],
+    "positive": [
+      "sab-pos-01",
+      "sab-pos-02"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-suffix-abstract-noun",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives",
+      "school_dependent_attributed"
+    ],
+    "capability": "discriminator_table",
+    "functions": [
+      {
+        "discriminators": {
+          "final_letter": [
+            "none_word_final_yaa"
+          ],
+          "shadda_on_yaa_evidence": [
+            "written_shadda"
+          ]
+        },
+        "id": "nisba_relational_yaa"
+      },
+      {
+        "discriminators": {
+          "final_letter": [
+            "taa_marbuta"
+          ],
+          "shadda_on_yaa_evidence": [
+            "written_shadda"
+          ]
+        },
+        "id": "abstract_noun_yaa"
+      }
+    ],
+    "increment": "inc-suffix-abstract-noun",
+    "rules": [
+      {
+        "id": "sab-r1",
+        "text": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; both share a geminated yaa, so the shadda itself must be written evidence, never assumed"
+      },
+      {
+        "id": "sab-r2",
+        "text": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense"
+      },
+      {
+        "id": "sab-r3",
+        "text": "an unmarked (unvocalised) surface carries no shadda evidence and abstains insufficient_features -- normalisation is never treated as confirmation"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-suffix-abstract-noun",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "suffix_class_chip",
+      "teaching": "shows which classifier (nisba ـيّ vs abstract-noun ـيّة) the written shadda + final letter decided"
+    },
+    {
+      "key": "shadda_evidence_note",
+      "teaching": "shows the exact written-shadda evidence the decision rested on, or the honest abstention when it is unmarked"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

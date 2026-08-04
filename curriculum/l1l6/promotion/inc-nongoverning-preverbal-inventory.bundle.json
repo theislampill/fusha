@@ -1,0 +1,320 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
+        "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
+        "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "3a78f2e49530e18c26e367edba6709b59cd125c8753894916fd9263826c3e3d4",
+      "guards_payload": [
+        {
+          "guard": "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
+          "id": "g-npv-1"
+        },
+        {
+          "guard": "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
+          "id": "g-npv-2"
+        },
+        {
+          "guard": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+          "id": "g-npv-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-npv-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "npv-abs-01",
+        "npv-abs-02",
+        "npv-adv-01",
+        "npv-adv-02"
+      ],
+      "positive_examples": [
+        "npv-pos-01",
+        "npv-pos-02",
+        "npv-pos-03",
+        "npv-pos-04"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nongoverning-preverbal-inventory"
+      },
+      "scope": {
+        "increment": "inc-nongoverning-preverbal-inventory",
+        "statement": "this pack is a CLOSED registry of preverbal items that never license invented case/mood/governor effects -- it emits a class label only, never a mood, case or governor key",
+        "unit_ref": "cu-nongoverning-preverbal-inventory"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nongoverning-preverbal-inventory-npv-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
+        "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
+        "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "3a78f2e49530e18c26e367edba6709b59cd125c8753894916fd9263826c3e3d4",
+      "guards_payload": [
+        {
+          "guard": "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
+          "id": "g-npv-1"
+        },
+        {
+          "guard": "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
+          "id": "g-npv-2"
+        },
+        {
+          "guard": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+          "id": "g-npv-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-npv-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "npv-abs-01",
+        "npv-abs-02",
+        "npv-adv-01",
+        "npv-adv-02"
+      ],
+      "positive_examples": [
+        "npv-pos-01",
+        "npv-pos-02",
+        "npv-pos-03",
+        "npv-pos-04"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nongoverning-preverbal-inventory"
+      },
+      "scope": {
+        "increment": "inc-nongoverning-preverbal-inventory",
+        "statement": "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in; it abstains insufficient_features exactly like an unrecognised surface",
+        "unit_ref": "cu-nongoverning-preverbal-inventory"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nongoverning-preverbal-inventory-npv-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
+        "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
+        "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "3a78f2e49530e18c26e367edba6709b59cd125c8753894916fd9263826c3e3d4",
+      "guards_payload": [
+        {
+          "guard": "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
+          "id": "g-npv-1"
+        },
+        {
+          "guard": "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
+          "id": "g-npv-2"
+        },
+        {
+          "guard": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+          "id": "g-npv-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-npv-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "npv-abs-01",
+        "npv-abs-02",
+        "npv-adv-01",
+        "npv-adv-02"
+      ],
+      "positive_examples": [
+        "npv-pos-01",
+        "npv-pos-02",
+        "npv-pos-03",
+        "npv-pos-04"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nongoverning-preverbal-inventory"
+      },
+      "scope": {
+        "increment": "inc-nongoverning-preverbal-inventory",
+        "statement": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+        "unit_ref": "cu-nongoverning-preverbal-inventory"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nongoverning-preverbal-inventory-npv-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-nongoverning-preverbal-inventory",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "npv-abs-01",
+      "npv-abs-02"
+    ],
+    "adversarial": [
+      "npv-adv-01",
+      "npv-adv-02"
+    ],
+    "positive": [
+      "npv-pos-01",
+      "npv-pos-02",
+      "npv-pos-03",
+      "npv-pos-04"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-nongoverning-preverbal-inventory",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives",
+      "school_dependent_attributed"
+    ],
+    "capability": "discriminator_table",
+    "functions": [
+      {
+        "discriminators": {
+          "particle": [
+            "قد"
+          ],
+          "verb_tense": [
+            "perfect"
+          ]
+        },
+        "id": "qad_confirmation_of_past"
+      },
+      {
+        "discriminators": {
+          "particle": [
+            "قد"
+          ],
+          "verb_tense": [
+            "imperfect"
+          ]
+        },
+        "id": "qad_reduction_of_probability"
+      },
+      {
+        "discriminators": {
+          "particle": [
+            "سَوْفَ"
+          ],
+          "verb_tense": [
+            "imperfect"
+          ]
+        },
+        "id": "sawfa_future_marker"
+      },
+      {
+        "discriminators": {
+          "particle": [
+            "لقد"
+          ],
+          "verb_tense": [
+            "perfect"
+          ]
+        },
+        "id": "laqad_emphatic_past"
+      }
+    ],
+    "increment": "inc-nongoverning-preverbal-inventory",
+    "rules": [
+      {
+        "id": "npv-r1",
+        "text": "this pack is a CLOSED registry of preverbal items that never license invented case/mood/governor effects -- it emits a class label only, never a mood, case or governor key"
+      },
+      {
+        "id": "npv-r2",
+        "text": "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in; it abstains insufficient_features exactly like an unrecognised surface"
+      },
+      {
+        "id": "npv-r3",
+        "text": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-nongoverning-preverbal-inventory",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "nongoverning_preverbal_chip",
+      "teaching": "names the closed-registry class this particle+tense pair matched, never a mood/case/governor"
+    },
+    {
+      "key": "tense_dependent_reading_note",
+      "teaching": "for قد, shows which of the two tense-dependent readings the declared verb tense selected"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}
