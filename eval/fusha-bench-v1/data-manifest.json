@@ -299,7 +299,7 @@
       "artifact_id": "runtime-keys-weak-root-voice",
       "path": "curriculum/drills/keys/weak-root-voice-runtime.keys.jsonl",
       "role": "runtime_drill_input",
-      "sha256": "b4ae53df8f9f389d3df8fb19c1021307123382e0355d24fb2997256523b6f1ac"
+      "sha256": "d116b95d3b1ffef4225acc4c832a271123f184aaec568e4176ee2364f040b653"
     },
     {
       "artifact_id": "canary-ma-relative",
@@ -329,7 +329,7 @@
       "artifact_id": "kc-catalog-legacy",
       "path": "curriculum/kc-catalog.json",
       "role": "kc_catalog_input",
-      "sha256": "e16c05f857ddde048fbc03b0e742f74fd2b8ec84fea3fea74ba57718fc09687a"
+      "sha256": "9a7cbc429386ca1f502b2d0c346c3cfb82764b00e1f775c5d43d298ab1459ea9"
     },
     {
       "artifact_id": "kc-catalog-shard-derivation-template",
