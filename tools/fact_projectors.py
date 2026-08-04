@@ -15,6 +15,7 @@ import json
 import sys
 import unicodedata
 from datetime import datetime
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Optional
 
@@ -43,6 +44,8 @@ PROOFV_VERB_PROJECTOR_ID = "sarf.proofv.verb.v1"
 # A3 largelexicon bridge. Its gate_tier is never_auto_resolve: a carried-table
 # lookup is candidate evidence about a written surface, never a certification of
 # lexical identity, so this projector has NO path to certified or materialized.
+NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID = "sarf.noun_plural_lexeme_link.v1"
+NOUN_LEXICAL_GENDER_PROJECTOR_ID = "sarf.noun_lexical_gender.v1"
 LARGELEXICON_BRIDGE_PROJECTOR_ID = "largelexicon.carried_lexeme_candidate.v1"
 # The bridge also emits typed ABSTENTIONS. They are registered with their own
 # never_auto_resolve contract so their refusal rests on a real producer gate,
@@ -560,6 +563,233 @@ def project_fam3_number_pattern(
         },
         "materialization_allowed": False,
     }
+
+
+# ---------------------------------------------------------------------------
+# u-s08 noun plural/gender lexeme-link projectors (Train A). These classify an
+# already-OBSERVED noun occurrence — never generate a new surface — so they
+# consult the read-only canonical loc-surface authority
+# (qamus/indexes/quran-loc-surface/index.jsonl) before an occurrence counts as
+# evidence, and tools/rm40_gate_stack.py's broken_plural_lexeme_link_gate /
+# lexical_gender_gate for every attestation/license/registry requirement.
+# Every result is candidate-or-abstained; neither function nor gate_tier ever
+# certifies (see review_and_materialize for the only certification path).
+# ---------------------------------------------------------------------------
+QURAN_LOC_SURFACE_INDEX_PATH = ROOT / "qamus" / "indexes" / "quran-loc-surface" / "index.jsonl"
+
+
+@lru_cache(maxsize=1)
+def _quran_loc_surface_index() -> Dict[str, str]:
+    index: Dict[str, str] = {}
+    if QURAN_LOC_SURFACE_INDEX_PATH.exists():
+        with QURAN_LOC_SURFACE_INDEX_PATH.open(encoding="utf-8") as handle:
+            for line in handle:
+                line = line.strip()
+                if not line:
+                    continue
+                row = json.loads(line)
+                index[row["loc"]] = row["surface"]
+    return index
+
+
+def _loc_surface_mismatch(occurrence: Dict[str, Any]) -> Optional[str]:
+    loc = occurrence["identity"]["loc"]
+    surface = occurrence.get("surface", "")
+    recorded = _quran_loc_surface_index().get(loc)
+    if recorded is None:
+        return "loc %s is absent from the canonical loc-surface authority" % loc
+    if recorded != surface:
+        return "occurrence surface does not surface-match the canonical loc-surface authority at %s" % loc
+    return None
+
+
+def _noun_abstention(
+    occurrence: Dict[str, Any], reason: str, detail: str, dependencies: Iterable[str]
+) -> Dict[str, Any]:
+    return {
+        "subject_identity": copy.deepcopy(occurrence["identity"]),
+        "reason": reason,
+        "detail": detail,
+        "dependencies": list(dependencies),
+    }
+
+
+def _noun_result(
+    contract: Dict[str, Any],
+    status: str,
+    route: str,
+    candidate: Optional[Dict[str, Any]],
+    abstention: Optional[Dict[str, Any]],
+) -> Dict[str, Any]:
+    return {
+        "projector_id": contract["projector_id"],
+        "status": status,
+        "route": route,
+        "candidate": candidate,
+        "abstention": abstention,
+        "certification_allowed": False,
+        "materialization_allowed": False,
+    }
+
+
+def noun_plural_lexeme_link_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named registration guard; the projector performs the exact evidence checks itself."""
+
+    return None
+
+
+def _attested_pair_status(surface: str, attested: List[str]) -> tuple[bool, Optional[str], Optional[str]]:
+    """Decide attested-pair status for ONE occurrence surface against the entry's
+    attested plurals.
+
+    Exact attestation requires LITERAL, byte-exact written-surface equality —
+    never NFC normalization and never a norm_strict match. NFC normalization
+    can itself reorder combining marks (e.g. the shadda/damma canonical
+    ordering the loc-surface authority does not use) and so can turn two
+    byte-different surfaces into the "same" string; treating that as
+    attestation would silently authorize a candidate the entry never actually
+    documents byte-for-byte. norm_strict likewise drops harakāt/shadda and
+    would accept a deliberately wrong vocalization or a bare (unvocalized)
+    surface as if it were the documented form. Both NFC and ``norm_strict``
+    are used only as RECALL, to find near-miss candidates; any near-miss is
+    reported with an explicit typed reason — never silently dropped to the
+    generic ``no_attested_lexeme_pair`` and never silently promoted to
+    attestation.
+
+    Returns ``(attested_pair, near_miss_reason, near_miss_detail)``.
+    """
+    if surface in attested:
+        return True, None, None
+    occ = {"surface": surface}
+    surface_nfc = unicodedata.normalize("NFC", surface)
+    for p in attested:
+        if p != surface and unicodedata.normalize("NFC", p) == surface_nfc:
+            return False, "attested_pair_normalization_only_match", (
+                "an NFC-normalization-only match was refused: attested plural %r is "
+                "byte-different from the occurrence surface %r though their NFC-normalized "
+                "forms are equal — exact attestation requires literal written-surface equality"
+                % (p, surface)
+            )
+        if normalize_ar.norm_strict(p) != normalize_ar.norm_strict(surface):
+            continue
+        form = {"surface": p}
+        detail = homograph_norm_key_collision(occ, form) or harakah_blind_sole_candidate(occ, form)
+        if detail:
+            return False, "attested_pair_vocalization_mismatch", "a norm_strict-only match was refused: " + detail
+    return False, None, None
+
+
+def project_noun_plural_lexeme_link(
+    *,
+    contract: Dict[str, Any],
+    occurrence: Dict[str, Any],
+    root: Optional[str] = None,
+    template_id: Optional[str] = None,
+    attested_plurals: Iterable[str] = (),
+    lexeme_id: Optional[str] = None,
+    plural_of_plural_base_attested: bool = False,
+) -> Dict[str, Any]:
+    """Classify ONE observed broken-plural occurrence as a lexeme-link candidate, or abstain.
+
+    A candidate requires ALL of: the occurrence surface-matching the canonical
+    loc-surface authority, an explicit ``template_id`` (never defaulted), a
+    ``taksir`` (never sound-plural) pattern, supplied root evidence, an exact
+    (literal, byte-exact — never NFC-normalized) attested-plural pairing, and
+    — where the pattern demands it — the caller's exact ``lexeme_id`` present on that pattern's closed
+    ``licensed_lexemes`` (lexeme_id, root) list, or an attested plural-of-plural
+    base. Multiple attested plurals for the SAME lemma are preserved as
+    unranked competing alternatives; nothing here is ever certified.
+    """
+    from tools import rm40_gate_stack as gates
+
+    mismatch = _loc_surface_mismatch(occurrence)
+    if mismatch:
+        return _noun_result(
+            contract, "abstained", "loc_surface_mismatch", None,
+            _noun_abstention(occurrence, "loc_surface_mismatch", mismatch,
+                              [str(QURAN_LOC_SURFACE_INDEX_PATH)]),
+        )
+    attested = list(attested_plurals)
+    surface = occurrence.get("surface", "")
+    attested_pair, near_miss_reason, near_miss_detail = _attested_pair_status(surface, attested)
+    if near_miss_reason:
+        return _noun_result(
+            contract, "abstained", near_miss_reason, None,
+            _noun_abstention(
+                occurrence, near_miss_reason, near_miss_detail,
+                [gates.PLURAL_GATE + "#attested-pair-required"],
+            ),
+        )
+    decision = gates.broken_plural_lexeme_link_gate(
+        root, template_id,
+        attested_pair=attested_pair,
+        lexeme_id=lexeme_id,
+        plural_of_plural_base_attested=plural_of_plural_base_attested,
+    )
+    if decision["decision"] != "emit":
+        return _noun_result(
+            contract, "abstained", decision["defeater"], None,
+            _noun_abstention(occurrence, decision["defeater"], decision["detail"], decision["gates"]),
+        )
+    distinct_others = sorted(
+        {p for p in attested if normalize_ar.norm_strict(p) != normalize_ar.norm_strict(surface)}
+    )
+    candidate = {
+        "fact_type": contract["output_fact_type"],
+        "surface": surface,
+        "loc": occurrence["identity"]["loc"],
+        "root": root,
+        "plural_template_id": template_id,
+        "attested_plurals": sorted(set(attested)),
+        "competing_alternatives": distinct_others,
+        "semantic_tie": len(distinct_others) > 0,
+        "evidence_mode": "entry_backed_attested_pair",
+        "rule_chain": decision["gates"],
+    }
+    return _noun_result(contract, "candidate", "entry_backed_attested_pair", candidate, None)
+
+
+def noun_lexical_gender_evidence_guard(*_args: Any, **_kwargs: Any) -> None:
+    """Named registration guard; the projector performs the exact registry check itself."""
+
+    return None
+
+
+def project_noun_lexical_gender(
+    *,
+    contract: Dict[str, Any],
+    occurrence: Dict[str, Any],
+    gender_registry_entry: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Classify ONE observed noun's lexical gender from an explicit registry fact only.
+
+    Never certifies from tā' marbūṭa presence or absence: شَجَرَة (has ة) and
+    شَمْس (has none) both require the SAME registry-fact gate.
+    """
+    from tools import rm40_gate_stack as gates
+
+    mismatch = _loc_surface_mismatch(occurrence)
+    if mismatch:
+        return _noun_result(
+            contract, "abstained", "loc_surface_mismatch", None,
+            _noun_abstention(occurrence, "loc_surface_mismatch", mismatch,
+                              [str(QURAN_LOC_SURFACE_INDEX_PATH)]),
+        )
+    decision = gates.lexical_gender_gate(gender_registry_entry)
+    if decision["decision"] != "emit":
+        return _noun_result(
+            contract, "abstained", decision["defeater"], None,
+            _noun_abstention(occurrence, decision["defeater"], decision["detail"], decision["gates"]),
+        )
+    candidate = {
+        "fact_type": contract["output_fact_type"],
+        "surface": occurrence.get("surface", ""),
+        "loc": occurrence["identity"]["loc"],
+        "gender": gender_registry_entry,
+        "evidence_mode": "registry_entry_fact",
+        "rule_chain": decision["gates"],
+    }
+    return _noun_result(contract, "candidate", "registry_entry_certified", candidate, None)
 
 
 def _source_gate(
@@ -1171,6 +1401,54 @@ PROOFV_VERB_CONTRACT = {
     "resolution_method": "bounded_same_lexeme_crosswalk_candidate",
 }
 
+NOUN_PLURAL_LEXEME_LINK_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.fact_projectors",
+    "projector_id": NOUN_PLURAL_LEXEME_LINK_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["entry_plural_form_attestation"],
+    "output_fact_type": "plural_lexeme_link_evidence",
+    "compatibility_class": (
+        "an observed noun occurrence whose surface surface-matches the canonical loc-surface authority AND "
+        "whose entry documents an exact root + lemma/plural-form attestation for an explicit, non-defaulted "
+        "taksir plural_template_id; sound-plural (msl/mfl) ids, missing root evidence, unattested pairs, "
+        "unlicensed rare/second-order templates, and unattested plural-of-plural bases all abstain"
+    ),
+    "defeater_checks": ["noun_plural_lexeme_link_evidence_guard"],
+    # never_auto_resolve, matching the A3 largelexicon bridge precedent: an
+    # entry-backed lexeme identity link is candidate evidence about a written
+    # surface, never a certification of lexical identity, so review_and_
+    # materialize must have NO path to certify or materialize it regardless of
+    # vote count (round-6 repair: this sat at two_vote_required despite the
+    # projector's own certification_allowed:false, letting two votes silently
+    # certify/materialize a fact this contract itself declares uncertifiable).
+    "gate_tier": "never_auto_resolve",
+    "version": "1.0.0",
+    "resolution_method": "entry_backed_attested_pair_lexeme_link",
+}
+
+NOUN_LEXICAL_GENDER_CONTRACT = {
+    "schema": "qamus.projector_record.v1",
+    "record_type": "registry_entry",
+    "producer": "tools.fact_projectors",
+    "projector_id": NOUN_LEXICAL_GENDER_PROJECTOR_ID,
+    "fact_family": "sarf",
+    "input_fact_types": ["entry_gender_registry_fact"],
+    "output_fact_type": "lexical_gender_evidence",
+    "compatibility_class": (
+        "an observed noun occurrence whose surface surface-matches the canonical loc-surface authority AND "
+        "whose entry carries an explicit registry gender fact; ta marbuta presence/absence never substitutes "
+        "for the registry fact and a missing registry entry abstains"
+    ),
+    "defeater_checks": ["noun_lexical_gender_evidence_guard"],
+    # never_auto_resolve — see NOUN_PLURAL_LEXEME_LINK_CONTRACT's comment above;
+    # the SAME fail-closed precedent applies to a registry-fact gender read.
+    "gate_tier": "never_auto_resolve",
+    "version": "1.0.0",
+    "resolution_method": "entry_backed_gender_registry_fact",
+}
+
 LARGELEXICON_BRIDGE_CONTRACT = {
     "schema": "qamus.projector_record.v1",
     "record_type": "registry_entry",
@@ -1241,6 +1519,8 @@ REGISTRY.register(FAM3_NUMBER_CONTRACT, project_fam3_number_pattern)
 REGISTRY.register(FAM4_FINITE_VERB_CONTRACT, project_fam4_finite_verb_pattern)
 REGISTRY.register(FAM5_DERIVED_VERB_CONTRACT, project_fam5_derived_verb_pattern)
 REGISTRY.register(PROOFV_VERB_CONTRACT, project_proofv_verb)
+REGISTRY.register(NOUN_PLURAL_LEXEME_LINK_CONTRACT, project_noun_plural_lexeme_link)
+REGISTRY.register(NOUN_LEXICAL_GENDER_CONTRACT, project_noun_lexical_gender)
 REGISTRY.register(LARGELEXICON_BRIDGE_CONTRACT, project_largelexicon_carried_lexeme)
 REGISTRY.register(LARGELEXICON_ABSTENTION_CONTRACT, project_largelexicon_abstention)
 

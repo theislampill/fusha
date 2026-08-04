@@ -1,6 +1,6 @@
 {
   "schema": "fusha/plural-gender-rules@1",
-  "purpose": "Patterns and grammatical-gender cues for certifying a noun's plural form and its gender BEFORE authoring a scripture-facing gloss or an agreement note. Consumed by the noun-plural-gender procedure. A plural pattern observed on the surface PROPOSES a class; it never certifies the singular root by itself — defer root certification to ../rules/root-decision-rules.json. Gender is a property of the lemma, not of the surface tā' marbūṭa: many feminine words carry no ـة and several ـة-bearing words are masculine. Public artifacts stay {src:'qamus', kind:'authored', lang:'en'}; QAC POS/gender is INTERNAL evidence only and is never exposed.",
+  "purpose": "Patterns and grammatical-gender cues for certifying a noun's plural form and its gender BEFORE authoring a scripture-facing gloss or an agreement note. Consumed by the noun-plural-gender procedure. A plural pattern observed on the surface PROPOSES a class; it never certifies the singular root by itself — defer root certification to ../rules/root-decision-rules.json. Gender is a property of the lemma, not of the surface tā' marbūṭa: many feminine words carry no ـة and several ـة-bearing words are masculine. Public artifacts stay {src:'qamus', kind:'authored', lang:'en'}; QAC POS/gender is INTERNAL evidence only and is never exposed. `projector_contract` below is the CLASSIFICATION-time companion to the patterns: it governs when an OBSERVED occurrence may be linked to a lemma's plural/gender facts at all (tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate / lexical_gender_gate, tools/fact_projectors.py:project_noun_plural_lexeme_link / project_noun_lexical_gender) — distinct from `plural_gate`'s paradigm-GENERATION safety check (tools/fusha_paradigm_generate.py), which only decides whether a root's radicals are sound enough to template-substitute a NEW candidate surface.",
   "fields": {
     "id": "stable rule key",
     "kind": "msl (jamʿ mudhakkar sālim) | mfl (jamʿ muʾannath sālim) | taksir (jamʿ taksīr) | cue",
@@ -8,9 +8,13 @@
     "test": "the operational signal on the diacritized surface (which letters / harakāt / suffix)",
     "singular_hint": "how the singular relates to the plural; never a certification on its own",
     "gender": "grammatical gender the pattern implies, or 'lemma-bound' when the pattern is gender-neutral",
-    "example": "a vowelized Arabic word",
-    "example_loc": "a quran:S:A:W where the form occurs",
-    "guard": "what must hold; what NOT to infer from this pattern"
+    "example": "a vowelized Arabic word, or null when no Qurʾanic occurrence exists (see example_loc_status)",
+    "example_loc": "a quran:S:A:W where the form occurs, or null when no Qurʾanic occurrence exists",
+    "example_loc_status": "present ONLY when example/example_loc are null; a closed reason such as 'not_attested_in_corpus' — never fabricate a location to fill the field",
+    "guard": "what must hold; what NOT to infer from this pattern",
+    "rarity": "absent (ordinary productive class) | 'rare' | 'second_order' — flags that this template needs the extra closed-license / attested-base gate below before a projector may license a candidate",
+    "licensed_lexemes": "REQUIRED when rarity is 'rare' or 'second_order' — the closed list of {lexeme_id, root} objects this template may license. A caller must supply BOTH a matching lexeme_id AND its matching root to license a candidate (tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate checks the exact pair, never lexeme_id alone and never a caller-supplied boolean); any lexeme_id/root outside this closed pair list must abstain, never be analogized in by shape",
+    "requires_attested_base": "REQUIRED true when rarity is 'second_order' (jam' al-jam' / plural-of-plural) — the BASE plural (not the singular, not merely the observed surface) must itself be an independently attested/documented form before this template may license a candidate"
   },
   "decide_on_diacritics": "Every test reads the FULL diacritized surface. A bare skeleton (مسلمون vs no harakāt) cannot distinguish masculine-sound nominative مُسْلِمُونَ from a hollow stem; if the harakāt or the case-suffix vowel is absent, emit pending rather than guessing the commoner reading. The case ending (ـُونَ/ـِينَ for msl, ـَاتٌ/ـَاتٍ for mfl) is part of the signal.",
   "patterns": [
@@ -22,8 +26,8 @@
       "singular_hint": "drop the case suffix → the masculine singular (مُسْلِمٌ ← مُسْلِمُونَ). The suffix is inflection, never a radical.",
       "gender": "masculine",
       "example": "ٱلْمُسْلِمُونَ",
-      "example_loc": "33:35:1",
-      "guard": "Sound-masculine plural is reserved for rational/animate masculine referents and a small fixed set (سِنُونَ, أَرَضُونَ). Do not treat the ـُونَ/ـِينَ as part of the root; do not certify a root from the suffix. Distinguish from the dual ـَانِ/ـَيْنِ."
+      "example_loc": "72:14:3",
+      "guard": "Sound-masculine plural is reserved for rational/animate masculine referents and a small fixed set (سِنُونَ, أَرَضُونَ). Do not treat the ـُونَ/ـِينَ as part of the root; do not certify a root from the suffix. Distinguish from the dual ـَانِ/ـَيْنِ. (example_loc corrected from a prior 33:35:1 mislocation, which pointed at إِنَّ, not any plural surface — 33:35:2 carries the SAME lemma but in the oblique ـِينَ case, so it belongs to msl-genitive-accusative, not here; 72:14:3 is the verified nominative occurrence.)"
     },
     {
       "id": "msl-genitive-accusative",
@@ -32,9 +36,9 @@
       "test": "stem + ـِينَ (yā'-kasra + nūn-fatḥa). Same lemma as msl-nominative, oblique case.",
       "singular_hint": "identical singular to msl-nominative; only the case vowel differs.",
       "gender": "masculine",
-      "example": "ٱلصَّٰبِرِينَ",
-      "example_loc": "2:153:6",
-      "guard": "Do NOT confuse the oblique sound-masculine ـِينَ with the broken-plural feminine ـِينَ-shaped endings or with the dual oblique ـَيْنِ. The yā' here carries kasra and the nūn fatḥa."
+      "example": "ٱلصَّٰبِرِينَ",
+      "example_loc": "2:153:10",
+      "guard": "Do NOT confuse the oblique sound-masculine ـِينَ with the broken-plural feminine ـِينَ-shaped endings or with the dual oblique ـَيْنِ. The yā' here carries kasra and the nūn fatḥa. (example_loc corrected from a prior 2:153:6 mislocation, which pointed at وَٱلصَّلَوٰةِ, not any plural surface; 2:153:10 is the verified byte-exact occurrence.)"
     },
     {
       "id": "mfl-sound",
@@ -43,9 +47,9 @@
       "test": "stem + ـَاتٌ (alif + tā' maftūḥa, NOT tā' marbūṭa) with ḍamma in the nominative, kasra (ـَاتٍ) in the oblique.",
       "singular_hint": "the singular usually ends in tā' marbūṭa (مُسْلِمَةٌ ← مُسْلِمَاتٌ); the marbūṭa opens to a maftūḥa tā' in the plural.",
       "gender": "feminine",
-      "example": "ٱلْمُسْلِمَاتِ",
-      "example_loc": "33:35:3",
-      "guard": "The oblique sound-feminine takes KASRA not fatḥa (مُسْلِمَاتٍ, not *مُسْلِمَاتَ) — it is a diptote-exception that takes kasra. Do not read the final ـَات as a feminine of the broken pattern فَعَلَات without checking soundness."
+      "example": "مُسْلِمَٰتٍ",
+      "example_loc": "66:5:10",
+      "guard": "The oblique sound-feminine takes KASRA not fatḥa (مُسْلِمَاتٍ, not *مُسْلِمَاتَ) — it is a diptote-exception that takes kasra. Do not read the final ـَات as a feminine of the broken pattern فَعَلَات without checking soundness. (example_loc corrected from a prior 33:35:3 mislocation, whose recorded surface وَٱلْمُسْلِمَٰتِ carries a وَ proclitic the example field did not actually reproduce byte-exactly; 66:5:10 is a bare, proclitic-free byte-exact occurrence of the oblique ending this pattern tests.)"
     },
     {
       "id": "taksir-afal",
@@ -54,9 +58,9 @@
       "test": "prefixed hamza-fatḥa + skeletal فعل; common plural of triliteral nouns.",
       "singular_hint": "singular is often فَعْل/فِعْل (قَوْل ← أَقْوَال, نَهْر ← أَنْهَار). The internal vowel change IS the plural — no sound suffix.",
       "gender": "lemma-bound",
-      "example": "أَنْهَٰر",
-      "example_loc": "2:25:18",
-      "guard": "Broken plurals are gender-neutral on the surface: gender is decided by the lemma + agreement, not by the أفعال shape. أَنْهَار is the plural of نَهْر 'river', NOT نَهَار 'daytime' — see the ن ه ر quarantine in ../rules/homograph-quarantines.json."
+      "example": "ٱلْأَنْهَٰرُ",
+      "example_loc": "2:25:12",
+      "guard": "Broken plurals are gender-neutral on the surface: gender is decided by the lemma + agreement, not by the أفعال shape. أَنْهَار is the plural of نَهْر 'river', NOT نَهَار 'daytime' — see the ن ه ر quarantine in ../rules/homograph-quarantines.json. (example_loc corrected from a prior 2:25:18 mislocation, which pointed at رِّزْقًا, not any plural surface; 2:25:12 is the verified occurrence and the example field is now the byte-exact recorded surface.)"
     },
     {
       "id": "taksir-fual",
@@ -65,9 +69,9 @@
       "test": "ḍamma-ḍamma or ḍamma-fatḥa internal vocalisation, no external suffix.",
       "singular_hint": "فُعُل pluralises فَعُول/فِعَال singulars (رَسُول ← رُسُل); فُعَل pluralises فُعْلَة (غُرْفَة ← غُرَف).",
       "gender": "lemma-bound",
-      "example": "ٱلرُّسُل",
-      "example_loc": "2:285:9",
-      "guard": "رُسُل is a broken plural of رَسُول and refers to rational beings, yet — being a broken (not sound-masculine) plural — it may take feminine-singular agreement on its verb/adjective. Decide agreement from the agreement cue, not from the referent's natural sex."
+      "example": "ٱلرُّسُلُ",
+      "example_loc": "12:110:4",
+      "guard": "رُسُل is a broken plural of رَسُول and refers to rational beings, yet — being a broken (not sound-masculine) plural — it may take feminine-singular agreement on its verb/adjective. Decide agreement from the agreement cue, not from the referent's natural sex. (example_loc corrected from a prior 2:285:9 mislocation, which pointed at كُلٌّ, not any plural surface; 12:110:4 is the verified byte-exact occurrence.)"
     },
     {
       "id": "taksir-fuala",
@@ -76,9 +80,9 @@
       "test": "ـَاء (alif + hamza) terminal; pluralises adjectival فَعِيل singulars denoting rational masculine referents.",
       "singular_hint": "فَعِيل ← فُعَلَاء (شَهِيد ← شُهَدَاء, نَبِيّ ← أَنْبِيَاء via أَفْعِلَاء).",
       "gender": "masculine (rational referents)",
-      "example": "ٱلشُّهَدَاء",
-      "example_loc": "2:282:23",
-      "guard": "The terminal ـَاء is a feminine/plural marker here, NOT a radical hamza. Do not certify a hamza-final root from this surface; check the seat per ../rules/hamza-gates.json before reading a third radical hamza."
+      "example": "شُهَدَآءَ",
+      "example_loc": "5:8:7",
+      "guard": "The terminal ـَاء is a feminine/plural marker here, NOT a radical hamza. Do not certify a hamza-final root from this surface; check the seat per ../rules/hamza-gates.json before reading a third radical hamza. (example_loc corrected from a prior 2:282:23 mislocation, which pointed at فَلْيَكْتُبْ, not any plural surface; 5:8:7 is the verified byte-exact occurrence.)"
     },
     {
       "id": "taksir-mafail",
@@ -87,9 +91,52 @@
       "test": "the 'broken plural of plenty' (ṣīghat muntahā al-jumūʿ): a long ā after the second radical and a kasra before the last. Diptote — no tanwīn, oblique takes fatḥa.",
       "singular_hint": "quadriliteral / augmented singulars (مَسْجِد ← مَسَاجِد, رِسَالَة ← رَسَائِل).",
       "gender": "lemma-bound",
-      "example": "مَسَٰجِد",
-      "example_loc": "2:114:6",
-      "guard": "This class is MAMNŪʿ MIN AL-ṢARF (diptote): it refuses tanwīn and takes FATḤA in the oblique (فِي مَسَاجِدَ, not *مَسَاجِدٍ). Authoring an oblique kasra-tanwīn here is a known error — verify the case vowel before glossing case."
+      "example": "مَسَٰجِدَ",
+      "example_loc": "9:18:3",
+      "guard": "This class is MAMNŪʿ MIN AL-ṢARF (diptote): it refuses tanwīn and takes FATḤA in the oblique (فِي مَسَاجِدَ, not *مَسَاجِدٍ). Authoring an oblique kasra-tanwīn here is a known error — verify the case vowel before glossing case. (example_loc corrected from a prior 2:114:6 mislocation, which pointed at ٱللَّهِ, not any plural surface; 9:18:3 is the verified byte-exact occurrence.)"
+    },
+    {
+      "id": "taksir-fiaal",
+      "kind": "taksir",
+      "wazn": "فِعَال",
+      "test": "kasra-fatḥa internal vocalisation with a medial long ā (kasra + fatḥa + alif); no external suffix.",
+      "singular_hint": "pluralises featureless فَعْل singulars of plain concrete nouns (عَبْد ← عِبَاد, كَلْب ← كِلَاب, ذِئْب ← ذِئَاب).",
+      "gender": "lemma-bound",
+      "example": "عِبَادٌ",
+      "example_loc": "7:194:7",
+      "guard": "The SAME lemma may also carry a second attested plural on a different, un-templated shape (عَبْد also takes عَبِيد — see projector_contract#unranked-multiple-attested-plurals); neither is 'more correct'. فِعَال is a productive class here, not exclusive to one lexeme."
+    },
+    {
+      "id": "taksir-nisa-suppletive-rare",
+      "kind": "taksir",
+      "wazn": "فِعَال (irregular/suppletive — no productive template)",
+      "test": "the surface نِسَاء / نِسَآء with any case ending or tanwīn; the singular is a DIFFERENT lexeme entirely, never derived by radical substitution.",
+      "singular_hint": "the singular ٱمْرَأَة 'woman' is SUPPLETIVE — its own root (م ر أ) is not the source of نِسَاء by any template substitution. No skeleton match may license this pairing for another lexeme.",
+      "gender": "feminine",
+      "example": "نِسَآءً",
+      "example_loc": "4:11:11",
+      "guard": "Never analogize نِسَاء onto any other فِعَال-shaped plural (see projector_contract#rare-and-second-order-closed-license): it is licensed ONLY for the closed lexeme pair (ٱمْرَأَة ↔ نِسَاء), and ONLY when the caller supplies BOTH the exact lexeme_id امرأة AND its exact root م ر أ — a lexeme_id without the matching root (or a root without the matching lexeme_id) never manufactures the licence.",
+      "rarity": "rare",
+      "licensed_lexemes": [
+        {"lexeme_id": "امرأة", "root": "م ر أ"}
+      ]
+    },
+    {
+      "id": "taksir-jam-al-jam-fuulaat",
+      "kind": "taksir",
+      "wazn": "فُعُولَات (jamʿ al-jamʿ — a plural re-pluralised)",
+      "test": "an already-attested broken plural (e.g. بُيُوت, itself the plural of بَيْت) carrying the sound-feminine ـَات tail a second time (بُيُوتَات).",
+      "singular_hint": "the BASE for this template is a PLURAL, not a singular; the base plural must itself be independently attested before a jamʿ al-jamʿ surface may be licensed (see projector_contract#plural-of-plural-requires-attested-base).",
+      "gender": "lemma-bound",
+      "example": null,
+      "example_loc": null,
+      "example_loc_status": "not_attested_in_corpus",
+      "guard": "Jamʿ al-jamʿ (second-order/plural-of-plural) is the rarest, most lexically-restricted class in Arabic morphology. Never license one unless the base plural (not just the singular) is a certified, attested form; the ـَات tail here is NOT a fresh sound-feminine formation of the singular بَيْت. Licensing also requires the caller supply BOTH the exact lexeme_id بيت AND its exact root ب ي ت — see licensed_lexemes above.",
+      "rarity": "second_order",
+      "licensed_lexemes": [
+        {"lexeme_id": "بيت", "root": "ب ي ت"}
+      ],
+      "requires_attested_base": true
     }
   ],
   "gender_cues": [
@@ -98,45 +145,45 @@
       "kind": "cue",
       "test": "lemma ends in tā' marbūṭa ـة → feminine by morphology (مَدِينَة, شَجَرَة).",
       "gender": "feminine",
-      "example": "شَجَرَة",
-      "example_loc": "2:35:11",
-      "guard": "Strong cue but NOT absolute: a few ـة words are masculine (خَلِيفَة 'successor', عَلَّامَة 'great scholar') and take masculine agreement. The marbūṭa is necessary-not-sufficient; confirm against the agreement cue when stakes are high."
+      "example": "شَجَرَةٍ",
+      "example_loc": "31:27:6",
+      "guard": "Strong cue but NOT absolute: a few ـة words are masculine (خَلِيفَة 'successor', عَلَّامَة 'great scholar') and take masculine agreement. The marbūṭa is necessary-not-sufficient; confirm against the agreement cue when stakes are high. It is NEVER sufficient on its own to certify gender for a projector — see projector_contract#lexical-gender-registry-only. (example_loc corrected from a prior 2:35:11 mislocation, which pointed at شِئْتُمَا, not any شَجَرَة surface; 31:27:6 is the verified byte-exact occurrence, matching the SAME loc used in the lexical_gender gate dogfood rows.)"
     },
     {
       "id": "cue-feminine-no-marker",
       "kind": "cue",
-      "test": "semantically/conventionally feminine lemma carrying NO ـة: body parts that come in pairs (يَد, عَيْن, أُذُن), and the fixed muʾannath samāʿī set (شَمْس, نَفْس, أَرْض, نَار, رِيح).",
+      "test": "a lemma carrying NO ـة that is nonetheless conventionally/lexically feminine (muʾannath samāʿī) and morphologically UNMARKED for gender — body parts that come in pairs (يَد, عَيْن, أُذُن), and the fixed muʾannath samāʿī set (شَمْس, نَفْس, أَرْض, نَار, رِيح). This is feminine BY CONVENTION (samāʿī, learned per lemma), never by a morphological marker — there is no marker here at all, so 'feminine by morphology' is a contradiction in terms for this cue.",
       "gender": "feminine",
-      "example": "ٱلشَّمْس",
-      "example_loc": "91:1:2",
-      "guard": "Never infer masculine merely because ـة is absent. شَمْس, أَرْض, نَفْس, نَار are feminine and govern feminine verbs/adjectives despite the bare skeleton. This is the single most common over-application of the marbūṭa shortcut."
+      "example": "ٱلشَّمْسَ",
+      "example_loc": "18:17:2",
+      "guard": "Never infer masculine merely because ـة is absent. شَمْس, أَرْض, نَفْس, نَار are feminine and govern feminine verbs/adjectives despite the bare skeleton. This is the single most common over-application of the marbūṭa shortcut — and it is exactly as unsafe for a projector to certify FROM (see projector_contract#lexical-gender-registry-only) as the presence of ـة is. (example_loc corrected from a prior 91:1:2 mislocation, which pointed at ٱللَّهِ, not any شَمْس surface; 18:17:2 is the verified byte-exact occurrence, matching the SAME loc used in the lexical_gender gate dogfood rows.)"
     },
     {
       "id": "cue-nonrational-plural-agreement",
       "kind": "cue",
       "test": "ANY plural of a non-rational noun (broken or sound) takes FEMININE-SINGULAR agreement on its verb, adjective, and demonstrative.",
       "gender": "feminine-singular (agreement, not lemma gender)",
-      "example": "ءَايَٰتٌ بَيِّنَٰتٌ",
-      "example_loc": "3:97:1",
-      "guard": "This is grammatical agreement (mā lā yaʿqil), independent of the singular's gender. أَيَّام (m. sg. يَوْم) still takes feminine-singular agreement in the plural. Do not 'correct' a feminine-singular adjective on a non-rational plural to masculine plural."
+      "example": "بَيِّنَٰتٌ",
+      "example_loc": "3:97:3",
+      "guard": "This is grammatical agreement (mā lā yaʿqil), independent of the singular's gender. أَيَّام (m. sg. يَوْم) still takes feminine-singular agreement in the plural. Do not 'correct' a feminine-singular adjective on a non-rational plural to masculine plural. (example_loc corrected from a prior 3:97:1 mislocation, which pointed at فِيهِ, not any plural surface; the field holds ONE vowelized word per its own fields doc, so the two-word ءَايَٰتٌ بَيِّنَٰتٌ phrase could never byte-match a single quran:S:A:W address — 3:97:3 is the verified byte-exact adjective بَيِّنَٰتٌ, agreeing with the non-rational plural noun ءَايَٰتٌۢ at the immediately preceding 3:97:2.)"
     },
     {
       "id": "cue-broken-plural-agreement",
       "kind": "cue",
       "test": "a BROKEN plural — even of rational beings — may take feminine-singular agreement, unlike the sound-masculine plural which takes masculine-plural agreement.",
       "gender": "feminine-singular permitted",
-      "example": "وَقَالَ ٱلرُّسُلُ",
+      "example": "قَالَتْ",
       "example_loc": "14:11:1",
-      "guard": "Contrast مُسْلِمُونَ (sound, masc-pl agreement) with رُسُل (broken, may take fem-sg). The plural KIND, not the referent, sets the licensed agreement. Read the verb's gender/number from the text; do not normalise it."
+      "guard": "Contrast مُسْلِمُونَ (sound, masc-pl agreement) with رُسُل (broken, may take fem-sg). The plural KIND, not the referent, sets the licensed agreement. Read the verb's gender/number from the text; do not normalise it. (example_loc corrected from a prior 14:11:1 entry whose example field held the fabricated two-word phrase وَقَالَ ٱلرُّسُلُ, which never occurs verbatim in the corpus; the field holds ONE vowelized word per its own fields doc, so 14:11:1's real, byte-exact content قَالَتْ is now the example — the genuine feminine-singular verb whose subject رُسُلُهُمْ, a broken plural of rational beings, follows at 14:11:3 in the SAME ayah.)"
     },
     {
       "id": "cue-diptote-no-tanwin",
       "kind": "cue",
       "test": "ṣīghat muntahā al-jumūʿ and فُعَلَاء/أَفْعِلَاء classes are diptote: no tanwīn, oblique = fatḥa.",
       "gender": "n/a (case behaviour, recorded as a cue)",
-      "example": "أَنبِيَآء",
-      "example_loc": "2:91:14",
-      "guard": "A missing tanwīn here is GRAMMATICAL, not a transcription gap; do not add one. If a gloss asserts the genitive with kasra-tanwīn on a diptote plural, flag it for repair per ../rules/root-decision-rules.json (qamus_entry_needs_repair)."
+      "example": "أَنۢبِيَآءَ",
+      "example_loc": "2:91:24",
+      "guard": "A missing tanwīn here is GRAMMATICAL, not a transcription gap; do not add one. If a gloss asserts the genitive with kasra-tanwīn on a diptote plural, flag it for repair per ../rules/root-decision-rules.json (qamus_entry_needs_repair). (example_loc corrected from a prior 2:91:14 mislocation, which pointed at بِمَا, not any plural surface; 2:91:24 is the verified byte-exact occurrence, carrying the accusative fatḥa with no tanwīn this cue tests.)"
     }
   ],
   "forbidden_shortcuts": [
@@ -164,6 +211,50 @@
       "id": "afal-default-gloss",
       "pattern": "auto-glossing any أَفْعَال surface by its commonest member",
       "why": "أَيْمَان could be 'oaths' (ي م ن) and أَنْهَار 'rivers' (ن ه ر) — both are أفعال but their singulars/roots differ. Defer to the homograph quarantines and certify the singular root before glossing the plural."
+    }
+  ],
+  "projector_contract": [
+    {
+      "id": "no-default-plural-template",
+      "requirement": "plural_template_id must be supplied by the caller from documented entry evidence. A missing id is a hard abstain (defeater plural_template_id_missing) — it is NEVER defaulted to taksir-afal or any other pattern.",
+      "enforced_by": "tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate; tools/fusha_paradigm_generate.py:generate_noun_plural",
+      "guard": "The historical bug this closes: generate_noun_plural once read noun.get('plural_template_id', 'taksir-afal') and silently fabricated a template id for any lexeme missing the field."
+    },
+    {
+      "id": "attested-pair-required",
+      "requirement": "An observed broken-plural surface may be classified only when BOTH a root is supplied AND the surface exactly matches (norm_strict) an entry-documented plural-form / lemma link. Shape or skeleton resemblance alone never suffices (defeaters no_root_evidence, no_attested_lexeme_pair).",
+      "enforced_by": "tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate",
+      "guard": "Applies the same discipline as forbidden_shortcuts#broken-plural-from-skeleton to CLASSIFICATION, not only to root recovery."
+    },
+    {
+      "id": "unranked-multiple-attested-plurals",
+      "requirement": "When an entry documents more than one attested plural surface for the same lemma (e.g. عَبْد: عِبَاد and عَبِيد), ALL remain competing_alternatives with semantic_tie true. The projector never ranks, scores, or silently picks a primary.",
+      "enforced_by": "tools/fact_projectors.py:project_noun_plural_lexeme_link",
+      "guard": "Ranking a lemma's attested plurals is a lexicographic judgement outside this projector's evidence; competing forms stay competing, never collapsed."
+    },
+    {
+      "id": "rare-and-second-order-closed-license",
+      "requirement": "A pattern flagged rarity:'rare' or rarity:'second_order' may license a candidate ONLY when the caller supplies an EXACT (lexeme_id, root) pair present in that pattern's own licensed_lexemes closed list; every other (lexeme_id, root) pair abstains (defeater rare_plural_unlicensed), never analogized in from the shape alone, and never manufactured by a caller-supplied boolean.",
+      "enforced_by": "tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate",
+      "guard": "نِسَاء is licensed only for the exact pair (lexeme_id=امرأة, root=م ر أ); it is not a productive template for any other featureless singular that happens to share its shape, and supplying only the root or only the lexeme_id (a wrong-root or wrong-lexeme call) must abstain."
+    },
+    {
+      "id": "plural-of-plural-requires-attested-base",
+      "requirement": "A pattern flagged requires_attested_base:true (jamʿ al-jamʿ) may license a candidate only when the caller supplies independent attestation that the BASE plural itself — not merely the final observed surface — is a documented form. Absent that, abstain (defeater plural_of_plural_base_unattested).",
+      "enforced_by": "tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate",
+      "guard": "بُيُوتَات presupposes بُيُوت is itself attested; a merely generated or unattested base plural can never license its own second-order plural."
+    },
+    {
+      "id": "lexical-gender-registry-only",
+      "requirement": "Gender is asserted only from a caller-supplied registry/entry gender fact (gender_registry_entry). It is NEVER inferred from the presence or absence of tā' marbūṭa — gender_cues#cue-ta-marbuta and #cue-feminine-no-marker are cues that INFORM a registry decision, never a substitute for one (defeater lexical_gender_registry_missing).",
+      "enforced_by": "tools/rm40_gate_stack.py:lexical_gender_gate; tools/fact_projectors.py:project_noun_lexical_gender",
+      "guard": "شَجَرَة (has ة) and شَمْس (has none) both require the identical registry-fact gate; neither shape decides gender on its own."
+    },
+    {
+      "id": "sound-plural-is-inflection-not-template",
+      "requirement": "An msl/mfl (sound-plural) kind pattern is inflectional morphology. It must never be accepted as a plural_template_id for a broken-plural lexeme link, and it must never be read as, or cited toward, a root (defeater sound_plural_suffix_not_broken_template).",
+      "enforced_by": "tools/rm40_gate_stack.py:broken_plural_lexeme_link_gate, is_broken_plural_template_id",
+      "guard": "See forbidden_shortcuts#suffix-as-radical — the same discipline applied to a projector's template-id acceptance, not only to root inference."
     }
   ]
 }
