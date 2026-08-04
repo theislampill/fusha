@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "assimilation_chip",
+      "teaching": "shows the resolved reading next to the following letter's sun/moon membership and whether a shadda was actually observed"
+    },
+    {
+      "key": "article_laam_note",
+      "teaching": "states that the article's written laam stays article-owned whether or not its sound assimilates"
+    },
+    {
+      "key": "unobserved_shadda_note",
+      "teaching": "flags a sun-letter context with no observed shadda as withheld, not a silent assumption that assimilation occurred"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

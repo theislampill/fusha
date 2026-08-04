@@ -1,0 +1,26 @@
+{
+  "guards": [
+    {
+      "guard": "membership in the six-letter non-attaching set is a closed lexical fact, never guessed from shape resemblance to a member",
+      "id": "g-con-membership"
+    },
+    {
+      "guard": "a classification is a per-letter joining fact only; it is never promoted to a token, morpheme, root, entry, or sense boundary",
+      "id": "g-con-no-boundary"
+    },
+    {
+      "guard": "neighbor context (preceding class, following presence) is declared evidence; an unlisted letter or missing context abstains rather than defaulting to a shape",
+      "id": "g-con-declared-only"
+    },
+    {
+      "guard": "the hamza-bearing alif variants are the one licensed unification; no other letter's hamza-bearing variant is folded into its base class without its own row",
+      "id": "g-con-variant-scope"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-con-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}
