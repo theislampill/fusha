@@ -19,6 +19,9 @@ param(
     [string]$PermissionMode = 'manual',
 
     [Parameter(ParameterSetName = 'Launch')]
+    [string[]]$AllowedTools = @(),
+
+    [Parameter(ParameterSetName = 'Launch')]
     [switch]$PreflightOnly,
 
     [Parameter(Mandatory, ParameterSetName = 'Worker')]
@@ -58,14 +61,19 @@ function Invoke-LaneWorker([string]$ConfigPath) {
         $stderrPath = Join-Path $config.run_directory 'stderr.log'
         $prompt = [IO.File]::ReadAllText($config.prompt_path, $utf8)
 
-        $prompt | & $config.claude_command -p `
-            --model $config.requested_model `
-            --output-format stream-json `
-            --verbose `
-            --session-id $config.session_id `
-            --permission-mode $config.permission_mode `
-            --disallowedTools 'Task,EnterWorktree' `
-            1> $streamPath 2> $stderrPath
+        $claudeArgs = @(
+            '-p',
+            '--model', $config.requested_model,
+            '--output-format', 'stream-json',
+            '--verbose',
+            '--session-id', $config.session_id,
+            '--permission-mode', $config.permission_mode,
+            '--disallowedTools', 'Task,EnterWorktree'
+        )
+        if (@($config.allowed_tools).Count -gt 0) {
+            $claudeArgs += @('--allowedTools', (@($config.allowed_tools) -join ','))
+        }
+        $prompt | & $config.claude_command @claudeArgs 1> $streamPath 2> $stderrPath
         $code = $LASTEXITCODE
         [IO.File]::WriteAllText(
             (Join-Path $config.run_directory 'exit-code.txt'),
@@ -141,6 +149,9 @@ if ($PSCmdlet.ParameterSetName -eq 'Worker') {
 if ($PSVersionTable.PSEdition -ne 'Core' -or $PSVersionTable.PSVersion.Major -ne 7) {
     throw 'tools/launch_lane.ps1 requires PowerShell 7.x'
 }
+if ($AllowedTools | Where-Object { $_ -in @('Task', 'EnterWorktree') }) {
+    throw 'Task and EnterWorktree remain prohibited even when a focused allowlist is supplied'
+}
 
 $promptFull = [IO.Path]::GetFullPath($PromptPath)
 $worktreeFull = [IO.Path]::GetFullPath($Worktree)
@@ -188,6 +199,7 @@ $metadata = [ordered]@{
     prompt_path = $promptFull
     prompt_sha256 = Get-Sha256 $promptFull
     permission_mode = $PermissionMode
+    allowed_tools = @($AllowedTools)
     disallowed_tools = @('Task', 'EnterWorktree')
     started_at_utc = [DateTime]::UtcNow.ToString('o')
     finished_at_utc = $null
@@ -204,6 +216,7 @@ $config = [ordered]@{
     run_directory = $runFull
     requested_model = $Model
     permission_mode = $PermissionMode
+    allowed_tools = @($AllowedTools)
     session_id = $sessionId
     claude_command = $claudeCommand
 }
