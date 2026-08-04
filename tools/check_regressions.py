@@ -805,6 +805,19 @@ for _args, _label in (
         check(_label + " runnable", False)
 
 try:
+    _lane_launcher_test = run_text([
+        "pwsh", "-NoLogo", "-NoProfile", "-File",
+        os.path.join(_R, "tools", "test_launch_lane.ps1"),
+    ])
+    check("PowerShell 7 Claude lane launcher preflight passes", _lane_launcher_test.returncode == 0)
+    if _lane_launcher_test.returncode != 0:
+        _out = (_lane_launcher_test.stdout or _lane_launcher_test.stderr).strip().splitlines()
+        if _out:
+            print("  ", _out[-1])
+except Exception:
+    check("PowerShell 7 Claude lane launcher preflight runnable", False)
+
+try:
     _report_dir = os.path.join(_R, "qamus", "reports")
     _rich_cert_reports = [
         os.path.join(_report_dir, _name)
