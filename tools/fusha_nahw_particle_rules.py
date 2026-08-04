@@ -666,6 +666,108 @@ def maa_context_frame(surface, evidence=None, at=None, rules=None):
 
 
 # ---------------------------------------------------------------------------
+# فاء function discrimination — istinafiyya / sababiyya / rabita, mirrors maa_context_frame() exactly
+# ---------------------------------------------------------------------------
+FA_CONTEXT_RULE_ID = "fa_function_frame"
+FA_CONTEXT_AXIS = "fa_function_frame"
+FA_GATE = "two_vote_required"
+
+
+def _fa_context_rule(rules=None):
+    rules = rules or load_particle_rules()
+    for rule in rules.get("rules", []):
+        if rule.get("id") == FA_CONTEXT_RULE_ID:
+            return rule
+    return None
+
+
+def fa_context_frame(surface, evidence=None, at=None, rules=None):
+    """Discriminate فاء's own function (istinafiyya / sababiyya / rabita) from a typed, source-addressed
+    CONTEXTUAL FRAME observation — never from fa's bare surface presence.
+
+    Mirrors maa_context_frame() exactly (same typed_observation/rival_analyses plumbing, same
+    candidate-only-on-a-unique-frame contract). Two invariants specific to فاء are structural, not
+    extra fields: (1) fa is NEVER reported as the mood governor — every frame_table row's own
+    `mood_licensing.fa_governs_mood` is false, and the actual governor (an implied أَنْ, a لَام أَمْر,
+    or none) is named separately; (2) when fa links to a DISTINCT following particle (e.g. مَا), this
+    function returns ONLY fa's own function candidate — it never reports a blended 'fa_plus_x' label,
+    and the linked particle's own function must be decided independently (e.g. via maa_context_frame /
+    negation_effect at the SAME occurrence).
+    """
+    rule = _fa_context_rule(rules)
+    if rule is None:
+        return {"rule_id": FA_CONTEXT_RULE_ID, "surface": surface, "at": at, "decision": "pending",
+                "pending_reason": "no_rule", "status": "out_of_domain"}
+    table = rule.get("frame_table") or []
+    axis_functions = sorted({f for row in table
+                             for f in (row.get("functions") or ([row["function"]] if row.get("function") else []))})
+    out_of_axis_functions = sorted(rule.get("functions_not_discriminated") or [])
+    all_functions = sorted(set(axis_functions) | set(out_of_axis_functions))
+    out_of_axis_set = set(out_of_axis_functions)
+    frame_keys = [row.get("frame") for row in table if row.get("frame")]
+    duplicate_frames = sorted({k for k in frame_keys if frame_keys.count(k) > 1})
+    if duplicate_frames:
+        return {"rule_id": rule["id"], "surface": surface, "at": at, "decision": "pending",
+                "pending_reason": "frame_table_duplicate_key", "evidence_defect": "frame_table_duplicate_key",
+                "duplicate_frames": duplicate_frames, "status": "table_integrity_defect",
+                "axis": rule.get("axis"), "functions_not_discriminated": out_of_axis_functions,
+                "unresolved_alternatives": rival_analyses(all_functions, selected=None, gate=FA_GATE,
+                                                           evidence_id=None, axis=FA_CONTEXT_AXIS,
+                                                           out_of_axis=out_of_axis_set)}
+    recognized_unmapped = {row["frame"] for row in (rule.get("recognized_unmapped_frames") or [])
+                           if row.get("frame")}
+    vocabulary = {row["frame"] for row in table if row.get("frame")} | recognized_unmapped
+    value, defect, art = typed_observation(evidence, vocabulary,
+                                           bind={"kind": "token", "value": rule["id"]},
+                                           surface=surface, at=at)
+    base = {"rule_id": rule["id"], "surface": surface, "at": at, "frame_vocabulary": sorted(vocabulary),
+            "status": "consumed", "axis": rule.get("axis"),
+            "functions_not_discriminated": out_of_axis_functions}
+    if defect:
+        base.update({"decision": "pending",
+                     "pending_reason": (rule.get("pending_fallback") or {}).get(
+                         "pending_reason", "fa_function_unresolved"),
+                     "evidence_defect": defect, "evidence_id": None, "source_address": None,
+                     "mood_licensing": None,
+                     "unresolved_alternatives": rival_analyses(all_functions, selected=None, gate=FA_GATE,
+                                                                evidence_id=None, axis=FA_CONTEXT_AXIS,
+                                                                out_of_axis=out_of_axis_set)})
+        return base
+    base.update({"evidence_id": art["evidence_id"], "source_address": art["source_address"],
+                 "producer": art["producer"], "producer_trust": art["producer_trust"]})
+    row = next((r for r in table if r.get("frame") == value), None)
+    if row is None:
+        base.update({"decision": "pending", "pending_reason": "frame_row_missing",
+                     "evidence_defect": "frame_row_missing", "observed_frame": value, "mood_licensing": None,
+                     "unresolved_alternatives": rival_analyses(all_functions, selected=None, gate=FA_GATE,
+                                                                evidence_id=art["evidence_id"],
+                                                                axis=FA_CONTEXT_AXIS,
+                                                                out_of_axis=out_of_axis_set)})
+        return base
+    functions = row.get("functions") or ([row["function"]] if row.get("function") else [])
+    base.update({"observed_frame": value, "reason": row.get("reason")})
+    if not row.get("unique_within_axis") or len(functions) != 1:
+        base.update({"decision": "pending", "pending_reason": "fa_function_unresolved",
+                     "evidence_defect": "fa_function_unresolved", "mood_licensing": None,
+                     "unresolved_alternatives": rival_analyses(sorted(set(functions) | set(all_functions)),
+                                                                selected=None, gate=FA_GATE,
+                                                                evidence_id=art["evidence_id"],
+                                                                axis=FA_CONTEXT_AXIS,
+                                                                out_of_axis=out_of_axis_set)})
+        return base
+    winner = functions[0]
+    base.update({"decision": "candidate", "gate": FA_GATE, "function_candidate": winner,
+                 "mood_licensing": row.get("mood_licensing"),
+                 "component_boundary": row.get("component_boundary"),
+                 "unresolved_alternatives": rival_analyses(all_functions, selected=winner, gate=FA_GATE,
+                                                            evidence_id=art["evidence_id"],
+                                                            axis=FA_CONTEXT_AXIS,
+                                                            out_of_axis=out_of_axis_set),
+                 "route": "nahw/procedures/particle-function-decision.md"})
+    return base
+
+
+# ---------------------------------------------------------------------------
 # negation-rules.json - the governing negative sets the gloss, after the homograph
 # ---------------------------------------------------------------------------
 # decision "resolved_with_context_else_pending" needs a syntactic OBSERVATION, and the observation vocabulary
@@ -1445,6 +1547,53 @@ def _self_test():
     eq("a recognized-but-unmapped frame still preserves both rivals",
        {"negation", "relative"} <= _unmapped_rivals, True)
 
+    # occurrence-specific فاء function discrimination (fa_function_frame) — TRAIN-B
+    eq("featureless فاء context frame stays pending", fa_context_frame("فَ")["decision"], "pending")
+    FA_ISTI = mint_fixture_observation("narrative_perfect_no_mood_question", source_address="quran:2:37:1",
+                                       quran_loc="2:37", word=1, surface="فَتَلَقَّىٰٓ", target_kind="token",
+                                       target_value="fa_function_frame")
+    FA_SAB = mint_fixture_observation("result_after_prohibition_or_negation_with_visible_subjunctive",
+                                      source_address="quran:17:22:7", quran_loc="17:22", word=7,
+                                      surface="فَتَقْعُدَ", target_kind="token", target_value="fa_function_frame")
+    _isti = fa_context_frame("فَتَلَقَّىٰٓ", evidence=FA_ISTI, at="quran:2:37:1")
+    eq("2:37:1 frame cannot exclude atfiyya -> stays pending, never a silent istinafiyya default",
+       _isti["decision"], "pending")
+    eq("2:37:1 pending frame preserves istinafiyya/sababiyya/rabita as live rivals",
+       {x["role"] for x in _isti["unresolved_alternatives"]
+        if x["defeater"] != "not_examined_by_this_axis" and not x["selected"]},
+       {"istinafiyya", "sababiyya", "rabita"})
+    _sab = fa_context_frame("فَتَقْعُدَ", evidence=FA_SAB, at="quran:17:22:7")
+    eq("17:22:7 frame -> sababiyya candidate", _sab["function_candidate"], "sababiyya")
+    eq("sababiyya never names fa itself as the mood governor",
+       _sab["mood_licensing"]["fa_governs_mood"], False)
+    eq("a conclusion label is not a valid فاء frame",
+       fa_context_frame("فَتَقْعُدَ", evidence=mint_fixture_observation(
+           "sababiyya", source_address="quran:17:22:7", quran_loc="17:22", word=7, surface="فَتَقْعُدَ",
+           target_kind="token", target_value="fa_function_frame"), at="quran:17:22:7")["evidence_defect"],
+       "observation_off_vocabulary")
+    FA_LAM = mint_fixture_observation("linked_to_lam_al_amr_jussive_apodosis", source_address="quran:2:283:14",
+                                      quran_loc="2:283", word=14, surface="فَلْيُؤَدِّ", target_kind="token",
+                                      target_value="fa_function_frame")
+    _lam = fa_context_frame("فَلْيُؤَدِّ", evidence=FA_LAM, at="quran:2:283:14")
+    eq("2:283:14 frame -> rabita candidate", _lam["function_candidate"], "rabita")
+    eq("2:283:14 the lam, not fa, is the named mood governor", _lam["mood_licensing"]["governor"], "lam_al_amr")
+    FA_MA = mint_fixture_observation("linked_to_separate_particle_component", source_address="quran:7:39:4",
+                                     quran_loc="7:39", word=4, surface="فَمَا", target_kind="token",
+                                     target_value="fa_function_frame")
+    _fama = fa_context_frame("فَمَا", evidence=FA_MA, at="quran:7:39:4")
+    eq("7:39:4 frame cannot exclude atfiyya either -> stays pending, never a silent rabita default",
+       _fama["decision"], "pending")
+    eq("7:39:4 pending frame preserves istinafiyya/sababiyya/rabita as live rivals",
+       {x["role"] for x in _fama["unresolved_alternatives"]
+        if x["defeater"] != "not_examined_by_this_axis" and not x["selected"]},
+       {"istinafiyya", "sababiyya", "rabita"})
+    _fa_amb_ev = mint_fixture_observation("ambiguous_link_or_sequence", source_address="quran:2:37:1",
+                                          quran_loc="2:37", word=1, surface="فَتَلَقَّىٰٓ", target_kind="token",
+                                          target_value="fa_function_frame")
+    _fa_amb = fa_context_frame("فَتَلَقَّىٰٓ", evidence=_fa_amb_ev, at="quran:2:37:1")
+    eq("an ambiguous فاء frame preserves every in-axis rival, selects none",
+       any(x.get("selected") for x in (_fa_amb.get("unresolved_alternatives") or [])), False)
+
     # every rule in every consumed file must have a truthful status
     for path, rows in rule_status().items():
         for rid, st in rows.items():
@@ -1457,7 +1606,8 @@ def _self_test():
         return 1
     print("PASS — particle/negation/state-transition consumer self-test "
           "(7 homograph rules consumed, 5 negation rules, 10 transitions, 5 forbidden bindings, "
-          "1 occurrence-specific contextual مَا relative-vs-negation frame rule)")
+          "1 occurrence-specific contextual مَا relative-vs-negation frame rule, "
+          "1 occurrence-specific فاء function frame rule)")
     return 0
 
 

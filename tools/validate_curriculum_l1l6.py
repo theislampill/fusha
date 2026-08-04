@@ -142,6 +142,8 @@ def load_context():
     ctx["families"] = _jsonl(BASE / "ledger" / "claim-families.jsonl")
     ctx["guards"] = _jsonl(BASE / "ledger" / "overgeneralization-guards.jsonl")
     ctx["links"] = _jsonl(BASE / "links" / "pvn-candidate-links.jsonl")
+    ctx["consumer_bindings"] = _jsonl(
+        BASE / "links" / "consumer-operationalization-bindings.jsonl")
     ctx["units"] = _jsonl(BASE / "units" / "instructional-units.jsonl")
     ctx["unit_deps"] = _jsonl(BASE / "units" / "unit-dependencies.jsonl")
     ctx["facts"] = json.loads((BASE / "pilot" / "pilot-facts.json").read_text(encoding="utf-8"))
@@ -1008,6 +1010,245 @@ ABSORPTION_STATES = frozenset({
     "candidate_fixture_harness_exercised", "backpropagated", "review_blocked",
     "not_applicable_with_reason"})
 
+CONSUMER_BINDING_SCHEMA = "curriculum.l1l6_consumer_operationalization_binding.v1"
+# the current closed set of consumer planes a binding row may name (Bounded Mechanical Finding 1).
+CONSUMER_PLANES = frozenset({"tutor_runtime", "nahw_analytical"})
+_WORKER_HEAD_ANCESTOR_CACHE = {}
+
+
+def _worker_head_is_ancestor(sha):
+    """A binding's worker_head must be a REAL, resolvable commit that is an ancestor of the assembled HEAD —
+    never a hard-coded, potentially-dangling pair. Memoized: only a handful of distinct heads appear across the
+    manifest."""
+    if sha in _WORKER_HEAD_ANCESTOR_CACHE:
+        return _WORKER_HEAD_ANCESTOR_CACHE[sha]
+    ok = False
+    if isinstance(sha, str) and re.fullmatch(r"[0-9a-f]{40}", sha):
+        try:
+            subprocess.run(["git", "cat-file", "-e", sha + "^{commit}"], cwd=ROOT,
+                           check=True, capture_output=True)
+            subprocess.run(["git", "merge-base", "--is-ancestor", sha, "HEAD"], cwd=ROOT,
+                           check=True, capture_output=True)
+            ok = True
+        except subprocess.CalledProcessError:
+            ok = False
+    _WORKER_HEAD_ANCESTOR_CACHE[sha] = ok
+    return ok
+
+
+REAL_CONTRIBUTION_STATUSES = {
+    "operationalized_real_consumer",
+    "already_operational_consumer_reverified",
+}
+TRAIN_B_EXPECTED_UNITS = {
+    "operationalized_real_consumer": {
+        "cu-bound-fa-function-discrimination",
+        "cu-fa-function-and-mood-licensing",
+    },
+    "already_operational_consumer_reverified": {
+        "cu-badal-vs-atf-bayan",
+        "cu-clitic-pronoun-role-discriminator",
+        "cu-la-negative-vs-prohibitive-discriminator",
+        "cu-preposition-sense-discriminators",
+        "cu-tanazu-governor-selection",
+    },
+    "pending_authoring": {
+        "cu-badal-typology-discriminator",
+        "cu-hal-licensing-conditions",
+        "cu-ighra-tahdhir-licensing",
+        "cu-ishtighal-fronted-noun-case",
+        "cu-verb-particle-selection-licensing",
+    },
+}
+TRAIN_C_EXPECTED_LESSONS = {
+    "L1.M4.05", "L2.M5.01", "L4.M2.01",
+    "L4.M2.04", "L4.M2.05", "L4.M5.04",
+}
+TRAIN_C_EXPECTED_UNITS = {
+    "cu-attributive-agreement-licensing",
+    "cu-atf-case-following",
+    "cu-atf-particle-discriminator",
+    "cu-badal-typology-discriminator",
+    "cu-lakin-coordinator-vs-abrogator",
+    "cu-waw-function-discriminator",
+}
+TRAIN_C_EXPECTED_KCS = {
+    "kc-attributive-follower-licensing",
+    "kc-badal-apposition-typology",
+    "kc-coordination-particle-case-following",
+    "kc-waw-function-accompaniment",
+}
+
+
+def check_consumer_operationalization_bindings(ctx, errors):
+    """Validate exact B/C consumer proof without promoting candidate drills."""
+    rows = ctx["consumer_bindings"]
+    lesson_ids = {row["lesson_id"] for row in ctx["lessons"]}
+    canonical_unit_ids = {
+        row["unit_id"] for row in
+        _jsonl(BASE / "canonical" / "canonical-units.jsonl")
+    }
+    runtime_rows = [
+        row for path in sorted((ROOT / "curriculum" / "drills" / "keys")
+                               .glob("*.jsonl"))
+        for row in _jsonl(path)
+    ]
+    runtime_ids = {row["id"] for row in runtime_rows}
+    kc_ids = {
+        row["kc_id"] for row in json.loads(
+            (ROOT / "curriculum" / "kc-catalog.json")
+            .read_text(encoding="utf-8"))
+    }
+    candidate_rows = {
+        row["drill_id"]: row for row in ctx["drills"]
+    }
+    seen_bindings, bound_runtime_ids, bound_candidate_ids = set(), set(), set()
+
+    for row in rows:
+        binding_id = row.get("binding_id")
+        if binding_id in seen_bindings:
+            errors.append("consumer_bindings: duplicate binding_id %r" % binding_id)
+        seen_bindings.add(binding_id)
+        if row.get("schema") != CONSUMER_BINDING_SCHEMA:
+            errors.append("consumer_bindings: %s wrong schema" % binding_id)
+        train = row.get("consumer_train")
+        if train not in ("train_b", "train_c"):
+            errors.append("consumer_bindings: %s unapproved train %r" %
+                          (binding_id, train))
+        if not _worker_head_is_ancestor(row.get("worker_head")):
+            errors.append("consumer_bindings: %s worker_head is not a real ancestor commit of HEAD" %
+                          binding_id)
+        plane = row.get("consumer_plane")
+        if plane not in CONSUMER_PLANES:
+            errors.append("consumer_bindings: %s consumer_plane %r outside the closed set %s" %
+                          (binding_id, plane, sorted(CONSUMER_PLANES)))
+        if row.get("binding_status") == "explicit":
+            if plane == "tutor_runtime":
+                if not row.get("runtime_item_ids") or not row.get("knowledge_component_ids"):
+                    errors.append("consumer_bindings: %s explicit tutor_runtime row needs "
+                                  "runtime_item_ids AND knowledge_component_ids" % binding_id)
+            elif plane == "nahw_analytical":
+                if row.get("runtime_item_ids") or row.get("knowledge_component_ids"):
+                    errors.append("consumer_bindings: %s explicit nahw_analytical row must carry "
+                                  "neither runtime_item_ids nor knowledge_component_ids" % binding_id)
+        if row.get("public_projection_eligible") is not False:
+            errors.append("consumer_bindings: %s public eligibility overclaim" %
+                          binding_id)
+        if row.get("candidate_status_preserved") is not True:
+            errors.append("consumer_bindings: %s candidate boundary missing" %
+                          binding_id)
+        if "certified" in str(row.get("certification_posture", "")).lower():
+            errors.append("consumer_bindings: %s certification overclaim" %
+                          binding_id)
+        for lesson_id in row.get("lesson_ids", []):
+            if lesson_id not in lesson_ids:
+                errors.append("consumer_bindings: %s unknown lesson %s" %
+                              (binding_id, lesson_id))
+        for unit_id in row.get("unit_ids", []):
+            if unit_id not in canonical_unit_ids:
+                errors.append("consumer_bindings: %s unknown unit %s" %
+                              (binding_id, unit_id))
+
+        status = row.get("binding_status")
+        contribution = row.get("contribution_status")
+        if status == "explicit":
+            if contribution not in REAL_CONTRIBUTION_STATUSES:
+                errors.append("consumer_bindings: %s explicit but not real" %
+                              binding_id)
+            for key in ("consumer_paths", "consumer_symbols", "test_paths"):
+                if not row.get(key):
+                    errors.append("consumer_bindings: %s missing %s" %
+                                  (binding_id, key))
+            for key in ("consumer_paths", "test_paths"):
+                for path in row.get(key, []):
+                    if not (ROOT / path).exists():
+                        errors.append("consumer_bindings: %s missing path %s" %
+                                      (binding_id, path))
+        elif status == "pending_authoring":
+            if contribution != "pending_authoring":
+                errors.append("consumer_bindings: %s pending status mismatch" %
+                              binding_id)
+            if any(row.get(key) for key in (
+                    "consumer_paths", "consumer_symbols", "test_paths",
+                    "runtime_item_ids", "knowledge_component_ids",
+                    "candidate_drill_ids")):
+                errors.append("consumer_bindings: %s pending row claims a consumer" %
+                              binding_id)
+            for path in row.get("proposed_destination_paths", []):
+                if not (ROOT / path).exists():
+                    errors.append("consumer_bindings: %s missing proposed path %s" %
+                                  (binding_id, path))
+        else:
+            errors.append("consumer_bindings: %s unknown binding status %r" %
+                          (binding_id, status))
+
+        for runtime_id in row.get("runtime_item_ids", []):
+            if runtime_id not in runtime_ids:
+                errors.append("consumer_bindings: %s missing runtime item %s" %
+                              (binding_id, runtime_id))
+            if runtime_id in bound_runtime_ids:
+                errors.append("consumer_bindings: duplicate runtime item %s" %
+                              runtime_id)
+            bound_runtime_ids.add(runtime_id)
+        for kc_id in row.get("knowledge_component_ids", []):
+            if kc_id not in kc_ids:
+                errors.append("consumer_bindings: %s missing KC %s" %
+                              (binding_id, kc_id))
+        for candidate_id in row.get("candidate_drill_ids", []):
+            candidate = candidate_rows.get(candidate_id)
+            if candidate is None:
+                errors.append("consumer_bindings: %s missing candidate drill %s" %
+                              (binding_id, candidate_id))
+            elif candidate.get("status") != "candidate_not_runtime_integrated":
+                errors.append("consumer_bindings: %s candidate %s was promoted" %
+                              (binding_id, candidate_id))
+            if candidate_id in bound_candidate_ids:
+                errors.append("consumer_bindings: duplicate candidate drill %s" %
+                              candidate_id)
+            bound_candidate_ids.add(candidate_id)
+
+    if len(rows) != 16:
+        errors.append("consumer_bindings: %d rows != exact B/C manifest 16" %
+                      len(rows))
+    train_b = [row for row in rows if row.get("consumer_train") == "train_b"]
+    train_c = [row for row in rows if row.get("consumer_train") == "train_c"]
+    b_counts = {
+        status: sum(row.get("contribution_status") == status for row in train_b)
+        for status in REAL_CONTRIBUTION_STATUSES | {"pending_authoring"}
+    }
+    if b_counts != {
+            "operationalized_real_consumer": 2,
+            "already_operational_consumer_reverified": 5,
+            "pending_authoring": 5}:
+        errors.append("consumer_bindings: Train B posture counts drift %r" % b_counts)
+    for status, expected_units in TRAIN_B_EXPECTED_UNITS.items():
+        actual_units = {
+            unit_id for row in train_b
+            if row.get("contribution_status") == status
+            for unit_id in row.get("unit_ids", [])
+        }
+        if actual_units != expected_units:
+            errors.append("consumer_bindings: Train B %s units drift" % status)
+    if len(train_c) != 4 or any(row.get("consumer_plane") != "tutor_runtime"
+                                for row in train_c):
+        errors.append("consumer_bindings: Train C runtime grouping drift")
+    c_lessons = {lesson_id for row in train_c
+                 for lesson_id in row.get("lesson_ids", [])}
+    c_units = {unit_id for row in train_c for unit_id in row.get("unit_ids", [])}
+    c_kcs = {kc_id for row in train_c
+             for kc_id in row.get("knowledge_component_ids", [])}
+    if c_lessons != TRAIN_C_EXPECTED_LESSONS:
+        errors.append("consumer_bindings: Train C lesson set drift")
+    if c_units != TRAIN_C_EXPECTED_UNITS:
+        errors.append("consumer_bindings: Train C unit set drift")
+    if c_kcs != TRAIN_C_EXPECTED_KCS:
+        errors.append("consumer_bindings: Train C KC set drift")
+    if len(bound_runtime_ids) != 27 or len(bound_candidate_ids) != 27:
+        errors.append("consumer_bindings: Train C runtime/candidate counts %d/%d != 27/27"
+                      % (len(bound_runtime_ids), len(bound_candidate_ids)))
+    if bound_runtime_ids & bound_candidate_ids:
+        errors.append("consumer_bindings: candidate and runtime identities overlap")
+
 
 def check_runtime_truth_consistency(readiness, derived_runtime, drill_meta,
                                     errors):
@@ -1049,6 +1290,10 @@ def check_runtime_truth_consistency(readiness, derived_runtime, drill_meta,
         errors.append(
             "absorption: candidate drill packets must remain runtime_integrated=0"
         )
+    if runtime.get("candidate_drill_specs_promoted", 0) != 0:
+        errors.append("absorption: candidate drill specifications were promoted")
+    if readiness.get("lessons_fully_operationalized", 0) != 0:
+        errors.append("absorption: whole-lesson operationalization overclaim")
 
 
 def check_absorption(ctx, errors):
@@ -1557,7 +1802,8 @@ ALL_CHECKS = (
     check_links_candidacy, check_material_classes, check_leakage,
     check_no_certification, check_pilot_parity, check_packet_presence,
     check_units_semantic, check_increments, check_flywheel_loop,
-    check_corpus_pilot, check_precise_links, check_absorption,
+    check_corpus_pilot, check_precise_links,
+    check_consumer_operationalization_bindings, check_absorption,
     check_generated_planes, check_freeze_planes, check_ma_payload_binding,
     check_drill_candidates, check_sol_ledgers,
 )
@@ -1710,6 +1956,22 @@ def self_test():
     mut("family_unit_uncovered", "ledger_qualification",
         lambda c: [c["families"].__setitem__(i, dict(r, family="u-s01"))
                    for i, r in enumerate(c["families"]) if r["family"] == "u-n12"])
+    # consumer-binding provenance canaries (Bounded Mechanical Findings 1/3/6): a fabricated/dangling worker_head
+    # must never pass as real runtime evidence, a closed-vocabulary plane violation must be caught, and an
+    # explicit tutor_runtime row that drops its runtime/KC evidence (or an explicit nahw_analytical row that
+    # invents some) must both fail closed — restoring the top-level no-false-runtime-evidence assertion this
+    # manifest's own check exists to make.
+    mut("consumer_binding_worker_head_not_ancestor", "worker_head",
+        lambda c: c["consumer_bindings"][0].update(worker_head="f" * 40))
+    mut("consumer_binding_plane_outside_closed_set", "consumer_plane",
+        lambda c: c["consumer_bindings"][0].update(consumer_plane="public_website"))
+    mut("consumer_binding_tutor_row_missing_runtime_evidence", "runtime_item_ids AND knowledge_component_ids",
+        lambda c: next(r for r in c["consumer_bindings"]
+                       if r["consumer_plane"] == "tutor_runtime").update(runtime_item_ids=[]))
+    mut("consumer_binding_analytical_row_claims_runtime_evidence", "neither runtime_item_ids nor",
+        lambda c: next(r for r in c["consumer_bindings"]
+                       if r["consumer_plane"] == "nahw_analytical").update(
+                           knowledge_component_ids=["kc-attributive-follower-licensing"]))
     # Sol witness canaries: a context-only appearance injected as a witness
     # must trip the same-entry/selected re-verification gate (file-level
     # mutation: checked via a temp-modified copy of the grounding rows)

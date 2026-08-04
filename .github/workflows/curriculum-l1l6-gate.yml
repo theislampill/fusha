@@ -41,6 +41,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # consumer-binding ancestor checks require component commits
 
       - uses: actions/setup-python@v5
         with:

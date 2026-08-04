@@ -23,6 +23,70 @@
     "runtime_integrated": 0,
     "status": "candidate_not_runtime_integrated"
   },
+  "canonical_units_with_real_consumers": 13,
+  "consumer_operationalization": {
+    "new_real_unit_ids_by_plane": {
+      "nahw_analytical": [
+        "cu-bound-fa-function-discrimination",
+        "cu-fa-function-and-mood-licensing"
+      ],
+      "tutor_runtime": [
+        "cu-atf-case-following",
+        "cu-atf-particle-discriminator",
+        "cu-attributive-agreement-licensing",
+        "cu-badal-typology-discriminator",
+        "cu-lakin-coordinator-vs-abrogator",
+        "cu-waw-function-discriminator"
+      ]
+    },
+    "pending_lesson_ids_by_plane": {
+      "nahw_analytical": [
+        "L1.M5.04",
+        "L4.M2.05",
+        "L4.M5.03",
+        "L5.M3.01",
+        "L5.M3.07"
+      ]
+    },
+    "pending_unit_ids_by_plane": {
+      "nahw_analytical": [
+        "cu-badal-typology-discriminator",
+        "cu-hal-licensing-conditions",
+        "cu-ighra-tahdhir-licensing",
+        "cu-ishtighal-fronted-noun-case",
+        "cu-verb-particle-selection-licensing"
+      ]
+    },
+    "real_lesson_ids_by_plane": {
+      "nahw_analytical": [
+        "L1.M5.02",
+        "L1.M5.07",
+        "L2.M1.04",
+        "L3.M4.01",
+        "L3.M4.04",
+        "L4.M2.06",
+        "L5.M3.02",
+        "L5.M6.04"
+      ],
+      "tutor_runtime": [
+        "L1.M4.05",
+        "L2.M5.01",
+        "L4.M2.01",
+        "L4.M2.04",
+        "L4.M2.05",
+        "L4.M5.04"
+      ]
+    },
+    "reverified_unit_ids_by_plane": {
+      "nahw_analytical": [
+        "cu-badal-vs-atf-bayan",
+        "cu-clitic-pronoun-role-discriminator",
+        "cu-la-negative-vs-prohibitive-discriminator",
+        "cu-preposition-sense-discriminators",
+        "cu-tanazu-governor-selection"
+      ]
+    }
+  },
   "lesson_denominators_by_level": {
     "L1": 39,
     "L2": 32,
@@ -36,19 +100,85 @@
     "explicit_lesson_refs": 16
   },
   "lessons_fully_accounted": 226,
+  "lessons_fully_operationalized": 0,
+  "lessons_fully_operationalized_basis": "not_yet_computed",
   "lessons_indirectly_linked_to_runtime_tutor_drills": 33,
   "lessons_mapped_to_nahw": 175,
   "lessons_mapped_to_sarf": 213,
-  "lessons_mapped_to_tutor_drills": 0,
+  "lessons_mapped_to_tutor_drills": 6,
+  "lessons_partially_operationalized": 14,
   "lessons_with_entry_level_links": 147,
   "lessons_with_exact_pvn_links": 1,
   "lessons_with_family_only_links": 77,
   "lessons_with_no_corpus_bridge": 1,
   "ordinary_tutor_runtime": {
-    "binding_note": "runtime behavior is proven only for the committed drill-key rows; lesson linkage is indirect via KC curriculum_misconception_ids and misconception manifestations; related_units do not establish a runtime canonical-unit binding",
-    "drill_key_rows": 37,
+    "binding_note": "runtime behavior is proven by committed drill-key rows plus exact explicit consumer-binding rows; candidate drill specifications remain candidate_not_runtime_integrated; related_units never establish a runtime canonical-unit binding",
+    "bound_runtime_item_count": 27,
+    "bound_runtime_item_ids": [
+      "FCA-01-naat-case-copy",
+      "FCA-02-naat-definiteness-predicate-boundary",
+      "FCA-03-naat-nonhuman-plural-feminine-singular",
+      "FCA-04-idafa-chain-case-undecidable",
+      "FCA-05-elative-attributive-invariable",
+      "FCA-06-hal-vs-naat-definiteness-parity",
+      "FCA-07-naat-definiteness-case-both-required",
+      "FCA-08-nonhuman-plural-animacy-not-singular-gender",
+      "FCA-09-bal-redundant-double-negation",
+      "FCA-10-atf-case-inheritance-core",
+      "FCA-11-lakin-light-vs-heavy-nun-shape",
+      "FCA-12-waw-additive-vs-sequencing",
+      "FCA-13-fa-immediacy-vs-stated-interval",
+      "FCA-14-atf-case-inheritance-dual-discriminator",
+      "FCA-15-imma-paired-alternation-incomplete",
+      "FCA-16-la-atifa-position-test",
+      "FCA-17-bal-upgrade-vs-plain-contrast",
+      "FCA-18-amm-aw-disputed-clause-type",
+      "FCA-19-badal-bad-min-kull-vs-naat",
+      "FCA-20-badal-mutabiq-no-clitic",
+      "FCA-21-badal-case-identity",
+      "FCA-22-badal-identity-vs-naat-quality",
+      "FCA-23-badal-partitive-clitic-required",
+      "FCA-24-maiyya-animacy-strong-cue-not-gate",
+      "FCA-25-maiyya-object-accusative",
+      "FCA-26-maiyya-vs-coordination-participation-test",
+      "FCA-27-maiyya-requires-verbal-governor"
+    ],
+    "candidate_drill_spec_ids": [
+      "dr-mc-0001",
+      "dr-mc-0040",
+      "dr-mc-0056",
+      "dr-mc-0079",
+      "dr-mc-0097",
+      "dr-mc-0223",
+      "dr-mc-0295",
+      "dr-mc-0298",
+      "dr-mc-0322",
+      "dr-mc-0376",
+      "dr-mc-0378",
+      "dr-mc-0399",
+      "dr-mc-0418",
+      "dr-mc-0478",
+      "dr-mc-0484",
+      "dr-mc-0512",
+      "dr-mc-0563",
+      "dr-mc-0573",
+      "dr-mc-0610",
+      "dr-mc-0626",
+      "dr-mc-0708",
+      "dr-mc-0823",
+      "dr-mc-0824",
+      "dr-mc-0826",
+      "dr-mc-0827",
+      "dr-mc-0853",
+      "dr-mc-0865"
+    ],
+    "candidate_drill_specs_promoted": 0,
+    "drill_key_rows": 64,
     "emittable_kc_ids": [
+      "kc-attributive-follower-licensing",
+      "kc-badal-apposition-typology",
       "kc-clitic-segmentation",
+      "kc-coordination-particle-case-following",
       "kc-derivative-shape-hidden",
       "kc-masdar-template-not-uniform",
       "kc-nawasikh-continuative-licensing",
@@ -59,22 +189,34 @@
       "kc-number-suffix-hidden",
       "kc-particle-function",
       "kc-root-template-slot-classification",
-      "kc-suffix-pronoun-missing"
+      "kc-suffix-pronoun-missing",
+      "kc-waw-function-accompaniment"
     ],
-    "emittable_knowledge_components": 12,
-    "explicit_canonical_unit_bindings": 0,
-    "explicit_lesson_bindings": 0,
+    "emittable_knowledge_components": 16,
+    "explicit_canonical_unit_bindings": 6,
+    "explicit_lesson_bindings": 6,
     "indirectly_linked_lessons": 33,
-    "lesson_content_operationalized": false
+    "lesson_content_fully_operationalized": false,
+    "lesson_content_fully_operationalized_basis": "not_yet_computed"
   },
   "other_train_l1l6_linkage": {
+    "train_b": {
+      "binding_basis": "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl rows with matching consumer_train and binding_status=explicit",
+      "explicit_lesson_bindings": 8,
+      "explicit_unit_bindings": 7
+    },
+    "train_c": {
+      "binding_basis": "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl rows with matching consumer_train and binding_status=explicit",
+      "explicit_lesson_bindings": 6,
+      "explicit_unit_bindings": 6
+    },
     "train_d": {
-      "binding_basis": "closed-form rows under curriculum/l1l6/links with matching consumer_train and binding_status=explicit",
+      "binding_basis": "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl rows with matching consumer_train and binding_status=explicit",
       "explicit_lesson_bindings": 0,
       "explicit_unit_bindings": 0
     },
     "train_e": {
-      "binding_basis": "closed-form rows under curriculum/l1l6/links with matching consumer_train and binding_status=explicit",
+      "binding_basis": "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl rows with matching consumer_train and binding_status=explicit",
       "explicit_lesson_bindings": 0,
       "explicit_unit_bindings": 0
     }
@@ -93,7 +235,7 @@
   },
   "schema": "curriculum.l1l6_full_readiness.v1",
   "semantic_units_authored": 21,
-  "separation_note": "lesson METADATA coverage is 226/226; semantic KNOWLEDGE coverage is the claims+units numbers; CAPABILITY fixture-harness coverage is candidate evidence; ordinary tutor CONSUMER coverage is 37 runtime key rows across 12 emittable KCs with 33 indirect lesson links and 0 explicit canonical-unit bindings; the 834 candidate drill packets remain runtime_integrated=0; OCCURRENCE coverage is the exact-link lessons — these denominators are never merged",
+  "separation_note": "lesson METADATA coverage is 226/226; semantic KNOWLEDGE coverage is the claims+units numbers; CAPABILITY fixture-harness coverage is candidate evidence; ordinary tutor CONSUMER coverage is 64 runtime key rows across 16 emittable KCs with 33 indirect lesson links and 6 explicit canonical-unit bindings; the 834 candidate drill packets remain runtime_integrated=0; OCCURRENCE coverage is the exact-link lessons — these denominators are never merged",
   "source_lessons": 226,
   "state_histogram": {
     "candidate_fixture_harness_exercised": 8,
