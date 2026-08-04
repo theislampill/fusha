@@ -66,6 +66,13 @@ above.
 | `kc-nawasikh-inna-family-government` | `emittable` | inna-family's ism left nominative, its khabar wrongly marked accusative (importing kāna's pattern), or a light/heavy or inna/anna selection error | `nawasikh-governor-families.md` | `../../nahw/procedures/nawasikh-government.md` |
 | `kc-nawasikh-qalb-verb-transitivity` | `emittable` | a two-accusative expectation forced onto a qalb-verb's literal-perception/location sense, only one of two complements marked accusative in a genuine judgemental use, or the verb's own agent miscounted as a complement | `nawasikh-governor-families.md` | `../../nahw/procedures/nawasikh-government.md` |
 | `kc-nawasikh-stacked-governor-scope` | `emittable` | one family's case signature applied across a span that actually contains more than one governor, corrupting the elements belonging to the other governor | `nawasikh-governor-families.md` | `../../nahw/procedures/nawasikh-government.md` |
+| `kc-grapheme-confusables` | `emittable` | a confusable letter (within-family by dots, or cross-family by silhouette) named from partial shape recognition alone | `foundational-script-orthography.md` | `foundational-script-orthography.md` |
+| `kc-orthographic-connectivity` | `emittable` | a non-connecting letter treated as connecting, or a connectivity-produced gap/medial shape misread | `foundational-script-orthography.md` | `foundational-script-orthography.md` |
+| `kc-short-vowels-and-vocalization-state` | `emittable` | a short-vowel mark misread by shape instead of position, or a vowel expected/invented where none is written | `foundational-script-orthography.md` | `foundational-script-orthography.md` |
+| `kc-sukun-shadda-stack` | `emittable` | sukūn read as optional, sukūn confused with shadda, or gemination realized without its stacked vowel | `foundational-script-orthography.md` | `foundational-script-orthography.md` |
+| `kc-long-vowel-carrier-role` | `emittable` | wāw/yāʾ's consonant-vs-carrier role assumed instead of read from its marks, or a long vowel shortened in speech | `foundational-script-orthography.md` | `foundational-script-orthography.md` |
+| `kc-nunation-written-realization` | `emittable` | nunation conflated with gemination, or the a-form's supporting alif mispronounced or omitted | `foundational-script-orthography.md` | `foundational-script-orthography.md` |
+| `kc-definite-article-assimilation` | `emittable` | gemination applied to a moon letter by analogy, assimilation treated as deletion, or the lām pronounced before a sun letter | `foundational-script-orthography.md` | `foundational-script-orthography.md` |
 
 Checkpoint rule: a remediated item is not cleared until the learner can name what the visible Arabic piece
 contributes and why the old hover failure was unsafe.

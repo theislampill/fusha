@@ -701,23 +701,19 @@ def _self_test():
     if select_next(cum_bank, prog_cum, 5, interleave=False)[1] != "due_review":
         failures.append("default select_next should also pick a due review for the cumulative bank")
 
-    # 13. RED-11: every drill-key row that carries kc_id (the Train-C re-authored rows) is two_vote_required and
-    #     stays pending/HELD even on a full-content-correct answer with a DECLARED agreeing second_check.
+    # 13. CATALOG-GATE RULE (replaces the earlier blanket "every kc_id row is two-vote" rule): a kc_id-bearing
+    #     drill-key row's required posture is decided by ITS OWN KC's `default_gate` in curriculum/kc-catalog.json,
+    #     not by a flat assumption that every KC is hard-gated. A KC gated `auto_safe` may clear normally on
+    #     content + reasoning (full-pass -> cleared + promote); a KC gated anything else (two_vote_required,
+    #     human_source_review_required, never_auto_resolve) must set two_vote_required=true on its rows and stays
+    #     pending/HELD even on a full-content-correct answer with a DECLARED agreeing second_check.
     _keys_dir = os.path.join(_REPO, "curriculum", "drills", "keys")
     _kc_rows = [row for fn in os.listdir(_keys_dir) if fn.endswith(".keys.jsonl")
                 for row in load_bank(os.path.join(_keys_dir, fn)) if row.get("kc_id")]
     if not _kc_rows:
         failures.append("no kc_id-bearing drill-key row found (Train C binding missing)")
     for row in _kc_rows:
-        if not row.get("two_vote_required"):
-            failures.append("kc_id-bearing row %s must be two_vote_required" % row["id"])
-            continue
-        payload = {"answer": row["expected_answer"], "reasoning": list(row.get("required_reasoning") or []),
-                   "second_check": {"conclusion_agrees": True, "reason_agrees": True}}
-        r = step(row, None, payload, now_day=0)
-        if r["grade"]["cleared"] or r["grade"]["two_vote_status"] != "pending" or r["outcome"] != "hold":
-            failures.append("Train C row %s cleared/promoted despite two_vote_required, got %s / %s"
-                            % (row["id"], r["grade"], r["outcome"]))
+        failures.extend(_check_kc_gate_row(row))
 
     for f in failures:
         print("FAIL " + f)

@@ -62,7 +62,10 @@ pairing as equivalent ONLY if it appears on this list.
 Every other `kc_id` currently reachable as an `error_reason` (`kc-clitic-segmentation`,
 `kc-root-template-slot-classification`, `kc-masdar-template-not-uniform`, `kc-nawasikh-kana-laysa-government`,
 `kc-nawasikh-continuative-licensing`, `kc-nawasikh-inna-family-government`, `kc-nawasikh-qalb-verb-transitivity`,
-`kc-nawasikh-stacked-governor-scope`) has NO legacy equivalent above; treat it as its own distinct error class,
+`kc-nawasikh-stacked-governor-scope`, `kc-grapheme-confusables`, `kc-orthographic-connectivity`,
+`kc-short-vowels-and-vocalization-state`, `kc-sukun-shadda-stack`, `kc-long-vowel-carrier-role`,
+`kc-nunation-written-realization`, `kc-definite-article-assimilation`) has NO legacy equivalent above; treat it as
+its own distinct error class,
 not a re-spelling of anything in the "Error Classes" list. Conversely, every legacy code not listed in the
 crosswalk table (`script_harakat`, `root_family_vibes`, `pp_attachment_unclear`, etc.) has no `kc_id` equivalent
 yet and stays a legacy-only code until a drill row binds it. The remaining KCs in `curriculum/kc-catalog.json`
