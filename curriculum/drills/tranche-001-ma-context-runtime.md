@@ -29,7 +29,7 @@ sentences (never a real Qurʾānic occurrence — every row here is `quran_examp
 - `kc-t1-ma-context-exclamatory-interrogative-case` — the exclamatory frozen taʿajjub verb's accusative object
   vs the interrogative elative predicate's genitive complement; the answer-expectation test decides which.
 - `kc-t1-ma-context-negated-possession-lam-subjunctive` — مَا لَكَ أَنْ + subjunctive denies a right or
-  entitlement as one frame; a bare command-lام without أَنْ is a different, jussive-governing frame.
+  entitlement as one frame; a bare command-lām (لام الأمر) without أَنْ is a different, jussive-governing frame.
 - `kc-t1-ma-context-lamma-jazm-vs-temporal-rival` — لَمَّا الجازمة (jussive-governing "not yet") vs the
   unrelated non-governing temporal لَمَّا ("when"): same surface, rival dispositions.
 - `kc-t1-ma-context-ma-zala-kana-sister-government` — مَا زَالَ/بَرِحَ/فَتِئَ/انْفَكَّ: negative-only

@@ -75,5 +75,44 @@ class KcCatalogShardTests(unittest.TestCase):
             self.assertEqual(kc_catalog.load_kc_catalog(root), expected)
 
 
+class DeclaredShardGateTests(unittest.TestCase):
+    """F3: every gate-bearing curriculum/kc-catalog.d/*.jsonl shard must be pinned by name; an undeclared
+    shard must fail closed rather than silently join the catalog _check_kc_gate_row reads."""
+
+    def test_undeclared_shard_fails_closed(self):
+        import sys as _sys
+        _repo = TOOLS.parent
+        _sys.path.insert(0, str(_repo))
+        from tools import fusha_tutor_runtime as RT
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_jsonl(root / "curriculum" / "kc-catalog.d" / "rogue-undeclared-shard.jsonl",
+                        [{"kc_id": "kc-rogue"}])
+            # RT imports kc_catalog as "tools.kc_catalog" (a distinct module object from this file's bare
+            # "kc_catalog" import), so the raised exception's class must be looked up through RT itself.
+            with self.assertRaises(RT.kc_catalog.KcCatalogError):
+                RT._assert_declared_kc_shards(repo_root=str(root))
+
+    def test_declared_shards_match_the_real_kc_catalog_d_directory_exactly(self):
+        import sys as _sys
+        _repo = TOOLS.parent
+        _sys.path.insert(0, str(_repo))
+        from tools import fusha_tutor_runtime as RT
+
+        real_shard_dir = _repo / "curriculum" / "kc-catalog.d"
+        on_disk = {p.name for p in real_shard_dir.glob("*.jsonl")}
+        self.assertEqual(on_disk, RT._DECLARED_KC_SHARDS,
+                         "curriculum/kc-catalog.d drifted from tools.fusha_tutor_runtime._DECLARED_KC_SHARDS")
+
+    def test_real_repo_kc_catalog_d_passes_the_declared_shard_gate(self):
+        import sys as _sys
+        _repo = TOOLS.parent
+        _sys.path.insert(0, str(_repo))
+        from tools import fusha_tutor_runtime as RT
+
+        RT._assert_declared_kc_shards()  # must not raise
+
+
 if __name__ == "__main__":
     unittest.main()

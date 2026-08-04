@@ -3893,6 +3893,35 @@ except Exception as _e:
     check("P1/P2 closure slice runnable", False)
     print("  ", _e)
 
+# --- Tranche 001b: the four T1b ordinary-runtime drill key banks and their five test modules are registered
+#     here explicitly, one check() per artifact — never folded into a single mega-try that would hide which
+#     bank or module actually broke. ---
+try:
+    _t1b_keys = [
+        os.path.join(ROOT, "curriculum", "drills", "keys", "foundational-script-orthography.keys.jsonl"),
+        os.path.join(ROOT, "curriculum", "drills", "keys", "weak-root-voice-runtime.keys.jsonl"),
+        os.path.join(ROOT, "curriculum", "drills", "keys", "tranche-001-derivation-template-runtime.keys.jsonl"),
+        os.path.join(ROOT, "curriculum", "drills", "keys", "tranche-001-ma-context-runtime.keys.jsonl"),
+    ]
+    for _t1b_key_path in _t1b_keys:
+        check("T1b key bank exists: %s" % os.path.relpath(_t1b_key_path, ROOT), os.path.exists(_t1b_key_path))
+    _t1b_vdk = run_text([sys.executable, os.path.join(ROOT, "tools", "validate_drill_keys.py")] + _t1b_keys)
+    check("T1b drill answer-key fixtures validate (0 violations)", _t1b_vdk.returncode == 0)
+
+    _t1b_modules = [
+        "test_foundational_script_orthography_runtime.py",
+        "test_weak_root_voice_runtime.py",
+        "test_tranche_001_derivation_template_runtime.py",
+        "test_tranche_001_ma_context_runtime.py",
+        "test_kc_catalog_shards.py",
+    ]
+    for _t1b_mod in _t1b_modules:
+        _t1b_res = run_text([sys.executable, os.path.join(ROOT, "tools", _t1b_mod)])
+        check("T1b test module passes: tools/%s" % _t1b_mod, _t1b_res.returncode == 0)
+except Exception as _e:
+    check("T1b runtime drill batch registration slice runnable", False)
+    print("  ", _e)
+
 # --- largelexicon candidate layer: Qamus-scale source-clean full fact tables, Mode A qword projection,
 #     public/private hover boundary, qg validation, CLI contract, and flywheel backfill. This is opt-in
 #     tooling, not live Qamus progress and not arbitrary-text certification. ---

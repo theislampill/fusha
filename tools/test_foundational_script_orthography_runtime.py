@@ -382,5 +382,73 @@ class OrdinaryRuntimeLoadsTheBank(unittest.TestCase):
         self.assertEqual(payload["reason"], "new_item")
 
 
+class F2ExactDiacriticContractGuard(unittest.TestCase):
+    """F2: every row whose authored correct form and an authored forbidden form collide under the lenient
+    recall normalizer (differ ONLY by a vowel/shadda diacritic) must opt into `exact_surface_forms`, and the
+    exact contract must actually reject that colliding forbidden form while still accepting the gold form."""
+
+    def test_every_diacritic_colliding_row_declares_exact_surface_forms(self):
+        missing = [row["id"] for row in _load_rows()
+                  if RT.diacritic_only_collision(row) and not row.get("exact_surface_forms")]
+        self.assertEqual(missing, [],
+                         "rows whose expected/forbidden collide under the lenient normalizer (differ only by "
+                         "diacritics) but do not declare exact_surface_forms: %s" % missing)
+
+    def test_exact_surface_forms_rows_reject_their_own_colliding_forbidden_text(self):
+        for row in _load_rows():
+            if not row.get("exact_surface_forms"):
+                continue
+            for forbidden in row["forbidden_answers"]:
+                if RT._norm(forbidden) in {RT._norm(row["expected_answer"])} | {
+                        RT._norm(v) for v in row.get("accepted_variants") or []}:
+                    with self.subTest(id=row["id"]):
+                        g = RT.grade(row, {"answer": forbidden, "reasoning": list(row["required_reasoning"])})
+                        self.assertFalse(g["passed"],
+                                        "%s: exact_surface_forms must reject the diacritic-colliding forbidden "
+                                        "text %r" % (row["id"], forbidden[:60]))
+
+    def test_exact_surface_forms_rows_still_accept_their_own_gold_form(self):
+        for row in _load_rows():
+            if not row.get("exact_surface_forms"):
+                continue
+            with self.subTest(id=row["id"]):
+                g = RT.grade(row, {"answer": row["expected_answer"], "reasoning": list(row["required_reasoning"])})
+                self.assertTrue(g["passed"], "%s: exact_surface_forms must still accept the gold answer" % row["id"])
+
+
+class F7DotlessFinalYaaConventionScoped(unittest.TestCase):
+    """F7: the dotless-final-yāʾ-as-alif-maqṣūra default (FSO-17) is a real orthographic CONVENTION (some
+    typesetting/regional conventions dot the final yāʾ in both roles), not a universal fact. It must be scoped
+    to an explicit, named, closed convention rather than asserted as an unconditional default, and it must stay
+    bound to its existing KC's own gate (kc-long-vowel-carrier-role is auto_safe; scoping the claim, not flipping
+    the gate, is how this row documents its runtime posture without creating a KC-gate mismatch)."""
+
+    def _row(self):
+        return {r["id"]: r for r in _load_rows()}["FSO-17-alif-maqsura-not-yaa"]
+
+    def test_fso17_names_its_governing_convention_explicitly(self):
+        row = self._row()
+        blob = (row["expected_answer"] + " ".join(row.get("accepted_variants") or [])).lower()
+        self.assertIn("convention", blob,
+                     "FSO-17 must document the runtime posture as an explicit, named convention")
+        self.assertIn("uthmani", blob,
+                     "FSO-17 must name the specific closed convention it assumes, not just say 'convention'")
+
+    def test_fso17_rejects_a_universal_every_convention_overclaim(self):
+        row = self._row()
+        g = RT.grade(row, {"answer": "any yāʾ-shaped grapheme at the end of a word is always a long ī, in "
+                                     "every Arabic typesetting convention",
+                          "reasoning": list(row["required_reasoning"])})
+        self.assertFalse(g["content_mastered"],
+                         "FSO-17 must reject the claim that the a-spelling default holds in every convention")
+
+    def test_fso17_stays_consistent_with_its_own_auto_safe_kc_gate(self):
+        row = self._row()
+        self.assertEqual(row["kc_id"], "kc-long-vowel-carrier-role")
+        self.assertFalse(row["two_vote_required"],
+                         "FSO-17's KC (kc-long-vowel-carrier-role) is auto_safe; scope the claim to a named "
+                         "convention instead of creating a KC-gate mismatch by flipping two_vote_required alone")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

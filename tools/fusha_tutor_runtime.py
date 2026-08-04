@@ -129,6 +129,80 @@ def _ordered_slots_ok(slots, answer):
     return True
 
 
+_TATWEEL = "ـ"
+
+
+def _norm_exact(s):
+    """F2: a diacritic-PRESERVING normalizer for the bounded exact/case-sensitive contract. Unlike `_norm`
+    (the lenient RECALL normalizer, which drops every harakah/shadda for content matching), this strips only
+    tatweel and collapses whitespace — every vowel mark, shadda, sukūn and hamza seat stays distinct. Used
+    ONLY by `_exact_surface_ok` for a row that opts in via `exact_surface_forms`; it never touches the global
+    recall normalizer or any row that does not opt in."""
+    if not isinstance(s, str):
+        return ""
+    s = s.replace(_TATWEEL, "")
+    return re.sub(r"\s+", " ", s).strip()
+
+
+_ARABIC_RUN = re.compile(r"[؀-ۿ](?:[؀-ۿ ]*[؀-ۿ])?")
+
+
+def _arabic_surface_tokens(text):
+    """Extract the bare Arabic-script run(s) from a mixed Arabic/English sentence (e.g. pulls "لَمْ يَمُدَّ" out
+    of "the merged jussive is لَمْ يَمُدَّ — because ..."), so a diacritic-collision check compares SURFACE
+    FORMS, not whole sentences whose differing English prose would mask an identical Arabic skeleton."""
+    if not isinstance(text, str):
+        return []
+    return [m.strip() for m in _ARABIC_RUN.findall(text) if m.strip()]
+
+
+def diacritic_only_collision(row):
+    """F2 diagnostic: True if some Arabic surface form inside a forbidden_answers entry (a) is NOT literally the
+    same spelling as any correct surface form (expected_answer/accepted_variants), (b) normalizes, under the
+    lenient recall `_norm`, IDENTICALLY to one of them anyway, (c) is a real multi-letter word (>=2 base letters
+    after normalization), and (d) BOTH sides actually carry at least one harakah/shadda mark — i.e. the two
+    surfaces are genuinely vocalized minimal pairs differing only by a vowel mark, shadda, or case/mood ending
+    the lenient normalizer discards. This excludes a decorative tatweel on a bare single letter, two answers
+    simply quoting the SAME correctly-spelled word on both sides of an argument, and a bare-vs-voweled mention
+    of the SAME proper noun or particle name (an authoring inconsistency, not a graded minimal pair) — none of
+    those are the vowel/shadda/case-sensitive defect class F2 targets. Such a row cannot actually discriminate
+    the correct surface from the wrong one on content alone unless it opts into `exact_surface_forms` (F2);
+    used by validators/tests to find every row that needs the bounded exact contract, never by grade() itself."""
+    correct_texts = [row.get("expected_answer", "")] + list(row.get("accepted_variants", []) or [])
+    by_norm = {}
+    for text in correct_texts:
+        for tok in _arabic_surface_tokens(text):
+            by_norm.setdefault(_norm(tok), set()).add(tok)
+    for forbidden in row.get("forbidden_answers", []) or []:
+        for tok in _arabic_surface_tokens(forbidden):
+            ntok = _norm(tok)
+            if len(ntok.replace(" ", "")) < 2:
+                continue
+            raws = by_norm.get(ntok)
+            if not raws or tok in raws:
+                continue
+            if not _DIACRITICS.search(tok):
+                continue
+            if not any(_DIACRITICS.search(r) for r in raws):
+                continue
+            return True
+    return False
+
+
+def _exact_surface_ok(row, answer):
+    """F2: bounded opt-in exact/diacritic-sensitive contract. A row whose graded fact IS a vowel, shadda, or
+    case/mood ending can declare `exact_surface_forms` (a list of the fully-diacritized gold forms); the
+    learner's raw answer must then contain at least one of them VERBATIM (diacritics/shadda preserved) for the
+    row to pass, in ADDITION to (never instead of) the ordinary lenient content-coverage match. A row without
+    `exact_surface_forms` is completely unaffected (returns True) — this never weakens the global `_norm`
+    recall normalizer used by every other row."""
+    forms = row.get("exact_surface_forms")
+    if not forms:
+        return True
+    hay = _norm_exact(answer)
+    return any(_norm_exact(f) in hay for f in forms if f)
+
+
 # --------------------------------------------------------------------------- grading (content-only, no self-report)
 # The closed set of payload keys the grader reads. A self-reported correctness flag is deliberately NOT here.
 GRADE_INPUT_KEYS = ("answer", "reasoning", "second_check")
@@ -147,7 +221,11 @@ def grade(row, payload):
     # Content coverage of the authored key AND (when the row declares them) the relational slots in order — so an
     # answer that inverts the relation cannot clear on the shared bag of words alone. Ordered-slot matching is additive:
     # a row without `ordered_slots` is graded exactly as before.
-    passed = any(_form_matches(v, answer) for v in expected_set) and _ordered_slots_ok(row.get("ordered_slots"), answer)
+    # F2: a row that opts in via `exact_surface_forms` additionally requires the diacritics/shadda-preserving
+    # exact match — never a replacement for the lenient coverage match, purely an additive AND-gate.
+    passed = (any(_form_matches(v, answer) for v in expected_set)
+              and _ordered_slots_ok(row.get("ordered_slots"), answer)
+              and _exact_surface_ok(row, answer))
     forbidden_hit = _contains_any(answer, row.get("forbidden_answers", []))
     joined_reasoning = " \n ".join(reasoning or []) if isinstance(reasoning, list) else str(reasoning or "")
     missing = [req for req in (row.get("required_reasoning", []) or [])
@@ -502,7 +580,31 @@ def _authored_bank():
     ]
 
 
+# F3: every curriculum/kc-catalog.d/*.jsonl shard the gate-bearing KC lookup consumes must be pinned here by
+# name. An undeclared shard fails closed rather than silently joining the catalog `_check_kc_gate_row` reads —
+# a rogue or forgotten-to-review shard must never widen (or narrow) the two-vote gate surface unnoticed.
+_DECLARED_KC_SHARDS = frozenset({
+    "tranche-001-derivation-template.jsonl",
+    "tranche-001-ma-context.jsonl",
+})
+
+
+def _assert_declared_kc_shards(repo_root=None):
+    """Fail closed if curriculum/kc-catalog.d/ contains a shard file not listed in _DECLARED_KC_SHARDS."""
+    root = repo_root or _REPO
+    shard_dir = os.path.join(root, "curriculum", "kc-catalog.d")
+    if not os.path.isdir(shard_dir):
+        return
+    found = {fn for fn in os.listdir(shard_dir) if fn.endswith(".jsonl")}
+    undeclared = found - _DECLARED_KC_SHARDS
+    if undeclared:
+        raise kc_catalog.KcCatalogError(
+            "undeclared curriculum/kc-catalog.d shard(s) %s: every gate-bearing KC shard must be pinned in "
+            "tools.fusha_tutor_runtime._DECLARED_KC_SHARDS before it can be loaded" % sorted(undeclared))
+
+
 def _load_kc_catalog_by_id():
+    _assert_declared_kc_shards()
     return kc_catalog.load_kc_catalog_by_id(_REPO)
 
 
@@ -619,6 +721,34 @@ def _self_test():
     if inv_paraphrase["grade"]["passed"] or inv_paraphrase["grade"]["cleared"]:
         failures.append("ordered-slot guard must fail a paraphrased relation inversion, got %s" % inv_paraphrase["grade"])
 
+    # 7c. F2: the bounded opt-in exact/diacritic-sensitive contract. A row declaring `exact_surface_forms` must
+    #     reject a swapped-vowel or dropped-shadda answer that the lenient `_norm` coverage match alone would
+    #     accept, while a row WITHOUT the field stays completely unaffected (the global recall normalizer is
+    #     never weakened for ordinary rows).
+    t4_exact = {"id": "T4-exact-diacritic", "level": "6", "concept": "geminate jussive shape",
+               "prompt": "Give the licensed merged jussive of a geminate verb.", "quran_example": None,
+               "expected_answer": "the merged jussive is لَمْ يَمُدَّ", "accepted_variants": [],
+               "forbidden_answers": [], "required_reasoning": [],
+               "sarf_procedure": None, "nahw_procedure": None,
+               "remediation_route": "sarf/drills/dogfood-sarf-remediation.md", "two_vote_required": False,
+               "exact_surface_forms": ["لَمْ يَمُدَّ"]}
+    swapped_vowel = grade(t4_exact, {"answer": "the merged jussive is لَمْ يَمُدُّ"})  # damma, not fatha
+    if swapped_vowel["passed"]:
+        failures.append("exact_surface_forms must reject a swapped-vowel answer, got %s" % swapped_vowel)
+    dropped_shadda = grade(t4_exact, {"answer": "the merged jussive is لَمْ يَمُدَ"})  # shadda dropped
+    if dropped_shadda["passed"]:
+        failures.append("exact_surface_forms must reject a dropped-shadda answer, got %s" % dropped_shadda)
+    exact_match = grade(t4_exact, {"answer": "the merged jussive is لَمْ يَمُدَّ"})
+    if not exact_match["passed"]:
+        failures.append("exact_surface_forms must accept the byte-exact gold form, got %s" % exact_match)
+    # a row WITHOUT exact_surface_forms is unaffected: the same swapped-vowel text still content-matches under
+    # the ordinary lenient recall normalizer (proves the opt-in gate never touches a row that does not set it).
+    t4_lenient = dict(t4_exact, id="T4-lenient-unaffected"); del t4_lenient["exact_surface_forms"]
+    lenient_swap = grade(t4_lenient, {"answer": "the merged jussive is لَمْ يَمُدُّ"})
+    if not lenient_swap["passed"]:
+        failures.append("a row without exact_surface_forms must be graded by the ordinary lenient normalizer "
+                        "unaffected by F2, got %s" % lenient_swap)
+
     # 8. NO write without --write: simulate a dry run by calling main() over a temp dir and asserting no file appears
     with tempfile.TemporaryDirectory() as td:
         bank_path = os.path.join(td, "bank.jsonl")
@@ -714,6 +844,25 @@ def _self_test():
         failures.append("no kc_id-bearing drill-key row found (Train C binding missing)")
     for row in _kc_rows:
         failures.extend(_check_kc_gate_row(row))
+
+    # 14. F3: the real curriculum/kc-catalog.d/ shard directory must contain only declared shards, and the
+    #     declared-shard gate must fail closed on an undeclared one (proven against a temp directory so the
+    #     real repo is never mutated).
+    try:
+        _assert_declared_kc_shards()
+    except kc_catalog.KcCatalogError as exc:
+        failures.append("real curriculum/kc-catalog.d contains an undeclared shard: %s" % exc)
+    import tempfile as _tempfile
+    with _tempfile.TemporaryDirectory() as _td:
+        _shard_dir = os.path.join(_td, "curriculum", "kc-catalog.d")
+        os.makedirs(_shard_dir)
+        with open(os.path.join(_shard_dir, "rogue-undeclared-shard.jsonl"), "w", encoding="utf-8") as _fh:
+            _fh.write(json.dumps({"kc_id": "kc-rogue"}) + "\n")
+        try:
+            _assert_declared_kc_shards(repo_root=_td)
+            failures.append("an undeclared kc-catalog.d shard was silently accepted instead of failing closed")
+        except kc_catalog.KcCatalogError:
+            pass
 
     for f in failures:
         print("FAIL " + f)

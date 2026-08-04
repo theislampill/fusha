@@ -788,5 +788,144 @@ class SourceCustodyAndLeakageBoundaryTests(unittest.TestCase):
         self.assertEqual(errs, [], "real assessment banks fail the quarantine after this batch: %s" % errs[:3])
 
 
+def _jsonl_shard(path):
+    with open(path, encoding="utf-8") as fh:
+        return [json.loads(line) for line in fh if line.strip()]
+
+
+class F6InterrogativeVsRelativeAlifProseUnambiguous(unittest.TestCase):
+    """F6: the interrogative alif-elided closed inventory (لِمَ، عَمَّ، مِمَّ، فِيمَ، بِمَ) vs the relative/
+    masdariyya retained-alif inventory (لِمَا، عَمَّا، مِمَّا، فِيمَا، بِمَا) must be spelled out in ARABIC
+    SCRIPT in the KC prose, never left as bare Latin transliteration ('lima, amma, mimma, fima, bima') that is
+    textually indistinguishable from the UNRELATED topic particle أَمَّا (also transliterated 'amma')."""
+
+    def _kc(self, kc_id):
+        return {row["kc_id"]: row for row in _jsonl_shard(NEW_SHARD)}[kc_id]
+
+    def test_istifham_alif_elision_kc_uses_arabic_script_for_its_closed_inventory(self):
+        kc = self._kc("kc-t1-ma-context-istifham-alif-elision-preposition")
+        for form in ("لِمَ", "عَمَّ", "مِمَّ", "فِيمَ", "بِمَ"):
+            self.assertIn(form, kc["plain_rule"],
+                         "istifham-alif-elision KC must spell its closed inventory in Arabic script: %s" % form)
+        self.assertNotIn("lima, amma, mimma, fima, bima", kc["plain_rule"],
+                         "the closed inventory must not be left as bare ambiguous Latin transliteration")
+
+    def test_istifham_kc_explicitly_disambiguates_amma_from_the_unrelated_topic_particle(self):
+        kc = self._kc("kc-t1-ma-context-istifham-alif-elision-preposition")
+        self.assertIn("أَمَّا", kc["plain_rule"],
+                     "the KC must explicitly name and distinguish the unrelated topic particle أَمَّا from "
+                     "the interrogative عَمَّ, since both transliterate identically as 'amma'")
+
+    def test_relative_masdariyya_kc_uses_arabic_script_for_its_retained_alif_inventory(self):
+        kc = self._kc("kc-t1-ma-context-relative-preposition-majrur-government")
+        for form in ("بِمَا", "مِمَّا", "فِيمَا"):
+            self.assertIn(form, kc["plain_rule"],
+                         "relative/masdariyya KC must spell its retained-alif inventory in Arabic script: %s" % form)
+
+
+class F11ProseIntegrityBoundedAssertion(unittest.TestCase):
+    """F11: no committed T1b file may contain a digit-corrupted Arabic transliteration token (e.g. 'a1n' for
+    'in'/'إِنْ') or a mixed-script token that directly fuses a Latin letter with an Arabic letter with no
+    separator (e.g. 'command-lام'). Scoped to this batch's own writable T1b artifacts only."""
+
+    # a lowercase LETTER-DIGIT-LETTER(S) run at a word boundary — the exact 'a1n' (for 'in'/'إِنْ')
+    # corruption shape. Deliberately narrow: repo IDs like T1MC-11, kc-t1-..., l1l6 never match (uppercase, or
+    # the digit sits next to a hyphen/another digit rather than being letter-digit-letter with no separator).
+    _DIGIT_IN_LATIN_WORD = __import__("re").compile(r"\b[a-z][0-9][a-z]+\b")
+    _MIXED_SCRIPT_TOKEN = __import__("re").compile(r"[A-Za-z][؀-ۿ]|[؀-ۿ][A-Za-z]")
+
+    def _scan_paths(self):
+        return [NEW_BANK, NEW_LESSON, NEW_SHARD]
+
+    def test_no_digit_corrupted_transliteration_token(self):
+        for path in self._scan_paths():
+            text = path.read_text(encoding="utf-8")
+            hits = self._DIGIT_IN_LATIN_WORD.findall(text)
+            self.assertEqual(hits, [], "%s: digit-corrupted transliteration token(s): %s" % (path, hits))
+
+    def test_no_mixed_script_fused_token(self):
+        for path in self._scan_paths():
+            text = path.read_text(encoding="utf-8")
+            hits = self._MIXED_SCRIPT_TOKEN.findall(text)
+            self.assertEqual(hits, [], "%s: mixed-script fused token(s): %s" % (path, hits))
+
+
+class F9HijaziyyaZarfJarrMajrurExceptionQualified(unittest.TestCase):
+    """F9: the hijaziyya cancellation-by-predicate-fronting rule must be qualified with the licensed zarf/
+    jarr-majrur exception (fronting a shibh al-jumla predicate does NOT cancel ma's government), both in the
+    KC prose and in T1MC-07's own row reasoning — and add no occurrence certification (quran_example stays
+    null)."""
+
+    def _kc(self):
+        return {row["kc_id"]: row for row in _jsonl_shard(NEW_SHARD)}["kc-t1-ma-context-hijaziyya-tamimiyya-nullifiers"]
+
+    def _row(self):
+        import fusha_tutor_runtime as ftr
+        return {r["id"]: r for r in ftr.load_bank(str(NEW_BANK))}["T1MC-07"]
+
+    def test_kc_plain_rule_names_the_zarf_jarr_majrur_exception(self):
+        kc = self._kc()
+        blob = kc["plain_rule"].lower()
+        self.assertIn("ẓarf", blob)
+        self.assertIn("majrūr", blob)
+        self.assertIn("does not cancel", blob)
+
+    def test_row_reasoning_names_the_exception_and_stays_occurrence_neutral(self):
+        row = self._row()
+        self.assertIsNone(row["quran_example"], "F9 qualification must add no occurrence certification")
+        blob = " ".join(row["required_reasoning"]).lower()
+        self.assertIn("zarf", blob)
+        self.assertIn("licensed exception", blob)
+
+    def test_row_rejects_the_overgeneralized_every_predicate_cancels_claim(self):
+        import fusha_tutor_runtime as ftr
+        row = self._row()
+        g = ftr.grade(row, {"answer": "Fronting any predicate at all, including a zarf or jarr-majrur, always "
+                                     "cancels ma's government the same way an ordinary predicate does.",
+                          "reasoning": []})
+        self.assertFalse(g["content_mastered"])
+
+
+class F2ExactDiacriticContractGuard(unittest.TestCase):
+    """F2: every row whose authored correct form and an authored forbidden form collide under the lenient
+    recall normalizer (differ ONLY by a vowel/shadda/case-ending diacritic) must opt into `exact_surface_forms`,
+    and the exact contract must actually reject that colliding forbidden form while still accepting the gold
+    form."""
+
+    def test_every_diacritic_colliding_row_declares_exact_surface_forms(self):
+        import fusha_tutor_runtime as ftr
+        rows = ftr.load_bank(str(NEW_BANK))
+        missing = [row["id"] for row in rows
+                  if ftr.diacritic_only_collision(row) and not row.get("exact_surface_forms")]
+        self.assertEqual(missing, [],
+                         "rows whose expected/forbidden collide under the lenient normalizer (differ only by "
+                         "diacritics) but do not declare exact_surface_forms: %s" % missing)
+
+    def test_exact_surface_forms_rows_reject_their_own_colliding_forbidden_text(self):
+        import fusha_tutor_runtime as ftr
+        rows = ftr.load_bank(str(NEW_BANK))
+        for row in rows:
+            if not row.get("exact_surface_forms"):
+                continue
+            for forbidden in row["forbidden_answers"]:
+                if ftr._norm(forbidden) in {ftr._norm(row["expected_answer"])} | {
+                        ftr._norm(v) for v in row.get("accepted_variants") or []}:
+                    with self.subTest(id=row["id"]):
+                        g = ftr.grade(row, {"answer": forbidden, "reasoning": list(row["required_reasoning"])})
+                        self.assertFalse(g["passed"],
+                                        "%s: exact_surface_forms must reject the diacritic-colliding forbidden "
+                                        "text %r" % (row["id"], forbidden[:60]))
+
+    def test_exact_surface_forms_rows_still_accept_their_own_gold_form(self):
+        import fusha_tutor_runtime as ftr
+        rows = ftr.load_bank(str(NEW_BANK))
+        for row in rows:
+            if not row.get("exact_surface_forms"):
+                continue
+            with self.subTest(id=row["id"]):
+                g = ftr.grade(row, {"answer": row["expected_answer"], "reasoning": list(row["required_reasoning"])})
+                self.assertTrue(g["passed"], "%s: exact_surface_forms must still accept the gold answer" % row["id"])
+
+
 if __name__ == "__main__":
     unittest.main()

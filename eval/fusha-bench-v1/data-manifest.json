@@ -203,7 +203,7 @@
       "artifact_id": "tutor-runtime",
       "path": "tools/fusha_tutor_runtime.py",
       "role": "tutor_runtime_consumer",
-      "sha256": "11b583f7e99413876f60d0543ec19820d0deddee38359a8a891f190a11397645"
+      "sha256": "7b9581dcbb866771ff46593776bf68b6880e5c211608318de518ae170d35afd1"
     },
     {
       "artifact_id": "candidate-drill-specifications",
@@ -227,7 +227,7 @@
       "artifact_id": "runtime-keys-foundational-script-orthography",
       "path": "curriculum/drills/keys/foundational-script-orthography.keys.jsonl",
       "role": "runtime_drill_input",
-      "sha256": "727e91bf7bacf3044e90d4ebecc7f8cacd2029dc7e582f8ba8d219f013db795e"
+      "sha256": "47965aeff5e851a2a4a5d69acf8e655f58e362407933c47089a07169470f34cd"
     },
     {
       "artifact_id": "runtime-keys-hover-composition",
@@ -281,13 +281,13 @@
       "artifact_id": "runtime-keys-tranche-001-derivation-template",
       "path": "curriculum/drills/keys/tranche-001-derivation-template-runtime.keys.jsonl",
       "role": "runtime_drill_input",
-      "sha256": "e34d4d847bd27ec7028e9fc192077c681a76aa9f71bebf6f2d192e49cde26398"
+      "sha256": "4b241c972cedcf2c763defd02da7b3af2cc7aee3754848512236d66a8583d14a"
     },
     {
       "artifact_id": "runtime-keys-tranche-001-ma-context",
       "path": "curriculum/drills/keys/tranche-001-ma-context-runtime.keys.jsonl",
       "role": "runtime_drill_input",
-      "sha256": "b217edac9a268447d90dd0201b0c0daa5a9aaaa651bdd006960cc72d6589eb3e"
+      "sha256": "70c3d745b11c254708ef18d398d5e99b440c9f990a79a1998157df9693c588d2"
     },
     {
       "artifact_id": "runtime-keys-vn00-hover-closure",
@@ -299,7 +299,7 @@
       "artifact_id": "runtime-keys-weak-root-voice",
       "path": "curriculum/drills/keys/weak-root-voice-runtime.keys.jsonl",
       "role": "runtime_drill_input",
-      "sha256": "5aece56fa113494bfad7c06ae8060666a82d0c9c0f78a081b26859d351cd6112"
+      "sha256": "aaa59f491ba180987d4140fc44bdf9cb932dd63e9ae1114c9eee09b60be61deb"
     },
     {
       "artifact_id": "canary-ma-relative",

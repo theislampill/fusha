@@ -413,19 +413,48 @@ def _expected_new_kc_entries():
 
 
 _PRE_EXISTING_KEYED_DRILLS = (
-    "followers-coordination-apposition", "foundational-script-orthography", "hover-composition-and-routing",
+    "followers-coordination-apposition", "hover-composition-and-routing",
     "morphology-foundations", "nawasikh-governor-families", "parse-key-and-color-layer",
     "plan15-route-families", "quranic-function-words", "root-pattern-practice", "sentence-foundations",
     "vn00-aggressive-hover-closure",
 )
+# NOTE (T1b bounded repair round): foundational-script-orthography was removed from the above byte-identical
+# set. It was pre-existing at THIS batch's own start SHA, but the T1b review-repair round (F2/F7) is explicitly
+# authorized to edit curriculum/drills/keys/foundational-script-orthography.keys.jsonl and its .md, so it can no
+# longer be asserted byte-identical here without contradicting that authorized repair.
 
+# The T1b bounded review-repair round's exclusive writable allowlist (superset of this batch's own six files) —
+# every file any of F1-F11 may touch, repo-wide, so this cross-cutting guard reflects the repair's real scope
+# rather than only this one batch's original authoring footprint.
 _WRITABLE_SET = {
-    "curriculum/drills/weak-root-voice-runtime.md",
+    "curriculum/drills/keys/foundational-script-orthography.keys.jsonl",
     "curriculum/drills/keys/weak-root-voice-runtime.keys.jsonl",
+    "curriculum/drills/keys/tranche-001-derivation-template-runtime.keys.jsonl",
+    "curriculum/drills/keys/tranche-001-ma-context-runtime.keys.jsonl",
+    "curriculum/drills/foundational-script-orthography.md",
+    "curriculum/drills/weak-root-voice-runtime.md",
+    "curriculum/drills/tranche-001-derivation-template-runtime.md",
+    "curriculum/drills/tranche-001-ma-context-runtime.md",
     "curriculum/kc-catalog.json",
+    "curriculum/kc-catalog.d/tranche-001-derivation-template.jsonl",
+    "curriculum/kc-catalog.d/tranche-001-ma-context.jsonl",
     "curriculum/drills/dogfood-error-remediation-index.md",
     "curriculum/progress/missed-error-log.template.md",
+    "tools/fusha_tutor_runtime.py",
+    "tools/validate_drill_keys.py",
+    "tools/validate_tutor_runtime.py",
+    "tools/test_foundational_script_orthography_runtime.py",
     "tools/test_weak_root_voice_runtime.py",
+    "tools/test_tranche_001_derivation_template_runtime.py",
+    "tools/test_tranche_001_ma_context_runtime.py",
+    "tools/test_kc_catalog_shards.py",
+    "eval/fusha-bench-v1/data-manifest.json",
+    "eval/fusha-bench-v1/tutor-quarantine.json",
+    "tools/fusha_bench.py",
+    "tools/test_fusha_bench.py",
+    "tools/check_regressions.py",
+    "docs/review-rubrics/drills-kc.md",
+    "dist/claude-ai/knowledge-manifest.md",
 }
 
 
@@ -725,6 +754,78 @@ class HardGrammarTwoVoteAlwaysHeld(unittest.TestCase):
         self.assertEqual(failures, [])
 
 
+# --------------------------------------------------------------------------- 4b. F1: geminate jussive inventory
+class GeminateJussiveInventoryNoContradiction(unittest.TestCase):
+    """F1: WRV-12 and WRV-13 must never teach a licensed geminate-verb form as forbidden. WRV-13 asserts BOTH
+    the merged-with-fatha (لَمْ يَمُدَّ) and separated-with-sukun (لَمْ يَمْدُدْ) jussive shapes are licensed;
+    WRV-12 must therefore never forbid the separated jussive shape, and must instead test the genuinely
+    distinct obligatory-merger environment (a vowel immediately follows the second radical)."""
+
+    def _row(self, item_id):
+        return {r["id"]: r for r in _load_runtime_rows()}[item_id]
+
+    def test_wrv13_licenses_both_geminate_jussive_shapes(self):
+        row = self._row("WRV-13-mudaaf-jussive-licensed-shapes")
+        for licensed in ("لَمْ يَمُدَّ", "لَمْ يَمْدُدْ"):
+            self.assertIn(licensed, row["expected_answer"],
+                         "WRV-13 must name both licensed jussive shapes: %r" % licensed)
+
+    def test_wrv12_never_forbids_wrv13s_licensed_separated_jussive_shape(self):
+        row12 = self._row("WRV-12-mudaaf-merger-default-no-trigger")
+        forbidden_blob = " ".join(row12["forbidden_answers"])
+        self.assertNotIn("لَمْ يَمْدُدْ", forbidden_blob,
+                        "WRV-12 must never forbid WRV-13's own licensed separated jussive shape (لَمْ يَمْدُدْ)")
+
+    def test_wrv12_targets_the_obligatory_merger_vowel_following_cell_not_the_jussive_cell(self):
+        row12 = self._row("WRV-12-mudaaf-merger-default-no-trigger")
+        # WRV-12 must no longer overlap WRV-13's own jussive-after-lam cell (the actual site of the
+        # contradiction); it now targets a cell where a vowel follows the second radical (merger obligatory).
+        self.assertNotIn("لَمْ", row12["expected_answer"])
+        self.assertIn("يَمُدُّونَ", row12["expected_answer"])
+
+    def test_wrv12_hostile_separated_form_in_the_vowel_following_cell_is_rejected(self):
+        row12 = self._row("WRV-12-mudaaf-merger-default-no-trigger")
+        payload = {"answer": "يَمْدُدُونَ — the radicals separate here.",
+                  "reasoning": list(row12["required_reasoning"])}
+        g = RT.grade(row12, payload)
+        self.assertFalse(g["content_mastered"], "a separated form must not clear in an obligatory-merger cell")
+
+    def test_wrv12_correct_merged_form_still_clears_content(self):
+        row12 = self._row("WRV-12-mudaaf-merger-default-no-trigger")
+        payload = {"answer": row12["expected_answer"], "reasoning": list(row12["required_reasoning"])}
+        g = RT.grade(row12, payload)
+        self.assertTrue(g["content_mastered"])
+
+
+# --------------------------------------------------------------------------- 4c. F8: WRV-18 dual hamza spellings
+class WRV18DualHamzaCarrierSpellingsAccepted(unittest.TestCase):
+    """F8: WRV-18 must accept BOTH licensed hamza-carrier spellings for the plural cell (bare hamza يَقْرَءُونَ
+    and wāw-carrier يَقْرَؤُونَ) while still rejecting the copied-singular-alif-carrier misconception."""
+
+    def _row(self):
+        return {r["id"]: r for r in _load_runtime_rows()}["WRV-18-mahmuz-carrier-recheck-after-suffix"]
+
+    def test_both_licensed_spellings_clear_content(self):
+        row = self._row()
+        base = row["expected_answer"]
+        # each answer keeps ONLY one of the two licensed spellings (drop the other's parenthetical mention),
+        # proving either spelling alone — not just the two stated together — clears content.
+        only_bare = base.replace(" or يَقْرَؤُونَ (wāw carrier)", "")
+        only_waw = base.replace("يَقْرَءُونَ (bare hamza) or ", "")
+        for form, answer in (("يَقْرَءُونَ", only_bare), ("يَقْرَؤُونَ", only_waw)):
+            with self.subTest(form=form):
+                self.assertIn(form, answer)
+                g = RT.grade(row, {"answer": answer, "reasoning": list(row["required_reasoning"])})
+                self.assertTrue(g["content_mastered"], "must accept the licensed spelling %r alone" % form)
+
+    def test_copied_singular_alif_carrier_is_still_rejected(self):
+        row = self._row()
+        g = RT.grade(row, {"answer": "يَقْرَأُونَ — the singular's alif carrier is copied unchanged into the "
+                                    "plural cell.",
+                          "reasoning": list(row["required_reasoning"])})
+        self.assertFalse(g["content_mastered"])
+
+
 # --------------------------------------------------------------------------- 5. voice/deputy-agent direction guard
 
 class VoiceAndDeputyAgentDirectionGuard(unittest.TestCase):
@@ -772,6 +873,41 @@ class VoiceAndDeputyAgentDirectionGuard(unittest.TestCase):
                     r = RT.step(row, None, payload, now_day=0)
                     self.assertTrue(r["grade"]["content_mastered"],
                                     "%s: authored correct form must still be mastered: %r" % (row["id"], form))
+
+
+# --------------------------------------------------------------------------- 5b. F2: exact/diacritic contract
+class F2ExactDiacriticContractGuard(unittest.TestCase):
+    """F2: every row whose authored correct form and an authored forbidden form collide under the lenient
+    recall normalizer (differ ONLY by a vowel/shadda diacritic) must opt into `exact_surface_forms`, and the
+    exact contract must actually reject that colliding forbidden form while still accepting the gold form."""
+
+    def test_every_diacritic_colliding_row_declares_exact_surface_forms(self):
+        missing = [row["id"] for row in _load_runtime_rows()
+                  if RT.diacritic_only_collision(row) and not row.get("exact_surface_forms")]
+        self.assertEqual(missing, [],
+                         "rows whose expected/forbidden collide under the lenient normalizer (differ only by "
+                         "diacritics) but do not declare exact_surface_forms: %s" % missing)
+
+    def test_exact_surface_forms_rows_reject_their_own_colliding_forbidden_text(self):
+        for row in _load_runtime_rows():
+            if not row.get("exact_surface_forms"):
+                continue
+            for forbidden in row["forbidden_answers"]:
+                if RT._norm(forbidden) in {RT._norm(row["expected_answer"])} | {
+                        RT._norm(v) for v in row.get("accepted_variants") or []}:
+                    with self.subTest(id=row["id"]):
+                        g = RT.grade(row, {"answer": forbidden, "reasoning": list(row["required_reasoning"])})
+                        self.assertFalse(g["passed"],
+                                        "%s: exact_surface_forms must reject the diacritic-colliding forbidden "
+                                        "text %r" % (row["id"], forbidden[:60]))
+
+    def test_exact_surface_forms_rows_still_accept_their_own_gold_form(self):
+        for row in _load_runtime_rows():
+            if not row.get("exact_surface_forms"):
+                continue
+            with self.subTest(id=row["id"]):
+                g = RT.grade(row, {"answer": row["expected_answer"], "reasoning": list(row["required_reasoning"])})
+                self.assertTrue(g["passed"], "%s: exact_surface_forms must still accept the gold answer" % row["id"])
 
 
 # --------------------------------------------------------------------------- 6. KC catalog resolution

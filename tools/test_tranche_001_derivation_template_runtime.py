@@ -40,6 +40,7 @@ a reimplementation of that grading logic.
 from __future__ import annotations
 
 import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -582,6 +583,75 @@ class RuntimeBehaviourTests(unittest.TestCase):
             g = ftr.grade(row, payload)
             self.assertTrue(g["forbidden_hit"], "%s: forbidden answer %r not detected by the real grader"
                              % (row["id"], forbidden))
+
+
+class F10EnglishWrongReasonTripwires(unittest.TestCase):
+    """F10: every derivation row must carry a REACHABLE English wrong-reason tripwire (the pre-existing
+    forbidden_answers were Arabic-only prose, unreachable in the row's own English-answer register), and the
+    tripwire must actually fire — the real grader must reject it — when submitted as the learner's answer."""
+
+    def test_every_row_carries_at_least_one_english_forbidden_answer(self):
+        import fusha_tutor_runtime as ftr
+        rows = ftr.load_bank(str(NEW_BANK))
+        missing = [row["id"] for row in rows
+                  if not any(re.search(r"[a-zA-Z]{4}", f) for f in row["forbidden_answers"])]
+        self.assertEqual(missing, [], "rows with no English-register forbidden answer: %s" % missing)
+
+    def test_every_rows_english_tripwire_fires_via_the_real_grader(self):
+        import fusha_tutor_runtime as ftr
+        rows = ftr.load_bank(str(NEW_BANK))
+        for row in rows:
+            english_forbidden = [f for f in row["forbidden_answers"] if re.search(r"[a-zA-Z]{4}", f)]
+            for forbidden in english_forbidden:
+                with self.subTest(id=row["id"]):
+                    g = ftr.grade(row, {"answer": forbidden, "reasoning": []})
+                    self.assertFalse(g["content_mastered"],
+                                    "%s: English wrong-reason tripwire did not fire: %r"
+                                    % (row["id"], forbidden[:60]))
+                    self.assertTrue(g["forbidden_hit"],
+                                   "%s: English tripwire not detected as forbidden by the real grader"
+                                   % row["id"])
+
+
+class F2ExactDiacriticContractGuard(unittest.TestCase):
+    """F2: every row whose authored correct form and an authored forbidden form collide under the lenient
+    recall normalizer (differ ONLY by a vowel/shadda/case-ending diacritic) must opt into `exact_surface_forms`,
+    and the exact contract must actually reject that colliding forbidden form while still accepting the gold
+    form."""
+
+    def test_every_diacritic_colliding_row_declares_exact_surface_forms(self):
+        import fusha_tutor_runtime as ftr
+        rows = ftr.load_bank(str(NEW_BANK))
+        missing = [row["id"] for row in rows
+                  if ftr.diacritic_only_collision(row) and not row.get("exact_surface_forms")]
+        self.assertEqual(missing, [],
+                         "rows whose expected/forbidden collide under the lenient normalizer (differ only by "
+                         "diacritics) but do not declare exact_surface_forms: %s" % missing)
+
+    def test_exact_surface_forms_rows_reject_their_own_colliding_forbidden_text(self):
+        import fusha_tutor_runtime as ftr
+        rows = ftr.load_bank(str(NEW_BANK))
+        for row in rows:
+            if not row.get("exact_surface_forms"):
+                continue
+            for forbidden in row["forbidden_answers"]:
+                if ftr._norm(forbidden) in {ftr._norm(row["expected_answer"])} | {
+                        ftr._norm(v) for v in row.get("accepted_variants") or []}:
+                    with self.subTest(id=row["id"]):
+                        g = ftr.grade(row, {"answer": forbidden, "reasoning": list(row["required_reasoning"])})
+                        self.assertFalse(g["passed"],
+                                        "%s: exact_surface_forms must reject the diacritic-colliding forbidden "
+                                        "text %r" % (row["id"], forbidden[:60]))
+
+    def test_exact_surface_forms_rows_still_accept_their_own_gold_form(self):
+        import fusha_tutor_runtime as ftr
+        rows = ftr.load_bank(str(NEW_BANK))
+        for row in rows:
+            if not row.get("exact_surface_forms"):
+                continue
+            with self.subTest(id=row["id"]):
+                g = ftr.grade(row, {"answer": row["expected_answer"], "reasoning": list(row["required_reasoning"])})
+                self.assertTrue(g["passed"], "%s: exact_surface_forms must still accept the gold answer" % row["id"])
 
 
 if __name__ == "__main__":
