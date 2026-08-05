@@ -14,6 +14,10 @@ different job, depending only on whether a taa marbuta follows.
 reading — an unvocalised مصري or انسانية gives us nothing to go on, so we
 say "needs the mark" instead of guessing.
 
-**Stage 4** — a geminated yaa on a word that's neither nisba-shaped nor
-abstract-noun-shaped (like قَوِيّ "strong", an intensive adjective) is a
-near-collision this pack correctly leaves alone.
+**Stage 4** — a word-final geminated ي with no trailing ة is ALSO the
+exact shape of a closed set of non-nisba adjectives — قَوِيّ "strong"
+looks identical to a nisba like مِصْرِيّ at that level. Shape and the
+written shadda alone never decide between them; only independent
+evidence about the base word's own category decides which rival it is,
+and without that evidence this pack honestly abstains instead of
+defaulting to nisba.

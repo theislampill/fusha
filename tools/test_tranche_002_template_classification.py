@@ -788,6 +788,112 @@ class DiscriminatorRegistryPacksTests(unittest.TestCase):
         self.assertEqual(rec["decision"], "abstain")
 
 
+def _load_json_file(inc, name):
+    return json.loads((INC_BASE / inc / name).read_text(encoding="utf-8"))
+
+
+def _load_flattened_text_file(inc, name):
+    # staged-explanation.md hard-wraps prose at ~70 chars, so a phrase can straddle a line
+    # break; collapse all whitespace runs to a single space before substring matching.
+    text = (INC_BASE / inc / name).read_text(encoding="utf-8")
+    return " ".join(text.split())
+
+
+class SemanticMirrorRepairTests(unittest.TestCase):
+    """The learner-facing mirror (guards.json / hover-fields.json / staged-explanation.md) must
+    stay in semantic lockstep with the authoritative machine-pack rules (unit-v1.json) and
+    reference.md/procedure.md prose for each increment. These tests inspect the real committed
+    mirror files directly -- never a test-owned constant -- and pin three specific contradictions
+    the independent Opus review found between the machine pack and its own learner surfaces."""
+
+    NPV = "inc-nongoverning-preverbal-inventory"
+    SAB = "inc-suffix-abstract-noun"
+    GEM = "inc-gemination-licensing"
+
+    # -- inc-nongoverning-preverbal-inventory: bare قد must be deferred to its sole owner pack,
+    # inc-qad-tense-conditioned-sense, never resolved here by a tense-dependent reading --
+
+    def test_npv_guards_never_claim_this_pack_selects_a_qad_reading_by_tense(self):
+        guards = _load_json_file(self.NPV, "guards.json")
+        blob = " ".join(g["guard"] for g in guards["guards"])
+        self.assertNotIn("قد carries two distinct readings", blob)
+
+    def test_npv_guards_defer_bare_qad_to_its_owner_pack(self):
+        guards = _load_json_file(self.NPV, "guards.json")
+        blob = " ".join(g["guard"] for g in guards["guards"])
+        self.assertIn("inc-qad-tense-conditioned-sense", blob)
+        self.assertIn("NOT a member of this closed registry", blob)
+
+    def test_npv_hover_fields_never_claim_a_tense_dependent_qad_reading(self):
+        hover = _load_json_file(self.NPV, "hover-fields.json")
+        keys = {f["key"] for f in hover["fields"]}
+        blob = " ".join(f["teaching"] for f in hover["fields"])
+        self.assertNotIn("tense_dependent_reading_note", keys)
+        self.assertNotIn("tense-dependent readings the declared verb tense selected", blob)
+
+    def test_npv_hover_fields_defer_bare_qad_to_its_owner_pack(self):
+        hover = _load_json_file(self.NPV, "hover-fields.json")
+        keys = {f["key"] for f in hover["fields"]}
+        blob = " ".join(f["teaching"] for f in hover["fields"])
+        self.assertIn("qad_deferred_note", keys)
+        self.assertIn("inc-qad-tense-conditioned-sense", blob)
+
+    def test_npv_staged_explanation_never_claims_qad_does_two_jobs_by_tense(self):
+        text = _load_flattened_text_file(self.NPV, "staged-explanation.md")
+        self.assertNotIn("قد does two different jobs depending on the verb after it", text)
+
+    def test_npv_staged_explanation_defers_bare_qad_to_its_owner_pack(self):
+        text = _load_flattened_text_file(self.NPV, "staged-explanation.md")
+        self.assertIn("inc-qad-tense-conditioned-sense", text)
+        self.assertIn("abstains", text)
+
+    # -- inc-suffix-abstract-noun: written shape (final letter + shadda) alone must never decide
+    # nisba vs the non-nisba geminated-yaa adjective rival -- independent base-category evidence
+    # is required, honest abstention preserved --
+
+    def test_sab_guards_state_the_base_category_rival_preservation_requirement(self):
+        guards = _load_json_file(self.SAB, "guards.json")
+        blob = " ".join(g["guard"] for g in guards["guards"])
+        self.assertIn("non_nisba_adjective", blob.replace("-", "_"))
+        self.assertIn("base_category_evidence", blob)
+        self.assertIn("never decide", blob)
+
+    def test_sab_hover_fields_never_claim_shape_alone_decides_the_classifier(self):
+        hover = _load_json_file(self.SAB, "hover-fields.json")
+        blob = " ".join(f["teaching"] for f in hover["fields"])
+        self.assertNotIn("the written shadda + final letter decided", blob)
+
+    def test_sab_hover_fields_state_independent_base_category_evidence_is_required(self):
+        hover = _load_json_file(self.SAB, "hover-fields.json")
+        blob = " ".join(f["teaching"] for f in hover["fields"])
+        self.assertIn("base_category_evidence", blob.replace("-", "_"))
+        self.assertIn("rival", blob)
+
+    def test_sab_staged_explanation_never_claims_the_rival_is_a_different_shape(self):
+        text = _load_flattened_text_file(self.SAB, "staged-explanation.md")
+        self.assertNotIn("neither nisba-shaped nor abstract-noun-shaped", text)
+
+    def test_sab_staged_explanation_states_shape_alone_never_decides_and_abstains_honestly(self):
+        text = _load_flattened_text_file(self.SAB, "staged-explanation.md")
+        self.assertIn("never decide", text)
+        self.assertIn("abstains", text)
+
+    # -- inc-gemination-licensing: only the actually-verified inputs (bound slot/radical, shadda
+    # source verified against the written surface, attested evidence basis) license the doubling;
+    # mood and cross-clitic-boundary idgham are never consulted --
+
+    def test_gem_hover_fields_never_claim_mood_or_boundary_license_the_doubling(self):
+        hover = _load_json_file(self.GEM, "hover-fields.json")
+        blob = " ".join(f["teaching"] for f in hover["fields"])
+        self.assertNotIn("written shadda source, mood, boundary", blob)
+
+    def test_gem_hover_fields_state_mood_and_boundary_are_never_consulted(self):
+        hover = _load_json_file(self.GEM, "hover-fields.json")
+        blob = " ".join(f["teaching"] for f in hover["fields"])
+        self.assertIn("never consulted", blob)
+        self.assertIn("attested basis", blob)
+
+
 class EvalBankStructuralTests(unittest.TestCase):
     def test_template_classification_train_1_bank_registered_in_contract(self):
         contract = json.loads((ROOT / "sarf" / "eval-runner-contract.json").read_text(encoding="utf-8"))

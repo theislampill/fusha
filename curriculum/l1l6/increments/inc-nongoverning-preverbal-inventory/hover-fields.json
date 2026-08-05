@@ -5,8 +5,8 @@
       "teaching": "names the closed-registry class this particle+tense pair matched, never a mood/case/governor"
     },
     {
-      "key": "tense_dependent_reading_note",
-      "teaching": "for قد, shows which of the two tense-dependent readings the declared verb tense selected"
+      "key": "qad_deferred_note",
+      "teaching": "bare قد always abstains in this pack -- its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, whose preserved rivals this pack never collapses"
     }
   ],
   "schema": "curriculum.l1l6_hover_fields.v1",

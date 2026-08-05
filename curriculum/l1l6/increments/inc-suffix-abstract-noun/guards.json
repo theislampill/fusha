@@ -13,6 +13,10 @@
       "id": "g-sab-3"
     },
     {
+      "guard": "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non_nisba_adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba",
+      "id": "g-sab-4"
+    },
+    {
       "guard": "method transfers, conclusions do not",
       "id": "g-sab-m"
     }
