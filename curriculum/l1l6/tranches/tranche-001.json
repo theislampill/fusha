@@ -13,65 +13,6 @@
       "eval/fusha-bench-v1/report/fusha-bench-report.json": "sha256:580150cd0f8860dde87a6e784b58838679c7ae41df14a4c82def57babaaba63f"
     }
   },
-  "baseline": {
-    "closed_lesson_ids": [
-      "L1.M1.01",
-      "L1.M1.02",
-      "L1.M1.03",
-      "L1.M1.07"
-    ],
-    "closed_unit_ids": [
-      "cu-grapheme-inventory-and-confusables",
-      "cu-orthographic-connectivity-classes",
-      "cu-short-vowel-diacritics-and-vocalization-state",
-      "cu-nunation-support-orthography",
-      "cu-definite-article-assimilation"
-    ],
-    "lessons_total": 226,
-    "not_applicable_lesson_ids": [
-      "L1.M5.08"
-    ],
-    "real_consumer_unit_ids_partial_only": [
-      "cu-atf-case-following",
-      "cu-atf-particle-discriminator",
-      "cu-attributive-agreement-licensing",
-      "cu-badal-typology-discriminator",
-      "cu-badal-vs-atf-bayan",
-      "cu-bound-fa-function-discrimination",
-      "cu-clitic-pronoun-role-discriminator",
-      "cu-definite-article-assimilation",
-      "cu-fa-function-and-mood-licensing",
-      "cu-grapheme-inventory-and-confusables",
-      "cu-la-negative-vs-prohibitive-discriminator",
-      "cu-lakin-coordinator-vs-abrogator",
-      "cu-nunation-support-orthography",
-      "cu-orthographic-connectivity-classes",
-      "cu-preposition-sense-discriminators",
-      "cu-short-vowel-diacritics-and-vocalization-state",
-      "cu-tanazu-governor-selection",
-      "cu-waw-function-discriminator",
-      "u-n01",
-      "u-n02",
-      "u-n03",
-      "u-n04",
-      "u-n06",
-      "u-n07",
-      "u-n08",
-      "u-n09",
-      "u-n10",
-      "u-n11",
-      "u-n12",
-      "u-s01",
-      "u-s02",
-      "u-s03",
-      "u-s04",
-      "u-s05",
-      "u-s06",
-      "u-s07",
-      "u-s09"
-    ],
-    "units_total": 166
-  },
   "blocked_lessons": [],
   "blocked_units": [],
   "closure": {
@@ -208,7 +149,66 @@
     "L6.M6.03",
     "L6.M6.04"
   ],
-  "expected_newly_flipped_lesson_ids": [
+  "current_state": {
+    "closed_lesson_ids": [
+      "L1.M1.01",
+      "L1.M1.02",
+      "L1.M1.03",
+      "L1.M1.07"
+    ],
+    "closed_unit_ids": [
+      "cu-grapheme-inventory-and-confusables",
+      "cu-orthographic-connectivity-classes",
+      "cu-short-vowel-diacritics-and-vocalization-state",
+      "cu-nunation-support-orthography",
+      "cu-definite-article-assimilation"
+    ],
+    "lessons_total": 226,
+    "not_applicable_lesson_ids": [
+      "L1.M5.08"
+    ],
+    "real_consumer_unit_ids_partial_only": [
+      "cu-atf-case-following",
+      "cu-atf-particle-discriminator",
+      "cu-attributive-agreement-licensing",
+      "cu-badal-typology-discriminator",
+      "cu-badal-vs-atf-bayan",
+      "cu-bound-fa-function-discrimination",
+      "cu-clitic-pronoun-role-discriminator",
+      "cu-definite-article-assimilation",
+      "cu-fa-function-and-mood-licensing",
+      "cu-grapheme-inventory-and-confusables",
+      "cu-la-negative-vs-prohibitive-discriminator",
+      "cu-lakin-coordinator-vs-abrogator",
+      "cu-nunation-support-orthography",
+      "cu-orthographic-connectivity-classes",
+      "cu-preposition-sense-discriminators",
+      "cu-short-vowel-diacritics-and-vocalization-state",
+      "cu-tanazu-governor-selection",
+      "cu-waw-function-discriminator",
+      "u-n01",
+      "u-n02",
+      "u-n03",
+      "u-n04",
+      "u-n06",
+      "u-n07",
+      "u-n08",
+      "u-n09",
+      "u-n10",
+      "u-n11",
+      "u-n12",
+      "u-s01",
+      "u-s02",
+      "u-s03",
+      "u-s04",
+      "u-s05",
+      "u-s06",
+      "u-s07",
+      "u-s09"
+    ],
+    "units_total": 166
+  },
+  "fully_operationalized_lesson_ids": [
     "L1.M1.01",
     "L1.M1.02",
     "L1.M1.03",
@@ -2178,8 +2178,8 @@
   ],
   "remaining": {
     "blocked_units": 0,
+    "future_tranches_total": 22,
     "parked_dimension_blockers": 105,
-    "planned_tranches_total": 22,
     "units_after_tranche_001": 161
   },
   "schema": "curriculum.l1l6_operationalization_tranche.v1",

@@ -13,9 +13,9 @@
       "eval/fusha-bench-v1/report/fusha-bench-report.json": "sha256:580150cd0f8860dde87a6e784b58838679c7ae41df14a4c82def57babaaba63f"
     }
   },
-  "baseline": {
+  "current_state": {
     "lessons_by_disposition": {
-      "closed_at_baseline": 4,
+      "fully_operationalized": 4,
       "not_applicable_with_reason": 1,
       "open": 181,
       "partially_operationalized_real_consumer": 40
@@ -33,7 +33,7 @@
     "units_total": 166
   },
   "current_tranche": {
-    "expected_newly_flipped_lesson_ids": [
+    "fully_operationalized_lesson_ids": [
       "L1.M1.01",
       "L1.M1.02",
       "L1.M1.03",
@@ -53,6 +53,148 @@
     ],
     "units_fully_operationalized": 5,
     "units_still_partial": 3
+  },
+  "forecast": {
+    "blocked_lessons": 0,
+    "future_tranches_total": 22,
+    "lesson_flip_quota": 9,
+    "not_applicable_lessons": 1,
+    "projected_additional_fully_operationalized_lessons": 221,
+    "projected_total_fully_operationalized_lessons": 225,
+    "tranches": [
+      {
+        "newly_flipped_lessons": 11,
+        "residual": false,
+        "tranche_number": 2,
+        "units": 4
+      },
+      {
+        "newly_flipped_lessons": 14,
+        "residual": false,
+        "tranche_number": 3,
+        "units": 7
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 4,
+        "units": 6
+      },
+      {
+        "newly_flipped_lessons": 10,
+        "residual": false,
+        "tranche_number": 5,
+        "units": 5
+      },
+      {
+        "newly_flipped_lessons": 13,
+        "residual": false,
+        "tranche_number": 6,
+        "units": 8
+      },
+      {
+        "newly_flipped_lessons": 11,
+        "residual": false,
+        "tranche_number": 7,
+        "units": 7
+      },
+      {
+        "newly_flipped_lessons": 11,
+        "residual": false,
+        "tranche_number": 8,
+        "units": 4
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 9,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 13,
+        "residual": false,
+        "tranche_number": 10,
+        "units": 10
+      },
+      {
+        "newly_flipped_lessons": 13,
+        "residual": false,
+        "tranche_number": 11,
+        "units": 1
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 12,
+        "units": 8
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 13,
+        "units": 6
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 14,
+        "units": 8
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 15,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 16,
+        "units": 8
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 17,
+        "units": 10
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 18,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 19,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 20,
+        "units": 7
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 21,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 22,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 8,
+        "residual": true,
+        "tranche_number": 23,
+        "units": 8
+      }
+    ]
   },
   "fusha_bench_axes": {
     "contextual_translation": {
@@ -89,146 +231,5 @@
     }
   },
   "generator": "tools/select_tranche.py",
-  "plan": {
-    "blocked_lessons": 0,
-    "lesson_flip_quota": 9,
-    "not_applicable_lessons": 1,
-    "projected_closed_lessons": 221,
-    "tranches": [
-      {
-        "newly_flipped_lessons": 11,
-        "residual": false,
-        "tranche_number": 1,
-        "units": 4
-      },
-      {
-        "newly_flipped_lessons": 14,
-        "residual": false,
-        "tranche_number": 2,
-        "units": 7
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 3,
-        "units": 6
-      },
-      {
-        "newly_flipped_lessons": 10,
-        "residual": false,
-        "tranche_number": 4,
-        "units": 5
-      },
-      {
-        "newly_flipped_lessons": 13,
-        "residual": false,
-        "tranche_number": 5,
-        "units": 8
-      },
-      {
-        "newly_flipped_lessons": 11,
-        "residual": false,
-        "tranche_number": 6,
-        "units": 7
-      },
-      {
-        "newly_flipped_lessons": 11,
-        "residual": false,
-        "tranche_number": 7,
-        "units": 4
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 8,
-        "units": 9
-      },
-      {
-        "newly_flipped_lessons": 13,
-        "residual": false,
-        "tranche_number": 9,
-        "units": 10
-      },
-      {
-        "newly_flipped_lessons": 13,
-        "residual": false,
-        "tranche_number": 10,
-        "units": 1
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 11,
-        "units": 8
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 12,
-        "units": 6
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 13,
-        "units": 8
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 14,
-        "units": 9
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 15,
-        "units": 8
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 16,
-        "units": 10
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 17,
-        "units": 9
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 18,
-        "units": 9
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 19,
-        "units": 7
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 20,
-        "units": 9
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 21,
-        "units": 9
-      },
-      {
-        "newly_flipped_lessons": 8,
-        "residual": true,
-        "tranche_number": 22,
-        "units": 8
-      }
-    ],
-    "tranches_total": 22
-  },
   "schema": "curriculum.l1l6_lesson_burndown.v1"
 }

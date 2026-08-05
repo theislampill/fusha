@@ -264,7 +264,7 @@ def plan_tranches(
         if lesson_id in not_applicable:
             state = "not_applicable_with_reason"
         elif lesson_id in baseline_closed_lessons:
-            state = "closed_at_baseline"
+            state = "fully_operationalized_current_state"
         elif units.intersection(blocked_units):
             state = "blocked"
         elif lesson_id in flipped:
@@ -476,7 +476,7 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
             "residual": first["residual"],
         },
         "authority": authority,
-        "baseline": {
+        "current_state": {
             "lessons_total": len(inputs.lessons),
             "units_total": len(inputs.unit_dispositions),
             "closed_unit_ids": plan["baseline_closed_unit_ids"],
@@ -486,7 +486,7 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
         },
         "units": unit_records,
         "contributing_lesson_ids": contributing_lessons,
-        "expected_newly_flipped_lesson_ids": first["newly_flipped_lesson_ids"],
+        "fully_operationalized_lesson_ids": first["newly_flipped_lesson_ids"],
         "closure": {
             "units_fully_operationalized": len(current_closed_unit_ids),
             "units_still_partial": len(current_unit_ids) - len(
@@ -505,7 +505,7 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
         "parked_dimension_blockers": plan["parked_units"],
         "blocked_lessons": blocked_lessons,
         "remaining": {
-            "planned_tranches_total": len(plan["tranches"]),
+            "future_tranches_total": len(plan["tranches"]),
             "units_after_tranche_001": (
                 len(inputs.unit_dispositions)
                 - len(plan["baseline_closed_unit_ids"])
@@ -526,7 +526,7 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
         if lesson_id in plan["not_applicable_lesson_ids"]:
             state = "not_applicable_with_reason"
         elif lesson_id in plan["baseline_closed_lesson_ids"]:
-            state = "closed_at_baseline"
+            state = "fully_operationalized"
         elif planned_state == "blocked":
             state = "blocked"
         elif lesson_id in real_lesson_ids:
@@ -549,7 +549,7 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
         "schema": "curriculum.l1l6_lesson_burndown.v1",
         "generator": GENERATOR,
         "authority": authority,
-        "baseline": {
+        "current_state": {
             "lessons_total": len(inputs.lessons),
             "lessons_by_disposition": dict(sorted(disposition_counts.items())),
             "lessons_with_real_consumer_partial_evidence": len(real_lesson_ids),
@@ -563,20 +563,27 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
             ),
         },
         "fusha_bench_axes": _bench_axes(inputs.bench_report),
-        "plan": {
+        "forecast": {
             "lesson_flip_quota": quota,
-            "tranches_total": len(plan["tranches"]),
+            "future_tranches_total": len(plan["tranches"]),
             "tranches": [
                 {
-                    "tranche_number": row["tranche_number"],
+                    "tranche_number": row["tranche_number"] + 1,
                     "units": len(row["unit_ids"]),
                     "newly_flipped_lessons": len(row["newly_flipped_lesson_ids"]),
                     "residual": row["residual"],
                 }
                 for row in plan["tranches"]
             ],
-            "projected_closed_lessons": sum(
+            "projected_additional_fully_operationalized_lessons": sum(
                 len(row["newly_flipped_lesson_ids"]) for row in plan["tranches"]
+            ),
+            "projected_total_fully_operationalized_lessons": (
+                len(plan["baseline_closed_lesson_ids"])
+                + sum(
+                    len(row["newly_flipped_lesson_ids"])
+                    for row in plan["tranches"]
+                )
             ),
             "blocked_lessons": len(blocked_lessons),
             "not_applicable_lessons": len(plan["not_applicable_lesson_ids"]),
@@ -584,7 +591,7 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
         "current_tranche": {
             "tranche_id": "tranche-001",
             "unit_ids": first["unit_ids"],
-            "expected_newly_flipped_lesson_ids": first[
+            "fully_operationalized_lesson_ids": first[
                 "newly_flipped_lesson_ids"
             ],
             "units_fully_operationalized": len(current_closed_unit_ids),
@@ -653,10 +660,12 @@ def main(argv: list[str] | None = None, *, load: bool = True) -> int:
         "mode": "read_only",
         "tranche_id": tranche["tranche_id"],
         "selected_units": len(tranche["units"]),
-        "expected_newly_flipped_lessons": len(
-            tranche["expected_newly_flipped_lesson_ids"]
+        "fully_operationalized_lessons": len(
+            tranche["fully_operationalized_lesson_ids"]
         ),
-        "closed_units_at_baseline": len(tranche["baseline"]["closed_unit_ids"]),
+        "fully_operationalized_units_current_state": len(
+            tranche["current_state"]["closed_unit_ids"]
+        ),
         "write_required": True,
     }, ensure_ascii=False, sort_keys=True))
     return 0

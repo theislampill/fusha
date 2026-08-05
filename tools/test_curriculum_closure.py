@@ -133,6 +133,31 @@ class CurriculumClosureTests(unittest.TestCase):
         self.assertEqual(
             burndown["current_tranche"]["units_fully_operationalized"], 5
         )
+        self.assertNotIn("baseline", burndown)
+        self.assertNotIn("plan", burndown)
+        self.assertEqual(
+            burndown["current_state"]["lessons_by_disposition"],
+            {
+                "fully_operationalized": 4,
+                "not_applicable_with_reason": 1,
+                "open": 181,
+                "partially_operationalized_real_consumer": 40,
+            },
+        )
+        self.assertEqual(
+            burndown["current_tranche"]["fully_operationalized_lesson_ids"],
+            ["L1.M1.01", "L1.M1.02", "L1.M1.03", "L1.M1.07"],
+        )
+        self.assertEqual(burndown["forecast"]["future_tranches_total"], 22)
+        self.assertEqual(
+            burndown["forecast"][
+                "projected_total_fully_operationalized_lessons"
+            ],
+            225,
+        )
+        self.assertEqual(
+            burndown["forecast"]["tranches"][0]["tranche_number"], 2
+        )
 
     def test_absorption_builder_records_four_fully_closed_lessons(self):
         dispositions, _ = build_unit_dispositions.build()
