@@ -4279,6 +4279,10 @@ try:
     _phantom_citation_hits = []
     _docs_dir = os.path.join(ROOT, "docs")
     for _dirpath, _dirnames, _filenames in os.walk(_docs_dir):
+        # docs/reports/history holds quarantined point-in-time evidence (banner-marked,
+        # moved 2026-08-05); RM-07 governs CURRENT docs only.
+        if os.path.join("docs", "reports", "history") in os.path.relpath(_dirpath, ROOT):
+            continue
         for _filename in _filenames:
             _path = os.path.join(_dirpath, _filename)
             with io.open(_path, "rb") as _f:

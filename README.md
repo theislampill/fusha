@@ -34,6 +34,10 @@ than being guessed.
 | **eval/fusha-bench-v1/** | The frozen benchmark | data manifest, model card, tutor-quarantine set |
 | **docs/** | Architecture + subsystem maps | `docs/INDEX.md` is the authority-precedence entry point |
 
+## Parser stack
+
+The current local parser stack is **qamustyping4** (parse-key + colour layer tooling, not live coverage): [`docs/parser/qamustyping4-implementation.md`](docs/parser/qamustyping4-implementation.md) - [`tools/validate_qamustyping4_acceptance.py`](tools/validate_qamustyping4_acceptance.py) - [`curriculum/drills/mode-a-thin-slice-regressions.md`](curriculum/drills/mode-a-thin-slice-regressions.md).
+
 ## State & verification
 
 `python tools/check_regressions.py` must end **ALL PASS**; that is the only accepted evidence of
