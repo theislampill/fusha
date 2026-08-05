@@ -401,7 +401,7 @@ class F4LexicalizedRelativeContractionTests(unittest.TestCase):
     contracted-article cases like لِلَّهِ stay conservative (no article split either, unaffected)."""
 
     def _qg_roles_and_gloss(self, surface):
-        rec = SP.parse_text(surface, db="full")
+        rec = SP.parse_text(surface, db="largelexicon")
         tok = rec["tokens"][0]
         roles = {s["role"] for s in tok["qg_segments"]}
         gloss = (tok.get("hover_preview") or {}).get("token_contribution_gloss")

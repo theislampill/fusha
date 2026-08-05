@@ -4,10 +4,13 @@
 from __future__ import annotations
 
 import json
+import io
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -44,6 +47,33 @@ def unit(
         "blockers": blockers or [],
         "real_consumer_bindings": [],
     }
+
+
+def fixture_inputs() -> selector.Inputs:
+    return selector.Inputs(
+        lessons=[lesson("L1")],
+        lesson_unit_map=[mapping("L1", "u1")],
+        unit_dispositions=[unit("u1")],
+        canonical_units=[{
+            "unit_id": "u1",
+            "axis": "sarf",
+            "capability_family": "discriminator_table",
+            "contributing_lessons": {"L1": "proposer"},
+        }],
+        absorption_rows=[{
+            "lesson_id": "L1",
+            "absorption_state": "unitized",
+            "consumer_operationalization": {
+                "status": "not_operationalized",
+                "real_binding_ids": [],
+            },
+        }],
+        consumer_bindings=[],
+        error_fixture_rows=[{"source": "L1"}],
+        readiness={"lessons_fully_operationalized": 0},
+        bench_report={"axes": {}},
+        source_hashes={"fixture": "sha256:test"},
+    )
 
 
 class SelectorTests(unittest.TestCase):
@@ -190,30 +220,7 @@ class SelectorTests(unittest.TestCase):
             )
 
     def test_serialization_is_byte_deterministic(self):
-        inputs = selector.Inputs(
-            lessons=[lesson("L1")],
-            lesson_unit_map=[mapping("L1", "u1")],
-            unit_dispositions=[unit("u1")],
-            canonical_units=[{
-                "unit_id": "u1",
-                "axis": "sarf",
-                "capability_family": "discriminator_table",
-                "contributing_lessons": {"L1": "proposer"},
-            }],
-            absorption_rows=[{
-                "lesson_id": "L1",
-                "absorption_state": "unitized",
-                "consumer_operationalization": {
-                    "status": "not_operationalized",
-                    "real_binding_ids": [],
-                },
-            }],
-            consumer_bindings=[],
-            error_fixture_rows=[{"source": "L1"}],
-            readiness={"lessons_fully_operationalized": 0},
-            bench_report={"axes": {}},
-            source_hashes={"fixture": "sha256:test"},
-        )
+        inputs = fixture_inputs()
 
         first = selector.serialize_outputs(inputs, quota=1)
         second = selector.serialize_outputs(inputs, quota=1)
@@ -229,10 +236,16 @@ class SelectorTests(unittest.TestCase):
             sentinel = root / "sentinel.json"
             sentinel.write_text("unchanged", encoding="utf-8")
 
-            rc = selector.main(["--root", str(root), "--quota", "1"], load=False)
+            with mock.patch.object(
+                selector, "load_inputs", return_value=fixture_inputs()
+            ) as mocked_load, redirect_stdout(io.StringIO()) as stdout:
+                rc = selector.main(["--root", str(root), "--quota", "1"])
 
             self.assertEqual(rc, 0)
+            mocked_load.assert_called_once_with(root)
+            self.assertIn('"mode": "read_only"', stdout.getvalue())
             self.assertEqual(sentinel.read_text(encoding="utf-8"), "unchanged")
+            self.assertEqual(list(root.iterdir()), [sentinel])
 
 
 if __name__ == "__main__":

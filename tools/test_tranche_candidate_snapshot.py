@@ -10,6 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import build_tranche_candidate_snapshot as snapshot
+import fusha_pattern_engine
 
 
 class TrancheCandidateSnapshotTests(unittest.TestCase):
@@ -19,7 +20,15 @@ class TrancheCandidateSnapshotTests(unittest.TestCase):
 
         self.assertEqual(len(by_id), 5)
         self.assertFalse(report["public_projection_eligible"])
-        self.assertEqual(by_id["mulk-final-kaf"]["status"], "regression_detected")
+        self.assertEqual(report["analysis_database"], "largelexicon")
+        self.assertEqual(
+            by_id["mulk-final-kaf"]["status"], "analysis_gap_detected"
+        )
+        self.assertEqual(
+            by_id["mulk-final-kaf"]["after"]["analysis_database"],
+            "largelexicon",
+        )
+        self.assertEqual(by_id["mulk-final-kaf"]["after"]["roles"], [])
         self.assertEqual(
             by_id["relative-alladhina"]["after"]["roles"], ["stem"]
         )
@@ -31,6 +40,10 @@ class TrancheCandidateSnapshotTests(unittest.TestCase):
             ["negation", "relative"],
         )
         self.assertTrue(by_id["geminate-jussive-rivals"]["after"]["held"])
+
+    def test_unknown_lexicon_database_fails_closed(self):
+        with self.assertRaisesRegex(ValueError, "unsupported lexicon database"):
+            fusha_pattern_engine._load_lexicon(db="full")
 
 
 if __name__ == "__main__":

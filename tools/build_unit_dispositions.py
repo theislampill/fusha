@@ -212,6 +212,12 @@ def build(bindings=None):
         row["fully_operationalized_basis"] = result[
             "fully_operationalized_basis"
         ]
+        row["occurrence_grounding_parked"] = result[
+            "occurrence_grounding_parked"
+        ]
+        row["satisfied_vacuously_dimension_ids"] = result[
+            "satisfied_vacuously_dimension_ids"
+        ]
         row["closure_dimensions"] = result["dimensions"]
         row["incomplete_closure_dimensions"] = result[
             "incomplete_dimensions"
@@ -259,6 +265,15 @@ def build(bindings=None):
             consumer_truth["pending_unit_ids_by_plane"].values()),
         "units_fully_operationalized": closure_report[
             "units_fully_operationalized"
+        ],
+        "units_closed_with_parked_occurrence_grounding": closure_report[
+            "units_closed_with_parked_occurrence_grounding"
+        ],
+        "units_closed_with_vacuous_dimensions": closure_report[
+            "units_closed_with_vacuous_dimensions"
+        ],
+        "unit_ids_closed_with_vacuous_dimensions": closure_report[
+            "unit_ids_closed_with_vacuous_dimensions"
         ],
         "units_partially_operationalized": sum(
             1

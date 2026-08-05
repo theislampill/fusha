@@ -1372,6 +1372,71 @@ def check_runtime_truth_consistency(readiness, derived_runtime, drill_meta,
         errors.append("absorption: candidate drill specifications were promoted")
 
 
+OPERATIONALIZATION_CLOSURE_DIMENSIONS = frozenset({
+    "machine_execution",
+    "runtime_misconceptions",
+    "error_fixtures",
+    "consumer_bindings",
+    "occurrence_grounding",
+})
+
+
+def derive_operationalization_closure(unit_rows, lesson_unit_rows, errors):
+    """Independently derive effective unit and lesson closure for validation."""
+    closed_units = set()
+    for row in unit_rows:
+        unit_id = row.get("unit_id")
+        dimensions = row.get("closure_dimensions") or {}
+        dimension_names = set(dimensions)
+        has_complete_dimensions = (
+            dimension_names == OPERATIONALIZATION_CLOSURE_DIMENSIONS
+        )
+        expected_closed = has_complete_dimensions and all(
+            dimensions[name].get("satisfied") is True
+            for name in OPERATIONALIZATION_CLOSURE_DIMENSIONS
+        )
+        declared_closed = row.get("fully_operationalized") is True
+        if declared_closed != expected_closed:
+            errors.append(
+                "absorption: unit %s declared closure %r != independent %r"
+                % (unit_id, declared_closed, expected_closed)
+            )
+        if declared_closed and not has_complete_dimensions:
+            errors.append(
+                "absorption: unit %s closed without all closure dimensions"
+                % unit_id
+            )
+            continue
+        if not expected_closed:
+            continue
+        occurrence_parked = (
+            dimensions["occurrence_grounding"].get("disposition") == "parked"
+        )
+        expected_prefix = (
+            "all_non_occurrence_dimensions_satisfied_"
+            "occurrence_grounding_parked:sha256:"
+            if occurrence_parked
+            else "all_required_dimensions_satisfied:sha256:"
+        )
+        if not str(row.get("fully_operationalized_basis", "")).startswith(
+            expected_prefix
+        ):
+            errors.append(
+                "absorption: unit %s closure basis does not match dimensions"
+                % unit_id
+            )
+            continue
+        closed_units.add(unit_id)
+
+    closed_lessons = set()
+    for row in lesson_unit_rows:
+        lesson_id = row.get("lesson_id")
+        unit_ids = set(row.get("units") or [])
+        if unit_ids and unit_ids.issubset(closed_units):
+            closed_lessons.add(lesson_id)
+    return closed_units, closed_lessons
+
+
 def check_absorption(ctx, errors):
     """Full-curriculum gates: 226 controlling rows, closed states, no empty
     next actions, zero unclassified sections, live recompute parity, queue
@@ -1402,6 +1467,11 @@ def check_absorption(ctx, errors):
     if not led_p.exists():
         return
     ledger = _jsonl(led_p)
+    unit_rows = _jsonl(BASE / "canonical" / "unit-dispositions.jsonl")
+    lesson_unit_rows = _jsonl(BASE / "canonical" / "lesson-unit-map.jsonl")
+    _, independently_closed_lessons = derive_operationalization_closure(
+        unit_rows, lesson_unit_rows, errors
+    )
     lesson_ids = {l["lesson_id"] for l in ctx["lessons"]}
     led_ids = {r["lesson_id"] for r in ledger}
     if len(ledger) != len(lesson_ids):
@@ -1424,33 +1494,52 @@ def check_absorption(ctx, errors):
         check_runtime_truth_consistency(
             ready, derived_runtime, drill_meta, errors
         )
-        fully_closed = [
-            row
+        ledger_closed_lesson_ids = {
+            row["lesson_id"]
             for row in ledger
             if (row.get("consumer_operationalization") or {}).get(
                 "fully_operationalized"
             ) is True
-        ]
-        partially_closed = [
-            row
-            for row in ledger
-            if (row.get("consumer_operationalization") or {}).get("status")
-            == "partially_operationalized"
-        ]
-        if ready.get("lessons_fully_operationalized") != len(fully_closed):
+        }
+        if ledger_closed_lesson_ids != independently_closed_lessons:
             errors.append(
-                "absorption: fully operationalized lesson count %r != ledger %d"
-                % (ready.get("lessons_fully_operationalized"), len(fully_closed))
-            )
-        if ready.get("lessons_partially_operationalized") != len(partially_closed):
-            errors.append(
-                "absorption: partially operationalized lesson count %r != ledger %d"
+                "absorption: ledger closed lessons %r != independent %r"
                 % (
-                    ready.get("lessons_partially_operationalized"),
-                    len(partially_closed),
+                    sorted(ledger_closed_lesson_ids),
+                    sorted(independently_closed_lessons),
                 )
             )
-        if fully_closed and ready.get(
+        independently_partial_lessons = {
+            row["lesson_id"]
+            for row in ledger
+            if row["lesson_id"] not in independently_closed_lessons
+            and bool(
+                (row.get("consumer_operationalization") or {}).get(
+                    "real_binding_ids"
+                )
+            )
+        }
+        if ready.get("lessons_fully_operationalized") != len(
+            independently_closed_lessons
+        ):
+            errors.append(
+                "absorption: fully operationalized lesson count %r != independent %d"
+                % (
+                    ready.get("lessons_fully_operationalized"),
+                    len(independently_closed_lessons),
+                )
+            )
+        if ready.get("lessons_partially_operationalized") != len(
+            independently_partial_lessons
+        ):
+            errors.append(
+                "absorption: partially operationalized lesson count %r != independent %d"
+                % (
+                    ready.get("lessons_partially_operationalized"),
+                    len(independently_partial_lessons),
+                )
+            )
+        if independently_closed_lessons and ready.get(
             "lessons_fully_operationalized_basis"
         ) != "all_mapped_canonical_units_fully_operationalized":
             errors.append(

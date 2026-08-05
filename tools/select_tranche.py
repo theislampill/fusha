@@ -387,6 +387,10 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
             real_binding_ids_by_unit.setdefault(unit_id, []).append(row["binding_id"])
     for values in real_binding_ids_by_unit.values():
         values.sort()
+    closed_unit_ids = set(plan["baseline_closed_unit_ids"])
+    partial_real_consumer_unit_ids = (
+        set(real_binding_ids_by_unit) - closed_unit_ids
+    )
 
     target_unit_ids = list(closure.TRANCHE_001_UNIT_IDS)
     preserve_tranche_001 = set(target_unit_ids).issubset(dispositions)
@@ -482,7 +486,9 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
             "closed_unit_ids": plan["baseline_closed_unit_ids"],
             "closed_lesson_ids": plan["baseline_closed_lesson_ids"],
             "not_applicable_lesson_ids": plan["not_applicable_lesson_ids"],
-            "real_consumer_unit_ids_partial_only": sorted(real_binding_ids_by_unit),
+            "real_consumer_unit_ids_partial_only": sorted(
+                partial_real_consumer_unit_ids
+            ),
         },
         "units": unit_records,
         "contributing_lesson_ids": contributing_lessons,
@@ -539,7 +545,9 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
         "closed": len(plan["baseline_closed_unit_ids"]),
         "blocked": len(plan["blocked_unit_ids"]),
         "real_consumer_partial": len(
-            units_with_real_consumer.difference(plan["blocked_unit_ids"])
+            units_with_real_consumer.difference(
+                plan["blocked_unit_ids"], plan["baseline_closed_unit_ids"]
+            )
         ),
     }
     unit_counts["candidate_or_open"] = (
@@ -552,9 +560,14 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
         "current_state": {
             "lessons_total": len(inputs.lessons),
             "lessons_by_disposition": dict(sorted(disposition_counts.items())),
-            "lessons_with_real_consumer_partial_evidence": len(real_lesson_ids),
+            "lessons_with_real_consumer_partial_evidence": len(
+                set(real_lesson_ids) - set(plan["baseline_closed_lesson_ids"])
+            ),
             "units_total": len(inputs.unit_dispositions),
             "units_by_disposition": unit_counts,
+            "unit_overlays": {
+                "parked_occurrence_grounding": len(plan["parked_unit_ids"]),
+            },
             "readiness_report_lessons_fully_operationalized": (
                 inputs.readiness.get("lessons_fully_operationalized")
             ),
@@ -587,6 +600,12 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
             ),
             "blocked_lessons": len(blocked_lessons),
             "not_applicable_lessons": len(plan["not_applicable_lesson_ids"]),
+            "parked_occurrence_grounding_units": len(plan["parked_unit_ids"]),
+            "assumption": (
+                "projected lesson closure assumes units with parked occurrence "
+                "grounding satisfy every non-occurrence closure dimension; "
+                "parking is not occurrence evidence or certification"
+            ),
         },
         "current_tranche": {
             "tranche_id": "tranche-001",

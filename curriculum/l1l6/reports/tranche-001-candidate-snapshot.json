@@ -1,73 +1,25 @@
 {
+  "analysis_database": "largelexicon",
   "generator": "tools/build_tranche_candidate_snapshot.py",
   "posture": "candidate_owner_demo_not_public_projection",
   "probes": [
     {
       "after": {
+        "analysis_database": "largelexicon",
         "hover_preview": {
-          "context_notes": [
-            "attached pronoun changes the token contribution and cannot be hidden"
-          ],
-          "learner_explanation": "Token preview preserves visible grammar pieces.",
-          "morphline": "noun candidate from surface_candidate",
+          "context_notes": [],
+          "learner_explanation": "Multiple analyses compete here; keep the token pending until source/context evidence selects one.",
+          "morphline": "lexical collision requires context",
           "public_boundary": {
             "kind": "authored",
             "lang": "en",
             "src": "qamus"
           },
-          "segments": [
-            {
-              "class": "qg-article",
-              "gloss_contribution": "the",
-              "label": "ART",
-              "role": "definite_article",
-              "surface": "ٱلْ"
-            },
-            {
-              "class": "qg-noun-stem",
-              "gloss_contribution": null,
-              "label": "N",
-              "role": "stem",
-              "surface": "مُلْ"
-            },
-            {
-              "class": "qg-object-pronoun",
-              "gloss_contribution": "you",
-              "label": "OBJ",
-              "role": "object_pronoun",
-              "surface": "كُ"
-            }
-          ],
-          "token_contribution_gloss": "the + you"
+          "segments": [],
+          "token_contribution_gloss": null
         },
-        "roles": [
-          "definite_article",
-          "stem",
-          "object_pronoun"
-        ],
-        "segments": [
-          {
-            "class": "qg-article",
-            "gloss_contribution": "the",
-            "label": "ART",
-            "role": "definite_article",
-            "surface": "ٱلْ"
-          },
-          {
-            "class": "qg-noun-stem",
-            "gloss_contribution": null,
-            "label": "N",
-            "role": "stem",
-            "surface": "مُلْ"
-          },
-          {
-            "class": "qg-object-pronoun",
-            "gloss_contribution": "you",
-            "label": "OBJ",
-            "role": "object_pronoun",
-            "surface": "كُ"
-          }
-        ]
+        "roles": [],
+        "segments": []
       },
       "before": {
         "defect": "article or root-final kaf could be swallowed by a false clitic split",
@@ -75,15 +27,16 @@
       },
       "next_owner": "tools/fusha_pattern_engine.py",
       "probe_id": "mulk-final-kaf",
-      "status": "regression_detected",
+      "status": "analysis_gap_detected",
       "surface": "ٱلْمُلْكُ"
     },
     {
       "after": {
+        "analysis_database": "largelexicon",
         "hover_preview": {
           "context_notes": [],
-          "learner_explanation": "Token preview preserves visible grammar pieces.",
-          "morphline": "unknown candidate from surface_candidate",
+          "learner_explanation": "Context is needed before this can become a certified token hover.",
+          "morphline": "particle candidate from largelexicon_full",
           "public_boundary": {
             "kind": "authored",
             "lang": "en",
@@ -91,23 +44,23 @@
           },
           "segments": [
             {
-              "class": "qg-noun-stem",
-              "gloss_contribution": null,
-              "label": "N",
+              "class": "qg-particle",
+              "gloss_contribution": "those who",
+              "label": "PART",
               "role": "stem",
               "surface": "ٱلَّذِينَ"
             }
           ],
-          "token_contribution_gloss": "surface candidate"
+          "token_contribution_gloss": "those who"
         },
         "roles": [
           "stem"
         ],
         "segments": [
           {
-            "class": "qg-noun-stem",
-            "gloss_contribution": null,
-            "label": "N",
+            "class": "qg-particle",
+            "gloss_contribution": "those who",
+            "label": "PART",
             "role": "stem",
             "surface": "ٱلَّذِينَ"
           }
@@ -123,6 +76,7 @@
     },
     {
       "after": {
+        "analysis_database": "largelexicon",
         "hover_preview": {
           "context_notes": [],
           "learner_explanation": "Token preview preserves visible grammar pieces.",
@@ -205,9 +159,10 @@
   "public_projection_eligible": false,
   "schema": "curriculum.l1l6_tranche_candidate_snapshot.v1",
   "summary": {
+    "analysis_gaps_detected": 1,
     "improved": 2,
     "probes": 5,
-    "regressions_detected": 1,
+    "regressions_detected": 0,
     "rivals_preserved": 2
   },
   "tranche_id": "tranche-001"

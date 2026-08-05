@@ -511,8 +511,13 @@ def build(ctx, unit_dispositions=None):
                     if lid in runtime_lesson_kcs else None
                 ),
                 "lesson_contribution_operationalized": bool(tutor_binding_ids),
-                "lesson_content_fully_operationalized": (
+                "mapped_unit_closure_reached": (
                     lid in fully_operationalized_lesson_ids
+                ),
+                "mapped_unit_closure_basis": (
+                    lesson_closure["basis"]
+                    if lid in fully_operationalized_lesson_ids
+                    else "mapped_units_incomplete"
                 ),
             },
             "consumer_operationalization": {

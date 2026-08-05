@@ -22,6 +22,7 @@ from tools import normalize_ar as N  # noqa: E402
 LEXICON_PATH = os.path.join(_REPO, "fusha", "lexicon", "fusha-lemmas.jsonl")
 LARGELEXICON_SAMPLE_PATH = os.path.join(_REPO, "fusha", "lexicon", "largelexicon", "lemma-source.sample.jsonl")
 LARGELEXICON_FULL_PATH = os.path.join(_REPO, "fusha", "lexicon", "largelexicon", "lemma-source.full.jsonl")
+SUPPORTED_DATABASES = frozenset({"smoke", "largelexicon"})
 
 FUNCTION_WORDS = {
     "ما": ("particle", "function-sensitive mā"),
@@ -49,6 +50,11 @@ INNER_PRONOUNS = ("هما", "هم", "كم", "كن", "ها", "نا", "ه", "ك", 
 
 
 def _load_lexicon(path=LEXICON_PATH, db="smoke"):
+    if db not in SUPPORTED_DATABASES:
+        raise ValueError(
+            "unsupported lexicon database %r; expected one of %s"
+            % (db, ", ".join(sorted(SUPPORTED_DATABASES)))
+        )
     rows = []
     if not os.path.exists(path):
         return rows

@@ -32,7 +32,12 @@
     "fixture_source_candidate": 18
   },
   "strongest_sums_to_units": true,
+  "unit_ids_closed_with_vacuous_dimensions": [
+    "cu-nunation-support-orthography"
+  ],
   "units": 166,
+  "units_closed_with_parked_occurrence_grounding": 0,
+  "units_closed_with_vacuous_dimensions": 1,
   "units_fully_operationalized": 5,
   "units_partially_operationalized": 3
 }

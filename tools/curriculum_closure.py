@@ -90,17 +90,35 @@ def close_from_dimensions(dimensions: list[dict]) -> dict:
         if name not in by_name or by_name[name].get("satisfied") is not True
     ]
     fully = not incomplete
+    occurrence_parked = fully and any(
+        row.get("dimension") == "occurrence_grounding"
+        and row.get("disposition") == "parked"
+        for row in dimensions
+    )
+    vacuous_dimensions = sorted(
+        row["dimension"]
+        for row in dimensions
+        if row.get("satisfied_vacuously") is True
+    )
     basis_payload = json.dumps(
         dimensions, ensure_ascii=False, sort_keys=True, separators=(",", ":")
     ).encode("utf-8")
+    if fully and occurrence_parked:
+        basis_prefix = (
+            "all_non_occurrence_dimensions_satisfied_"
+            "occurrence_grounding_parked:sha256:"
+        )
+    else:
+        basis_prefix = "all_required_dimensions_satisfied:sha256:"
     return {
         "fully_operationalized": fully,
         "fully_operationalized_basis": (
-            "all_required_dimensions_satisfied:sha256:"
-            + hashlib.sha256(basis_payload).hexdigest()
+            basis_prefix + hashlib.sha256(basis_payload).hexdigest()
             if fully
             else "incomplete_dimensions:" + ",".join(incomplete)
         ),
+        "occurrence_grounding_parked": occurrence_parked,
+        "satisfied_vacuously_dimension_ids": vacuous_dimensions,
         "incomplete_dimensions": incomplete,
         "missing_dimensions": missing,
     }
@@ -152,6 +170,14 @@ def _runtime_dimension(
     return {
         "dimension": "runtime_misconceptions",
         "satisfied": not missing,
+        "satisfied_vacuously": not required,
+        "satisfaction_basis": (
+            "vacuous_no_required_misconceptions"
+            if not required
+            else "all_required_misconceptions_covered"
+            if not missing
+            else "required_misconceptions_missing"
+        ),
         "total": len(required),
         "covered": len(required & covered),
         "missing_ids": missing,
@@ -180,6 +206,14 @@ def _error_fixture_dimension(
     return {
         "dimension": "error_fixtures",
         "satisfied": not missing,
+        "satisfied_vacuously": not expected,
+        "satisfaction_basis": (
+            "vacuous_no_expected_error_rows"
+            if not expected
+            else "all_expected_error_rows_traced"
+            if not missing
+            else "expected_error_rows_missing"
+        ),
         "total": len(expected),
         "traced": len(expected & traced),
         "missing_queue_row_ids": missing,
@@ -286,6 +320,12 @@ def build(disposition_rows: list[dict] | None = None) -> dict:
             "fully_operationalized_basis": result[
                 "fully_operationalized_basis"
             ],
+            "occurrence_grounding_parked": result[
+                "occurrence_grounding_parked"
+            ],
+            "satisfied_vacuously_dimension_ids": result[
+                "satisfied_vacuously_dimension_ids"
+            ],
             "incomplete_dimensions": result["incomplete_dimensions"],
             "dimensions": {
                 row["dimension"]: {
@@ -303,6 +343,24 @@ def build(disposition_rows: list[dict] | None = None) -> dict:
         "units_total": len(rows),
         "units_fully_operationalized": sum(
             1 for row in rows if row["fully_operationalized"]
+        ),
+        "units_closed_with_parked_occurrence_grounding": sum(
+            1
+            for row in rows
+            if row["fully_operationalized"]
+            and row["occurrence_grounding_parked"]
+        ),
+        "units_closed_with_vacuous_dimensions": sum(
+            1
+            for row in rows
+            if row["fully_operationalized"]
+            and row["satisfied_vacuously_dimension_ids"]
+        ),
+        "unit_ids_closed_with_vacuous_dimensions": sorted(
+            row["unit_id"]
+            for row in rows
+            if row["fully_operationalized"]
+            and row["satisfied_vacuously_dimension_ids"]
         ),
     }
 

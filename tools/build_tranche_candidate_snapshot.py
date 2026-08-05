@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = Path(
     "curriculum/l1l6/reports/tranche-001-candidate-snapshot.json"
 )
+ANALYSIS_DATABASE = "largelexicon"
 
 
 def _jsonl(path: Path) -> list[dict]:
@@ -25,9 +26,12 @@ def _jsonl(path: Path) -> list[dict]:
 
 
 def _parse(surface: str) -> dict:
-    token = fusha_standalone_parse.parse_text(surface, db="full")["tokens"][0]
+    token = fusha_standalone_parse.parse_text(
+        surface, db=ANALYSIS_DATABASE
+    )["tokens"][0]
     segments = token.get("qg_segments") or []
     return {
+        "analysis_database": ANALYSIS_DATABASE,
         "roles": [row.get("role") for row in segments],
         "segments": segments,
         "hover_preview": token.get("hover_preview"),
@@ -65,6 +69,8 @@ def build() -> dict:
             "status": (
                 "improved"
                 if mulk_roles == ["definite_article", "stem"]
+                else "analysis_gap_detected"
+                if not mulk_roles
                 else "regression_detected"
             ),
             "next_owner": (
@@ -137,6 +143,7 @@ def build() -> dict:
         "tranche_id": "tranche-001",
         "posture": "candidate_owner_demo_not_public_projection",
         "public_projection_eligible": False,
+        "analysis_database": ANALYSIS_DATABASE,
         "probes": probes,
         "summary": {
             "probes": len(probes),
@@ -146,6 +153,9 @@ def build() -> dict:
             ),
             "regressions_detected": sum(
                 row["status"] == "regression_detected" for row in probes
+            ),
+            "analysis_gaps_detected": sum(
+                row["status"] == "analysis_gap_detected" for row in probes
             ),
         },
     }

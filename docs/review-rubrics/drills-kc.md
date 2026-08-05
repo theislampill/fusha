@@ -99,3 +99,7 @@ Record findings by stable class so recurrence can be measured across tranches.
   identical settled conclusion or exhaustive count in different words, has not closed the finding — it has
   relocated it. Match by MEANING (a closed set of paraphrases: "form X is simply indicative, not a jussive",
   "this cell has its own N licensed shapes"), not by the one exact phrase the finding happened to quote.
+- **closure-plane-name-collision**: never reuse a tutor-runtime field name for
+  all-unit curriculum closure. Keep runtime lesson-content truth distinct from
+  mapped-unit closure, attach the latter's exact basis, and exclude fully
+  closed lessons or units from every count labelled partial.
