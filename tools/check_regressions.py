@@ -819,9 +819,14 @@ except Exception:
 
 try:
     _report_dir = os.path.join(_R, "qamus", "reports")
+    # The dated 2026-06-27 RICH-CERT evidence was quarantined into
+    # qamus/reports/history/ on 2026-08-05 (repo-organization hygiene). Scan both
+    # the top level and history/ so the count stays placement-independent.
     _rich_cert_reports = [
-        os.path.join(_report_dir, _name)
-        for _name in os.listdir(_report_dir)
+        os.path.join(_dir, _name)
+        for _dir in (_report_dir, os.path.join(_report_dir, "history"))
+        if os.path.isdir(_dir)
+        for _name in os.listdir(_dir)
         if _name.endswith(".md")
         and (_name.startswith("p-rich-cert-") or _name.startswith("vn-rich-cert-"))
     ]
@@ -4279,6 +4284,10 @@ try:
     _phantom_citation_hits = []
     _docs_dir = os.path.join(ROOT, "docs")
     for _dirpath, _dirnames, _filenames in os.walk(_docs_dir):
+        # docs/reports/history holds quarantined point-in-time evidence (banner-marked,
+        # moved 2026-08-05); RM-07 governs CURRENT docs only.
+        if os.path.join("docs", "reports", "history") in os.path.relpath(_dirpath, ROOT):
+            continue
         for _filename in _filenames:
             _path = os.path.join(_dirpath, _filename)
             with io.open(_path, "rb") as _f:
@@ -6354,11 +6363,11 @@ try:
         sys.executable,
         os.path.join(ROOT, "tools", "validate_vn_ledger.py"),
         "--ledger",
-        os.path.join(ROOT, "vn-ledger.jsonl"),
+        os.path.join(ROOT, "qamus/reports/vn-ledger.jsonl"),
         "--metrics",
-        os.path.join(ROOT, "vn-graph-metrics.json"),
+        os.path.join(ROOT, "qamus/reports/vn-graph-metrics.json"),
         "--matrix",
-        os.path.join(ROOT, "vn-readiness-matrix.json"),
+        os.path.join(ROOT, "qamus/reports/vn-readiness-matrix.json"),
         "--structure-only",
     ], timeout=120)
     check(

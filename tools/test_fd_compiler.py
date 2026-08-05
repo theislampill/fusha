@@ -194,7 +194,7 @@ class SufahaCompilerTests(unittest.TestCase):
 
 class CandidateMatrixTests(unittest.TestCase):
     def test_report_has_exactly_the_twelve_requested_metrics(self) -> None:
-        report = json.loads((ROOT / "fd-455-report.json").read_text(encoding="utf-8"))
+        report = json.loads((ROOT / "qamus/reports/calibration-455/fd-455-report.json").read_text(encoding="utf-8"))
         expected = {
             "rows compiling successfully",
             "rows failing linguistic consistency",
@@ -213,7 +213,7 @@ class CandidateMatrixTests(unittest.TestCase):
         self.assertEqual(report["verified_row_count"], 455)
 
     def test_verdicts_are_reproducible_jsonl_and_have_primary_blockers(self) -> None:
-        path = ROOT / "fd-455-verdicts.jsonl"
+        path = ROOT / "qamus/reports/calibration-455/fd-455-verdicts.jsonl"
         rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
         self.assertEqual(len(rows), 455)
         self.assertTrue(all(row["compile_mode"] == "candidate" for row in rows))

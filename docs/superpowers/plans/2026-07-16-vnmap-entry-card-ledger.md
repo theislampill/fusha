@@ -202,7 +202,7 @@ Expected: focused suite and self-test both exit 0.
 - Create: `vn-ledger.jsonl`
 - Create: `vn-graph-metrics.json`
 - Create: `vn-readiness-matrix.json`
-- Create: `VNMAP-REPORT.md`
+- Create: `docs/reports/history/2026-07-29-VNMAP-REPORT.md`
 - Modify: `tools/check_regressions.py`
 
 **Interfaces:**

@@ -80,7 +80,7 @@
 - Create: `qamus/examples/fam5-derived-verbs/generated/derived-verb-facts.jsonl`
 - Create: `qamus/examples/fam5-derived-verbs/generated/unresolved-records.jsonl`
 - Create: `qamus/examples/fam5-derived-verbs/generated/calibration-summary.json`
-- Create: `FAM5-REPORT.md`
+- Create: `docs/reports/history/2026-07-17-FAM5-REPORT.md`
 
 **Interfaces:**
 - `tools/build_fam5_report.py` accepts the lane STRAT/v575 inputs, read-only corpus entries/whitelist, and the committed FAM4 packet; it writes only the FAM5 generated directory and report.

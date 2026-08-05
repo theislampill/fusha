@@ -37,7 +37,7 @@
     "vowel_preserving_surface_drift": 385,
     "wbw_slice_reference_artifact": 7
   },
-  "generated_by": "qamus/reports/rm36-residual-closure/build_rm36_residual_closure.py",
+  "generated_by": "tools/build_rm36_residual_closure.py",
   "inputs": {
     "demotion_report": {
       "path": "qamus/reports/rm36-fallback-reverification/demotion-wave.report.json",
@@ -60,14 +60,9 @@
     "prior_residual_report": {
       "path": "qamus/reports/rm36-fallback-reverification/residual-reclassification.report.json",
       "sha256": "2f88386232cfbe3de5101214c5591810997596281ee4666631a780f809587b79"
-    },
-    "report_directory_git_attributes": {
-      "path": "qamus/reports/rm36-residual-closure/.gitattributes",
-      "sha256": "fb9a23962ad7ca9cb58a26f88c6abf27a576726f1d56b49a16e9f890ee7f8717"
     }
   },
   "method": {
-    "check_regressions_proposed_hunk": "qamus/reports/rm36-residual-closure/check-regressions.proposed.patch",
     "closure_rule": "canonical_quran_loc plus vowel-preserving exact surface join",
     "exception_rule": "no generic unverifiable state; exact pair and concrete cause required",
     "normalizer": "tools.validate_largelexicon_denominator_join._join_surface_key"
@@ -236,7 +231,7 @@
   "output": {
     "residual_artifact": "qamus/reports/rm36-residual-closure/residual-closure.jsonl",
     "residual_artifact_row_count": 479,
-    "residual_artifact_sha256": "4f7ce3f1e1c78a655cd481a51a322f7e8a0a6ed992c6f70580dd603b243846e0"
+    "residual_artifact_sha256": "fd330d7c9fc1c3dd7809feff9873a4158f8a6f103d7ded8ebd8efd303abc8166"
   },
   "schema": "fusha/rm36-residual-closure-report@1",
   "scope": {

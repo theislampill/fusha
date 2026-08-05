@@ -967,7 +967,7 @@ def _input_evidence():
         "crosswalk": "EDGES/full-artifacts/lexeme-entry-crosswalk.forward.jsonl",
         "debt": "EDGES/full-artifacts/debt-classification.jsonl",
         "famwide": "FAMWIDE/famwide-strat.jsonl",
-        "baseline": "vn-readiness-matrix.json",
+        "baseline": "qamus/reports/vn-readiness-matrix.json",
     }
 
 

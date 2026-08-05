@@ -61,7 +61,7 @@ fixtures.
 
 Files: `tools/build_fam4_report.py`,
 `qamus/examples/fam4-finite-verbs/generated/*`,
-`qamus/examples/fam4-finite-verbs/README.md`, and `FAM4-REPORT.md`.
+`qamus/examples/fam4-finite-verbs/README.md`, and `docs/reports/history/2026-07-17-FAM4-REPORT.md`.
 
 Run the producer with explicit lane inputs and read-only corpus paths. Commit
 only typed packet outputs, the per-row survey, precision/abstention summary,

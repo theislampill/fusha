@@ -1,3 +1,6 @@
+> **Historical audit snapshot** (2026-06-25, superseded 2026-08-05). Point-in-time evidence;
+> current repo state lives in `docs/current-state.yaml`. Do not quote tallies from this file.
+
 # Repo state and curriculum mission audit — 2026-06-25
 
 This audit records the current public-repo state that the curriculum and drills

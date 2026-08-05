@@ -1768,8 +1768,8 @@ def compile_fd2_rows(
             FD2_METRIC_KEYS[11]: "Rows where a generated producer/view surface conflicts with the canonical source surface.",
             FD2_METRIC_KEYS[12]: "Producer exceptions or positive records that violate their typed-output contract; guarded abstentions are not defects.",
         },
-        "verdicts_artifact": "fd2-455-verdicts.jsonl",
-        "verdicts_meta_artifact": "fd2-455-verdicts.meta.json",
+        "verdicts_artifact": "qamus/reports/calibration-455/fd2-455-verdicts.jsonl",
+        "verdicts_meta_artifact": "qamus/reports/calibration-455/fd2-455-verdicts.meta.json",
         "live_mutation_allowed": False,
     }
     return matrix, report
@@ -1957,8 +1957,8 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--entries", type=Path)
     parser.add_argument("--v575-verdicts", type=Path)
     parser.add_argument("--output-dir", type=Path, default=ROOT / "qamus" / "examples" / "fd")
-    parser.add_argument("--report", type=Path, default=ROOT / "fd-455-report.json")
-    parser.add_argument("--verdict-output", type=Path, default=ROOT / "fd-455-verdicts.jsonl")
+    parser.add_argument("--report", type=Path, default=ROOT / "qamus/reports/calibration-455/fd-455-report.json")
+    parser.add_argument("--verdict-output", type=Path, default=ROOT / "qamus/reports/calibration-455/fd-455-verdicts.jsonl")
     parser.add_argument("--font-source", type=Path)
     return parser
 

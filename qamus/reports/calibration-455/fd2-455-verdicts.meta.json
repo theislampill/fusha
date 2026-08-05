@@ -1,5 +1,5 @@
 {
-  "artifact": "fd2-455-verdicts.jsonl",
+  "artifact": "qamus/reports/calibration-455/fd2-455-verdicts.jsonl",
   "candidate_only": true,
   "count": 455,
   "generator": "tools.fd2_rerun",

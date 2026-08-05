@@ -7,10 +7,14 @@ import json
 from pathlib import Path
 from typing import Any
 
+# Moved-report banner: emitted by the generator so regeneration stays byte-identical.
+HISTORICAL_BANNER = ("> **Historical lane report** (moved from the repo root 2026-08-05). Point-in-time evidence; tallies herein are superseded — current state lives in `docs/current-state.yaml` and the generated ledgers. Do not quote numbers from this file.\n\n")
+
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SUMMARY = ROOT / "qamus" / "examples" / "fam5-derived-verbs" / "generated" / "calibration-summary.json"
-DEFAULT_OUTPUT = ROOT / "FAM5-REPORT.md"
+DEFAULT_OUTPUT = ROOT / "docs" / "reports" / "history" / "2026-07-17-FAM5-REPORT.md"
 
 
 def _json(path: Path) -> dict[str, Any]:
@@ -152,7 +156,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--summary", type=Path, default=DEFAULT_SUMMARY)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args(argv)
-    args.output.write_text(render(_json(args.summary)), encoding="utf-8", newline="\n")
+    args.output.write_text(HISTORICAL_BANNER + render(_json(args.summary)), encoding="utf-8", newline="\n")
     print(args.output)
     return 0
 

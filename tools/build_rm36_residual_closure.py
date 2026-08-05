@@ -12,7 +12,10 @@ from typing import Any, Iterable
 
 
 HERE = Path(__file__).resolve().parent
-REPO_ROOT = HERE.parents[2]
+# Moved from qamus/reports/rm36-residual-closure/ to tools/ on 2026-08-05: code does
+# not live in the evidence tree. The emitted artifacts stay in the report directory.
+REPO_ROOT = HERE.parent
+REPORT_DIR = REPO_ROOT / "qamus/reports/rm36-residual-closure"
 TOOLS = REPO_ROOT / "tools"
 if str(TOOLS) not in sys.path:
     sys.path.insert(0, str(TOOLS))
@@ -27,16 +30,17 @@ PRIOR_REPORT_PATH = REPO_ROOT / "qamus/reports/rm36-fallback-reverification/resi
 INDEX_PATH = REPO_ROOT / "qamus/indexes/quran-loc-surface/index.jsonl"
 INDEX_MANIFEST_PATH = REPO_ROOT / "qamus/indexes/quran-loc-surface/index.manifest.json"
 CROSSWALK_DIR = REPO_ROOT / "qamus/indexes/largelexicon/qword-crosswalk"
-REPORT_PATH = HERE / "rm36-residual-closure.report.json"
-RESIDUAL_PATH = HERE / "residual-closure.jsonl"
-MANIFEST_PATH = HERE / "rm36-residual-closure.manifest.json"
-HUNK_PATH = HERE / "check-regressions.proposed.patch"
-ATTRIBUTES_PATH = HERE / ".gitattributes"
+REPORT_PATH = REPORT_DIR / "rm36-residual-closure.report.json"
+RESIDUAL_PATH = REPORT_DIR / "residual-closure.jsonl"
+MANIFEST_PATH = REPORT_DIR / "rm36-residual-closure.manifest.json"
+# The proposed check_regressions hunk and the dir-local .gitattributes that kept its
+# bytes unnormalized were dropped on 2026-08-05: the hunk was never applied and the
+# report directory now holds evidence only.
 
 SCHEMA_ROW = "fusha/rm36-residual-closure-row@1"
 SCHEMA_REPORT = "fusha/rm36-residual-closure-report@1"
 SCHEMA_MANIFEST = "fusha/rm36-residual-closure-manifest@1"
-GENERATOR = "qamus/reports/rm36-residual-closure/build_rm36_residual_closure.py"
+GENERATOR = "tools/build_rm36_residual_closure.py"
 BASELINE_HEAD = "949b3212034dfc361352aa280c0c8ddbe3560417"
 PR53_MERGE_COMMIT = "cce73d4"
 PR53_DATA_COMMIT = "d70efb2f13df26acc6ecf77f9826d1a3e4975643"
@@ -58,33 +62,6 @@ TERMINAL_ORDER = {
 
 def complete_terminal_counts(counts: Counter[str]) -> dict[str, int]:
     return {terminal_class: counts.get(terminal_class, 0) for terminal_class in sorted(TERMINAL_ORDER)}
-
-
-def proposed_regression_hunk_bytes() -> bytes:
-    return """diff --git a/tools/check_regressions.py b/tools/check_regressions.py
---- a/tools/check_regressions.py
-+++ b/tools/check_regressions.py
-@@ -4832,6 +4832,19 @@ except Exception as _e:
-     check("RM-36 fallback re-verifier self-test (harness error)", False)
-     print("  ", _e)
- try:
-+    _rm36c_dir = os.path.join(ROOT, "qamus", "reports", "rm36-residual-closure")
-+    _rm36c_test = run_text([
-+        sys.executable, os.path.join(_rm36c_dir, "test_build_rm36_residual_closure.py")
-+    ])
-+    check("RM-36 residual closure tests", _rm36c_test.returncode == 0)
-+    _rm36c_check = run_text([
-+        sys.executable, os.path.join(_rm36c_dir, "build_rm36_residual_closure.py"), "--check"
-+    ])
-+    check("RM-36 residual closure artifacts", _rm36c_check.returncode == 0)
-+except Exception as _e:
-+    check("RM-36 residual closure harness error", False)
-+    print("  ", _e)
-+try:
-     _residue = run_text([sys.executable, os.path.join(ROOT, "tools", "resolve_gap_residue_wave.py"), "--self-test"])
-     check("T10 residue + RM-36 demotion self-test (red-first exclusions)", _residue.returncode == 0)
- except Exception as _e:
-""".encode("utf-8")
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -389,7 +366,6 @@ def build() -> tuple[bytes, bytes, bytes, bytes, dict[str, Any]]:
         for row in active_rows
         if row["terminal_class"] == "exception" and row["exception"]["owner_gated_data_fix"]
     ]
-    hunk_bytes = proposed_regression_hunk_bytes()
     report = {
         "baseline_head": BASELINE_HEAD,
         "correction_pr_53": {
@@ -437,13 +413,8 @@ def build() -> tuple[bytes, bytes, bytes, bytes, dict[str, Any]]:
                 "path": PRIOR_REPORT_PATH.relative_to(REPO_ROOT).as_posix(),
                 "sha256": sha256_file(PRIOR_REPORT_PATH),
             },
-            "report_directory_git_attributes": {
-                "path": ATTRIBUTES_PATH.relative_to(REPO_ROOT).as_posix(),
-                "sha256": sha256_file(ATTRIBUTES_PATH),
-            },
         },
         "method": {
-            "check_regressions_proposed_hunk": HUNK_PATH.relative_to(REPO_ROOT).as_posix(),
             "closure_rule": "canonical_quran_loc plus vowel-preserving exact surface join",
             "exception_rule": "no generic unverifiable state; exact pair and concrete cause required",
             "normalizer": "tools.validate_largelexicon_denominator_join._join_surface_key",
@@ -477,7 +448,6 @@ def build() -> tuple[bytes, bytes, bytes, bytes, dict[str, Any]]:
                 PRIOR_REPORT_PATH,
                 INDEX_PATH,
                 INDEX_MANIFEST_PATH,
-                ATTRIBUTES_PATH,
             ]
         },
         "outputs": {
@@ -490,10 +460,6 @@ def build() -> tuple[bytes, bytes, bytes, bytes, dict[str, Any]]:
                 "row_count": len(terminal_rows),
                 "sha256": sha256_bytes(residual_bytes),
             },
-            HUNK_PATH.relative_to(REPO_ROOT).as_posix(): {
-                "bytes": len(hunk_bytes),
-                "sha256": sha256_bytes(hunk_bytes),
-            },
         },
         "schema": SCHEMA_MANIFEST,
     }
@@ -503,7 +469,7 @@ def build() -> tuple[bytes, bytes, bytes, bytes, dict[str, Any]]:
         "exception_cause_counts": dict(sorted(exception_counts.items())),
         "new_owner_gated_canonical_data_defects_count": len(owner_gated_defects),
     }
-    return report_bytes, residual_bytes, manifest_bytes, hunk_bytes, summary
+    return report_bytes, residual_bytes, manifest_bytes, summary
 
 
 def write_if_changed(path: Path, data: bytes) -> None:
@@ -513,12 +479,11 @@ def write_if_changed(path: Path, data: bytes) -> None:
 
 
 def run(check: bool) -> int:
-    report_bytes, residual_bytes, manifest_bytes, hunk_bytes, summary = build()
+    report_bytes, residual_bytes, manifest_bytes, summary = build()
     outputs = {
         REPORT_PATH: report_bytes,
         RESIDUAL_PATH: residual_bytes,
         MANIFEST_PATH: manifest_bytes,
-        HUNK_PATH: hunk_bytes,
     }
     if check:
         mismatches = [path for path, data in outputs.items() if not path.exists() or path.read_bytes() != data]

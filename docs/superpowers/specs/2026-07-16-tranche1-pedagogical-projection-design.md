@@ -87,5 +87,5 @@ The older rich-seg debt metadata records 34,322 rows and a different hash. This 
 - All named schemas preserve their existing validation behavior and the tranche schema closes the new carrier.
 - Both registered projector paths are exercised and every produced row has complete lineage.
 - The five named validators, parity/hash validator, phase-4 validator, human-review validator, tests, and artifact ergonomics checks pass, or an incomplete linguistic row is represented by the expected typed queue rather than a guessed projection.
-- `TRANCHE1-REPORT.md` records verbatim command output, the 4+4 table, `git log --stat`, risks, and exact nonclaims.
+- `docs/reports/history/2026-07-16-QAMUS-FIXTURE-TRANCHE1-REPORT.md` records verbatim command output, the 4+4 table, `git log --stat`, risks, and exact nonclaims.
 - All commits are local to `andon-tranche1`, prefixed `tranche1:`, with no push.

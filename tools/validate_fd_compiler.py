@@ -243,8 +243,8 @@ def validate_fixtures(
     payload_path: Path = FD_DIR / "sufaha-normalized-public-payload.json",
     parity_path: Path = FD_DIR / "sufaha-parity-fixture.json",
     html_path: Path = FD_DIR / "sufaha-card.html",
-    report_path: Path = _ROOT / "fd-455-report.json",
-    verdict_path: Path = _ROOT / "fd-455-verdicts.jsonl",
+    report_path: Path = _ROOT / "qamus/reports/calibration-455/fd-455-report.json",
+    verdict_path: Path = _ROOT / "qamus/reports/calibration-455/fd-455-verdicts.jsonl",
 ) -> list[str]:
     errors: list[str] = []
     contract = _load(contract_path)

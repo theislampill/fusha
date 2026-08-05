@@ -57,10 +57,11 @@ draws on, its drill, and its checkpoint, is in
 The first eight rungs build the machinery to read one āyah. Rungs 9–12 widen the reading from
 a single āyah to a root family, then to classical prose, and finally to the open corpus.
 
-## Current repo state this curriculum teaches from
+## Historical audit snapshot (2026-06-25, superseded — current state: docs/current-state.yaml)
 
-The current public `main` state audited on 2026-06-25 is recorded in
-[`repo-state-and-mission-audit-20260625.md`](repo-state-and-mission-audit-20260625.md). The
+The public `main` state audited on 2026-06-25 is recorded in
+[`repo-state-and-mission-audit-20260625.md`](repo-state-and-mission-audit-20260625.md). That
+audit is a point-in-time snapshot; for current repo state see `docs/current-state.yaml`. The
 short version: Fusha is no longer only a set of root and particle lessons. It now contains
 Qamus closure procedures for grammar-resource usage, source-triangulation boundaries,
 closure-lane routing, clitic/host morphology, governing-particle mood, `مَا` function

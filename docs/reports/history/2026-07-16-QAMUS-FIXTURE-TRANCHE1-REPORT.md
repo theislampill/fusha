@@ -1,3 +1,5 @@
+> **Historical lane report** (moved from the repo root 2026-08-05 and renamed from `TRANCHE1-REPORT.md` to `QAMUS-FIXTURE-TRANCHE1-REPORT.md`: this is a July 2026 qamus fixture-architecture proof, not the curriculum tranche-001 tracked under issue #163). Point-in-time evidence; tallies herein are superseded — current state lives in `docs/current-state.yaml` and the generated ledgers. Do not quote numbers from this file.
+
 # Tranche 1 implementation report
 
 ## Result
