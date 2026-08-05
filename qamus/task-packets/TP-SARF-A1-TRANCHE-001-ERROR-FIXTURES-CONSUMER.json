@@ -1,0 +1,161 @@
+{
+  "acceptance_tests": [
+    {
+      "name": "sarf eval runner all-bank mode",
+      "pass_condition": "exit 0 with the terminal line SARF EVAL RUNNER PASS",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    },
+    {
+      "name": "sarf eval runner unit suite",
+      "pass_condition": "unittest OK, including exact packet population binding",
+      "run": "python -m unittest tools.test_run_sarf_evals"
+    },
+    {
+      "name": "full regression harness",
+      "pass_condition": "ends ALL REGRESSION CHECKS PASS",
+      "run": "python tools/check_regressions.py"
+    }
+  ],
+  "canaries": {
+    "adversarial": [
+      {
+        "expectation": "a fixture-only row must remain undecided until the new consumer compares an observed analysis with the row's hostile distinction",
+        "id": "trf-b2-sarf-0001",
+        "source": "sarf/evals/tranche-001-error-fixtures-b2.jsonl"
+      }
+    ],
+    "positive": [
+      {
+        "expectation": "the consumer must preserve exact surface reconstruction while returning an explicit supported, rejected or abstained disposition",
+        "id": "trf-a-sarf-0001",
+        "source": "sarf/evals/tranche-001-error-fixtures-a.jsonl"
+      }
+    ]
+  },
+  "candidate_population": {
+    "population_source": "the three tranche-001 Sarf hostile-fixture banks",
+    "selection_rule": "all 99 rows in committed bank order; no sampling and no answer-key promotion",
+    "this_packet_size": 99,
+    "universe_size": 99
+  },
+  "commands": [
+    {
+      "expect": "exit 0; all three banks remain fixture_only before implementation",
+      "purpose": "measure the current structural and byte-exact routing coverage",
+      "run": "python tools/run_sarf_evals.py --all --strict"
+    },
+    {
+      "expect": "failure before a real comparison consumer exists",
+      "purpose": "red-first: require a consumer test that rejects a no-op or answer-echo implementation",
+      "run": "python -m unittest tools.test_tranche_001_error_fixture_consumer"
+    }
+  ],
+  "defeaters": [
+    "The fixture's expected distinction is test data, not evidence and not a certified occurrence fact.",
+    "A byte-exact segmentation alone does not decide the hostile linguistic distinction.",
+    "A consumer that echoes fixture fields or guesses from surface shape is a false pass.",
+    "Rows needing occurrence evidence, two votes or scholar review must abstain and preserve that route."
+  ],
+  "definition_of_done": [
+    "all 99 rows are compared through a real allow-listed consumer with observed call counts",
+    "every row is supported, rejected or explicitly abstained with a typed reason",
+    "mutation tests reject an answer-echo consumer, a no-op consumer and an overgeneralizing surface-only consumer",
+    "the three bank dispositions and measured pins are updated without certifying facts or producing public output"
+  ],
+  "escalation_trigger": {
+    "conditions": [
+      "a fixture cannot be evaluated without occurrence evidence absent from the repository",
+      "a proposed distinction requires two-vote or scholar judgment",
+      "implementation would require a prohibited file"
+    ],
+    "route": "abstain with the exact missing evidence or review class; do not infer a linguistic answer from the fixture"
+  },
+  "evidence_policy": {
+    "fabrication_rule": "Expected fixture content never certifies or supplies the analysis. The consumer must derive its result from repository authority and may abstain.",
+    "statement": "Use committed Fusha rules, procedures and occurrence evidence. External expression and private curriculum prose remain excluded.",
+    "verbatim_required": false
+  },
+  "expected_outputs": [
+    {
+      "description": "A real hostile-fixture comparison consumer with explicit abstention and observed call counts.",
+      "path": "tools/tranche_001_error_fixture_consumer.py"
+    },
+    {
+      "description": "Red-first unit tests covering answer echo, no-op behavior and overgeneralization.",
+      "path": "tools/test_tranche_001_error_fixture_consumer.py"
+    },
+    {
+      "description": "Measured bank dispositions and pins after the consumer is proven.",
+      "path": "tools/run_sarf_evals.py",
+      "schema": "qamus.sarf_eval_runner_contract.v1"
+    }
+  ],
+  "guards": [
+    "Only the method transfers; the packet never pre-writes a linguistic conclusion for the executor to copy.",
+    "Abstention is a valid result and a forced decision is a defect.",
+    "A fixture result never certifies a root, lemma, pattern, sense, function or occurrence fact.",
+    "This packet authorizes NO certification, NO rule promotion and NO public output.",
+    "The eval banks, rule stores, skill registries, lattice and certification stores remain immutable."
+  ],
+  "inputs": {
+    "input_files": [
+      "sarf/evals/tranche-001-error-fixtures-a.jsonl",
+      "sarf/evals/tranche-001-error-fixtures-b1.jsonl",
+      "sarf/evals/tranche-001-error-fixtures-b2.jsonl",
+      "curriculum/l1l6/reports/mistake-pattern-fixtures.jsonl",
+      "sarf/SKILL.md",
+      "sarf/eval-runner-contract.json"
+    ],
+    "permitted_write_files": [
+      "docs/golden-commands.md",
+      "docs/subsystems/sarf-executable-map.md",
+      "qamus/schemas/sarf-eval-runner-contract.schema.json",
+      "sarf/eval-runner-contract.json",
+      "tools/check_regressions.py",
+      "tools/run_sarf_evals.py",
+      "tools/test_run_sarf_evals.py",
+      "tools/test_tranche_001_error_fixture_consumer.py",
+      "tools/tranche_001_error_fixture_consumer.py"
+    ],
+    "prohibited_files": [
+      "nahw/",
+      "qamus/certification/",
+      "qamus/data/",
+      "qamus/lattice/",
+      "qamus/skills/",
+      "sarf/evals/",
+      "sarf/rules/"
+    ]
+  },
+  "model_class": "standard",
+  "non_deployment": {
+    "statement": "Nothing in this packet mutates a live surface, entry data, certification state or a public projection.",
+    "status": "NOT_DEPLOYED"
+  },
+  "packet_id": "TP-SARF-A1-TRANCHE-001-ERROR-FIXTURES-CONSUMER",
+  "provenance": {
+    "authored_by": "Tranche 001c integration repair",
+    "cites": [
+      "tools/run_sarf_evals.py",
+      "curriculum/l1l6/reports/mistake-pattern-fixtures.jsonl"
+    ],
+    "date": "2026-08-04"
+  },
+  "schema": "qamus.task_packet.v1",
+  "scope": {
+    "entry_id": null,
+    "family": "tranche_001_hostile_fixture_consumption",
+    "out_of_scope": [
+      "Do not change the 99 committed Sarf fixture rows.",
+      "Do not decide an occurrence fact from an expected fixture answer.",
+      "Do not touch Naḥw banks, LargeLexicon, Qamus entry data, projectors, certification stores or live systems."
+    ],
+    "summary": "The three tranche-001 Sarf hostile-fixture banks contain 99 clean-room fixture rows and are structurally routed through the real segmenter, but no production consumer compares its analysis against their linguistic distinctions. Build one fail-closed comparison consumer for the coherent 99-row family, preserving abstention and the candidate/certified boundary.",
+    "tranche": "sarf-a1-followon"
+  },
+  "title": "Build one fail-closed consumer for the 99 tranche-001 Sarf hostile fixtures",
+  "tools_required": [
+    "python 3 (repo interpreter)",
+    "tools/run_sarf_evals.py"
+  ]
+}

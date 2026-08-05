@@ -821,6 +821,53 @@ def run_wrong_reasoning(errors, stats):
 
 
 # ---------------------------------------------------------------------------
+# tranche-001 error-fixtures bank A (curriculum L1-L6 hostile fixtures, batch A, naḥw-routed rows only)
+# ---------------------------------------------------------------------------
+# Same right-answer/wrong-path trap shape as run_wrong_reasoning above (grammar-wrong-reasoning-cases.jsonl),
+# plus the tranche's own traceability fields back to curriculum/l1l6/reports/queues/q-error-fixtures.jsonl and
+# curriculum/l1l6/misconceptions/misconception-registry.jsonl. Honestly fixture_only: no structured governor
+# evidence is in this bank, so grade_structured() is not given anything real to grade (same reasoning as GP-WR).
+# What IS checked, through the real tools/fusha_nahw_gate_rules.py:gate_rank consumer, is that every trap is held
+# at two_vote_required or stricter and that its honest path and its trap are genuinely distinct, non-empty text.
+def run_tranche_001_error_fixtures_a(errors, stats):
+    bank = "tranche-001-error-fixtures-a"
+    rows = _jsonl(os.path.join(EVAL_DIR, "tranche-001-error-fixtures-a.jsonl"))
+    stats[bank] = {"cases": len(rows), "classification": "fixture_only",
+                   "packet": "TP-TRANCHE-001-ERROR-FIXTURES-A-NAHW-CONSUMER", "routing_checked": 0}
+    seen_ids = set()
+    for r in rows:
+        rid = r.get("id")
+        if rid in seen_ids:
+            errors.append("%s:%s duplicate row id" % (bank, rid))
+        seen_ids.add(rid)
+        for key in ("source_row_id", "source_lesson", "misconception_id", "domain", "anti_llm_boundary",
+                    "expected_answer", "expected_reasoning", "wrong_reasoning_trap", "why_trap_wrong",
+                    "required_gate", "hover_safety", "clean_room_posture"):
+            if key not in r:
+                errors.append("%s:%s missing required field %s" % (bank, rid, key))
+        if GATE.gate_rank(r.get("required_gate")) < GATE.gate_rank("two_vote_required"):
+            errors.append("%s:%s a right-answer/wrong-reason trap may never sit below two_vote (got %s)"
+                          % (bank, rid, r.get("required_gate")))
+        if r.get("hover_safety") == "auto_safe":
+            errors.append("%s:%s hover_safety auto_safe on a wrong-reasoning trap" % (bank, rid))
+        for key in ("expected_reasoning", "wrong_reasoning_trap", "why_trap_wrong"):
+            if not str(r.get(key) or "").strip():
+                errors.append("%s:%s %s is empty (a trap row with no stated path is untestable)"
+                              % (bank, rid, key))
+        if str(r.get("expected_reasoning")) == str(r.get("wrong_reasoning_trap")):
+            errors.append("%s:%s the honest path and the trap are the same text" % (bank, rid))
+        if r.get("domain") not in ("syntactic_relations", "case_mood"):
+            errors.append("%s:%s domain %r outside the closed set this batch routes to naḥw"
+                          % (bank, rid, r.get("domain")))
+        if not str(r.get("source_row_id") or "").startswith("q-error-fixtures-"):
+            errors.append("%s:%s source_row_id does not trace to the q-error-fixtures queue" % (bank, rid))
+        stats[bank]["routing_checked"] += 1
+    if stats[bank]["cases"] < 1:
+        errors.append("%s: the bank must carry at least one row" % bank)
+    return bank
+
+
+# ---------------------------------------------------------------------------
 # bank 4 — largelexicon-function-collision-safety.jsonl
 # ---------------------------------------------------------------------------
 # EXACT typed binding per LLX row: the consumer must return this forbidden-reading id, and the bank's own
@@ -1112,6 +1159,7 @@ BANKS = {
     "llx-collision": run_llx_collision,
     "public-boundary": run_public_boundary,
     "ma-function-occurrence": run_ma_function_occurrence,
+    "tranche-001-error-fixtures-a": run_tranche_001_error_fixtures_a,
 }
 
 

@@ -978,6 +978,19 @@ class RunnerCli(unittest.TestCase):
         lattice = next(b for b in rep["banks"] if "morphology-candidate-lattice" in b["bank"])
         self.assertEqual(packets["TP-SARF-A1-LATTICE-EVIDENCE-CLASS"]["candidate_population"]["this_packet_size"],
                          len(lattice["metrics"]["evidence_class_mismatch_rows"]))
+        fixture_packet = packets["TP-SARF-A1-TRANCHE-001-ERROR-FIXTURES-CONSUMER"]
+        fixture_banks = (
+            "sarf/evals/tranche-001-error-fixtures-a.jsonl",
+            "sarf/evals/tranche-001-error-fixtures-b1.jsonl",
+            "sarf/evals/tranche-001-error-fixtures-b2.jsonl",
+        )
+        self.assertEqual(
+            fixture_packet["candidate_population"]["this_packet_size"],
+            sum(rows_by_bank[path] for path in fixture_banks),
+        )
+        self.assertTrue(
+            set(fixture_banks) <= set(fixture_packet["inputs"]["input_files"])
+        )
         for pid, pkt in packets.items():
             joined = " ".join(pkt["guards"])
             self.assertIn("authorizes NO certification", joined, "%s: missing the no-authority guard" % pid)
