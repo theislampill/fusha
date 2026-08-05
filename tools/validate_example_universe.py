@@ -243,8 +243,12 @@ def _fixture_membership():
             tranche = "P-01"
         elif i <= 51:
             tranche = "P-02"
-        else:
+        elif i <= 67:
             tranche = "P-03"
+        elif i <= 85:
+            tranche = "P-04"
+        else:
+            tranche = "P-05"
         rows.append({
             "source_key": f"p{i:03d}",
             "entry_id": f"e{i:03d}",
