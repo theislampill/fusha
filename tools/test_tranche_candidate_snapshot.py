@@ -24,7 +24,10 @@ class TrancheCandidateSnapshotTests(unittest.TestCase):
         self.assertEqual(report["analysis_database"], "largelexicon")
         self.assertEqual(
             report["analysis_database_source"],
-            "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
+            Path(fusha_pattern_engine.LARGELEXICON_FULL_PATH)
+            .resolve()
+            .relative_to(snapshot.ROOT.resolve())
+            .as_posix(),
         )
         self.assertEqual(
             by_id["mulk-final-kaf"]["status"], "analysis_gap_detected"
@@ -62,6 +65,34 @@ class TrancheCandidateSnapshotTests(unittest.TestCase):
                 FileNotFoundError, "required largelexicon full source"
             ):
                 fusha_pattern_engine._load_lexicon(db="largelexicon")
+
+    def test_snapshot_source_label_tracks_the_resolved_engine_source(self):
+        sample_path = (
+            snapshot.ROOT
+            / "fusha/lexicon/largelexicon/lemma-source.sample.jsonl"
+        )
+        with mock.patch.object(
+            fusha_pattern_engine,
+            "LARGELEXICON_FULL_PATH",
+            str(sample_path),
+        ):
+            report = snapshot.build()
+
+        expected = sample_path.resolve().relative_to(
+            snapshot.ROOT.resolve()
+        ).as_posix()
+        self.assertEqual(report["analysis_database_source"], expected)
+        for probe_id in (
+            "mulk-final-kaf",
+            "relative-alladhina",
+            "quranan-tanwin",
+        ):
+            probe = next(
+                row for row in report["probes"] if row["probe_id"] == probe_id
+            )
+            self.assertEqual(
+                probe["after"]["analysis_database_source"], expected
+            )
 
 
 if __name__ == "__main__":
