@@ -56,7 +56,7 @@
 
 - [ ] Add `tools/validate_fd_compiler.py` and `tools/test_fd_compiler.py`; make the validator check the checked-in generated artifacts and the red/green invariants.
 - [ ] Add the F-D gate to `tools/check_regressions.py` without broadening it into live or corpus mutation.
-- [ ] Write root `FD-REPORT.md` with the built artifacts, the 22-point checklist and witnesses, exact 12-metric table, verbatim harness output, and exact nonclaims.
+- [ ] Write root `docs/reports/history/2026-07-16-FD-REPORT.md` with the built artifacts, the 22-point checklist and witnesses, exact 12-metric table, verbatim harness output, and exact nonclaims.
 
 ### 7. Verify and commit
 

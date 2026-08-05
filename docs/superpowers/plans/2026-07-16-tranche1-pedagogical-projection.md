@@ -338,7 +338,7 @@ git commit -m "tranche1: add non-authorizing apply gate"
 ### Task 6: Final verification and report
 
 **Files:**
-- Create: `TRANCHE1-REPORT.md`
+- Create: `docs/reports/history/2026-07-16-QAMUS-FIXTURE-TRANCHE1-REPORT.md`
 
 **Interfaces:**
 - Report contains built surfaces, verbatim validator outputs, 4+4 table, exact `git log --stat`, risks, and exact nonclaims.
@@ -370,7 +370,7 @@ git diff --stat f706698..HEAD
 
 Expected: local `andon-tranche1` commits only; no push or remote mutation.
 
-- [ ] **Step 3: Write `TRANCHE1-REPORT.md`**
+- [ ] **Step 3: Write `docs/reports/history/2026-07-16-QAMUS-FIXTURE-TRANCHE1-REPORT.md`**
 
 Include the validator stdout verbatim in fenced text blocks, the exact 4+4 table, current corpus/hash/commit evidence, stale metadata mismatch risk, and these nonclaims: fixture-only; no linguistic certification; no root/template/singular/case guess for source gaps; no live/browser/DOM readback; no whitelist or renderer mutation; no applier; no SSH; no deploy/publication/release; no push; no corpus-wide correctness or coverage claim.
 
@@ -379,7 +379,7 @@ Include the validator stdout verbatim in fenced text blocks, the exact 4+4 table
 Run:
 
 ```powershell
-rg -n "EXACT NONCLAIMS|fixture-only|no linguistic certification|no live deployment|pre_apply_not_authorized" TRANCHE1-REPORT.md
+rg -n "EXACT NONCLAIMS|fixture-only|no linguistic certification|no live deployment|pre_apply_not_authorized" docs/reports/history/2026-07-16-QAMUS-FIXTURE-TRANCHE1-REPORT.md
 git diff --check
 git status --short
 ```
@@ -389,7 +389,7 @@ Expected: report contains all mandatory headings and only the report is uncommit
 - [ ] **Step 5: Commit report**
 
 ```powershell
-git add TRANCHE1-REPORT.md
+git add docs/reports/history/2026-07-16-QAMUS-FIXTURE-TRANCHE1-REPORT.md
 git commit -m "tranche1: report fixture projection proof"
 ```
 

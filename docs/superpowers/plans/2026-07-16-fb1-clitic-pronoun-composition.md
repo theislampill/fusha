@@ -33,7 +33,7 @@ pass. No push or corpus mutation.
 4. Select and run the real >=40-row family sample from explicit STRAT/verdict/
    corpus CLI paths. Commit only the bounded fixture input and the resulting
    typed calibration output, never the external corpus.
-5. Write `FB1-REPORT.md` with the per-row table, abstention arithmetic,
+5. Write `docs/reports/history/2026-07-16-FB1-REPORT.md` with the per-row table, abstention arithmetic,
    zero-false-projection attestation basis, and exact nonclaims. Wire the FB1
    self-test/fixture gate into the regression harness.
 6. Run focused tests, F-A validation, registry and ergonomics validators, then

@@ -48,3 +48,8 @@ Read `sarf/SKILL.md` and `nahw/SKILL.md`; open the procedure named by the gate; 
 MCP-free skills (external sources are optional internal evidence via `sources/README.md`, never a dependency,
 never public); public gloss record stays `{src:"qamus",kind:"authored",lang:"en"}`; no raw source/media/secret committed;
 Qurʾān text unaltered; when uncertain, stay pending with a precise blocker.
+
+## Skill release state
+The sarf/nahw skills are **released at @2**. Increments @2.1–@2.4 are **candidate-only** pending
+owner adjudication — do not treat them as installed/live until that ruling lands. See
+`CONTRIBUTING.md` for how to propose or track a candidate increment.

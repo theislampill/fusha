@@ -28,4 +28,4 @@ The validator's self-test is red-first: a synthetic same-`loc` fork must fail, w
 
 ## Integration
 
-The builder and validator remain stdlib-only and offline. A focused unittest fixture suite protects the resolver and parity rules. `tools/check_regressions.py` receives one F-B/F-C gate block invoking the validator self-test and the real validator against the committed artifact and sibling whitelist. `IDX-REPORT.md` records the exact commands and verbatim outputs used for closure.
+The builder and validator remain stdlib-only and offline. A focused unittest fixture suite protects the resolver and parity rules. `tools/check_regressions.py` receives one F-B/F-C gate block invoking the validator self-test and the real validator against the committed artifact and sibling whitelist. `docs/reports/history/2026-07-16-IDX-REPORT.md` records the exact commands and verbatim outputs used for closure.

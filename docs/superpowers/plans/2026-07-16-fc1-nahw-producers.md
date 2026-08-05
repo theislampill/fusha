@@ -60,13 +60,13 @@
 
 ### Task 4: Add validator, full-harness gate, and FC1 report
 
-**Files:** `tools/validate_fc1_nahw_producer.py`, `tools/check_regressions.py`, `FC1-REPORT.md`
+**Files:** `tools/validate_fc1_nahw_producer.py`, `tools/check_regressions.py`, `docs/reports/history/2026-07-16-FC1-REPORT.md`
 
 **Interfaces:** `--self-test` prints `FC1 NAHW PRODUCER SELF-TEST PASS`; `--fixtures qamus/examples/fc1-nahw` prints `FC1 NAHW PRODUCER FIXTURES PASS`.
 
 - [ ] Validate every committed F-A envelope, positive/unresolved accounting, surface preservation, source/certification fields, and absence of lane paths.
 - [ ] Wire both repo-self-contained validator invocations into `tools/check_regressions.py` without external corpus arguments.
-- [ ] Write `FC1-REPORT.md` with outcome table, abstention formula/value, evidence-mode counts, command results, and an `EXACT NONCLAIMS` section.
+- [ ] Write `docs/reports/history/2026-07-16-FC1-REPORT.md` with outcome table, abstention formula/value, evidence-mode counts, command results, and an `EXACT NONCLAIMS` section.
 - [ ] Commit with `fc1: wire nahw producer harness and report` after `git diff --check`.
 
 ### Task 5: Final verification

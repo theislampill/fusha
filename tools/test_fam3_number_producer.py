@@ -165,7 +165,7 @@ class FAM3NumberProducerTests(unittest.TestCase):
         from tools import build_fam3_report
 
         with TemporaryDirectory() as directory:
-            output = Path(directory) / "FAM3-REPORT.md"
+            output = Path(directory) / "report.md"
             build_fam3_report.build_report(FIXTURES / "generated", output)
             report = output.read_text(encoding="utf-8")
         self.assertIn("Precision + abstention by sub-shape", report)

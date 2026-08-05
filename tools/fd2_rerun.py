@@ -194,7 +194,7 @@ def render_markdown(report: dict[str, Any], verdicts: list[dict[str, Any]]) -> s
         "- `fd2-455-report.json`",
         "- `fd2-455-verdicts.jsonl`",
         "- `fd2-455-verdicts.meta.json`",
-        "- `FD2-REPORT.md`",
+        "- `docs/reports/history/2026-07-16-FD2-REPORT.md`",
         "",
     ])
     return "\n".join(lines)

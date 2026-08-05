@@ -54,6 +54,6 @@ this lane performs no live deployment.
 
 The generator, fixture tests, validator, harness hook, generated artifacts
 under `qamus/examples/proof-noun-sufaha/`, `PROOFN-MANIFEST.json`, and
-`PROOFN-REPORT.md` are committed; all focused and full harness checks pass;
+`docs/reports/history/2026-07-17-PROOFN-REPORT.md` are committed; all focused and full harness checks pass;
 `git diff --check` is clean; no read-only input or live surface changed; and
 the branch has a local `proofn:` commit with no push.

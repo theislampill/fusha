@@ -92,7 +92,7 @@ typed-fact/payload orphan counts, reciprocity failures, appearance parity
 failures, exact missing-edge counts, input-space counts, and zero manual-probe
 status with reasons. `vn-readiness-matrix.json` records denominator totals,
 proposal labels, tranche rows, clitic-family mapping, and projection limits.
-`VNMAP-REPORT.md` is generated from the same deterministic result and includes
+`docs/reports/history/2026-07-29-VNMAP-REPORT.md` is generated from the same deterministic result and includes
 the denominator tables, metrics, proposal caveat, clitic-family NorthStar
 mapping, Compounding Impact, and honest pre-deploy limits.
 

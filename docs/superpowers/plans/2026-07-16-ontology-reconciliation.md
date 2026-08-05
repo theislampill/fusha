@@ -21,5 +21,5 @@
 1. Add red-first tests for registry coverage and required-field validation.
 2. Implement CSS/schema parsing, semantic metadata, CSS-token resolution, CIE76 pairwise collision computation, and static WCAG contrast calculation.
 3. Generate `qamus/registry/qg-class-reconciliation.json/.md` and `qamus/registry/palette-collision-matrix.json/.md`.
-4. Wire the validator self-test into `tools/check_regressions.py` and add `ONTO-REPORT.md` with exact nonclaims.
+4. Wire the validator self-test into `tools/check_regressions.py` and add `docs/reports/history/2026-07-16-ONTO-REPORT.md` with exact nonclaims.
 5. Run focused tests, artifact ergonomics, schema coherence, the full regression harness, `git diff --check`, and the final staged review; commit with an `onto:` prefix and do not push.

@@ -1,158 +1,74 @@
-# Fusha — reusable Arabic language, source & intelligence layer
+# Fusha — the Arabic-competence flywheel behind Qamus
 
-**Fusha** is the canonical, reusable research repo for Classical Arabic (fuṣḥā) language intelligence behind the
-Dawah.Wiki / **Qamus** project. It holds the *portable* assets — schemas, indexes, morphology/syntax skills,
-source-address graph, candidate-generation scripts, and catalogue research — that improve Qamus entry authoring,
-qamus-highlight hover-gloss correctness, and future Qurʾān / Nawawī40 / Ṣaḥīḥayn lexical expansion.
+**Fusha** is a closed Arabic-competence flywheel. Quran-anchored ṣarf (morphology), naḥw (syntax), and
+tarkeeb (iʿrāb composition) analysis run over a 2,092-entry lexicon; every claim is typed-fact
+certified with exact-occurrence transclusion; curriculum absorption and delivery turn that
+certified analysis into a learner ladder; a tutoring runtime drills and remediates against it.
+The same certified pieces power the rich colour segmentation and hover glossing of
+**qamus.dawah.wiki** — the live app this repo feeds but never writes to.
 
-> **Dawah.Wiki is the live product.** This repo is **not** the app. It never writes to the live site.
+> **Dawah.Wiki is the live product.** This repo is **not** the app. It is a candidate-mode
+> research and authoring layer: every artifact here is reviewable, diffable, and owner-gated
+> before anything reaches the live site.
 
-## Architecture: the Qamus is the cart, sarf/nahw is the engine
+## The flywheel
 
-The **Qamus is the cart** (the lexicon/output). The **sarf + nahw skills are the engine** that pulls it; external
-sources are **fuel/evidence**, never public output; the **source-address + state graphs are the transmission**.
-The engine can pull the existing Qamus, **generate new Qamus** from a corpus, author hover glosses, audit grammar
-(the GrammarProblems gate: right answer *and* right reasoning), teach ajami learners, and know when a token must
-stay **pending**. It is **MCP-free** — it consults *available source adapters* (`sources/README.md`) only as
-optional internal evidence. Full architecture + worked examples: `curriculum/qamus-driven-fluency-engine.md`.
-For rich learner hovers, the engine now also targets a source-clean parse-key/color layer:
-`curriculum/qamus-hover-parse-key-and-color.md` explains how sarf/nahw decisions become a compact `parse_key`
-and scrubbed `qamus-grammar-v1` display classes without leaking QAC/Tafsir/screenshot provenance.
-
-### Engine contract (P2/P2b grammar-checker back-propagation)
-
-Beyond source-addressed hover authoring, the engine now also checks **arbitrary typed Fusha** and exposes its reasoning as data.
-Two certainty regimes, kept distinct: a **source-addressed** token (exact `S:A:W`) can reach confirmed readings; **arbitrary typing**
-has no source-address certainty and stays ambiguity-preserving. The contracts (each cites an executable tool as its source of truth):
-
-- **Morphology candidate lattice** — analyse-then-rank: keep every competing reading of an unvoweled token, with `score` + `rank`
-  (never a boolean `correct`); `>1` candidate ⇒ pending. [`tools/fusha_morphology_lattice.py`](tools/fusha_morphology_lattice.py).
-- **Clitic segmentation candidates** — proclitic/enclitic peels as candidates (a lone single-letter peel is low-confidence/likely a
-  radical; a tanwīn-alif is not the pronoun نا). [`tools/fusha_text_check.py`](tools/fusha_text_check.py).
-- **Governor / iʿrāb dependency lattice** — a case/mood **value** is paired with its **governor justification**; a correct ending
-  with an absent/wrong governor is `governor_not_justified` (right answer, wrong reason) → scholar/two-vote review, **never
-  `auto_safe`**; PP-attachment stays unresolved unless justified; iḍāfa keeps its alternatives. [`tools/fusha_governor.py`](tools/fusha_governor.py).
-- **Abstention-first suggestions** — corrections that retain/reject/abstain rather than overcorrect; iʿrāb edits are never `auto_safe`
-  without a governor. [`tools/fusha_suggest.py`](tools/fusha_suggest.py).
-- **Learner hint ladder** — Point → Teach → Bottom-out, with Bottom-out withheld past the gate. [`tools/fusha_learner_feedback.py`](tools/fusha_learner_feedback.py).
-- **CEFR is scaffolding, not certification** — explanation depth is gated by a *caller-supplied* learner level; the engine never
-  assesses or certifies a learner. [`tools/fusha_cefr_gate.py`](tools/fusha_cefr_gate.py).
-- **Standalone parser preview** — source-clean `fusha/standalone-parse@1` output for Mode A/B/C planning:
-  clitic splits, seed/pinned morphology, context candidates, qg segments, and hover-preview text without source-address
-  certainty. [`tools/fusha_standalone_parse.py`](tools/fusha_standalone_parse.py) ·
-  [`tools/validate_fusha_standalone_parse.py`](tools/validate_fusha_standalone_parse.py) ·
-  [`qamus/reports/standalone-fusha-parser-mvp.md`](qamus/reports/standalone-fusha-parser-mvp.md).
-- **Qamustyping4 all-qword acceptance** — fixture-backed page/card sanity checks for the observed RH-LIVE sparse-page
-  regressions: every visible qword must be source-addressed or exactly packeted, vocalization/readback drift is a blocker,
-  and sarf/nahw pieces must remain visible in the parse-key/color layer. This is local tooling, not live coverage.
-  [`docs/parser/qamustyping4-implementation.md`](docs/parser/qamustyping4-implementation.md) ·
-  [`tools/validate_qamustyping4_acceptance.py`](tools/validate_qamustyping4_acceptance.py) ·
-  [`curriculum/drills/mode-a-thin-slice-regressions.md`](curriculum/drills/mode-a-thin-slice-regressions.md).
-- **Largelexicon candidate layer** — opt-in `--db largelexicon` morphology over committed Qamus-derived
-  source-clean fact tables, source-ledger checks, Mode A all-qword denominator/worklists, public/private hover
-  projection, qg role validation, local JSON/JSONL CLI contract, and flywheel artifacts for scaling Qamus rollout
-  work from smoke fixtures toward the 2,092-entry index. It produces candidate rows and exact packets only; it is
-  not live Qamus progress and not a certified arbitrary-text parser.
-  [`docs/parser/largelexicon-implementation.md`](docs/parser/largelexicon-implementation.md) ·
-  [`docs/parser/largelexicon-claim-boundary.md`](docs/parser/largelexicon-claim-boundary.md) ·
-  [`docs/parser/largelexicon-collision-safety.md`](docs/parser/largelexicon-collision-safety.md) ·
-  [`qamus/procedures/largelexicon-rollout-consumption.md`](qamus/procedures/largelexicon-rollout-consumption.md).
-  The largerollout3 extension adds source-card repair worklists, a qword
-  crosswalk status table, transclusion validation, private acquisition
-  projection checks, affix compatibility rules, and an executor adoption gate:
-  [`docs/parser/largelexicon-largerollout3-implementation.md`](docs/parser/largelexicon-largerollout3-implementation.md).
-- **Offline learning runtime** — a deterministic tutor loop grades checkpoints against the answer key (never model self-report),
-  schedules reviews by Leitner box, holds hard grammar until two independent checks agree, and persists progress only with an
-  explicit `--write`. [`tools/fusha_tutor_runtime.py`](tools/fusha_tutor_runtime.py) ·
-  [`tools/fusha_review_scheduler.py`](tools/fusha_review_scheduler.py) · [`tools/fusha_checkpoint_coverage.py`](tools/fusha_checkpoint_coverage.py).
-- **Real morphology data, source-clean** — the lattice can confirm an occurrence's `root` as a FACT from *your own local* QAC export
-  (QAC is GPL v3 — consulted, never vendored) with an internal `informed_by:['qac']` breadcrumb; the field is null when absent. Which
-  public tools need the private WBW services is mapped honestly in [`provenance/public-runnability.md`](provenance/public-runnability.md)
-  via the public-safe seam [`tools/qamus_wbw_adapter.py`](tools/qamus_wbw_adapter.py).
-
-The sarf/nahw **skills**, **curriculum/**, and **drills/** teach these contracts. `tools/check_regressions.py` gates
-**artifacts and behaviours** — normalization/homograph invariants, fixture well-formedness, validator `--self-test` runs, and the
-existence of files the skills cite. It does **not** parse documentation prose; a stale sentence in a doc can outlive the code it
-describes. Treat executable tools and JSON schemas as the contract of record; current coverage lives only in
-[`docs/STATUS.md`](docs/STATUS.md). This is **tooling** — not live Qamus coverage progress. The recent Fusha-only stack now includes
-P1 general checker + rich-hover flywheel, P2 governor/conflict gates, P2b learner feedback/CEFR scaffolding, sarf/nahw skill and
-curriculum back-prop, data/runtime completion, and qamustyping3/4 Mode A acceptance. Stronger claims remain gated by corpora,
-splits, metrics, and owner authorization.
-
-The largelexicon layer is the next scaling step: it preserves the smoke parser as the default path while letting rollout and
-curriculum workers opt into larger Qamus-derived tables with `--db largelexicon`. Full Qamus-derived fact tables are committed
-only through `fusha/lexicon/largelexicon/source-clean-table-allowlist.json` and the largelexicon validators. Raw external
-QAC/MCP/API/source-photo caches still belong outside public repo artifacts.
-
-**The engine in five examples** (each a regression fixture): أَعْمَالُنَا → "our deeds" (noun stem + possessive,
-POS-gated); لَمْ vs لِمَ → "did not" vs "why" (particle state split); مِن vs مَن → "from" vs "who/whoever" (harakat
-split); كَظِيم → adjectival ṣifa, **not** the infinitive verb; نَزَّلَ vs نَزَلَ → form II vs I split.
-
-**Install it** as a Claude/Codex skill — see `INSTALL.md` (`scripts/install_claude_skills.py --dry-run`).
-**Agent-facing** entry: `sarf/SKILL.md` + `nahw/SKILL.md`. **Learner-facing** entry: `curriculum/`.
-
-## What belongs here vs the live app
-
-| Stays in the Dawah.Wiki live app repo | Lives (or is mirrored) here in Fusha |
-|---|---|
-| live qamus app, qamus-highlight runtime + deployed artifact | source-address graph **schema** + samples |
-| service / systemd / timer / deploy scripts | Qamus 2,092 **index** export + scoreboards |
-| website CSS/JS/nav/theme, live tests/smokes | candidate additions/augmentations (review-only) |
-| production backups, private operational detail, secrets | Nawawī40 catalogue outputs; Ṣaḥīḥayn **plan** |
-| the 5GB photographed source corpus (raw images) | locator **reports/manifests** (not raw images) |
-| anything needed only to *run* qamus.dawah.wiki | reusable OCR/locator + normalization **scripts** |
-| | qamus-highlight analysis **reports** (not deploy code) |
-| | safe internal provenance schemas; authored-gloss schemas |
-| | **sarf** + **nahw** agent skills; morphology/root/POS integration docs |
+Corpus work returns knowledge to the skills. A Qurʾānic occurrence is analysed by ṣarf + naḥw,
+certified as typed facts with an exact source address, and folded back into the lexicon and the
+rule references those same skills consult next time — so each certified occurrence makes the next
+analysis better, not just bigger. The curriculum then absorbs that same certified state into a
+graded learner ladder, and the tutoring runtime drills and remediates a learner against it. Nothing
+leaves the loop uncertified: a word the engine cannot confidently author stays `PENDING` rather
+than being guessed.
 
 ## Repo map
-```
-qamus/      schemas · indexes · reports · candidates · scripts   (the Qamus knowledge layer)
-sarf/       morphology agent skill + drills + references + regressions
-nahw/       syntax agent skill + drills + references + regressions
-corpora/    source catalogue · nawawi40/out · sahihayn/PLAN
-provenance/ source-boundary rules · informed_by schema
-tools/      normalize_ar.py · qac_adapter.py · ocr_locator_notes
-```
 
-## Source-boundary rules (see `provenance/source-boundaries.md`)
-- External references (Quran.com, QAC, Tanzil, sunnah.com) are **internal evidence for triangulation only**.
-- **No external gloss, translation, tafsīr, or OCR text is ever copied into public output.** The
-  published qamus-highlight hover carries only qamus's own authored English; a word we cannot
-  confidently author stays `PENDING` rather than being filled from an external gloss. During authoring,
-  external references (dictionaries, translations, corpora, tafsīr) are consulted only as *comparative
-  evidence*. Because every rendering describes the same Arabic source text, ordinary overlap of
-  individual words, conventional expressions, or semantically constrained passages with existing
-  translations can occur and should not by itself be read as evidence that a rendering was copied from
-  any particular source. Where wording is *intentionally reproduced* from an identified external edition
-  rather than independently authored or synthesized, that source is recorded and attributed under its
-  applicable terms. (The deeper provenance question — **D-01** — is open; this bullet states the output
-  boundary and does not preempt it. See `qamus/data/current/NOTICE.md` (D-12) and
-  `provenance/source-boundaries.md`.)
-- `informed_by` is an **internal** provenance label (which sources informed the authoring). The **public**
-  qamus-highlight hover artifact must show **only** `{"src":"qamus","kind":"authored","lang":"en"}` — no `informed_by`,
-  no external source names, no OCR snippets, no crop/source-image paths.
-- **Qurʾān text is never altered.** No raw source images, model weights, large OCR dumps, secrets, or private
-  server paths are committed (this is a **public** repo).
+| Subsystem | What it holds | Leverage path |
+|---|---|---|
+| **sarf/** + **nahw/** | The skills: morphology and syntax decision procedures | `SKILL.md`, `procedures/`, `rules/`, `references/`, `evals/` in each |
+| **qamus/data/current/entries.jsonl** | The lexicon: 2,092 entries (947 verb / 1,045 noun / 100 particle) | one JSONL record per entry, reviewable |
+| **qamus/lattice/** | The example-āyah universe | appearance rows + unique occurrences + particle candidate matrix |
+| **qamus/indexes/** | Reverse indexes from occurrence to appearance | `qamus/indexes/current/`, `LargeLexicon` |
+| **tools/certify_typed_fact.py** + **qamus/certification/** | Fact-level certification | hash-chained event trails per certified claim |
+| **curriculum/l1l6/** | The absorbed curriculum substrate | 226 inherited lessons as clean-room metadata + 166 canonical units + tranche machinery (`tools/select_tranche.py`) |
+| **eval/fusha-bench-v1/** | The frozen benchmark | data manifest, model card, tutor-quarantine set |
+| **docs/** | Architecture + subsystem maps | `docs/INDEX.md` is the authority-precedence entry point |
 
-## Generated-artifact rules
-Large outputs (full indexes, OCR dumps) are **not** committed raw — commit a **sample + the generator script**,
-and keep full output under a gitignored `out/`. Every committed index/report is reproducible from its script.
+## State & verification
 
-## Artifact ergonomics — how to review the data (humans & agents)
-Every committed artifact is **reviewable and diffable** (enforced by `tools/check_artifact_ergonomics.py`,
-gated in `check_regressions.py`; classified in `qamus/reports/artifact-taxonomy.md`):
-- **reviewer-facing JSON** is pretty (`indent=2`, `sort_keys`, `ensure_ascii=False`, trailing newline) — open it
-  and read it; diffs are line-by-line. The navigational lookup indexes (`qamus/indexes/current/by-*.json`) are here.
-- **large row-records are JSONL** (one record per line) with a pretty `*.meta.json` sidecar — e.g.
-  `qamus/data/current/entries.jsonl`, `qamus/indexes/current/{source-address-full,quran-usage-spine-full,
-  qamus-entry-field-addresses}.jsonl`, `qamus/reports/hover-token-audit-full.jsonl`. Grep a line; each is valid JSON.
-- **compact is allowed only** for `*.min.json` (machine-only, regenerable from the reviewable dataset) and
-  `checksums.json`. Nothing else may be a one-line mega-file.
-- query any of it offline, no server: `tools/query_current_qamus.py`, `tools/query_source_address_graph.py`,
-  `tools/query_hover_token.py`.
+`python tools/check_regressions.py` must end **ALL PASS**; that is the only accepted evidence of
+a green state. Machine-readable current state lives in `docs/current-state.yaml`. Never quote a
+prose tally from a report, a plan, or this README as current — recompute it from the validators
+and the ledgers. Point-in-time reports (calibration lanes, proofs, closed tranches) are archived
+under `docs/reports/history/` with a banner marking them superseded; they are evidence of what was
+true when they were written, not of what is true now.
 
-## Review workflow
-Candidate entries / authored glosses / repairs are produced **review-only** (`review_status: needs_human_review`)
-and flow through `qamus/reports/fusha-to-qamus-highlight-bridge.md` → human review → owner-gated apply. Nothing
-here mutates live Qamus. See `AGENTS.md` for agent rules and `sarf/` + `nahw/` for the decision skills.
+## Work tracking
+
+GitHub issues mirror the committed ledgers at tranche grain — curriculum tranches, qamus VN
+windows, particle families. Two milestones anchor the programme: **234-lesson absorption**
+(226 inherited lessons + 8 GPS-supplement lessons, tracked with separate denominators) and
+**qamus.dawah.wiki rich completeness**. On any conflict between an issue checkbox and a ledger,
+the ledger wins; issues are updated *from* ledger state, never the reverse.
+
+## Custody & contribution
+
+This is an **owner-directed, candidate-mode** repository, not a conventional open-source project.
+Nothing here performs a live mutation — candidate entries, authored glosses, and repairs are
+produced `needs_human_review` and flow through human review to an owner-gated apply. The source
+site that this curriculum's lessons were originally drawn from is deliberately not named in this
+repo; see `provenance/source-boundaries.md` for the sourcing rules that govern all external
+material. External contributions are welcome within those rules — see `CONTRIBUTING.md` and
+`AGENTS.md` before opening a PR or issue.
+
+Qurʾān text is never altered. No raw source images, model weights, large OCR dumps, secrets, or
+private server paths are committed — this is a public repo, and only the repo's own authored
+output (`{"src":"qamus","kind":"authored","lang":"en"}`) is ever shown publicly; no external
+gloss, translation, tafsīr, or OCR text is copied into public output.
+
+## Start here
+
+- **Zero-context onboarding:** `START-HERE-FOR-CONTINUATION.md` — read this first if you have no
+  prior chat context.
+- **Install the skills:** `INSTALL.md` — installs the sarf/nahw engine as a Claude or Codex skill.
+- **Authority precedence for the docs themselves:** `docs/INDEX.md`.

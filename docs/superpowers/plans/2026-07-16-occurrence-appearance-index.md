@@ -115,7 +115,7 @@ Expected: the synthetic fork is reported as an expected failure inside the self-
 
 **Files:**
 - Create: `qamus/indexes/occurrence-appearances.jsonl`
-- Create: `IDX-REPORT.md`
+- Create: `docs/reports/history/2026-07-16-IDX-REPORT.md`
 - Modify: `tools/check_regressions.py`
 
 **Interfaces:**
@@ -138,7 +138,7 @@ Run: `python tools/validate_appearance_parity.py --index qamus\indexes\occurrenc
 
 Expected: zero divergent same-`loc` analyses, zero artifact parity errors, and a stable report containing the measured occurrence/appearance counts and allowed same-surface pair.
 
-- [ ] **Step 4: Write `IDX-REPORT.md` from captured output**
+- [ ] **Step 4: Write `docs/reports/history/2026-07-16-IDX-REPORT.md` from captured output**
 
 Include unique occurrences, total appearances, entry-relationship counts, the exact `39:63:3`/`22:18:9` different-location evidence, verbatim focused/self-test/real-validator/harness results, and exact nonclaims about linguistic correctness, browser impressions, and unresolved word-level emphasis.
 
@@ -161,7 +161,7 @@ Rebuild to a temporary output and byte-compare it to `qamus/indexes/occurrence-a
 
 - [ ] **Step 4: Commit implementation with the required prefix**
 
-Run: `git add tools/build_occurrence_appearance_index.py tools/validate_appearance_parity.py tools/test_occurrence_appearance_index.py tools/check_regressions.py qamus/indexes/occurrence-appearances.jsonl IDX-REPORT.md; git commit -m "idx: add occurrence appearance index and parity gate"`
+Run: `git add tools/build_occurrence_appearance_index.py tools/validate_appearance_parity.py tools/test_occurrence_appearance_index.py tools/check_regressions.py qamus/indexes/occurrence-appearances.jsonl docs/reports/history/2026-07-16-IDX-REPORT.md; git commit -m "idx: add occurrence appearance index and parity gate"`
 
 - [ ] **Step 5: Re-read commit state before handoff**
 

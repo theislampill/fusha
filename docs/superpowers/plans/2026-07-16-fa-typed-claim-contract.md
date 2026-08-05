@@ -166,7 +166,7 @@ Expected: the new gate is green; the full harness output ends with `ALL REGRESSI
 ### Task 6: Final verification, report, and commit
 
 **Files:**
-- Create: `FA-REPORT.md`
+- Create: `docs/reports/history/2026-07-16-FA-REPORT.md`
 
 - [ ] **Step 1: Run fresh verification commands**
 
@@ -185,7 +185,7 @@ git diff --name-only
 
 Confirm no whitelist, renderer, CSS, live/apply, or unrelated files changed.
 
-- [ ] **Step 3: Write `FA-REPORT.md`**
+- [ ] **Step 3: Write `docs/reports/history/2026-07-16-FA-REPORT.md`**
 
 Include what was built, the exact fixture counts, verbatim validator/harness outputs, diff summary, and an `EXACT NONCLAIMS` section stating no linguistic certification, no renderer/whitelist/live mutation, no deploy, no push, no full-corpus projection claim, and no unresolved-fact invention.
 

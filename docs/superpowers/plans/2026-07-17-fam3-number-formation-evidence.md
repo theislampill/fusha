@@ -76,7 +76,7 @@
 
 **Files:**
 - Create: `tools/validate_fam3_numbers.py`
-- Create: `FAM3-REPORT.md`
+- Create: `docs/reports/history/2026-07-17-FAM3-REPORT.md`
 - Create: `qamus/examples/fam3-numbers/generated/calibration-sample.jsonl`
 - Create: `qamus/examples/fam3-numbers/generated/formation-facts.jsonl`
 - Create: `qamus/examples/fam3-numbers/generated/unresolved-records.jsonl`
@@ -90,14 +90,14 @@
 - [ ] Run the explicit calibration against the lane inputs and read-only corpus, with output limited to the FAM3 example directory.
 - [ ] Confirm exactly 57 packet records and split records by projection status.
 - [ ] Compute sub-shape populations, candidate counts, contract-bounded precision, abstention counts/rates, and a per-row outcome table.
-- [ ] Write `FAM3-REPORT.md` with the survey, precision/abstention table, zero-false-projection attestation basis, exact nonclaims, and finite-verbs/F-C compounding impact.
+- [ ] Write `docs/reports/history/2026-07-17-FAM3-REPORT.md` with the survey, precision/abstention table, zero-false-projection attestation basis, exact nonclaims, and finite-verbs/F-C compounding impact.
 - [ ] Commit `fam3: add number calibration packet and report`.
 
 ### Task 5: Wire the full harness and close the branch
 
 **Files:**
 - Modify: `tools/check_regressions.py`
-- Modify: `FAM3-REPORT.md` if verification results change the report.
+- Modify: `docs/reports/history/2026-07-17-FAM3-REPORT.md` if verification results change the report.
 
 - [ ] Add fixture-only FAM3 self-test, focused unit test, and packet validator checks beside FAM2/VNMAP gates.
 - [ ] Run `git diff --check`, the FAM3 self-test, focused tests, FAM2/VNMAP neighbors, and the full `python tools/check_regressions.py` harness.

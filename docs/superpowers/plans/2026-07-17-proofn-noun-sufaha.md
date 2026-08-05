@@ -78,7 +78,7 @@
 
 - [ ] **Step 5: Write deterministic artifacts**
 
-  Write pretty JSON, JSONL, and Markdown artifacts under `qamus/examples/proof-noun-sufaha/`: contract, typed edges, payload, compact/expanded projections, hover structure, appearance parity, FAM2 candidate fact, parity fixture, render witness placeholder/updated witness, graph-validator report, and `PROOFN-MANIFEST.json`/`PROOFN-REPORT.md` at repo root.
+  Write pretty JSON, JSONL, and Markdown artifacts under `qamus/examples/proof-noun-sufaha/`: contract, typed edges, payload, compact/expanded projections, hover structure, appearance parity, FAM2 candidate fact, parity fixture, render witness placeholder/updated witness, graph-validator report, and `PROOFN-MANIFEST.json`/`docs/reports/history/2026-07-17-PROOFN-REPORT.md` at repo root.
 
 ### Task 3: Implement proofn validation and harness wiring
 
@@ -111,7 +111,7 @@
 **Files:**
 - Create/modify: `qamus/examples/proof-noun-sufaha/*`
 - Create/modify: `PROOFN-MANIFEST.json`
-- Create/modify: `PROOFN-REPORT.md`
+- Create/modify: `docs/reports/history/2026-07-17-PROOFN-REPORT.md`
 - Create: `tools/render_proofn_sufaha.js`
 
 **Interfaces:**

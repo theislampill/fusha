@@ -933,10 +933,11 @@ def write_artifacts(proof: Mapping[str, Any], output_dir: Path | str = PROOF_DIR
     shutil.copyfile(font_source, output / "assets" / font_source.name)
     _write_json(output / "proofn-validation.json", {"status": "pending_validator_run", "errors": []})
     _write_json(ROOT / "PROOFN-MANIFEST.json", proof["manifest"])
-    (ROOT / "PROOFN-REPORT.md").write_text(proof["report"], encoding="utf-8")
+    _report_path = ROOT / "docs" / "reports" / "history" / "2026-07-17-PROOFN-REPORT.md"
+    _report_path.write_text(proof["report"], encoding="utf-8")
     return {
         "manifest": ROOT / "PROOFN-MANIFEST.json",
-        "report": ROOT / "PROOFN-REPORT.md",
+        "report": _report_path,
         "contract": output / "sufaha-contract.json",
         "edges": output / "typed-edge-graph.jsonl",
         "payload": output / "sufaha-normalized-public-payload.json",

@@ -109,5 +109,6 @@ def build_report() -> str:
 
 
 if __name__ == "__main__":
-    (ROOT / "FD-REPORT.md").write_text(build_report(), encoding="utf-8", newline="\n")
-    print("FD-REPORT.md generated")
+    _output = ROOT / "docs" / "reports" / "history" / "2026-07-16-FD-REPORT.md"
+    _output.write_text(build_report(), encoding="utf-8", newline="\n")
+    print(f"{_output.relative_to(ROOT)} generated")

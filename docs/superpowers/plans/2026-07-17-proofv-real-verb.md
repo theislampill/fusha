@@ -77,7 +77,7 @@
 **Files:**
 
 - Create: `tools/validate_proofv_verb.py`
-- Create: `PROOFV-REPORT.md`
+- Create: `docs/reports/history/2026-07-17-PROOFV-REPORT.md`
 - Modify: `tools/check_regressions.py`
 
 - [ ] Validate all committed proof artifacts without corpus, network, or lane dependencies.

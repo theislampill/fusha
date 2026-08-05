@@ -10,7 +10,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SUMMARY = ROOT / "qamus" / "examples" / "fam5-derived-verbs" / "generated" / "calibration-summary.json"
-DEFAULT_OUTPUT = ROOT / "FAM5-REPORT.md"
+DEFAULT_OUTPUT = ROOT / "docs" / "reports" / "history" / "2026-07-17-FAM5-REPORT.md"
 
 
 def _json(path: Path) -> dict[str, Any]:

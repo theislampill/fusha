@@ -1,3 +1,5 @@
+> **Historical lane report** (moved from the repo root 2026-08-05). Point-in-time evidence; tallies herein are superseded — current state lives in `docs/current-state.yaml` and the generated ledgers. Do not quote numbers from this file.
+
 # ONTOLOGY RECONCILIATION REPORT
 
 ## Scope and evidence boundary

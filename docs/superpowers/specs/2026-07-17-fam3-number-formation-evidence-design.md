@@ -90,7 +90,7 @@ The fixture set contains at least six positives and six adversarial negatives,
 including the required label-only ordinal, wrong-gender, homograph, and
 context-only cases. The explicit calibration writes all 57 records, split
 positive/unresolved JSONL, a summary, and fixture proof artifacts under the
-FAM3 example directory. `FAM3-REPORT.md` records the survey populations,
+FAM3 example directory. `docs/reports/history/2026-07-17-FAM3-REPORT.md` records the survey populations,
 precision and abstention by sub-shape, per-row outcomes, zero-false-projection
 attestation basis, exact nonclaims, and compounding impact.
 
