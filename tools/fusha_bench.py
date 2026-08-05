@@ -26,6 +26,7 @@ if str(ROOT) not in sys.path:
 
 from tools import build_corpus_fact_projection_batch as geometry_builder  # noqa: E402
 from tools import fusha_tutor_runtime as tutor_runtime  # noqa: E402
+from tools import kc_catalog  # noqa: E402
 from tools import leak_sot  # noqa: E402
 from tools import validate_p007_pilot as pilot_validator  # noqa: E402
 from tools.certify_typed_fact import TypedFactCertificationStore  # noqa: E402
@@ -175,6 +176,16 @@ def axis_gold_artifact_ids(manifest):
     return result
 
 
+def _kc_catalog_gate_paths():
+    """R4: the exact set of gate-bearing KC catalog artifact paths that FUSHA-BENCH must keep pinned — derived
+    LIVE from tools.kc_catalog.DECLARED_KC_SHARDS (the loader's own choke-point source of truth) plus the two
+    fixed catalog-loading files, so a newly declared shard that forgets a manifest pin fails this completeness
+    guard automatically rather than silently widening (or narrowing) the two-vote gate surface unpinned."""
+    return {"curriculum/kc-catalog.json", "tools/kc_catalog.py"} | {
+        f"curriculum/kc-catalog.d/{name}" for name in kc_catalog.DECLARED_KC_SHARDS
+    }
+
+
 def validate_manifest(manifest, *, root=ROOT):
     if manifest.get("schema") != MANIFEST_SCHEMA:
         raise BenchError(f"manifest schema must be {MANIFEST_SCHEMA}")
@@ -186,6 +197,13 @@ def validate_manifest(manifest, *, root=ROOT):
         raise BenchError("manifest must set aggregate_score_allowed false")
 
     artifacts = _artifact_map(manifest)
+    kc_catalog_paths = {row["path"] for row in artifacts.values() if row.get("role") == "kc_catalog_input"}
+    missing_kc_catalog = _kc_catalog_gate_paths() - kc_catalog_paths
+    if missing_kc_catalog:
+        raise BenchError(
+            "manifest is missing gate-bearing KC catalog artifact(s): " + ", ".join(sorted(missing_kc_catalog))
+        )
+
     canary_ids = manifest.get("safety_canary_artifact_ids")
     if not isinstance(canary_ids, list) or not canary_ids:
         raise BenchError("manifest requires safety canary artifact ids")
@@ -812,6 +830,12 @@ def _self_test():
         raise BenchError(f"mutation was not rejected: {expected}")
 
     rejected(lambda value: value.__setitem__("aggregate_score", 1.0), "aggregate")
+    rejected(
+        lambda value: value["artifacts"].remove(
+            next(a for a in value["artifacts"] if a["artifact_id"] == "kc-catalog-legacy")
+        ),
+        "gate-bearing KC catalog artifact",
+    )
     rejected(
         lambda value: value["axes"]["contextual_translation"].__setitem__("denominator", 1),
         "certified translation gold",

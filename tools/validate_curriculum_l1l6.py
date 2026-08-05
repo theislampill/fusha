@@ -60,6 +60,8 @@ import tempfile
 import unicodedata
 from pathlib import Path
 
+import kc_catalog
+
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
@@ -1089,6 +1091,12 @@ TRAIN_C_EXPECTED_KCS = {
 # entry rather than growing one global magic total that would block unrelated future slices.
 TRANCHE_EXPECTED_BINDING_IDS = {
     "tranche_001a": frozenset({"l1l6-tranche-001a-foundational-orthography-analysis"}),
+    "tranche_001b": frozenset({
+        "l1l6-tranche-001b-foundational-script-runtime",
+        "l1l6-tranche-001b-weak-root-voice-runtime",
+        "l1l6-tranche-001b-derivation-template-runtime",
+        "l1l6-tranche-001b-ma-context-runtime",
+    }),
 }
 # test_paths must name an actual test file, never a production/consumer module (F8).
 _TEST_PATH_BASENAME_RE = re.compile(r"^test_.*\.py$")
@@ -1122,11 +1130,7 @@ def check_consumer_operationalization_bindings(ctx, errors):
         for row in _jsonl(path)
     ]
     runtime_ids = {row["id"] for row in runtime_rows}
-    kc_ids = {
-        row["kc_id"] for row in json.loads(
-            (ROOT / "curriculum" / "kc-catalog.json")
-            .read_text(encoding="utf-8"))
-    }
+    kc_ids = {row["kc_id"] for row in kc_catalog.load_kc_catalog(ROOT)}
     candidate_rows = {
         row["drill_id"]: row for row in ctx["drills"]
     }

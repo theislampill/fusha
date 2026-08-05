@@ -136,6 +136,11 @@ def _validate_remediation_index(text=None, reachable=None, crosswalk_text=None):
                         (kc_id, posture, expected))
     if not seen:
         errs.append("Train C remediation table has no posture-bearing KC rows")
+    # F5: a reachable KC (bound to a real drill-key row) that has NO row at all in this index is a silent
+    # remediation gap — omission must fail exactly like a wrong posture, not merely go unchecked.
+    missing = sorted(kc_id for kc_id in reachable if kc_id not in seen)
+    if missing:
+        errs.append("reachable KC(s) missing entirely from the Train C remediation index: %s" % missing)
     normalized = " ".join(text.split())
     if "treat the ids as equivalent only when the authoritative crosswalk explicitly pairs them" not in normalized:
         errs.append("remediation precedence does not defer equivalence to the authoritative crosswalk")
@@ -244,6 +249,13 @@ def validate():
     if not miss_no or miss_no["error_reason"] is not None:
         errs.append("a miss on a row without kc_id invented a non-null error_reason: %r" % miss_no)
     errs += _validate_remediation_index()
+
+    # F3: the real curriculum/kc-catalog.d/ shard directory must contain only shards declared in
+    # RT._DECLARED_KC_SHARDS — an undeclared shard must fail closed, not silently join the gate-bearing catalog.
+    try:
+        RT._assert_declared_kc_shards()
+    except Exception as exc:
+        errs.append("kc-catalog.d shard declaration: %s" % exc)
     return errs
 
 
@@ -264,6 +276,10 @@ def _self_test():
                                      "| `kc-hidden-proclitic` | `emittable` |", 1)
     if not _validate_remediation_index(bad_posture):
         errs.append("META: remediation index accepted an unreachable KC as emittable")
+    # META (F5): a reachable KC with NO row at all in the index (silent omission, not a wrong posture) must
+    # still be rejected. Simulate by asserting a fabricated reachable id absent from the real index is caught.
+    if not _validate_remediation_index(index_text, reachable=set(_reachable_kc_ids()) | {"kc-fabricated-missing"}):
+        errs.append("META: remediation index accepted a reachable KC missing entirely from its rows")
     bad_equivalence = index_text.replace("it is not an equivalence assertion for either KC",
                                          "it is an equivalence assertion for either KC", 1)
     if not _validate_remediation_index(bad_equivalence):
@@ -278,6 +294,17 @@ def _self_test():
         "the list above are emitted by the runtime", 1)
     if not _validate_remediation_index(index_text, crosswalk_text=bad_legacy_crosswalk):
         errs.append("META: missed-error template accepted legacy classes as runtime-emitted")
+    # META (F3): the declared-shard gate must fail closed on an undeclared curriculum/kc-catalog.d shard.
+    with tempfile.TemporaryDirectory() as td:
+        shard_dir = os.path.join(td, "curriculum", "kc-catalog.d")
+        os.makedirs(shard_dir)
+        with open(os.path.join(shard_dir, "rogue-undeclared-shard.jsonl"), "w", encoding="utf-8") as fh:
+            fh.write(json.dumps({"kc_id": "kc-rogue"}) + "\n")
+        try:
+            RT._assert_declared_kc_shards(repo_root=td)
+            errs.append("META: an undeclared kc-catalog.d shard was silently accepted instead of failing closed")
+        except Exception:
+            pass
     for e in errs:
         print("FAIL " + e)
     if not errs:

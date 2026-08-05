@@ -20,6 +20,7 @@ if hasattr(sys.stdout, "reconfigure"):
 _REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, _REPO)
 from tools import leak_sot  # noqa: E402
+from tools import kc_catalog  # noqa: E402
 from tools.fusha_check import IRAB_SENSITIVE_ISSUE_CLASSES, GATE_ALIAS, ISSUE_ROUTE, NAWASIKH_FAMILY_KC  # noqa: E402
 from tools import fusha_governor as GOV  # noqa: E402
 
@@ -53,8 +54,11 @@ _GENERIC_GOVERNOR_KC_ID = "kc-governor-justification"
 
 
 def load_kc_catalog(path=KC_CATALOG_PATH):
-    with open(path, encoding="utf-8") as fh:
-        kcs = json.load(fh)
+    if os.path.abspath(path) == os.path.abspath(KC_CATALOG_PATH):
+        kcs = kc_catalog.load_kc_catalog(_REPO)
+    else:
+        with open(path, encoding="utf-8") as fh:
+            kcs = json.load(fh)
     by_class = {}
     for kc in kcs:
         for cls in kc.get("diagnostic_classes", []):

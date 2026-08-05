@@ -31,6 +31,8 @@ import json
 import sys
 from pathlib import Path
 
+import kc_catalog
+
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "curriculum" / "l1l6"
 RPT = BASE / "reports"
@@ -175,10 +177,8 @@ def ordinary_tutor_runtime_truth(ctx, bindings=None):
     key_rows = []
     for path in sorted((ROOT / "curriculum" / "drills" / "keys").glob("*.jsonl")):
         key_rows.extend(r for r in _jsonl(path) if r.get("kc_id"))
-    kc_catalog = json.loads(
-        (ROOT / "curriculum" / "kc-catalog.json").read_text(encoding="utf-8")
-    )
-    kc_by_id = {r["kc_id"]: r for r in kc_catalog}
+    kc_rows = kc_catalog.load_kc_catalog(ROOT)
+    kc_by_id = {r["kc_id"]: r for r in kc_rows}
     emittable_kcs = sorted({r["kc_id"] for r in key_rows})
     missing_kcs = sorted(set(emittable_kcs) - set(kc_by_id))
     if missing_kcs:

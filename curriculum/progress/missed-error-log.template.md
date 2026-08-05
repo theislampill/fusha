@@ -62,7 +62,25 @@ pairing as equivalent ONLY if it appears on this list.
 Every other `kc_id` currently reachable as an `error_reason` (`kc-clitic-segmentation`,
 `kc-root-template-slot-classification`, `kc-masdar-template-not-uniform`, `kc-nawasikh-kana-laysa-government`,
 `kc-nawasikh-continuative-licensing`, `kc-nawasikh-inna-family-government`, `kc-nawasikh-qalb-verb-transitivity`,
-`kc-nawasikh-stacked-governor-scope`) has NO legacy equivalent above; treat it as its own distinct error class,
+`kc-nawasikh-stacked-governor-scope`, `kc-grapheme-confusables`, `kc-orthographic-connectivity`,
+`kc-short-vowels-and-vocalization-state`, `kc-sukun-shadda-stack`, `kc-long-vowel-carrier-role`,
+`kc-nunation-written-realization`, `kc-definite-article-assimilation`, `kc-attributive-follower-licensing`,
+`kc-coordination-particle-case-following`, `kc-badal-apposition-typology`, `kc-waw-function-accompaniment`,
+`kc-assimilated-verb-radical-scope`, `kc-defective-verb-suffix-and-jussive-shift`,
+`kc-geminate-verb-merger-licensing`, `kc-hamzated-verb-carrier-and-imperfect`,
+`kc-doubly-weak-verb-subtype-composition`, `kc-passive-voice-melody-and-argument-promotion`,
+`kc-deputy-agent-function-discrimination`, `kc-t1-derivation-noun-final-class-declension`,
+`kc-t1-derivation-passive-voice-construction`, `kc-t1-derivation-root-template-letter-discipline`,
+`kc-t1-derivation-idafa-masdar-argument-case`, `kc-t1-derivation-participle-usage-licensing`,
+`kc-t1-derivation-terminology-category-discipline`, `kc-t1-ma-context-masdariyya-verbal-noun-substitution`,
+`kc-t1-ma-context-hijaziyya-tamimiyya-nullifiers`, `kc-t1-ma-context-amma-kaffa-jawab-fa`,
+`kc-t1-ma-context-exclamatory-interrogative-case`, `kc-t1-ma-context-negated-possession-lam-subjunctive`,
+`kc-t1-ma-context-lamma-jazm-vs-temporal-rival`, `kc-t1-ma-context-ma-zala-kana-sister-government`,
+`kc-t1-ma-context-ma-dama-temporal-not-negation`, `kc-t1-ma-context-ma-nafiya-no-mood-government`,
+`kc-t1-ma-context-istifham-alif-elision-preposition`, `kc-t1-ma-context-relative-preposition-majrur-government`,
+`kc-t1-ma-context-ma-vs-man-rational-referent`, `kc-t1-ma-context-innama-kaffa-restriction-scope`,
+`kc-t1-ma-context-lamma-jazm-requires-mudari`) has NO legacy equivalent above; treat it as
+its own distinct error class,
 not a re-spelling of anything in the "Error Classes" list. Conversely, every legacy code not listed in the
 crosswalk table (`script_harakat`, `root_family_vibes`, `pp_attachment_unclear`, etc.) has no `kc_id` equivalent
 yet and stays a legacy-only code until a drill row binds it. The remaining KCs in `curriculum/kc-catalog.json`

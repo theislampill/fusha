@@ -203,7 +203,7 @@
       "artifact_id": "tutor-runtime",
       "path": "tools/fusha_tutor_runtime.py",
       "role": "tutor_runtime_consumer",
-      "sha256": "63354631480132cbd6f377144a281f6050111e0abf1906d3612282a6f4bfcd89"
+      "sha256": "bcb5e1ed815d53142698b9961924023d06d072b40b4339e17f88feb36a8218ef"
     },
     {
       "artifact_id": "candidate-drill-specifications",
@@ -222,6 +222,12 @@
       "path": "curriculum/drills/keys/followers-coordination-apposition.keys.jsonl",
       "role": "runtime_drill_input",
       "sha256": "946cb99b0dc66d3ec2a9cafb503594adf4f94ccd64358e0088682937fee8e1b1"
+    },
+    {
+      "artifact_id": "runtime-keys-foundational-script-orthography",
+      "path": "curriculum/drills/keys/foundational-script-orthography.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "a557e908dab18632685a16f309be91f42c4847feb3594f8550bc31643c921d60"
     },
     {
       "artifact_id": "runtime-keys-hover-composition",
@@ -272,10 +278,28 @@
       "sha256": "bf79a212597c99e9c02bc6e42dc762aad6fbb8fcb76b446bb0f1c7e8952b162a"
     },
     {
+      "artifact_id": "runtime-keys-tranche-001-derivation-template",
+      "path": "curriculum/drills/keys/tranche-001-derivation-template-runtime.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "4b241c972cedcf2c763defd02da7b3af2cc7aee3754848512236d66a8583d14a"
+    },
+    {
+      "artifact_id": "runtime-keys-tranche-001-ma-context",
+      "path": "curriculum/drills/keys/tranche-001-ma-context-runtime.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "449c2ed2d6c56a3b6eda458ce426cc79948d383082e7af8335f0a723fb8bf65f"
+    },
+    {
       "artifact_id": "runtime-keys-vn00-hover-closure",
       "path": "curriculum/drills/keys/vn00-aggressive-hover-closure.keys.jsonl",
       "role": "runtime_drill_input",
       "sha256": "7e234a9219b7dc9ff8e5f3b2caa2f86b285bf3a4d69cc648080c417d797a023d"
+    },
+    {
+      "artifact_id": "runtime-keys-weak-root-voice",
+      "path": "curriculum/drills/keys/weak-root-voice-runtime.keys.jsonl",
+      "role": "runtime_drill_input",
+      "sha256": "59d08d817fba75e15bd2c60bfebd18a0ccdbda1efb0c9590ce5270ae998694eb"
     },
     {
       "artifact_id": "canary-ma-relative",
@@ -300,6 +324,30 @@
       "path": "qamus/examples/website-payloads/multi_entry_liqawmihi_61_5_4.payload.json",
       "role": "safety_canary",
       "sha256": "5f27ced1dd998e1874a2c2b4b468ca899f9147a2a20c1179af7a4bd81d479518"
+    },
+    {
+      "artifact_id": "kc-catalog-legacy",
+      "path": "curriculum/kc-catalog.json",
+      "role": "kc_catalog_input",
+      "sha256": "9a7cbc429386ca1f502b2d0c346c3cfb82764b00e1f775c5d43d298ab1459ea9"
+    },
+    {
+      "artifact_id": "kc-catalog-shard-derivation-template",
+      "path": "curriculum/kc-catalog.d/tranche-001-derivation-template.jsonl",
+      "role": "kc_catalog_input",
+      "sha256": "07eca62ffeb93c6e5ec9a49c8b236a22c4a48bdc7c78c6ea7d31857081c21a48"
+    },
+    {
+      "artifact_id": "kc-catalog-shard-ma-context",
+      "path": "curriculum/kc-catalog.d/tranche-001-ma-context.jsonl",
+      "role": "kc_catalog_input",
+      "sha256": "8a1856ac62c1c8063ceb49fbcb95072b4a6f1b206193ca7c7a45ae6d87672889"
+    },
+    {
+      "artifact_id": "kc-catalog-loader",
+      "path": "tools/kc_catalog.py",
+      "role": "kc_catalog_input",
+      "sha256": "bcb9ad138412510756caa53897ca27a0205501c360c7486a94aa565a4d074fae"
     }
   ],
   "authority_commit": "1bd48d1bf3664316415a01d976fc3b7771dbb38a",
@@ -373,6 +421,7 @@
         "candidate-drill-specifications",
         "runtime-default-level-checkpoints",
         "runtime-keys-followers-coordination-apposition",
+        "runtime-keys-foundational-script-orthography",
         "runtime-keys-hover-composition",
         "runtime-keys-morphology-foundations",
         "runtime-keys-nawasikh-governor",
@@ -381,7 +430,10 @@
         "runtime-keys-quranic-function-words",
         "runtime-keys-root-pattern",
         "runtime-keys-sentence-foundations",
-        "runtime-keys-vn00-hover-closure"
+        "runtime-keys-tranche-001-derivation-template",
+        "runtime-keys-tranche-001-ma-context",
+        "runtime-keys-vn00-hover-closure",
+        "runtime-keys-weak-root-voice"
       ],
       "gold_artifact_ids": [
         "placement-probes"

@@ -325,6 +325,23 @@ class FushaBenchTest(unittest.TestCase):
         with self.assertRaisesRegex(bench.BenchError, "sha256 mismatch"):
             bench.validate_manifest(mutated, root=ROOT)
 
+    def test_kc_catalog_gate_bearing_artifacts_are_pinned_with_the_kc_catalog_input_role(self):
+        # R4: curriculum/kc-catalog.json, both declared shards, and the loader module itself must all be
+        # sha-pinned with role kc_catalog_input -- not just discoverable on disk.
+        expected_paths = {"curriculum/kc-catalog.json", "tools/kc_catalog.py"} | {
+            "curriculum/kc-catalog.d/%s" % name for name in bench.kc_catalog.DECLARED_KC_SHARDS
+        }
+        pinned = {a["path"]: a for a in self.manifest["artifacts"] if a.get("role") == "kc_catalog_input"}
+        self.assertEqual(set(pinned), expected_paths)
+        for path, artifact in pinned.items():
+            self.assertRegex(artifact["sha256"], r"^[0-9a-f]{64}$", path)
+
+    def test_removing_a_gate_bearing_kc_catalog_artifact_fails_the_completeness_guard(self):
+        mutated = copy.deepcopy(self.manifest)
+        mutated["artifacts"] = [a for a in mutated["artifacts"] if a["artifact_id"] != "kc-catalog-legacy"]
+        with self.assertRaisesRegex(bench.BenchError, "gate-bearing KC catalog artifact"):
+            bench.validate_manifest(mutated, root=ROOT)
+
     def test_axis_paths_are_bound_to_the_exact_pinned_artifacts(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             copied_claims = os.path.join(temp_dir, "typed-facts.jsonl")
