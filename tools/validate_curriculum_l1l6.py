@@ -1370,8 +1370,6 @@ def check_runtime_truth_consistency(readiness, derived_runtime, drill_meta,
         )
     if runtime.get("candidate_drill_specs_promoted", 0) != 0:
         errors.append("absorption: candidate drill specifications were promoted")
-    if readiness.get("lessons_fully_operationalized", 0) != 0:
-        errors.append("absorption: whole-lesson operationalization overclaim")
 
 
 def check_absorption(ctx, errors):
@@ -1426,6 +1424,38 @@ def check_absorption(ctx, errors):
         check_runtime_truth_consistency(
             ready, derived_runtime, drill_meta, errors
         )
+        fully_closed = [
+            row
+            for row in ledger
+            if (row.get("consumer_operationalization") or {}).get(
+                "fully_operationalized"
+            ) is True
+        ]
+        partially_closed = [
+            row
+            for row in ledger
+            if (row.get("consumer_operationalization") or {}).get("status")
+            == "partially_operationalized"
+        ]
+        if ready.get("lessons_fully_operationalized") != len(fully_closed):
+            errors.append(
+                "absorption: fully operationalized lesson count %r != ledger %d"
+                % (ready.get("lessons_fully_operationalized"), len(fully_closed))
+            )
+        if ready.get("lessons_partially_operationalized") != len(partially_closed):
+            errors.append(
+                "absorption: partially operationalized lesson count %r != ledger %d"
+                % (
+                    ready.get("lessons_partially_operationalized"),
+                    len(partially_closed),
+                )
+            )
+        if fully_closed and ready.get(
+            "lessons_fully_operationalized_basis"
+        ) != "all_mapped_canonical_units_fully_operationalized":
+            errors.append(
+                "absorption: fully operationalized lesson basis is not computed"
+            )
     comp_p = BASE / "reports" / "section-completeness.json"
     if comp_p.exists():
         comp = json.loads(comp_p.read_text(encoding="utf-8"))

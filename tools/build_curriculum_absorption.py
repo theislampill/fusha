@@ -32,6 +32,7 @@ import sys
 from pathlib import Path
 
 import kc_catalog
+import curriculum_closure
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "curriculum" / "l1l6"
@@ -347,9 +348,34 @@ def _campaign_numbers(ctx, ledger, section_rows, completeness):
     }
 
 
-def build(ctx):
+def build(ctx, unit_dispositions=None):
     bindings = load_consumer_bindings()
     operationalization = consumer_operationalization_truth(bindings)
+    if unit_dispositions is None:
+        # Recompute rather than trusting a possibly stale generated ledger.
+        # The import is deliberately local: build_unit_dispositions imports
+        # this module only for consumer-binding helpers.
+        import build_unit_dispositions
+        unit_dispositions, _ = build_unit_dispositions.build(bindings=bindings)
+    lesson_closure = curriculum_closure.lesson_closure_truth(
+        unit_dispositions,
+        list(ctx["lesson_unit_map"].values()),
+    )
+    fully_operationalized_lesson_ids = set(
+        lesson_closure["fully_operationalized_lesson_ids"]
+    )
+    real_consumer_lesson_ids = set(
+        operationalization["real_consumer_lesson_ids"]
+    )
+    operationalization["lessons_fully_operationalized"] = len(
+        fully_operationalized_lesson_ids
+    )
+    operationalization["lessons_partially_operationalized"] = len(
+        real_consumer_lesson_ids - fully_operationalized_lesson_ids
+    )
+    operationalization["lessons_fully_operationalized_basis"] = (
+        lesson_closure["basis"]
+    )
     runtime_truth = ordinary_tutor_runtime_truth(ctx, bindings=bindings)
     runtime_lesson_kcs = runtime_truth["indirect_lesson_kcs"]
     binding_by_id = {r["binding_id"]: r for r in bindings}
@@ -485,17 +511,28 @@ def build(ctx):
                     if lid in runtime_lesson_kcs else None
                 ),
                 "lesson_contribution_operationalized": bool(tutor_binding_ids),
-                "lesson_content_fully_operationalized": False,
+                "lesson_content_fully_operationalized": (
+                    lid in fully_operationalized_lesson_ids
+                ),
             },
             "consumer_operationalization": {
-                "status": ("partially_operationalized" if real_binding_ids
+                "status": ("fully_operationalized"
+                           if lid in fully_operationalized_lesson_ids
+                           else "partially_operationalized" if real_binding_ids
                            else "pending_authoring" if pending_binding_ids
                            else "not_operationalized"),
                 "real_binding_ids": real_binding_ids,
                 "pending_binding_ids": pending_binding_ids,
                 "operationalized_planes": real_planes,
                 "pending_planes": pending_planes,
-                "fully_operationalized": False,
+                "fully_operationalized": (
+                    lid in fully_operationalized_lesson_ids
+                ),
+                "fully_operationalized_basis": (
+                    lesson_closure["basis"]
+                    if lid in fully_operationalized_lesson_ids
+                    else "mapped_units_incomplete"
+                ),
             },
             "tutor_drill_destinations": (
                 ["ordinary tutor runtime via emittable KC drill-key rows"]

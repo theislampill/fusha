@@ -2,20 +2,31 @@
   "authority": {
     "closure_rule": "unit-dispositions fully_operationalized=true with a computed fully_operationalized_basis; candidate states and plane-specific consumer bindings remain partial evidence",
     "inputs": {
-      "curriculum/l1l6/canonical/canonical-units.jsonl": "sha256:3a3d4cf04c126de2c2a1263bb0259458b657585278f28f0eadc28c10fc7b6209",
+      "curriculum/l1l6/canonical/canonical-units.jsonl": "sha256:af4c53e64ab64b18e5caecbec75fef7abebcef3949810e4deabcec9c80cd8671",
       "curriculum/l1l6/canonical/lesson-unit-map.jsonl": "sha256:499ee92a1008df30af12ef19e27adb6ddbdb61cea26519c00fc6292aa2aeea6d",
-      "curriculum/l1l6/canonical/unit-dispositions.jsonl": "sha256:51bd82ebbd2c24b4a6909ad26c851fa37eb3884d4e85da7695f0e59ba12e60a4",
-      "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl": "sha256:cdeb066afc973905fa42c6977d6c8b488061f99b52727e0bf87a7d3dfacbd333",
+      "curriculum/l1l6/canonical/unit-dispositions.jsonl": "sha256:36ec38c142965b1023b4457dd57f8226dfee84adac04938d85ca737db668dc9d",
+      "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl": "sha256:2aa5b75fd34ab04092031ea18fc1abca0b9981049d5dfee1735477497e81a781",
       "curriculum/l1l6/registry/lessons.jsonl": "sha256:6362bc8ef50f8ffebec4c6253c279d2e2e3d6c94f0b976352f32717baebfc743",
-      "curriculum/l1l6/reports/absorption-ledger.jsonl": "sha256:0667773a9598ec2cacfaac6643f6aedb9646ee8db2ccbf8d68e3e44524af07dd",
-      "curriculum/l1l6/reports/full-curriculum-readiness.json": "sha256:673f9fdff3a5e40a330e96aee72a0cd34286735c7ab6eb85b2cb24021c5cb97a",
+      "curriculum/l1l6/reports/absorption-ledger.jsonl": "sha256:b0b1d0dedf7b6cfdf39104933bc778b8a7d494e48faa07ab82b86c1dc3baade0",
+      "curriculum/l1l6/reports/full-curriculum-readiness.json": "sha256:8e2222ba97596203ee2564dd770773fbbb272af67db39c881649092da525e9b7",
       "curriculum/l1l6/reports/queues/q-error-fixtures.jsonl": "sha256:50d979c923bc868b457eafc6244ea38bfe32b81595920e045658a8bdf2838e09",
       "eval/fusha-bench-v1/report/fusha-bench-report.json": "sha256:580150cd0f8860dde87a6e784b58838679c7ae41df14a4c82def57babaaba63f"
     }
   },
   "baseline": {
-    "closed_lesson_ids": [],
-    "closed_unit_ids": [],
+    "closed_lesson_ids": [
+      "L1.M1.01",
+      "L1.M1.02",
+      "L1.M1.03",
+      "L1.M1.07"
+    ],
+    "closed_unit_ids": [
+      "cu-grapheme-inventory-and-confusables",
+      "cu-orthographic-connectivity-classes",
+      "cu-short-vowel-diacritics-and-vocalization-state",
+      "cu-nunation-support-orthography",
+      "cu-definite-article-assimilation"
+    ],
     "lessons_total": 226,
     "not_applicable_lesson_ids": [
       "L1.M5.08"
@@ -28,17 +39,59 @@
       "cu-badal-vs-atf-bayan",
       "cu-bound-fa-function-discrimination",
       "cu-clitic-pronoun-role-discriminator",
+      "cu-definite-article-assimilation",
       "cu-fa-function-and-mood-licensing",
+      "cu-grapheme-inventory-and-confusables",
       "cu-la-negative-vs-prohibitive-discriminator",
       "cu-lakin-coordinator-vs-abrogator",
+      "cu-nunation-support-orthography",
+      "cu-orthographic-connectivity-classes",
       "cu-preposition-sense-discriminators",
+      "cu-short-vowel-diacritics-and-vocalization-state",
       "cu-tanazu-governor-selection",
-      "cu-waw-function-discriminator"
+      "cu-waw-function-discriminator",
+      "u-n01",
+      "u-n02",
+      "u-n03",
+      "u-n04",
+      "u-n06",
+      "u-n07",
+      "u-n08",
+      "u-n09",
+      "u-n10",
+      "u-n11",
+      "u-n12",
+      "u-s01",
+      "u-s02",
+      "u-s03",
+      "u-s04",
+      "u-s05",
+      "u-s06",
+      "u-s07",
+      "u-s09"
     ],
     "units_total": 166
   },
   "blocked_lessons": [],
   "blocked_units": [],
+  "closure": {
+    "fully_operationalized_unit_ids": [
+      "cu-grapheme-inventory-and-confusables",
+      "cu-orthographic-connectivity-classes",
+      "cu-short-vowel-diacritics-and-vocalization-state",
+      "cu-nunation-support-orthography",
+      "cu-definite-article-assimilation"
+    ],
+    "newly_fully_operationalized_lesson_ids": [
+      "L1.M1.01",
+      "L1.M1.02",
+      "L1.M1.03",
+      "L1.M1.07"
+    ],
+    "tranche_closed": false,
+    "units_fully_operationalized": 5,
+    "units_still_partial": 3
+  },
   "contributing_lesson_ids": [
     "L1.M1.01",
     "L1.M1.02",
@@ -159,12 +212,7 @@
     "L1.M1.01",
     "L1.M1.02",
     "L1.M1.03",
-    "L1.M1.04",
-    "L1.M1.05",
-    "L1.M1.06",
-    "L1.M1.07",
-    "L1.M2.01",
-    "L1.M2.10"
+    "L1.M1.07"
   ],
   "generator": "tools/select_tranche.py",
   "parked_dimension_blockers": [
@@ -2131,14 +2179,14 @@
   "remaining": {
     "blocked_units": 0,
     "parked_dimension_blockers": 105,
-    "planned_tranches_total": 23,
-    "units_after_tranche_001": 158
+    "planned_tranches_total": 22,
+    "units_after_tranche_001": 161
   },
   "schema": "curriculum.l1l6_operationalization_tranche.v1",
   "selection": {
     "algorithm": "earliest_contributing_lesson_then_unit_id_greedy",
     "lesson_flip_quota": 9,
-    "residual": false
+    "residual": true
   },
   "tranche_id": "tranche-001",
   "units": [
@@ -2149,13 +2197,17 @@
       "contributing_lesson_ids": [
         "L1.M1.01"
       ],
-      "current_closure": "open",
+      "current_closure": "fully_operationalized",
       "current_strongest_state": "candidate_remediation_material",
+      "incomplete_closure_dimensions": [],
       "owning_production_lines": [
         "line_2_drill_kc_realization",
         "line_4_error_fixtures"
       ],
-      "real_consumer_binding_ids": [],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001a-foundational-orthography-analysis",
+        "l1l6-tranche-001b-foundational-script-runtime"
+      ],
       "unit_id": "cu-grapheme-inventory-and-confusables"
     },
     {
@@ -2165,14 +2217,18 @@
       "contributing_lesson_ids": [
         "L1.M1.02"
       ],
-      "current_closure": "open",
-      "current_strongest_state": "fixture_source_candidate",
+      "current_closure": "fully_operationalized",
+      "current_strongest_state": "candidate_pack_harnessed",
+      "incomplete_closure_dimensions": [],
       "owning_production_lines": [
         "line_1_machine_packs",
         "line_2_drill_kc_realization",
         "line_4_error_fixtures"
       ],
-      "real_consumer_binding_ids": [],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001a-foundational-orthography-analysis",
+        "l1l6-tranche-001b-foundational-script-runtime"
+      ],
       "unit_id": "cu-orthographic-connectivity-classes"
     },
     {
@@ -2182,13 +2238,17 @@
       "contributing_lesson_ids": [
         "L1.M1.03"
       ],
-      "current_closure": "open",
+      "current_closure": "fully_operationalized",
       "current_strongest_state": "candidate_remediation_material",
+      "incomplete_closure_dimensions": [],
       "owning_production_lines": [
         "line_2_drill_kc_realization",
         "line_4_error_fixtures"
       ],
-      "real_consumer_binding_ids": [],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001a-foundational-orthography-analysis",
+        "l1l6-tranche-001b-foundational-script-runtime"
+      ],
       "unit_id": "cu-short-vowel-diacritics-and-vocalization-state"
     },
     {
@@ -2230,14 +2290,23 @@
         "L6.M5.01",
         "L6.M5.02"
       ],
-      "current_closure": "open",
+      "current_closure": "partially_operationalized",
       "current_strongest_state": "candidate_occurrence_witnesses",
+      "incomplete_closure_dimensions": [
+        "runtime_misconceptions",
+        "consumer_bindings"
+      ],
       "owning_production_lines": [
         "line_2_drill_kc_realization",
         "line_3_occurrence_grounding",
         "line_4_error_fixtures"
       ],
-      "real_consumer_binding_ids": [],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001b-derivation-template-runtime",
+        "l1l6-tranche-001b-foundational-script-runtime",
+        "l1l6-tranche-001b-ma-context-runtime",
+        "l1l6-tranche-001b-weak-root-voice-runtime"
+      ],
       "unit_id": "u-s06"
     },
     {
@@ -2273,15 +2342,22 @@
         "L6.M5.01",
         "L6.M5.05"
       ],
-      "current_closure": "open",
+      "current_closure": "partially_operationalized",
       "current_strongest_state": "candidate_pack_harnessed",
+      "incomplete_closure_dimensions": [
+        "runtime_misconceptions",
+        "consumer_bindings"
+      ],
       "owning_production_lines": [
         "line_1_machine_packs",
         "line_2_drill_kc_realization",
         "line_3_occurrence_grounding",
         "line_4_error_fixtures"
       ],
-      "real_consumer_binding_ids": [],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001b-foundational-script-runtime",
+        "l1l6-tranche-001b-weak-root-voice-runtime"
+      ],
       "unit_id": "u-s01"
     },
     {
@@ -2291,14 +2367,18 @@
       "contributing_lesson_ids": [
         "L1.M1.06"
       ],
-      "current_closure": "open",
-      "current_strongest_state": "candidate_presentation_template",
+      "current_closure": "fully_operationalized",
+      "current_strongest_state": "candidate_pack_harnessed",
+      "incomplete_closure_dimensions": [],
       "owning_production_lines": [
         "line_1_machine_packs",
         "line_2_drill_kc_realization",
         "line_4_error_fixtures"
       ],
-      "real_consumer_binding_ids": [],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001a-foundational-orthography-analysis",
+        "l1l6-tranche-001b-foundational-script-runtime"
+      ],
       "unit_id": "cu-nunation-support-orthography"
     },
     {
@@ -2388,15 +2468,24 @@
         "L6.M6.03",
         "L6.M6.04"
       ],
-      "current_closure": "open",
+      "current_closure": "partially_operationalized",
       "current_strongest_state": "candidate_pack_harnessed",
+      "incomplete_closure_dimensions": [
+        "runtime_misconceptions",
+        "consumer_bindings"
+      ],
       "owning_production_lines": [
         "line_1_machine_packs",
         "line_2_drill_kc_realization",
         "line_3_occurrence_grounding",
         "line_4_error_fixtures"
       ],
-      "real_consumer_binding_ids": [],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001b-derivation-template-runtime",
+        "l1l6-tranche-001b-foundational-script-runtime",
+        "l1l6-tranche-001b-ma-context-runtime",
+        "l1l6-tranche-001b-weak-root-voice-runtime"
+      ],
       "unit_id": "u-n01"
     },
     {
@@ -2406,14 +2495,18 @@
       "contributing_lesson_ids": [
         "L1.M1.07"
       ],
-      "current_closure": "open",
-      "current_strongest_state": "fixture_source_candidate",
+      "current_closure": "fully_operationalized",
+      "current_strongest_state": "candidate_pack_harnessed",
+      "incomplete_closure_dimensions": [],
       "owning_production_lines": [
         "line_1_machine_packs",
         "line_2_drill_kc_realization",
         "line_4_error_fixtures"
       ],
-      "real_consumer_binding_ids": [],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001a-foundational-orthography-analysis",
+        "l1l6-tranche-001b-foundational-script-runtime"
+      ],
       "unit_id": "cu-definite-article-assimilation"
     }
   ]

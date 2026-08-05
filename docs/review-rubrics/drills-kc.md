@@ -12,6 +12,10 @@ Read before authoring and during the single assembled-slice review.
 - Exercise ordinary tutor selection, grading, progress isolation and remediation—not a curriculum-local mock.
 - Preserve `quran_example: null` or an explicit evidence-blocked posture when exact occurrence evidence is absent.
 - Ensure bindings and generated accounting ship in the same slice as the consumer behavior.
+- Give every disputed-form or rival-preservation decision one canonical KC/decision record. Generate each
+  learner-facing restatement from that record or gate-check its semantic posture against it; reject manually
+  mirrored key rows, WRV cells, remediation indexes, staged explanations or hover fields that settle a rival
+  the canonical record preserves.
 
 Record findings by stable class so recurrence can be measured across tranches.
 

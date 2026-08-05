@@ -147,8 +147,11 @@ class ConsumerTruthTests(unittest.TestCase):
         self.assertEqual(runtime["bound_runtime_item_count"], 155)
         self.assertEqual(runtime["candidate_drill_specs_promoted"], 0)
         self.assertEqual(readiness["lessons_mapped_to_tutor_drills"], 39)
-        self.assertEqual(readiness["lessons_fully_operationalized"], 0)
-        self.assertEqual(readiness["lessons_fully_operationalized_basis"], "not_yet_computed")
+        self.assertEqual(readiness["lessons_fully_operationalized"], 4)
+        self.assertEqual(
+            readiness["lessons_fully_operationalized_basis"],
+            "all_mapped_canonical_units_fully_operationalized",
+        )
         self.assertEqual(
             readiness["candidate_drill_packets"]["runtime_integrated"], 0
         )
@@ -172,7 +175,7 @@ class ConsumerTruthTests(unittest.TestCase):
             TRAIN_B_PENDING_UNITS,
         )
         self.assertEqual(meta["explicit_runtime_unit_bindings"], 30)
-        self.assertEqual(meta["lessons_fully_operationalized"], 0)
+        self.assertEqual(meta["lessons_fully_operationalized"], 4)
 
         badal = by_id["cu-badal-typology-discriminator"]
         self.assertEqual(badal["operationalized_planes"], ["tutor_runtime"])
@@ -287,11 +290,27 @@ class ConsumerTruthTests(unittest.TestCase):
     def test_unit_dispositions_keep_consumer_evidence_out_of_candidate_states(self):
         rows, meta = dispositions.build()
         self.assertEqual(meta["explicit_runtime_unit_bindings"], 30)
+        closed = {
+            "cu-definite-article-assimilation",
+            "cu-grapheme-inventory-and-confusables",
+            "cu-nunation-support-orthography",
+            "cu-orthographic-connectivity-classes",
+            "cu-short-vowel-diacritics-and-vocalization-state",
+        }
         for row in rows:
             self.assertNotIn("candidate_runtime_behavioral_mapping", row["states"])
             self.assertNotIn("runtime_behavioral_evidence", row["states"])
-            self.assertFalse(row["fully_operationalized"])
-            self.assertEqual(row["fully_operationalized_basis"], "not_yet_computed")
+            self.assertEqual(
+                row["fully_operationalized"], row["unit_id"] in closed
+            )
+            if row["unit_id"] in closed:
+                self.assertTrue(
+                    row["fully_operationalized_basis"].startswith(
+                        "all_required_dimensions_satisfied:sha256:"
+                    )
+                )
+            else:
+                self.assertFalse(row["fully_operationalized"])
 
     def test_runtime_validator_accepts_future_internally_consistent_counts(self):
         derived = {

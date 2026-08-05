@@ -112,6 +112,28 @@ class SelectorTests(unittest.TestCase):
         self.assertEqual(plan["tranches"][0]["unit_ids"], ["u-parked"])
         self.assertEqual(plan["tranches"][0]["newly_flipped_lesson_ids"], ["L1"])
 
+    def test_closed_unit_may_retain_only_a_parked_occurrence_blocker(self):
+        blocker = {
+            "dimension": "occurrence_grounding",
+            "state": "evidence_blocked",
+            "cause": "missing exact occurrence witness",
+        }
+        plan = selector.plan_tranches(
+            [lesson("L1")],
+            [mapping("L1", "u-closed-parked")],
+            [unit(
+                "u-closed-parked",
+                closed=True,
+                basis="all_non_occurrence_dimensions_proven",
+                blockers=[blocker],
+            )],
+            quota=1,
+        )
+
+        self.assertEqual(plan["baseline_closed_unit_ids"], ["u-closed-parked"])
+        self.assertEqual(plan["baseline_closed_lesson_ids"], ["L1"])
+        self.assertEqual(plan["parked_unit_ids"], ["u-closed-parked"])
+
     def test_greedy_selection_is_stable_and_reaches_quota_when_possible(self):
         lessons = [lesson(f"L{i:02}") for i in range(1, 11)]
         mappings = [mapping(f"L{i:02}", f"u{i:02}") for i in range(1, 11)]

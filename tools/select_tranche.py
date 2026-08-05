@@ -20,6 +20,8 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+import curriculum_closure as closure
+
 
 ROOT = Path(__file__).resolve().parents[1]
 GENERATOR = "tools/select_tranche.py"
@@ -170,7 +172,11 @@ def plan_tranches(
     contradictory = sorted(
         unit_id
         for unit_id in closed_units
-        if unit_by_id[unit_id].get("blockers")
+        if any(
+            blocker.get("dimension") != "occurrence_grounding"
+            or blocker.get("state") not in PARKABLE_BLOCKER_STATES
+            for blocker in unit_by_id[unit_id].get("blockers", [])
+        )
     )
     if contradictory:
         raise ValueError("closed units still carry blockers: " + ", ".join(contradictory))
@@ -186,8 +192,7 @@ def plan_tranches(
     parked_units = {
         unit_id
         for unit_id, row in unit_by_id.items()
-        if unit_id not in closed_units
-        and bool(row.get("blockers"))
+        if bool(row.get("blockers"))
         and unit_id not in blocked_units
     }
 
@@ -383,12 +388,33 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
     for values in real_binding_ids_by_unit.values():
         values.sort()
 
-    first = plan["tranches"][0] if plan["tranches"] else {
+    target_unit_ids = list(closure.TRANCHE_001_UNIT_IDS)
+    preserve_tranche_001 = set(target_unit_ids).issubset(dispositions)
+    if preserve_tranche_001:
+        current_unit_ids = target_unit_ids
+    else:
+        current_unit_ids = list(
+            plan["tranches"][0]["unit_ids"] if plan["tranches"] else []
+        )
+    current_closed_unit_ids = [
+        unit_id
+        for unit_id in current_unit_ids
+        if is_closed_unit(dispositions[unit_id])
+    ]
+    first = {
         "tranche_number": 1,
-        "unit_ids": [],
-        "newly_flipped_lesson_ids": [],
-        "residual": True,
+        "unit_ids": current_unit_ids,
+        "newly_flipped_lesson_ids": (
+            plan["baseline_closed_lesson_ids"]
+            if preserve_tranche_001
+            else (
+                plan["tranches"][0]["newly_flipped_lesson_ids"]
+                if plan["tranches"] else []
+            )
+        ),
+        "residual": False,
     }
+    first["residual"] = len(first["newly_flipped_lesson_ids"]) < quota
     unit_records = []
     contributing_lessons = []
     seen_lessons = set()
@@ -408,7 +434,14 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
             "owning_production_lines": _production_lines(
                 disposition, lessons, error_fixture_lessons
             ),
-            "current_closure": "open",
+            "current_closure": (
+                "fully_operationalized"
+                if is_closed_unit(disposition)
+                else "partially_operationalized"
+            ),
+            "incomplete_closure_dimensions": disposition.get(
+                "incomplete_closure_dimensions", []
+            ),
             "current_strongest_state": disposition.get("strongest_state"),
             "real_consumer_binding_ids": real_binding_ids_by_unit.get(unit_id, []),
             "blockers": disposition.get("blockers", []),
@@ -454,6 +487,20 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
         "units": unit_records,
         "contributing_lesson_ids": contributing_lessons,
         "expected_newly_flipped_lesson_ids": first["newly_flipped_lesson_ids"],
+        "closure": {
+            "units_fully_operationalized": len(current_closed_unit_ids),
+            "units_still_partial": len(current_unit_ids) - len(
+                current_closed_unit_ids
+            ),
+            "fully_operationalized_unit_ids": current_closed_unit_ids,
+            "newly_fully_operationalized_lesson_ids": first[
+                "newly_flipped_lesson_ids"
+            ],
+            "tranche_closed": (
+                len(current_closed_unit_ids) == len(current_unit_ids)
+                and len(first["newly_flipped_lesson_ids"]) >= quota
+            ),
+        },
         "blocked_units": plan["blocked_units"],
         "parked_dimension_blockers": plan["parked_units"],
         "blocked_lessons": blocked_lessons,
@@ -462,7 +509,6 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
             "units_after_tranche_001": (
                 len(inputs.unit_dispositions)
                 - len(plan["baseline_closed_unit_ids"])
-                - len(first["unit_ids"])
             ),
             "blocked_units": len(plan["blocked_unit_ids"]),
             "parked_dimension_blockers": len(plan["parked_unit_ids"]),
@@ -541,6 +587,14 @@ def build_artifacts(inputs: Inputs, *, quota: int = 9) -> tuple[dict, dict]:
             "expected_newly_flipped_lesson_ids": first[
                 "newly_flipped_lesson_ids"
             ],
+            "units_fully_operationalized": len(current_closed_unit_ids),
+            "units_still_partial": len(current_unit_ids) - len(
+                current_closed_unit_ids
+            ),
+            "tranche_closed": (
+                len(current_closed_unit_ids) == len(current_unit_ids)
+                and len(first["newly_flipped_lesson_ids"]) >= quota
+            ),
         },
     }
     return tranche, burndown
