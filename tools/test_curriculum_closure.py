@@ -32,6 +32,7 @@ class CurriculumClosureTests(unittest.TestCase):
             dimension("machine_execution", True),
             dimension("runtime_misconceptions", False, missing=["mc-2"]),
             dimension("error_fixtures", True),
+            dimension("behavioral_coverage", True),
             dimension("consumer_bindings", True),
             dimension("occurrence_grounding", True),
         ]
@@ -46,6 +47,7 @@ class CurriculumClosureTests(unittest.TestCase):
             dimension("machine_execution", True),
             dimension("runtime_misconceptions", True),
             dimension("error_fixtures", True),
+            dimension("behavioral_coverage", True),
             dimension("consumer_bindings", False, missing_lessons=["L2"]),
             {
                 "dimension": "occurrence_grounding",
@@ -65,6 +67,7 @@ class CurriculumClosureTests(unittest.TestCase):
             dimension("machine_execution", True),
             dimension("runtime_misconceptions", True),
             dimension("error_fixtures", True),
+            dimension("behavioral_coverage", True),
             dimension("consumer_bindings", True),
             {
                 "dimension": "occurrence_grounding",
@@ -90,6 +93,9 @@ class CurriculumClosureTests(unittest.TestCase):
         fixtures = closure._error_fixture_dimension(
             "u-none", ["L-none"], [], []
         )
+        behavioral = closure._behavioral_coverage_dimension(
+            "u-none", ["L-none"], [], []
+        )
 
         self.assertTrue(runtime["satisfied_vacuously"])
         self.assertEqual(
@@ -101,8 +107,110 @@ class CurriculumClosureTests(unittest.TestCase):
             fixtures["satisfaction_basis"],
             "vacuous_no_expected_error_rows",
         )
+        self.assertTrue(behavioral["satisfied_vacuously"])
+        self.assertEqual(
+            behavioral["satisfaction_basis"],
+            "vacuous_no_expected_error_rows",
+        )
 
-    def test_live_tranche_001_closes_only_five_narrow_units(self):
+    def test_error_fixture_trace_accepts_both_boolean_behavioral_states(self):
+        queue_rows = [
+            {"row_id": "q-false", "source": "L-test"},
+            {"row_id": "q-true", "source": "L-test"},
+        ]
+        shared = {
+            "selected_unit_links": ["u-test"],
+            "outcome": "runner_loaded_fixture_only",
+            "owning_runner": "tools/run_sarf_evals.py",
+            "owning_skill_bank": "sarf/evals/tranche-001-error-fixtures-a.jsonl",
+        }
+        trace_rows = [
+            {
+                **shared,
+                "source_queue_row_id": "q-false",
+                "behaviorally_decided": False,
+            },
+            {
+                **shared,
+                "source_queue_row_id": "q-true",
+                "behaviorally_decided": True,
+            },
+        ]
+
+        result = closure._error_fixture_dimension(
+            "u-test", ["L-test"], queue_rows, trace_rows
+        )
+
+        self.assertTrue(result["satisfied"])
+        self.assertEqual(result["traced"], 2)
+        self.assertEqual(result["missing_queue_row_ids"], [])
+
+    def test_error_fixture_trace_rejects_missing_behavioral_state(self):
+        result = closure._error_fixture_dimension(
+            "u-test",
+            ["L-test"],
+            [{"row_id": "q-missing", "source": "L-test"}],
+            [{
+                "source_queue_row_id": "q-missing",
+                "selected_unit_links": ["u-test"],
+                "outcome": "runner_loaded_fixture_only",
+                "owning_runner": "tools/run_sarf_evals.py",
+                "owning_skill_bank": "sarf/evals/tranche-001-error-fixtures-a.jsonl",
+            }],
+        )
+
+        self.assertFalse(result["satisfied"])
+        self.assertEqual(result["missing_queue_row_ids"], ["q-missing"])
+
+    def test_behavioral_coverage_is_a_separate_fail_closed_dimension(self):
+        queue_rows = [
+            {"row_id": "q-undecided", "source": "L-test"},
+            {"row_id": "q-decided", "source": "L-test"},
+        ]
+        shared = {
+            "selected_unit_links": ["u-test"],
+            "outcome": "runner_loaded_fixture_only",
+            "owning_runner": "tools/run_sarf_evals.py",
+            "owning_skill_bank": "sarf/evals/tranche-001-error-fixtures-a.jsonl",
+        }
+        trace_rows = [
+            {
+                **shared,
+                "source_queue_row_id": "q-undecided",
+                "behaviorally_decided": False,
+            },
+            {
+                **shared,
+                "source_queue_row_id": "q-decided",
+                "behaviorally_decided": True,
+            },
+        ]
+
+        result = closure._behavioral_coverage_dimension(
+            "u-test", ["L-test"], queue_rows, trace_rows
+        )
+
+        self.assertFalse(result["satisfied"])
+        self.assertEqual(result["total"], 2)
+        self.assertEqual(result["decided"], 1)
+        self.assertEqual(result["missing_queue_row_ids"], ["q-undecided"])
+
+    def test_behavioral_coverage_is_required_for_unit_closure(self):
+        dimensions = [
+            dimension("machine_execution", True),
+            dimension("runtime_misconceptions", True),
+            dimension("error_fixtures", True),
+            dimension("behavioral_coverage", False),
+            dimension("consumer_bindings", True),
+            dimension("occurrence_grounding", True),
+        ]
+
+        result = closure.close_from_dimensions(dimensions)
+
+        self.assertFalse(result["fully_operationalized"])
+        self.assertEqual(result["incomplete_dimensions"], ["behavioral_coverage"])
+
+    def test_live_tranche_001_reopens_fixture_only_units_for_grading(self):
         report = closure.build()
         by_id = {row["unit_id"]: row for row in report["units"]}
 
@@ -111,16 +219,12 @@ class CurriculumClosureTests(unittest.TestCase):
             for unit_id, row in by_id.items()
             if row["fully_operationalized"]
         }
-        self.assertEqual(
-            closed,
-            {
-                "cu-definite-article-assimilation",
-                "cu-grapheme-inventory-and-confusables",
-                "cu-nunation-support-orthography",
-                "cu-orthographic-connectivity-classes",
-                "cu-short-vowel-diacritics-and-vocalization-state",
-            },
-        )
+        self.assertEqual(closed, set())
+        for row in by_id.values():
+            behavioral = row["dimensions"]["behavioral_coverage"]
+            self.assertEqual(behavioral["decided"], 0)
+            self.assertGreater(behavioral["total"], 0)
+            self.assertIn("behavioral_coverage", row["incomplete_dimensions"])
         self.assertEqual(
             by_id["u-s06"]["dimensions"]["runtime_misconceptions"]["covered"],
             65,
@@ -149,19 +253,16 @@ class CurriculumClosureTests(unittest.TestCase):
             row["unit_id"] for row in rows if row["fully_operationalized"]
         }
 
-        self.assertEqual(len(closed), 5)
-        self.assertEqual(meta["units_fully_operationalized"], 5)
-        self.assertEqual(meta["units_partially_operationalized"], 3)
+        self.assertEqual(len(closed), 0)
+        self.assertEqual(meta["units_fully_operationalized"], 0)
+        self.assertEqual(meta["units_partially_operationalized"], 8)
         self.assertEqual(
             meta["units_closed_with_parked_occurrence_grounding"], 0
         )
-        self.assertGreater(meta["units_closed_with_vacuous_dimensions"], 0)
-        self.assertEqual(meta["lessons_fully_operationalized"], 4)
+        self.assertEqual(meta["units_closed_with_vacuous_dimensions"], 0)
+        self.assertEqual(meta["lessons_fully_operationalized"], 0)
         lesson_truth = closure.lesson_closure_truth(rows)
-        self.assertEqual(
-            lesson_truth["fully_operationalized_lesson_ids"],
-            ["L1.M1.01", "L1.M1.02", "L1.M1.03", "L1.M1.07"],
-        )
+        self.assertEqual(lesson_truth["fully_operationalized_lesson_ids"], [])
 
     def test_selector_preserves_tranche_001_membership_after_partial_closure(self):
         dispositions, _ = build_unit_dispositions.build()
@@ -176,33 +277,32 @@ class CurriculumClosureTests(unittest.TestCase):
             [row["unit_id"] for row in tranche["units"]],
             list(closure.TRANCHE_001_UNIT_IDS),
         )
-        self.assertEqual(tranche["closure"]["units_fully_operationalized"], 5)
-        self.assertEqual(tranche["closure"]["units_still_partial"], 3)
+        self.assertEqual(tranche["closure"]["units_fully_operationalized"], 0)
+        self.assertEqual(tranche["closure"]["units_still_partial"], 8)
         self.assertEqual(
-            burndown["current_tranche"]["units_fully_operationalized"], 5
+            burndown["current_tranche"]["units_fully_operationalized"], 0
         )
         self.assertNotIn("baseline", burndown)
         self.assertNotIn("plan", burndown)
         self.assertEqual(
             burndown["current_state"]["lessons_by_disposition"],
             {
-                "fully_operationalized": 4,
                 "not_applicable_with_reason": 1,
                 "open": 172,
-                "partially_operationalized_real_consumer": 49,
+                "partially_operationalized_real_consumer": 53,
             },
         )
         self.assertEqual(
             burndown["current_state"]["lessons_with_real_consumer_partial_evidence"],
-            49,
+            53,
         )
         self.assertEqual(
             burndown["current_state"]["units_by_disposition"],
             {
                 "blocked": 0,
                 "candidate_or_open": 118,
-                "closed": 5,
-                "real_consumer_partial": 43,
+                "closed": 0,
+                "real_consumer_partial": 48,
             },
         )
         self.assertEqual(
@@ -213,9 +313,9 @@ class CurriculumClosureTests(unittest.TestCase):
         )
         self.assertEqual(
             burndown["current_tranche"]["fully_operationalized_lesson_ids"],
-            ["L1.M1.01", "L1.M1.02", "L1.M1.03", "L1.M1.07"],
+            [],
         )
-        self.assertEqual(burndown["forecast"]["future_tranches_total"], 22)
+        self.assertEqual(burndown["forecast"]["future_tranches_total"], 23)
         self.assertEqual(
             burndown["forecast"]["parked_occurrence_grounding_units"], 105
         )
@@ -233,7 +333,7 @@ class CurriculumClosureTests(unittest.TestCase):
             burndown["forecast"]["tranches"][0]["tranche_number"], 2
         )
 
-    def test_absorption_builder_records_four_fully_closed_lessons(self):
+    def test_absorption_builder_reopens_fixture_only_lessons(self):
         dispositions, _ = build_unit_dispositions.build()
         ledger, _, _, _, readiness = build_curriculum_absorption.build(
             build_curriculum_absorption.load(),
@@ -241,14 +341,14 @@ class CurriculumClosureTests(unittest.TestCase):
         )
         by_lesson = {row["lesson_id"]: row for row in ledger}
 
-        self.assertEqual(readiness["lessons_fully_operationalized"], 4)
-        self.assertEqual(readiness["lessons_partially_operationalized"], 49)
-        self.assertTrue(
+        self.assertEqual(readiness["lessons_fully_operationalized"], 0)
+        self.assertEqual(readiness["lessons_partially_operationalized"], 53)
+        self.assertFalse(
             by_lesson["L1.M1.01"]["consumer_operationalization"][
                 "fully_operationalized"
             ]
         )
-        self.assertTrue(
+        self.assertFalse(
             by_lesson["L1.M1.01"]["runtime_tutor_evidence"][
                 "mapped_unit_closure_reached"
             ]
@@ -257,7 +357,7 @@ class CurriculumClosureTests(unittest.TestCase):
             by_lesson["L1.M1.01"]["runtime_tutor_evidence"][
                 "mapped_unit_closure_basis"
             ],
-            "all_mapped_canonical_units_fully_operationalized",
+            "mapped_units_incomplete",
         )
         self.assertNotIn(
             "lesson_content_fully_operationalized",
@@ -281,15 +381,14 @@ class CurriculumClosureTests(unittest.TestCase):
             )
         )
         self.assertEqual(errors, [])
-        self.assertEqual(len(closed_lessons), 4)
+        self.assertEqual(len(closed_lessons), 0)
 
         mutated = copy.deepcopy(dispositions)
-        closed_row = next(
-            row for row in mutated if row["fully_operationalized"]
+        closed_row = mutated[0]
+        closed_row["fully_operationalized"] = True
+        closed_row["fully_operationalized_basis"] = (
+            "all_required_dimensions_satisfied:sha256:invalid"
         )
-        closed_row["closure_dimensions"]["consumer_bindings"][
-            "satisfied"
-        ] = False
         errors = []
         validate_curriculum_l1l6.derive_operationalization_closure(
             mutated, lesson_units, errors
