@@ -1,0 +1,26 @@
+{
+  "guards": [
+    {
+      "guard": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+      "id": "g-sab-1"
+    },
+    {
+      "guard": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+      "id": "g-sab-2"
+    },
+    {
+      "guard": "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+      "id": "g-sab-3"
+    },
+    {
+      "guard": "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non_nisba_adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba",
+      "id": "g-sab-4"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-sab-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

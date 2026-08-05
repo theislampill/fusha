@@ -1,0 +1,43 @@
+{
+  "abstention_reasons": [
+    "insufficient_features",
+    "preserve_alternatives",
+    "school_dependent_attributed"
+  ],
+  "capability": "discriminator_table",
+  "functions": [
+    {
+      "discriminators": {
+        "pos": ["verb_imperfect_five_verb_form"],
+        "preceding_letter_class": ["long_vowel_glide"]
+      },
+      "id": "nun_al_rafa"
+    },
+    {
+      "discriminators": {
+        "pos": ["verb_imperfect_feminine_plural"],
+        "preceding_letter_class": ["consonant_stem_final"]
+      },
+      "id": "nun_al_niswa"
+    }
+  ],
+  "increment": "inc-nun-raf-vs-nun-niswa",
+  "rules": [
+    {
+      "id": "nrn-r1",
+      "text": "the نون of رفع (on the five verbs, e.g. تفعلون) and the نون of نسوة (feminine plural, e.g. يفعلن) are DISTINCT nūns; this pack classifies IDENTITY only, never a mood, case or governor"
+    },
+    {
+      "id": "nrn-r2",
+      "text": "نون الرفع always follows a long vowel/glide (و، ا، ي); نون النسوة always attaches directly to a consonant stem final -- both POS and the preceding-letter evidence are required together"
+    },
+    {
+      "id": "nrn-r3",
+      "text": "occurrence-level dropping of نون الرفع under a governor (نصب/جزم) is a Naḥw fact this pack never emits; it classifies the nūn's identity on a surface that carries it"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "unit_ref": "cu-nun-raf-vs-nun-niswa",
+  "version": 1
+}

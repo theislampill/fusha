@@ -3,11 +3,26 @@
 Status: **private_source_custody_metadata_only** (controlling for every row in
 `source-manifest.jsonl`).
 
+## Owner amendment — 2026-08-05: the source site is not named publicly
+
+By owner direction, this public repository no longer names the source site.
+Every `source_url` in this subtree uses the opaque alias host
+`source-site.invalid` with the original path preserved unchanged, so the
+mapping is bijective: alias URL ↔ real URL differ only in the host. The real
+host, and therefore every exact source URL required by the §6A ruling's
+provenance fields, is recorded in the owner's private custody records (the
+same private workspace that holds the archives). The custody flags below were
+renamed to the `SOURCE_SITE_*` prefix under the same direction (the prior
+prefix named the site; the mapping is recorded in private custody records);
+their values and semantics are unchanged. This amendment satisfies the ruling's
+exact-source requirement by reference to private custody rather than by
+public naming; it authorizes nothing new.
+
 ## Source
 
 Six archives (`Level1.zip` … `Level6.zip`), 232 files: 226 lesson exports +
 6 level READMEs of the "Arabic for English Speakers" (`en-ar`) curriculum,
-levels A1–C2, each file self-declaring a `https://kitabite.com/...` source URL.
+levels A1–C2, each file self-declaring a `https://source-site.invalid/...` source URL.
 
 ## Publication-rights determination
 
@@ -15,9 +30,9 @@ levels A1–C2, each file self-declaring a `https://kitabite.com/...` source URL
 continuation archive as `TP-EXTERNAL-CURRICULUM-MAP-001`):
 
 ```text
-KITABITE_FULL_CONTENT_REUSE_LICENSE: NOT_VERIFIED_BY_THIS_PROGRAMME
-KITABITE_CURRICULUM_ABSORPTION: FUTURE_CLEAN_ROOM_TOPIC_AND_COVERAGE_ANALYSIS_ONLY
-KITABITE_CONTENT_COPYING: NOT_AUTHORIZED
+SOURCE_SITE_FULL_CONTENT_REUSE_LICENSE: NOT_VERIFIED_BY_THIS_PROGRAMME
+SOURCE_SITE_CURRICULUM_ABSORPTION: FUTURE_CLEAN_ROOM_TOPIC_AND_COVERAGE_ANALYSIS_ONLY
+SOURCE_SITE_CONTENT_COPYING: NOT_AUTHORIZED
 ```
 
 Never reproduce or closely paraphrase lesson prose, exercises, answer keys,
@@ -28,7 +43,7 @@ metadata inventory + crosswalk + independently authored materials.
 
 Required public-metadata provenance fields (per the ruling):
 
-- **exact source**: `https://kitabite.com/level/level-{1..6}` and per-lesson
+- **exact source**: `https://source-site.invalid/level/level-{1..6}` and per-lesson
   URLs recorded in the manifest;
 - **capture date**: archives dated 2026-08-02 (owner-supplied exports);
 - **public-accessibility status**: the recorded URLs are public pages; the

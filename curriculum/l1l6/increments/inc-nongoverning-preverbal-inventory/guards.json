@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
+      "id": "g-npv-1"
+    },
+    {
+      "guard": "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
+      "id": "g-npv-2"
+    },
+    {
+      "guard": "bare قد is NOT a member of this closed registry: its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, and this pack always abstains for it rather than collapsing that owner pack's preserved rivals with a weaker particle+tense-only gate",
+      "id": "g-npv-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-npv-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

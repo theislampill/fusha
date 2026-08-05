@@ -1,0 +1,26 @@
+{
+  "guards": [
+    {
+      "guard": "this pack classifies the SURFACE inflection class only; it never infers mood, case or a governor",
+      "id": "g-fiv-1"
+    },
+    {
+      "guard": "a caller-supplied declared_mood is never echoed into the decision record",
+      "id": "g-fiv-2"
+    },
+    {
+      "guard": "occurrence use over a real Quranic/text token additionally requires the authoritative Naḥw envelope; a dropped نون الرفع under نصب/جزم is a Naḥw fact this pack never emits",
+      "id": "g-fiv-3"
+    },
+    {
+      "guard": "the five surface classes are letter-distinct by construction; they never collide with the distinct نون النسوة family (cu-nun-raf-vs-nun-niswa)",
+      "id": "g-fiv-4"
+    },
+    {
+      "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+      "id": "g-fiv-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

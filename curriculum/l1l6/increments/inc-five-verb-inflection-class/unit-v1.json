@@ -1,0 +1,61 @@
+{
+  "abstention_reasons": [
+    "no_root_evidence",
+    "surface_letter_mismatch",
+    "no_template",
+    "ambiguous_template"
+  ],
+  "capability": "template_classification",
+  "increment": "inc-five-verb-inflection-class",
+  "radical_arity": 3,
+  "rules": [
+    {
+      "id": "fiv-r1",
+      "text": "الأفعال الخمسة are the five imperfect-verb inflections built by attaching و/ا/ي + ن to a triliteral imperfect stem; this pack classifies the SURFACE inflection class only"
+    },
+    {
+      "id": "fiv-r2",
+      "text": "this pack never infers mood or a governor: it emits a class label and a template id only, never a mood, case or governor field -- occurrence use over a real Quranic/text token additionally requires the authoritative Naḥw envelope"
+    },
+    {
+      "id": "fiv-r3",
+      "text": "the five surface classes are letter-distinct from one another by construction (person prefix + number/gender suffix), so no cross-class collision arises within this pack"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "templates": [
+    {
+      "class": "five_verb_second_masc_plural",
+      "id": "tafaluna",
+      "name": "second person masculine plural (تَفْعَلُونَ)",
+      "shape": ["ت", "R1", "R2", "R3", "و", "ن"]
+    },
+    {
+      "class": "five_verb_third_masc_plural",
+      "id": "yafaluna",
+      "name": "third person masculine plural (يَفْعَلُونَ)",
+      "shape": ["ي", "R1", "R2", "R3", "و", "ن"]
+    },
+    {
+      "class": "five_verb_second_fem_singular",
+      "id": "tafalina",
+      "name": "second person feminine singular (تَفْعَلِينَ)",
+      "shape": ["ت", "R1", "R2", "R3", "ي", "ن"]
+    },
+    {
+      "class": "five_verb_second_dual",
+      "id": "tafalani",
+      "name": "second person dual (تَفْعَلَانِ)",
+      "shape": ["ت", "R1", "R2", "R3", "ا", "ن"]
+    },
+    {
+      "class": "five_verb_third_dual",
+      "id": "yafalani",
+      "name": "third person dual (يَفْعَلَانِ)",
+      "shape": ["ي", "R1", "R2", "R3", "ا", "ن"]
+    }
+  ],
+  "unit_ref": "cu-five-verb-inflection-class",
+  "version": 1
+}

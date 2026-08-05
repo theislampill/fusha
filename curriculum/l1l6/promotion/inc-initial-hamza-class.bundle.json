@@ -1,0 +1,290 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-initial-hamza-class/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-initial-hamza-class/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "hamzat al-qat' and hamzat al-wasl are DISTINCT initial-hamza classes",
+        "the seat and its exact vocalization must be WRITTEN evidence; a normalized/collapsed key can never decide this alone",
+        "a bare initial alif with no hamza mark at all is unresolved and abstains rather than defaulting to either class",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-initial-hamza-class/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "b406a939067b2df8e956bedd17ee84abf567dd518d1da42a51153712372c23a1",
+      "guards_payload": [
+        {
+          "guard": "hamzat al-qat' and hamzat al-wasl are DISTINCT initial-hamza classes",
+          "id": "g-ihc-1"
+        },
+        {
+          "guard": "the seat and its exact vocalization must be WRITTEN evidence; a normalized/collapsed key can never decide this alone",
+          "id": "g-ihc-2"
+        },
+        {
+          "guard": "a bare initial alif with no hamza mark at all is unresolved and abstains rather than defaulting to either class",
+          "id": "g-ihc-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-ihc-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ihc-abs-01",
+        "ihc-abs-02",
+        "ihc-adv-01",
+        "ihc-adv-02"
+      ],
+      "positive_examples": [
+        "ihc-pos-01",
+        "ihc-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-initial-hamza-class/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-initial-hamza-class"
+      },
+      "scope": {
+        "increment": "inc-initial-hamza-class",
+        "statement": "hamzat al-qat' (a genuine glottal-stop hamza) and hamzat al-wasl (the seated helper alif, ٱ, pronounced only in isolation) are DISTINCT initial-hamza classes",
+        "unit_ref": "cu-initial-hamza-class"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-initial-hamza-class-ihc-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-initial-hamza-class/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "hamzat al-qat' and hamzat al-wasl are DISTINCT initial-hamza classes",
+        "the seat and its exact vocalization must be WRITTEN evidence; a normalized/collapsed key can never decide this alone",
+        "a bare initial alif with no hamza mark at all is unresolved and abstains rather than defaulting to either class",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-initial-hamza-class/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "b406a939067b2df8e956bedd17ee84abf567dd518d1da42a51153712372c23a1",
+      "guards_payload": [
+        {
+          "guard": "hamzat al-qat' and hamzat al-wasl are DISTINCT initial-hamza classes",
+          "id": "g-ihc-1"
+        },
+        {
+          "guard": "the seat and its exact vocalization must be WRITTEN evidence; a normalized/collapsed key can never decide this alone",
+          "id": "g-ihc-2"
+        },
+        {
+          "guard": "a bare initial alif with no hamza mark at all is unresolved and abstains rather than defaulting to either class",
+          "id": "g-ihc-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-ihc-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ihc-abs-01",
+        "ihc-abs-02",
+        "ihc-adv-01",
+        "ihc-adv-02"
+      ],
+      "positive_examples": [
+        "ihc-pos-01",
+        "ihc-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-initial-hamza-class/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-initial-hamza-class"
+      },
+      "scope": {
+        "increment": "inc-initial-hamza-class",
+        "statement": "the seat and its exact vocalization must be WRITTEN evidence -- normalisation (which regularly strips or unifies hamza seats) can never decide this on its own",
+        "unit_ref": "cu-initial-hamza-class"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-initial-hamza-class-ihc-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-initial-hamza-class/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "hamzat al-qat' and hamzat al-wasl are DISTINCT initial-hamza classes",
+        "the seat and its exact vocalization must be WRITTEN evidence; a normalized/collapsed key can never decide this alone",
+        "a bare initial alif with no hamza mark at all is unresolved and abstains rather than defaulting to either class",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-initial-hamza-class/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "b406a939067b2df8e956bedd17ee84abf567dd518d1da42a51153712372c23a1",
+      "guards_payload": [
+        {
+          "guard": "hamzat al-qat' and hamzat al-wasl are DISTINCT initial-hamza classes",
+          "id": "g-ihc-1"
+        },
+        {
+          "guard": "the seat and its exact vocalization must be WRITTEN evidence; a normalized/collapsed key can never decide this alone",
+          "id": "g-ihc-2"
+        },
+        {
+          "guard": "a bare initial alif with no hamza mark at all is unresolved and abstains rather than defaulting to either class",
+          "id": "g-ihc-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-ihc-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "ihc-abs-01",
+        "ihc-abs-02",
+        "ihc-adv-01",
+        "ihc-adv-02"
+      ],
+      "positive_examples": [
+        "ihc-pos-01",
+        "ihc-pos-02"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-initial-hamza-class/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-initial-hamza-class"
+      },
+      "scope": {
+        "increment": "inc-initial-hamza-class",
+        "statement": "a bare initial alif with no hamza mark at all is unresolved: it abstains rather than defaulting to either class",
+        "unit_ref": "cu-initial-hamza-class"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-initial-hamza-class-ihc-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-initial-hamza-class/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-initial-hamza-class",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "ihc-abs-01",
+      "ihc-abs-02"
+    ],
+    "adversarial": [
+      "ihc-adv-01",
+      "ihc-adv-02"
+    ],
+    "positive": [
+      "ihc-pos-01",
+      "ihc-pos-02"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-initial-hamza-class",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives",
+      "school_dependent_attributed"
+    ],
+    "capability": "discriminator_table",
+    "functions": [
+      {
+        "discriminators": {
+          "initial_seat": [
+            "hamza_qat_alif"
+          ],
+          "vocalization_evidence": [
+            "written_mark"
+          ]
+        },
+        "id": "hamzat_qat"
+      },
+      {
+        "discriminators": {
+          "initial_seat": [
+            "hamza_wasl_seated"
+          ],
+          "vocalization_evidence": [
+            "written_mark"
+          ]
+        },
+        "id": "hamzat_wasl"
+      }
+    ],
+    "increment": "inc-initial-hamza-class",
+    "rules": [
+      {
+        "id": "ihc-r1",
+        "text": "hamzat al-qat' (a genuine glottal-stop hamza) and hamzat al-wasl (the seated helper alif, ٱ, pronounced only in isolation) are DISTINCT initial-hamza classes"
+      },
+      {
+        "id": "ihc-r2",
+        "text": "the seat and its exact vocalization must be WRITTEN evidence -- normalisation (which regularly strips or unifies hamza seats) can never decide this on its own"
+      },
+      {
+        "id": "ihc-r3",
+        "text": "a bare initial alif with no hamza mark at all is unresolved: it abstains rather than defaulting to either class"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-initial-hamza-class",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "initial_hamza_class_chip",
+      "teaching": "shows which class (hamzat al-qat' vs hamzat al-wasl) the WRITTEN seat mark decided"
+    },
+    {
+      "key": "vocalization_evidence_note",
+      "teaching": "shows the exact written-mark evidence the decision rested on, or the honest abstention when the seat is unmarked"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

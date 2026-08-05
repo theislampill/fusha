@@ -188,21 +188,21 @@ class CurriculumClosureTests(unittest.TestCase):
             {
                 "fully_operationalized": 4,
                 "not_applicable_with_reason": 1,
-                "open": 181,
-                "partially_operationalized_real_consumer": 40,
+                "open": 172,
+                "partially_operationalized_real_consumer": 49,
             },
         )
         self.assertEqual(
             burndown["current_state"]["lessons_with_real_consumer_partial_evidence"],
-            40,
+            49,
         )
         self.assertEqual(
             burndown["current_state"]["units_by_disposition"],
             {
                 "blocked": 0,
-                "candidate_or_open": 129,
+                "candidate_or_open": 118,
                 "closed": 5,
-                "real_consumer_partial": 32,
+                "real_consumer_partial": 43,
             },
         )
         self.assertEqual(
@@ -242,7 +242,7 @@ class CurriculumClosureTests(unittest.TestCase):
         by_lesson = {row["lesson_id"]: row for row in ledger}
 
         self.assertEqual(readiness["lessons_fully_operationalized"], 4)
-        self.assertEqual(readiness["lessons_partially_operationalized"], 40)
+        self.assertEqual(readiness["lessons_partially_operationalized"], 49)
         self.assertTrue(
             by_lesson["L1.M1.01"]["consumer_operationalization"][
                 "fully_operationalized"

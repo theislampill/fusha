@@ -4,7 +4,7 @@
 material-class census from the PRIVATE lesson corpus.
 
 Custody boundary (controlling; see curriculum/l1l6/custody/custody-decision.md):
-the six Level archives (kitabite.com lesson exports) are PRIVATE SOURCE CUSTODY.
+the six Level archives (source-site lesson exports) are PRIVATE SOURCE CUSTODY.
 Public redistribution authority is NOT established, so this builder never
 commits lesson prose. Committed fields are limited to: file hashes, structural
 counts, titles, slugs, section-heading strings (short factual labels used as
@@ -30,6 +30,19 @@ import os
 import re
 import sys
 import unicodedata
+
+# Owner direction 2026-08-05 (curriculum/l1l6/custody/custody-decision.md,
+# "the source site is not named publicly"): committed provenance URLs carry an
+# opaque alias host with the original path preserved. Applied to EVERY http(s)
+# URL at ingestion so the public tree never depends on the real host string.
+ALIAS_HOST = "source-site.invalid"
+
+def alias_url(url):
+    m = re.match(r"^(https?://)[^/]+(/.*)?$", url or "")
+    if not m:
+        return url
+    return m.group(1) + ALIAS_HOST + (m.group(2) or "")
+
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_BASE = os.path.join(REPO_ROOT, "curriculum", "l1l6")
@@ -276,7 +289,7 @@ def parse_lesson(path, fname):
         "lesson": lesson_n,
         "title": nfc(title),
         "slug": nfc(slug),
-        "source_url": nfc(source),
+        "source_url": alias_url(nfc(source)),
         "curriculum": curriculum,
         "module_title": nfc(module_line),
         "concept_headings": [nfc(h) for h in headings],
@@ -340,7 +353,7 @@ def build(source_dir):
                     "title": title,
                     "declared_modules": mods,
                     "declared_lessons": les,
-                    "source_url": src,
+                    "source_url": alias_url(src),
                 }
                 manifest_rows.append({
                     "schema": SCHEMA_MANIFEST,
@@ -351,7 +364,7 @@ def build(source_dir):
                     "kind": "level_readme",
                     "level": level_n, "module": None, "lesson": None,
                     "title": title, "slug": None,
-                    "source_url": src, "language": "en+ar",
+                    "source_url": alias_url(src), "language": "en+ar",
                     "counts": None,
                     "custody_status": CUSTODY_STATUS,
                     "normalization_state": "nfc",

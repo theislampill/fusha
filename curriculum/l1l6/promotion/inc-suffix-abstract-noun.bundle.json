@@ -1,0 +1,409 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-suffix-abstract-noun/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-suffix-abstract-noun/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+        "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+        "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+        "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non_nisba_adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "246e4361b85334e81ce912363210a3e69de0a3b2a3ea51369a6faf431d460249",
+      "guards_payload": [
+        {
+          "guard": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+          "id": "g-sab-1"
+        },
+        {
+          "guard": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+          "id": "g-sab-2"
+        },
+        {
+          "guard": "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+          "id": "g-sab-3"
+        },
+        {
+          "guard": "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non_nisba_adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba",
+          "id": "g-sab-4"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-sab-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "sab-abs-01",
+        "sab-abs-02",
+        "sab-adv-01",
+        "sab-adv-02",
+        "sab-adv-03"
+      ],
+      "positive_examples": [
+        "sab-pos-01",
+        "sab-pos-02",
+        "sab-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "scope": {
+        "increment": "inc-suffix-abstract-noun",
+        "statement": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; both share a geminated yaa, so the shadda itself must be written evidence, never assumed",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-suffix-abstract-noun-sab-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+        "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+        "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+        "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non_nisba_adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "246e4361b85334e81ce912363210a3e69de0a3b2a3ea51369a6faf431d460249",
+      "guards_payload": [
+        {
+          "guard": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+          "id": "g-sab-1"
+        },
+        {
+          "guard": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+          "id": "g-sab-2"
+        },
+        {
+          "guard": "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+          "id": "g-sab-3"
+        },
+        {
+          "guard": "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non_nisba_adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba",
+          "id": "g-sab-4"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-sab-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "sab-abs-01",
+        "sab-abs-02",
+        "sab-adv-01",
+        "sab-adv-02",
+        "sab-adv-03"
+      ],
+      "positive_examples": [
+        "sab-pos-01",
+        "sab-pos-02",
+        "sab-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "scope": {
+        "increment": "inc-suffix-abstract-noun",
+        "statement": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-suffix-abstract-noun-sab-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+        "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+        "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+        "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non_nisba_adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "246e4361b85334e81ce912363210a3e69de0a3b2a3ea51369a6faf431d460249",
+      "guards_payload": [
+        {
+          "guard": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+          "id": "g-sab-1"
+        },
+        {
+          "guard": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+          "id": "g-sab-2"
+        },
+        {
+          "guard": "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+          "id": "g-sab-3"
+        },
+        {
+          "guard": "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non_nisba_adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba",
+          "id": "g-sab-4"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-sab-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "sab-abs-01",
+        "sab-abs-02",
+        "sab-adv-01",
+        "sab-adv-02",
+        "sab-adv-03"
+      ],
+      "positive_examples": [
+        "sab-pos-01",
+        "sab-pos-02",
+        "sab-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "scope": {
+        "increment": "inc-suffix-abstract-noun",
+        "statement": "an unmarked (unvocalised) surface carries no shadda evidence and abstains insufficient_features -- normalisation is never treated as confirmation",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-suffix-abstract-noun-sab-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+        "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+        "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+        "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non_nisba_adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "246e4361b85334e81ce912363210a3e69de0a3b2a3ea51369a6faf431d460249",
+      "guards_payload": [
+        {
+          "guard": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; the shadda itself must be written evidence, never assumed",
+          "id": "g-sab-1"
+        },
+        {
+          "guard": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense",
+          "id": "g-sab-2"
+        },
+        {
+          "guard": "an unmarked (unvocalised) surface carries no shadda evidence and abstains; normalisation is never treated as confirmation",
+          "id": "g-sab-3"
+        },
+        {
+          "guard": "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non_nisba_adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba",
+          "id": "g-sab-4"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-sab-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "sab-abs-01",
+        "sab-abs-02",
+        "sab-adv-01",
+        "sab-adv-02",
+        "sab-adv-03"
+      ],
+      "positive_examples": [
+        "sab-pos-01",
+        "sab-pos-02",
+        "sab-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-suffix-abstract-noun/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "scope": {
+        "increment": "inc-suffix-abstract-noun",
+        "statement": "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non-nisba-adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba",
+        "unit_ref": "cu-suffix-abstract-noun"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-suffix-abstract-noun-sab-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-suffix-abstract-noun/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "discriminator_table",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-suffix-abstract-noun",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "sab-abs-01",
+      "sab-abs-02"
+    ],
+    "adversarial": [
+      "sab-adv-01",
+      "sab-adv-02",
+      "sab-adv-03"
+    ],
+    "positive": [
+      "sab-pos-01",
+      "sab-pos-02",
+      "sab-pos-03"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-suffix-abstract-noun",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "insufficient_features",
+      "preserve_alternatives",
+      "school_dependent_attributed"
+    ],
+    "capability": "discriminator_table",
+    "functions": [
+      {
+        "discriminators": {
+          "base_category_evidence": [
+            "nisba_relational_attested"
+          ],
+          "final_letter": [
+            "none_word_final_yaa"
+          ],
+          "shadda_on_yaa_evidence": [
+            "written_shadda"
+          ]
+        },
+        "id": "nisba_relational_yaa"
+      },
+      {
+        "discriminators": {
+          "final_letter": [
+            "taa_marbuta"
+          ],
+          "shadda_on_yaa_evidence": [
+            "written_shadda"
+          ]
+        },
+        "id": "abstract_noun_yaa"
+      },
+      {
+        "discriminators": {
+          "base_category_evidence": [
+            "non_nisba_adjective_attested"
+          ],
+          "final_letter": [
+            "none_word_final_yaa"
+          ],
+          "shadda_on_yaa_evidence": [
+            "written_shadda"
+          ]
+        },
+        "id": "non_nisba_geminated_yaa_adjective"
+      }
+    ],
+    "increment": "inc-suffix-abstract-noun",
+    "rules": [
+      {
+        "id": "sab-r1",
+        "text": "ـيّ (nisba/relational) and ـيّة (abstract noun) are DISTINCT classifiers; both share a geminated yaa, so the shadda itself must be written evidence, never assumed"
+      },
+      {
+        "id": "sab-r2",
+        "text": "a candidate_pending function label is a SUFFIX CLASSIFICATION only -- it never infers the base lexeme's identity or a contextual sense"
+      },
+      {
+        "id": "sab-r3",
+        "text": "an unmarked (unvocalised) surface carries no shadda evidence and abstains insufficient_features -- normalisation is never treated as confirmation"
+      },
+      {
+        "id": "sab-r4",
+        "text": "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non-nisba-adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "unit_ref": "cu-suffix-abstract-noun",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "suffix_class_chip",
+      "teaching": "shows which classifier the written shadda + final letter narrowed to -- nisba ـيّ, abstract-noun ـيّة, or (on the yaa-final branch, where shape alone collides with the non-nisba geminated-yaa adjective rival) the class the independent base_category_evidence decided"
+    },
+    {
+      "key": "shadda_evidence_note",
+      "teaching": "shows the exact written-shadda evidence the decision rested on, or the honest abstention when it is unmarked"
+    },
+    {
+      "key": "base_category_rival_note",
+      "teaching": "for the yaa-final branch, shows the declared base_category_evidence that decided nisba vs the non-nisba adjective rival, or the honest abstention when shape and shadda alone can never decide between them"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

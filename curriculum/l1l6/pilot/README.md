@@ -24,7 +24,7 @@ every unsafe simplification named and every artifact candidate.
 
 Example tokens are independently selected standard grammar examples
 (مَسْجِد، مَكْتَب، مَلِك، مَاء، مِن) — **not** lesson-passage words — per the
-controlling kitabite rights ruling (see `../custody/custody-decision.md`).
+controlling source-site rights ruling (see `../custody/custody-decision.md`).
 
 ## Candidate boundary
 
