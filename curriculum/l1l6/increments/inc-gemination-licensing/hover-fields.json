@@ -1,0 +1,14 @@
+{
+  "fields": [
+    {
+      "key": "gemination_template_chip",
+      "teaching": "names the matched template and the GEM slot that carries the doubled radical"
+    },
+    {
+      "key": "gemination_licence_note",
+      "teaching": "shows the exact declared environment (the bound slot/radical, and the shadda source VERIFIED against the actual written surface at the GEM slot's own letter position) plus the evidence's attested basis that licensed the doubling, or the exact reason it did not -- mood and cross-clitic-boundary idgham are impossible category errors for these templates and are never consulted"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

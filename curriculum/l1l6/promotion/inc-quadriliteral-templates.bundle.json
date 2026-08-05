@@ -1,0 +1,505 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-quadriliteral-templates/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-quadriliteral-templates/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3",
+        "nothing about voice or mood is inferred from the bare Form I quadriliteral perfect shape",
+        "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical unvocalised; both rows survive and abstention is the honest verdict",
+        "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly",
+        "quadriliteral templates and triliteral doubling/gemination are DISTINCT families and never collide by construction",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quadriliteral-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "65b2b14e457c0af414b5ee17cf4703a5066cf2fdf88af9a516899e13cbeb98f5",
+      "guards_payload": [
+        {
+          "guard": "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3",
+          "id": "g-quad-1"
+        },
+        {
+          "guard": "nothing about voice or mood is inferred from the bare Form I quadriliteral perfect shape",
+          "id": "g-quad-2"
+        },
+        {
+          "guard": "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical unvocalised; both rows survive and abstention is the honest verdict",
+          "id": "g-quad-3"
+        },
+        {
+          "guard": "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly",
+          "id": "g-quad-4"
+        },
+        {
+          "guard": "quadriliteral templates and triliteral doubling/gemination are DISTINCT families and never collide by construction",
+          "id": "g-quad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-quad-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "quad-adv-01",
+        "quad-adv-02",
+        "quad-adv-03",
+        "quad-adv-04",
+        "quad-abs-01",
+        "quad-abs-02"
+      ],
+      "positive_examples": [
+        "quad-pos-01",
+        "quad-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quadriliteral-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quadriliteral-templates"
+      },
+      "scope": {
+        "increment": "inc-quadriliteral-templates",
+        "statement": "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3, one radical per written letter position",
+        "unit_ref": "cu-quadriliteral-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quadriliteral-templates-quad-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quadriliteral-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3",
+        "nothing about voice or mood is inferred from the bare Form I quadriliteral perfect shape",
+        "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical unvocalised; both rows survive and abstention is the honest verdict",
+        "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly",
+        "quadriliteral templates and triliteral doubling/gemination are DISTINCT families and never collide by construction",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quadriliteral-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "65b2b14e457c0af414b5ee17cf4703a5066cf2fdf88af9a516899e13cbeb98f5",
+      "guards_payload": [
+        {
+          "guard": "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3",
+          "id": "g-quad-1"
+        },
+        {
+          "guard": "nothing about voice or mood is inferred from the bare Form I quadriliteral perfect shape",
+          "id": "g-quad-2"
+        },
+        {
+          "guard": "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical unvocalised; both rows survive and abstention is the honest verdict",
+          "id": "g-quad-3"
+        },
+        {
+          "guard": "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly",
+          "id": "g-quad-4"
+        },
+        {
+          "guard": "quadriliteral templates and triliteral doubling/gemination are DISTINCT families and never collide by construction",
+          "id": "g-quad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-quad-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "quad-adv-01",
+        "quad-adv-02",
+        "quad-adv-03",
+        "quad-adv-04",
+        "quad-abs-01",
+        "quad-abs-02"
+      ],
+      "positive_examples": [
+        "quad-pos-01",
+        "quad-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quadriliteral-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quadriliteral-templates"
+      },
+      "scope": {
+        "increment": "inc-quadriliteral-templates",
+        "statement": "the bare Form I quadriliteral perfect (فَعْلَل) is letter-decidable from a plain four-radical shape; nothing about voice or mood is inferred here",
+        "unit_ref": "cu-quadriliteral-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quadriliteral-templates-quad-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quadriliteral-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3",
+        "nothing about voice or mood is inferred from the bare Form I quadriliteral perfect shape",
+        "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical unvocalised; both rows survive and abstention is the honest verdict",
+        "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly",
+        "quadriliteral templates and triliteral doubling/gemination are DISTINCT families and never collide by construction",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quadriliteral-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "65b2b14e457c0af414b5ee17cf4703a5066cf2fdf88af9a516899e13cbeb98f5",
+      "guards_payload": [
+        {
+          "guard": "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3",
+          "id": "g-quad-1"
+        },
+        {
+          "guard": "nothing about voice or mood is inferred from the bare Form I quadriliteral perfect shape",
+          "id": "g-quad-2"
+        },
+        {
+          "guard": "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical unvocalised; both rows survive and abstention is the honest verdict",
+          "id": "g-quad-3"
+        },
+        {
+          "guard": "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly",
+          "id": "g-quad-4"
+        },
+        {
+          "guard": "quadriliteral templates and triliteral doubling/gemination are DISTINCT families and never collide by construction",
+          "id": "g-quad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-quad-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "quad-adv-01",
+        "quad-adv-02",
+        "quad-adv-03",
+        "quad-adv-04",
+        "quad-abs-01",
+        "quad-abs-02"
+      ],
+      "positive_examples": [
+        "quad-pos-01",
+        "quad-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quadriliteral-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quadriliteral-templates"
+      },
+      "scope": {
+        "increment": "inc-quadriliteral-templates",
+        "statement": "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical once the radicals stand literally after the augment: this pack declares BOTH rows, so the cell collides and abstention is the honest verdict for unvocalised text",
+        "unit_ref": "cu-quadriliteral-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quadriliteral-templates-quad-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quadriliteral-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3",
+        "nothing about voice or mood is inferred from the bare Form I quadriliteral perfect shape",
+        "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical unvocalised; both rows survive and abstention is the honest verdict",
+        "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly",
+        "quadriliteral templates and triliteral doubling/gemination are DISTINCT families and never collide by construction",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quadriliteral-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "65b2b14e457c0af414b5ee17cf4703a5066cf2fdf88af9a516899e13cbeb98f5",
+      "guards_payload": [
+        {
+          "guard": "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3",
+          "id": "g-quad-1"
+        },
+        {
+          "guard": "nothing about voice or mood is inferred from the bare Form I quadriliteral perfect shape",
+          "id": "g-quad-2"
+        },
+        {
+          "guard": "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical unvocalised; both rows survive and abstention is the honest verdict",
+          "id": "g-quad-3"
+        },
+        {
+          "guard": "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly",
+          "id": "g-quad-4"
+        },
+        {
+          "guard": "quadriliteral templates and triliteral doubling/gemination are DISTINCT families and never collide by construction",
+          "id": "g-quad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-quad-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "quad-adv-01",
+        "quad-adv-02",
+        "quad-adv-03",
+        "quad-adv-04",
+        "quad-abs-01",
+        "quad-abs-02"
+      ],
+      "positive_examples": [
+        "quad-pos-01",
+        "quad-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quadriliteral-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quadriliteral-templates"
+      },
+      "scope": {
+        "increment": "inc-quadriliteral-templates",
+        "statement": "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly or the match fails closed to no_template",
+        "unit_ref": "cu-quadriliteral-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quadriliteral-templates-quad-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quadriliteral-templates/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3",
+        "nothing about voice or mood is inferred from the bare Form I quadriliteral perfect shape",
+        "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical unvocalised; both rows survive and abstention is the honest verdict",
+        "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly",
+        "quadriliteral templates and triliteral doubling/gemination are DISTINCT families and never collide by construction",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-quadriliteral-templates/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "65b2b14e457c0af414b5ee17cf4703a5066cf2fdf88af9a516899e13cbeb98f5",
+      "guards_payload": [
+        {
+          "guard": "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3",
+          "id": "g-quad-1"
+        },
+        {
+          "guard": "nothing about voice or mood is inferred from the bare Form I quadriliteral perfect shape",
+          "id": "g-quad-2"
+        },
+        {
+          "guard": "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical unvocalised; both rows survive and abstention is the honest verdict",
+          "id": "g-quad-3"
+        },
+        {
+          "guard": "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly",
+          "id": "g-quad-4"
+        },
+        {
+          "guard": "quadriliteral templates and triliteral doubling/gemination are DISTINCT families and never collide by construction",
+          "id": "g-quad-5"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-quad-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "quad-adv-01",
+        "quad-adv-02",
+        "quad-adv-03",
+        "quad-adv-04",
+        "quad-abs-01",
+        "quad-abs-02"
+      ],
+      "positive_examples": [
+        "quad-pos-01",
+        "quad-trn-01"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-quadriliteral-templates/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-quadriliteral-templates"
+      },
+      "scope": {
+        "increment": "inc-quadriliteral-templates",
+        "statement": "quadriliteral templates and triliteral doubling/gemination are DISTINCT families: this pack declares no GEM slot, and inc-gemination-licensing declares no R4 slot, so the two never collide by construction",
+        "unit_ref": "cu-quadriliteral-templates"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-quadriliteral-templates-quad-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-quadriliteral-templates/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "template_classification",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-quadriliteral-templates",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "quad-abs-01",
+      "quad-abs-02"
+    ],
+    "adversarial": [
+      "quad-adv-01",
+      "quad-adv-02",
+      "quad-adv-03",
+      "quad-adv-04"
+    ],
+    "positive": [
+      "quad-pos-01"
+    ],
+    "transfer": [
+      "quad-trn-01"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-quadriliteral-templates",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "no_root_evidence",
+      "surface_letter_mismatch",
+      "no_template",
+      "ambiguous_template"
+    ],
+    "capability": "template_classification",
+    "increment": "inc-quadriliteral-templates",
+    "radical_arity": 4,
+    "rules": [
+      {
+        "id": "quad-r1",
+        "text": "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3, one radical per written letter position"
+      },
+      {
+        "id": "quad-r2",
+        "text": "the bare Form I quadriliteral perfect (فَعْلَل) is letter-decidable from a plain four-radical shape; nothing about voice or mood is inferred here"
+      },
+      {
+        "id": "quad-r3",
+        "text": "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical once the radicals stand literally after the augment: this pack declares BOTH rows, so the cell collides and abstention is the honest verdict for unvocalised text"
+      },
+      {
+        "id": "quad-r4",
+        "text": "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly or the match fails closed to no_template"
+      },
+      {
+        "id": "quad-r5",
+        "text": "quadriliteral templates and triliteral doubling/gemination are DISTINCT families: this pack declares no GEM slot, and inc-gemination-licensing declares no R4 slot, so the two never collide by construction"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "templates": [
+      {
+        "class": "quadriliteral_perfect_active",
+        "id": "fa3lala_perfect_active",
+        "name": "Form I quadriliteral perfect (فَعْلَلَ)",
+        "shape": [
+          "R1",
+          "R2",
+          "R3",
+          "R4"
+        ]
+      },
+      {
+        "class": "quadriliteral_active_participle",
+        "id": "mufa3lil_active_participle",
+        "name": "quadriliteral active participle (مُفَعْلِل)",
+        "shape": [
+          "م",
+          "R1",
+          "R2",
+          "R3",
+          "R4"
+        ]
+      },
+      {
+        "class": "quadriliteral_passive_participle",
+        "id": "mufa3lal_passive_participle",
+        "name": "quadriliteral passive participle (مُفَعْلَل)",
+        "shape": [
+          "م",
+          "R1",
+          "R2",
+          "R3",
+          "R4"
+        ]
+      }
+    ],
+    "unit_ref": "cu-quadriliteral-templates",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "quadriliteral_template_chip",
+      "teaching": "names the matched four-radical template, or the honest active/passive-participle collision when unvocalised"
+    },
+    {
+      "key": "radical_count_note",
+      "teaching": "shows the four supplied radicals filling R1-R4, so the learner sees why a three- or five-radical root never matches"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

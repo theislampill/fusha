@@ -478,7 +478,16 @@ def _match_template(shape, letters, radicals, subs):
     list of weak substitutions actually EXERCISED, each {slot, radical,
     letter}. `subs` must already be the slot table licensed for THIS template
     — a substitution licensed for one template never licenses another (Sol
-    fix-request 1: the global table produced the مقئول/تقئيل false passes)."""
+    fix-request 1: the global table produced the مقئول/تقئيل false passes).
+
+    Every one of R1..R4 and GEM consumes exactly one radical at one written
+    letter position — a fourth radical is licensed exactly like the first
+    three, so quadriliteral templates need no separate matcher. GEM marks a
+    position that ADDITIONALLY requires gemination-licensing evidence,
+    checked by `_gemination_gate` after a template has matched, never here:
+    the radical at a GEM slot still must match the written letter literally
+    or through the template's own licensed substitution table, exactly like
+    any other slot."""
     if "..." in shape:
         return None  # handled by the mu/mafal special-case below
     if len(shape) != len(letters):
@@ -486,14 +495,19 @@ def _match_template(shape, letters, radicals, subs):
     used = []
     j = 0
     for slot, letter in zip(shape, letters):
-        if slot in ("R1", "R2", "R3"):
+        if slot in ("R1", "R2", "R3", "R4", "GEM"):
             if j >= len(radicals):
                 return None
             radical = radicals[j]
             if letter != radical:
                 if letter not in (subs.get(slot, {}) or {}).get(radical, []):
                     return None
-                used.append({"slot": slot, "radical": radical, "letter": letter})
+                # a GEM substitution is recorded under its OWN R-slot identity (its ordinal
+                # position among the radical-consuming slots), never the literal "GEM" token, so
+                # downstream per-slot matching (e.g. the weak-realization gate's "R%d" naming)
+                # never disagrees with itself about which letter position it occupies (Sol repair 5)
+                rslot = ("R%d" % (j + 1)) if slot == "GEM" else slot
+                used.append({"slot": rslot, "radical": radical, "letter": letter})
             j += 1
         elif slot != letter:
             return None
@@ -569,6 +583,168 @@ def _weak_gate(unit, template_id, radicals, used_subs, ev):
     return None
 
 
+_GEM_SLOT_INDEX = {"R1": 0, "R2": 1, "R3": 2, "R4": 3}
+
+
+def _gem_shape_slot(shape):
+    """The R-slot NAME the GEM position occupies within `shape`, counting only radical-consuming
+    slots (R1..R4, GEM) in written order — e.g. ["R1","GEM","R3"] and ["م","R1","GEM","R3"] both
+    name GEM "R2" (a literal prefix like م is not a radical-consuming slot). Returns
+    (letter_index, rslot_name), or (None, None) when the shape carries no GEM slot at all."""
+    n = 0
+    for i, slot in enumerate(shape):
+        if slot in ("R1", "R2", "R3", "R4", "GEM"):
+            n += 1
+            if slot == "GEM":
+                return i, "R%d" % n
+    return None, None
+
+
+def _gemination_gate(unit, template, radicals, ev, surface):
+    """cu-gemination-licensing: fail closed on a matched GEM slot. A GEM slot already matched
+    the written letter like any other radical slot (`_match_template`); this gate additionally
+    requires an EXACT declared environment before the doubling itself is licensed — nothing is
+    licensed by default. `unit["gemination_templates"]` maps a template id to its GEM slot's
+    name ("R1".."R4"); a template whose own `shape` carries no GEM slot at all never reaches
+    this gate (returns None immediately, before the map is even consulted), so every other pack
+    in this consumer is unaffected. A template whose shape DOES declare a GEM slot but whose id
+    is missing from that map, or maps to null/empty, fails closed exactly like any other
+    malformed declaration (residual B) — it never falls through as "no gate applies".
+
+    Required, in order:
+      - the pack's declared merge slot must be a nonempty value that actually names the GEM
+        position in THIS template's own `shape` (`gemination_slot_declaration_malformed`
+        otherwise — an absent/null declaration, or one the pack cannot resolve to a real
+        R-slot, or that disagrees with the template's own shape, fails closed rather than
+        raising or guessing at the wrong letter position, Sol repair 5);
+      - `root_evidence.gemination_position`/`gemination_radical` must bind to the exact slot and
+        radical this template declares (`gemination_declaration_unbound` otherwise);
+      - `root_evidence.gemination_evidence.shadda_source` must be the literal
+        `"written_shadda"` (`shadda_source_unresolved` otherwise — an assumed or unspecified
+        shadda source never licenses the doubling);
+      - that claim must be VERIFIED against the actual written surface at the GEM slot's own
+        letter position — a caller's bare assertion is never sufficient by itself; an unpointed
+        surface, or one whose shadda sits on a different letter, buys nothing
+        (`shadda_not_in_surface`, Sol repair 1);
+      - and the pack's own `gemination_realizations.by_template` table must explicitly license
+        this exact template/slot against the evidence's ATTESTED basis — never against the
+        literal radical letter, so an ordinary Form II root over any R2 is licensed exactly like
+        any other given the same environment (`gemination_realization_unlicensed` otherwise,
+        Sol repair 4).
+
+    Mood (indicative/subjunctive/jussive) and cross-clitic-boundary idgham are never consulted:
+    both are impossible category errors for the templates this pack declares — a perfect-tense
+    verb form carries no mood inflection at all and a participle is a noun, and neither template
+    declares a clitic layer a merger could cross (the geminate-ROOT jussive alternation, e.g.
+    لم يَمْدُدْ from يَمُدُّ, is a different root/template family this pack does not declare;
+    conflating it with Form II's inherent, mood-invariant gemination was the recorded defect).
+
+    Returns an abstention dict, or None when every check passes.
+    """
+    template_id = template["id"]
+    letter_idx, shape_slot = _gem_shape_slot(template.get("shape") or [])
+    if shape_slot is None:
+        return None  # this template's own shape carries no GEM slot at all
+    merge_slot = (unit.get("gemination_templates") or {}).get(template_id)
+    if not merge_slot or shape_slot != merge_slot or merge_slot not in _GEM_SLOT_INDEX:
+        return {"decision": "abstain", "reason": "gemination_slot_declaration_malformed",
+                "declared_slot": merge_slot, "template": template_id}
+    idx = _GEM_SLOT_INDEX[merge_slot]
+    if idx >= len(radicals):
+        return None  # the template could not have matched at all in this case
+    radical = radicals[idx]
+    if ev.get("gemination_position") != merge_slot or ev.get("gemination_radical") != radical:
+        return {"decision": "abstain", "reason": "gemination_declaration_unbound",
+                "unbound_slot": merge_slot, "template": template_id}
+    gem_ev = ev.get("gemination_evidence") or {}
+    if gem_ev.get("shadda_source") != "written_shadda":
+        return {"decision": "abstain", "reason": "shadda_source_unresolved",
+                "unbound_slot": merge_slot, "template": template_id}
+    groups = _surface_mark_groups(surface) if surface else []
+    if not (letter_idx < len(groups) and "ّ" in groups[letter_idx][1]):
+        return {"decision": "abstain", "reason": "shadda_not_in_surface",
+                "unbound_slot": merge_slot, "template": template_id}
+    lic = ((unit.get("gemination_realizations") or {}).get("by_template", {}).get(template_id) or {})
+    basis = ev.get("basis")
+    if not ((lic.get(merge_slot) or {}).get(basis) or {}).get("licensed"):
+        return {"decision": "abstain", "reason": "gemination_realization_unlicensed",
+                "unlicensed_slot": merge_slot, "radical": radical, "template": template_id,
+                "note": "the pack licenses no gemination realization for this exact "
+                        "slot/evidence-basis combination in this template"}
+    return None
+
+
+def _diminutive_gate(unit, template, inp):
+    """cu-diminutive-template-family: shape alone never certifies identity or meaning, so a
+    matched diminutive template additionally requires (a) attested base-lexeme evidence and (b)
+    a licensed affix-marker declaration bound to the exact letter this template's diminutive
+    infix occupies. Opt-in via `unit["require_base_lexeme_evidence"]`, so every other
+    template_classification pack in this consumer is unaffected. Weak-root restoration evidence
+    is already covered by the shared `_weak_gate` (called separately in `analyze_derivative`);
+    this gate only adds the base-lexeme/affix obligation on top of it."""
+    if not unit.get("require_base_lexeme_evidence"):
+        return None
+    ble = inp.get("base_lexeme_evidence")
+    bases = unit.get("base_lexeme_evidence_bases") or ("qamus_entry_ladder",)
+    if not isinstance(ble, dict) or ble.get("basis") not in bases or ble.get("attested") is not True:
+        return {"decision": "abstain", "reason": "base_lexeme_evidence_required"}
+    marker = template.get("affix_marker")
+    if marker is not None:
+        aff = inp.get("diminutive_affix_evidence")
+        if not isinstance(aff, dict) or aff.get("marker") != marker or aff.get("licensed") is not True:
+            return {"decision": "abstain", "reason": "diminutive_affix_evidence_required"}
+    return None
+
+
+def _voice_vocalization_resolve(survivors, inp):
+    """cu-passive-voice-vocalization: when letter-identical voice/form rows collide (voi-r3 in
+    inc-voice-melody-templates), a genuinely WRITTEN short-vowel pattern — never a normalization
+    or a bare caller assertion — may narrow the collision to one surviving row. Every position a
+    surviving row's `vowel_pattern` declares must be VERIFIABLE on the actual surface; if ANY
+    declared position anywhere in the collision carries no written mark at all, the evidence is
+    incomplete and this function returns None so the caller falls back to the ordinary
+    `ambiguous_template` abstention — an unvocalised sound stem keeps abstaining exactly as
+    before. A fully written pattern that matches none of the colliding rows is a genuine
+    contradiction (`written_vocalization_mismatch`), never a silent pick of the nearest one.
+
+    Returns None (defer to the caller's existing ambiguous_template path), or a
+    `("abstain", record)` / `("resolved", (template, used))` tuple.
+    """
+    if not all(t.get("vowel_pattern") for t, _u in survivors):
+        return None
+    surface = inp.get("surface")
+    written = inp.get("written_vocalization")
+    if not surface or not isinstance(written, dict):
+        return None
+    groups = _surface_mark_groups(surface)
+    matches = []
+    for t, used in survivors:
+        shape = t["shape"]
+        ok = True
+        for slot, mark in t["vowel_pattern"].items():
+            idx = shape.index(slot)
+            actual = _vowel_mark_at(groups, idx)
+            if actual is None:
+                return None  # incomplete written evidence anywhere in the collision
+            if written.get(slot) != mark or actual != mark:
+                ok = False
+                break
+        if ok and t.get("gem_required") is not None:
+            gem_slot = t.get("gem_slot", "R2")
+            idx = shape.index(gem_slot)
+            marks_at = groups[idx][1] if idx < len(groups) else []
+            shadda_written = "ّ" in marks_at
+            if shadda_written != t["gem_required"] or bool(written.get("gem_" + gem_slot)) != t["gem_required"]:
+                ok = False
+        if ok:
+            matches.append((t, used))
+    if not matches:
+        return ("abstain", {"decision": "abstain", "reason": "written_vocalization_mismatch"})
+    if len(matches) > 1:
+        return None
+    return ("resolved", matches[0])
+
+
 # the template ids that can co-survive in the mafal_place/mu_participle collision (der-r9):
 # masdar_mimi (der-r10) shares mafal_place's exact shape, so wherever mafal_place matches
 # literally, masdar_mimi matches too -- membership here is READ off whichever of these ids the
@@ -619,6 +795,17 @@ def analyze_derivative(inp, unit):
                                _template_subs(unit, t["id"]))
         if used is not None:
             survivors.append((t, used))
+
+    if unit.get("vocalization_disambiguation") and len(survivors) > 1:
+        # cu-passive-voice-vocalization: a genuinely WRITTEN vocalization may narrow a
+        # letter-identical voice/form collision to a single row (opt-in; every other pack is
+        # unaffected).
+        outcome = _voice_vocalization_resolve(survivors, inp)
+        if outcome is not None:
+            kind, payload = outcome
+            if kind == "abstain":
+                return payload
+            survivors = [payload]
 
     def weak_declaration_bound(required_slot, required_radical):
         return (ev.get("weak_position") == required_slot
@@ -720,6 +907,12 @@ def analyze_derivative(inp, unit):
     blocked = weak_check(t["id"], used)
     if blocked:
         return blocked
+    gem_blocked = _gemination_gate(unit, t, radicals, ev, inp.get("surface"))
+    if gem_blocked:
+        return gem_blocked
+    dim_blocked = _diminutive_gate(unit, t, inp)
+    if dim_blocked:
+        return dim_blocked
     if str(t.get("class") or "").startswith("shared_"):
         # a `shared_*` class is a ROUTING LABEL, not a resolved class (the row
         # is letter-identical to a row in a sibling pack): the discriminating

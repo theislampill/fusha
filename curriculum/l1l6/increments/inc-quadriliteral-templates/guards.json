@@ -1,0 +1,30 @@
+{
+  "guards": [
+    {
+      "guard": "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3",
+      "id": "g-quad-1"
+    },
+    {
+      "guard": "nothing about voice or mood is inferred from the bare Form I quadriliteral perfect shape",
+      "id": "g-quad-2"
+    },
+    {
+      "guard": "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical unvocalised; both rows survive and abstention is the honest verdict",
+      "id": "g-quad-3"
+    },
+    {
+      "guard": "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly",
+      "id": "g-quad-4"
+    },
+    {
+      "guard": "quadriliteral templates and triliteral doubling/gemination are DISTINCT families and never collide by construction",
+      "id": "g-quad-5"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-quad-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

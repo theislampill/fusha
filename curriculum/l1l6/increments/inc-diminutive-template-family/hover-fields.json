@@ -1,0 +1,18 @@
+{
+  "fields": [
+    {
+      "key": "diminutive_template_chip",
+      "teaching": "names the diminutive template (فُعَيْل) and marks the infixed ي as a template letter, never a root radical"
+    },
+    {
+      "key": "base_lexeme_evidence_note",
+      "teaching": "shows whether the base word this diminutive is built from is independently attested, or why the match still abstains"
+    },
+    {
+      "key": "weak_restoration_note",
+      "teaching": "for a hollow base, shows the literal weak-radical restoration and whether this pack licenses it for this exact slot"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

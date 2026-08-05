@@ -1,0 +1,362 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-five-verb-inflection-class/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-five-verb-inflection-class/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "this pack classifies the SURFACE inflection class only; it never infers mood, case or a governor",
+        "a caller-supplied declared_mood is never echoed into the decision record",
+        "occurrence use over a real Quranic/text token additionally requires the authoritative Naḥw envelope; a dropped نون الرفع under نصب/جزم is a Naḥw fact this pack never emits",
+        "the five surface classes are letter-distinct by construction; they never collide with the distinct نون النسوة family (cu-nun-raf-vs-nun-niswa)",
+        "method transfers, conclusions do not; per-token class needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-five-verb-inflection-class/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e974bb14992a9eaff6cb7e91ccfc8fdbd3ffcce3e83dce91630c209ac9650e42",
+      "guards_payload": [
+        {
+          "guard": "this pack classifies the SURFACE inflection class only; it never infers mood, case or a governor",
+          "id": "g-fiv-1"
+        },
+        {
+          "guard": "a caller-supplied declared_mood is never echoed into the decision record",
+          "id": "g-fiv-2"
+        },
+        {
+          "guard": "occurrence use over a real Quranic/text token additionally requires the authoritative Naḥw envelope; a dropped نون الرفع under نصب/جزم is a Naḥw fact this pack never emits",
+          "id": "g-fiv-3"
+        },
+        {
+          "guard": "the five surface classes are letter-distinct by construction; they never collide with the distinct نون النسوة family (cu-nun-raf-vs-nun-niswa)",
+          "id": "g-fiv-4"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+          "id": "g-fiv-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "fiv-adv-01",
+        "fiv-adv-02",
+        "fiv-abs-01",
+        "fiv-abs-02"
+      ],
+      "positive_examples": [
+        "fiv-pos-01",
+        "fiv-pos-02",
+        "fiv-pos-03",
+        "fiv-pos-04",
+        "fiv-pos-05"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-five-verb-inflection-class/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-five-verb-inflection-class"
+      },
+      "scope": {
+        "increment": "inc-five-verb-inflection-class",
+        "statement": "الأفعال الخمسة are the five imperfect-verb inflections built by attaching و/ا/ي + ن to a triliteral imperfect stem; this pack classifies the SURFACE inflection class only",
+        "unit_ref": "cu-five-verb-inflection-class"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-five-verb-inflection-class-fiv-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-five-verb-inflection-class/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "this pack classifies the SURFACE inflection class only; it never infers mood, case or a governor",
+        "a caller-supplied declared_mood is never echoed into the decision record",
+        "occurrence use over a real Quranic/text token additionally requires the authoritative Naḥw envelope; a dropped نون الرفع under نصب/جزم is a Naḥw fact this pack never emits",
+        "the five surface classes are letter-distinct by construction; they never collide with the distinct نون النسوة family (cu-nun-raf-vs-nun-niswa)",
+        "method transfers, conclusions do not; per-token class needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-five-verb-inflection-class/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e974bb14992a9eaff6cb7e91ccfc8fdbd3ffcce3e83dce91630c209ac9650e42",
+      "guards_payload": [
+        {
+          "guard": "this pack classifies the SURFACE inflection class only; it never infers mood, case or a governor",
+          "id": "g-fiv-1"
+        },
+        {
+          "guard": "a caller-supplied declared_mood is never echoed into the decision record",
+          "id": "g-fiv-2"
+        },
+        {
+          "guard": "occurrence use over a real Quranic/text token additionally requires the authoritative Naḥw envelope; a dropped نون الرفع under نصب/جزم is a Naḥw fact this pack never emits",
+          "id": "g-fiv-3"
+        },
+        {
+          "guard": "the five surface classes are letter-distinct by construction; they never collide with the distinct نون النسوة family (cu-nun-raf-vs-nun-niswa)",
+          "id": "g-fiv-4"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+          "id": "g-fiv-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "fiv-adv-01",
+        "fiv-adv-02",
+        "fiv-abs-01",
+        "fiv-abs-02"
+      ],
+      "positive_examples": [
+        "fiv-pos-01",
+        "fiv-pos-02",
+        "fiv-pos-03",
+        "fiv-pos-04",
+        "fiv-pos-05"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-five-verb-inflection-class/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-five-verb-inflection-class"
+      },
+      "scope": {
+        "increment": "inc-five-verb-inflection-class",
+        "statement": "this pack never infers mood or a governor: it emits a class label and a template id only, never a mood, case or governor field -- occurrence use over a real Quranic/text token additionally requires the authoritative Naḥw envelope",
+        "unit_ref": "cu-five-verb-inflection-class"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-five-verb-inflection-class-fiv-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-five-verb-inflection-class/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; ambiguous_template",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "this pack classifies the SURFACE inflection class only; it never infers mood, case or a governor",
+        "a caller-supplied declared_mood is never echoed into the decision record",
+        "occurrence use over a real Quranic/text token additionally requires the authoritative Naḥw envelope; a dropped نون الرفع under نصب/جزم is a Naḥw fact this pack never emits",
+        "the five surface classes are letter-distinct by construction; they never collide with the distinct نون النسوة family (cu-nun-raf-vs-nun-niswa)",
+        "method transfers, conclusions do not; per-token class needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-five-verb-inflection-class/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "e974bb14992a9eaff6cb7e91ccfc8fdbd3ffcce3e83dce91630c209ac9650e42",
+      "guards_payload": [
+        {
+          "guard": "this pack classifies the SURFACE inflection class only; it never infers mood, case or a governor",
+          "id": "g-fiv-1"
+        },
+        {
+          "guard": "a caller-supplied declared_mood is never echoed into the decision record",
+          "id": "g-fiv-2"
+        },
+        {
+          "guard": "occurrence use over a real Quranic/text token additionally requires the authoritative Naḥw envelope; a dropped نون الرفع under نصب/جزم is a Naḥw fact this pack never emits",
+          "id": "g-fiv-3"
+        },
+        {
+          "guard": "the five surface classes are letter-distinct by construction; they never collide with the distinct نون النسوة family (cu-nun-raf-vs-nun-niswa)",
+          "id": "g-fiv-4"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token class needs per-token evidence",
+          "id": "g-fiv-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "fiv-adv-01",
+        "fiv-adv-02",
+        "fiv-abs-01",
+        "fiv-abs-02"
+      ],
+      "positive_examples": [
+        "fiv-pos-01",
+        "fiv-pos-02",
+        "fiv-pos-03",
+        "fiv-pos-04",
+        "fiv-pos-05"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-five-verb-inflection-class/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-five-verb-inflection-class"
+      },
+      "scope": {
+        "increment": "inc-five-verb-inflection-class",
+        "statement": "the five surface classes are letter-distinct from one another by construction (person prefix + number/gender suffix), so no cross-class collision arises within this pack",
+        "unit_ref": "cu-five-verb-inflection-class"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-five-verb-inflection-class-fiv-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-five-verb-inflection-class/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "template_classification",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-five-verb-inflection-class",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "fiv-abs-01",
+      "fiv-abs-02"
+    ],
+    "adversarial": [
+      "fiv-adv-01",
+      "fiv-adv-02"
+    ],
+    "positive": [
+      "fiv-pos-01",
+      "fiv-pos-02",
+      "fiv-pos-03",
+      "fiv-pos-04",
+      "fiv-pos-05"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-five-verb-inflection-class",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "no_root_evidence",
+      "surface_letter_mismatch",
+      "no_template",
+      "ambiguous_template"
+    ],
+    "capability": "template_classification",
+    "increment": "inc-five-verb-inflection-class",
+    "radical_arity": 3,
+    "rules": [
+      {
+        "id": "fiv-r1",
+        "text": "الأفعال الخمسة are the five imperfect-verb inflections built by attaching و/ا/ي + ن to a triliteral imperfect stem; this pack classifies the SURFACE inflection class only"
+      },
+      {
+        "id": "fiv-r2",
+        "text": "this pack never infers mood or a governor: it emits a class label and a template id only, never a mood, case or governor field -- occurrence use over a real Quranic/text token additionally requires the authoritative Naḥw envelope"
+      },
+      {
+        "id": "fiv-r3",
+        "text": "the five surface classes are letter-distinct from one another by construction (person prefix + number/gender suffix), so no cross-class collision arises within this pack"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "templates": [
+      {
+        "class": "five_verb_second_masc_plural",
+        "id": "tafaluna",
+        "name": "second person masculine plural (تَفْعَلُونَ)",
+        "shape": [
+          "ت",
+          "R1",
+          "R2",
+          "R3",
+          "و",
+          "ن"
+        ]
+      },
+      {
+        "class": "five_verb_third_masc_plural",
+        "id": "yafaluna",
+        "name": "third person masculine plural (يَفْعَلُونَ)",
+        "shape": [
+          "ي",
+          "R1",
+          "R2",
+          "R3",
+          "و",
+          "ن"
+        ]
+      },
+      {
+        "class": "five_verb_second_fem_singular",
+        "id": "tafalina",
+        "name": "second person feminine singular (تَفْعَلِينَ)",
+        "shape": [
+          "ت",
+          "R1",
+          "R2",
+          "R3",
+          "ي",
+          "ن"
+        ]
+      },
+      {
+        "class": "five_verb_second_dual",
+        "id": "tafalani",
+        "name": "second person dual (تَفْعَلَانِ)",
+        "shape": [
+          "ت",
+          "R1",
+          "R2",
+          "R3",
+          "ا",
+          "ن"
+        ]
+      },
+      {
+        "class": "five_verb_third_dual",
+        "id": "yafalani",
+        "name": "third person dual (يَفْعَلَانِ)",
+        "shape": [
+          "ي",
+          "R1",
+          "R2",
+          "R3",
+          "ا",
+          "ن"
+        ]
+      }
+    ],
+    "unit_ref": "cu-five-verb-inflection-class",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "five_verb_class_chip",
+      "teaching": "names which of the five surface inflection classes matched (prefix + suffix), never a mood/case/governor"
+    },
+    {
+      "key": "shape_evidence_note",
+      "teaching": "shows the exact prefix/suffix letters that decided the class, so the learner can see the shape is letter-decidable"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

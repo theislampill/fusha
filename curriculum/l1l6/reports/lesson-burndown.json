@@ -2,13 +2,13 @@
   "authority": {
     "closure_rule": "unit-dispositions fully_operationalized=true with a computed fully_operationalized_basis; candidate states and plane-specific consumer bindings remain partial evidence",
     "inputs": {
-      "curriculum/l1l6/canonical/canonical-units.jsonl": "sha256:af4c53e64ab64b18e5caecbec75fef7abebcef3949810e4deabcec9c80cd8671",
+      "curriculum/l1l6/canonical/canonical-units.jsonl": "sha256:a5c817c9399de339020c748faa0dfb91560c6bc88f87bc66b6de5c895b8fd181",
       "curriculum/l1l6/canonical/lesson-unit-map.jsonl": "sha256:499ee92a1008df30af12ef19e27adb6ddbdb61cea26519c00fc6292aa2aeea6d",
-      "curriculum/l1l6/canonical/unit-dispositions.jsonl": "sha256:e97e238f2f7be68facd2f33be1b3f93e085152a7905ea85f258a06217819c9b2",
-      "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl": "sha256:2aa5b75fd34ab04092031ea18fc1abca0b9981049d5dfee1735477497e81a781",
+      "curriculum/l1l6/canonical/unit-dispositions.jsonl": "sha256:a9c02aa8e0c8f81598995c4971a000d722f729818c030f9b46af60c44f450a66",
+      "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl": "sha256:4d15504113931e140e69415cf9ac650d5067a5005575ce417f4900aa3bc474e0",
       "curriculum/l1l6/registry/lessons.jsonl": "sha256:476055a92c88d598346d318f208adb2a94113f5d2f0c71d0634ceca3786398cd",
-      "curriculum/l1l6/reports/absorption-ledger.jsonl": "sha256:7be5cd6802d474279e2e8d2ef8ea8efdb095586e8009a5dca7337c87f7510d9e",
-      "curriculum/l1l6/reports/full-curriculum-readiness.json": "sha256:8e2222ba97596203ee2564dd770773fbbb272af67db39c881649092da525e9b7",
+      "curriculum/l1l6/reports/absorption-ledger.jsonl": "sha256:513454975e04dd082d96b0a066505eaae8c42710294501f8d17133868912036b",
+      "curriculum/l1l6/reports/full-curriculum-readiness.json": "sha256:2b493bff8e61a06f3c0fddec5994bc8868cf70508fd0264b2050eb877c2fccbb",
       "curriculum/l1l6/reports/queues/q-error-fixtures.jsonl": "sha256:50d979c923bc868b457eafc6244ea38bfe32b81595920e045658a8bdf2838e09",
       "eval/fusha-bench-v1/report/fusha-bench-report.json": "sha256:580150cd0f8860dde87a6e784b58838679c7ae41df14a4c82def57babaaba63f"
     }
@@ -17,11 +17,11 @@
     "lessons_by_disposition": {
       "fully_operationalized": 4,
       "not_applicable_with_reason": 1,
-      "open": 181,
-      "partially_operationalized_real_consumer": 40
+      "open": 172,
+      "partially_operationalized_real_consumer": 49
     },
     "lessons_total": 226,
-    "lessons_with_real_consumer_partial_evidence": 40,
+    "lessons_with_real_consumer_partial_evidence": 49,
     "readiness_report_basis": "all_mapped_canonical_units_fully_operationalized",
     "readiness_report_lessons_fully_operationalized": 4,
     "unit_overlays": {
@@ -29,9 +29,9 @@
     },
     "units_by_disposition": {
       "blocked": 0,
-      "candidate_or_open": 129,
+      "candidate_or_open": 118,
       "closed": 5,
-      "real_consumer_partial": 32
+      "real_consumer_partial": 43
     },
     "units_total": 166
   },

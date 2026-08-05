@@ -19,3 +19,14 @@ Read before authoring each coherent pack family and during train review.
 - Run focused family fixtures per batch and amortize the full harness/review at the assembled slice.
 
 Record findings by stable class so recurrence can be measured across tranches.
+
+## Feedforward checklist (from the T2 template-classification round)
+- Complete seven-part pack contract (unit, fixtures, reference, procedure, staged explanation, hover
+  fields, guards) before freeze — never freeze a pack on unit+fixtures alone.
+- The validator must not discover missing support files after review; run
+  `tools/validate_curriculum_l1l6.py` before and after a batch and require zero missing-file failures
+  for every pack the batch touches.
+- Eval coverage claims require observed production-consumer calls, not structural registration: a bank
+  may claim `implemented_and_consumed` only once its adapter genuinely invokes the declared consumer for
+  every row and a mutation/hostile proof shows rebinding or bypassing that consumer turns the bank red —
+  an eval fixture's own expected answer can never certify a fact by itself.

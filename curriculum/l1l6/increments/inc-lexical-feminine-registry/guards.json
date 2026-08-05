@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "a CLOSED declared registry of lexically feminine nouns; membership is exact, never inferred from shape",
+      "id": "g-lfr-1"
+    },
+    {
+      "guard": "a noun outside the registry never gets a shape-based vote here, whether masculine or already regularly feminine-marked by ة",
+      "id": "g-lfr-2"
+    },
+    {
+      "guard": "growing the registry is a deliberate, reviewed pack edit -- never a runtime inference",
+      "id": "g-lfr-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-lfr-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}
