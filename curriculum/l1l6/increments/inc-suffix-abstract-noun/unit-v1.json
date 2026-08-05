@@ -9,7 +9,8 @@
     {
       "discriminators": {
         "final_letter": ["none_word_final_yaa"],
-        "shadda_on_yaa_evidence": ["written_shadda"]
+        "shadda_on_yaa_evidence": ["written_shadda"],
+        "base_category_evidence": ["nisba_relational_attested"]
       },
       "id": "nisba_relational_yaa"
     },
@@ -19,6 +20,14 @@
         "shadda_on_yaa_evidence": ["written_shadda"]
       },
       "id": "abstract_noun_yaa"
+    },
+    {
+      "discriminators": {
+        "final_letter": ["none_word_final_yaa"],
+        "shadda_on_yaa_evidence": ["written_shadda"],
+        "base_category_evidence": ["non_nisba_adjective_attested"]
+      },
+      "id": "non_nisba_geminated_yaa_adjective"
     }
   ],
   "increment": "inc-suffix-abstract-noun",
@@ -34,6 +43,10 @@
     {
       "id": "sab-r3",
       "text": "an unmarked (unvocalised) surface carries no shadda evidence and abstains insufficient_features -- normalisation is never treated as confirmation"
+    },
+    {
+      "id": "sab-r4",
+      "text": "a word-final geminated yaa with no trailing taa marbuta is ALSO the shape of a closed set of non-nisba faʿīl-pattern adjectives (e.g. قَوِيّ); the final-letter and shadda evidence alone never decide between the relational-nisba and the non-nisba-adjective rival -- a declared base_category_evidence is required, and its absence abstains insufficient_features rather than defaulting to nisba"
     }
   ],
   "schema": "curriculum.l1l6_machine_unit.v1",

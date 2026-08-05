@@ -106,7 +106,7 @@ class NewIncrementsDiscoveredAndGreenTests(unittest.TestCase):
         # the "mismatch" here is purely v1 being less capable than v2, never a false candidate --
         # the same recorded-defect pattern inc-derivatives already pins for its own older packs.
         newly_resolvable = {"voc-pos-01", "voc-pos-02", "voc-pos-03",
-                            "voc-pos-04", "voc-pos-05", "voc-pos-06"}
+                            "voc-pos-04", "voc-pos-05", "voc-pos-06", "voc-adv-02"}
         bad = {r["fixture_id"] for r in rec1["results"] if not r["match"]}
         self.assertEqual(bad, newly_resolvable)
         for r in rec1["results"]:
@@ -592,6 +592,25 @@ class PassiveVoiceVocalizationTests(unittest.TestCase):
         for key in ("naib_fail", "deputy_agent", "case", "agreement"):
             self.assertNotIn(key, rec)
 
+    def test_written_vocalization_mismatch_reason_is_reachable(self):
+        """written_vocalization_mismatch was declared in abstention_reasons but no fixture had
+        ever reached it. A genuinely WRITTEN vowel (kasra on the prefix ي) that matches neither
+        surviving row's declared pattern is a real contradiction, never a silent pick."""
+        rec = cu.analyze_derivative(
+            {"letters": list("يكتب"), "surface": "يِكتب",
+             "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list("كتب")},
+             "written_vocalization": {"ي": "kasra"}},
+            self.unit)
+        self.assertEqual(rec, {"decision": "abstain", "reason": "written_vocalization_mismatch"})
+
+    def test_incomplete_unpointed_hostile_row_keeps_its_own_distinct_reason(self):
+        """The sukun-on-R2 hostile row (voc-adv-01) is INCOMPLETE written evidence (sukun names
+        no fatha/kasra/damma), not a genuine mismatch -- it must keep ambiguous_template, distinct
+        from written_vocalization_mismatch above."""
+        rec = cu.analyze_derivative(
+            self._row("كَتْبَ", {"R1": "fatha", "R2": "fatha", "gem_R2": False}), self.unit)
+        self.assertEqual(rec, {"decision": "abstain", "reason": "ambiguous_template"})
+
 
 class DiscriminatorRegistryPacksTests(unittest.TestCase):
     """The five closed-registry units (suffix-abstract-noun, nongoverning-preverbal-inventory,
@@ -602,7 +621,8 @@ class DiscriminatorRegistryPacksTests(unittest.TestCase):
         unit, _ = cu.load("inc-suffix-abstract-noun")
         nisba = cu.analyze_discriminator_table(
             {"features": {"shadda_on_yaa_evidence": "written_shadda",
-                          "final_letter": "none_word_final_yaa"}}, unit)
+                          "final_letter": "none_word_final_yaa",
+                          "base_category_evidence": "nisba_relational_attested"}}, unit)
         abstract = cu.analyze_discriminator_table(
             {"features": {"shadda_on_yaa_evidence": "written_shadda",
                           "final_letter": "taa_marbuta"}}, unit)
@@ -619,7 +639,7 @@ class DiscriminatorRegistryPacksTests(unittest.TestCase):
     def test_nongoverning_preverbal_inventory_never_emits_governor_effects(self):
         unit, _ = cu.load("inc-nongoverning-preverbal-inventory")
         rec = cu.analyze_discriminator_table(
-            {"features": {"particle": "قد", "verb_tense": "perfect"}}, unit)
+            {"features": {"particle": "لقد", "verb_tense": "perfect"}}, unit)
         self.assertEqual(rec["decision"], "candidate_pending")
         for key in ("mood", "governor", "case"):
             self.assertNotIn(key, rec)
@@ -629,6 +649,88 @@ class DiscriminatorRegistryPacksTests(unittest.TestCase):
         rec = cu.analyze_discriminator_table({"features": {"particle": "لن", "verb_tense": "imperfect"}},
                                              unit)
         self.assertEqual(rec["decision"], "abstain")
+
+    def test_nongoverning_preverbal_inventory_never_resolves_bare_qad(self):
+        """Sol repair: bare قد duplicated inc-qad-tense-conditioned-sense's own authority with a
+        weaker particle+tense-only gate and collapsed that pack's preserved rivals. قد belongs
+        exclusively to the owner pack; this closed registry must abstain for it in EITHER tense,
+        never resolve it with a weaker gate."""
+        unit, _ = cu.load("inc-nongoverning-preverbal-inventory")
+        for tense in ("perfect", "imperfect"):
+            rec = cu.analyze_discriminator_table(
+                {"features": {"particle": "قد", "verb_tense": tense}}, unit)
+            self.assertEqual(rec["decision"], "abstain", tense)
+
+    def test_nongoverning_preverbal_inventory_never_collapses_qad_owner_rivals(self):
+        """Cross-pack hostile test: the owner pack (inc-qad-tense-conditioned-sense) preserves
+        certainty_completion alongside a co-surviving recency_reading for this exact evidence
+        (qad-adv-01) -- proving this registry never resolves a single answer in its place, because
+        it never resolves بare قد at all."""
+        npv_unit, _ = cu.load("inc-nongoverning-preverbal-inventory")
+        qad_unit, _ = cu.load("inc-qad-tense-conditioned-sense")
+        qad_rec = cu.analyze_discriminator_table(
+            {"features": {"adjacency": "immediate", "following_token": "perfect_verb",
+                          "utterance_anchoring": "at_event_moment"}}, qad_unit)
+        self.assertEqual(qad_rec["decision"], "abstain")
+        self.assertEqual(qad_rec["reason"], "preserve_alternatives")
+        npv_rec = cu.analyze_discriminator_table(
+            {"features": {"particle": "قد", "verb_tense": "perfect"}}, npv_unit)
+        self.assertEqual(npv_rec["decision"], "abstain")
+
+    def test_nongoverning_preverbal_inventory_registers_both_sawfa_written_forms(self):
+        """The vocalized سَوْفَ and the ordinary unpointed سوف are both registered as exact
+        surface forms of the SAME closed-registry member -- no lossy normalization merges them."""
+        unit, _ = cu.load("inc-nongoverning-preverbal-inventory")
+        vocalized = cu.analyze_discriminator_table(
+            {"features": {"particle": "سَوْفَ", "verb_tense": "imperfect"}}, unit)
+        unpointed = cu.analyze_discriminator_table(
+            {"features": {"particle": "سوف", "verb_tense": "imperfect"}}, unit)
+        self.assertEqual(vocalized["function"], "sawfa_future_marker")
+        self.assertEqual(unpointed["function"], "sawfa_future_marker")
+
+    def test_nongoverning_preverbal_inventory_rejects_sawfa_near_miss(self):
+        unit, _ = cu.load("inc-nongoverning-preverbal-inventory")
+        for near_miss in ("سوفا", "سُوف"):
+            rec = cu.analyze_discriminator_table(
+                {"features": {"particle": near_miss, "verb_tense": "imperfect"}}, unit)
+            self.assertEqual(rec["decision"], "abstain", near_miss)
+
+    def test_suffix_abstract_noun_shape_alone_never_decides_nisba_vs_adjective(self):
+        """sab-adv-01 (قَوِيّ) previously lied about final_letter=other_consonant; its honest
+        final_letter is none_word_final_yaa -- the SAME shape as a genuine nisba (مِصْرِيّ). Shape
+        (final_letter + written shadda) alone must never resolve which rival it is."""
+        unit, _ = cu.load("inc-suffix-abstract-noun")
+        rec = cu.analyze_discriminator_table(
+            {"features": {"final_letter": "none_word_final_yaa",
+                          "shadda_on_yaa_evidence": "written_shadda"}}, unit)
+        self.assertEqual(rec["decision"], "abstain")
+
+    def test_suffix_abstract_noun_base_category_evidence_disambiguates_the_rival(self):
+        unit, _ = cu.load("inc-suffix-abstract-noun")
+        nisba = cu.analyze_discriminator_table(
+            {"features": {"final_letter": "none_word_final_yaa",
+                          "shadda_on_yaa_evidence": "written_shadda",
+                          "base_category_evidence": "nisba_relational_attested"}}, unit)
+        adjective = cu.analyze_discriminator_table(
+            {"features": {"final_letter": "none_word_final_yaa",
+                          "shadda_on_yaa_evidence": "written_shadda",
+                          "base_category_evidence": "non_nisba_adjective_attested"}}, unit)
+        self.assertEqual(nisba["function"], "nisba_relational_yaa")
+        self.assertEqual(adjective["function"], "non_nisba_geminated_yaa_adjective")
+
+    def test_suffix_abstract_noun_shadda_claim_is_verified_against_every_fixtures_surface(self):
+        """This pack's discriminator dispatch trusts shadda_on_yaa_evidence as a caller-declared
+        LABEL; every committed fixture claiming written_shadda must actually carry a written
+        shadda on a yaa in its own surface, so the label is never trusted alone."""
+        from tools.normalize_ar import shadda_on
+        _, fixtures = cu.load("inc-suffix-abstract-noun")
+        for fx in fixtures:
+            feats = fx["input"]["features"]
+            if feats.get("shadda_on_yaa_evidence") == "written_shadda":
+                surface = fx["input"].get("surface")
+                self.assertTrue(surface and shadda_on(surface, "ي"),
+                                "%s claims written_shadda but its surface %r carries none"
+                                % (fx["fixture_id"], surface))
 
     def test_nun_raf_vs_nun_niswa_distinguishes_the_two_nuns(self):
         unit, _ = cu.load("inc-nun-raf-vs-nun-niswa")
@@ -700,6 +802,12 @@ class EvalBankStructuralTests(unittest.TestCase):
         rows = [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
         increments = {r["increment"] for r in rows}
         self.assertTrue(ALL_NEW_INCREMENTS_SET <= increments | {"inc-voice-melody-templates"})
+
+    def test_npv_bank_row_moved_off_the_removed_bare_qad_decision(self):
+        path = ROOT / "sarf" / "evals" / "template-classification-train-1-eval.jsonl"
+        rows = [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+        row = next(r for r in rows if r["id"] == "tc1-npv-01")
+        self.assertNotEqual(row["surface"], "قد")
 
 
 ALL_NEW_INCREMENTS_SET = set(ALL_NEW_INCREMENTS)
