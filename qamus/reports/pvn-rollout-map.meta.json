@@ -130,16 +130,40 @@
       "unique_occurrences": 245
     },
     "P-03": {
-      "appearance_rows": 353,
-      "cards": 88,
+      "appearance_rows": 127,
+      "cards": 35,
       "completion_states": {
-        "not_measured": 49
+        "not_measured": 16
       },
-      "crosswalk_missing": 28,
-      "crosswalk_resolved": 325,
-      "entries": 49,
-      "reverse_index_occurrences": 4036,
-      "unique_occurrences": 325
+      "crosswalk_missing": 19,
+      "crosswalk_resolved": 108,
+      "entries": 16,
+      "reverse_index_occurrences": 853,
+      "unique_occurrences": 108
+    },
+    "P-04": {
+      "appearance_rows": 140,
+      "cards": 33,
+      "completion_states": {
+        "not_measured": 18
+      },
+      "crosswalk_missing": 7,
+      "crosswalk_resolved": 133,
+      "entries": 18,
+      "reverse_index_occurrences": 2649,
+      "unique_occurrences": 133
+    },
+    "P-05": {
+      "appearance_rows": 86,
+      "cards": 20,
+      "completion_states": {
+        "not_measured": 15
+      },
+      "crosswalk_missing": 2,
+      "crosswalk_resolved": 84,
+      "entries": 15,
+      "reverse_index_occurrences": 534,
+      "unique_occurrences": 84
     },
     "VN-00": {
       "appearance_rows": 12781,
@@ -154,289 +178,255 @@
       "unique_occurrences": 12680
     },
     "VN-01": {
-      "appearance_rows": 14052,
-      "cards": 802,
+      "appearance_rows": 13755,
+      "cards": 791,
       "completion_states": {
-        "not_measured": 92
+        "not_measured": 95
       },
       "crosswalk_missing": 0,
-      "crosswalk_resolved": 14052,
-      "entries": 92,
-      "reverse_index_occurrences": 2333,
-      "unique_occurrences": 14008
+      "crosswalk_resolved": 13755,
+      "entries": 95,
+      "reverse_index_occurrences": 2334,
+      "unique_occurrences": 13711
     },
     "VN-02": {
-      "appearance_rows": 12185,
-      "cards": 620,
+      "appearance_rows": 11972,
+      "cards": 603,
       "completion_states": {
-        "not_measured": 92
+        "not_measured": 95
       },
       "crosswalk_missing": 1,
-      "crosswalk_resolved": 12184,
-      "entries": 92,
-      "reverse_index_occurrences": 2309,
-      "unique_occurrences": 12145
+      "crosswalk_resolved": 11971,
+      "entries": 95,
+      "reverse_index_occurrences": 2315,
+      "unique_occurrences": 11932
     },
     "VN-03": {
-      "appearance_rows": 10711,
-      "cards": 582,
+      "appearance_rows": 10500,
+      "cards": 569,
       "completion_states": {
-        "not_measured": 92
+        "not_measured": 95
       },
-      "crosswalk_missing": 1,
-      "crosswalk_resolved": 10710,
-      "entries": 92,
-      "reverse_index_occurrences": 1968,
-      "unique_occurrences": 10710
+      "crosswalk_missing": 0,
+      "crosswalk_resolved": 10500,
+      "entries": 95,
+      "reverse_index_occurrences": 1951,
+      "unique_occurrences": 10500
     },
     "VN-04": {
-      "appearance_rows": 9155,
-      "cards": 488,
+      "appearance_rows": 9160,
+      "cards": 520,
       "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 41,
-      "crosswalk_resolved": 9114,
-      "entries": 92,
-      "reverse_index_occurrences": 2313,
-      "unique_occurrences": 9065
-    },
-    "VN-05": {
-      "appearance_rows": 8198,
-      "cards": 526,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 13,
-      "crosswalk_resolved": 8185,
-      "entries": 92,
-      "reverse_index_occurrences": 2113,
-      "unique_occurrences": 8029
-    },
-    "VN-06": {
-      "appearance_rows": 6939,
-      "cards": 403,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 27,
-      "crosswalk_resolved": 6912,
-      "entries": 92,
-      "reverse_index_occurrences": 1070,
-      "unique_occurrences": 6912
-    },
-    "VN-07": {
-      "appearance_rows": 5543,
-      "cards": 414,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 16,
-      "crosswalk_resolved": 5527,
-      "entries": 92,
-      "reverse_index_occurrences": 1176,
-      "unique_occurrences": 5527
-    },
-    "VN-08": {
-      "appearance_rows": 4895,
-      "cards": 326,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 16,
-      "crosswalk_resolved": 4879,
-      "entries": 92,
-      "reverse_index_occurrences": 898,
-      "unique_occurrences": 4879
-    },
-    "VN-09": {
-      "appearance_rows": 4081,
-      "cards": 280,
-      "completion_states": {
-        "not_measured": 91,
-        "occurrence_links_candidate": 1
-      },
-      "crosswalk_missing": 5,
-      "crosswalk_resolved": 4076,
-      "entries": 92,
-      "reverse_index_occurrences": 1375,
-      "unique_occurrences": 4076
-    },
-    "VN-10": {
-      "appearance_rows": 3882,
-      "cards": 249,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 9,
-      "crosswalk_resolved": 3873,
-      "entries": 92,
-      "reverse_index_occurrences": 729,
-      "unique_occurrences": 3873
-    },
-    "VN-11": {
-      "appearance_rows": 3479,
-      "cards": 212,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 11,
-      "crosswalk_resolved": 3468,
-      "entries": 92,
-      "reverse_index_occurrences": 254,
-      "unique_occurrences": 3468
-    },
-    "VN-12": {
-      "appearance_rows": 2839,
-      "cards": 193,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 4,
-      "crosswalk_resolved": 2835,
-      "entries": 92,
-      "reverse_index_occurrences": 266,
-      "unique_occurrences": 2835
-    },
-    "VN-13": {
-      "appearance_rows": 2418,
-      "cards": 211,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 25,
-      "crosswalk_resolved": 2393,
-      "entries": 92,
-      "reverse_index_occurrences": 1251,
-      "unique_occurrences": 2393
-    },
-    "VN-14": {
-      "appearance_rows": 807,
-      "cards": 182,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 31,
-      "crosswalk_resolved": 776,
-      "entries": 92,
-      "reverse_index_occurrences": 777,
-      "unique_occurrences": 776
-    },
-    "VN-15": {
-      "appearance_rows": 620,
-      "cards": 152,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 31,
-      "crosswalk_resolved": 589,
-      "entries": 92,
-      "reverse_index_occurrences": 366,
-      "unique_occurrences": 589
-    },
-    "VN-16": {
-      "appearance_rows": 1081,
-      "cards": 145,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 13,
-      "crosswalk_resolved": 1068,
-      "entries": 92,
-      "reverse_index_occurrences": 286,
-      "unique_occurrences": 1068
-    },
-    "VN-17": {
-      "appearance_rows": 1787,
-      "cards": 117,
-      "completion_states": {
-        "not_measured": 91,
-        "occurrence_links_candidate": 1
-      },
-      "crosswalk_missing": 12,
-      "crosswalk_resolved": 1775,
-      "entries": 92,
-      "reverse_index_occurrences": 205,
-      "unique_occurrences": 1775
-    },
-    "VN-18": {
-      "appearance_rows": 1165,
-      "cards": 122,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 5,
-      "crosswalk_resolved": 1160,
-      "entries": 92,
-      "reverse_index_occurrences": 363,
-      "unique_occurrences": 1160
-    },
-    "VN-19": {
-      "appearance_rows": 534,
-      "cards": 130,
-      "completion_states": {
-        "not_measured": 92
-      },
-      "crosswalk_missing": 10,
-      "crosswalk_resolved": 524,
-      "entries": 92,
-      "reverse_index_occurrences": 1324,
-      "unique_occurrences": 524
-    },
-    "VN-20": {
-      "appearance_rows": 519,
-      "cards": 126,
-      "completion_states": {
-        "not_measured": 52
+        "not_measured": 95
       },
       "crosswalk_missing": 22,
-      "crosswalk_resolved": 497,
-      "entries": 52,
-      "reverse_index_occurrences": 1671,
-      "unique_occurrences": 497
+      "crosswalk_resolved": 9138,
+      "entries": 95,
+      "reverse_index_occurrences": 2508,
+      "unique_occurrences": 9113
     },
-    "VN-21": {
-      "appearance_rows": 400,
-      "cards": 99,
+    "VN-05": {
+      "appearance_rows": 7837,
+      "cards": 512,
       "completion_states": {
-        "not_measured": 45
+        "not_measured": 95
       },
-      "crosswalk_missing": 25,
-      "crosswalk_resolved": 375,
-      "entries": 45,
-      "reverse_index_occurrences": 1158,
-      "unique_occurrences": 375
+      "crosswalk_missing": 36,
+      "crosswalk_resolved": 7801,
+      "entries": 95,
+      "reverse_index_occurrences": 1886,
+      "unique_occurrences": 7671
     },
-    "VN-22": {
-      "appearance_rows": 336,
-      "cards": 84,
+    "VN-06": {
+      "appearance_rows": 6661,
+      "cards": 416,
       "completion_states": {
-        "not_measured": 45
+        "not_measured": 95
+      },
+      "crosswalk_missing": 23,
+      "crosswalk_resolved": 6638,
+      "entries": 95,
+      "reverse_index_occurrences": 1328,
+      "unique_occurrences": 6588
+    },
+    "VN-07": {
+      "appearance_rows": 5819,
+      "cards": 423,
+      "completion_states": {
+        "not_measured": 95
+      },
+      "crosswalk_missing": 32,
+      "crosswalk_resolved": 5787,
+      "entries": 95,
+      "reverse_index_occurrences": 908,
+      "unique_occurrences": 5787
+    },
+    "VN-08": {
+      "appearance_rows": 4489,
+      "cards": 304,
+      "completion_states": {
+        "not_measured": 95
+      },
+      "crosswalk_missing": 5,
+      "crosswalk_resolved": 4484,
+      "entries": 95,
+      "reverse_index_occurrences": 1751,
+      "unique_occurrences": 4484
+    },
+    "VN-09": {
+      "appearance_rows": 4491,
+      "cards": 276,
+      "completion_states": {
+        "not_measured": 94,
+        "occurrence_links_candidate": 1
+      },
+      "crosswalk_missing": 10,
+      "crosswalk_resolved": 4481,
+      "entries": 95,
+      "reverse_index_occurrences": 766,
+      "unique_occurrences": 4481
+    },
+    "VN-10": {
+      "appearance_rows": 3648,
+      "cards": 241,
+      "completion_states": {
+        "not_measured": 95
+      },
+      "crosswalk_missing": 11,
+      "crosswalk_resolved": 3637,
+      "entries": 95,
+      "reverse_index_occurrences": 430,
+      "unique_occurrences": 3637
+    },
+    "VN-11": {
+      "appearance_rows": 3371,
+      "cards": 226,
+      "completion_states": {
+        "not_measured": 95
       },
       "crosswalk_missing": 4,
-      "crosswalk_resolved": 332,
-      "entries": 45,
-      "reverse_index_occurrences": 1519,
-      "unique_occurrences": 332
+      "crosswalk_resolved": 3367,
+      "entries": 95,
+      "reverse_index_occurrences": 375,
+      "unique_occurrences": 3367
     },
-    "VN-23": {
-      "appearance_rows": 114,
-      "cards": 27,
+    "VN-12": {
+      "appearance_rows": 3436,
+      "cards": 240,
       "completion_states": {
-        "not_measured": 10
+        "not_measured": 95
       },
-      "crosswalk_missing": 9,
-      "crosswalk_resolved": 105,
-      "entries": 10,
-      "reverse_index_occurrences": 115,
-      "unique_occurrences": 105
+      "crosswalk_missing": 3,
+      "crosswalk_resolved": 3433,
+      "entries": 95,
+      "reverse_index_occurrences": 1041,
+      "unique_occurrences": 3433
+    },
+    "VN-13": {
+      "appearance_rows": 3170,
+      "cards": 217,
+      "completion_states": {
+        "not_measured": 95
+      },
+      "crosswalk_missing": 23,
+      "crosswalk_resolved": 3147,
+      "entries": 95,
+      "reverse_index_occurrences": 1081,
+      "unique_occurrences": 3147
+    },
+    "VN-14": {
+      "appearance_rows": 1086,
+      "cards": 181,
+      "completion_states": {
+        "not_measured": 95
+      },
+      "crosswalk_missing": 15,
+      "crosswalk_resolved": 1071,
+      "entries": 95,
+      "reverse_index_occurrences": 367,
+      "unique_occurrences": 1071
+    },
+    "VN-15": {
+      "appearance_rows": 1930,
+      "cards": 169,
+      "completion_states": {
+        "not_measured": 94,
+        "occurrence_links_candidate": 1
+      },
+      "crosswalk_missing": 34,
+      "crosswalk_resolved": 1896,
+      "entries": 95,
+      "reverse_index_occurrences": 340,
+      "unique_occurrences": 1896
+    },
+    "VN-16": {
+      "appearance_rows": 919,
+      "cards": 163,
+      "completion_states": {
+        "not_measured": 95
+      },
+      "crosswalk_missing": 20,
+      "crosswalk_resolved": 899,
+      "entries": 95,
+      "reverse_index_occurrences": 458,
+      "unique_occurrences": 899
+    },
+    "VN-17": {
+      "appearance_rows": 488,
+      "cards": 132,
+      "completion_states": {
+        "not_measured": 95
+      },
+      "crosswalk_missing": 13,
+      "crosswalk_resolved": 475,
+      "entries": 95,
+      "reverse_index_occurrences": 227,
+      "unique_occurrences": 475
+    },
+    "VN-18": {
+      "appearance_rows": 1295,
+      "cards": 205,
+      "completion_states": {
+        "not_measured": 95
+      },
+      "crosswalk_missing": 34,
+      "crosswalk_resolved": 1261,
+      "entries": 95,
+      "reverse_index_occurrences": 2586,
+      "unique_occurrences": 1261
+    },
+    "VN-19": {
+      "appearance_rows": 1099,
+      "cards": 151,
+      "completion_states": {
+        "not_measured": 95
+      },
+      "crosswalk_missing": 25,
+      "crosswalk_resolved": 1074,
+      "entries": 95,
+      "reverse_index_occurrences": 1219,
+      "unique_occurrences": 1074
+    },
+    "VN-20": {
+      "appearance_rows": 614,
+      "cards": 151,
+      "completion_states": {
+        "not_measured": 95
+      },
+      "crosswalk_missing": 20,
+      "crosswalk_resolved": 594,
+      "entries": 95,
+      "reverse_index_occurrences": 1968,
+      "unique_occurrences": 594
     }
   },
   "vnprop_rollup_entries_by_majority_label": {
     "P-00": 12,
     "P-01": 17,
     "P-02": 22,
-    "P-03": 49,
+    "P-03": 16,
+    "P-04": 18,
+    "P-05": 15,
     "VNPROP-00": 92,
     "VNPROP-01": 92,
     "VNPROP-02": 101,

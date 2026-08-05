@@ -66,8 +66,11 @@ trustworthy on a red harness.
   p007 (owner ruling).
 - **VN span gates**: VN-00 (12,775 spans) · VN-01 (14,052) · VN-02 (12,185)
   each re-verified **100% span-live** on 2026-07-28 (server-side smokes;
-  tranche-level claim). VN-03 (v142–v188 + n0136–n0180) is *measured, not
-  started* (69.38% at last measure; 3,280-row worklist). Span-live ≠ rich.
+  tranche-level claim). the next unverified window measured 69.38% (3,280-row worklist) under the
+  pre-2026-08-05 windowing (then called VN-03 = v142–v188 + n0136–n0180); the
+  2026-08-05 owner respec re-cut boundaries (see `docs/VN-OPERATIONS.md` §1),
+  so that measurement spans the respec's VN-03/VN-04 and is per-page in
+  `qamus/reports/pvn-rollout-map.jsonl`. Span-live ≠ rich.
 - **~2,057 lane-certified typed facts** — exact strata, never merge them:
   49 pilot (in-repo, event-verified) + 1,362 geometry wave (in-repo,
   event-verified; mechanical attachment geometry ONLY — not identity, function
@@ -222,7 +225,7 @@ Its committed executable packet is `qamus/task-packets/TP-P007-DS-W2.json`
 - **dogfood** — using the machinery on our own corpus to find defects before
   deployment; dogfood findings become fixtures and regression guards.
 - **VN tranche** — a contract window of verb+noun pages on the authoritative
-  page ordering (47 verb + 45 noun pages per window; VN-00..VN-23).
+  page ordering (owner respec 2026-08-05: VN-00 = 47v+45n, then 45v+50n evenly; VN-00..VN-20).
 - **VNPROP** — the balanced-partition *proposal* namespace (VNPROP-00..
   VNPROP-20 + universe labels); preserved for comparison only; never a
   contract window and never quoted as VN-xx.

@@ -16,8 +16,15 @@ The qamus app routes `/vNNN /nNNNN /pNNN` by each entry's own `source_key`
 947 v +
 1,045 n +
 100 p, contiguous,
-0 gaps/dups. A VN tranche is a page range on this ordering. VN-00 = `v001-v047 + n0001-n0045`;
-VN-01 = `v048-v094 + n0046-n0090` (the ordering itself is authoritative; owner may override a boundary).
+0 gaps/dups. A VN tranche is a page range on this ordering.
+
+**Owner respec — 2026-08-05 (supersedes the repeated 47/45 blocks):** VN-00 stays irregular,
+`v001-v047 + n0001-n0045`; the remainder (900 v + 1,000 n) splits **evenly** across
+**VN-01..VN-20** as **45 verb + 50 noun pages per tranche** (so VN-01 = `v048-v092 + n0046-n0095`,
+VN-20 = `v903-v947 + n0996-n1045`; 21 tranches total, no VN-21+). Span-verification history is
+per page and was recorded under the pre-respec windows (old VN-00..02 = `v001-v141 + n0001-n0135`);
+pages keep that state under renumbering, so a respec tranche may honestly mix states.
+`tools/build_pvn_rollout_map.py` encodes this rule and self-tests the boundaries.
 
 ## 2. Live matrix = the completion denominator
 `vn_matrix_build.py <WINDOW> "<ranges>"` curls every `/vNNN?wbw_preview=1`, counts qword spans,

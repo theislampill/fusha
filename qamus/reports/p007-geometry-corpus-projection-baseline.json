@@ -41,7 +41,7 @@
   },
   "inputs": {
     "certification_events_sha256": "6c0c37f6c2948d5ff4fd812c0ee3bc88713aad9e57d9c0619a6d235e7907a2eb",
-    "corpus_projection_manifest_sha256": "04a440ca219775eb754a337984cc2d32a7578adac372a7d7afd55e68e3435338",
+    "corpus_projection_manifest_sha256": "3bd07678486732ce5dc5771e1ed353e8f6aa15015cae4e4089ed6708e5f628e2",
     "p007_reverse_universe_sha256": "54fea0f3e3a214c978eb065d5d0b7e2a2532fa1f6d02682c6bfc2a95041a85e1",
     "typed_facts_sha256": "6e428baab29da63c2a452d304dac60f3a4d4c4c5fe7908c28830303db26af2fa"
   },

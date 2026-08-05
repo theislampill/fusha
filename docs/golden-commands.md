@@ -78,7 +78,7 @@ than believed.
 1. **Environment / repo verify** — inputs: checkout. Outputs: HEAD sha +
    harness verdict. Exit: `ALL REGRESSION CHECKS PASS`. Report: stdout.
 2. **check_regressions** — the only merge gate. Inputs: whole repo. Outputs:
-   one `ok/FAIL` line per check (1,100+). Mutation: none. Report: stdout;
+   one `ok/FAIL` line per check (count grows over time; trust the run's own final summary line, never a quoted count). Mutation: none. Report: stdout;
    failures list at the end.
 3. **Universe build** — inputs: `qamus/data/current/entries.jsonl`, appearance
    index, loc-surface index, particle membership. Outputs:

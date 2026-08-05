@@ -13,9 +13,9 @@ either evidenced by a named committed artifact or marked not measured.
 Tranche namespaces (owner ruling 2026-07-29, PR #127):
 * plan tranche = the CONTRACT window namespace.  For v/n pages this is the
   page-ordering rule of docs/VN-OPERATIONS.md (VN-00 = v001-v047 + n0001-n0045;
-  VN-01 = v048-v094 + n0046-n0090; VN-03 = v142-v188 + n0136-n0180; blocks of
-  47 verb pages / 45 noun pages, running to VN-23 on the noun side).  For
-  particles it is the owner-approved P-00..P-03 work-ordering families
+  VN-01 = v048-v092 + n0046-n0095; even 45 verb / 50 noun blocks through
+  VN-20 (owner respec 2026-08-05; VN-00 alone keeps 47v+45n).  For
+  particles it is the owner-approved P-00..P-05 work-ordering families (owner renumber 2026-08-05)
   (qamus/data/particle-tranche-membership.json) — a WORK plan, never a
   completion claim.
 * VNPROP-xx = the balanced-partition PROPOSAL namespace carried by the
@@ -71,15 +71,19 @@ GEOMETRY_EVENTS = os.path.join(ROOT, "qamus", "certification",
 OUT_ROWS = os.path.join(ROOT, "qamus", "reports", "pvn-rollout-map.jsonl")
 OUT_META = os.path.join(ROOT, "qamus", "reports", "pvn-rollout-map.meta.json")
 
-# Contract-window rule (docs/VN-OPERATIONS.md T2 ordering; VN-03 window fixed
-# by the owner decision ledger: v142-v188 + n0136-n0180).
-V_BLOCK = 47
-N_BLOCK = 45
+# Contract-window rule (owner decision 2026-08-05, superseding the repeated
+# 47/45 blocks): VN-00 stays irregular (v001-v047 + n0001-n0045); the
+# remainder splits EVENLY across VN-01..VN-20 as 45 verb + 50 noun pages per
+# tranche (900 v / 20 = 45, 1000 n / 20 = 50). 21 tranches total.
+V0_BLOCK, N0_BLOCK = 47, 45
+V_BLOCK, N_BLOCK = 45, 50
 
-# VN-00/01/02 were re-verified 100% span-live on 2026-07-28 (server smokes;
-# tranche-level claim — there is NO per-entry live-render instrument in this
-# repo, so rows only inherit the tranche-level claim).
-SPAN_VERIFIED_WINDOWS = {"VN-00", "VN-01", "VN-02"}
+# Span verification history is PER PAGE, recorded 2026-07-28 under the
+# pre-respec windows (old VN-00..02 = v001-v141 + n0001-n0135; server smokes;
+# tranche-level claims inherited by their pages). Pages keep that state under
+# the 2026-08-05 renumbering, so a new tranche may honestly mix states.
+SPAN_VERIFIED_V_MAX = 141
+SPAN_VERIFIED_N_MAX = 135
 PARTICLE_SPAN_DEFECT = {"p048"}  # sole non-rich particle span (2:91:3)
 
 
@@ -87,10 +91,20 @@ def contract_window(source_key: str) -> str:
     kind = source_key[0]
     num = int(source_key[1:])
     if kind == "v":
-        return "VN-%02d" % ((num - 1) // V_BLOCK)
+        if num <= V0_BLOCK:
+            return "VN-00"
+        return "VN-%02d" % (1 + (num - V0_BLOCK - 1) // V_BLOCK)
     if kind == "n":
-        return "VN-%02d" % ((num - 1) // N_BLOCK)
+        if num <= N0_BLOCK:
+            return "VN-00"
+        return "VN-%02d" % (1 + (num - N0_BLOCK - 1) // N_BLOCK)
     raise ValueError(source_key)
+
+
+def span_verified_page(source_key: str) -> bool:
+    kind, num = source_key[0], int(source_key[1:])
+    return (kind == "v" and num <= SPAN_VERIFIED_V_MAX) or (
+        kind == "n" and num <= SPAN_VERIFIED_N_MAX)
 
 
 def certified_fact_count(events_path: str) -> int:
@@ -162,18 +176,19 @@ def build():
         if kind == "p":
             plan = p_tranche.get(source_key)
             plan_basis = ("qamus/data/particle-tranche-membership.json "
-                          "(owner-approved work-ordering plan, P-00..P-03)")
+                          "(owner-approved work-ordering plan, P-00..P-05)")
             if source_key in PARTICLE_SPAN_DEFECT:
                 span = "known_defect"
             else:
                 span = "particle_axis_span_live_983_of_984"
         else:
             plan = contract_window(source_key)
-            plan_basis = ("docs/VN-OPERATIONS.md page-ordering rule "
-                          "(47 verb / 45 noun pages per contract window)")
-            if plan in SPAN_VERIFIED_WINDOWS:
-                span = "window_verified_live_2026-07-28"
-            elif plan == "VN-03":
+            plan_basis = ("docs/VN-OPERATIONS.md page-ordering rule, owner "
+                          "respec 2026-08-05 (VN-00 = 47v+45n; VN-01..VN-20 "
+                          "= 45v+50n evenly)")
+            if span_verified_page(source_key):
+                span = "page_verified_live_2026-07-28_pre_respec_window"
+            elif source_key[0] == "v" and 142 <= int(source_key[1:]) <= 188 or                     source_key[0] == "n" and 136 <= int(source_key[1:]) <= 180:
                 span = "measured_not_started"
             else:
                 span = "not_measured"
@@ -328,12 +343,13 @@ def self_test(rows, meta):
     t("every v/n row has a VN-xx contract window",
       all(r["plan_tranche"] and r["plan_tranche"].startswith("VN-")
           for r in rows if r["kind"] in "vn"))
-    t("VN-03 window is v142-v188 + n0136-n0180",
-      contract_window("v142") == "VN-03" and contract_window("v188") == "VN-03"
-      and contract_window("n0136") == "VN-03"
-      and contract_window("n0180") == "VN-03"
-      and contract_window("v141") == "VN-02"
-      and contract_window("n0181") == "VN-04")
+    t("respec windows: VN-00 irregular, even 45v/50n after, ends VN-20",
+      contract_window("v047") == "VN-00" and contract_window("v048") == "VN-01"
+      and contract_window("n0045") == "VN-00"
+      and contract_window("n0046") == "VN-01"
+      and contract_window("v092") == "VN-01" and contract_window("v093") == "VN-02"
+      and contract_window("n0095") == "VN-01" and contract_window("n0096") == "VN-02"
+      and contract_window("v947") == "VN-20" and contract_window("n1045") == "VN-20")
     t("no plan tranche uses the VNPROP namespace",
       all(not (r["plan_tranche"] or "").startswith("VNPROP")
           for r in rows))

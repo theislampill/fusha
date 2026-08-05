@@ -75,3 +75,28 @@ validators; never quote prose numbers. State: `docs/current-state.yaml` · queue
 - Commit only to this repo's paths. Stage explicit paths; verify staged set before committing.
 - Commit a **sample + generator** for large outputs; keep full output gitignored under `out/`.
 - Every committed index/report names the script that regenerates it.
+## Curriculum accounting (2026-08-05)
+The lesson universe is **234 = 226 inherited + 8 GPS** (Level 7 supplement, programme-authored).
+Separate corpora, separate ids, separate ledgers — GPS lessons are **never counted inside the 226**
+(owner never-launder ruling). "234" is a container total only; every report names its corpus
+denominator. Tranche machinery: `tools/select_tranche.py` (unit-closure tranches, 9-lesson flip
+quota, burndown = `curriculum/l1l6/reports/lesson-burndown.json`).
+
+## Public issue board & milestones (2026-08-05)
+The GitHub issue board is the **public mirror of the committed ledgers** at tranche grain — never a
+second source of truth; on any conflict the ledgers win, and issue text is updated *from* ledger
+state, never the reverse. Layout: curriculum tranches #163–#185 + GPS train #3 under milestone
+**"234-lesson absorption (226 inherited + 8 GPS)"**; qamus VN windows **VN-00..VN-20** (#186–#206)
+and particle families **P-00..P-05** (#210–#213, #215–#216) under milestone **"qamus.dawah.wiki
+rich completeness"**. Discipline:
+- update checkboxes with one-line citations (PR number + ledger path); post cross-issue unlock
+  measurements on the affected issues (particle closures → per-VN unlock counts);
+- curriculum issues close on burndown state; **qamus issues close only when the repo ledgers AND
+  the live website both reflect the closed state** — the deploy rung is owner-gated, so finish the
+  candidate plane and comment "candidate-complete, awaiting deploy window";
+- closing comments state realized impact (facts certified, cards lit, flywheel rows returned);
+- issue text is public: repo paths, PR numbers, blocker ids only — no private packet contents, no
+  server topology, no source-site naming or prose.
+Plan namespaces current as of 2026-08-05: VN-00 = 47v+45n, VN-01..VN-20 = 45v+50n evenly (no
+VN-21+); P-00..P-05 at 12/17/22/16/18/15 (`qamus/data/particle-tranche-membership.json`;
+`docs/VN-OPERATIONS.md`; `docs/decision-ledger.md`).

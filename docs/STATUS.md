@@ -6,7 +6,7 @@ The artifact was **built 2026-07-07** and **verified current 2026-07-10** via th
 
 **Measurement surface:** the deployed wbw lookup artifact meta (`qamus_wbw/build.py` `meta["coverage"]["glossed"]`) — live-side. This number cannot be recomputed from this repo alone.
 
-**Per-window rich-span regression gates:** VN-00 frozen at 100.00% (12,775/12,775); VN-01 frozen at 100.00% (14,052/14,052); VN-02 frozen at 100.00% (12,185/12,185). VN-03 measured 69.38% (7,431/10,711), not started.
+**Per-window rich-span regression gates:** VN-00 frozen at 100.00% (12,775/12,775); VN-01 frozen at 100.00% (14,052/14,052); VN-02 frozen at 100.00% (12,185/12,185). VN-03 measured 69.38% (7,431/10,711), not started — measured under the pre-2026-08-05 windowing (v142–v188 + n0136–n0180); the 2026-08-05 owner respec re-cut tranche boundaries (`docs/VN-OPERATIONS.md` §1); per-page states: `qamus/reports/pvn-rollout-map.jsonl`.
 
 **Truth rule:** any other coverage number in this repo is historical; files carrying old figures must have a HISTORICAL banner.
 

@@ -59,6 +59,14 @@ authoritative where the two differ.
   naṣb/jazm/negation/condition · P-02 homograph hard cases · P-03
   pronouns/demonstratives/relatives/remaining). 983/984 is span_live ONLY.
   Membership table: `qamus/data/particle-tranche-membership.json`.
+  **Amended 2026-08-05 (owner renumber):** the 49-entry P-03 long tail is
+  renumbered into three flat tranches cut on shared analytical machinery —
+  P-03 question/response + operator particles (16) · P-04 demonstratives +
+  relatives (18) · P-05 personal pronouns (15). The plan is **P-00..P-05 at
+  12/17/22/16/18/15**; P-00..P-02 memberships unchanged; recorded in the
+  membership table (`p_plan_renumber_2026_08_05`) and re-labeled through the
+  universe, matrix, and rollout-map artifacts. Same VN respec date also
+  re-cut the V/N windows to VN-00..VN-20 (see `docs/VN-OPERATIONS.md`).
 - **Shadow qualification:** subsequently **RETIRED BY OWNER** (2026-07-29):
   the scheduled shadow run was disabled before its first authoritative run;
   Ledger A = historical evidence, Ledger B = owner-cancelled-not-required.

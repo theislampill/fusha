@@ -50,7 +50,10 @@ DEFAULT_MATRIX = os.path.join(
 DEFAULT_APPEARANCE_INDEX = os.path.join(
     REPO_ROOT, "qamus", "indexes", "occurrence-appearances.jsonl")
 
-EXPECTED_TRANCHE_SIZES = {"P-00": 12, "P-01": 17, "P-02": 22, "P-03": 49}
+# Owner renumber 2026-08-05 (docs/decision-ledger.md): the 49-entry P-03 long
+# tail split into P-03/P-04/P-05 on shared analytical machinery.
+EXPECTED_TRANCHE_SIZES = {"P-00": 12, "P-01": 17, "P-02": 22, "P-03": 16,
+                          "P-04": 18, "P-05": 15}
 CONTRACT_WINDOW_IDS = frozenset(f"VN-{i:02d}" for i in range(24))
 PROPOSAL_VN_LABELS = frozenset(f"VNPROP-{i:02d}" for i in range(21))
 
@@ -240,8 +243,12 @@ def _fixture_membership():
             tranche = "P-01"
         elif i <= 51:
             tranche = "P-02"
-        else:
+        elif i <= 67:
             tranche = "P-03"
+        elif i <= 85:
+            tranche = "P-04"
+        else:
+            tranche = "P-05"
         rows.append({
             "source_key": f"p{i:03d}",
             "entry_id": f"e{i:03d}",
