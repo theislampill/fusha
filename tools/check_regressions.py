@@ -3922,6 +3922,26 @@ except Exception as _e:
     check("T1b runtime drill batch registration slice runnable", False)
     print("  ", _e)
 
+# --- Tranche 001c: hostile fixture batches are fixture-only, but their
+#     append-safety tests must stay individually visible in the canonical
+#     harness. The all-bank runners above exercise the banks themselves. ---
+try:
+    for _t1c_mod in (
+        "test_tranche_001_error_fixtures.py",
+        "test_tranche_001_error_fixtures_b1.py",
+        "test_tranche_001_error_fixtures_b2.py",
+    ):
+        _t1c_res = run_text([
+            sys.executable, os.path.join(ROOT, "tools", _t1c_mod)
+        ])
+        check(
+            "T1c append-safety module passes: tools/%s" % _t1c_mod,
+            _t1c_res.returncode == 0,
+        )
+except Exception as _e:
+    check("T1c hostile fixture registration slice runnable", False)
+    print("  ", _e)
+
 # --- largelexicon candidate layer: Qamus-scale source-clean full fact tables, Mode A qword projection,
 #     public/private hover boundary, qg validation, CLI contract, and flywheel backfill. This is opt-in
 #     tooling, not live Qamus progress and not arbitrary-text certification. ---
