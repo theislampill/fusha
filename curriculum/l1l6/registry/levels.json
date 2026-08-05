@@ -10,7 +10,7 @@
       "level_id": "L1",
       "ordinal": 1,
       "schema": "curriculum.l1l6_level.v1",
-      "source_url": "https://kitabite.com/level/level-1",
+      "source_url": "https://source-site.invalid/level/level-1",
       "title": "Level 1 — Foundations (A1): The Building Blocks of Arabic Speech"
     },
     {
@@ -22,7 +22,7 @@
       "level_id": "L2",
       "ordinal": 2,
       "schema": "curriculum.l1l6_level.v1",
-      "source_url": "https://kitabite.com/level/level-2",
+      "source_url": "https://source-site.invalid/level/level-2",
       "title": "Level 2 — Core System (A2): Governance, Mood, and the Abrogators"
     },
     {
@@ -34,7 +34,7 @@
       "level_id": "L3",
       "ordinal": 3,
       "schema": "curriculum.l1l6_level.v1",
-      "source_url": "https://kitabite.com/level/level-3",
+      "source_url": "https://source-site.invalid/level/level-3",
       "title": "Level 3 — Expanded Morphology and Constructions (B1): Derivation, Governance, and Complex Roles"
     },
     {
@@ -46,7 +46,7 @@
       "level_id": "L4",
       "ordinal": 4,
       "schema": "curriculum.l1l6_level.v1",
-      "source_url": "https://kitabite.com/level/level-4",
+      "source_url": "https://source-site.invalid/level/level-4",
       "title": "Level 4 — Deep Syntax and Mastery of Roles (B2): Advanced Governance, Constructions, and Paradigms"
     },
     {
@@ -58,7 +58,7 @@
       "level_id": "L5",
       "ordinal": 5,
       "schema": "curriculum.l1l6_level.v1",
-      "source_url": "https://kitabite.com/level/level-5",
+      "source_url": "https://source-site.invalid/level/level-5",
       "title": "Level 5 — Stylistic Control and Genre Grammar (C1): Rhetoric, Complex Governance, and Advanced Morphology"
     },
     {
@@ -70,7 +70,7 @@
       "level_id": "L6",
       "ordinal": 6,
       "schema": "curriculum.l1l6_level.v1",
-      "source_url": "https://kitabite.com/level/level-6",
+      "source_url": "https://source-site.invalid/level/level-6",
       "title": "Level 6 — Mastery and Autonomy (C2): Classical Tradition, Poetic Grammar, and Full-System Command"
     }
   ],
