@@ -6,7 +6,7 @@
       "curriculum/l1l6/canonical/lesson-unit-map.jsonl": "sha256:499ee92a1008df30af12ef19e27adb6ddbdb61cea26519c00fc6292aa2aeea6d",
       "curriculum/l1l6/canonical/unit-dispositions.jsonl": "sha256:e97e238f2f7be68facd2f33be1b3f93e085152a7905ea85f258a06217819c9b2",
       "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl": "sha256:2aa5b75fd34ab04092031ea18fc1abca0b9981049d5dfee1735477497e81a781",
-      "curriculum/l1l6/registry/lessons.jsonl": "sha256:6362bc8ef50f8ffebec4c6253c279d2e2e3d6c94f0b976352f32717baebfc743",
+      "curriculum/l1l6/registry/lessons.jsonl": "sha256:476055a92c88d598346d318f208adb2a94113f5d2f0c71d0634ceca3786398cd",
       "curriculum/l1l6/reports/absorption-ledger.jsonl": "sha256:7be5cd6802d474279e2e8d2ef8ea8efdb095586e8009a5dca7337c87f7510d9e",
       "curriculum/l1l6/reports/full-curriculum-readiness.json": "sha256:8e2222ba97596203ee2564dd770773fbbb272af67db39c881649092da525e9b7",
       "curriculum/l1l6/reports/queues/q-error-fixtures.jsonl": "sha256:50d979c923bc868b457eafc6244ea38bfe32b81595920e045658a8bdf2838e09",
