@@ -605,14 +605,18 @@ def _gemination_gate(unit, template, radicals, ev, surface):
     the written letter like any other radical slot (`_match_template`); this gate additionally
     requires an EXACT declared environment before the doubling itself is licensed — nothing is
     licensed by default. `unit["gemination_templates"]` maps a template id to its GEM slot's
-    name ("R1".."R4"); a template absent from that map never reaches this gate (returns None
-    immediately), so every other pack in this consumer is unaffected.
+    name ("R1".."R4"); a template whose own `shape` carries no GEM slot at all never reaches
+    this gate (returns None immediately, before the map is even consulted), so every other pack
+    in this consumer is unaffected. A template whose shape DOES declare a GEM slot but whose id
+    is missing from that map, or maps to null/empty, fails closed exactly like any other
+    malformed declaration (residual B) — it never falls through as "no gate applies".
 
     Required, in order:
-      - the pack's declared merge slot must actually name the GEM position in THIS template's
-        own `shape` (`gemination_slot_declaration_malformed` otherwise — a declared slot the
-        pack cannot resolve to a real R-slot, or that disagrees with the template's own shape,
-        fails closed rather than raising or guessing at the wrong letter position, Sol repair 5);
+      - the pack's declared merge slot must be a nonempty value that actually names the GEM
+        position in THIS template's own `shape` (`gemination_slot_declaration_malformed`
+        otherwise — an absent/null declaration, or one the pack cannot resolve to a real
+        R-slot, or that disagrees with the template's own shape, fails closed rather than
+        raising or guessing at the wrong letter position, Sol repair 5);
       - `root_evidence.gemination_position`/`gemination_radical` must bind to the exact slot and
         radical this template declares (`gemination_declaration_unbound` otherwise);
       - `root_evidence.gemination_evidence.shadda_source` must be the literal
@@ -638,11 +642,11 @@ def _gemination_gate(unit, template, radicals, ev, surface):
     Returns an abstention dict, or None when every check passes.
     """
     template_id = template["id"]
-    merge_slot = (unit.get("gemination_templates") or {}).get(template_id)
-    if merge_slot is None:
-        return None
     letter_idx, shape_slot = _gem_shape_slot(template.get("shape") or [])
-    if shape_slot is None or shape_slot != merge_slot or merge_slot not in _GEM_SLOT_INDEX:
+    if shape_slot is None:
+        return None  # this template's own shape carries no GEM slot at all
+    merge_slot = (unit.get("gemination_templates") or {}).get(template_id)
+    if not merge_slot or shape_slot != merge_slot or merge_slot not in _GEM_SLOT_INDEX:
         return {"decision": "abstain", "reason": "gemination_slot_declaration_malformed",
                 "declared_slot": merge_slot, "template": template_id}
     idx = _GEM_SLOT_INDEX[merge_slot]

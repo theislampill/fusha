@@ -437,6 +437,25 @@ class GeminationSlotIntegrityTests(unittest.TestCase):
                                    {"GEM": {"ر": ["ب"]}})
         self.assertEqual(used, [{"slot": "R2", "radical": "ر", "letter": "ب"}])
 
+    def test_missing_gemination_templates_entry_abstains_instead_of_passing_open(self):
+        # residual B: the active template's shape declares GEM, but the pack's
+        # gemination_templates map carries no entry at all for it -- that must fail closed,
+        # never fall through as "no gemination gate applies" on an unpointed surface.
+        unit_m = _deep_copy(self.unit)
+        del unit_m["gemination_templates"]["fa33ala_perfect_active"]
+        fx = next(f for f in self.fixtures if f["fixture_id"] == "gem-pos-01")
+        rec = cu.analyze_derivative(fx["input"], unit_m)
+        self.assertEqual(rec["decision"], "abstain")
+        self.assertEqual(rec["reason"], "gemination_slot_declaration_malformed")
+
+    def test_null_gemination_templates_entry_abstains_instead_of_passing_open(self):
+        unit_m = _deep_copy(self.unit)
+        unit_m["gemination_templates"]["fa33ala_perfect_active"] = None
+        fx = next(f for f in self.fixtures if f["fixture_id"] == "gem-pos-01")
+        rec = cu.analyze_derivative(fx["input"], unit_m)
+        self.assertEqual(rec["decision"], "abstain")
+        self.assertEqual(rec["reason"], "gemination_slot_declaration_malformed")
+
 
 class GeminationRivalPackConsistencyTests(unittest.TestCase):
     """Sol repair 2: cu-gemination-licensing, cu-voice-melody-templates/
