@@ -57,7 +57,8 @@
         "voi-abs-01",
         "voc-abs-01",
         "voc-abs-02",
-        "voc-adv-01"
+        "voc-adv-01",
+        "voc-adv-02"
       ],
       "positive_examples": [
         "voi-pos-01",
@@ -76,12 +77,20 @@
       "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "scope": {
         "increment": "inc-voice-melody-templates",
         "statement": "voice is a MELODY imposed on an existing stem: no consonant is added or removed, so a voice row is a vocalised skeleton, not a new template family",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "skill": "sarf",
       "skill_rule_id": "curr-voice-melody-templates-voi-r1",
@@ -146,7 +155,8 @@
         "voi-abs-01",
         "voc-abs-01",
         "voc-abs-02",
-        "voc-adv-01"
+        "voc-adv-01",
+        "voc-adv-02"
       ],
       "positive_examples": [
         "voi-pos-01",
@@ -165,12 +175,20 @@
       "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "scope": {
         "increment": "inc-voice-melody-templates",
         "statement": "each row is written as a letter shape over SUPPLIED radicals; a row is a survivor only on an exact letter match, and the radicals are never derived here",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "skill": "sarf",
       "skill_rule_id": "curr-voice-melody-templates-voi-r2",
@@ -235,7 +253,8 @@
         "voi-abs-01",
         "voc-abs-01",
         "voc-abs-02",
-        "voc-adv-01"
+        "voc-adv-01",
+        "voc-adv-02"
       ],
       "positive_examples": [
         "voi-pos-01",
@@ -254,12 +273,20 @@
       "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "scope": {
         "increment": "inc-voice-melody-templates",
         "statement": "where the active and passive melodies of a cell share one consonant skeleton the pack declares BOTH rows, so the cell collides and the unit abstains ambiguous_template unless a genuinely WRITTEN vocalization is also supplied — that abstention IS the correct verdict for unvocalised text, not a defect",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "skill": "sarf",
       "skill_rule_id": "curr-voice-melody-templates-voi-r3",
@@ -324,7 +351,8 @@
         "voi-abs-01",
         "voc-abs-01",
         "voc-abs-02",
-        "voc-adv-01"
+        "voc-adv-01",
+        "voc-adv-02"
       ],
       "positive_examples": [
         "voi-pos-01",
@@ -343,12 +371,20 @@
       "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "scope": {
         "increment": "inc-voice-melody-templates",
         "statement": "where the melody changes a LETTER — the third form's long low vowel becoming a long back vowel in the perfect passive, and the medial-weak cells in both tenses — the rows are distinct and the voice is decidable from the letters alone",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "skill": "sarf",
       "skill_rule_id": "curr-voice-melody-templates-voi-r4",
@@ -413,7 +449,8 @@
         "voi-abs-01",
         "voc-abs-01",
         "voc-abs-02",
-        "voc-adv-01"
+        "voc-adv-01",
+        "voc-adv-02"
       ],
       "positive_examples": [
         "voi-pos-01",
@@ -432,12 +469,20 @@
       "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "scope": {
         "increment": "inc-voice-melody-templates",
         "statement": "medial-weak rows are matched against the two SOUND radicals, with the weak radical and its position carried in the evidence record; the melody letter is a template literal because it is an exponent of voice, not a realization of the radical",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "skill": "sarf",
       "skill_rule_id": "curr-voice-melody-templates-voi-r5",
@@ -502,7 +547,8 @@
         "voi-abs-01",
         "voc-abs-01",
         "voc-abs-02",
-        "voc-adv-01"
+        "voc-adv-01",
+        "voc-adv-02"
       ],
       "positive_examples": [
         "voi-pos-01",
@@ -521,12 +567,20 @@
       "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "scope": {
         "increment": "inc-voice-melody-templates",
         "statement": "the imperfect passive melody overwrites the lexically stored active vowel, so that vowel is NOT recoverable from a passive surface and is never reported from one",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "skill": "sarf",
       "skill_rule_id": "curr-voice-melody-templates-voi-r6",
@@ -591,7 +645,8 @@
         "voi-abs-01",
         "voc-abs-01",
         "voc-abs-02",
-        "voc-adv-01"
+        "voc-adv-01",
+        "voc-adv-02"
       ],
       "positive_examples": [
         "voi-pos-01",
@@ -610,12 +665,20 @@
       "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "scope": {
         "increment": "inc-voice-melody-templates",
         "statement": "promotion of the patient to subject and the agreement that follows are syntactic consequences; this unit classifies the verb's voice and emits no case or agreement fact",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "skill": "sarf",
       "skill_rule_id": "curr-voice-melody-templates-voi-r7",
@@ -680,7 +743,8 @@
         "voi-abs-01",
         "voc-abs-01",
         "voc-abs-02",
-        "voc-adv-01"
+        "voc-adv-01",
+        "voc-adv-02"
       ],
       "positive_examples": [
         "voi-pos-01",
@@ -699,12 +763,20 @@
       "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "scope": {
         "increment": "inc-voice-melody-templates",
         "statement": "final-weak, doubly weak and geminate stem classes have NO row in this pack; a surface from those classes abstains no_template rather than borrowing a sound-stem melody",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "skill": "sarf",
       "skill_rule_id": "curr-voice-melody-templates-voi-r8",
@@ -769,7 +841,8 @@
         "voi-abs-01",
         "voc-abs-01",
         "voc-abs-02",
-        "voc-adv-01"
+        "voc-adv-01",
+        "voc-adv-02"
       ],
       "positive_examples": [
         "voi-pos-01",
@@ -788,12 +861,20 @@
       "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "scope": {
         "increment": "inc-voice-melody-templates",
         "statement": "cu-passive-voice-vocalization: a letter-identical collision may be narrowed to one row ONLY by a genuinely WRITTEN short-vowel pattern that is independently verified on the surface itself, never by a caller assertion alone; a partially or wholly unvocalised surface keeps abstaining exactly as unit-v1.json already did",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "skill": "sarf",
       "skill_rule_id": "curr-voice-melody-templates-voi-r9",
@@ -858,7 +939,8 @@
         "voi-abs-01",
         "voc-abs-01",
         "voc-abs-02",
-        "voc-adv-01"
+        "voc-adv-01",
+        "voc-adv-02"
       ],
       "positive_examples": [
         "voi-pos-01",
@@ -877,12 +959,20 @@
       "provenance": "curriculum/l1l6/increments/inc-voice-melody-templates/unit-v2.json",
       "relationships": {
         "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "scope": {
         "increment": "inc-voice-melody-templates",
         "statement": "the form I/form II perfect collision additionally turns on whether R2 carries a WRITTEN shadda; a shadda is a vocalization mark like any other and is verified the same way, never assumed from the declared form alone",
-        "unit_ref": "cu-passive-voice-vocalization"
+        "unit_ref": "cu-passive-voice-vocalization",
+        "unit_refs": [
+          "cu-passive-voice-vocalization",
+          "cu-voice-melody-templates"
+        ]
       },
       "skill": "sarf",
       "skill_rule_id": "curr-voice-melody-templates-voi-r10",
@@ -909,6 +999,7 @@
     ],
     "adversarial": [
       "voc-adv-01",
+      "voc-adv-02",
       "voi-adv-01",
       "voi-adv-02",
       "voi-adv-03",
@@ -1356,5 +1447,9 @@
   ],
   "rollback_condition": "revert to unit-v1.json (kept committed; the loops manifest pins both packs), rerun the regression command, expect the recorded pre-repair defect set",
   "schema": "curriculum.l1l6_promotion_bundle.v1",
-  "status": "candidate_awaiting_sol_review"
+  "status": "candidate_awaiting_sol_review",
+  "unit_refs": [
+    "cu-passive-voice-vocalization",
+    "cu-voice-melody-templates"
+  ]
 }

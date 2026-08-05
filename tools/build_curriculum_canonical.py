@@ -65,6 +65,18 @@ CAPABILITY_OVERRIDES = {
         "proposed three different families for one verb-class x mood -> "
         "exponent table; discriminator_table matches the inc-negation "
         "consumer that already reads mood evidence"),
+    "cu-gemination-licensing": ("template_classification",
+        "active pack interface pinned to template_classification: the current "
+        "candidate pack covers a bounded Form-II/perfect-participle written-"
+        "shadda subset; it does not claim closure of the broader licensing unit"),
+    "cu-lexical-feminine-registry": ("discriminator_table",
+        "active pack interface pinned to discriminator_table: the consumer "
+        "performs an exact closed-registry lookup and never derives gender "
+        "from written shape"),
+    "cu-nongoverning-preverbal-inventory": ("discriminator_table",
+        "active pack interface pinned to discriminator_table: the consumer "
+        "matches exact closed-registry members and emits no mood, case, or "
+        "governor conclusion"),
 }
 
 

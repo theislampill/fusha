@@ -10,7 +10,7 @@
       "defeaters": [
         "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
         "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
-        "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+        "bare قد is NOT a member of this closed registry: its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, and this pack always abstains for it rather than collapsing that owner pack's preserved rivals with a weaker particle+tense-only gate",
         "method transfers, conclusions do not"
       ],
       "evidence_addresses": [
@@ -19,7 +19,7 @@
       ],
       "fact_family": "discriminator_table",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "3a78f2e49530e18c26e367edba6709b59cd125c8753894916fd9263826c3e3d4",
+      "guards_hash": "83422b39bab2a37bd1042e0142c4ae416a09bfb34c63b869376ef0814c23be7b",
       "guards_payload": [
         {
           "guard": "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
@@ -30,7 +30,7 @@
           "id": "g-npv-2"
         },
         {
-          "guard": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+          "guard": "bare قد is NOT a member of this closed registry: its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, and this pack always abstains for it rather than collapsing that owner pack's preserved rivals with a weaker particle+tense-only gate",
           "id": "g-npv-3"
         },
         {
@@ -42,13 +42,16 @@
         "npv-abs-01",
         "npv-abs-02",
         "npv-adv-01",
-        "npv-adv-02"
+        "npv-adv-02",
+        "npv-adv-03",
+        "npv-adv-04",
+        "npv-adv-05",
+        "npv-adv-06"
       ],
       "positive_examples": [
         "npv-pos-01",
         "npv-pos-02",
-        "npv-pos-03",
-        "npv-pos-04"
+        "npv-pos-03"
       ],
       "provenance": "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/unit-v1.json",
       "relationships": {
@@ -76,7 +79,7 @@
       "defeaters": [
         "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
         "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
-        "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+        "bare قد is NOT a member of this closed registry: its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, and this pack always abstains for it rather than collapsing that owner pack's preserved rivals with a weaker particle+tense-only gate",
         "method transfers, conclusions do not"
       ],
       "evidence_addresses": [
@@ -85,7 +88,7 @@
       ],
       "fact_family": "discriminator_table",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "3a78f2e49530e18c26e367edba6709b59cd125c8753894916fd9263826c3e3d4",
+      "guards_hash": "83422b39bab2a37bd1042e0142c4ae416a09bfb34c63b869376ef0814c23be7b",
       "guards_payload": [
         {
           "guard": "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
@@ -96,7 +99,7 @@
           "id": "g-npv-2"
         },
         {
-          "guard": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+          "guard": "bare قد is NOT a member of this closed registry: its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, and this pack always abstains for it rather than collapsing that owner pack's preserved rivals with a weaker particle+tense-only gate",
           "id": "g-npv-3"
         },
         {
@@ -108,13 +111,16 @@
         "npv-abs-01",
         "npv-abs-02",
         "npv-adv-01",
-        "npv-adv-02"
+        "npv-adv-02",
+        "npv-adv-03",
+        "npv-adv-04",
+        "npv-adv-05",
+        "npv-adv-06"
       ],
       "positive_examples": [
         "npv-pos-01",
         "npv-pos-02",
-        "npv-pos-03",
-        "npv-pos-04"
+        "npv-pos-03"
       ],
       "provenance": "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/unit-v1.json",
       "relationships": {
@@ -142,7 +148,7 @@
       "defeaters": [
         "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
         "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
-        "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+        "bare قد is NOT a member of this closed registry: its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, and this pack always abstains for it rather than collapsing that owner pack's preserved rivals with a weaker particle+tense-only gate",
         "method transfers, conclusions do not"
       ],
       "evidence_addresses": [
@@ -151,7 +157,7 @@
       ],
       "fact_family": "discriminator_table",
       "gate": "@curriculum-candidate:redfirst",
-      "guards_hash": "3a78f2e49530e18c26e367edba6709b59cd125c8753894916fd9263826c3e3d4",
+      "guards_hash": "83422b39bab2a37bd1042e0142c4ae416a09bfb34c63b869376ef0814c23be7b",
       "guards_payload": [
         {
           "guard": "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
@@ -162,7 +168,7 @@
           "id": "g-npv-2"
         },
         {
-          "guard": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+          "guard": "bare قد is NOT a member of this closed registry: its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, and this pack always abstains for it rather than collapsing that owner pack's preserved rivals with a weaker particle+tense-only gate",
           "id": "g-npv-3"
         },
         {
@@ -174,13 +180,16 @@
         "npv-abs-01",
         "npv-abs-02",
         "npv-adv-01",
-        "npv-adv-02"
+        "npv-adv-02",
+        "npv-adv-03",
+        "npv-adv-04",
+        "npv-adv-05",
+        "npv-adv-06"
       ],
       "positive_examples": [
         "npv-pos-01",
         "npv-pos-02",
-        "npv-pos-03",
-        "npv-pos-04"
+        "npv-pos-03"
       ],
       "provenance": "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/unit-v1.json",
       "relationships": {
@@ -189,11 +198,80 @@
       },
       "scope": {
         "increment": "inc-nongoverning-preverbal-inventory",
-        "statement": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed",
+        "statement": "bare قد is NOT a member of this registry: its two tense-conditioned readings, and its secondary recency/frequency readings, belong exclusively to inc-qad-tense-conditioned-sense, the sole owner of that authority. This closed registry never resolves a bare-قد occurrence -- in either tense -- and always abstains insufficient_features for it rather than duplicating the owner pack's decision with a weaker gate that would also collapse the owner's preserved rivals",
         "unit_ref": "cu-nongoverning-preverbal-inventory"
       },
       "skill": "nahw",
       "skill_rule_id": "curr-nongoverning-preverbal-inventory-npv-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "insufficient_features; preserve_alternatives; school_dependent_attributed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
+        "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
+        "bare قد is NOT a member of this closed registry: its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, and this pack always abstains for it rather than collapsing that owner pack's preserved rivals with a weaker particle+tense-only gate",
+        "method transfers, conclusions do not"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "discriminator_table",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "83422b39bab2a37bd1042e0142c4ae416a09bfb34c63b869376ef0814c23be7b",
+      "guards_payload": [
+        {
+          "guard": "a CLOSED registry of preverbal items that never license invented case/mood/governor effects; it emits a class label only",
+          "id": "g-npv-1"
+        },
+        {
+          "guard": "a particle outside the closed registry (including a genuinely GOVERNING particle like لن or لم) is never swept in",
+          "id": "g-npv-2"
+        },
+        {
+          "guard": "bare قد is NOT a member of this closed registry: its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, and this pack always abstains for it rather than collapsing that owner pack's preserved rivals with a weaker particle+tense-only gate",
+          "id": "g-npv-3"
+        },
+        {
+          "guard": "method transfers, conclusions do not",
+          "id": "g-npv-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "npv-abs-01",
+        "npv-abs-02",
+        "npv-adv-01",
+        "npv-adv-02",
+        "npv-adv-03",
+        "npv-adv-04",
+        "npv-adv-05",
+        "npv-adv-06"
+      ],
+      "positive_examples": [
+        "npv-pos-01",
+        "npv-pos-02",
+        "npv-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-nongoverning-preverbal-inventory/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-nongoverning-preverbal-inventory"
+      },
+      "scope": {
+        "increment": "inc-nongoverning-preverbal-inventory",
+        "statement": "سَوْفَ (vocalized) and سوف (ordinary unpointed) are BOTH registered as exact surface forms of the SAME closed-registry future-marker member -- no lossy normalization collapses one into the other, and a near-miss surface (an extra, missing or altered letter) is never promoted from mere surface similarity",
+        "unit_ref": "cu-nongoverning-preverbal-inventory"
+      },
+      "skill": "nahw",
+      "skill_rule_id": "curr-nongoverning-preverbal-inventory-npv-r4",
       "skill_version": "@curriculum-candidate",
       "status": "candidate",
       "test_references": [
@@ -216,13 +294,16 @@
     ],
     "adversarial": [
       "npv-adv-01",
-      "npv-adv-02"
+      "npv-adv-02",
+      "npv-adv-03",
+      "npv-adv-04",
+      "npv-adv-05",
+      "npv-adv-06"
     ],
     "positive": [
       "npv-pos-01",
       "npv-pos-02",
-      "npv-pos-03",
-      "npv-pos-04"
+      "npv-pos-03"
     ]
   },
   "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
@@ -239,29 +320,8 @@
       {
         "discriminators": {
           "particle": [
-            "قد"
-          ],
-          "verb_tense": [
-            "perfect"
-          ]
-        },
-        "id": "qad_confirmation_of_past"
-      },
-      {
-        "discriminators": {
-          "particle": [
-            "قد"
-          ],
-          "verb_tense": [
-            "imperfect"
-          ]
-        },
-        "id": "qad_reduction_of_probability"
-      },
-      {
-        "discriminators": {
-          "particle": [
-            "سَوْفَ"
+            "سَوْفَ",
+            "سوف"
           ],
           "verb_tense": [
             "imperfect"
@@ -293,7 +353,11 @@
       },
       {
         "id": "npv-r3",
-        "text": "قد carries two distinct readings depending on the verb tense it precedes; without a declared tense neither reading is licensed"
+        "text": "bare قد is NOT a member of this registry: its two tense-conditioned readings, and its secondary recency/frequency readings, belong exclusively to inc-qad-tense-conditioned-sense, the sole owner of that authority. This closed registry never resolves a bare-قد occurrence -- in either tense -- and always abstains insufficient_features for it rather than duplicating the owner pack's decision with a weaker gate that would also collapse the owner's preserved rivals"
+      },
+      {
+        "id": "npv-r4",
+        "text": "سَوْفَ (vocalized) and سوف (ordinary unpointed) are BOTH registered as exact surface forms of the SAME closed-registry future-marker member -- no lossy normalization collapses one into the other, and a near-miss surface (an extra, missing or altered letter) is never promoted from mere surface similarity"
       }
     ],
     "schema": "curriculum.l1l6_machine_unit.v1",
@@ -310,8 +374,8 @@
       "teaching": "names the closed-registry class this particle+tense pair matched, never a mood/case/governor"
     },
     {
-      "key": "tense_dependent_reading_note",
-      "teaching": "for قد, shows which of the two tense-dependent readings the declared verb tense selected"
+      "key": "qad_deferred_note",
+      "teaching": "bare قد always abstains in this pack -- its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, whose preserved rivals this pack never collapses"
     }
   ],
   "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",

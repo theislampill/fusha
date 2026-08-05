@@ -25,6 +25,8 @@ if str(ROOT / "tools") not in sys.path:
 
 import curriculum_unit_consumer as cu  # noqa: E402
 import build_curriculum_canonical as canonical_builder  # noqa: E402
+import build_promotion_bundles as promotion_builder  # noqa: E402
+import validate_curriculum_l1l6 as curriculum_validator  # noqa: E402
 
 INC_BASE = ROOT / "curriculum" / "l1l6" / "increments"
 
@@ -153,6 +155,53 @@ class NewIncrementsDiscoveredAndGreenTests(unittest.TestCase):
         self.assertEqual(binding["consumer_plane"], "sarf_analytical")
         self.assertFalse(binding["public_projection_eligible"])
         self.assertTrue(binding["candidate_status_preserved"])
+
+    def test_voice_promotion_rows_preserve_all_canonical_unit_refs(self):
+        """Dropping unit_refs from the promotion builder loses the second canonical
+        contribution even though the active voice pack and canonical backlinks preserve it."""
+        bundle = promotion_builder.build()[
+            "inc-voice-melody-templates.bundle.json"
+        ]
+        expected = [
+            "cu-passive-voice-vocalization",
+            "cu-voice-melody-templates",
+        ]
+        self.assertIn("unit_refs", bundle)
+        self.assertEqual(bundle["unit_refs"], expected)
+        for row in bundle["candidate_registry_rows"]:
+            self.assertEqual(row["scope"]["unit_refs"], expected)
+            self.assertEqual(row["relationships"]["unit_refs"], expected)
+
+    def test_canonical_capability_families_match_active_pack_interfaces(self):
+        """A pack backlink must not leave the canonical unit advertising a different
+        executable interface from the one the real consumer dispatches."""
+        units, _, _, _ = canonical_builder.build(canonical_builder.load())
+        by_id = {row["unit_id"]: row for row in units}
+        expected = {
+            "cu-gemination-licensing": "template_classification",
+            "cu-lexical-feminine-registry": "discriminator_table",
+            "cu-nongoverning-preverbal-inventory": "discriminator_table",
+        }
+        for unit_id, capability in expected.items():
+            self.assertEqual(by_id[unit_id]["capability_family"], capability)
+            self.assertIn("capability_adjudication", by_id[unit_id])
+
+    def test_cross_axis_analytical_binding_requires_executing_plane_basis(self):
+        """A nahw-axis unit may execute through the shared Sarf analytical runtime only
+        when the binding states why the executing plane differs from the unit ontology."""
+        ctx = curriculum_validator.load_context()
+        binding = next(
+            row for row in ctx["consumer_bindings"]
+            if row["binding_id"] ==
+            "l1l6-tranche-002a-template-classification-analysis"
+        )
+        binding.pop("consumer_plane_basis", None)
+        errors = []
+        curriculum_validator.check_consumer_operationalization_bindings(ctx, errors)
+        self.assertTrue(
+            any("consumer_plane_basis" in error for error in errors),
+            "cross-axis analytical bindings must fail closed without a stated basis",
+        )
 
     def test_consumer_self_test_still_passes(self):
         self.assertEqual(cu.self_test(), 0)
