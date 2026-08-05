@@ -176,15 +176,26 @@ class NewIncrementsDiscoveredAndGreenTests(unittest.TestCase):
         """A pack backlink must not leave the canonical unit advertising a different
         executable interface from the one the real consumer dispatches."""
         units, _, _, _ = canonical_builder.build(canonical_builder.load())
-        by_id = {row["unit_id"]: row for row in units}
-        expected = {
-            "cu-gemination-licensing": "template_classification",
-            "cu-lexical-feminine-registry": "discriminator_table",
-            "cu-nongoverning-preverbal-inventory": "discriminator_table",
-        }
-        for unit_id, capability in expected.items():
-            self.assertEqual(by_id[unit_id]["capability_family"], capability)
-            self.assertIn("capability_adjudication", by_id[unit_id])
+        for unit in units:
+            if (not unit["unit_id"].startswith("cu-")
+                    or not unit.get("machine_increments")):
+                continue
+            for increment in unit["machine_increments"]:
+                packs = sorted(
+                    (INC_BASE / increment).glob("unit-v*.json"),
+                    key=lambda path: int(path.stem.split("-v")[1]),
+                )
+                if not packs:
+                    continue
+                pack = json.loads(packs[-1].read_text(encoding="utf-8"))
+                self.assertEqual(
+                    unit["capability_family"],
+                    pack["capability"],
+                    "%s advertises %s but %s dispatches %s" % (
+                        unit["unit_id"], unit["capability_family"], increment,
+                        pack["capability"],
+                    ),
+                )
 
     def test_cross_axis_analytical_binding_requires_executing_plane_basis(self):
         """A nahw-axis unit may execute through the shared Sarf analytical runtime only

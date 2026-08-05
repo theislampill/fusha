@@ -77,6 +77,10 @@ CAPABILITY_OVERRIDES = {
         "active pack interface pinned to discriminator_table: the consumer "
         "matches exact closed-registry members and emits no mood, case, or "
         "governor conclusion"),
+    "cu-suffix-abstract-noun": ("discriminator_table",
+        "active pack interface pinned to discriminator_table: the consumer "
+        "preserves the nisba, abstract-noun, and non-nisba geminated-yaa "
+        "adjective rivals and requires independent base-category evidence"),
 }
 
 
