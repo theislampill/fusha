@@ -1,0 +1,26 @@
+{
+  "guards": [
+    {
+      "guard": "the diminutive infix ي is a literal template letter, never a radical",
+      "id": "g-dim-1"
+    },
+    {
+      "guard": "shape alone never certifies identity or meaning: a diminutive match ALSO requires attested base-lexeme evidence and a licensed affix-marker declaration bound to this template's own infix letter",
+      "id": "g-dim-2"
+    },
+    {
+      "guard": "a hollow base's literal weak-radical restoration must be explicitly licensed per template and slot, exactly like every other template_classification pack -- an uncontracted or unlicensed weak shape is never assumed regular",
+      "id": "g-dim-3"
+    },
+    {
+      "guard": "this pack authors ONLY the plain triliteral فُعَيْل family (L6.M5.01); it makes no claim about quadriliteral-base diminutives",
+      "id": "g-dim-4"
+    },
+    {
+      "guard": "method transfers, conclusions do not; per-token diminutive class needs per-token evidence",
+      "id": "g-dim-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}

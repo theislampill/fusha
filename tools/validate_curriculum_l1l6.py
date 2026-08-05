@@ -1097,6 +1097,9 @@ TRANCHE_EXPECTED_BINDING_IDS = {
         "l1l6-tranche-001b-derivation-template-runtime",
         "l1l6-tranche-001b-ma-context-runtime",
     }),
+    "tranche_002a": frozenset({
+        "l1l6-tranche-002a-template-classification-analysis",
+    }),
 }
 # test_paths must name an actual test file, never a production/consumer module (F8).
 _TEST_PATH_BASENAME_RE = re.compile(r"^test_.*\.py$")
@@ -1120,10 +1123,11 @@ def check_consumer_operationalization_bindings(ctx, errors):
     """Validate exact B/C consumer proof without promoting candidate drills."""
     rows = ctx["consumer_bindings"]
     lesson_ids = {row["lesson_id"] for row in ctx["lessons"]}
-    canonical_unit_ids = {
-        row["unit_id"] for row in
+    canonical_units = {
+        row["unit_id"]: row for row in
         _jsonl(BASE / "canonical" / "canonical-units.jsonl")
     }
+    canonical_unit_ids = set(canonical_units)
     runtime_rows = [
         row for path in sorted((ROOT / "curriculum" / "drills" / "keys")
                                .glob("*.jsonl"))
@@ -1155,6 +1159,23 @@ def check_consumer_operationalization_bindings(ctx, errors):
         if plane not in CONSUMER_PLANES:
             errors.append("consumer_bindings: %s consumer_plane %r outside the closed set %s" %
                           (binding_id, plane, sorted(CONSUMER_PLANES)))
+        analytical_axis = {
+            "sarf_analytical": "sarf",
+            "nahw_analytical": "nahw",
+        }.get(plane)
+        if analytical_axis:
+            opposite_axes = sorted({
+                canonical_units[unit_id].get("axis")
+                for unit_id in row.get("unit_ids", [])
+                if unit_id in canonical_units
+                and canonical_units[unit_id].get("axis") in {"sarf", "nahw"}
+                and canonical_units[unit_id].get("axis") != analytical_axis
+            })
+            if opposite_axes and not row.get("consumer_plane_basis"):
+                errors.append(
+                    "consumer_bindings: %s cross-axis analytical binding needs "
+                    "consumer_plane_basis (plane %s, unit axes %s)" %
+                    (binding_id, plane, opposite_axes))
         if row.get("binding_status") == "explicit":
             if plane == "tutor_runtime":
                 if not row.get("runtime_item_ids") or not row.get("knowledge_component_ids"):
@@ -2169,16 +2190,24 @@ def self_test():
         lambda c: next(r for r in c["consumer_bindings"]
                        if r["consumer_plane"] == "nahw_analytical").update(
                            knowledge_component_ids=["kc-attributive-follower-licensing"]))
+    mut("consumer_binding_cross_axis_missing_basis", "consumer_plane_basis",
+        lambda c: next(r for r in c["consumer_bindings"]
+                       if r["binding_id"] ==
+                       "l1l6-tranche-002a-template-classification-analysis").pop(
+                           "consumer_plane_basis", None))
     # F7/F8 (adversarial orthography review): a per-tranche binding-id set must be pinned (not
     # just an "approved train" regex), and a non-test file must never count as a test.
     mut("tranche_duplicate_binding_id_escapes_pinning", "binding-id set drift",
         lambda c: c["consumer_bindings"].append(dict(
             next(r for r in c["consumer_bindings"] if r["consumer_train"] == "tranche_001a"),
             binding_id="l1l6-tranche-001a-duplicate-row")))
+    unregistered_train = next(
+        "tranche_%03da" % number for number in range(999, 0, -1)
+        if "tranche_%03da" % number not in TRANCHE_EXPECTED_BINDING_IDS)
     mut("tranche_unregistered_train_name_validates_unchecked", "no registered expected binding-id set",
         lambda c: c["consumer_bindings"].append(dict(
             next(r for r in c["consumer_bindings"] if r["consumer_train"] == "tranche_001a"),
-            binding_id="l1l6-tranche-002a-unregistered", consumer_train="tranche_002a",
+            binding_id="l1l6-unregistered-tranche-canary", consumer_train=unregistered_train,
             lesson_ids=[], unit_ids=[])))
     mut("consumer_module_counted_as_test_path", "is not a test file",
         lambda c: next(r for r in c["consumer_bindings"]

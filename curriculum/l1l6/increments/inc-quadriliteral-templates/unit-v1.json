@@ -1,0 +1,57 @@
+{
+  "abstention_reasons": [
+    "no_root_evidence",
+    "surface_letter_mismatch",
+    "no_template",
+    "ambiguous_template"
+  ],
+  "capability": "template_classification",
+  "increment": "inc-quadriliteral-templates",
+  "radical_arity": 4,
+  "rules": [
+    {
+      "id": "quad-r1",
+      "text": "a quadriliteral root supplies FOUR independent radicals; R4 is licensed exactly like R1-R3, one radical per written letter position"
+    },
+    {
+      "id": "quad-r2",
+      "text": "the bare Form I quadriliteral perfect (فَعْلَل) is letter-decidable from a plain four-radical shape; nothing about voice or mood is inferred here"
+    },
+    {
+      "id": "quad-r3",
+      "text": "the مُفَعْلِل active and مُفَعْلَل passive participles are letter-identical once the radicals stand literally after the augment: this pack declares BOTH rows, so the cell collides and abstention is the honest verdict for unvocalised text"
+    },
+    {
+      "id": "quad-r4",
+      "text": "a three- or five-radical root never borrows a slot from this template family; the radical count must match exactly or the match fails closed to no_template"
+    },
+    {
+      "id": "quad-r5",
+      "text": "quadriliteral templates and triliteral doubling/gemination are DISTINCT families: this pack declares no GEM slot, and inc-gemination-licensing declares no R4 slot, so the two never collide by construction"
+    }
+  ],
+  "schema": "curriculum.l1l6_machine_unit.v1",
+  "status": "candidate",
+  "templates": [
+    {
+      "class": "quadriliteral_perfect_active",
+      "id": "fa3lala_perfect_active",
+      "name": "Form I quadriliteral perfect (فَعْلَلَ)",
+      "shape": ["R1", "R2", "R3", "R4"]
+    },
+    {
+      "class": "quadriliteral_active_participle",
+      "id": "mufa3lil_active_participle",
+      "name": "quadriliteral active participle (مُفَعْلِل)",
+      "shape": ["م", "R1", "R2", "R3", "R4"]
+    },
+    {
+      "class": "quadriliteral_passive_participle",
+      "id": "mufa3lal_passive_participle",
+      "name": "quadriliteral passive participle (مُفَعْلَل)",
+      "shape": ["م", "R1", "R2", "R3", "R4"]
+    }
+  ],
+  "unit_ref": "cu-quadriliteral-templates",
+  "version": 1
+}
