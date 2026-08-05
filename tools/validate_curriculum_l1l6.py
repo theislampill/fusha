@@ -1397,6 +1397,7 @@ OPERATIONALIZATION_CLOSURE_DIMENSIONS = frozenset({
     "machine_execution",
     "runtime_misconceptions",
     "error_fixtures",
+    "behavioral_coverage",
     "consumer_bindings",
     "occurrence_grounding",
 })

@@ -4,11 +4,11 @@
     "inputs": {
       "curriculum/l1l6/canonical/canonical-units.jsonl": "sha256:a5c817c9399de339020c748faa0dfb91560c6bc88f87bc66b6de5c895b8fd181",
       "curriculum/l1l6/canonical/lesson-unit-map.jsonl": "sha256:499ee92a1008df30af12ef19e27adb6ddbdb61cea26519c00fc6292aa2aeea6d",
-      "curriculum/l1l6/canonical/unit-dispositions.jsonl": "sha256:a9c02aa8e0c8f81598995c4971a000d722f729818c030f9b46af60c44f450a66",
+      "curriculum/l1l6/canonical/unit-dispositions.jsonl": "sha256:0de5880984e873fdae63780cbbc14d6e83fa1bb8e6288a672b237d77318e8d89",
       "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl": "sha256:4d15504113931e140e69415cf9ac650d5067a5005575ce417f4900aa3bc474e0",
       "curriculum/l1l6/registry/lessons.jsonl": "sha256:476055a92c88d598346d318f208adb2a94113f5d2f0c71d0634ceca3786398cd",
-      "curriculum/l1l6/reports/absorption-ledger.jsonl": "sha256:513454975e04dd082d96b0a066505eaae8c42710294501f8d17133868912036b",
-      "curriculum/l1l6/reports/full-curriculum-readiness.json": "sha256:2b493bff8e61a06f3c0fddec5994bc8868cf70508fd0264b2050eb877c2fccbb",
+      "curriculum/l1l6/reports/absorption-ledger.jsonl": "sha256:0f465db41e7e848d5c8b8310680f8de9dd7c877a36cad23a0b0aa50a37dd5c4a",
+      "curriculum/l1l6/reports/full-curriculum-readiness.json": "sha256:066507923c18348daecb8787daad7e30e84f42a4514bc56321c34f4346fc3d9a",
       "curriculum/l1l6/reports/queues/q-error-fixtures.jsonl": "sha256:50d979c923bc868b457eafc6244ea38bfe32b81595920e045658a8bdf2838e09",
       "eval/fusha-bench-v1/report/fusha-bench-report.json": "sha256:580150cd0f8860dde87a6e784b58838679c7ae41df14a4c82def57babaaba63f"
     }
@@ -16,22 +16,11 @@
   "blocked_lessons": [],
   "blocked_units": [],
   "closure": {
-    "fully_operationalized_unit_ids": [
-      "cu-grapheme-inventory-and-confusables",
-      "cu-orthographic-connectivity-classes",
-      "cu-short-vowel-diacritics-and-vocalization-state",
-      "cu-nunation-support-orthography",
-      "cu-definite-article-assimilation"
-    ],
-    "newly_fully_operationalized_lesson_ids": [
-      "L1.M1.01",
-      "L1.M1.02",
-      "L1.M1.03",
-      "L1.M1.07"
-    ],
+    "fully_operationalized_unit_ids": [],
+    "newly_fully_operationalized_lesson_ids": [],
     "tranche_closed": false,
-    "units_fully_operationalized": 5,
-    "units_still_partial": 3
+    "units_fully_operationalized": 0,
+    "units_still_partial": 8
   },
   "contributing_lesson_ids": [
     "L1.M1.01",
@@ -150,19 +139,8 @@
     "L6.M6.04"
   ],
   "current_state": {
-    "closed_lesson_ids": [
-      "L1.M1.01",
-      "L1.M1.02",
-      "L1.M1.03",
-      "L1.M1.07"
-    ],
-    "closed_unit_ids": [
-      "cu-grapheme-inventory-and-confusables",
-      "cu-orthographic-connectivity-classes",
-      "cu-short-vowel-diacritics-and-vocalization-state",
-      "cu-nunation-support-orthography",
-      "cu-definite-article-assimilation"
-    ],
+    "closed_lesson_ids": [],
+    "closed_unit_ids": [],
     "lessons_total": 226,
     "not_applicable_lesson_ids": [
       "L1.M5.08"
@@ -175,19 +153,24 @@
       "cu-badal-vs-atf-bayan",
       "cu-bound-fa-function-discrimination",
       "cu-clitic-pronoun-role-discriminator",
+      "cu-definite-article-assimilation",
       "cu-diminutive-template-family",
       "cu-fa-function-and-mood-licensing",
       "cu-five-verb-inflection-class",
       "cu-gemination-licensing",
+      "cu-grapheme-inventory-and-confusables",
       "cu-initial-hamza-class",
       "cu-la-negative-vs-prohibitive-discriminator",
       "cu-lakin-coordinator-vs-abrogator",
       "cu-lexical-feminine-registry",
       "cu-nongoverning-preverbal-inventory",
       "cu-nun-raf-vs-nun-niswa",
+      "cu-nunation-support-orthography",
+      "cu-orthographic-connectivity-classes",
       "cu-passive-voice-vocalization",
       "cu-preposition-sense-discriminators",
       "cu-quadriliteral-templates",
+      "cu-short-vowel-diacritics-and-vocalization-state",
       "cu-suffix-abstract-noun",
       "cu-tanazu-governor-selection",
       "cu-voice-melody-templates",
@@ -214,12 +197,7 @@
     ],
     "units_total": 166
   },
-  "fully_operationalized_lesson_ids": [
-    "L1.M1.01",
-    "L1.M1.02",
-    "L1.M1.03",
-    "L1.M1.07"
-  ],
+  "fully_operationalized_lesson_ids": [],
   "generator": "tools/select_tranche.py",
   "parked_dimension_blockers": [
     {
@@ -2184,9 +2162,9 @@
   ],
   "remaining": {
     "blocked_units": 0,
-    "future_tranches_total": 22,
+    "future_tranches_total": 23,
     "parked_dimension_blockers": 105,
-    "units_after_tranche_001": 161
+    "units_after_tranche_001": 166
   },
   "schema": "curriculum.l1l6_operationalization_tranche.v1",
   "selection": {
@@ -2203,9 +2181,11 @@
       "contributing_lesson_ids": [
         "L1.M1.01"
       ],
-      "current_closure": "fully_operationalized",
+      "current_closure": "partially_operationalized",
       "current_strongest_state": "candidate_remediation_material",
-      "incomplete_closure_dimensions": [],
+      "incomplete_closure_dimensions": [
+        "behavioral_coverage"
+      ],
       "owning_production_lines": [
         "line_2_drill_kc_realization",
         "line_4_error_fixtures"
@@ -2223,9 +2203,11 @@
       "contributing_lesson_ids": [
         "L1.M1.02"
       ],
-      "current_closure": "fully_operationalized",
+      "current_closure": "partially_operationalized",
       "current_strongest_state": "candidate_pack_harnessed",
-      "incomplete_closure_dimensions": [],
+      "incomplete_closure_dimensions": [
+        "behavioral_coverage"
+      ],
       "owning_production_lines": [
         "line_1_machine_packs",
         "line_2_drill_kc_realization",
@@ -2244,9 +2226,11 @@
       "contributing_lesson_ids": [
         "L1.M1.03"
       ],
-      "current_closure": "fully_operationalized",
+      "current_closure": "partially_operationalized",
       "current_strongest_state": "candidate_remediation_material",
-      "incomplete_closure_dimensions": [],
+      "incomplete_closure_dimensions": [
+        "behavioral_coverage"
+      ],
       "owning_production_lines": [
         "line_2_drill_kc_realization",
         "line_4_error_fixtures"
@@ -2300,6 +2284,7 @@
       "current_strongest_state": "candidate_occurrence_witnesses",
       "incomplete_closure_dimensions": [
         "runtime_misconceptions",
+        "behavioral_coverage",
         "consumer_bindings"
       ],
       "owning_production_lines": [
@@ -2352,6 +2337,7 @@
       "current_strongest_state": "candidate_pack_harnessed",
       "incomplete_closure_dimensions": [
         "runtime_misconceptions",
+        "behavioral_coverage",
         "consumer_bindings"
       ],
       "owning_production_lines": [
@@ -2373,9 +2359,11 @@
       "contributing_lesson_ids": [
         "L1.M1.06"
       ],
-      "current_closure": "fully_operationalized",
+      "current_closure": "partially_operationalized",
       "current_strongest_state": "candidate_pack_harnessed",
-      "incomplete_closure_dimensions": [],
+      "incomplete_closure_dimensions": [
+        "behavioral_coverage"
+      ],
       "owning_production_lines": [
         "line_1_machine_packs",
         "line_2_drill_kc_realization",
@@ -2478,6 +2466,7 @@
       "current_strongest_state": "candidate_pack_harnessed",
       "incomplete_closure_dimensions": [
         "runtime_misconceptions",
+        "behavioral_coverage",
         "consumer_bindings"
       ],
       "owning_production_lines": [
@@ -2501,9 +2490,11 @@
       "contributing_lesson_ids": [
         "L1.M1.07"
       ],
-      "current_closure": "fully_operationalized",
+      "current_closure": "partially_operationalized",
       "current_strongest_state": "candidate_pack_harnessed",
-      "incomplete_closure_dimensions": [],
+      "incomplete_closure_dimensions": [
+        "behavioral_coverage"
+      ],
       "owning_production_lines": [
         "line_1_machine_packs",
         "line_2_drill_kc_realization",

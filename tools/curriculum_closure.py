@@ -39,6 +39,7 @@ DIMENSION_ORDER = (
     "machine_execution",
     "runtime_misconceptions",
     "error_fixtures",
+    "behavioral_coverage",
     "consumer_bindings",
     "occurrence_grounding",
 )
@@ -198,7 +199,7 @@ def _error_fixture_dimension(
         for row in trace_rows
         if unit_id in row.get("selected_unit_links", [])
         and row.get("outcome") == "runner_loaded_fixture_only"
-        and row.get("behaviorally_decided") is False
+        and type(row.get("behaviorally_decided")) is bool
         and _existing_repo_path(row.get("owning_runner", ""))
         and _existing_repo_path(row.get("owning_skill_bank", ""))
     }
@@ -217,7 +218,44 @@ def _error_fixture_dimension(
         "total": len(expected),
         "traced": len(expected & traced),
         "missing_queue_row_ids": missing,
-        "posture": "fixture_only_not_behavioral_closure",
+        "posture": "runner_loaded_with_explicit_behavioral_state",
+    }
+
+
+def _behavioral_coverage_dimension(
+    unit_id: str,
+    lesson_ids: list[str],
+    queue_rows: list[dict],
+    trace_rows: list[dict],
+) -> dict:
+    expected = {
+        row["row_id"] for row in queue_rows if row.get("source") in lesson_ids
+    }
+    decided = {
+        row["source_queue_row_id"]
+        for row in trace_rows
+        if unit_id in row.get("selected_unit_links", [])
+        and row.get("outcome") == "runner_loaded_fixture_only"
+        and row.get("behaviorally_decided") is True
+        and _existing_repo_path(row.get("owning_runner", ""))
+        and _existing_repo_path(row.get("owning_skill_bank", ""))
+    }
+    missing = sorted(expected - decided)
+    return {
+        "dimension": "behavioral_coverage",
+        "satisfied": not missing,
+        "satisfied_vacuously": not expected,
+        "satisfaction_basis": (
+            "vacuous_no_expected_error_rows"
+            if not expected
+            else "all_expected_error_rows_behaviorally_decided"
+            if not missing
+            else "expected_error_rows_not_behaviorally_decided"
+        ),
+        "total": len(expected),
+        "decided": len(expected & decided),
+        "missing_queue_row_ids": missing,
+        "posture": "behavioral_verdict_required",
     }
 
 
@@ -308,6 +346,9 @@ def build(disposition_rows: list[dict] | None = None) -> dict:
             _machine_dimension(source),
             _runtime_dimension(unit_id, misconceptions, kcs, runtime_kcs),
             _error_fixture_dimension(
+                unit_id, lessons, queue_rows, trace_rows
+            ),
+            _behavioral_coverage_dimension(
                 unit_id, lessons, queue_rows, trace_rows
             ),
             _binding_dimension(unit_id, lessons, bindings),

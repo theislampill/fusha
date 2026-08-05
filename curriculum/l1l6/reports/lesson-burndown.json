@@ -4,44 +4,38 @@
     "inputs": {
       "curriculum/l1l6/canonical/canonical-units.jsonl": "sha256:a5c817c9399de339020c748faa0dfb91560c6bc88f87bc66b6de5c895b8fd181",
       "curriculum/l1l6/canonical/lesson-unit-map.jsonl": "sha256:499ee92a1008df30af12ef19e27adb6ddbdb61cea26519c00fc6292aa2aeea6d",
-      "curriculum/l1l6/canonical/unit-dispositions.jsonl": "sha256:a9c02aa8e0c8f81598995c4971a000d722f729818c030f9b46af60c44f450a66",
+      "curriculum/l1l6/canonical/unit-dispositions.jsonl": "sha256:0de5880984e873fdae63780cbbc14d6e83fa1bb8e6288a672b237d77318e8d89",
       "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl": "sha256:4d15504113931e140e69415cf9ac650d5067a5005575ce417f4900aa3bc474e0",
       "curriculum/l1l6/registry/lessons.jsonl": "sha256:476055a92c88d598346d318f208adb2a94113f5d2f0c71d0634ceca3786398cd",
-      "curriculum/l1l6/reports/absorption-ledger.jsonl": "sha256:513454975e04dd082d96b0a066505eaae8c42710294501f8d17133868912036b",
-      "curriculum/l1l6/reports/full-curriculum-readiness.json": "sha256:2b493bff8e61a06f3c0fddec5994bc8868cf70508fd0264b2050eb877c2fccbb",
+      "curriculum/l1l6/reports/absorption-ledger.jsonl": "sha256:0f465db41e7e848d5c8b8310680f8de9dd7c877a36cad23a0b0aa50a37dd5c4a",
+      "curriculum/l1l6/reports/full-curriculum-readiness.json": "sha256:066507923c18348daecb8787daad7e30e84f42a4514bc56321c34f4346fc3d9a",
       "curriculum/l1l6/reports/queues/q-error-fixtures.jsonl": "sha256:50d979c923bc868b457eafc6244ea38bfe32b81595920e045658a8bdf2838e09",
       "eval/fusha-bench-v1/report/fusha-bench-report.json": "sha256:580150cd0f8860dde87a6e784b58838679c7ae41df14a4c82def57babaaba63f"
     }
   },
   "current_state": {
     "lessons_by_disposition": {
-      "fully_operationalized": 4,
       "not_applicable_with_reason": 1,
       "open": 172,
-      "partially_operationalized_real_consumer": 49
+      "partially_operationalized_real_consumer": 53
     },
     "lessons_total": 226,
-    "lessons_with_real_consumer_partial_evidence": 49,
+    "lessons_with_real_consumer_partial_evidence": 53,
     "readiness_report_basis": "all_mapped_canonical_units_fully_operationalized",
-    "readiness_report_lessons_fully_operationalized": 4,
+    "readiness_report_lessons_fully_operationalized": 0,
     "unit_overlays": {
       "parked_occurrence_grounding": 105
     },
     "units_by_disposition": {
       "blocked": 0,
       "candidate_or_open": 118,
-      "closed": 5,
-      "real_consumer_partial": 43
+      "closed": 0,
+      "real_consumer_partial": 48
     },
     "units_total": 166
   },
   "current_tranche": {
-    "fully_operationalized_lesson_ids": [
-      "L1.M1.01",
-      "L1.M1.02",
-      "L1.M1.03",
-      "L1.M1.07"
-    ],
+    "fully_operationalized_lesson_ids": [],
     "tranche_closed": false,
     "tranche_id": "tranche-001",
     "unit_ids": [
@@ -54,120 +48,120 @@
       "u-n01",
       "cu-definite-article-assimilation"
     ],
-    "units_fully_operationalized": 5,
-    "units_still_partial": 3
+    "units_fully_operationalized": 0,
+    "units_still_partial": 8
   },
   "forecast": {
     "assumption": "projected lesson closure assumes units with parked occurrence grounding satisfy every non-occurrence closure dimension; parking is not occurrence evidence or certification",
     "blocked_lessons": 0,
-    "future_tranches_total": 22,
+    "future_tranches_total": 23,
     "lesson_flip_quota": 9,
     "not_applicable_lessons": 1,
     "parked_occurrence_grounding_units": 105,
-    "projected_additional_fully_operationalized_lessons": 221,
+    "projected_additional_fully_operationalized_lessons": 225,
     "projected_total_fully_operationalized_lessons": 225,
     "tranches": [
       {
-        "newly_flipped_lessons": 11,
+        "newly_flipped_lessons": 9,
         "residual": false,
         "tranche_number": 2,
-        "units": 4
-      },
-      {
-        "newly_flipped_lessons": 14,
-        "residual": false,
-        "tranche_number": 3,
-        "units": 7
+        "units": 8
       },
       {
         "newly_flipped_lessons": 9,
         "residual": false,
+        "tranche_number": 3,
+        "units": 4
+      },
+      {
+        "newly_flipped_lessons": 11,
+        "residual": false,
         "tranche_number": 4,
+        "units": 4
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 5,
         "units": 6
       },
       {
         "newly_flipped_lessons": 10,
         "residual": false,
-        "tranche_number": 5,
+        "tranche_number": 6,
         "units": 5
       },
       {
         "newly_flipped_lessons": 13,
         "residual": false,
-        "tranche_number": 6,
-        "units": 8
-      },
-      {
-        "newly_flipped_lessons": 11,
-        "residual": false,
         "tranche_number": 7,
-        "units": 7
+        "units": 8
       },
       {
         "newly_flipped_lessons": 11,
         "residual": false,
         "tranche_number": 8,
+        "units": 7
+      },
+      {
+        "newly_flipped_lessons": 11,
+        "residual": false,
+        "tranche_number": 9,
         "units": 4
       },
       {
         "newly_flipped_lessons": 9,
         "residual": false,
-        "tranche_number": 9,
-        "units": 9
-      },
-      {
-        "newly_flipped_lessons": 13,
-        "residual": false,
         "tranche_number": 10,
-        "units": 10
+        "units": 9
       },
       {
         "newly_flipped_lessons": 13,
         "residual": false,
         "tranche_number": 11,
+        "units": 10
+      },
+      {
+        "newly_flipped_lessons": 13,
+        "residual": false,
+        "tranche_number": 12,
         "units": 1
       },
       {
         "newly_flipped_lessons": 9,
         "residual": false,
-        "tranche_number": 12,
-        "units": 8
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
         "tranche_number": 13,
-        "units": 6
+        "units": 8
       },
       {
         "newly_flipped_lessons": 9,
         "residual": false,
         "tranche_number": 14,
-        "units": 8
+        "units": 6
       },
       {
         "newly_flipped_lessons": 9,
         "residual": false,
         "tranche_number": 15,
-        "units": 9
-      },
-      {
-        "newly_flipped_lessons": 9,
-        "residual": false,
-        "tranche_number": 16,
         "units": 8
       },
       {
         "newly_flipped_lessons": 9,
         "residual": false,
+        "tranche_number": 16,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
         "tranche_number": 17,
-        "units": 10
+        "units": 8
       },
       {
         "newly_flipped_lessons": 9,
         "residual": false,
         "tranche_number": 18,
-        "units": 9
+        "units": 10
       },
       {
         "newly_flipped_lessons": 9,
@@ -179,13 +173,13 @@
         "newly_flipped_lessons": 9,
         "residual": false,
         "tranche_number": 20,
-        "units": 7
+        "units": 9
       },
       {
         "newly_flipped_lessons": 9,
         "residual": false,
         "tranche_number": 21,
-        "units": 9
+        "units": 7
       },
       {
         "newly_flipped_lessons": 9,
@@ -194,9 +188,15 @@
         "units": 9
       },
       {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 23,
+        "units": 9
+      },
+      {
         "newly_flipped_lessons": 8,
         "residual": true,
-        "tranche_number": 23,
+        "tranche_number": 24,
         "units": 8
       }
     ]
