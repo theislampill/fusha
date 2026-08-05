@@ -42,7 +42,7 @@ sys.path.insert(0, _REPO)
 from tools import fusha_tutor_runtime as RT  # noqa: E402
 from tools import validate_drill_keys as VDK  # noqa: E402
 
-_START_SHA = "75f49c963e359fb36f6a979f99d360761c36432f"
+_START_SHA = "0ea77694db25ad3d95cf48370468b302f18b625c"
 _KEYS_PATH = os.path.join(_REPO, "curriculum", "drills", "keys", "foundational-script-orthography.keys.jsonl")
 _DRILL_PATH = os.path.join(_REPO, "curriculum", "drills", "foundational-script-orthography.md")
 _CATALOG_PATH = os.path.join(_REPO, "curriculum", "kc-catalog.json")
@@ -98,6 +98,18 @@ class RedFirstStartStateAbsence(unittest.TestCase):
 
     # the known, pre-existing, broad/indirect KC that already listed the four article clusters at the start SHA.
     _KNOWN_BROAD_INDIRECT_KC_ID = "kc-clitic-segmentation"
+
+    def test_start_sha_is_a_reachable_ancestor_of_the_current_head(self):
+        proc = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", _START_SHA, "HEAD"],
+            cwd=_REPO,
+            capture_output=True,
+        )
+        self.assertEqual(
+            proc.returncode,
+            0,
+            "the red-state SHA must be carried by the published branch history so clean CI can replay it",
+        )
 
     def test_bank_file_absent_at_start_sha(self):
         proc = _git_show("curriculum/drills/keys/foundational-script-orthography.keys.jsonl")

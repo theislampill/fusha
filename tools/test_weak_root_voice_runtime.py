@@ -473,6 +473,22 @@ def _git_show(path_rel):
     return out.stdout.decode("utf-8")
 
 
+def _unexpected_worktree_paths(status_lines):
+    """Return source-tree changes outside the repair allowlist.
+
+    GitHub's harness intentionally creates ``harness.log`` before this module
+    runs.  That workflow-owned capture file is not an implementation edit; no
+    other untracked path receives this exception.
+    """
+    unexpected = []
+    for line in status_lines:
+        path = line[3:].strip().replace("\\", "/")
+        if not path or path == "harness.log" or path in _WRITABLE_SET:
+            continue
+        unexpected.append(path)
+    return unexpected
+
+
 def _load_jsonl_text(text):
     return [json.loads(line) for line in text.splitlines() if line.strip()]
 
@@ -1339,13 +1355,16 @@ class ExistingArtifactsUnchanged(unittest.TestCase):
                 current = fh.read()
             self.assertEqual(original, current, "%s must be byte-identical to the start SHA" % rel)
 
+    def test_ci_owned_harness_log_is_ignored_but_other_untracked_files_are_rejected(self):
+        self.assertEqual(
+            _unexpected_worktree_paths(["?? harness.log", "?? surprise.tmp"]),
+            ["surprise.tmp"],
+        )
+
     def test_no_other_working_tree_changes_outside_the_writable_set(self):
         out = subprocess.run(["git", "status", "--porcelain"], cwd=_REPO, capture_output=True, check=True)
-        for line in out.stdout.decode("utf-8").splitlines():
-            path = line[3:].strip().replace("\\", "/")
-            if not path:
-                continue
-            self.assertIn(path, _WRITABLE_SET, "unexpected working-tree change outside the writable set: %s" % path)
+        unexpected = _unexpected_worktree_paths(out.stdout.decode("utf-8").splitlines())
+        self.assertEqual(unexpected, [], "unexpected working-tree changes outside the writable set: %s" % unexpected)
 
 
 if __name__ == "__main__":
