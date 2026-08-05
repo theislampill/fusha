@@ -277,6 +277,10 @@
     }
   ],
   "unit_ref": "cu-passive-voice-vocalization",
+  "unit_refs": [
+    "cu-passive-voice-vocalization",
+    "cu-voice-melody-templates"
+  ],
   "version": 2,
   "vocalization_disambiguation": true
 }

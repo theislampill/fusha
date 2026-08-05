@@ -4,7 +4,7 @@
     "canonical_units_nahw": 76,
     "canonical_units_sarf": 39,
     "canonical_units_total": 166,
-    "canonical_units_with_machine_pack": 38,
+    "canonical_units_with_machine_pack": 48,
     "error_section_lessons_processed": 226,
     "honesty": "canonical units from the qualification wave are AUTHORED CANDIDATE UNITS (summary, capability family, contributing lessons, two-way map); their machine packs are the bounded remaining executable work, not silent gaps",
     "lessons_instructional_only_with_reason": 5,
@@ -14,7 +14,7 @@
     "lessons_semantically_qualified": 226,
     "misconception_clusters": 906,
     "misconception_manifestations": 912,
-    "pack_authoring_remaining": 103,
+    "pack_authoring_remaining": 93,
     "sections_linked_to_canonical_units": 1491,
     "sections_still_only_domain_classified": 0
   },
@@ -23,7 +23,7 @@
     "runtime_integrated": 0,
     "status": "candidate_not_runtime_integrated"
   },
-  "canonical_units_with_real_consumers": 37,
+  "canonical_units_with_real_consumers": 48,
   "consumer_operationalization": {
     "new_real_unit_ids_by_plane": {
       "nahw_analytical": [
@@ -32,10 +32,21 @@
       ],
       "sarf_analytical": [
         "cu-definite-article-assimilation",
+        "cu-diminutive-template-family",
+        "cu-five-verb-inflection-class",
+        "cu-gemination-licensing",
         "cu-grapheme-inventory-and-confusables",
+        "cu-initial-hamza-class",
+        "cu-lexical-feminine-registry",
+        "cu-nongoverning-preverbal-inventory",
+        "cu-nun-raf-vs-nun-niswa",
         "cu-nunation-support-orthography",
         "cu-orthographic-connectivity-classes",
-        "cu-short-vowel-diacritics-and-vocalization-state"
+        "cu-passive-voice-vocalization",
+        "cu-quadriliteral-templates",
+        "cu-short-vowel-diacritics-and-vocalization-state",
+        "cu-suffix-abstract-noun",
+        "cu-voice-melody-templates"
       ],
       "tutor_runtime": [
         "cu-atf-case-following",
@@ -106,7 +117,18 @@
         "L1.M1.04",
         "L1.M1.05",
         "L1.M1.06",
-        "L1.M1.07"
+        "L1.M1.07",
+        "L2.M1.01",
+        "L2.M1.07",
+        "L2.M3.02",
+        "L3.M5.05",
+        "L4.M1.06",
+        "L5.M4.02",
+        "L5.M4.06",
+        "L6.M3.01",
+        "L6.M5.01",
+        "L6.M5.04",
+        "L6.M5.08"
       ],
       "tutor_runtime": [
         "L1.M1.01",
@@ -179,7 +201,7 @@
   "lessons_mapped_to_nahw": 175,
   "lessons_mapped_to_sarf": 213,
   "lessons_mapped_to_tutor_drills": 39,
-  "lessons_partially_operationalized": 40,
+  "lessons_partially_operationalized": 49,
   "lessons_with_entry_level_links": 147,
   "lessons_with_exact_pvn_links": 1,
   "lessons_with_family_only_links": 77,

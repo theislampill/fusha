@@ -134,9 +134,10 @@ def build(ctx):
             row["capability_adjudication"] = why
     canonical.update(proposals)
 
-    # canonical<->increment backlink, DERIVED by unit_ref scan over the
-    # discovered increments (never hand-edited): a pack claiming unit_ref=X
-    # makes X machine-backed
+    # canonical<->increment backlink, DERIVED by unit_ref/unit_refs scan over
+    # the discovered increments (never hand-edited).  Most packs own one unit;
+    # a superseding pack may explicitly preserve several canonical-unit
+    # contributions when its behavior subsumes an earlier pack version.
     inc_dir = BASE / "increments"
     if inc_dir.exists():
         for d in sorted(p for p in inc_dir.iterdir() if p.is_dir()):
@@ -145,13 +146,15 @@ def build(ctx):
             if not packs:
                 continue
             pack = json.loads(packs[-1].read_text(encoding="utf-8"))
-            uref = pack.get("unit_ref")
-            if uref in canonical and d.name not in canonical[uref]["machine_increments"]:
-                canonical[uref]["machine_increments"].append(d.name)
-                canonical[uref]["machine_increments"].sort()
-                if canonical[uref].get("capability_family") in (
-                        None, "instructional_only", "executable"):
-                    canonical[uref]["capability_family"] = pack.get("capability")
+            unit_refs = pack.get("unit_refs") or [pack.get("unit_ref")]
+            for uref in unit_refs:
+                if (uref in canonical
+                        and d.name not in canonical[uref]["machine_increments"]):
+                    canonical[uref]["machine_increments"].append(d.name)
+                    canonical[uref]["machine_increments"].sort()
+                    if canonical[uref].get("capability_family") in (
+                            None, "instructional_only", "executable"):
+                        canonical[uref]["capability_family"] = pack.get("capability")
 
     # ---- two-way lesson<->unit map ----
     lesson_map = []

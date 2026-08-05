@@ -24,6 +24,7 @@ if str(ROOT / "tools") not in sys.path:
     sys.path.insert(0, str(ROOT / "tools"))
 
 import curriculum_unit_consumer as cu  # noqa: E402
+import build_curriculum_canonical as canonical_builder  # noqa: E402
 
 INC_BASE = ROOT / "curriculum" / "l1l6" / "increments"
 
@@ -93,6 +94,12 @@ class NewIncrementsDiscoveredAndGreenTests(unittest.TestCase):
     def test_voice_melody_v2_pack_exists_and_is_green_and_v1_still_abstains_conservatively(self):
         rec2 = cu.run("inc-voice-melody-templates", "unit-v2.json")
         self.assertEqual(rec2["mismatches"], 0)
+        pack2, _ = cu.load("inc-voice-melody-templates", "unit-v2.json")
+        self.assertEqual(
+            pack2["unit_refs"],
+            ["cu-passive-voice-vocalization", "cu-voice-melody-templates"],
+            "a superseding voice pack must preserve both canonical contributions",
+        )
         rec1 = cu.run("inc-voice-melody-templates", "unit-v1.json")
         # v1 is not WRONG about anything: it keeps abstaining ambiguous_template on every one of
         # the six newly-resolvable rows (it has no `vocalization_disambiguation` flag at all), so
@@ -105,6 +112,47 @@ class NewIncrementsDiscoveredAndGreenTests(unittest.TestCase):
         for r in rec1["results"]:
             if r["fixture_id"] in newly_resolvable:
                 self.assertEqual(r["actual"], {"decision": "abstain", "reason": "ambiguous_template"})
+
+    def test_canonical_backlinks_preserve_both_voice_units(self):
+        units, _, _, _ = canonical_builder.build(canonical_builder.load())
+        by_id = {row["unit_id"]: row for row in units}
+        for unit_id in ("cu-passive-voice-vocalization", "cu-voice-melody-templates"):
+            self.assertIn(
+                "inc-voice-melody-templates",
+                by_id[unit_id]["machine_increments"],
+                "%s lost its machine-pack backlink" % unit_id,
+            )
+
+    def test_t2a_real_consumer_binding_covers_every_pack_backed_unit(self):
+        rows = [
+            json.loads(line)
+            for line in (ROOT / "curriculum" / "l1l6" / "links" /
+                          "consumer-operationalization-bindings.jsonl").read_text(
+                              encoding="utf-8").splitlines()
+            if line.strip()
+        ]
+        binding = next(
+            row for row in rows
+            if row["binding_id"] ==
+            "l1l6-tranche-002a-template-classification-analysis"
+        )
+        expected_units = {
+            "cu-diminutive-template-family",
+            "cu-five-verb-inflection-class",
+            "cu-gemination-licensing",
+            "cu-initial-hamza-class",
+            "cu-lexical-feminine-registry",
+            "cu-nongoverning-preverbal-inventory",
+            "cu-nun-raf-vs-nun-niswa",
+            "cu-passive-voice-vocalization",
+            "cu-quadriliteral-templates",
+            "cu-suffix-abstract-noun",
+            "cu-voice-melody-templates",
+        }
+        self.assertEqual(set(binding["unit_ids"]), expected_units)
+        self.assertEqual(binding["consumer_plane"], "sarf_analytical")
+        self.assertFalse(binding["public_projection_eligible"])
+        self.assertTrue(binding["candidate_status_preserved"])
 
     def test_consumer_self_test_still_passes(self):
         self.assertEqual(cu.self_test(), 0)

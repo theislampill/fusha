@@ -1097,6 +1097,9 @@ TRANCHE_EXPECTED_BINDING_IDS = {
         "l1l6-tranche-001b-derivation-template-runtime",
         "l1l6-tranche-001b-ma-context-runtime",
     }),
+    "tranche_002a": frozenset({
+        "l1l6-tranche-002a-template-classification-analysis",
+    }),
 }
 # test_paths must name an actual test file, never a production/consumer module (F8).
 _TEST_PATH_BASENAME_RE = re.compile(r"^test_.*\.py$")
