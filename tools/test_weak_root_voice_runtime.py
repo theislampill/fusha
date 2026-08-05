@@ -69,7 +69,7 @@ from tools import validate_drill_keys as VDK  # noqa: E402
 from tools import fusha_bench as FB  # noqa: E402
 from tools import leak_sot  # noqa: E402
 
-_START_SHA = "647390b619e444c69960b32cb46b8a29e03027cd"
+_START_SHA = "1cc757f961dc4aa4c832fede4dd222098a8e5bc3"
 _MISCONCEPTION_REGISTRY = os.path.join(_REPO, "curriculum", "l1l6", "misconceptions",
                                        "misconception-registry.jsonl")
 _KEYS_PATH = os.path.join(_REPO, "curriculum", "drills", "keys", "weak-root-voice-runtime.keys.jsonl")
@@ -1346,6 +1346,18 @@ class ProvenanceAndPublicProjectionBoundary(unittest.TestCase):
 class ExistingArtifactsUnchanged(unittest.TestCase):
     """The eleven pre-existing keyed drill files and the pre-existing kc-catalog prefix remain byte-identical;
     nothing outside the six exclusive-writable paths changes."""
+
+    def test_start_sha_is_a_reachable_ancestor_of_the_current_head(self):
+        proc = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", _START_SHA, "HEAD"],
+            cwd=_REPO,
+            capture_output=True,
+        )
+        self.assertEqual(
+            proc.returncode,
+            0,
+            "the red-state SHA must be carried by the published branch history so clean CI can replay it",
+        )
 
     def test_pre_existing_keyed_drill_files_are_byte_identical_to_start_sha(self):
         for name in _PRE_EXISTING_KEYED_DRILLS:
