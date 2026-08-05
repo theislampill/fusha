@@ -876,7 +876,7 @@ def main(argv=None) -> int:
     parser.add_argument("--famwide")
     parser.add_argument("--sufaha-evidence")
     parser.add_argument("--reciprocity-baseline-git-ref")
-    parser.add_argument("--reciprocity-baseline-ledger-path", default="vn-ledger.jsonl")
+    parser.add_argument("--reciprocity-baseline-ledger-path", default="qamus/reports/vn-ledger.jsonl")
     parser.add_argument("--reciprocity-baseline-appearances-path", default="qamus/indexes/occurrence-appearances.jsonl")
     parser.add_argument("--output-dir", required=True)
     args = parser.parse_args(argv)

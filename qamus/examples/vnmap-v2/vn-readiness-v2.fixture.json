@@ -337,7 +337,7 @@
   "family_rows": 1,
   "input_evidence": {
     "backup_listing": "VNREC/inputs/backups-vn-listing.txt",
-    "baseline": "vn-readiness-matrix.json",
+    "baseline": "qamus/reports/vn-readiness-matrix.json",
     "crosswalk": "EDGES/full-artifacts/lexeme-entry-crosswalk.forward.jsonl",
     "debt": "EDGES/full-artifacts/debt-classification.jsonl",
     "edge_summary": "EDGES/edge-closure-summary.json",

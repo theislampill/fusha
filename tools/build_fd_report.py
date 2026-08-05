@@ -18,11 +18,11 @@ def _json(path: Path) -> dict:
 
 
 def build_report() -> str:
-    report = _json(ROOT / "fd-455-report.json")
+    report = _json(ROOT / "qamus/reports/calibration-455/fd-455-report.json")
     payload = _json(ROOT / "qamus" / "examples" / "fd" / "sufaha-normalized-public-payload.json")
     parity = _json(ROOT / "qamus" / "examples" / "fd" / "sufaha-parity-fixture.json")
     render = _json(ROOT / "qamus" / "examples" / "fd" / "render-proof.json")
-    harness = (ROOT / "fd-check-regressions-output.txt").read_text(encoding="utf-8-sig").rstrip()
+    harness = (ROOT / "qamus/reports/calibration-455/fd-check-regressions-output.txt").read_text(encoding="utf-8-sig").rstrip()
 
     checklist = [
         ("canonical identity", "payload.canonical_identity; quran 2:13:12, wbw:2:13:12, exact surface, lexical entry, card ID"),

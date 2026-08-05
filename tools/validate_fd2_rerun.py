@@ -24,9 +24,9 @@ from tools import fact_ledger
 from tools import fd_compiler
 
 
-REPORT_PATH = _ROOT / "fd2-455-report.json"
-VERDICTS_PATH = _ROOT / "fd2-455-verdicts.jsonl"
-META_PATH = _ROOT / "fd2-455-verdicts.meta.json"
+REPORT_PATH = _ROOT / "qamus/reports/calibration-455/fd2-455-report.json"
+VERDICTS_PATH = _ROOT / "qamus/reports/calibration-455/fd2-455-verdicts.jsonl"
+META_PATH = _ROOT / "qamus/reports/calibration-455/fd2-455-verdicts.meta.json"
 REPORT_SCHEMA_PATH = _ROOT / "qamus" / "schemas" / "fd2-455-report.schema.json"
 _ABSOLUTE_PATH_RE = re.compile(r"(?:^[A-Za-z]:[\\/]|^\\\\|file://)")
 _FORBIDDEN_LEARNER_TERMS = (
@@ -247,7 +247,7 @@ def validate_fd2_artifacts(
         primary = Counter(str(row.get("primary_blocker", "")) for row in verdicts)
         if report.get("primary_blocker_counts") != dict(sorted(primary.items())):
             errors.append("FD2 primary blocker counts do not recompute")
-    if meta.get("artifact") != "fd2-455-verdicts.jsonl" or meta.get("count") != len(verdicts):
+    if meta.get("artifact") != "qamus/reports/calibration-455/fd2-455-verdicts.jsonl" or meta.get("count") != len(verdicts):
         errors.append("FD2 verdict metadata does not bind to the emitted row artifact")
     if meta.get("candidate_only") is not True or meta.get("live_mutation_allowed") is not False:
         errors.append("FD2 verdict metadata is not candidate-only with live mutation disabled")

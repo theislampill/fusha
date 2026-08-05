@@ -6358,11 +6358,11 @@ try:
         sys.executable,
         os.path.join(ROOT, "tools", "validate_vn_ledger.py"),
         "--ledger",
-        os.path.join(ROOT, "vn-ledger.jsonl"),
+        os.path.join(ROOT, "qamus/reports/vn-ledger.jsonl"),
         "--metrics",
-        os.path.join(ROOT, "vn-graph-metrics.json"),
+        os.path.join(ROOT, "qamus/reports/vn-graph-metrics.json"),
         "--matrix",
-        os.path.join(ROOT, "vn-readiness-matrix.json"),
+        os.path.join(ROOT, "qamus/reports/vn-readiness-matrix.json"),
         "--structure-only",
     ], timeout=120)
     check(

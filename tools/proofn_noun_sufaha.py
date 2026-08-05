@@ -936,11 +936,11 @@ def write_artifacts(proof: Mapping[str, Any], output_dir: Path | str = PROOF_DIR
     (output / "assets").mkdir(parents=True, exist_ok=True)
     shutil.copyfile(font_source, output / "assets" / font_source.name)
     _write_json(output / "proofn-validation.json", {"status": "pending_validator_run", "errors": []})
-    _write_json(ROOT / "PROOFN-MANIFEST.json", proof["manifest"])
+    _write_json(ROOT / "qamus/reports/proofn/PROOFN-MANIFEST.json", proof["manifest"])
     _report_path = ROOT / "docs" / "reports" / "history" / "2026-07-17-PROOFN-REPORT.md"
     _report_path.write_text(HISTORICAL_BANNER + proof["report"], encoding="utf-8")
     return {
-        "manifest": ROOT / "PROOFN-MANIFEST.json",
+        "manifest": ROOT / "qamus/reports/proofn/PROOFN-MANIFEST.json",
         "report": _report_path,
         "contract": output / "sufaha-contract.json",
         "edges": output / "typed-edge-graph.jsonl",
@@ -954,9 +954,9 @@ def load_proof_artifacts(proof_dir: Path | str = PROOF_DIR) -> dict[str, Any]:
     """Load the committed proof packet for validator/tests."""
 
     output = Path(proof_dir).expanduser().resolve()
-    manifest_path = ROOT / "PROOFN-MANIFEST.json"
+    manifest_path = ROOT / "qamus/reports/proofn/PROOFN-MANIFEST.json"
     if output != PROOF_DIR.resolve():
-        manifest_path = output.parent.parent.parent / "PROOFN-MANIFEST.json"
+        manifest_path = output.parent.parent.parent / "qamus/reports/proofn/PROOFN-MANIFEST.json"
     edge_path = output / "typed-edge-graph.jsonl"
     return {
         "manifest": _read_json(manifest_path),

@@ -146,7 +146,7 @@
     "other_families": "prior state retained; no scope creep",
     "row_source": "strat-455.jsonl + v575-verdicts.jsonl"
   },
-  "verdicts_artifact": "fd2-455-verdicts.jsonl",
-  "verdicts_meta_artifact": "fd2-455-verdicts.meta.json",
+  "verdicts_artifact": "qamus/reports/calibration-455/fd2-455-verdicts.jsonl",
+  "verdicts_meta_artifact": "qamus/reports/calibration-455/fd2-455-verdicts.meta.json",
   "verified_row_count": 455
 }

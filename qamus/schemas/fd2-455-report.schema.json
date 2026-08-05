@@ -110,8 +110,8 @@
     "producer_lineage": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}},
     "scope": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}},
     "metric_definitions": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}},
-    "verdicts_artifact": {"const": "fd2-455-verdicts.jsonl"},
-    "verdicts_meta_artifact": {"const": "fd2-455-verdicts.meta.json"},
+    "verdicts_artifact": {"const": "qamus/reports/calibration-455/fd2-455-verdicts.jsonl"},
+    "verdicts_meta_artifact": {"const": "qamus/reports/calibration-455/fd2-455-verdicts.meta.json"},
     "input_artifacts": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}},
     "live_mutation_allowed": {"const": false}
   },

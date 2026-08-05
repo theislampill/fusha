@@ -229,9 +229,9 @@ class RerunWriterTests(unittest.TestCase):
             corpus = root / "corpus.jsonl"
             entries = root / "entries.jsonl"
             index = root / "index.jsonl"
-            report = root / "fd2-455-report.json"
-            output_verdicts = root / "fd2-455-verdicts.jsonl"
-            meta = root / "fd2-455-verdicts.meta.json"
+            report = root / "qamus/reports/calibration-455/fd2-455-report.json"
+            output_verdicts = root / "qamus/reports/calibration-455/fd2-455-verdicts.jsonl"
+            meta = root / "qamus/reports/calibration-455/fd2-455-verdicts.meta.json"
             markdown = root / "report.md"
             fd2_rerun._write_jsonl(strat, [{"loc": "1:1:1", "surface": source["surface"], "morphology_family": "clitic_pronoun_compositions"}])
             fd2_rerun._write_jsonl(verdicts, [{"loc": "1:1:1", "verdict": "verified"}])

@@ -276,7 +276,7 @@ def self_test():
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--entries", default=os.path.join(ROOT, "qamus", "data", "current", "entries.jsonl"))
-    parser.add_argument("--ledger", default=os.path.join(ROOT, "vn-ledger.jsonl"))
+    parser.add_argument("--ledger", default=os.path.join(ROOT, "qamus/reports/vn-ledger.jsonl"))
     parser.add_argument("--attach-queue",
                         default=os.path.join(ROOT, "qamus", "lattice", "crosswalk-attach-queue.jsonl"))
     parser.add_argument("--origin", default=DEFAULT_ORIGIN)
