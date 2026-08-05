@@ -3,7 +3,7 @@
 """Build the complete particle-occurrence CANDIDATE matrix for p001-p100.
 
 Consumes the example-ayah universe (tools/build_example_ayah_universe.py) and
-the owner-approved P-00..P-03 membership table.  Emits one row per
+the owner-approved P-00..P-05 membership table (renumber 2026-08-05).  Emits one row per
 particle-entry x candidate-occurrence: every canonical occurrence in the
 universe whose corpus-facing displayed surface could realise the particle,
 either as a free word (exact / normalized match) or as a visible clitic

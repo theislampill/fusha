@@ -195,7 +195,7 @@ never fans out on lemma/pattern/POS).
    (sarf-primary vs nahw-primary) be mandatory rather than merely recorded?
 2. **Adjudication artifact schema:** §4's owner/scholar artifact is described but
    not yet schema-enforced. Adopt a `qamus.adjudication_artifact.v1` next?
-3. **Certification event trail placement:** fixture-first in-repo, or defer until
+3. **ANSWERED (2026-08-05): fixture-first in-repo, adopted** — the event trail store exists (`qamus/certification/p007-geometry-wave/events.jsonl` + the p007 pilot trail; counts in `docs/current-state.yaml`). Original question: fixture-first in-repo, or defer until
    the live store exists (mirroring the closure-2092 apply-receipt pattern)?
 4. **Historical reclassification tranche:** when do we sweep the closure-2092
    `bulk_two_vote_certified` rows into explicit `two_vote_claimed_unverified`

@@ -658,11 +658,25 @@
    "selected_on_p": 36
   },
   "P-03": {
-   "context_on_n": 2834,
-   "context_on_p": 187,
-   "context_on_v": 19541,
-   "occurrences": 10434,
-   "selected_on_p": 44
+   "context_on_n": 2259,
+   "context_on_p": 140,
+   "context_on_v": 14949,
+   "occurrences": 7905,
+   "selected_on_p": 17
+  },
+  "P-04": {
+   "context_on_n": 336,
+   "context_on_p": 16,
+   "context_on_v": 2722,
+   "occurrences": 1451,
+   "selected_on_p": 19
+  },
+  "P-05": {
+   "context_on_n": 239,
+   "context_on_p": 31,
+   "context_on_v": 1870,
+   "occurrences": 1078,
+   "selected_on_p": 8
   }
  },
  "schema": "qamus.particle_occurrence_matrix.v1",

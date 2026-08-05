@@ -77,7 +77,10 @@ DEFAULT_SAMPLE_META_OUTPUT = os.path.join(
 # spine.  Drift is an Andon stop, not an invitation to silently recalculate a
 # new cohort under an old report name.
 EXPECTED_CORPUS_ROWS = 117117
-EXPECTED_CORPUS_SHA256 = "04a440ca219775eb754a337984cc2d32a7578adac372a7d7afd55e68e3435338"
+# Re-pinned 2026-08-05: owner particle-plan renumber (P-00..P-05) relabeled
+# universe rows; cohort identity proven unchanged by every other EXPECTED_*
+# gate below (rows, occurrence ids, facts, events, appearances).
+EXPECTED_CORPUS_SHA256 = "3bd07678486732ce5dc5771e1ed353e8f6aa15015cae4e4089ed6708e5f628e2"
 EXPECTED_OCCURRENCES = 454
 EXPECTED_FACTS = 1362
 EXPECTED_EVENTS = 4086

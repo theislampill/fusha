@@ -65,7 +65,7 @@ validator migration only.
   equivalent occurrences; every equivalent occurrence must either project the richer fact or carry an
   exact exception. Accepted crosswalk rows are **support evidence, not visual closure**.
 
-## 7. VN / tranche terms (`docs/vn-tranche-completion-playbook.md`)
+## 7. VN / tranche terms (`docs/VN-OPERATIONS.md` — authoritative copy)
 
 - **VN window** — a page range on the authoritative `source_key` ordering (e.g. VN-00 =
   `v001-v047 + n0001-n0045`). NOT a `created_at` proxy.

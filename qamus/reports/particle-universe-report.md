@@ -1,4 +1,6 @@
-# Particle Universe Report — example-āyah occurrence universe + P-00..P-03 candidate matrix
+# Particle Universe Report — example-āyah occurrence universe + P-00..P-05 candidate matrix
+
+> **Updated 2026-08-05:** the owner renumbered the particle plan — the 49-entry P-03 long tail split into P-03 (question/response + operators, 16), P-04 (demonstratives + relatives, 18), P-05 (personal pronouns, 15); plan = P-00..P-05 at 12/17/22/16/18/15. SSOT: `qamus/data/particle-tranche-membership.json`. Tables below re-tallied from the relabeled matrix.
 
 Date: 2026-07-28 · Lane: candidate-mode (no live mutation; all inputs are committed repo artifacts) · Builders: `tools/build_example_ayah_universe.py` v1.0.0, `tools/build_particle_occurrence_matrix.py` v1.0.0 · Validator: `tools/validate_example_universe.py` (wired into `tools/check_regressions.py`, "UNIVERSE" gates).
 
@@ -30,7 +32,7 @@ Relation to existing machinery: `qamus/indexes/occurrence-appearances.jsonl` (34
 
 ## 2. Particle membership (committed table)
 
-`qamus/data/particle-tranche-membership.json` encodes the owner-approved p001–p100 assignment: P-00 = 12, P-01 = 17, P-02 = 22, P-03 = 49 (sum 100; each source_key exactly once; every P-02 row carries `scholar_two_vote_required`). Dual-family tensions and dogfood zero-row flags are carried per row.
+`qamus/data/particle-tranche-membership.json` encodes the owner-approved p001–p100 assignment: P-00 = 12, P-01 = 17, P-02 = 22, P-03 = 16, P-04 = 18, P-05 = 15 (sum 100; each source_key exactly once; every P-02 row carries `scholar_two_vote_required`; the `p_plan_renumber_2026_08_05` key records the split). Dual-family tensions and dogfood zero-row flags are carried per row.
 
 ## 3. Particle-occurrence candidate matrix (`qamus/lattice/particle-occurrence-matrix.jsonl`)
 
@@ -61,7 +63,11 @@ Match kind/basis across rows: clitic_prefix_normalized 24,997 · free exact 5,80
 | P-00 | 12 | 21,662 | 21 | 335 | 41,559 | 6,173 |
 | P-01 | 17 | 8,444 | 32 | 163 | 15,821 | 1,822 |
 | P-02 | 22 | 9,723 | 36 | 155 | 18,250 | 2,391 |
-| P-03 | 49 | 10,434 | 44 | 187 | 19,541 | 2,834 |
+| P-03 | 15† | 7,905 | 17 | 140 | 14,949 | 2,259 |
+| P-04 | 16† | 1,451 | 19 | 16 | 2,722 | 336 |
+| P-05 | 15 | 1,078 | 8 | 31 | 1,870 | 239 |
+
+† particles column counts particles WITH candidate matrix rows; membership totals are P-03=16, P-04=18 (the difference = dogfood zero-row particles with no candidate occurrences).
 
 Largest candidate spaces: p010 الْ 6,634 · p009 وَ 6,586 · p005 فَـ 3,288 · p007 لَـ/لِـ 2,999 · p002 بِـ 2,492 · p034 مِنْ 2,481 · p011 أَنَّ 2,291 · p100 مَنْ 2,088 · p012 إِنَّ 1,903 · p056 لَا 1,781.
 

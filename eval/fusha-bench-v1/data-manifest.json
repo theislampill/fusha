@@ -11,7 +11,7 @@
       "artifact_id": "example-ayah-universe",
       "path": "qamus/lattice/example-ayah-universe.jsonl",
       "role": "geometry_builder_input",
-      "sha256": "3d24985ef635ef2fd8be06187158233def0a612a01aabe5fd8cc3c186734f1f2"
+      "sha256": "a35b4392ce8487a597e483a8213ad7201c1ebc623d2988694438f9ccfd8e2abc"
     },
     {
       "artifact_id": "example-ayah-occurrences",
@@ -29,7 +29,7 @@
       "artifact_id": "particle-occurrence-matrix",
       "path": "qamus/lattice/particle-occurrence-matrix.jsonl",
       "role": "geometry_builder_input",
-      "sha256": "48c8996c3c0da5b6390e5612d94dc00b8fcf8935d05c1465bd4fdd173dccdefe"
+      "sha256": "8fa05e740c49466aaf2275eeecaa13420ac809cb6793d96e75572c484b901615"
     },
     {
       "artifact_id": "geometry-reverse-universe",
@@ -53,7 +53,7 @@
       "artifact_id": "geometry-projection-baseline",
       "path": "qamus/reports/p007-geometry-corpus-projection-baseline.json",
       "role": "ownership_projection_baseline",
-      "sha256": "d0987f32e7f64f1110c3c167b1a968f9a98473c425ae65a4c2e47ce561d352b6"
+      "sha256": "93361f85d7f5745ded7c68545048755d349d1aefafe285b8b6237c19896e7439"
     },
     {
       "artifact_id": "pilot-locations",

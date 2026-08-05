@@ -1,3 +1,5 @@
+> **Counts superseded (2026-08-05):** this reconciliation's first pass ran 2026-07-29 against an EMPTY typed-claim event store (“0 certified” below). The store was populated the same day (p007 pilot + geometry wave; 1,411 in-repo event-verified facts — authoritative counts: `docs/current-state.yaml`). The duplicate/conflict pass has NOT been rerun against the populated store; treat §5/§8 numbers as historical.
+
 # Certification store reconciliation (token-layer ledger ↔ typed-claim plane)
 
 **Status:** proposed 2026-07-29 (owner order §11). This doc **extends**

@@ -1,6 +1,13 @@
 # Documentation index — Fusha repo (authoritative)
 
-Status: adopted 2026-07-29 (institutionalization lane A).
+Status: adopted 2026-07-29 · dated addendum 2026-08-05: the VN plan was
+re-cut to VN-00..VN-20 and the particle plan renumbered to P-00..P-05 (see
+`docs/VN-OPERATIONS.md` §1 and `docs/decision-ledger.md`); the curriculum
+substrate `curriculum/l1l6/` (226 inherited lessons + tranche machinery,
+`tools/select_tranche.py`), the GPS supplement accounting (234 = 226 + 8,
+separate denominators), and the public GitHub issue-board mirror (see
+`AGENTS.md` §“Public issue board” and `CONTRIBUTING.md`) postdate this
+index's inventory and are not yet classified in §4 (institutionalization lane A).
 Purpose: a cold reader (human or lower-cost model) starts here. Every document
 in this repo is classified below as **authoritative**, **historical**,
 **generated**, **example**, or **superseded**, with a one-line role. When two
@@ -41,7 +48,7 @@ WEBSITE_FRONTEND: OWNED_BY_THE_SEPARATE_WEBSITE_AGENT
 | "Autonomous live deploy" phrasings in old directives | **SUPERSEDED.** No autonomous deployment path exists or is authorized. | `LIVE_QAMUS_MUTATION: NOT_AUTHORIZED`; every apply is a separate owner-gated step (`docs/CI.md`: "CI results are evidence, not adoption"). |
 | Coarse `PFX/STEM/SUF` segmentation as target quality | **SUPERSEDED.** Legacy-valid only; never target quality (owner decision D-1: rich letter-level projection is the target). | `docs/qamus/particle-projection-contract.md` + `docs/qamus/RICH-HOVER-NORMALIZATION-CONTRACT.md` (N-SEG-03 tiered standard). Note: `docs/parser/index.html` is a stale demo still rendering a `PFX` label — example class, not a target. |
 | Simplified linkage-board hovers as final standard | **SUPERSEDED.** The W5/entry-linkage board's simplified hovers were an interim sketch. | The rich-at-rest + rich-hover two-surface contract (`docs/architecture/two-surface-contract.md` and its sources). |
-| Proposal population labelled "VN-03" (v196–v296) | **SUPERSEDED — VN-03 namespace ruling 2026-07-29.** Authoritative VN-03 = v142–v188 + n0136–n0180 + its 3,280-row worklist. The proposal population is renamed to the `VNPROP-xx` namespace with provenance preserved. | `qamus/examples/p007-li-pilot/vn-unlock.json` uses `VNPROP-xx` keys and records the ruling. Never quote VN-03 counts except against the contract namespace. |
+| Proposal population labelled "VN-03" (v196–v296) | **SUPERSEDED — VN-03 namespace ruling 2026-07-29.** Contract-window VN-03 (then v142–v188 + n0136–n0180 + its 3,280-row worklist; boundaries re-cut by the 2026-08-05 owner respec — see `docs/VN-OPERATIONS.md` §1, now VN-00..VN-20 only). The proposal population is renamed to the `VNPROP-xx` namespace with provenance preserved. | `qamus/examples/p007-li-pilot/vn-unlock.json` uses `VNPROP-xx` keys and records the ruling. Never quote VN-03 counts except against the contract namespace. |
 
 Additionally superseded by their own banners: the 13 HISTORICAL-bannered
 reports listed in §4.6, plus the un-bannered stale coverage reports flagged
