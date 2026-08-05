@@ -12,7 +12,8 @@ Read before authoring and during train review. A repaired finding class must bec
 - Test encoding integrity with byte-exact Arabic canaries and the full combining-mark inventory used by the batch.
 - Keep consumer/accounting claims no stronger than observed runtime behavior.
 - Accept only the parser's declared database identifiers. Reject unknown names
-  instead of silently falling back, and record the exact database in every
-  owner-facing snapshot so a fallback cannot manufacture a regression or pass.
+  and missing required source files instead of silently falling back, and
+  record the exact database and resolved source in every owner-facing snapshot
+  so a fallback cannot manufacture a regression or pass.
 
 Record findings by stable class so recurrence can be measured across tranches.

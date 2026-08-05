@@ -6,6 +6,7 @@ from __future__ import annotations
 import sys
 import unittest
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -21,6 +22,10 @@ class TrancheCandidateSnapshotTests(unittest.TestCase):
         self.assertEqual(len(by_id), 5)
         self.assertFalse(report["public_projection_eligible"])
         self.assertEqual(report["analysis_database"], "largelexicon")
+        self.assertEqual(
+            report["analysis_database_source"],
+            "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
+        )
         self.assertEqual(
             by_id["mulk-final-kaf"]["status"], "analysis_gap_detected"
         )
@@ -44,6 +49,19 @@ class TrancheCandidateSnapshotTests(unittest.TestCase):
     def test_unknown_lexicon_database_fails_closed(self):
         with self.assertRaisesRegex(ValueError, "unsupported lexicon database"):
             fusha_pattern_engine._load_lexicon(db="full")
+
+    def test_missing_lexicon_sources_fail_closed_without_fallback(self):
+        with self.assertRaisesRegex(FileNotFoundError, "required seed lexicon"):
+            fusha_pattern_engine._load_lexicon(path="missing-seed.jsonl")
+        with mock.patch.object(
+            fusha_pattern_engine,
+            "LARGELEXICON_FULL_PATH",
+            "missing-largelexicon-full.jsonl",
+        ):
+            with self.assertRaisesRegex(
+                FileNotFoundError, "required largelexicon full source"
+            ):
+                fusha_pattern_engine._load_lexicon(db="largelexicon")
 
 
 if __name__ == "__main__":

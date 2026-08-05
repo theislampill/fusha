@@ -650,10 +650,8 @@ def _parse_args(argv: list[str]) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
-def main(argv: list[str] | None = None, *, load: bool = True) -> int:
+def main(argv: list[str] | None = None) -> int:
     args = _parse_args(list(sys.argv[1:] if argv is None else argv))
-    if not load:
-        return 0
     root = args.root.resolve()
     outputs = serialize_outputs(load_inputs(root), quota=args.quota)
     if args.write:

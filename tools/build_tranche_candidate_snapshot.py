@@ -15,6 +15,9 @@ OUTPUT = Path(
     "curriculum/l1l6/reports/tranche-001-candidate-snapshot.json"
 )
 ANALYSIS_DATABASE = "largelexicon"
+ANALYSIS_DATABASE_SOURCE = (
+    "fusha/lexicon/largelexicon/lemma-source.full.jsonl"
+)
 
 
 def _jsonl(path: Path) -> list[dict]:
@@ -32,6 +35,7 @@ def _parse(surface: str) -> dict:
     segments = token.get("qg_segments") or []
     return {
         "analysis_database": ANALYSIS_DATABASE,
+        "analysis_database_source": ANALYSIS_DATABASE_SOURCE,
         "roles": [row.get("role") for row in segments],
         "segments": segments,
         "hover_preview": token.get("hover_preview"),
@@ -144,6 +148,7 @@ def build() -> dict:
         "posture": "candidate_owner_demo_not_public_projection",
         "public_projection_eligible": False,
         "analysis_database": ANALYSIS_DATABASE,
+        "analysis_database_source": ANALYSIS_DATABASE_SOURCE,
         "probes": probes,
         "summary": {
             "probes": len(probes),
