@@ -122,6 +122,7 @@ REQUIRED_BEHAVIORAL_BANKS = (
     "sarf/evals/morphology-candidate-lattice.jsonl",
     "sarf/evals/nominal-class-discrimination-eval.jsonl",
     "sarf/evals/plural-gender-operationalization-eval.jsonl",
+    "sarf/evals/template-classification-train-1-eval.jsonl",
     "sarf/evals/weak-root-and-voice-eval.jsonl",
 )
 # ---------------------------------------------------------------------------
@@ -1912,6 +1913,152 @@ def adapter_plural_gender_operationalization(rows, spec, ctx, root):
     }
 
 
+# --------------------------------------------------- template-classification-train-1
+# tc1-* row id -> the exact (increment, fixture_id) pair in THAT PACK'S OWN committed fixtures.jsonl whose
+# `input` this bank row replays through the real production consumer. Authored ONCE, by hand, against the bank
+# row's own surface/teaches text and each pack's fixtures -- never derived at runtime from the bank row's own
+# fields -- so a row can never smuggle a fabricated evidence dict into analyze_derivative/
+# analyze_discriminator_table: the consumer input is always byte-identical to evidence
+# tools/curriculum_unit_consumer.py --all/--self-test already exercises and the T2 batch's own
+# tools/test_tranche_002_template_classification.py already proves green.
+_TC1_ROW_TO_FIXTURE = {
+    "tc1-dim-01": ("inc-diminutive-template-family", "dim-pos-01"),
+    "tc1-dim-02": ("inc-diminutive-template-family", "dim-abs-01"),
+    "tc1-fiv-01": ("inc-five-verb-inflection-class", "fiv-pos-01"),
+    "tc1-fiv-02": ("inc-five-verb-inflection-class", "fiv-adv-02"),
+    "tc1-voc-01": ("inc-voice-melody-templates", "voc-pos-01"),
+    "tc1-voc-02": ("inc-voice-melody-templates", "voc-abs-01"),
+    "tc1-quad-01": ("inc-quadriliteral-templates", "quad-pos-01"),
+    "tc1-quad-02": ("inc-quadriliteral-templates", "quad-adv-01"),
+    "tc1-sab-01": ("inc-suffix-abstract-noun", "sab-pos-01"),
+    "tc1-sab-02": ("inc-suffix-abstract-noun", "sab-pos-02"),
+    "tc1-npv-01": ("inc-nongoverning-preverbal-inventory", "npv-pos-01"),
+    "tc1-npv-02": ("inc-nongoverning-preverbal-inventory", "npv-adv-01"),
+    "tc1-nrn-01": ("inc-nun-raf-vs-nun-niswa", "nrn-pos-01"),
+    "tc1-nrn-02": ("inc-nun-raf-vs-nun-niswa", "nrn-pos-02"),
+    "tc1-ihc-01": ("inc-initial-hamza-class", "ihc-pos-01"),
+    "tc1-ihc-02": ("inc-initial-hamza-class", "ihc-pos-02"),
+    "tc1-lfr-01": ("inc-lexical-feminine-registry", "lfr-pos-01"),
+    "tc1-lfr-02": ("inc-lexical-feminine-registry", "lfr-adv-01"),
+    "tc1-gem-01": ("inc-gemination-licensing", "gem-pos-01"),
+    "tc1-gem-02": ("inc-gemination-licensing", "gem-abs-02"),
+}
+
+_TC1_DECISIONS = ("candidate_pending", "abstain")
+_TC1_TEMPLATE_PROP = "template_classification_rows_decided"
+_TC1_DISCRIMINATOR_PROP = "discriminator_table_rows_decided"
+_TC1_NEVER_CERTIFIED_PROP = "never_certified"
+_TC1_GROUNDED_PROP = "fixture_binding_grounded_in_committed_pack"
+
+
+def _tc1_pack(increment, root=_REPO):
+    """MODULE-LEVEL indirection (mirrors `_dtc_pack`/`_ncd_pack`): the adapter below always calls this name,
+    never a pack+fixtures pair captured at import time, so a bounded mutation prover can swap this exact
+    function in memory and prove the decision genuinely depends on the loaded pack/fixture CONTENT."""
+    import tools.curriculum_unit_consumer as cu
+    return cu.load(increment)
+
+
+def adapter_template_classification_train1(rows, spec, ctx, root):
+    """sarf/evals/template-classification-train-1-eval.jsonl -> tools/curriculum_unit_consumer.py:
+    analyze_derivative (10 rows: the template_classification capability) and :analyze_discriminator_table (10
+    rows: the discriminator_table capability) -- the SAME two production functions the T2 batch's own
+    tools/test_tranche_002_template_classification.py already proves decide every one of the ten packs'
+    committed fixtures.jsonl.
+
+    This bank's own rows carry NO evidence dict (`id`/`increment`/`surface`/`class`/`expected_decision`/
+    `teaches` only) -- they can never themselves supply `letters`/`root_evidence`/`features` to the consumer,
+    so there is no I-1 echo surface to defend here. Instead every row id is bound (`_TC1_ROW_TO_FIXTURE`,
+    authored once by hand against the bank row's own surface/teaches text) to the exact fixture_id in that
+    pack's OWN committed fixtures.jsonl whose `input` this row replays; the adapter loads that pack+fixtures
+    pair fresh through `_tc1_pack` (never a value captured at import time), looks the fixture up by id, and
+    calls the real consumer named by the pack's own declared `capability` with that fixture's exact `input`. A
+    row whose declared `increment` disagrees with its binding, whose bound fixture_id no longer exists, or
+    whose bank-declared surface disagrees with the bound fixture's own surface fails closed rather than
+    silently reaching for a nearby fixture.
+
+    Wrong behaviour in EITHER real function turns the bank RED (tools/test_tranche_002_template_classification.py
+    mutates both independently, via the injected ctx slot AND via the EXTERNAL
+    tools/curriculum_unit_consumer.py module attribute, mirroring the derivational-template-carve/
+    nominal-class-discrimination mutation proofs). An eval fixture's own `expected_decision` can never by itself
+    certify anything: every row-level assertion below is the REAL consumer's own return value, never the bank's
+    copy of it.
+    """
+    fails, decided = [], 0
+    props = _Props()
+    template_rows = discriminator_rows = 0
+    seen_ids, byte_exact = set(), 0
+    for i, row in enumerate(rows):
+        rid = _rid(row, spec, i)
+        fails.extend(_required_field_failures(row, spec, rid))
+        if rid in seen_ids:
+            fails.append(_f(rid, _TC1_GROUNDED_PROP, "duplicate row id"))
+        seen_ids.add(rid)
+        surface = row.get("surface")
+        if surface:
+            cands = ctx.segment_candidates(surface)
+            if _concat_exact(cands, surface):
+                byte_exact += 1
+            else:
+                fails.append(_f(rid, _TC1_GROUNDED_PROP, "surface is not byte-exact through the segmenter"))
+        increment = row.get("increment")
+        binding = _TC1_ROW_TO_FIXTURE.get(row.get("id"))
+        if binding is None:
+            fails.append(_f(rid, _TC1_NEVER_CERTIFIED_PROP,
+                            "no fixture binding declared for this row id"))
+            continue
+        bound_increment, fixture_id = binding
+        if increment != bound_increment:
+            fails.append(_f(rid, _TC1_GROUNDED_PROP,
+                            "row declares increment %r but is bound to %r" % (increment, bound_increment)))
+            continue
+        unit, fixtures = _tc1_pack(increment, root)
+        fixture = next((f for f in fixtures if f.get("fixture_id") == fixture_id), None)
+        if fixture is None:
+            fails.append(_f(rid, _TC1_GROUNDED_PROP,
+                            "bound fixture %r no longer exists in %s/fixtures.jsonl" % (fixture_id, increment)))
+            continue
+        consumer_input = fixture.get("input") or {}
+        bound_surface = consumer_input.get("surface")
+        if bound_surface is None:
+            bound_surface = (consumer_input.get("features") or {}).get("lexeme_surface")
+        if row.get("surface") and bound_surface and row["surface"] != bound_surface:
+            fails.append(_f(rid, _TC1_GROUNDED_PROP,
+                            "bank surface %r disagrees with the bound fixture %r's surface %r"
+                            % (row["surface"], fixture_id, bound_surface)))
+        capability = unit.get("capability")
+        if capability == "template_classification":
+            rec = ctx.derivative_decide(consumer_input, unit)
+            decided_by, prop = _DER, _TC1_TEMPLATE_PROP
+            template_rows += 1
+        elif capability == "discriminator_table":
+            rec = ctx.discriminator_decide(consumer_input, unit)
+            decided_by, prop = _DISC, _TC1_DISCRIMINATOR_PROP
+            discriminator_rows += 1
+        else:
+            fails.append(_f(rid, _TC1_NEVER_CERTIFIED_PROP,
+                            "pack %r declares unknown capability %r" % (increment, capability)))
+            continue
+        decided += 1
+        props.hit(rid, decided_by, prop, _TC1_NEVER_CERTIFIED_PROP, _TC1_GROUNDED_PROP)
+        got_decision = rec.get("decision")
+        if got_decision not in _TC1_DECISIONS:
+            fails.append(_f(rid, prop, "consumer returned %r" % got_decision))
+        if "certified" in json.dumps(rec, ensure_ascii=False).lower():
+            fails.append(_f(rid, _TC1_NEVER_CERTIFIED_PROP, "the decision record claims a certified state"))
+        expected_decision = row.get("expected_decision")
+        if got_decision != expected_decision:
+            fails.append(_f(rid, prop,
+                            "decided %r via bound fixture %s/%s, bank expects %r"
+                            % (got_decision, increment, fixture_id, expected_decision)))
+    return fails, {"rows": len(rows), "decided_rows": decided,
+                   "template_classification_rows": template_rows,
+                   "discriminator_table_rows": discriminator_rows,
+                   "primary_applicable_rows": template_rows,
+                   "distinct_ids": len(seen_ids), "surfaces_byte_exact": byte_exact,
+                   "property_hits": props.as_metric()}
+
+
 def adapter_structural(rows, spec, ctx, root):
     """Structure/vocabulary gate for a bank with no behavioural consumer (fixture_only / candidate_no_consumer).
 
@@ -2057,6 +2204,7 @@ ADAPTERS = {
     "nominal_class_discrimination": adapter_nominal_class_discrimination,
     "weak_root_and_voice": adapter_weak_root_and_voice,
     "plural_gender_operationalization": adapter_plural_gender_operationalization,
+    "template_classification_train1": adapter_template_classification_train1,
     "structural": adapter_structural,
     "tranche_001_error_fixtures_a": adapter_tranche_001_error_fixtures_a,
     "tranche_001_error_fixtures_b1": adapter_tranche_001_error_fixtures_b1,

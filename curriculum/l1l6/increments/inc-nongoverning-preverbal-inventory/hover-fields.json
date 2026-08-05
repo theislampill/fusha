@@ -1,0 +1,14 @@
+{
+  "fields": [
+    {
+      "key": "nongoverning_preverbal_chip",
+      "teaching": "names the closed-registry class this particle+tense pair matched, never a mood/case/governor"
+    },
+    {
+      "key": "qad_deferred_note",
+      "teaching": "bare قد always abstains in this pack -- its tense-conditioned readings belong exclusively to inc-qad-tense-conditioned-sense, whose preserved rivals this pack never collapses"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

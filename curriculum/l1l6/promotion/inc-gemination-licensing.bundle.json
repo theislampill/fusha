@@ -1,0 +1,795 @@
+{
+  "candidate_procedure": "curriculum/l1l6/increments/inc-gemination-licensing/procedure.md",
+  "candidate_reference": "curriculum/l1l6/increments/inc-gemination-licensing/reference.md",
+  "candidate_registry_rows": [
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_slot_declaration_malformed; gemination_declaration_unbound; shadda_source_unresolved; shadda_not_in_surface; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+        "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+        "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+        "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "01b8c23d72a9a9c06afd0d887464b47f33c340a41e1db1168e3971b32bb70a00",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+          "id": "g-gem-6"
+        },
+        {
+          "guard": "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+          "id": "g-gem-7"
+        },
+        {
+          "guard": "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+          "id": "g-gem-8"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-adv-01",
+        "gem-adv-02",
+        "gem-adv-03"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02",
+        "gem-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two -- writing it as two base letters does not reconstruct the surface",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r1",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_slot_declaration_malformed; gemination_declaration_unbound; shadda_source_unresolved; shadda_not_in_surface; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+        "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+        "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+        "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "01b8c23d72a9a9c06afd0d887464b47f33c340a41e1db1168e3971b32bb70a00",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+          "id": "g-gem-6"
+        },
+        {
+          "guard": "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+          "id": "g-gem-7"
+        },
+        {
+          "guard": "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+          "id": "g-gem-8"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-adv-01",
+        "gem-adv-02",
+        "gem-adv-03"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02",
+        "gem-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence, checked only after the shape has matched",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r2",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_slot_declaration_malformed; gemination_declaration_unbound; shadda_source_unresolved; shadda_not_in_surface; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+        "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+        "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+        "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "01b8c23d72a9a9c06afd0d887464b47f33c340a41e1db1168e3971b32bb70a00",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+          "id": "g-gem-6"
+        },
+        {
+          "guard": "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+          "id": "g-gem-7"
+        },
+        {
+          "guard": "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+          "id": "g-gem-8"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-adv-01",
+        "gem-adv-02",
+        "gem-adv-03"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02",
+        "gem-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "the licence requires an EXACT declared environment: the bound slot/radical, and a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller's assertion that the source is written_shadda is never sufficient by itself; an unpointed surface, or one whose shadda sits on the wrong letter, buys nothing and the token abstains shadda_not_in_surface",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r3",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_slot_declaration_malformed; gemination_declaration_unbound; shadda_source_unresolved; shadda_not_in_surface; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+        "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+        "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+        "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "01b8c23d72a9a9c06afd0d887464b47f33c340a41e1db1168e3971b32bb70a00",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+          "id": "g-gem-6"
+        },
+        {
+          "guard": "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+          "id": "g-gem-7"
+        },
+        {
+          "guard": "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+          "id": "g-gem-8"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-adv-01",
+        "gem-adv-02",
+        "gem-adv-03"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02",
+        "gem-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal letter that fills the radical position -- an ordinary Form II root over any R2 (not only ر) is licensed exactly like any other, given the same declared environment and an attested basis; nothing is licensed by default, and an unattested basis abstains gemination_realization_unlicensed regardless of which letter fills R2",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r4",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_slot_declaration_malformed; gemination_declaration_unbound; shadda_source_unresolved; shadda_not_in_surface; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+        "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+        "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+        "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "01b8c23d72a9a9c06afd0d887464b47f33c340a41e1db1168e3971b32bb70a00",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+          "id": "g-gem-6"
+        },
+        {
+          "guard": "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+          "id": "g-gem-7"
+        },
+        {
+          "guard": "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+          "id": "g-gem-8"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-adv-01",
+        "gem-adv-02",
+        "gem-adv-03"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02",
+        "gem-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families: this pack declares no R4 slot, and inc-quadriliteral-templates declares no GEM slot, so the two never collide by construction",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r5",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_slot_declaration_malformed; gemination_declaration_unbound; shadda_source_unresolved; shadda_not_in_surface; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+        "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+        "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+        "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "01b8c23d72a9a9c06afd0d887464b47f33c340a41e1db1168e3971b32bb70a00",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+          "id": "g-gem-6"
+        },
+        {
+          "guard": "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+          "id": "g-gem-7"
+        },
+        {
+          "guard": "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+          "id": "g-gem-8"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-adv-01",
+        "gem-adv-02",
+        "gem-adv-03"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02",
+        "gem-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "mood (indicative/subjunctive/jussive) and cross-clitic-boundary idgham are impossible category errors for these two templates and are never consulted: fa33ala_perfect_active is a PERFECT-tense verb form (مبني -- it carries no mood inflection at all; mood only exists on the imperfect) and mufa33il_active_participle is a noun; neither template declares a clitic layer a merger could cross either. The doubled-ROOT جزم alternation (a geminate root genuinely losing its written doubling in the jussive, e.g. لم يَمْدُدْ from يَمُدُّ) is a DIFFERENT phenomenon over a different root/template family this pack does not declare -- conflating it with Form II's inherent, mood-invariant gemination was the recorded defect",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r6",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    },
+    {
+      "abstention_condition": "no_root_evidence; surface_letter_mismatch; no_template; gemination_slot_declaration_malformed; gemination_declaration_unbound; shadda_source_unresolved; shadda_not_in_surface; gemination_realization_unlicensed",
+      "code_references": [
+        "tools/curriculum_unit_consumer.py"
+      ],
+      "defeaters": [
+        "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+        "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+        "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+        "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+        "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+        "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+        "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+        "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+        "method transfers, conclusions do not; per-token doubling needs per-token evidence"
+      ],
+      "evidence_addresses": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+        "curriculum/l1l6/qualification/ (contributing lessons via canonical-units)"
+      ],
+      "fact_family": "template_classification",
+      "gate": "@curriculum-candidate:redfirst",
+      "guards_hash": "01b8c23d72a9a9c06afd0d887464b47f33c340a41e1db1168e3971b32bb70a00",
+      "guards_payload": [
+        {
+          "guard": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two",
+          "id": "g-gem-1"
+        },
+        {
+          "guard": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence checked only after the shape has matched",
+          "id": "g-gem-2"
+        },
+        {
+          "guard": "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
+          "id": "g-gem-3"
+        },
+        {
+          "guard": "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
+          "id": "g-gem-4"
+        },
+        {
+          "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
+          "id": "g-gem-5"
+        },
+        {
+          "guard": "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+          "id": "g-gem-6"
+        },
+        {
+          "guard": "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+          "id": "g-gem-7"
+        },
+        {
+          "guard": "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+          "id": "g-gem-8"
+        },
+        {
+          "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",
+          "id": "g-gem-m"
+        }
+      ],
+      "negative_or_boundary_examples": [
+        "gem-abs-01",
+        "gem-abs-02",
+        "gem-abs-03",
+        "gem-abs-04",
+        "gem-adv-01",
+        "gem-adv-02",
+        "gem-adv-03"
+      ],
+      "positive_examples": [
+        "gem-pos-01",
+        "gem-pos-02",
+        "gem-pos-03"
+      ],
+      "provenance": "curriculum/l1l6/increments/inc-gemination-licensing/unit-v1.json",
+      "relationships": {
+        "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "scope": {
+        "increment": "inc-gemination-licensing",
+        "statement": "this pack is a narrow RIVAL to cu-voice-melody-templates/cu-passive-voice-vocalization (inc-voice-melody-templates' letter-identical f2_perfect_active/f2_perfect_passive rows) and to inc-derivatives' mu_participle (the same مُـ+radicals skeleton): every one of these packs independently requires its own genuinely WRITTEN mark before resolving the same cell, so an unpointed Form II shape abstains under all three -- never a candidate under one pack while a rival abstains. This pack's own ownership is narrow: it licenses ONLY the doubling itself once a shape has already matched; it never resolves voice, never distinguishes participle from place/time noun, and never derives an un-geminated variant",
+        "unit_ref": "cu-gemination-licensing"
+      },
+      "skill": "sarf",
+      "skill_rule_id": "curr-gemination-licensing-gem-r7",
+      "skill_version": "@curriculum-candidate",
+      "status": "candidate",
+      "test_references": [
+        "curriculum/l1l6/increments/inc-gemination-licensing/fixtures.jsonl"
+      ]
+    }
+  ],
+  "capability": "template_classification",
+  "exact_consumer": "tools/curriculum_unit_consumer.py",
+  "exact_regression_command": "python tools/curriculum_unit_consumer.py --increment inc-gemination-licensing",
+  "expected_mirror_impact": [
+    "qamus/skills/rule-registry (candidate rows only, Sol-applied)",
+    "sarf/ or nahw/ drills (staged explanation adoption, Sol-applied)",
+    "no live surface, no certified store"
+  ],
+  "fixtures_by_class": {
+    "abstention": [
+      "gem-abs-01",
+      "gem-abs-02",
+      "gem-abs-03",
+      "gem-abs-04"
+    ],
+    "adversarial": [
+      "gem-adv-01",
+      "gem-adv-02",
+      "gem-adv-03"
+    ],
+    "positive": [
+      "gem-pos-01",
+      "gem-pos-02",
+      "gem-pos-03"
+    ]
+  },
+  "flywheel_evidence": "no recorded loop yet (fixtures-only evidence)",
+  "increment": "inc-gemination-licensing",
+  "learner_explanation_ladder": {},
+  "machine_unit_pack": {
+    "abstention_reasons": [
+      "no_root_evidence",
+      "surface_letter_mismatch",
+      "no_template",
+      "gemination_slot_declaration_malformed",
+      "gemination_declaration_unbound",
+      "shadda_source_unresolved",
+      "shadda_not_in_surface",
+      "gemination_realization_unlicensed"
+    ],
+    "capability": "template_classification",
+    "gemination_realizations": {
+      "by_template": {
+        "fa33ala_perfect_active": {
+          "R2": {
+            "qamus_entry_ladder": {
+              "licensed": true
+            }
+          }
+        },
+        "mufa33il_active_participle": {
+          "R2": {
+            "qamus_entry_ladder": {
+              "licensed": true
+            }
+          }
+        }
+      }
+    },
+    "gemination_templates": {
+      "fa33ala_perfect_active": "R2",
+      "mufa33il_active_participle": "R2"
+    },
+    "increment": "inc-gemination-licensing",
+    "rules": [
+      {
+        "id": "gem-r1",
+        "text": "a shadda is never transparent to the skeleton: a geminated radical occupies exactly ONE written letter position, never two -- writing it as two base letters does not reconstruct the surface"
+      },
+      {
+        "id": "gem-r2",
+        "text": "a GEM slot matches the written letter exactly like an ordinary radical slot; the doubling itself is a SEPARATE licence, checked only after the shape has matched"
+      },
+      {
+        "id": "gem-r3",
+        "text": "the licence requires an EXACT declared environment: the bound slot/radical, and a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller's assertion that the source is written_shadda is never sufficient by itself; an unpointed surface, or one whose shadda sits on the wrong letter, buys nothing and the token abstains shadda_not_in_surface"
+      },
+      {
+        "id": "gem-r4",
+        "text": "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal letter that fills the radical position -- an ordinary Form II root over any R2 (not only ر) is licensed exactly like any other, given the same declared environment and an attested basis; nothing is licensed by default, and an unattested basis abstains gemination_realization_unlicensed regardless of which letter fills R2"
+      },
+      {
+        "id": "gem-r5",
+        "text": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families: this pack declares no R4 slot, and inc-quadriliteral-templates declares no GEM slot, so the two never collide by construction"
+      },
+      {
+        "id": "gem-r6",
+        "text": "mood (indicative/subjunctive/jussive) and cross-clitic-boundary idgham are impossible category errors for these two templates and are never consulted: fa33ala_perfect_active is a PERFECT-tense verb form (مبني -- it carries no mood inflection at all; mood only exists on the imperfect) and mufa33il_active_participle is a noun; neither template declares a clitic layer a merger could cross either. The doubled-ROOT جزم alternation (a geminate root genuinely losing its written doubling in the jussive, e.g. لم يَمْدُدْ from يَمُدُّ) is a DIFFERENT phenomenon over a different root/template family this pack does not declare -- conflating it with Form II's inherent, mood-invariant gemination was the recorded defect"
+      },
+      {
+        "id": "gem-r7",
+        "text": "this pack is a narrow RIVAL to cu-voice-melody-templates/cu-passive-voice-vocalization (inc-voice-melody-templates' letter-identical f2_perfect_active/f2_perfect_passive rows) and to inc-derivatives' mu_participle (the same مُـ+radicals skeleton): every one of these packs independently requires its own genuinely WRITTEN mark before resolving the same cell, so an unpointed Form II shape abstains under all three -- never a candidate under one pack while a rival abstains. This pack's own ownership is narrow: it licenses ONLY the doubling itself once a shape has already matched; it never resolves voice, never distinguishes participle from place/time noun, and never derives an un-geminated variant"
+      }
+    ],
+    "schema": "curriculum.l1l6_machine_unit.v1",
+    "status": "candidate",
+    "templates": [
+      {
+        "class": "form_ii_perfect_active",
+        "id": "fa33ala_perfect_active",
+        "name": "Form II perfect, R2 geminated (فَعَّلَ)",
+        "shape": [
+          "R1",
+          "GEM",
+          "R3"
+        ]
+      },
+      {
+        "class": "form_ii_active_participle",
+        "id": "mufa33il_active_participle",
+        "name": "Form II active participle, R2 geminated (مُفَعِّل)",
+        "shape": [
+          "م",
+          "R1",
+          "GEM",
+          "R3"
+        ]
+      }
+    ],
+    "unit_ref": "cu-gemination-licensing",
+    "version": 1
+  },
+  "no_auto_promotion": true,
+  "occurrence_applications": [],
+  "registry_row_schema_source": "key set of qamus/skills/rule-registry.jsonl rows (current main); validated field-for-field by tools/validate_curriculum_l1l6.py",
+  "rich_hover_fields": [
+    {
+      "key": "gemination_template_chip",
+      "teaching": "names the matched template and the GEM slot that carries the doubled radical"
+    },
+    {
+      "key": "gemination_licence_note",
+      "teaching": "shows the exact declared environment (the bound slot/radical, and the shadda source VERIFIED against the actual written surface at the GEM slot's own letter position) plus the evidence's attested basis that licensed the doubling, or the exact reason it did not -- mood and cross-clitic-boundary idgham are impossible category errors for these templates and are never consulted"
+    }
+  ],
+  "rollback_condition": "remove the increment dir; discovery drops it; no other artifact mutates",
+  "schema": "curriculum.l1l6_promotion_bundle.v1",
+  "status": "candidate_awaiting_sol_review"
+}

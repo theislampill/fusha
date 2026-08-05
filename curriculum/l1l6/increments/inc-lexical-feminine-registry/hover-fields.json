@@ -1,0 +1,14 @@
+{
+  "fields": [
+    {
+      "key": "lexical_feminine_chip",
+      "teaching": "marks the noun as feminine by closed-registry membership, never by shape"
+    },
+    {
+      "key": "registry_membership_note",
+      "teaching": "shows the exact registered lexeme this surface matched, or that no registry entry applies"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

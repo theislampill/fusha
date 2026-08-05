@@ -31,6 +31,13 @@ def _jsonl(p):
     return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
 
 
+def _unit_refs(pack):
+    """Return every canonical-unit contribution while preserving the legacy
+    singular primary reference used by the current rule-registry shape."""
+    return [ref for ref in (pack.get("unit_refs") or [pack.get("unit_ref")])
+            if ref]
+
+
 
 
 def _full_registry_row(inc, pack_file, pack, rule, inc_dir, loop):
@@ -49,9 +56,11 @@ def _full_registry_row(inc, pack_file, pack, rule, inc_dir, loop):
           if l.strip()]
     pos = [f["fixture_id"] for f in fx if f["class"] in ("positive", "transfer")]
     neg = [f["fixture_id"] for f in fx if f["class"] in ("adversarial", "abstention")]
-    return {
+    unit_refs = _unit_refs(pack)
+    unit_ref = unit_refs[0] if unit_refs else None
+    row = {
         "skill_rule_id": "curr-%s-%s" % (inc.replace("inc-", ""), rule["id"]),
-        "skill": "sarf" if pack.get("unit_ref", "").startswith(("u-s", "cu-"))
+        "skill": "sarf" if (unit_ref or "").startswith(("u-s", "cu-"))
                  and pack.get("capability") in ("letter_ownership",
                                                 "template_classification")
                  else "nahw",
@@ -60,7 +69,7 @@ def _full_registry_row(inc, pack_file, pack, rule, inc_dir, loop):
         "gate": ("@curriculum-candidate:redfirst+loop-measured" if loop
                  else "@curriculum-candidate:redfirst"),
         "fact_family": pack.get("capability"),
-        "scope": {"unit_ref": pack.get("unit_ref"), "increment": inc,
+        "scope": {"unit_ref": unit_ref, "increment": inc,
                   "statement": rule["text"]},
         "abstention_condition": "; ".join(pack.get("abstention_reasons", []))
                                 or "insufficient evidence -> abstain",
@@ -72,12 +81,16 @@ def _full_registry_row(inc, pack_file, pack, rule, inc_dir, loop):
         "defeaters": [g["guard"] for g in guard_payload],
         "guards_payload": guard_payload,
         "guards_hash": guard_hash,
-        "relationships": {"unit_ref": pack.get("unit_ref"),
+        "relationships": {"unit_ref": unit_ref,
                           "harness": "tools/curriculum_unit_consumer.py (NON-AUTHORITATIVE)"},
         "code_references": ["tools/curriculum_unit_consumer.py"],
         "test_references": [fixtures_path],
         "provenance": "curriculum/l1l6/increments/%s/%s" % (inc, pack_file),
     }
+    if pack.get("unit_refs"):
+        row["scope"]["unit_refs"] = unit_refs
+        row["relationships"]["unit_refs"] = unit_refs
+    return row
 
 def build():
     inc_dir = BASE / "increments"
@@ -99,7 +112,7 @@ def build():
         unit_recs = [u for u in units if inc in u.get("machine_increments", [])]
         loop = next((l for l in loops if l["increment"] == inc), None)
         rules = pack.get("rules", [])
-        bundles["%s.bundle.json" % inc] = {
+        bundle = {
             "schema": "curriculum.l1l6_promotion_bundle.v1",
             "increment": inc,
             "capability": pack.get("capability"),
@@ -135,6 +148,9 @@ def build():
                 "remove the increment dir; discovery drops it; no other artifact mutates"),
             "no_auto_promotion": True,
         }
+        if pack.get("unit_refs"):
+            bundle["unit_refs"] = _unit_refs(pack)
+        bundles["%s.bundle.json" % inc] = bundle
     return bundles
 
 

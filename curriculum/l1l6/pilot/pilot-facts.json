@@ -12,7 +12,7 @@
     }
   ],
   "notes": [
-    "clean-room pilot: tokens are independently selected standard examples, NOT lesson-passage words (kitabite ruling)",
+    "clean-room pilot: tokens are independently selected standard examples, NOT lesson-passage words (source-site ruling)",
     "candidate-mode only: no quran loc, no live Qamus fact touched, nothing certified",
     "letter ownership classes: root | pattern_augment | clitic | inflection",
     "final short case vowel is hover-only (owner decision D-5 analogue: tanwin/case hover-only OK)"

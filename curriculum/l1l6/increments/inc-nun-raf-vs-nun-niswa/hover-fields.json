@@ -1,0 +1,14 @@
+{
+  "fields": [
+    {
+      "key": "nun_identity_chip",
+      "teaching": "names which نون (رفع vs نسوة) the POS + preceding-letter evidence decided"
+    },
+    {
+      "key": "preceding_letter_evidence_note",
+      "teaching": "shows the exact preceding-letter class (long-glide vs consonant-final) that separated the two families"
+    }
+  ],
+  "schema": "curriculum.l1l6_hover_fields.v1",
+  "status": "candidate"
+}

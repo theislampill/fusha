@@ -5,7 +5,7 @@
 The real L1-L6 corpus is private (custody boundary), so CI proves builder
 determinism + extraction semantics on the committed clean-room fixture corpus
 (curriculum/l1l6/testdata/fixture-corpus — synthetic lessons authored for
-this repo, zero kitabite content):
+this repo, zero source-site content):
 
 1. build twice into two temp dirs -> every artifact byte-identical
    (determinism);

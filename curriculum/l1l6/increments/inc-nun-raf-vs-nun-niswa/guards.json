@@ -1,0 +1,22 @@
+{
+  "guards": [
+    {
+      "guard": "نون الرفع and نون النسوة are DISTINCT نونs; this pack classifies IDENTITY only, never a mood, case or governor",
+      "id": "g-nrn-1"
+    },
+    {
+      "guard": "both POS and the preceding-letter evidence are required together; a contradictory pairing never licenses either نون",
+      "id": "g-nrn-2"
+    },
+    {
+      "guard": "occurrence-level dropping of نون الرفع under a governor is a Naḥw fact this pack never emits",
+      "id": "g-nrn-3"
+    },
+    {
+      "guard": "method transfers, conclusions do not",
+      "id": "g-nrn-m"
+    }
+  ],
+  "schema": "curriculum.l1l6_increment_guards.v1",
+  "status": "candidate"
+}
