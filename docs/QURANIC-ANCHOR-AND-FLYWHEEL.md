@@ -1,7 +1,7 @@
 # The Qurʾānic Anchor and the Flywheel — project charter
 
 **Status:** first-class project charter (owner-adopted 2026-07-10). This document governs
-how the project describes itself. Companion: `research/QURANIC-ANCHOR-EVALUATION-PLAN.md`
+how the project describes itself. Companion: `docs/QURANIC-ANCHOR-EVALUATION-PLAN.md`
 (the falsifiable comparative program). Every substantial claim in this document — and in
 any project document that cites it — carries one of four explicit epistemic labels:
 
@@ -112,7 +112,7 @@ cross-corpus experiment has yet been run.
 ## 5. TESTABLE HYPOTHESES (the comparative research program — strong, explicit, falsifiable)
 
 The owner's thesis predicts, and the evaluation plan operationalizes (H-numbers refer to
-`research/QURANIC-ANCHOR-EVALUATION-PLAN.md`):
+`docs/QURANIC-ANCHOR-EVALUATION-PLAN.md`):
 
 - **H1** — the Qurʾān produces greater provenance completeness (canonical addressing,
   token-identity and version stability, vocalization coverage) than alternative seed

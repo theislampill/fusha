@@ -212,3 +212,31 @@ shut, the honest closing comment is "candidate-complete, awaiting deploy window"
 **Custody in one line:** what may be committed, what must stay private, and how to cite evidence
 publicly are governed by `CONTRIBUTING.md`, with the enforceable detail in
 `provenance/source-boundaries.md` and `docs/evidence-custody.md`.
+
+## 6. Directory census (top level — complete against `git ls-tree`, audited 2026-08-05)
+
+Every top-level entry, its purpose, and its primary consumer. Verdicts from the 2026-08-05
+organization audit; the pending-disposition items it opened were closed by the 2026-08-05 hygiene
+batch and now carry their disposition inline. `docs/INDEX.md` carries the cold-reader subset.
+
+| Entry | Purpose | State |
+|---|---|---|
+| `sarf/`, `nahw/` | The canonical skill engines (SKILL.md + procedures/rules/references/evals) | active |
+| `skills/` | ~2KB installable wrappers deferring to the engines; hash-tracked in `skills/registry/skill-mirror-map.json` | active |
+| `qamus/` | The lexicon product plane: `data` (2,092-entry SSOT) · `lattice` (derived projections) · `indexes` (LargeLexicon queues) · `certification` (fact plane) · `schemas` (contracts) · `examples` (gate-consumed fixtures) · `reports` (evidence) · `candidates` · `skills` (rule registry — JSONL fact rows, not a skill) | active |
+| `fusha/` | The parser/morphology substrate plane (lexicon/morphology/parser schemas, fixtures, model cards) — distinct from `qamus/`; name collision with the repo is historical | active |
+| `curriculum/` | The 234-lesson substrate (l1l6 clean-room metadata, canonical units, tranches, drills, keys) | active |
+| `tools/` | The engine: ~550 builders/validators/tests; `tools/check_regressions.py` is the merge gate | active |
+| `scripts/` | Install/distribution (skill installers, claude.ai pack builder) — deliberate split from `tools/` | active |
+| `dist/` | claude.ai Project-Knowledge pack allowlist + manifest + self-tests (payload itself is gitignored) | active |
+| `sources/` | External source adapters (qac/quran_com/tanzil/tafsir_mcp) + artifact ledger | active |
+| `corpora/` | Owner-gated corpus staging (`sahihayn/` is deliberately PLAN-only, no ḥadīth content staged) | active |
+| `eval/` | FUSHA-BENCH v1 (frozen benchmark: data manifest, model card, report, quarantine) | active |
+| `provenance/` | Source-boundary and public-runnability doctrine | active |
+| `docs/` | Architecture canon, subsystem as-built maps, operational docs, `INDEX.md` authority precedence, `reports/history/` (quarantined dated evidence) | active |
+| `impl-records/` | Implementation evidence records — **known gap: 12/22 referenced evidence addresses live in the operator workspace, not the clone** (open; also flagged in `docs/INDEX.md`) | active, gap flagged |
+| `research/` | One companion file to the Qurʾānic-anchor charter | **folded into `docs/` 2026-08-05** — now `docs/QURANIC-ANCHOR-EVALUATION-PLAN.md`; the directory no longer exists |
+| `attic/` | Deliberate archive with per-file retirement evidence and restore procedure (D-11 pattern) | deliberate-archive |
+| `prep/`, `.IMPLEMENTAUDIT/` | Closed one-shot migration + committed skill scratch state — zero consumers | **retired to `attic/` 2026-08-05** — `attic/prep/` + `attic/IMPLEMENTAUDIT-runs/`; `.IMPLEMENTAUDIT/` is now gitignored |
+| root data artifacts (`fd*`, `vn-*`, `PROOFN-MANIFEST.json`) | Consumed calibration/ledger inputs | **relocated to `qamus/reports/` 2026-08-05** — `calibration-455/`, `proofn/`, and the `vn-*` trio at `qamus/reports/`; every consumer re-pointed |
+| `.github/`, `.gitattributes`, `.gitignore` | CI workflow gate, byte-stability policy (`*.jsonl text eol=lf` keeps sha256 pins platform-stable), ignore rules | active |

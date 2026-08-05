@@ -13,6 +13,23 @@ in this repo is classified below as **authoritative**, **historical**,
 **generated**, **example**, or **superseded**, with a one-line role. When two
 documents disagree, the authority-precedence order in §1 decides.
 
+### Root namespace (2026-08-05)
+
+Top-level directories a cold reader is most likely to mis-read. The complete
+top-level census, with per-entry verdicts, is the directory-census table in
+`PRODUCT.md`.
+
+| Entry | What it is | Note |
+|---|---|---|
+| `fusha/` | The parser/morphology substrate plane: lexicon/morphology/parser schemas, fixtures, model cards. | **Not** the repo root and **not** `qamus/`. The name collision with the repository is historical. |
+| `dist/` | claude.ai Project-Knowledge pack: allowlist, manifest, self-tests. | The pack payload itself is gitignored (`dist/claude-ai/pack/`); rebuild with `scripts/build_claude_ai_project_pack.py`. |
+| `scripts/` | Install/distribution only — skill installers, the claude.ai pack builder. | Deliberately split from `tools/`; `tools/` holds the engine and the merge gate. |
+| `sources/` | External source adapters (`qac`, `quran_com`, `tanzil`, `tafsir_mcp`) plus the artifact ledger. | Adapter code and ledgers only; raw external text stays private (`provenance/source-boundaries.md`). |
+| `corpora/` | Owner-gated corpus staging. | `corpora/sahihayn/` is deliberately PLAN-only — no ḥadīth content is staged. |
+| `impl-records/` | Implementation evidence records. | **Known gap:** 12 of 22 referenced evidence addresses resolve into the operator workspace, not this clone. Treat those addresses as unverifiable from a fresh checkout. |
+| `research/` | *Retired 2026-08-05.* | Its single file folded into `docs/QURANIC-ANCHOR-EVALUATION-PLAN.md`. No `research/` directory exists. |
+| `attic/` | Deliberate archive (D-11 pattern): retired code and evidence with per-file zero-consumer evidence and a restore procedure. | `attic/README.md` is the register. Nothing here is on a production path; the 2026-08-05 sweep section records the second wave. |
+
 ## 1. Authority precedence (§26, owner-ruled 2026-07-29 — controlling)
 
 1. **Verified repo artifacts + tests** (schemas, validators, committed data,
