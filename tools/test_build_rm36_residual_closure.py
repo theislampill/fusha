@@ -182,35 +182,9 @@ class ResidualClosureTests(unittest.TestCase):
             },
         )
 
-    def test_proposed_regression_hunk_is_scoped_but_not_applied(self):
-        hunk = self.mod.proposed_regression_hunk_bytes().decode("utf-8")
-        self.assertIn("diff --git a/tools/check_regressions.py b/tools/check_regressions.py", hunk)
-        self.assertIn("build_rm36_residual_closure.py", hunk)
-        self.assertIn('"--check"', hunk)
-        self.assertTrue(hunk.endswith("\n"))
-        checked = subprocess.run(
-            ["git", "apply", "--check", "-"],
-            cwd=self.mod.REPO_ROOT,
-            input=self.mod.proposed_regression_hunk_bytes(),
-            capture_output=True,
-            check=False,
-        )
-        self.assertEqual(checked.returncode, 0, checked.stderr.decode("utf-8", errors="replace"))
-
-    def test_patch_bytes_are_not_line_ending_normalized_by_git(self):
-        paths = [
-            str(self.mod.HUNK_PATH.relative_to(self.mod.REPO_ROOT)),
-            str(self.mod.ATTRIBUTES_PATH.relative_to(self.mod.REPO_ROOT)),
-        ]
-        checked = subprocess.run(
-            ["git", "check-attr", "text", "--", *paths],
-            cwd=self.mod.REPO_ROOT,
-            text=True,
-            capture_output=True,
-            check=False,
-        )
-        self.assertEqual(checked.returncode, 0, checked.stderr)
-        self.assertEqual(checked.stdout.count("text: unset"), 2, checked.stdout)
+    # The proposed check_regressions hunk and the dir-local .gitattributes that pinned
+    # its byte form were dropped on 2026-08-05 (never applied); the two tests that
+    # asserted their shape were removed with them.
 
 
 if __name__ == "__main__":

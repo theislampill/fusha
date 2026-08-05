@@ -1,26 +1,21 @@
 {
-  "generated_by": "qamus/reports/rm36-residual-closure/build_rm36_residual_closure.py",
+  "generated_by": "tools/build_rm36_residual_closure.py",
   "inputs": {
     "qamus/indexes/quran-loc-surface/index.jsonl": "97efbaca345d5f23d9e9c699eef155f5bf4e06bb725e430729a8962b1573d227",
     "qamus/indexes/quran-loc-surface/index.manifest.json": "daa4d843ab4823a0247fb57ec5dc714d87b39e850b8a95b1dc9e13cdc4775190",
     "qamus/reports/rm36-fallback-reverification/demotion-wave.report.json": "33842231832b311208efcdc5c9f09ffec6b868d5ad4f2f80d98e94b4a98b41a5",
     "qamus/reports/rm36-fallback-reverification/failing-rows.jsonl": "daef516d135db0dd361c84e6b5f2b8f330bbe97a8e4ad0f050bdb9d317fedd23",
-    "qamus/reports/rm36-fallback-reverification/residual-reclassification.report.json": "2f88386232cfbe3de5101214c5591810997596281ee4666631a780f809587b79",
-    "qamus/reports/rm36-residual-closure/.gitattributes": "fb9a23962ad7ca9cb58a26f88c6abf27a576726f1d56b49a16e9f890ee7f8717"
+    "qamus/reports/rm36-fallback-reverification/residual-reclassification.report.json": "2f88386232cfbe3de5101214c5591810997596281ee4666631a780f809587b79"
   },
   "outputs": {
-    "qamus/reports/rm36-residual-closure/check-regressions.proposed.patch": {
-      "bytes": 1130,
-      "sha256": "332d2b27c0a84a696813d1f23c924b5660fbbc22ff0fe5b13a6e65fd29991952"
-    },
     "qamus/reports/rm36-residual-closure/residual-closure.jsonl": {
-      "bytes": 615810,
+      "bytes": 615786,
       "row_count": 479,
-      "sha256": "4f7ce3f1e1c78a655cd481a51a322f7e8a0a6ed992c6f70580dd603b243846e0"
+      "sha256": "fd330d7c9fc1c3dd7809feff9873a4158f8a6f103d7ded8ebd8efd303abc8166"
     },
     "qamus/reports/rm36-residual-closure/rm36-residual-closure.report.json": {
-      "bytes": 10229,
-      "sha256": "d21aefb3f41524eb177defb73c6847399fc9b762a301302b952bf5efce1b312d"
+      "bytes": 9889,
+      "sha256": "e532c4303076d4391f4606e471828993dad889f369fab3b8cc6fde71ddc9eb97"
     }
   },
   "schema": "fusha/rm36-residual-closure-manifest@1"
