@@ -5,6 +5,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+# Moved-report banner: emitted by the generator so regeneration stays byte-identical.
+HISTORICAL_BANNER = ("> **Historical lane report** (moved from the repo root 2026-08-05). Point-in-time evidence; tallies herein are superseded — current state lives in `docs/current-state.yaml` and the generated ledgers. Do not quote numbers from this file.\n\n")
+
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -110,5 +114,5 @@ def build_report() -> str:
 
 if __name__ == "__main__":
     _output = ROOT / "docs" / "reports" / "history" / "2026-07-16-FD-REPORT.md"
-    _output.write_text(build_report(), encoding="utf-8", newline="\n")
+    _output.write_text(HISTORICAL_BANNER + build_report(), encoding="utf-8", newline="\n")
     print(f"{_output.relative_to(ROOT)} generated")

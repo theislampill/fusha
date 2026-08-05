@@ -22,6 +22,10 @@ if str(_ROOT) not in sys.path:
 from tools import build_occurrence_appearance_index
 from tools import fd_compiler
 
+# Moved-report banner: emitted by the generator so regeneration stays byte-identical.
+HISTORICAL_BANNER = ("> **Historical lane report** (moved from the repo root 2026-08-05). Point-in-time evidence; tallies herein are superseded — current state lives in `docs/current-state.yaml` and the generated ledgers. Do not quote numbers from this file.\n\n")
+
+
 
 def _read_jsonl(path: Path) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
@@ -267,7 +271,7 @@ def run_rerun(
     _write_jsonl(verdicts_path, row_verdicts)
     _write_json(meta_path, meta)
     Path(markdown_path).parent.mkdir(parents=True, exist_ok=True)
-    Path(markdown_path).write_text(render_markdown(report, row_verdicts), encoding="utf-8")
+    Path(markdown_path).write_text(HISTORICAL_BANNER + render_markdown(report, row_verdicts), encoding="utf-8")
     return report, row_verdicts
 
 

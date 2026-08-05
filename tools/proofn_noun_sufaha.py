@@ -24,6 +24,10 @@ from tools import fam2_lexical_producer
 from tools import fd_compiler
 from tools.build_typed_edge_crosswalk import SCHEMA as GRAPH_SCHEMA
 
+# Moved-report banner: emitted by the generator so regeneration stays byte-identical.
+HISTORICAL_BANNER = ("> **Historical lane report** (moved from the repo root 2026-08-05). Point-in-time evidence; tallies herein are superseded — current state lives in `docs/current-state.yaml` and the generated ledgers. Do not quote numbers from this file.\n\n")
+
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PROOF_DIR = ROOT / "qamus" / "examples" / "proof-noun-sufaha"
@@ -934,7 +938,7 @@ def write_artifacts(proof: Mapping[str, Any], output_dir: Path | str = PROOF_DIR
     _write_json(output / "proofn-validation.json", {"status": "pending_validator_run", "errors": []})
     _write_json(ROOT / "PROOFN-MANIFEST.json", proof["manifest"])
     _report_path = ROOT / "docs" / "reports" / "history" / "2026-07-17-PROOFN-REPORT.md"
-    _report_path.write_text(proof["report"], encoding="utf-8")
+    _report_path.write_text(HISTORICAL_BANNER + proof["report"], encoding="utf-8")
     return {
         "manifest": ROOT / "PROOFN-MANIFEST.json",
         "report": _report_path,
