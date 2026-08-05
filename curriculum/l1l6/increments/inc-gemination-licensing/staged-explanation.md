@@ -9,12 +9,19 @@ pronounced twice — the doubling is a mark, not an extra letter.
 **Stage 2** — the doubled letter still has to be the RIGHT letter in the
 RIGHT slot: matching the shape first, then checking the doubling is
 licensed, is why كَبَّرَ's ب doesn't accidentally license doubling
-somewhere this pack hasn't approved.
+somewhere this pack hasn't approved — and كَبَّرَ resolves exactly like
+دَرَّسَ once its own shadda is genuinely written, because the licence
+is about the attested environment, not about which one letter happens to
+sit at R2.
 
-**Stage 3** — a shadda that's only ASSUMED (never actually written) proves
-nothing — our hover waits for the real mark.
+**Stage 3** — a shadda that's only ASSERTED (never actually WRITTEN on the
+surface itself, at that exact letter) proves nothing — our hover waits for
+the real mark at the real position, not a caller's say-so.
 
-**Stage 4** — after لم/لن-type governors the geminated verb can lose its
-double letter in writing (جزم forms) — that's a completely different
-written word this pack doesn't try to derive; it only classifies the
-geminated shape it's actually given.
+**Stage 4** — mood and cross-clitic idgham simply don't apply here: a
+perfect-tense verb like دَرَّسَ carries no mood at all, and مُدَرِّس is a
+noun — neither ever asks the question. (The verb family that DOES lose its
+double letter after لم/لن-type governors — a geminate ROOT like يَمُدُّ
+losing it in لم يَمْدُدْ — is a different root/template family this pack
+does not cover; it only classifies the geminated Form II shape it's
+actually given.)

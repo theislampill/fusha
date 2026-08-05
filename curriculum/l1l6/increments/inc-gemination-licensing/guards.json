@@ -9,16 +9,28 @@
       "id": "g-gem-2"
     },
     {
-      "guard": "the licence requires an EXACT declared environment: bound slot/radical, a written (never assumed) shadda source, non-jussive mood, and word-internal (never cross-boundary) merger",
+      "guard": "the licence requires an EXACT declared environment: bound slot/radical AND a shadda source VERIFIED against the actual written surface at the GEM slot's own letter position -- a caller assertion alone never licenses the doubling",
       "id": "g-gem-3"
     },
     {
-      "guard": "the jussive's un-geminated realization of the same root is a DIFFERENT written form this pack does not cover; it is never derived from the geminated one",
+      "guard": "the licence is keyed to the template+slot's ATTESTED evidence basis, never to the literal radical letter -- any structurally-bound R2 is licensed exactly like any other given the same environment and an attested basis; nothing is licensed by default",
       "id": "g-gem-4"
     },
     {
       "guard": "triliteral doubling/gemination and quadriliteral templates are DISTINCT families and never collide by construction",
       "id": "g-gem-5"
+    },
+    {
+      "guard": "mood and cross-clitic-boundary idgham are impossible category errors for a perfect-tense verb / participle template and are never consulted by this pack -- the geminate-root jussive alternation is a different root/template family this pack does not declare",
+      "id": "g-gem-6"
+    },
+    {
+      "guard": "this pack is a narrow rival to cu-voice-melody-templates/cu-passive-voice-vocalization and to inc-derivatives' mu_participle over the same letter-identical shapes; an unpointed Form II cell abstains under every rival pack, never a candidate under one while another abstains",
+      "id": "g-gem-7"
+    },
+    {
+      "guard": "a declared merge slot the pack cannot resolve to a real R-slot, or that disagrees with the template's own shape, fails closed rather than raising or guessing",
+      "id": "g-gem-8"
     },
     {
       "guard": "method transfers, conclusions do not; per-token doubling needs per-token evidence",

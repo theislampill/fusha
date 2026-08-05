@@ -234,8 +234,11 @@ class QuadriliteralTemplateR4Tests(unittest.TestCase):
 
 
 class GeminationLicensingTests(unittest.TestCase):
-    """cu-gemination-licensing (L5.M4.02): an exact declared environment is required; unresolved
-    shadda source, jussive variants and cross-boundary mergers all abstain."""
+    """cu-gemination-licensing (L5.M4.02): an exact declared environment is required, VERIFIED
+    against the actual written surface -- a caller assertion alone never licenses the doubling --
+    and the licence is keyed to the evidence's attested basis, never to the literal radical
+    letter. Mood and cross-clitic-boundary idgham are impossible category errors for these
+    perfect-tense/participle templates and are never consulted."""
 
     def setUp(self):
         self.unit, self.fixtures = cu.load("inc-gemination-licensing")
@@ -243,10 +246,9 @@ class GeminationLicensingTests(unittest.TestCase):
     def _base(self, **overrides):
         ev = {"basis": "qamus_entry_ladder", "radicals": list("درس"),
               "gemination_position": "R2", "gemination_radical": "ر",
-              "gemination_evidence": {"shadda_source": "written_shadda",
-                                      "mood": "indicative", "boundary": "word_internal"}}
+              "gemination_evidence": {"shadda_source": "written_shadda"}}
         ev.update(overrides.pop("root_evidence_overrides", {}))
-        inp = {"letters": list("درس"), "surface": "درس", "root_evidence": ev}
+        inp = {"letters": list("درس"), "surface": "دَرَّسَ", "root_evidence": ev}
         inp.update(overrides)
         return inp
 
@@ -264,38 +266,65 @@ class GeminationLicensingTests(unittest.TestCase):
     def test_unresolved_shadda_source_abstains(self):
         ev = {"basis": "qamus_entry_ladder", "radicals": list("درس"),
               "gemination_position": "R2", "gemination_radical": "ر",
-              "gemination_evidence": {"shadda_source": "assumed",
-                                      "mood": "indicative", "boundary": "word_internal"}}
+              "gemination_evidence": {"shadda_source": "assumed"}}
         rec = cu.analyze_derivative({"letters": list("درس"), "surface": "درس", "root_evidence": ev},
                                     self.unit)
         self.assertEqual(rec, {"decision": "abstain", "reason": "shadda_source_unresolved",
                                "unbound_slot": "R2", "template": "fa33ala_perfect_active"})
 
-    def test_jussive_variant_abstains(self):
+    def test_unpointed_surface_never_licenses_a_bare_caller_assertion(self):
+        # Sol repair 1: gem-pos-01/02 were unpointed, yet a caller's bare shadda_source=
+        # written_shadda assertion alone resolved candidate_pending -- the actual written mark at
+        # the GEM slot's own letter position must now be verified, never merely asserted.
+        ev = {"basis": "qamus_entry_ladder", "radicals": list("درس"),
+              "gemination_position": "R2", "gemination_radical": "ر",
+              "gemination_evidence": {"shadda_source": "written_shadda"}}
+        rec = cu.analyze_derivative({"letters": list("درس"), "surface": "درس", "root_evidence": ev},
+                                    self.unit)
+        self.assertEqual(rec, {"decision": "abstain", "reason": "shadda_not_in_surface",
+                               "unbound_slot": "R2", "template": "fa33ala_perfect_active"})
+
+    def test_shadda_written_on_the_wrong_letter_never_licenses_the_gem_slot(self):
+        ev = {"basis": "qamus_entry_ladder", "radicals": list("درس"),
+              "gemination_position": "R2", "gemination_radical": "ر",
+              "gemination_evidence": {"shadda_source": "written_shadda"}}
+        # the shadda sits on the FINAL س, not on the GEM slot's own ر
+        rec = cu.analyze_derivative({"letters": list("درس"), "surface": "دَرْسّ", "root_evidence": ev},
+                                    self.unit)
+        self.assertEqual(rec["decision"], "abstain")
+        self.assertEqual(rec["reason"], "shadda_not_in_surface")
+
+    def test_extraneous_mood_and_boundary_evidence_is_never_consulted(self):
+        # gem-r6: mood and cross-clitic-boundary idgham are impossible category errors for a
+        # PERFECT-tense verb / participle template -- any caller-supplied value is inert data,
+        # never a licensing input (mirrors five-verb-inflection-class's declared_mood pattern)
         ev = {"basis": "qamus_entry_ladder", "radicals": list("درس"),
               "gemination_position": "R2", "gemination_radical": "ر",
               "gemination_evidence": {"shadda_source": "written_shadda",
-                                      "mood": "jussive", "boundary": "word_internal"}}
-        rec = cu.analyze_derivative({"letters": list("درس"), "surface": "درس", "root_evidence": ev},
+                                      "mood": "jussive", "boundary": "clitic_boundary"}}
+        rec = cu.analyze_derivative({"letters": list("درس"), "surface": "دَرَّسَ", "root_evidence": ev},
                                     self.unit)
-        self.assertEqual(rec["reason"], "jussive_variant_unlicensed")
+        self.assertEqual(rec["decision"], "candidate_pending")
+        self.assertEqual(rec["template"], "fa33ala_perfect_active")
 
-    def test_cross_boundary_merger_abstains(self):
-        ev = {"basis": "qamus_entry_ladder", "radicals": list("درس"),
-              "gemination_position": "R2", "gemination_radical": "ر",
-              "gemination_evidence": {"shadda_source": "written_shadda",
-                                      "mood": "indicative", "boundary": "clitic_boundary"}}
-        rec = cu.analyze_derivative({"letters": list("درس"), "surface": "درس", "root_evidence": ev},
-                                    self.unit)
-        self.assertEqual(rec["reason"], "cross_boundary_merger_unlicensed")
-
-    def test_unlicensed_radical_at_licensed_slot_abstains(self):
-        # ب is a real radical position but the pack licenses no gemination realization for it
+    def test_any_attested_r2_radical_is_licensed_not_only_raa(self):
+        # Sol repair 4: gemination_realizations was keyed to the literal radical letter ر, so an
+        # ordinary Form II root with a DIFFERENT R2 (e.g. ب) wrongly abstained.
         ev = {"basis": "qamus_entry_ladder", "radicals": list("كبر"),
               "gemination_position": "R2", "gemination_radical": "ب",
-              "gemination_evidence": {"shadda_source": "written_shadda",
-                                      "mood": "indicative", "boundary": "word_internal"}}
-        rec = cu.analyze_derivative({"letters": list("كبر"), "surface": "كبر", "root_evidence": ev},
+              "gemination_evidence": {"shadda_source": "written_shadda"}}
+        rec = cu.analyze_derivative({"letters": list("كبر"), "surface": "كَبَّرَ", "root_evidence": ev},
+                                    self.unit)
+        self.assertEqual(rec["decision"], "candidate_pending")
+        self.assertEqual(rec["template"], "fa33ala_perfect_active")
+
+    def test_unattested_evidence_basis_abstains_regardless_of_radical(self):
+        # the replacement for the old radical-keyed hostile fixture: a genuinely unlicensed
+        # ENVIRONMENT (an unattested basis), not a specific literal letter
+        ev = {"basis": "shape_inference", "radicals": list("كبر"),
+              "gemination_position": "R2", "gemination_radical": "ب",
+              "gemination_evidence": {"shadda_source": "written_shadda"}}
+        rec = cu.analyze_derivative({"letters": list("كبر"), "surface": "كَبَّرَ", "root_evidence": ev},
                                     self.unit)
         self.assertEqual(rec["reason"], "gemination_realization_unlicensed")
 
@@ -308,13 +337,14 @@ class GeminationLicensingTests(unittest.TestCase):
     def test_pack_mutation_revokes_a_licensed_realization(self):
         fx = next(f for f in self.fixtures if f["fixture_id"] == "gem-pos-01")
         unit_m = _deep_copy(self.unit)
-        unit_m["gemination_realizations"]["by_template"]["fa33ala_perfect_active"]["R2"]["ر"]["licensed"] = False
+        unit_m["gemination_realizations"]["by_template"]["fa33ala_perfect_active"]["R2"] \
+            ["qamus_entry_ladder"]["licensed"] = False
         rec = cu.analyze_derivative(fx["input"], unit_m)
         self.assertEqual(rec, {"decision": "abstain", "reason": "gemination_realization_unlicensed",
-                               "unlicensed_slot": "R2", "weak_radical": "ر",
+                               "unlicensed_slot": "R2", "radical": "ر",
                                "template": "fa33ala_perfect_active",
                                "note": "the pack licenses no gemination realization for this exact "
-                                       "slot/radical combination in this template"})
+                                       "slot/evidence-basis combination in this template"})
 
     def test_gemination_and_quadriliteral_stay_distinct_packs(self):
         gem_unit, _ = cu.load("inc-gemination-licensing")
@@ -325,6 +355,69 @@ class GeminationLicensingTests(unittest.TestCase):
         self.assertFalse(any("GEM" in s for s in quad_shapes.values()))
         self.assertTrue(any("R4" in s for s in quad_shapes.values()))
         self.assertFalse(any("R4" in s for s in gem_shapes.values()))
+
+
+class GeminationSlotIntegrityTests(unittest.TestCase):
+    """Sol repair 5: a declared merge slot the pack cannot resolve to a real R-slot fails closed
+    rather than raising `KeyError`, and a substitution actually exercised AT the GEM slot is
+    normalized to its own R-slot identity rather than surfacing the literal 'GEM' token."""
+
+    def setUp(self):
+        self.unit, self.fixtures = cu.load("inc-gemination-licensing")
+
+    def test_unknown_declared_merge_slot_fails_closed_instead_of_raising(self):
+        unit_m = _deep_copy(self.unit)
+        unit_m["gemination_templates"]["fa33ala_perfect_active"] = "R9"
+        fx = next(f for f in self.fixtures if f["fixture_id"] == "gem-pos-01")
+        rec = cu.analyze_derivative(fx["input"], unit_m)
+        self.assertEqual(rec["decision"], "abstain")
+        self.assertEqual(rec["reason"], "gemination_slot_declaration_malformed")
+
+    def test_declared_slot_disagreeing_with_the_templates_own_shape_fails_closed(self):
+        # the template's own shape puts GEM at R2; a pack declaring R3 for the SAME template is
+        # self-contradictory and must never be trusted, even when it is a "real" R-slot name
+        unit_m = _deep_copy(self.unit)
+        unit_m["gemination_templates"]["fa33ala_perfect_active"] = "R3"
+        fx = next(f for f in self.fixtures if f["fixture_id"] == "gem-pos-01")
+        rec = cu.analyze_derivative(fx["input"], unit_m)
+        self.assertEqual(rec["decision"], "abstain")
+        self.assertEqual(rec["reason"], "gemination_slot_declaration_malformed")
+
+    def test_gem_slot_substitution_normalizes_to_its_own_r_slot_identity(self):
+        used = cu._match_template(["R1", "GEM", "R3"], list("دبس"), list("درس"),
+                                   {"GEM": {"ر": ["ب"]}})
+        self.assertEqual(used, [{"slot": "R2", "radical": "ر", "letter": "ب"}])
+
+
+class GeminationRivalPackConsistencyTests(unittest.TestCase):
+    """Sol repair 2: cu-gemination-licensing, cu-voice-melody-templates/
+    cu-passive-voice-vocalization (inc-voice-melody-templates) and inc-derivatives' mu_participle
+    all classify letter-identical Form II shapes over the SAME radicals -- every one of them must
+    abstain, never one candidate while a rival abstains, on a genuinely unpointed cell."""
+
+    def test_unpointed_form_ii_cell_abstains_identically_across_all_three_rival_packs(self):
+        gem_unit, _ = cu.load("inc-gemination-licensing")
+        voice_unit, _ = cu.load("inc-voice-melody-templates", "unit-v2.json")
+        der_unit, _ = cu.load("inc-derivatives", "unit-v4.json")
+
+        gem_ev = {"basis": "qamus_entry_ladder", "radicals": list("درس"),
+                  "gemination_position": "R2", "gemination_radical": "ر",
+                  "gemination_evidence": {"shadda_source": "written_shadda"}}
+        gem_rec = cu.analyze_derivative(
+            {"letters": list("درس"), "surface": "درس", "root_evidence": gem_ev}, gem_unit)
+        self.assertEqual(gem_rec["decision"], "abstain")
+
+        voice_rec = cu.analyze_derivative(
+            {"letters": list("درس"), "surface": "درس",
+             "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list("درس")}},
+            voice_unit)
+        self.assertEqual(voice_rec["decision"], "abstain")
+
+        der_rec = cu.analyze_derivative(
+            {"letters": list("مدرس"), "surface": "مدرس",
+             "root_evidence": {"basis": "qamus_entry_ladder", "radicals": list("درس")}},
+            der_unit)
+        self.assertEqual(der_rec["decision"], "abstain")
 
 
 class DiminutiveTemplateFamilyTests(unittest.TestCase):

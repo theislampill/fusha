@@ -16,5 +16,5 @@
 {"class": "positive", "expected_decision": "candidate_pending", "id": "tc1-ihc-02", "increment": "inc-initial-hamza-class", "surface": "استخرج", "teaches": "hamzat al-wasl, distinct from hamzat al-qat'"}
 {"class": "positive", "expected_decision": "candidate_pending", "id": "tc1-lfr-01", "increment": "inc-lexical-feminine-registry", "surface": "أرض", "teaches": "a closed lexical-feminine registry entry, never inferred from shape"}
 {"class": "adversarial", "expected_decision": "abstain", "id": "tc1-lfr-02", "increment": "inc-lexical-feminine-registry", "surface": "قمر", "teaches": "a masculine noun outside the closed registry gets no vote from shape"}
-{"class": "positive", "expected_decision": "candidate_pending", "id": "tc1-gem-01", "increment": "inc-gemination-licensing", "surface": "درس", "teaches": "an exact declared gemination environment licenses the doubling"}
+{"class": "positive", "expected_decision": "candidate_pending", "id": "tc1-gem-01", "increment": "inc-gemination-licensing", "surface": "دَرَّسَ", "teaches": "an exact declared environment -- bound slot, and a shadda genuinely WRITTEN at that exact letter position -- licenses the doubling"}
 {"class": "abstention", "expected_decision": "abstain", "id": "tc1-gem-02", "increment": "inc-gemination-licensing", "surface": "درس", "teaches": "an unresolved shadda source never licenses the doubling"}

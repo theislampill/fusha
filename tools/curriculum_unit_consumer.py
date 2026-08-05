@@ -502,7 +502,12 @@ def _match_template(shape, letters, radicals, subs):
             if letter != radical:
                 if letter not in (subs.get(slot, {}) or {}).get(radical, []):
                     return None
-                used.append({"slot": slot, "radical": radical, "letter": letter})
+                # a GEM substitution is recorded under its OWN R-slot identity (its ordinal
+                # position among the radical-consuming slots), never the literal "GEM" token, so
+                # downstream per-slot matching (e.g. the weak-realization gate's "R%d" naming)
+                # never disagrees with itself about which letter position it occupies (Sol repair 5)
+                rslot = ("R%d" % (j + 1)) if slot == "GEM" else slot
+                used.append({"slot": rslot, "radical": radical, "letter": letter})
             j += 1
         elif slot != letter:
             return None
@@ -581,7 +586,21 @@ def _weak_gate(unit, template_id, radicals, used_subs, ev):
 _GEM_SLOT_INDEX = {"R1": 0, "R2": 1, "R3": 2, "R4": 3}
 
 
-def _gemination_gate(unit, template_id, radicals, ev):
+def _gem_shape_slot(shape):
+    """The R-slot NAME the GEM position occupies within `shape`, counting only radical-consuming
+    slots (R1..R4, GEM) in written order — e.g. ["R1","GEM","R3"] and ["م","R1","GEM","R3"] both
+    name GEM "R2" (a literal prefix like م is not a radical-consuming slot). Returns
+    (letter_index, rslot_name), or (None, None) when the shape carries no GEM slot at all."""
+    n = 0
+    for i, slot in enumerate(shape):
+        if slot in ("R1", "R2", "R3", "R4", "GEM"):
+            n += 1
+            if slot == "GEM":
+                return i, "R%d" % n
+    return None, None
+
+
+def _gemination_gate(unit, template, radicals, ev, surface):
     """cu-gemination-licensing: fail closed on a matched GEM slot. A GEM slot already matched
     the written letter like any other radical slot (`_match_template`); this gate additionally
     requires an EXACT declared environment before the doubling itself is licensed — nothing is
@@ -590,25 +609,42 @@ def _gemination_gate(unit, template_id, radicals, ev):
     immediately), so every other pack in this consumer is unaffected.
 
     Required, in order:
+      - the pack's declared merge slot must actually name the GEM position in THIS template's
+        own `shape` (`gemination_slot_declaration_malformed` otherwise — a declared slot the
+        pack cannot resolve to a real R-slot, or that disagrees with the template's own shape,
+        fails closed rather than raising or guessing at the wrong letter position, Sol repair 5);
       - `root_evidence.gemination_position`/`gemination_radical` must bind to the exact slot and
         radical this template declares (`gemination_declaration_unbound` otherwise);
       - `root_evidence.gemination_evidence.shadda_source` must be the literal
         `"written_shadda"` (`shadda_source_unresolved` otherwise — an assumed or unspecified
         shadda source never licenses the doubling);
-      - the declared mood must not be `"jussive"` (`jussive_variant_unlicensed` — the jussive's
-        un-geminated realization is a DIFFERENT written form this pack does not cover, never
-        assumed from the geminated one);
-      - the declared boundary must be `"word_internal"` (`cross_boundary_merger_unlicensed` — a
-        clitic/root-boundary merge is a different phenomenon this pack does not license);
+      - that claim must be VERIFIED against the actual written surface at the GEM slot's own
+        letter position — a caller's bare assertion is never sufficient by itself; an unpointed
+        surface, or one whose shadda sits on a different letter, buys nothing
+        (`shadda_not_in_surface`, Sol repair 1);
       - and the pack's own `gemination_realizations.by_template` table must explicitly license
-        this exact template/slot/radical combination (`gemination_realization_unlicensed`
-        otherwise).
+        this exact template/slot against the evidence's ATTESTED basis — never against the
+        literal radical letter, so an ordinary Form II root over any R2 is licensed exactly like
+        any other given the same environment (`gemination_realization_unlicensed` otherwise,
+        Sol repair 4).
+
+    Mood (indicative/subjunctive/jussive) and cross-clitic-boundary idgham are never consulted:
+    both are impossible category errors for the templates this pack declares — a perfect-tense
+    verb form carries no mood inflection at all and a participle is a noun, and neither template
+    declares a clitic layer a merger could cross (the geminate-ROOT jussive alternation, e.g.
+    لم يَمْدُدْ from يَمُدُّ, is a different root/template family this pack does not declare;
+    conflating it with Form II's inherent, mood-invariant gemination was the recorded defect).
 
     Returns an abstention dict, or None when every check passes.
     """
+    template_id = template["id"]
     merge_slot = (unit.get("gemination_templates") or {}).get(template_id)
     if merge_slot is None:
         return None
+    letter_idx, shape_slot = _gem_shape_slot(template.get("shape") or [])
+    if shape_slot is None or shape_slot != merge_slot or merge_slot not in _GEM_SLOT_INDEX:
+        return {"decision": "abstain", "reason": "gemination_slot_declaration_malformed",
+                "declared_slot": merge_slot, "template": template_id}
     idx = _GEM_SLOT_INDEX[merge_slot]
     if idx >= len(radicals):
         return None  # the template could not have matched at all in this case
@@ -620,18 +656,17 @@ def _gemination_gate(unit, template_id, radicals, ev):
     if gem_ev.get("shadda_source") != "written_shadda":
         return {"decision": "abstain", "reason": "shadda_source_unresolved",
                 "unbound_slot": merge_slot, "template": template_id}
-    if gem_ev.get("mood") == "jussive":
-        return {"decision": "abstain", "reason": "jussive_variant_unlicensed",
-                "unbound_slot": merge_slot, "template": template_id}
-    if gem_ev.get("boundary") != "word_internal":
-        return {"decision": "abstain", "reason": "cross_boundary_merger_unlicensed",
+    groups = _surface_mark_groups(surface) if surface else []
+    if not (letter_idx < len(groups) and "ّ" in groups[letter_idx][1]):
+        return {"decision": "abstain", "reason": "shadda_not_in_surface",
                 "unbound_slot": merge_slot, "template": template_id}
     lic = ((unit.get("gemination_realizations") or {}).get("by_template", {}).get(template_id) or {})
-    if not ((lic.get(merge_slot) or {}).get(radical) or {}).get("licensed"):
+    basis = ev.get("basis")
+    if not ((lic.get(merge_slot) or {}).get(basis) or {}).get("licensed"):
         return {"decision": "abstain", "reason": "gemination_realization_unlicensed",
-                "unlicensed_slot": merge_slot, "weak_radical": radical, "template": template_id,
+                "unlicensed_slot": merge_slot, "radical": radical, "template": template_id,
                 "note": "the pack licenses no gemination realization for this exact "
-                        "slot/radical combination in this template"}
+                        "slot/evidence-basis combination in this template"}
     return None
 
 
@@ -868,7 +903,7 @@ def analyze_derivative(inp, unit):
     blocked = weak_check(t["id"], used)
     if blocked:
         return blocked
-    gem_blocked = _gemination_gate(unit, t["id"], radicals, ev)
+    gem_blocked = _gemination_gate(unit, t, radicals, ev, inp.get("surface"))
     if gem_blocked:
         return gem_blocked
     dim_blocked = _diminutive_gate(unit, t, inp)

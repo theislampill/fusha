@@ -14,12 +14,43 @@ letter exactly like an ordinary radical slot; the doubling itself is a
 SEPARATE licence, checked only after the shape has matched.
 
 The licence requires an EXACT declared environment: the bound slot/radical,
-a written (never assumed) shadda source, a non-jussive mood, and a
-word-internal (never cross-boundary) merger — missing any one of these
-abstains rather than assuming the doubling is licensed. The jussive's
-un-geminated realization of the same root (دَرْسًا-family جزم forms) is a
-DIFFERENT written form this pack does not cover; it is never derived from
-the geminated one.
+and a shadda source that is actually VERIFIED against the real written
+surface at the GEM slot's own letter position — a caller's assertion that
+the source is `written_shadda` is never sufficient by itself; an unpointed
+surface, or one whose shadda sits on the wrong letter, buys nothing and the
+token abstains `shadda_not_in_surface`.
+
+The licence is keyed to the template+slot's ATTESTED evidence basis, never
+to the literal letter that fills the radical position: an ordinary Form II
+root with any R2 (فَعَّلَ over any triliteral, not only ر) is licensed exactly
+like any other, given the same declared environment and an attested basis
+(`qamus_entry_ladder`) — nothing is licensed by default, and an unattested
+basis abstains `gemination_realization_unlicensed` regardless of which
+letter fills R2.
+
+Mood (indicative/subjunctive/jussive) and cross-clitic-boundary idgham are
+impossible category errors for these two templates and this pack never
+consults either: `fa33ala_perfect_active` is a PERFECT-tense verb form
+(مبني — it carries no mood inflection at all; mood only exists on the
+imperfect) and `mufa33il_active_participle` is a noun; neither template
+declares a clitic layer a merger could cross either. (The doubled-ROOT
+جزم alternation — where a GEMINATE ROOT genuinely loses its written
+doubling in the jussive, e.g. لم يَمْدُدْ from يَمُدُّ — is a DIFFERENT
+phenomenon over a different root/template family this pack does not
+declare; conflating it with Form II's inherent, mood-invariant gemination
+was the recorded defect.)
+
+**Rival packs**: `inc-voice-melody-templates` (`cu-voice-melody-templates` /
+`cu-passive-voice-vocalization`, its `f2_perfect_active`/`f2_perfect_passive`
+rows) and `inc-derivatives` (`mu_participle`, the same مُـ+radicals
+skeleton) classify letter-identical shapes over the SAME radicals. Every one
+of these packs independently requires its own genuinely WRITTEN mark (a
+vocalization pattern, a penult mark, or here a shadda) before resolving the
+cell, so an unpointed Form II shape abstains under all three — never a
+candidate under one pack while a rival abstains. This pack's own ownership
+is narrow: it licenses ONLY the doubling itself, once a shape has already
+matched; it never resolves voice, never distinguishes participle from
+place/time noun, and never derives an un-geminated variant.
 
 Triliteral doubling/gemination and quadriliteral templates are DISTINCT
 families: this pack declares no R4 slot, and `cu-quadriliteral-templates`
