@@ -23,3 +23,24 @@ These scripts were unreferenced and absent from the regression harness at `446a5
 | `tools/test_public_hover_crawl_details.py` | Self-test for public Qamus hover-detail extraction. | No literal references, Python importers, or `tools/check_regressions.py` execution at `446a536a`. |
 | `tools/test_qamustyping3_acceptance.py` | Regression test for the qamustyping3 acceptance gate. | No literal references, Python importers, or `tools/check_regressions.py` execution at `446a536a`. |
 | `tools/text_extract.py` | Shared text helpers for the sarf/nahw corpus ingest (SN1/SN2). | No literal references, Python importers, or `tools/check_regressions.py` execution at `446a536a`. |
+
+## 2026-08-05 sweep
+
+Second application of the D-11 pattern, from the repository-organization audit on `fable/doc-hygiene`.
+Every entry below was verified zero-consumer by `git grep` of its basename/module name across the
+whole tree immediately before the move; none is invoked by `tools/check_regressions.py`. Restore the
+same way: `git revert` the sweep commit, then reclassify before reuse.
+
+| File | Prior role | Evidence |
+|---|---|---|
+| `tools/assemble_calibration.py` | One-shot assembly of a calibration input bundle. | `git grep assemble_calibration` returns no hit outside the file itself; not harness-invoked. |
+| `tools/build_morphline_author_packets.py` | Built morphline authoring packets for a closed authoring wave. | `git grep build_morphline_author_packets` returns no hit outside the file itself; not harness-invoked. |
+| `tools/build_richseg_debt_manifest.py` | Built the rich-segmentation debt manifest for a closed debt wave. | `git grep build_richseg_debt_manifest` returns no hit outside the file itself; not harness-invoked. |
+| `tools/check_richseg_debt.py` | Checked the rich-segmentation debt manifest produced by the builder above. | `git grep check_richseg_debt` returns no hit outside the file itself; not harness-invoked. |
+| `tools/test_certify_funcword_wave.py` | Self-test for a completed function-word certification wave. | `git grep test_certify_funcword_wave` returns no hit outside the file itself; not harness-invoked. |
+| `tools/test_certify_rebind_wave.py` | Self-test for a completed rebind certification wave. | `git grep test_certify_rebind_wave` returns no hit outside the file itself; not harness-invoked. |
+| `tools/test_rich_seg_83_26_5.py` | Single-location rich-segmentation regression fixture (83:26:5). | `git grep test_rich_seg_83_26_5` returns no hit outside the file itself; not harness-invoked. |
+| `tools/test_tier_due_process.py` | Self-test for a retired tier due-process rule. | `git grep test_tier_due_process` returns no hit outside the file itself; not harness-invoked. |
+| `prep/` (6 files: `morphline-apply-plan.md`, `morphline-approved-manifest.json`, `nft101-apply.py`, `nft101-manifest.txt`, `nft101-plan.md`, `test_nft101_apply.py`) | Closed one-shot migration staging (morphline apply + NFT-101 apply). | `git grep -E "prep/(morphline\|nft101)"` and `git grep nft101` return no hit outside `prep/` itself. |
+| `IMPLEMENTAUDIT-runs/*-STATE.md` (3 files, from `.IMPLEMENTAUDIT/runs/`) | Committed agent run state for three closed audit runs (`fusha-parser-substrate-001`, `qamustyping4-closure-001`, `qamustypingfin-closure-001`). | `git grep IMPLEMENTAUDIT` finds only two prose strings naming an out-of-repo operator-workspace path, never these files. `.IMPLEMENTAUDIT/` is now gitignored. |
+| `rm22-row-accounting.jsonl` (from `qamus/reports/rm22-regeneration-rehearsal/row-accounting.jsonl`) | Bulk per-row accounting dump for the RM-22 regeneration rehearsal (owner ruling 2026-08-05: evidence dump, not reviewable report surface). | Its only consumer was `tools/rehearse_largelexicon_regeneration.py`, which now takes `--accounting-path` defaulting here. The summary `migration-report.json` and the sha256-pinning `row-accounting.meta.json` deliberately STAY in `qamus/reports/rm22-regeneration-rehearsal/`; `--check` stays green. |

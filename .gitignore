@@ -36,6 +36,9 @@ qac-*.tsv
 *.local.json
 tools/leak_denylist_local.json
 
+# implementaudit run state (agent scratch; retired runs live in attic/IMPLEMENTAUDIT-runs/)
+.IMPLEMENTAUDIT/
+
 # local scratch (agent slices, enriched inputs)
 .p4*
 .hover_*

@@ -25,6 +25,11 @@ import validate_largelexicon_rows as validator
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REPORT_DIR = ROOT / "qamus" / "reports" / "rm22-regeneration-rehearsal"
+# The per-row accounting dump was retired to attic/ on 2026-08-05 (owner ruling):
+# it is a bulk evidence dump, not reviewable report surface. The summary
+# (migration-report.json) and its sha256-pinning sidecar (row-accounting.meta.json)
+# stay in the report dir; only the row body moved.
+DEFAULT_ACCOUNTING_PATH = ROOT / "attic" / "rm22-row-accounting.jsonl"
 TOOL_PATH = "tools/rehearse_largelexicon_regeneration.py"
 REPORT_SCHEMA = "qamus/rm22-regeneration-rehearsal@1"
 ACCOUNTING_SCHEMA = "qamus/rm22-regeneration-accounting-row@1"
@@ -196,11 +201,17 @@ def accounting_bytes(accounting: list[dict[str, Any]]) -> tuple[bytes, dict[str,
     return b"".join(canonical_line(row) for row in compact), profiles
 
 
-def write_reports(report_dir: Path, summary: dict[str, Any], accounting: list[dict[str, Any]]) -> None:
+def write_reports(
+    report_dir: Path,
+    summary: dict[str, Any],
+    accounting: list[dict[str, Any]],
+    accounting_path: Path = DEFAULT_ACCOUNTING_PATH,
+) -> None:
     report_dir.mkdir(parents=True, exist_ok=True)
     (report_dir / "migration-report.json").write_text(review_json(summary), encoding="utf-8", newline="\n")
     serialized, profiles = accounting_bytes(accounting)
-    (report_dir / "row-accounting.jsonl").write_bytes(serialized)
+    accounting_path.parent.mkdir(parents=True, exist_ok=True)
+    accounting_path.write_bytes(serialized)
     meta = {
         "change_profiles": profiles,
         "dispositions": sorted(DISPOSITIONS),
@@ -245,6 +256,7 @@ def main() -> int:
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--check", action="store_true", help="compare generated reports with committed reports")
     parser.add_argument("--report-dir", type=Path, default=DEFAULT_REPORT_DIR)
+    parser.add_argument("--accounting-path", type=Path, default=DEFAULT_ACCOUNTING_PATH)
     args = parser.parse_args()
     if args.self_test:
         return run_self_test()
@@ -253,7 +265,7 @@ def main() -> int:
         expected_summary = review_json(summary)
         expected_accounting, profiles = accounting_bytes(accounting)
         actual_summary = (args.report_dir / "migration-report.json").read_text(encoding="utf-8")
-        actual_accounting = (args.report_dir / "row-accounting.jsonl").read_bytes()
+        actual_accounting = args.accounting_path.read_bytes()
         expected_meta = {
             "change_profiles": profiles,
             "dispositions": sorted(DISPOSITIONS),
@@ -268,7 +280,7 @@ def main() -> int:
         if actual_summary != expected_summary or actual_accounting != expected_accounting or actual_meta != review_json(expected_meta):
             raise SystemExit("rehearsal reports are stale or non-deterministic")
     else:
-        write_reports(args.report_dir, summary, accounting)
+        write_reports(args.report_dir, summary, accounting, args.accounting_path)
     print(review_json(summary), end="")
     return 0
 
