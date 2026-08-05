@@ -819,9 +819,14 @@ except Exception:
 
 try:
     _report_dir = os.path.join(_R, "qamus", "reports")
+    # The dated 2026-06-27 RICH-CERT evidence was quarantined into
+    # qamus/reports/history/ on 2026-08-05 (repo-organization hygiene). Scan both
+    # the top level and history/ so the count stays placement-independent.
     _rich_cert_reports = [
-        os.path.join(_report_dir, _name)
-        for _name in os.listdir(_report_dir)
+        os.path.join(_dir, _name)
+        for _dir in (_report_dir, os.path.join(_report_dir, "history"))
+        if os.path.isdir(_dir)
+        for _name in os.listdir(_dir)
         if _name.endswith(".md")
         and (_name.startswith("p-rich-cert-") or _name.startswith("vn-rich-cert-"))
     ]
