@@ -337,7 +337,7 @@ class ManifestSourceTruthTests(unittest.TestCase):
 
     def test_qualification_paths_exist_and_contain_the_named_lesson(self):
         for row in MANIFEST_ROWS:
-            path = _REPO / row["qualification_path"].replace("/", "\\")
+            path = _REPO / row["qualification_path"]
             self.assertTrue(path.exists(), "%s does not exist" % row["qualification_path"])
             lessons = {r["lesson_id"] for r in _jsonl(path)}
             self.assertIn(row["lesson_id"], lessons)

@@ -3603,10 +3603,10 @@ try:
           and _a2stat("ma-function-occurrence", "candidates") == 4
           and _a2stat("ma-function-occurrence", "pending") == 2
           and _a2stat("ma-function-occurrence", "replay_checks") == 24)
-    check("A2 seven banks / 320 rows measured",
+    check("A2 eight banks / 322 rows measured",
           sum(v for s in _a2s.values() for k, v in s.items()
-              if (k == "cases" or k.endswith("_cases")) and isinstance(v, int)) == 320
-          and len(_a2s) == 7)
+              if (k == "cases" or k.endswith("_cases")) and isinstance(v, int)) == 322
+          and len(_a2s) == 8)
     # EXACT quarantine totals: a quarantine that grows silently is a regression, not coverage
     check("A2 quarantine totals exactly 9 state-machine + 12 hover-context (21 rows, excluded from closure)",
           _a2stat("state-machine", "quarantined") == 9 and _a2stat("hover-context", "quarantined") == 12)
@@ -3864,8 +3864,11 @@ try:
     check("TASKPACKET inventory derived from disk (%d packet file(s) + %d non-packet artifact(s), each packet "
           "self-named and parseable)" % (len(_tp_packets), len(_tp_other)),
           _tp_shape_ok and len(_tp_ids) == len(_tp_packets) and len(_tp_packets) >= 5)
-    with io.open(os.path.join(ROOT, "sarf", "eval-runner-contract.json"), encoding="utf-8") as _fh:
-        _a1_contract = json.load(_fh)
+    # Use the runner's effective contract, not the raw JSON alone. Some
+    # exclusive-file lanes register banks in run_sarf_evals.py and merge them
+    # through load_contract(); packet inventory must see the same authority.
+    from tools import run_sarf_evals as _A1_PACKET_RUNNER
+    _a1_contract = _A1_PACKET_RUNNER.load_contract(ROOT)
     _a1_referenced = {b.get("followup_packet") for b in _a1_contract["banks"] if b.get("followup_packet")}
     _a1_referenced |= {r.get("followup_packet") for r in _a1_contract["store_a_rules"] if r.get("followup_packet")}
     _a1_on_disk = {i for i in _tp_ids if str(i).startswith("TP-SARF-A1-")}
