@@ -40,6 +40,7 @@ import sys
 from pathlib import Path
 
 import build_curriculum_absorption as absorption
+import curriculum_closure as closure
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "curriculum" / "l1l6"
@@ -199,6 +200,37 @@ def build(bindings=None):
                 "python tools/build_pedagogy_projections.py --check"),
         })
 
+    closure_report = closure.build(rows)
+    closure_by_unit = {
+        row["unit_id"]: row for row in closure_report["units"]
+    }
+    for row in rows:
+        result = closure_by_unit.get(row["unit_id"])
+        if result is None:
+            continue
+        row["fully_operationalized"] = result["fully_operationalized"]
+        row["fully_operationalized_basis"] = result[
+            "fully_operationalized_basis"
+        ]
+        row["occurrence_grounding_parked"] = result[
+            "occurrence_grounding_parked"
+        ]
+        row["satisfied_vacuously_dimension_ids"] = result[
+            "satisfied_vacuously_dimension_ids"
+        ]
+        row["closure_dimensions"] = result["dimensions"]
+        row["incomplete_closure_dimensions"] = result[
+            "incomplete_dimensions"
+        ]
+
+    lesson_closure = closure.lesson_closure_truth(rows)
+    fully_closed_lessons = set(
+        lesson_closure["fully_operationalized_lesson_ids"]
+    )
+    real_consumer_lessons = set(
+        consumer_truth["real_consumer_lesson_ids"]
+    )
+
     hist = {}
     for r in rows:
         hist[r["strongest_state"]] = hist.get(r["strongest_state"], 0) + 1
@@ -231,10 +263,29 @@ def build(bindings=None):
         "pending_authoring_unit_bindings": sum(
             len(ids) for ids in
             consumer_truth["pending_unit_ids_by_plane"].values()),
-        "lessons_partially_operationalized": consumer_truth[
-            "lessons_partially_operationalized"],
-        "lessons_fully_operationalized": consumer_truth[
-            "lessons_fully_operationalized"],
+        "units_fully_operationalized": closure_report[
+            "units_fully_operationalized"
+        ],
+        "units_closed_with_parked_occurrence_grounding": closure_report[
+            "units_closed_with_parked_occurrence_grounding"
+        ],
+        "units_closed_with_vacuous_dimensions": closure_report[
+            "units_closed_with_vacuous_dimensions"
+        ],
+        "unit_ids_closed_with_vacuous_dimensions": closure_report[
+            "unit_ids_closed_with_vacuous_dimensions"
+        ],
+        "units_partially_operationalized": sum(
+            1
+            for row in closure_report["units"]
+            if not row["fully_operationalized"]
+            and bool(row["dimensions"])
+        ),
+        "lessons_partially_operationalized": len(
+            real_consumer_lessons - fully_closed_lessons
+        ),
+        "lessons_fully_operationalized": len(fully_closed_lessons),
+        "lessons_fully_operationalized_basis": lesson_closure["basis"],
         "note": "candidate readiness states remain separate from exact plane-specific consumer bindings; no binding certifies a linguistic fact or marks a whole lesson operationalized",
     }
     return rows, meta

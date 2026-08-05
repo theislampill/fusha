@@ -13,6 +13,9 @@ Read before authoring each coherent pack family and during train review.
 - Emit binding/crosswalk/accounting rows with the same batch; no consumer-less candidate artifact.
 - Compose repository paths from POSIX-style relative strings with `pathlib.Path`; never rewrite `/` to a Windows-only separator. Exercise every new focused test through the Linux canonical harness.
 - Derive packet inventories, bank counts and row denominators from the same effective registry loader used at runtime. A code-injected bank must not be invisible to a raw-contract-only gate.
+- Mark zero-row closure dimensions as vacuously satisfied and count closed
+  units that rely on them. Independently rederive closure from the dimensions
+  in the validator rather than comparing two outputs from one builder pass.
 - Run focused family fixtures per batch and amortize the full harness/review at the assembled slice.
 
 Record findings by stable class so recurrence can be measured across tranches.

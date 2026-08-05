@@ -3945,6 +3945,42 @@ except Exception as _e:
     check("T1c hostile fixture registration slice runnable", False)
     print("  ", _e)
 
+# --- Tranche 001d: operationalization closure is computed from real consumer
+#     dimensions, lesson closure requires every mapped unit, and the owner
+#     snapshot stays candidate-only and byte-fresh. ---
+try:
+    for _t1d_mod in (
+        "test_curriculum_closure.py",
+        "test_select_tranche.py",
+        "test_tranche_candidate_snapshot.py",
+        "test_l1l6_consumer_truth.py",
+    ):
+        _t1d_res = run_text([
+            sys.executable, os.path.join(ROOT, "tools", _t1d_mod)
+        ])
+        check(
+            "T1d focused module passes: tools/%s" % _t1d_mod,
+            _t1d_res.returncode == 0,
+        )
+    for _t1d_builder in (
+        "build_unit_dispositions.py",
+        "build_curriculum_absorption.py",
+        "select_tranche.py",
+        "build_tranche_candidate_snapshot.py",
+    ):
+        _t1d_fresh = run_text([
+            sys.executable,
+            os.path.join(ROOT, "tools", _t1d_builder),
+            "--check",
+        ])
+        check(
+            "T1d generated artifact fresh: tools/%s" % _t1d_builder,
+            _t1d_fresh.returncode == 0,
+        )
+except Exception as _e:
+    check("T1d closure and candidate-snapshot slice runnable", False)
+    print("  ", _e)
+
 # --- largelexicon candidate layer: Qamus-scale source-clean full fact tables, Mode A qword projection,
 #     public/private hover boundary, qg validation, CLI contract, and flywheel backfill. This is opt-in
 #     tooling, not live Qamus progress and not arbitrary-text certification. ---

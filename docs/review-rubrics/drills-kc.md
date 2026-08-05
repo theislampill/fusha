@@ -12,6 +12,10 @@ Read before authoring and during the single assembled-slice review.
 - Exercise ordinary tutor selection, grading, progress isolation and remediation—not a curriculum-local mock.
 - Preserve `quran_example: null` or an explicit evidence-blocked posture when exact occurrence evidence is absent.
 - Ensure bindings and generated accounting ship in the same slice as the consumer behavior.
+- Give every disputed-form or rival-preservation decision one canonical KC/decision record. Generate each
+  learner-facing restatement from that record or gate-check its semantic posture against it; reject manually
+  mirrored key rows, WRV cells, remediation indexes, staged explanations or hover fields that settle a rival
+  the canonical record preserves.
 
 Record findings by stable class so recurrence can be measured across tranches.
 
@@ -95,3 +99,7 @@ Record findings by stable class so recurrence can be measured across tranches.
   identical settled conclusion or exhaustive count in different words, has not closed the finding — it has
   relocated it. Match by MEANING (a closed set of paraphrases: "form X is simply indicative, not a jussive",
   "this cell has its own N licensed shapes"), not by the one exact phrase the finding happened to quote.
+- **closure-plane-name-collision**: never reuse a tutor-runtime field name for
+  all-unit curriculum closure. Keep runtime lesson-content truth distinct from
+  mapped-unit closure, attach the latter's exact basis, and exclude fully
+  closed lessons or units from every count labelled partial.

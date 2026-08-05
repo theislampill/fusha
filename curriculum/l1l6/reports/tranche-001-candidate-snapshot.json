@@ -1,0 +1,173 @@
+{
+  "analysis_database": "largelexicon",
+  "analysis_database_source": "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
+  "generator": "tools/build_tranche_candidate_snapshot.py",
+  "posture": "candidate_owner_demo_not_public_projection",
+  "probes": [
+    {
+      "after": {
+        "analysis_database": "largelexicon",
+        "analysis_database_source": "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
+        "hover_preview": {
+          "context_notes": [],
+          "learner_explanation": "Multiple analyses compete here; keep the token pending until source/context evidence selects one.",
+          "morphline": "lexical collision requires context",
+          "public_boundary": {
+            "kind": "authored",
+            "lang": "en",
+            "src": "qamus"
+          },
+          "segments": [],
+          "token_contribution_gloss": null
+        },
+        "roles": [],
+        "segments": []
+      },
+      "before": {
+        "defect": "article or root-final kaf could be swallowed by a false clitic split",
+        "regression_source": "sarf/evals/false-clitic-split-eval.jsonl#FCS-001"
+      },
+      "next_owner": "tools/fusha_pattern_engine.py",
+      "probe_id": "mulk-final-kaf",
+      "status": "analysis_gap_detected",
+      "surface": "ٱلْمُلْكُ"
+    },
+    {
+      "after": {
+        "analysis_database": "largelexicon",
+        "analysis_database_source": "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
+        "hover_preview": {
+          "context_notes": [],
+          "learner_explanation": "Context is needed before this can become a certified token hover.",
+          "morphline": "particle candidate from largelexicon_full",
+          "public_boundary": {
+            "kind": "authored",
+            "lang": "en",
+            "src": "qamus"
+          },
+          "segments": [
+            {
+              "class": "qg-particle",
+              "gloss_contribution": "those who",
+              "label": "PART",
+              "role": "stem",
+              "surface": "ٱلَّذِينَ"
+            }
+          ],
+          "token_contribution_gloss": "those who"
+        },
+        "roles": [
+          "stem"
+        ],
+        "segments": [
+          {
+            "class": "qg-particle",
+            "gloss_contribution": "those who",
+            "label": "PART",
+            "role": "stem",
+            "surface": "ٱلَّذِينَ"
+          }
+        ]
+      },
+      "before": {
+        "defect": "lexical relative could be split as article plus remnant",
+        "regression_source": "tools/test_fusha_orthography.py#F4LexicalizedRelativeContractionTests"
+      },
+      "probe_id": "relative-alladhina",
+      "status": "improved",
+      "surface": "ٱلَّذِينَ"
+    },
+    {
+      "after": {
+        "analysis_database": "largelexicon",
+        "analysis_database_source": "fusha/lexicon/largelexicon/lemma-source.full.jsonl",
+        "hover_preview": {
+          "context_notes": [],
+          "learner_explanation": "Token preview preserves visible grammar pieces.",
+          "morphline": "unknown candidate from surface_candidate",
+          "public_boundary": {
+            "kind": "authored",
+            "lang": "en",
+            "src": "qamus"
+          },
+          "segments": [
+            {
+              "class": "qg-noun-stem",
+              "gloss_contribution": null,
+              "label": "N",
+              "role": "stem",
+              "surface": "قُرْءَانًا"
+            }
+          ],
+          "token_contribution_gloss": "surface candidate"
+        },
+        "roles": [
+          "stem"
+        ],
+        "segments": [
+          {
+            "class": "qg-noun-stem",
+            "gloss_contribution": null,
+            "label": "N",
+            "role": "stem",
+            "surface": "قُرْءَانًا"
+          }
+        ]
+      },
+      "before": {
+        "defect": "tanwin support alif could be parsed as the pronoun na",
+        "regression_source": "tools/test_fusha_orthography.py#test_quranan_never_produces_a_subject_pronoun"
+      },
+      "occurrence_id": "quran:13:31:3",
+      "probe_id": "quranan-tanwin",
+      "status": "improved",
+      "surface": "قُرْءَانًا"
+    },
+    {
+      "after": {
+        "decision": "pending",
+        "defect": "maa_category_unresolved",
+        "rivals": [
+          "negation",
+          "relative"
+        ]
+      },
+      "before": {
+        "defect": "same surface could be forced to one contextual function",
+        "regression_source": "nahw/evals/ma-function-occurrence-eval.jsonl#ma-occ-005"
+      },
+      "occurrence_id": "quran:2:284:2",
+      "probe_id": "ma-rivals",
+      "status": "rivals_preserved",
+      "surface": "مَا"
+    },
+    {
+      "after": {
+        "held": true,
+        "licensed_forms": [
+          "لَمْ يَمُدَّ",
+          "لَمْ يَمْدُدْ"
+        ],
+        "remediation_route": "curriculum/drills/weak-root-voice-runtime.md",
+        "runtime_item_id": "WRV-13-mudaaf-jussive-licensed-shapes"
+      },
+      "before": {
+        "defect": "one licensed jussive realization contradicted another learner surface",
+        "regression_source": "tools/test_weak_root_voice_runtime.py#GeminateJussiveInventoryNoContradiction"
+      },
+      "probe_id": "geminate-jussive-rivals",
+      "status": "rivals_preserved_held",
+      "surface": "لَمْ يَمُدَّ / لَمْ يَمْدُدْ"
+    }
+  ],
+  "public_projection_eligible": false,
+  "schema": "curriculum.l1l6_tranche_candidate_snapshot.v1",
+  "summary": {
+    "analysis_gaps_detected": 1,
+    "improved": 2,
+    "probes": 5,
+    "regressions_detected": 0,
+    "rivals_preserved": 2
+  },
+  "tranche_id": "tranche-001"
+}

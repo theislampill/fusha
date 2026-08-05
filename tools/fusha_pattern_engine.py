@@ -20,8 +20,8 @@ sys.path.insert(0, _REPO)
 from tools import normalize_ar as N  # noqa: E402
 
 LEXICON_PATH = os.path.join(_REPO, "fusha", "lexicon", "fusha-lemmas.jsonl")
-LARGELEXICON_SAMPLE_PATH = os.path.join(_REPO, "fusha", "lexicon", "largelexicon", "lemma-source.sample.jsonl")
 LARGELEXICON_FULL_PATH = os.path.join(_REPO, "fusha", "lexicon", "largelexicon", "lemma-source.full.jsonl")
+SUPPORTED_DATABASES = frozenset({"smoke", "largelexicon"})
 
 FUNCTION_WORDS = {
     "ما": ("particle", "function-sensitive mā"),
@@ -49,9 +49,14 @@ INNER_PRONOUNS = ("هما", "هم", "كم", "كن", "ها", "نا", "ه", "ك", 
 
 
 def _load_lexicon(path=LEXICON_PATH, db="smoke"):
+    if db not in SUPPORTED_DATABASES:
+        raise ValueError(
+            "unsupported lexicon database %r; expected one of %s"
+            % (db, ", ".join(sorted(SUPPORTED_DATABASES)))
+        )
     rows = []
     if not os.path.exists(path):
-        return rows
+        raise FileNotFoundError("required seed lexicon is missing: %s" % path)
     with open(path, encoding="utf-8") as fh:
         for line in fh:
             line = line.strip()
@@ -60,8 +65,12 @@ def _load_lexicon(path=LEXICON_PATH, db="smoke"):
                 row.setdefault("evidence_class", "seed_lexicon")
                 rows.append(row)
     if db == "largelexicon":
-        large_path = LARGELEXICON_FULL_PATH if os.path.exists(LARGELEXICON_FULL_PATH) else LARGELEXICON_SAMPLE_PATH
-        evidence_class = "largelexicon_full" if large_path == LARGELEXICON_FULL_PATH else "largelexicon_sample"
+        large_path = LARGELEXICON_FULL_PATH
+        if not os.path.exists(large_path):
+            raise FileNotFoundError(
+                "required largelexicon full source is missing: %s" % large_path
+            )
+        evidence_class = "largelexicon_full"
         with open(large_path, encoding="utf-8") as fh:
             for line in fh:
                 line = line.strip()

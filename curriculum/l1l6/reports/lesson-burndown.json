@@ -1,0 +1,240 @@
+{
+  "authority": {
+    "closure_rule": "unit-dispositions fully_operationalized=true with a computed fully_operationalized_basis; candidate states and plane-specific consumer bindings remain partial evidence",
+    "inputs": {
+      "curriculum/l1l6/canonical/canonical-units.jsonl": "sha256:af4c53e64ab64b18e5caecbec75fef7abebcef3949810e4deabcec9c80cd8671",
+      "curriculum/l1l6/canonical/lesson-unit-map.jsonl": "sha256:499ee92a1008df30af12ef19e27adb6ddbdb61cea26519c00fc6292aa2aeea6d",
+      "curriculum/l1l6/canonical/unit-dispositions.jsonl": "sha256:e97e238f2f7be68facd2f33be1b3f93e085152a7905ea85f258a06217819c9b2",
+      "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl": "sha256:2aa5b75fd34ab04092031ea18fc1abca0b9981049d5dfee1735477497e81a781",
+      "curriculum/l1l6/registry/lessons.jsonl": "sha256:6362bc8ef50f8ffebec4c6253c279d2e2e3d6c94f0b976352f32717baebfc743",
+      "curriculum/l1l6/reports/absorption-ledger.jsonl": "sha256:7be5cd6802d474279e2e8d2ef8ea8efdb095586e8009a5dca7337c87f7510d9e",
+      "curriculum/l1l6/reports/full-curriculum-readiness.json": "sha256:8e2222ba97596203ee2564dd770773fbbb272af67db39c881649092da525e9b7",
+      "curriculum/l1l6/reports/queues/q-error-fixtures.jsonl": "sha256:50d979c923bc868b457eafc6244ea38bfe32b81595920e045658a8bdf2838e09",
+      "eval/fusha-bench-v1/report/fusha-bench-report.json": "sha256:580150cd0f8860dde87a6e784b58838679c7ae41df14a4c82def57babaaba63f"
+    }
+  },
+  "current_state": {
+    "lessons_by_disposition": {
+      "fully_operationalized": 4,
+      "not_applicable_with_reason": 1,
+      "open": 181,
+      "partially_operationalized_real_consumer": 40
+    },
+    "lessons_total": 226,
+    "lessons_with_real_consumer_partial_evidence": 40,
+    "readiness_report_basis": "all_mapped_canonical_units_fully_operationalized",
+    "readiness_report_lessons_fully_operationalized": 4,
+    "unit_overlays": {
+      "parked_occurrence_grounding": 105
+    },
+    "units_by_disposition": {
+      "blocked": 0,
+      "candidate_or_open": 129,
+      "closed": 5,
+      "real_consumer_partial": 32
+    },
+    "units_total": 166
+  },
+  "current_tranche": {
+    "fully_operationalized_lesson_ids": [
+      "L1.M1.01",
+      "L1.M1.02",
+      "L1.M1.03",
+      "L1.M1.07"
+    ],
+    "tranche_closed": false,
+    "tranche_id": "tranche-001",
+    "unit_ids": [
+      "cu-grapheme-inventory-and-confusables",
+      "cu-orthographic-connectivity-classes",
+      "cu-short-vowel-diacritics-and-vocalization-state",
+      "u-s06",
+      "u-s01",
+      "cu-nunation-support-orthography",
+      "u-n01",
+      "cu-definite-article-assimilation"
+    ],
+    "units_fully_operationalized": 5,
+    "units_still_partial": 3
+  },
+  "forecast": {
+    "assumption": "projected lesson closure assumes units with parked occurrence grounding satisfy every non-occurrence closure dimension; parking is not occurrence evidence or certification",
+    "blocked_lessons": 0,
+    "future_tranches_total": 22,
+    "lesson_flip_quota": 9,
+    "not_applicable_lessons": 1,
+    "parked_occurrence_grounding_units": 105,
+    "projected_additional_fully_operationalized_lessons": 221,
+    "projected_total_fully_operationalized_lessons": 225,
+    "tranches": [
+      {
+        "newly_flipped_lessons": 11,
+        "residual": false,
+        "tranche_number": 2,
+        "units": 4
+      },
+      {
+        "newly_flipped_lessons": 14,
+        "residual": false,
+        "tranche_number": 3,
+        "units": 7
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 4,
+        "units": 6
+      },
+      {
+        "newly_flipped_lessons": 10,
+        "residual": false,
+        "tranche_number": 5,
+        "units": 5
+      },
+      {
+        "newly_flipped_lessons": 13,
+        "residual": false,
+        "tranche_number": 6,
+        "units": 8
+      },
+      {
+        "newly_flipped_lessons": 11,
+        "residual": false,
+        "tranche_number": 7,
+        "units": 7
+      },
+      {
+        "newly_flipped_lessons": 11,
+        "residual": false,
+        "tranche_number": 8,
+        "units": 4
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 9,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 13,
+        "residual": false,
+        "tranche_number": 10,
+        "units": 10
+      },
+      {
+        "newly_flipped_lessons": 13,
+        "residual": false,
+        "tranche_number": 11,
+        "units": 1
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 12,
+        "units": 8
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 13,
+        "units": 6
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 14,
+        "units": 8
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 15,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 16,
+        "units": 8
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 17,
+        "units": 10
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 18,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 19,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 20,
+        "units": 7
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 21,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 9,
+        "residual": false,
+        "tranche_number": 22,
+        "units": 9
+      },
+      {
+        "newly_flipped_lessons": 8,
+        "residual": true,
+        "tranche_number": 23,
+        "units": 8
+      }
+    ]
+  },
+  "fusha_bench_axes": {
+    "contextual_translation": {
+      "delta": null,
+      "denominator": 0,
+      "metric_name": null,
+      "numerator": null,
+      "score": null,
+      "status": "not_scored_no_certified_gold"
+    },
+    "ownership_geometry": {
+      "delta": null,
+      "denominator": 1362,
+      "metric_name": "effective_certified_geometry_fact_integrity",
+      "numerator": 1362,
+      "score": 1.0,
+      "status": "scored_authority_integrity"
+    },
+    "structured_hover": {
+      "delta": null,
+      "denominator": 49,
+      "metric_name": "projection_effective_fact_parity",
+      "numerator": 49,
+      "score": 1.0,
+      "status": "scored_projection_fact_parity"
+    },
+    "tutor": {
+      "delta": null,
+      "denominator": 16,
+      "metric_name": "ordinary_tutor_runtime_replay",
+      "numerator": 16,
+      "score": 1.0,
+      "status": "scored_runtime_replay"
+    }
+  },
+  "generator": "tools/select_tranche.py",
+  "schema": "curriculum.l1l6_lesson_burndown.v1"
+}

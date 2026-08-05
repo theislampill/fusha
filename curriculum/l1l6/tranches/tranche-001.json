@@ -1,0 +1,2508 @@
+{
+  "authority": {
+    "closure_rule": "unit-dispositions fully_operationalized=true with a computed fully_operationalized_basis; candidate states and plane-specific consumer bindings remain partial evidence",
+    "inputs": {
+      "curriculum/l1l6/canonical/canonical-units.jsonl": "sha256:af4c53e64ab64b18e5caecbec75fef7abebcef3949810e4deabcec9c80cd8671",
+      "curriculum/l1l6/canonical/lesson-unit-map.jsonl": "sha256:499ee92a1008df30af12ef19e27adb6ddbdb61cea26519c00fc6292aa2aeea6d",
+      "curriculum/l1l6/canonical/unit-dispositions.jsonl": "sha256:e97e238f2f7be68facd2f33be1b3f93e085152a7905ea85f258a06217819c9b2",
+      "curriculum/l1l6/links/consumer-operationalization-bindings.jsonl": "sha256:2aa5b75fd34ab04092031ea18fc1abca0b9981049d5dfee1735477497e81a781",
+      "curriculum/l1l6/registry/lessons.jsonl": "sha256:6362bc8ef50f8ffebec4c6253c279d2e2e3d6c94f0b976352f32717baebfc743",
+      "curriculum/l1l6/reports/absorption-ledger.jsonl": "sha256:7be5cd6802d474279e2e8d2ef8ea8efdb095586e8009a5dca7337c87f7510d9e",
+      "curriculum/l1l6/reports/full-curriculum-readiness.json": "sha256:8e2222ba97596203ee2564dd770773fbbb272af67db39c881649092da525e9b7",
+      "curriculum/l1l6/reports/queues/q-error-fixtures.jsonl": "sha256:50d979c923bc868b457eafc6244ea38bfe32b81595920e045658a8bdf2838e09",
+      "eval/fusha-bench-v1/report/fusha-bench-report.json": "sha256:580150cd0f8860dde87a6e784b58838679c7ae41df14a4c82def57babaaba63f"
+    }
+  },
+  "blocked_lessons": [],
+  "blocked_units": [],
+  "closure": {
+    "fully_operationalized_unit_ids": [
+      "cu-grapheme-inventory-and-confusables",
+      "cu-orthographic-connectivity-classes",
+      "cu-short-vowel-diacritics-and-vocalization-state",
+      "cu-nunation-support-orthography",
+      "cu-definite-article-assimilation"
+    ],
+    "newly_fully_operationalized_lesson_ids": [
+      "L1.M1.01",
+      "L1.M1.02",
+      "L1.M1.03",
+      "L1.M1.07"
+    ],
+    "tranche_closed": false,
+    "units_fully_operationalized": 5,
+    "units_still_partial": 3
+  },
+  "contributing_lesson_ids": [
+    "L1.M1.01",
+    "L1.M1.02",
+    "L1.M1.03",
+    "L1.M1.04",
+    "L1.M1.05",
+    "L1.M1.06",
+    "L1.M1.07",
+    "L1.M1.08",
+    "L1.M2.01",
+    "L1.M2.03",
+    "L1.M2.08",
+    "L1.M2.09",
+    "L1.M2.10",
+    "L1.M3.01",
+    "L1.M3.02",
+    "L1.M3.03",
+    "L1.M3.04",
+    "L1.M3.05",
+    "L1.M4.02",
+    "L1.M4.03",
+    "L1.M4.05",
+    "L1.M5.01",
+    "L1.M5.03",
+    "L1.M5.04",
+    "L1.M5.05",
+    "L1.M5.06",
+    "L1.M5.07",
+    "L2.M1.01",
+    "L2.M1.02",
+    "L2.M1.03",
+    "L2.M1.04",
+    "L2.M1.05",
+    "L2.M1.06",
+    "L2.M1.07",
+    "L2.M1.08",
+    "L2.M2.01",
+    "L2.M2.02",
+    "L2.M2.06",
+    "L2.M3.01",
+    "L2.M3.03",
+    "L2.M3.04",
+    "L2.M3.05",
+    "L2.M3.06",
+    "L2.M4.01",
+    "L2.M4.02",
+    "L2.M4.04",
+    "L2.M4.05",
+    "L2.M4.06",
+    "L2.M5.01",
+    "L2.M5.02",
+    "L2.M5.03",
+    "L3.M1.01",
+    "L3.M1.04",
+    "L3.M1.07",
+    "L3.M1.08",
+    "L3.M1.09",
+    "L3.M3.03",
+    "L3.M3.06",
+    "L3.M4.04",
+    "L3.M4.08",
+    "L3.M5.01",
+    "L3.M5.02",
+    "L3.M5.04",
+    "L3.M5.05",
+    "L4.M1.01",
+    "L4.M1.02",
+    "L4.M1.03",
+    "L4.M1.04",
+    "L4.M1.05",
+    "L4.M1.06",
+    "L4.M1.07",
+    "L4.M2.01",
+    "L4.M2.02",
+    "L4.M2.04",
+    "L4.M2.05",
+    "L4.M2.06",
+    "L4.M2.07",
+    "L4.M3.03",
+    "L4.M3.04",
+    "L4.M3.05",
+    "L4.M3.07",
+    "L4.M4.01",
+    "L4.M4.02",
+    "L4.M4.03",
+    "L4.M4.04",
+    "L4.M4.07",
+    "L4.M5.10",
+    "L5.M1.03",
+    "L5.M1.06",
+    "L5.M1.07",
+    "L5.M3.04",
+    "L5.M4.01",
+    "L5.M4.02",
+    "L5.M4.04",
+    "L5.M4.05",
+    "L5.M4.06",
+    "L5.M4.07",
+    "L5.M5.02",
+    "L5.M5.06",
+    "L6.M1.06",
+    "L6.M2.01",
+    "L6.M2.02",
+    "L6.M2.03",
+    "L6.M3.01",
+    "L6.M3.02",
+    "L6.M3.03",
+    "L6.M3.06",
+    "L6.M3.07",
+    "L6.M4.06",
+    "L6.M5.01",
+    "L6.M5.02",
+    "L6.M5.05",
+    "L6.M6.03",
+    "L6.M6.04"
+  ],
+  "current_state": {
+    "closed_lesson_ids": [
+      "L1.M1.01",
+      "L1.M1.02",
+      "L1.M1.03",
+      "L1.M1.07"
+    ],
+    "closed_unit_ids": [
+      "cu-grapheme-inventory-and-confusables",
+      "cu-orthographic-connectivity-classes",
+      "cu-short-vowel-diacritics-and-vocalization-state",
+      "cu-nunation-support-orthography",
+      "cu-definite-article-assimilation"
+    ],
+    "lessons_total": 226,
+    "not_applicable_lesson_ids": [
+      "L1.M5.08"
+    ],
+    "real_consumer_unit_ids_partial_only": [
+      "cu-atf-case-following",
+      "cu-atf-particle-discriminator",
+      "cu-attributive-agreement-licensing",
+      "cu-badal-typology-discriminator",
+      "cu-badal-vs-atf-bayan",
+      "cu-bound-fa-function-discrimination",
+      "cu-clitic-pronoun-role-discriminator",
+      "cu-fa-function-and-mood-licensing",
+      "cu-la-negative-vs-prohibitive-discriminator",
+      "cu-lakin-coordinator-vs-abrogator",
+      "cu-preposition-sense-discriminators",
+      "cu-tanazu-governor-selection",
+      "cu-waw-function-discriminator",
+      "u-n01",
+      "u-n02",
+      "u-n03",
+      "u-n04",
+      "u-n06",
+      "u-n07",
+      "u-n08",
+      "u-n09",
+      "u-n10",
+      "u-n11",
+      "u-n12",
+      "u-s01",
+      "u-s02",
+      "u-s03",
+      "u-s04",
+      "u-s05",
+      "u-s06",
+      "u-s07",
+      "u-s09"
+    ],
+    "units_total": 166
+  },
+  "fully_operationalized_lesson_ids": [
+    "L1.M1.01",
+    "L1.M1.02",
+    "L1.M1.03",
+    "L1.M1.07"
+  ],
+  "generator": "tools/select_tranche.py",
+  "parked_dimension_blockers": [
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M1.05",
+        "L1.M1.08",
+        "L1.M2.03",
+        "L1.M2.08",
+        "L2.M1.06",
+        "L2.M1.07",
+        "L2.M3.01",
+        "L2.M3.06",
+        "L2.M4.04",
+        "L3.M1.01",
+        "L3.M1.04",
+        "L3.M1.07",
+        "L3.M1.08",
+        "L3.M1.09",
+        "L4.M1.01",
+        "L4.M1.04",
+        "L5.M4.04",
+        "L5.M4.05",
+        "L5.M4.06",
+        "L6.M5.01",
+        "L6.M5.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-s01"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M1.06",
+        "L1.M2.01",
+        "L1.M2.09",
+        "L1.M2.10",
+        "L1.M3.01",
+        "L1.M3.02",
+        "L1.M3.03",
+        "L1.M3.04",
+        "L1.M3.05",
+        "L1.M4.02",
+        "L1.M4.03",
+        "L1.M4.05",
+        "L1.M5.01",
+        "L1.M5.03",
+        "L1.M5.04",
+        "L1.M5.05",
+        "L1.M5.06",
+        "L1.M5.07",
+        "L2.M1.01",
+        "L2.M1.02",
+        "L2.M1.03",
+        "L2.M1.04",
+        "L2.M1.05",
+        "L2.M1.08",
+        "L2.M2.01",
+        "L2.M2.06",
+        "L2.M3.03",
+        "L2.M3.04",
+        "L2.M3.05",
+        "L2.M4.05",
+        "L2.M4.06",
+        "L2.M5.01",
+        "L2.M5.02",
+        "L2.M5.03",
+        "L3.M3.03",
+        "L3.M4.04",
+        "L3.M4.08",
+        "L3.M5.01",
+        "L3.M5.02",
+        "L3.M5.04",
+        "L3.M5.05",
+        "L4.M1.02",
+        "L4.M1.06",
+        "L4.M1.07",
+        "L4.M2.01",
+        "L4.M2.02",
+        "L4.M2.04",
+        "L4.M2.05",
+        "L4.M2.06",
+        "L4.M2.07",
+        "L4.M3.03",
+        "L4.M3.05",
+        "L4.M3.07",
+        "L4.M4.01",
+        "L4.M4.02",
+        "L4.M4.03",
+        "L4.M4.04",
+        "L4.M4.07",
+        "L4.M5.10",
+        "L5.M1.03",
+        "L5.M1.06",
+        "L5.M1.07",
+        "L5.M3.04",
+        "L5.M4.07",
+        "L5.M5.02",
+        "L5.M5.06",
+        "L6.M1.06",
+        "L6.M2.01",
+        "L6.M2.02",
+        "L6.M3.02",
+        "L6.M3.03",
+        "L6.M3.06",
+        "L6.M4.06",
+        "L6.M6.03",
+        "L6.M6.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n01"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: رِجَال / كُتُب (skeleton-level matches exist in the store but identity requires the full citation form — og-1 forbids binding them) / مُسْلِمُونَ); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M1.08",
+        "L1.M3.02",
+        "L1.M3.03",
+        "L1.M3.05",
+        "L1.M4.01",
+        "L1.M4.02",
+        "L1.M4.05",
+        "L2.M3.01",
+        "L2.M3.02",
+        "L2.M3.03",
+        "L2.M3.04",
+        "L2.M3.05",
+        "L2.M3.06",
+        "L2.M3.07",
+        "L2.M4.01",
+        "L3.M2.04",
+        "L3.M2.05",
+        "L3.M3.03",
+        "L3.M4.07",
+        "L3.M5.05",
+        "L4.M2.01",
+        "L4.M2.07",
+        "L4.M4.01",
+        "L4.M4.07",
+        "L4.M5.07",
+        "L4.M5.08",
+        "L4.M5.09",
+        "L6.M2.02",
+        "L6.M3.03",
+        "L6.M5.02",
+        "L6.M5.03",
+        "L6.M5.06",
+        "L6.M6.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-s08"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M2.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-utterance-completeness-threshold"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: مِيزَان / مِفْتَاح); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M2.03",
+        "L1.M2.08",
+        "L3.M3.07",
+        "L3.M3.08",
+        "L3.M4.08",
+        "L6.M5.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-s05"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M2.07",
+        "L1.M5.04",
+        "L1.M5.05",
+        "L1.M5.07",
+        "L2.M1.02",
+        "L2.M1.04",
+        "L2.M2.02",
+        "L2.M5.02",
+        "L3.M2.06",
+        "L3.M4.01",
+        "L3.M4.04",
+        "L3.M4.05",
+        "L3.M4.08",
+        "L3.M5.06",
+        "L4.M2.04",
+        "L4.M3.06",
+        "L4.M3.07",
+        "L4.M4.06",
+        "L4.M5.06",
+        "L4.M5.10",
+        "L5.M1.01",
+        "L5.M1.06",
+        "L5.M3.03",
+        "L5.M5.01",
+        "L5.M6.03",
+        "L5.M6.04",
+        "L6.M3.04",
+        "L6.M4.01",
+        "L6.M4.05",
+        "L6.M4.06",
+        "L6.M6.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n07"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: كَاتِب / مَكْتُوب / عَالِم); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M2.08",
+        "L2.M4.01",
+        "L2.M4.02",
+        "L3.M2.04",
+        "L3.M3.01",
+        "L3.M3.02",
+        "L3.M3.07",
+        "L3.M4.02",
+        "L3.M4.08",
+        "L4.M4.04",
+        "L4.M5.09",
+        "L5.M4.04",
+        "L5.M4.06",
+        "L6.M3.07",
+        "L6.M5.04",
+        "L6.M6.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-s03"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M2.09",
+        "L1.M5.01",
+        "L1.M5.02",
+        "L1.M5.03",
+        "L1.M5.05",
+        "L2.M5.05",
+        "L4.M1.07",
+        "L4.M3.06",
+        "L4.M3.08",
+        "L4.M4.05",
+        "L4.M5.01",
+        "L4.M5.02",
+        "L4.M5.03",
+        "L4.M5.05",
+        "L5.M1.05",
+        "L5.M1.07",
+        "L5.M3.03",
+        "L5.M5.02",
+        "L5.M5.03",
+        "L5.M5.05",
+        "L5.M5.06",
+        "L6.M3.02",
+        "L6.M3.04",
+        "L6.M3.06",
+        "L6.M4.02",
+        "L6.M6.01"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n09"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M3.01"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-predication-boundary-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M3.03",
+        "L1.M3.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-predicate-realisation-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M3.04",
+        "L1.M3.05",
+        "L1.M4.03",
+        "L1.M4.04",
+        "L1.M5.02",
+        "L1.M5.04",
+        "L1.M5.06",
+        "L1.M5.07",
+        "L2.M1.02",
+        "L2.M1.03",
+        "L2.M1.04",
+        "L2.M2.03",
+        "L2.M2.05",
+        "L2.M2.06",
+        "L2.M4.05",
+        "L3.M1.07",
+        "L3.M2.03",
+        "L3.M2.06",
+        "L3.M3.04",
+        "L3.M4.01",
+        "L3.M4.02",
+        "L3.M4.03",
+        "L3.M4.07",
+        "L3.M5.02",
+        "L3.M5.03",
+        "L3.M5.06",
+        "L4.M1.07",
+        "L4.M2.07",
+        "L4.M3.02",
+        "L4.M3.03",
+        "L4.M3.04",
+        "L4.M3.07",
+        "L4.M4.02",
+        "L5.M1.06",
+        "L5.M1.07",
+        "L5.M2.01",
+        "L5.M3.01",
+        "L5.M3.02",
+        "L5.M3.03",
+        "L5.M3.04",
+        "L5.M3.08",
+        "L5.M5.01",
+        "L5.M5.04",
+        "L5.M6.02",
+        "L5.M6.03",
+        "L6.M2.04",
+        "L6.M2.05",
+        "L6.M3.01",
+        "L6.M3.02",
+        "L6.M3.04",
+        "L6.M3.06",
+        "L6.M3.07",
+        "L6.M4.02",
+        "L6.M5.08",
+        "L6.M6.01",
+        "L6.M6.02",
+        "L6.M6.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n03"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M3.05",
+        "L1.M4.03",
+        "L1.M4.04",
+        "L2.M2.05",
+        "L2.M4.06",
+        "L3.M2.01",
+        "L3.M2.02",
+        "L3.M2.03",
+        "L3.M2.04",
+        "L3.M2.05",
+        "L3.M2.06",
+        "L3.M5.06",
+        "L4.M4.07",
+        "L4.M5.03",
+        "L4.M5.04",
+        "L4.M5.07",
+        "L4.M5.08",
+        "L4.M5.10",
+        "L5.M1.07",
+        "L5.M3.06",
+        "L5.M3.07",
+        "L5.M3.08",
+        "L5.M5.03",
+        "L5.M5.07",
+        "L6.M2.05",
+        "L6.M3.04",
+        "L6.M4.04",
+        "L6.M6.04",
+        "L6.M6.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n04"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M3.06",
+        "L1.M4.01",
+        "L1.M4.02",
+        "L1.M4.03",
+        "L1.M5.01",
+        "L1.M5.02",
+        "L2.M1.07",
+        "L2.M2.03",
+        "L2.M2.04",
+        "L3.M1.05",
+        "L3.M2.01",
+        "L3.M5.05",
+        "L4.M1.02",
+        "L4.M1.03",
+        "L4.M2.02",
+        "L4.M3.02",
+        "L4.M3.07",
+        "L4.M3.09",
+        "L4.M4.03",
+        "L4.M4.05",
+        "L5.M1.03",
+        "L5.M2.06",
+        "L5.M3.05",
+        "L5.M3.07",
+        "L5.M4.07",
+        "L5.M5.06",
+        "L6.M3.02",
+        "L6.M3.03",
+        "L6.M3.05",
+        "L6.M4.03",
+        "L6.M6.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-s09"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M4.05",
+        "L4.M2.01"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-attributive-agreement-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M4.05",
+        "L1.M5.03",
+        "L1.M5.04",
+        "L1.M5.05",
+        "L2.M2.06",
+        "L2.M3.07",
+        "L3.M2.01",
+        "L3.M2.04",
+        "L3.M2.05",
+        "L3.M4.01",
+        "L3.M4.02",
+        "L3.M4.03",
+        "L4.M1.07",
+        "L4.M2.01",
+        "L4.M2.02",
+        "L4.M2.05",
+        "L4.M2.06",
+        "L4.M3.05",
+        "L4.M3.09",
+        "L4.M5.03",
+        "L4.M5.04",
+        "L5.M1.05",
+        "L5.M2.05",
+        "L5.M2.06",
+        "L5.M3.01",
+        "L5.M3.02",
+        "L5.M3.05",
+        "L5.M5.03",
+        "L5.M5.05",
+        "L5.M5.07",
+        "L5.M6.01",
+        "L5.M6.04",
+        "L6.M1.06",
+        "L6.M2.04",
+        "L6.M3.02",
+        "L6.M3.03",
+        "L6.M3.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n10"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M5.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-demonstrative-definiteness-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M5.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-verb-particle-selection-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M5.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-kam-counted-noun-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M5.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-fronted-predicate-possession-frame"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M5.06",
+        "L2.M2.01",
+        "L2.M2.02",
+        "L2.M2.03",
+        "L2.M2.04",
+        "L2.M2.05",
+        "L2.M2.06",
+        "L2.M5.01",
+        "L2.M5.02",
+        "L4.M3.04",
+        "L4.M3.08",
+        "L4.M3.09",
+        "L4.M5.01",
+        "L5.M1.03",
+        "L5.M1.06",
+        "L5.M2.01",
+        "L5.M5.01",
+        "L5.M5.02",
+        "L5.M6.02",
+        "L5.M6.03",
+        "L6.M1.06",
+        "L6.M3.02",
+        "L6.M3.05",
+        "L6.M3.08",
+        "L6.M4.01",
+        "L6.M4.03",
+        "L6.M4.05",
+        "L6.M4.06",
+        "L6.M6.02",
+        "L6.M6.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n02"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M5.06",
+        "L2.M1.02",
+        "L2.M5.05",
+        "L3.M2.01",
+        "L3.M4.04",
+        "L3.M5.06",
+        "L4.M1.07",
+        "L4.M3.01",
+        "L4.M3.03",
+        "L4.M4.07",
+        "L4.M5.05",
+        "L5.M1.05",
+        "L5.M1.07",
+        "L5.M3.01",
+        "L5.M3.06",
+        "L5.M3.07",
+        "L5.M5.02",
+        "L5.M5.04",
+        "L5.M5.07",
+        "L6.M3.04",
+        "L6.M3.06",
+        "L6.M6.01",
+        "L6.M6.02",
+        "L6.M6.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n08"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L1.M5.07",
+        "L2.M1.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-la-negative-vs-prohibitive-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M1.01"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-nongoverning-preverbal-inventory"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M1.02",
+        "L2.M1.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-mood-governor-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M1.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-mood-syncretism-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M1.05",
+        "L3.M4.04",
+        "L3.M5.01",
+        "L3.M5.02",
+        "L3.M5.03",
+        "L4.M3.01",
+        "L4.M4.06",
+        "L4.M5.02",
+        "L4.M5.06",
+        "L5.M5.01",
+        "L5.M5.05",
+        "L5.M6.01",
+        "L6.M6.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n06"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: اُكْتُبْ / قُلْ); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M1.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-imperative-stem-derivation"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M1.06",
+        "L3.M2.06",
+        "L4.M2.04",
+        "L4.M2.06",
+        "L4.M3.05",
+        "L4.M4.05",
+        "L4.M5.04",
+        "L5.M1.07",
+        "L5.M2.05",
+        "L5.M3.02",
+        "L5.M5.04",
+        "L5.M5.07",
+        "L6.M2.05",
+        "L6.M3.06",
+        "L6.M4.01",
+        "L6.M4.02",
+        "L6.M4.04",
+        "L6.M4.05",
+        "L6.M6.01",
+        "L6.M6.02",
+        "L6.M6.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n11"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M1.07"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-initial-hamza-class"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M2.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-nawasikh-polarity-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M2.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-inna-family-selection"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M2.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-inna-modal-force"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M2.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-qalb-verb-transitivity"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M2.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-nawasikh-family-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M3.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-lexical-feminine-registry"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: رِجَال / كُتُب (skeleton-level matches exist in the store but identity requires the full citation form — og-1 forbids binding them) / أَقْلَام); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M3.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-broken-plural-template-inventory"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M4.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-form-i-participle-voice-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M4.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-elative-comparison-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M4.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-nisba-attribution-suffix"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M4.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-idafa-definiteness-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M4.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-zarf-lexeme-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M5.01"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-atf-case-following"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M5.01"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-lakin-coordinator-vs-abrogator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L2.M5.04",
+        "L2.M5.05",
+        "L4.M2.05",
+        "L4.M4.05",
+        "L4.M5.01",
+        "L4.M5.02",
+        "L5.M5.01",
+        "L5.M5.03",
+        "L5.M5.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n05"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: تَعْلِيم / إِحْسَان / قِتَال); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M1.02",
+        "L3.M1.03",
+        "L3.M1.04",
+        "L3.M1.05",
+        "L3.M1.06",
+        "L3.M1.08",
+        "L3.M1.09",
+        "L3.M2.02",
+        "L3.M2.03",
+        "L3.M3.05",
+        "L3.M3.06",
+        "L4.M3.08",
+        "L5.M4.01",
+        "L5.M4.04",
+        "L5.M4.05",
+        "L5.M4.06",
+        "L6.M3.07",
+        "L6.M5.04",
+        "L6.M5.05",
+        "L6.M5.08"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-s04"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M1.07",
+        "L3.M1.09"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-derived-form-root-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M2.06",
+        "L5.M1.07"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-istithna-case-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M3.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-adjective-class-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: غَفَّار / صَبَّار); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M3.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-intensive-agent-templates"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: مَغْرِب / مِفْتَاح); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M3.08",
+        "L6.M5.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-mim-initial-noun-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M4.01"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-preposition-sense-discriminators"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M4.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-idafa-chain-node-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M4.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-fa-function-and-mood-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M4.04",
+        "L3.M4.05",
+        "L4.M2.03",
+        "L4.M3.06",
+        "L4.M4.06",
+        "L4.M5.02",
+        "L4.M5.06",
+        "L5.M1.05",
+        "L5.M2.05",
+        "L5.M2.06",
+        "L5.M3.05",
+        "L5.M6.02",
+        "L5.M6.03",
+        "L5.M6.04",
+        "L6.M3.05",
+        "L6.M3.08",
+        "L6.M5.07",
+        "L6.M5.08"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "u-n12"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M5.02",
+        "L3.M5.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-jawab-al-shart-fa-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M5.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-munada-type-case-assignment"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M5.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-nun-raf-vs-nun-niswa"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L3.M5.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-hatta-mood-reading-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: خُلِقَ (skeleton-level matches exist in the store but identity requires the full citation form — og-1 forbids binding them) / قِيلَ); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M1.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-voice-melody-templates"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M1.07"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-agent-vs-deputy-discrimination"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M2.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-tawkid-manawi-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M2.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-tawkid-lafzi-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M2.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-atf-particle-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M2.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-badal-typology-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M2.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-badal-vs-atf-bayan"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M3.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-oath-frame-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M3.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-constituent-order-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M4.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-diptote-restoration-conditions"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M4.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-final-shape-noun-class-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M4.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-fixed-form-noun-inventory"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M4.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-attention-presentative-particles"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M4.07"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-tamyiz-role-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M5.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-hal-licensing-conditions"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L4.M5.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-waw-function-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M1.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-emphasis-device-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M1.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-parenthetical-span-diagnosis"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M1.08"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-restriction-composition-method"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M2.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-tarid-indirect-address-frames"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M3.01"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-ishtighal-fronted-noun-case"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M3.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-tanazu-governor-selection"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M3.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-taliq-suspending-particles"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M3.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-ilgha-position-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M3.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-ikhtisas-specifier-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M3.07"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-ighra-tahdhir-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M4.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-gemination-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M4.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-quadriliteral-templates"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M5.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-an-particle-role-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M5.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-la-siyyama-complement-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M6.02",
+        "L5.M6.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-connective-complement-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L5.M6.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-bound-fa-function-discrimination"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M2.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-maqsur-mamdud-register-variants"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M2.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-idafa-adjacency-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M2.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-valency-shift-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M3.01",
+        "L6.M5.08"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-passive-voice-vocalization"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M3.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-nasikh-scope-locality"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M3.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-reported-speech-deixis"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M3.06"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-praise-blame-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M4.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-paradigm-defectivity-block-lists"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: عُبَيْد); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M5.01"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-diminutive-template-family"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M5.02"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-rare-broken-plural-licensing"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: بُيُوتَات); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M5.03"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-plural-of-plural-layer"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: جَاهِلِيَّة); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M5.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-suffix-abstract-noun"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "no curated exemplar resolves by exact citation-form identity in the entry store (tried: سَجْدَة / قِتْلَة); extension path: widen the exemplar list with store-attested citation forms — identity matching only, never similarity",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M5.05"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-marra-hayah-discriminator"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M6.01"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-restriction-carriers"
+    },
+    {
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "contributing_lesson_ids": [
+        "L6.M6.04"
+      ],
+      "selection_effect": "parked_state_does_not_stall_tranche",
+      "unit_id": "cu-commentary-metalanguage-index"
+    }
+  ],
+  "remaining": {
+    "blocked_units": 0,
+    "future_tranches_total": 22,
+    "parked_dimension_blockers": 105,
+    "units_after_tranche_001": 161
+  },
+  "schema": "curriculum.l1l6_operationalization_tranche.v1",
+  "selection": {
+    "algorithm": "earliest_contributing_lesson_then_unit_id_greedy",
+    "lesson_flip_quota": 9,
+    "residual": true
+  },
+  "tranche_id": "tranche-001",
+  "units": [
+    {
+      "axis": "cross",
+      "blockers": [],
+      "capability_family": "instructional_only",
+      "contributing_lesson_ids": [
+        "L1.M1.01"
+      ],
+      "current_closure": "fully_operationalized",
+      "current_strongest_state": "candidate_remediation_material",
+      "incomplete_closure_dimensions": [],
+      "owning_production_lines": [
+        "line_2_drill_kc_realization",
+        "line_4_error_fixtures"
+      ],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001a-foundational-orthography-analysis",
+        "l1l6-tranche-001b-foundational-script-runtime"
+      ],
+      "unit_id": "cu-grapheme-inventory-and-confusables"
+    },
+    {
+      "axis": "cross",
+      "blockers": [],
+      "capability_family": "discriminator_table",
+      "contributing_lesson_ids": [
+        "L1.M1.02"
+      ],
+      "current_closure": "fully_operationalized",
+      "current_strongest_state": "candidate_pack_harnessed",
+      "incomplete_closure_dimensions": [],
+      "owning_production_lines": [
+        "line_1_machine_packs",
+        "line_2_drill_kc_realization",
+        "line_4_error_fixtures"
+      ],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001a-foundational-orthography-analysis",
+        "l1l6-tranche-001b-foundational-script-runtime"
+      ],
+      "unit_id": "cu-orthographic-connectivity-classes"
+    },
+    {
+      "axis": "cross",
+      "blockers": [],
+      "capability_family": "instructional_only",
+      "contributing_lesson_ids": [
+        "L1.M1.03"
+      ],
+      "current_closure": "fully_operationalized",
+      "current_strongest_state": "candidate_remediation_material",
+      "incomplete_closure_dimensions": [],
+      "owning_production_lines": [
+        "line_2_drill_kc_realization",
+        "line_4_error_fixtures"
+      ],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001a-foundational-orthography-analysis",
+        "l1l6-tranche-001b-foundational-script-runtime"
+      ],
+      "unit_id": "cu-short-vowel-diacritics-and-vocalization-state"
+    },
+    {
+      "axis": "sarf",
+      "blockers": [],
+      "capability_family": "instructional_only",
+      "contributing_lesson_ids": [
+        "L1.M1.04",
+        "L1.M1.05",
+        "L1.M2.10",
+        "L2.M1.04",
+        "L2.M1.05",
+        "L2.M1.06",
+        "L2.M1.08",
+        "L2.M2.01",
+        "L2.M2.02",
+        "L2.M3.04",
+        "L2.M4.01",
+        "L2.M4.02",
+        "L2.M5.03",
+        "L3.M3.06",
+        "L3.M5.01",
+        "L4.M1.01",
+        "L4.M1.02",
+        "L4.M1.03",
+        "L4.M1.04",
+        "L4.M1.05",
+        "L4.M3.04",
+        "L4.M4.03",
+        "L4.M4.04",
+        "L5.M4.01",
+        "L5.M4.02",
+        "L5.M4.05",
+        "L5.M4.07",
+        "L5.M5.06",
+        "L6.M2.03",
+        "L6.M3.01",
+        "L6.M3.07",
+        "L6.M5.01",
+        "L6.M5.02"
+      ],
+      "current_closure": "partially_operationalized",
+      "current_strongest_state": "candidate_occurrence_witnesses",
+      "incomplete_closure_dimensions": [
+        "runtime_misconceptions",
+        "consumer_bindings"
+      ],
+      "owning_production_lines": [
+        "line_2_drill_kc_realization",
+        "line_3_occurrence_grounding",
+        "line_4_error_fixtures"
+      ],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001b-derivation-template-runtime",
+        "l1l6-tranche-001b-foundational-script-runtime",
+        "l1l6-tranche-001b-ma-context-runtime",
+        "l1l6-tranche-001b-weak-root-voice-runtime"
+      ],
+      "unit_id": "u-s06"
+    },
+    {
+      "axis": "sarf",
+      "blockers": [
+        {
+          "cause": "no curated standard exemplar yet resolves for this sarf unit; extension path: widen CANDIDATE_HEADWORDS with independently selected citation forms and re-run (identity matching only)",
+          "dimension": "occurrence_grounding",
+          "state": "evidence_blocked"
+        }
+      ],
+      "capability_family": "executable",
+      "contributing_lesson_ids": [
+        "L1.M1.05",
+        "L1.M1.08",
+        "L1.M2.03",
+        "L1.M2.08",
+        "L2.M1.06",
+        "L2.M1.07",
+        "L2.M3.01",
+        "L2.M3.06",
+        "L2.M4.04",
+        "L3.M1.01",
+        "L3.M1.04",
+        "L3.M1.07",
+        "L3.M1.08",
+        "L3.M1.09",
+        "L4.M1.01",
+        "L4.M1.04",
+        "L5.M4.04",
+        "L5.M4.05",
+        "L5.M4.06",
+        "L6.M5.01",
+        "L6.M5.05"
+      ],
+      "current_closure": "partially_operationalized",
+      "current_strongest_state": "candidate_pack_harnessed",
+      "incomplete_closure_dimensions": [
+        "runtime_misconceptions",
+        "consumer_bindings"
+      ],
+      "owning_production_lines": [
+        "line_1_machine_packs",
+        "line_2_drill_kc_realization",
+        "line_3_occurrence_grounding",
+        "line_4_error_fixtures"
+      ],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001b-foundational-script-runtime",
+        "l1l6-tranche-001b-weak-root-voice-runtime"
+      ],
+      "unit_id": "u-s01"
+    },
+    {
+      "axis": "cross",
+      "blockers": [],
+      "capability_family": "licensing_table",
+      "contributing_lesson_ids": [
+        "L1.M1.06"
+      ],
+      "current_closure": "fully_operationalized",
+      "current_strongest_state": "candidate_pack_harnessed",
+      "incomplete_closure_dimensions": [],
+      "owning_production_lines": [
+        "line_1_machine_packs",
+        "line_2_drill_kc_realization",
+        "line_4_error_fixtures"
+      ],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001a-foundational-orthography-analysis",
+        "l1l6-tranche-001b-foundational-script-runtime"
+      ],
+      "unit_id": "cu-nunation-support-orthography"
+    },
+    {
+      "axis": "nahw",
+      "blockers": [
+        {
+          "cause": "occurrence grounding for syntax units requires per-occurrence governor/dependency evidence from the merged Burst-A2 nahw plane (Sol-owned, merged to main after this branch's base); candidate lattices exist but occurrence selection without that plane would be surface-similarity inference, which is prohibited",
+          "dimension": "occurrence_grounding",
+          "state": "sol_integration_blocked"
+        }
+      ],
+      "capability_family": "executable",
+      "contributing_lesson_ids": [
+        "L1.M1.06",
+        "L1.M2.01",
+        "L1.M2.09",
+        "L1.M2.10",
+        "L1.M3.01",
+        "L1.M3.02",
+        "L1.M3.03",
+        "L1.M3.04",
+        "L1.M3.05",
+        "L1.M4.02",
+        "L1.M4.03",
+        "L1.M4.05",
+        "L1.M5.01",
+        "L1.M5.03",
+        "L1.M5.04",
+        "L1.M5.05",
+        "L1.M5.06",
+        "L1.M5.07",
+        "L2.M1.01",
+        "L2.M1.02",
+        "L2.M1.03",
+        "L2.M1.04",
+        "L2.M1.05",
+        "L2.M1.08",
+        "L2.M2.01",
+        "L2.M2.06",
+        "L2.M3.03",
+        "L2.M3.04",
+        "L2.M3.05",
+        "L2.M4.05",
+        "L2.M4.06",
+        "L2.M5.01",
+        "L2.M5.02",
+        "L2.M5.03",
+        "L3.M3.03",
+        "L3.M4.04",
+        "L3.M4.08",
+        "L3.M5.01",
+        "L3.M5.02",
+        "L3.M5.04",
+        "L3.M5.05",
+        "L4.M1.02",
+        "L4.M1.06",
+        "L4.M1.07",
+        "L4.M2.01",
+        "L4.M2.02",
+        "L4.M2.04",
+        "L4.M2.05",
+        "L4.M2.06",
+        "L4.M2.07",
+        "L4.M3.03",
+        "L4.M3.05",
+        "L4.M3.07",
+        "L4.M4.01",
+        "L4.M4.02",
+        "L4.M4.03",
+        "L4.M4.04",
+        "L4.M4.07",
+        "L4.M5.10",
+        "L5.M1.03",
+        "L5.M1.06",
+        "L5.M1.07",
+        "L5.M3.04",
+        "L5.M4.07",
+        "L5.M5.02",
+        "L5.M5.06",
+        "L6.M1.06",
+        "L6.M2.01",
+        "L6.M2.02",
+        "L6.M3.02",
+        "L6.M3.03",
+        "L6.M3.06",
+        "L6.M4.06",
+        "L6.M6.03",
+        "L6.M6.04"
+      ],
+      "current_closure": "partially_operationalized",
+      "current_strongest_state": "candidate_pack_harnessed",
+      "incomplete_closure_dimensions": [
+        "runtime_misconceptions",
+        "consumer_bindings"
+      ],
+      "owning_production_lines": [
+        "line_1_machine_packs",
+        "line_2_drill_kc_realization",
+        "line_3_occurrence_grounding",
+        "line_4_error_fixtures"
+      ],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001b-derivation-template-runtime",
+        "l1l6-tranche-001b-foundational-script-runtime",
+        "l1l6-tranche-001b-ma-context-runtime",
+        "l1l6-tranche-001b-weak-root-voice-runtime"
+      ],
+      "unit_id": "u-n01"
+    },
+    {
+      "axis": "cross",
+      "blockers": [],
+      "capability_family": "discriminator_table",
+      "contributing_lesson_ids": [
+        "L1.M1.07"
+      ],
+      "current_closure": "fully_operationalized",
+      "current_strongest_state": "candidate_pack_harnessed",
+      "incomplete_closure_dimensions": [],
+      "owning_production_lines": [
+        "line_1_machine_packs",
+        "line_2_drill_kc_realization",
+        "line_4_error_fixtures"
+      ],
+      "real_consumer_binding_ids": [
+        "l1l6-tranche-001a-foundational-orthography-analysis",
+        "l1l6-tranche-001b-foundational-script-runtime"
+      ],
+      "unit_id": "cu-definite-article-assimilation"
+    }
+  ]
+}
